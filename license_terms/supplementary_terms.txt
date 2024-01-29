@@ -1,0 +1,23 @@
+===============================================================================
+This file contains details of any applicable specific extensions, limitations 
+or other variations to the terms of the End User License Agreement that 
+accompanies this release of 'MDK Middleware Source'.
+===============================================================================
+1) Use of 'MDK Middleware Source' is granted per licensed Seat of 
+MDK-Professional Edition. You acknowledge and agree that you shall not use the 
+'MDK Middleware Sources' unless you have licensed MDK-Professional Edition.
+
+2) Your use of 'MDK Middleware Source' is restricted for a specified license 
+type as set out in the order documentation.
+
+“Single Product” means an unlimited number of units of a single design with a 
+unique part number e.g. one phone product].
+
+“Single Product Line” means a range of products which serve the same purpose 
+(e.g. different phone designs, but not phones and dvd players)].
+
+“Multi Product Line” means numerous product lines e.g. Mobile phone, DVD 
+player, TV ]
+
+===============================================================================
+END OF FILE: supplementary_terms.txt

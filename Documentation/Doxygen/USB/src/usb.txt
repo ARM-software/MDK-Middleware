@@ -1,0 +1,2108 @@
+﻿/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\mainpage
+\anchor usb_mw_comp
+
+\section Overview
+The <b>USB Component</b> enables you to create <b>USB Device</b> and <b>USB Host</b> applications and is part of \url{MW-General}.
+The USB Protocol is handled by the USB Component, so that developers can focus on their application needs.
+
+\image html "usbmiddleware.png" "Structure of the USB Component"
+
+The <b>USB Component</b> is structured as follows:
+- \ref USB_Host is used to communicate to other USB Device peripherals over the USB bus.
+- \ref USB_Device implements a device peripheral that can be connected to an USB Host.
+- The following USB Classes are supported:
+  - \ref HID "Human Interface Device (HID)"
+  - \ref MSC "Mass Storage Class (MSC)"
+  - \ref CDC "Communication Device Class (CDC)"
+  - \ref ADC "Audio Device Class (ADC)" (USB Device only)
+  - \ref CustomClass "Custom Class" (for implementing new or unsupported USB Classes)
+  - <b>Composite USB Devices</b> supporting multiple device classes can be implemented.
+- \urlout{USB-API} for USB Host and USB Device provide the interface to the microcontroller peripherals.
+
+\subsection usb_mdk_editions MDK Editions
+
+MDK Middleware is available to all users of \urlout{MDK-Pro-Editions} and \urlout{MDK-Plus-Editions}. 
+The following table shows the differences in USB component availability:
+
+| Middleware Component | MDK-Professional | MDK-Plus  |
+|----------------------|:----------------:|:---------:|
+| USB Device           | Available        | Available |
+| USB Host             | Available        |           |
+
+\subsection usb_doc_structure Documentation Structure
+
+This user's guide contains the following chapters:
+- \ref USB_Device explains how to implement a <b>USB Device</b> with a microcontroller.
+- \ref USB_Host explains how to implement a <b>USB Host</b> with a microcontroller (MDK-Professional only).
+- \ref USB_Concepts contains general information about USB.
+- \ref USB_Classes provides details about the supported USB Device Classes.
+- \ref usb_function_reference lists the complete API of the USB Component.
+- \ref usb_resource_requirements shows the configuration of system resources for USB in detail.
+
+The <a class="el" href="https://www.usb.org/developers" target="_blank">USB-IF Developers Area</a> contains the complete
+<b>USB 2.0 Specification</b> and additional information that is referenced in this user's guide.
+
+\page usb_revhist Revision History
+
+<table class="cmtable" summary="Revision History">
+    <tr>
+      <th>Version</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>V6.17.0</td>
+      <td>
+        - USB Device/Host: using Event Recorder component from CMSIS-View pack (instead of deprecated ARM_Compiler pack)
+        - USB Device/Host: updated main Config files (clean-up)
+        - USB Device/Host: fixed issue with Arm Compiler 5 (Warning: L6418W: Tagging symbol not recognized)
+        - USB Device: increased maximum number of HID instances from 4 to 8
+        - USB Device: corrected Control Transfer data stage ZLP termination (unnecessary ZLP was sent if requested data length was equal to available data length)
+      </td>
+    </tr>
+    <tr>
+      <td>V6.16.1</td>
+      <td>
+        - USB Device/Host: improved code robustness
+      </td>
+    </tr>
+    <tr>
+      <td>V6.16.0</td>
+      <td>
+        - USB Host: libraries built with Arm Compiler 6
+        - USB Device: libraries built with Arm Compiler 6
+        - USB Device: fixed Control Transfer data stage ZLP termination (unnecessary ZLP not sent if all requested data was transferred)
+      </td>
+    </tr>
+    <tr>
+      <td>V6.15.4</td>
+      <td>
+        - USB Host: Improved enumeration process
+        - USB Host: Improved handling for HID keyboard device including Report ID in the Input Report
+        - USB Host: Fixed USBH_HID_Read function to return all data received on the Interrupt IN pipe
+        - USB Device: Enabled automatic driver installation on Microsoft Windows 8.1 and later for full-speed devices
+        - USB Device: Fixed Mass Storage device mounting as read-only on MAC OS
+      </td>
+    </tr>
+    <tr>
+      <td>V6.15.0</td>
+      <td>
+        - USB Host: Added support for Isochronous transfers (only for EHCI full-speed)
+        - USB Host: Fixed sporadic crash when disconnecting device from port 1
+        - USB Host: Fixed OHCI driver causing HardFault during debugging
+        - USB Device: ClearEndpointFeature request propagated to low-level driver also if endpoint was not in halt state
+      </td>
+    </tr>
+    <tr>
+      <td>V6.14.1</td>
+      <td>
+        - USB Host: Corrected enumeration of a CDC device if it is a part of a composite device
+        - USB Device: Corrected RNDIS (incomplete type is not allowed)
+      </td>
+    </tr>
+    <tr>
+      <td>V6.14.0</td>
+      <td>
+        - USB Host: Added abort functionality to CDC ACM transfers
+      </td>
+    </tr>
+    <tr>
+      <td>V6.13.7</td>
+      <td>
+        - USB Device/Host: Added thread name for all threads created by USB stack
+        - USB Device/Host: Corrected compiler warnings
+        - USB Host: Corrected USBH_Device_GetController/Port/Speed/Address/VID/PID functions to work in device enumeration Initialize callbacks
+      </td>
+    </tr>
+    <tr>
+      <td>V6.13.6</td>
+      <td>
+        - USB Device: Corrected delay on USB out transfer when multiple USB devices are used
+        - USB Device: Corrected handling if endpoint configuration in driver fails
+        - USB Device: Corrected MSC class support for sector size different than 512
+        - USB Device: Corrected MAC_str_to_addr function in Ethernet RNDIS driver
+        - USB Device: Corrected MAC_str_to_addr function in USBD_User_CDC_ACM_RNDIS_ETH.c template
+        - USB Device: Corrected MAC_str_to_addr function in USBD_User_CDC_ACM_RNDIS_VETH.c template
+        - USB Device: Improved USB input buffers alignment (aligned to 32 bytes, support cache up to 32 bytes per cache line)
+        - USB Host: Corrected CMSIS-RTOS1 compatibility mode compilation error in USART_CDC_ACM.c template
+        - USB Host: Corrected CMSIS-RTOS1 compatibility mode compilation error in USART_PL2303.c template
+      </td>
+    </tr>
+    <tr>
+      <td>V6.13.0</td>
+      <td>
+        - USB Device/Host: Added debug configuration for debugging with Event Recorder
+        - USB Device/Host: Corrected compilation warnings if GNU extensions is enabled in C/C++ settings for ARM Compiler 5
+        - USB Device: Added support for USB Device CDC ACM using RNDIS protocol
+        - USB Device: Renamed CDC ACM function USBD_CDC_ACM_Notify to USBD_CDC_ACM_Notify_SerialState
+        - USB Device: Updated configuration with capability to specify Control Transfer Buffer Size
+        - USB Device: Updated CDC configuration for RNDIS
+        - USB Device: Increased number of available CDC instances to 8
+        - USB Host: Corrected EHCI driver for handling transfers larger than 16kB
+        - USB Host: Corrected CMSIS-RTOS2 compilation error in USART_CDC_ACM.c template
+        - USB Host: Corrected CMSIS-RTOS2 compilation error in USART_PL2303.c template
+        - USB Host: Corrected Component Viewer display when ARM Compiler 6 is used
+        - USB Host: Added unsupported state to mounted device in Component Viewer if no driver is available for device
+      </td>
+    </tr>
+    <tr>
+      <td>V6.12.8</td>
+      <td>
+        - USB Device/Host: Corrected Initialize and Uninitialize functions so they can be called on already initialized/uninitialized device/controller
+        - USB Device: Corrected HID descriptors offset calculation
+        - USB Host: Corrected EHCI driver USB Controller power off procedure
+        - USB Host: Corrected OHCI driver transfers after endpoint returns stall
+        - USB Host: Improved USB Flash disk enumeration procedure (some USB Flash disks return wrong data residue on RequestSense command)
+        - USB Host: Improved recovery after USB Flash disk is disconnect while reading is in progress
+      </td>
+    </tr>
+    <tr>
+      <td>V6.12.4</td>
+      <td>
+        - USB Device/Host: Corrected timer, semaphore and mutex section location (for debugging)
+        - USB Device/Host: Improved robustness by adding 2 retries for failed driver operations
+        - USB Device: Corrected USBD_MSCn_GetMaxLUN callback return type from bool to uint8_t
+        - USB Host: Corrected USART_CDC_ACM.c CMSIS UART driver receive function returning invalid data in receive buffer
+        - USB Host: Improved USB Flash disk unmount procedure
+      </td>
+    </tr>
+    <tr>
+      <td>V6.12.0</td>
+      <td>
+        - USB Device/Host: Improved RTOS2 wrapper (reduced number of osKernelGetTickFreq() calls to improve performance)
+        - USB Device: Added function for setting Serial Number String at run-time
+        - USB Device: Added Microsoft OS Descriptors (automatic driver installation on Win 8 and later)
+        - USB Device: Added USBD_CDCn_ACM_Data_Received and USBD_CDCn_ACM_Data_Sent callback functions to USBD_User_CDC_ACM.c template
+        - USB Device: Added USBD_MSCn_GetMaxLUN callback for runtime change of maximum LUN
+        - USB Device: Improved custom class configuration, extended to 8 endpoints of selectable type and direction per interface
+        - USB Device: Improved custom class interface association setting, usage made optional
+        - USB Device: Improved USBD_MSC.c template to be able to switch owner to FS if device is not connected on the USB
+        - USB Device: Improved descriptor positioning in code memory, aligned to 4 bytes so DMA can be used
+        - USB Device: Improved CDC with aligned transfers (USB driver can use DMA for data transfers)
+        - USB Device: Corrected crc_mode parameter value in USBD_CDCn_NCM_SetCrcMode callbacks
+        - USB Host: Improved USB Flash disk enumeration procedure (some USB Flash disks return wrong data residue on TestUnitReady and Inquiry commands)
+        - USB Host: Improved memory management
+        - USB Host: Improved pipe transfer handling (corrected possible problem of simultaneous access on different pipes)
+        - USB Host: Improved disconnect procedure
+        - USB Host: Corrected USART_PL2303.c and USART_CDC_ACM.c CMSIS UART driver to allow send/receive restart form callbacks, 
+                    and corrected receive function so ARM_USART_EVENT_RECEIVE_COMPLETE event is signaled after requested number of bytes was received
+        - USB Host: Corrected functionality when Memory Pool Relocation is used
+        - USB Host: Corrected Default Pipe deletion in uninitialization
+        - USB Host: Corrected OHCI driver number of bytes transferred
+        - USB Host: Corrected OHCI driver USB Flash Disk recognition
+        - USB Host: Corrected OHCI driver causing HardFault if two USB Memory Sticks are connected on two root hub ports
+        - USB Host: Corrected OHCI driver causing HID device to stop working when another HID device gets disconnected
+        - USB Host: Corrected OHCI driver disconnect on one root hub port causing malfunction of device attached to the other root hub port
+        - USB Host: Corrected EHCI driver asynchronous simultaneous transfers functionality
+        - USB Host: Corrected EHCI driver USB Controller power off procedure
+      </td>
+    </tr>
+    <tr>
+      <td>V6.11.0</td>
+      <td>
+        - USB Device/Host: Added support for ARM Compiler 6
+        - USB Device/Host: Updated source code for MISRA compliance
+        - USB Device/Host: Updated resource requirements
+        - USB Device: Added Mass Storage Class support for multiple Logical Units (up to 4)
+        - USB Device: Updated custom device/class handling (buffer and length are initialized to 0 when SETUP packet is received)
+        - USB Device: Corrected USBD_User_Device_SerNum_n.c template (corrected handling of requests shorter than serial number string descriptor size)
+        - USB Device: Corrected Mass Storage Class was stalling bulk out endpoint if all data for write was received but media has become unavailable
+        - USB Device: Corrected Audio Device in case only microphone is used
+        - USB Device: Updated Audio Device USBD_User_ADC_Audio.c template
+        - USB Device: Corrected string descriptors if ARM Compiler 5 is used with Optimization Level 0
+        - USB Host: Corrected USBH_PL2303_GetRxCount function in USART_PL2303.c template
+        - USB Host: Corrected enumeration of USB HID devices which stall SetIdle request
+      </td>
+    </tr>
+    <tr>
+      <td>V6.10.0</td>
+      <td>
+        - USB Device/Host: Library made RTOS agnostic, all hooks externally (compile time) available
+        - USB Device/Host: Added support for CMSIS-RTOS2
+        - USB Device/Host: Added version information in Component Viewer
+        - USB Device: Added USBD_GetVersion function for retrieving version of USB Device library
+        - USB Device: Updated USBD_User_CDC_ACM.c template with default SetLineCoding/GetLineCoding handling
+        - USB Device: Improved display of memory size for Mass Storage class
+        - USB Device: Improved Mass Storage read performance through multiple transfers to host
+        - USB Device: Corrected HID deadlock if device is disconnected in the middle of interrupt transfer
+        - USB Device: Corrected CDC ZLP termination of bulk transfer if bulk transfer is multiple of maximum packet size
+        - USB Host: Corrected deadlock in case that USB Flash Disk is disconnected while there was active read or write to it
+        - USB Host: Corrected enumeration of USB Flash Disks which stall GetMaxLUN request
+        - USB Host: Corrected memory size information for Mass Storage class in Component Viewer
+        - USB Host: Changed first parameter of USBH_..._Configure functions from const USBH_DEV *ptr_dev to uint8_t device
+        - USB Host: Changed USBH_Port_Notify function to USBH_Notify with added 3-rd parameter uint8_t device for device notifications
+        - USB Host: Changed first parameter of USBH_ControlTransfer and USBH_DeviceRequest_... functions from uint8_t ctrl to uint8_t device
+        - USB Host: Removed USBH_DefaultPipe... functions and all default pipe communication provided through USBH_ControlTransfer function
+        - USB Host: Removed internal structures from main rl_usb.h file
+        - USB Host: Added USBH_GetVersion function for retrieving version of USB Host library
+        - USB Host: Added USBH_Device_GetStringDescriptor function for retrieving string descriptor
+        - USB Host: Updated USBH_Pipe... functions see function reference documentation for details
+        - USB Host: Updated USBH_PL2303.c and USBH_User_CustomClass.c templates to fit API changes
+        - USB Host: Updated USART_PL2303.c and USART_CDC_ACM.c drivers to fit API changes
+        - USB Host: Improved display of memory size for Mass Storage class in Component Viewer
+      </td>
+    </tr>
+    <tr>
+      <td>V6.9.0</td>
+      <td>
+        - USB Device/Host: Added debug library variants with event recording
+        - USB Device: Added capability to disable string for Custom Class interfaces
+        - USB Device: Corrected unbalanced mutex release when using USBD_HID_GetReportTrigger (lock mechanism changed from mutex to semaphore)
+        - USB Device: Corrected string descriptors
+        - USB Device: Corrected initial UART reception size in CDC ACM UART template
+        - USB Device: Corrected Audio Class template as volume or mute control changes on Host side could cause device to stop responding
+        - USB Host: Improved USB memory stick enumeration procedure to work for sticks that require more time after initial reset
+      </td>
+    </tr>
+    <tr>
+      <td>V6.8.0</td>
+      <td>
+        - USB Device/Host: Improved compatibility with ARM Compiler 6
+        - USB Device: Corrected Audio Class functionality for 24-bit resolution with 3 bytes per sample setting
+        - USB Device: Updated Audio Class API (old API is still functional)
+        - USB Device: Added state retrieval function (USBD_GetState)
+        - USB Device: Added user notifications for device events
+        - USB Device: Added setting for Interface Association for Custom Class
+        - USB Device: Improved Audio Class template
+        - USB Host: Corrected device causing HardFault if USB Memory Stick gets disconnected while device was reading it
+        - USB Host: Corrected EHCI Relocate Memory Pool compilation errors
+        - USB Host: Corrected enumeration if SetIdle on HID device stalls
+        - USB Host: Corrected interrupt pipe creation and deletion for OHCI and EHCI controllers
+        - USB Host: Extended API with additional functions to get more device information
+        - USB Host: Added notification function (USBH_Port_Notify)
+        - USB Host: Added class driver notification functions for each supported class (..._Initialize and ..._Uninitialize)
+        - USB Host: Added maximum power consumption configuration to configuration file
+        - USB Host: Added len parameter to USBH_HID_ParseReportDescriptor function
+        - USB Host: Renamed all get status functions from ..._GetDeviceStatus to ..._GetStatus
+        - USB Host: Improved EHCI structures positioning in RAM
+      </td>
+    </tr>
+    <tr>
+      <td>V6.7.0</td>
+      <td>
+        - Corrected USB Host Mass Storage class finit failing if no USB MSC device is connected
+        - Corrected USB Host language_id parameter for USBH_DeviceRequest_GetDescriptor() and USBH_DeviceRequest_SetDescriptor() functions changed from uint8_t to uint16_t
+        - Improved USB Host keyboard functionality (cleaned up translation to ASCII and routing of all non-ASCII translated keys to user)
+        - Corrected USB Device USBD_EndpointRead and USBD_EndpointWrite functions return usbDriverBusy if low level hardware is busy
+        - Corrected USB Device Custom Device handling for Device to Host request with wLength of 0, no Status OUT stage was generated
+        - Corrected USB Device Custom Class calling multiple interface callbacks for class request to single interface
+        - Corrected USB Device Custom Class not working if endpoints higher than 7 are configured
+        - Corrected USB Device Audio Class race condition (user function directly started USB transfer)
+        - Corrected USB Device CDC ACM Class race condition (user function directly started USB transfer)
+        - Corrected USB Device CDC ACM Class functionality for Maximum Communication Device Receive Buffer Size equal to two OUT endpoint maximum packet sizes
+        - Corrected USB Device Mass Storage Class hang in case of Bulk-Only Mass Storage Reset was issued during Write 10 operation
+        - Corrected USB Device HID to be thread safe
+        - Improved robustness of USB Device Core by adding retries to low-level driver accesses
+        - Added USB Device CDC ACM <-> UART Bridge template
+        - Added USB Device Audio Class callback USBD_ADCn_ReceivedSamples called when receive buffer is half-full
+        - Changed USB Device Audio Class USB sending starts when there is half of USB buffer of data pending
+        - Removed __packed specifier form structures for GCC compliance
+        - Removed anonymous unions and structures for GCC compliance
+      </td>
+    </tr>
+    <tr>
+      <td>V6.6.10</td>
+      <td>
+        - Corrected USB Device USBD_Configured function return value, it wrongly returned error status if instance did not exist instead of false value
+        - Improved USB Host CDC and PL2303 templates
+      </td>
+    </tr>
+    <tr>
+      <td>V6.6.9</td>
+      <td>
+        - Corrected USB Device Audio Class corner case of sending Isochronous IN data beyond intermediate buffer
+      </td>
+    </tr>
+    <tr>
+      <td>V6.6.8</td>
+      <td>
+        - Corrected USB Device core handling of simultaneous signals OUT ZLP and SETUP
+      </td>
+    </tr>
+    <tr>
+      <td>V6.6.7</td>
+      <td>
+        - Corrected USB Device CDC NCM bulk transfer termination of multiple maximum packet size with ZLP
+      </td>
+    </tr>
+    <tr>
+      <td>V6.6.6</td>
+      <td>
+        - renamed CoreThread to Core_Thread
+        - removed msc structures from rl_usb.h
+      </td>
+    </tr>
+    <tr>
+      <td>V6.6.5</td>
+      <td>
+        - corrected USB Device functionality so Device level custom handling is always enabled
+        - fixed capability to send ZLP on Control Endpoint 0 request
+        - fixed sending ZLP on Control Endpoint 0 request if sent data is multiple of maximum packet size and less then requested
+        - added template for USB Device device level Control Endpoint 0 request handling demonstrating serial number provided at runtime
+        - removed section about migration from RL-USB. If you need to migrate from previous versions, please install Middleware Pack 6.5.0.
+      </td>
+    </tr>
+    <tr>
+      <td>V6.6.4</td>
+      <td>
+        - corrected USB Host functionality not to do PING after there was error in transfer
+      </td>
+    </tr>
+    <tr>
+      <td>V6.6.3</td>
+      <td>
+        - corrected USB Host functionality if relocate memory pool is not used
+      </td>
+    </tr>
+    <tr>
+      <td>V6.6.2</td>
+      <td>
+        - added USB Host force disconnect of active device on USBH_Uninitialize
+      </td>
+    </tr>
+    <tr>
+      <td>V6.6.1</td>
+      <td>
+        - added support for double buffering for USB Device CDC Network Control Model (NCM) class
+        - changed behaviour of USBD_HID_GetReportTrigger to be non blocking and return usbDriverBusy
+          if previous request has not yet finished
+      </td>
+    </tr>
+    <tr>
+      <td>V6.6.0</td>
+      <td>
+        - added support for USB Device CDC Network Control Model (NCM) class
+      </td>
+    </tr>
+    <tr>
+      <td>V6.5.0</td>
+      <td>
+        - cleared USB Device device state after disconnect, so after 
+          disconnect USBD_Configured function will return false
+        - prevented race condition in USB Device CDC that could happen in
+          situation when any USB Device CDC user function was called and
+          while it was being executed an USB interrupt happened it could
+          corrupt information about current state of transmission and
+          reception thus leaving CDC communication in inoperable state
+        - improved USB Host port lock handling during enumeration
+      </td>
+    </tr>
+    <tr>
+      <td>V6.4.0</td>
+      <td>
+        - added USB Device device level endpoint 0 request handling
+        - added template for USB Device device level endpoint 0 request handling
+        - added example code into USB Device Custom Class template
+        - corrected USB Device Custom Class endpoint 0 device request handling
+        - corrected USB Host send/receive timeout functionality
+        - corrected USB Host CDC device disconnect handling
+      </td>
+    </tr>
+    <tr>
+      <td>V6.3.0</td>
+      <td>
+        - added template for implementing Audio Class Device (ADC)
+        - added template for implementing ADC Headphone
+        - corrected USB Device ADC meaning of samples to per channel basis
+        - corrected USB Host handling of stall response on GetMaxLUN
+        - corrected USB Device CDC DataReceived functionality
+        - corrected USB Device MSC SCSI command TestUnitReady response on no media
+        - improved USB Device MSC SCSI command RequestSense functionality
+        - improved USBD_User_MSC.c template for media ownership control, media connect/disconnect
+          and removed direct access to MSC data variables with additional callback functions
+        - added template for USB Device MSC media ownership control (.c and .h files)
+        - corrected USB Host behavior on connection of non boot subclass device
+        - corrected USB Device Audio Class interface string number
+        - corrected USB Device Audio Class control endpoint request status stage response
+        - added support for USB Device Mass Storage Inquiry - Vital Product Data Pages: 0 and 80h
+        - corrected USB Device Mass Storage class behaviour for read request of non-existing sector
+        - corrected USB Device behaviour for slower code execution
+        - added setting for overriding HID Report Descriptor to USBD_Config_HID.h file
+        - added template for implementing HID Mouse (shows how to override HID Report Descriptor)
+        - corrected USB Host OHCI and EHCI structure positioning in RAM
+        - corrected USB Host OHCI and EHCI larger transfer handling
+        - corrected USB Device USBD_HID_GetReportTrigger lock-up if called too often
+      </td>
+    </tr>
+    <tr>
+      <td>V6.2.0</td>
+      <td>
+        - reimplemented USB Device Audio Class support
+        - added USB Host CDC support
+        - added USART USB Host CDC Driver
+        - added USB Host Custom Class Template
+        - added USB Host Prolific PL2303 Custom Class Template
+        - added USART Prolific PL2303 Driver (USB to serial RS232 adapter)
+        - added USB Device Mass Storage CheckMedia callback
+        - changed USB Device CDC DataReceived and DataSent callback functions to callback style functions with instance in function name
+        - moved user accessible functions and structures from rl_usbd.h and rl_usbh.h file to main rl_usb.h file
+        - changed USB Host library functions for usage with custom class
+        - USB Host library adapted to use USB Host CMSIS Driver v2.01
+        - fixed problem with simultaneous same device types on different controllers
+        - corrected USB Device Mass Storage handling if media removed while write/read in progress
+      </td>
+    </tr>
+    <tr>
+      <td>V6.1.0</td>
+      <td>
+        - corrected USB Host OHCI driver interrupt endpoint handling
+      </td>
+    </tr>
+    <tr>
+      <td>V6.0.0</td>
+      <td> 
+        - adapted to CMSIS-Driver V2 interface
+        - added Custom Class support for USB Host
+      </td>
+    </tr>
+    <tr>
+      <td>V5.1.5</td>
+      <td>
+        - corrected USB Device Custom Class event handling, build issue and template
+        - corrected USB Host polling rate when Interrupt Endpoint requests "bInterval = 1"
+      </td>
+    </tr>
+     <tr>
+      <td>V5.1.4</td>
+      <td>
+        - updated user API
+        - added configuration options for OS resources
+        - added OHCI and EHCI drivers for USB Host
+        - added multiple packet read for USB Device
+        - corrected issue on USB Host when using addresses over 127
+      </td>
+    </tr>
+    <tr>
+      <td>V5.1</td>
+      <td>
+        - updated USB Device configuration 
+        - added Custom Class support for USB Device
+      </td>
+    </tr>
+    <tr>
+      <td>V5.0</td>
+      <td>
+        - Initial release for MDK Version 5
+        - Explains modifications compared to previous releases
+      </td>
+    </tr>
+ </table>
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Device USB Device
+
+This chapter describes the software structure of the USB Device Component and its use for creating applications.
+The USB Device Component simplifies the software development of microcontroller systems that interface to a 
+USB Host. 
+
+<b>Attributes of the USB Device Component:</b>
+
+  - Supports \ref USB_Transfer_Rates "Low-Speed", \ref USB_Transfer_Rates "Full-Speed" and \ref USB_Transfer_Rates "High-Speed".
+  - Supports standard \ref USB_Classes "USB Classes" with multiple device class instances.
+  - Supports composite devices. Combine USB Device Classes to create a \ref dev_comp_tutorial "composite device".
+  - Supports multiple USB Devices on a single microcontroller with more than one USB Device controller.
+  - Provides \urlout{uv4_ca_sourcefiles} for implementing the USB Device functionality.
+  - Provides an user-friendly configuration file for each device class to generate \ref USB_Descriptors.
+  - Flexibly assigns \ref USB_Endpoints "USB Endpoints" to the microcontroller USB Device peripheral.
+  - Provides \subpage USB_Device_Tutorial to show the use of the software stack.
+  
+For interfacing to an USB Host Computer, additional software may be required. Page \subpage usb_sw_utilities shows an example
+for such a software running on Windows PCs.
+
+\section usbd_rte_components RTE Components
+
+The picture shows the relationship between RTE Components and the microcontroller's USB Device peripheral (USB Controller).
+RTE Components provide configuration files and user code templates.
+<b>Configuration files</b> configure the RTE Components, hardware interfaces, memory resources and USB Device driver parameters. They
+can have an impact on multiple RTE Components (for example RTE_Device.h configures the USB Controller 0 \e and Driver_USBD0).
+<b>User code templates</b> provide the skeleton for implementing the USB Device functionality.
+
+The grey area around the RTE Components USB Device 1 and Driver_USBD1, as well as USB Controller 1 means that these components are optional
+and can only be used if a microcontroller device has multiple USB controllers present. If this is the case, an USB Device
+Class can be connected to any of the USB Device Instances.
+
+\image html "usb_device_blocks_config_files.png" "USB Device Structure"
+
+USB Device peripherals can have one or more of the following USB Device Classes:
+ - \ref ADC "Audio Device Class (ADC)" is used to exchange streaming audio data between the USB Host and the USB Device.
+ - \ref CDC "Communication Device Class (CDC)" provides virtual communication port functionality to the USB Host.
+ - \ref HID "Human Interface Device (HID)" is typically used to implement a keyboard, joystick, or mouse. The
+   HID Class can be also used for low bandwidth data exchange.
+ - \ref MSC "Mass Storage Class (MSC)" is used to connect various storage devices to an USB Host. Mass Storage Class media can be an SD card,
+   internal or external Flash memory, or RAM.
+ - \ref CustomClass "Custom Class" is used to implement either a standard or a vendor specific USB Device Class.
+   
+Generic information about USB Device Classes can be found on the USB-IF's
+<a class="el" href="https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50" target="_blank">Approved Class Specification Documents</a>
+page.
+
+Multiple RTE Component instances can interface with more than one USB Controller or can implement multiple
+USB Device Classes. RTE Component instances are numbered. The number is appended to the RTE Component name, related configuration files,
+and user code templates. Each RTE Component has a separate configuration file. For example, for HID 0 and HID 1
+the configuration files have the name \b USB_Config_HID_0.h and \b USB_Config_HID_1.h.
+\note The default configuration settings are pre-configured for one instance of an USB Device or USB Device Class
+in a non-composite device peripheral. For other combinations the settings \em need to be edited to ensure proper
+operation. The \ref dev_comp_tutorial example shows how to implement and configure a composite devices 
+
+\section Creation_Steps Create an Application
+
+The steps to create a microcontroller application that uses USB communication with an USB Device controller are:
+ -# Select \ref RTE_Software_Component_Selection "RTE Components" along with the USB Device Classes that are
+    required for your application.
+ -# \ref USB_Driver_Configuration "Enable and configure the USB Device Driver".
+ -# Configure the \ref USB_Device_Configuration "USB Device" that connects the USB Middleware to the microcontroller USB peripheral.
+ -# Configure \ref USB_Device_Class_Configuration for each selected USB Device Class and instance.
+ -# Configure the \ref usbd_system_resources "System Resources" according to the USB Device component's
+    \ref usbd_res_req "Resource Requirements".
+ -# Implement the \ref User_Code_Implementation "Application Code" using code templates that are provided for the USB Device
+    Classes.
+ -# If required by your application, you can \ref Overriding_Descriptors "change the default USB Device descriptors".
+ -# \ref usbd_debugging "Debug" you application using the built-in mechanisms of the USB Component.
+
+For interfacing to an USB Host computer, standard USB Device Classes drivers can be used. This may require additional software
+development for the USB Host application. An exemplary application for interfacing to an USB HID Device is explained
+\ref hid_client_app "here".
+  
+\subsection RTE_Software_Component_Selection RTE Component Selection
+
+Only a few steps are necessary to complete the RTE Component selection: 
+ 
+ -# From the USB Component:
+   - Select <b>USB:CORE</b> that provides the basic functionality required for USB communication.
+   - Set <b>USB:Device</b> to '1'. This creates one USB Device for communication with the USB Host.
+   - Select the desired USB Classes (HID, MSC, CDC, ADC, or Custom Class).  For example, set <b>USB:Device:HID</b> to '1' to create a single HID Class Device. If
+     you select more than one class or multiple instances of the same class on the same device, you will create a <b>Composite USB Device</b>.
+ -# From the Drivers Component:
+   - Select an appropriate USB Device driver suitable for your application.
+ -# From the Device Component:
+   - Additional device specific drivers may be required according to the validation output.
+ -# From the CMSIS Component:
+   - Select the <b>CMSIS:CORE</b> to provide the core interface to the processor.
+   - Select a suitable <b>CMSIS:RTOS</b> or <b>CMSIS:RTOS2</b> that is a required for the application.
+
+
+\image html "rteusbx.png" "RTE Component Selection"
+
+\note 
+ - Most microcontrollers have only one USB Controller implemented in hardware and only one driver \b Driver_USBD0
+   is available. In this case, only one \b USB:Device can be selected to generate <b>USB Device 0</b>.
+ - On a single <b>USB Device 0</b> an USB Composite Device may be implemented that combines multiple USB Device Classes.
+ - When a microcontroller implements multiple USB Controllers an additional <b>USB Device 1</b> can be generated by
+   setting \b USB:Device to '2'.
+
+\subsection USB_Driver_Configuration USB Driver and Controller 
+
+The USB Device Driver and the USB Controller of the microcontroller need to be correctly configured. In particular this means:
+
+ - The USB Device Driver selected under the Drivers Component is typically configured with the \b RTE_Device.h configuration file.
+   While this file provides multiple options, it is typically sufficient to enable the USB Device peripheral related to this driver.
+   Some microcontrollers may require settings that are related to a physical layer interface \b (PHY). The picture below shows two possible
+   variants. Either, the USB PHY is integrated into the controller, or an external chip is used for providing the USB signal lines:
+   
+   \image html "usb_phy.png" USB Controller and PHY Setups
+   
+ - The USB Controller of the microcontroller typically needs specific clock settings. Consult the user's guide of the microcontroller
+   to understand the requirements. Alternatively, you may copy the setup of an USB Device example (in case your hardware setup is
+   similar to that of the chosen evaluation boards).
+
+\subsection USB_Device_Configuration USB Device Configuration
+
+The configuration file <b>USBD_Config_<i>n</i>.c</b> is listed in the Project Windows under the Component USB and 
+contains a number of important settings for the specific USB Device.
+- The \b Driver_USBD# number is set according to the selected USB Controller. This specifies which driver will be used for
+  the USB Device determining the pin-out as well. For single USB Device Controllers it will be '0'.
+- \b High-Speed may be selected if supported by the USB Controller.
+- The \b Vendor \b ID (VID) needs to be set to a private VID. The default Vendor ID is owned by Keil and must not be used
+  for actual products. Please visit <a class="el" href="https://www.usb.org/getting-vendor-id" target="_blank">USB-IF</a>
+  for more information on how to apply for a valid Vendor ID.
+- Every device variant needs an unique \b Product \b ID. Together with the \b VID, it is used by the Host computer's operating system
+  to find a driver for your device.
+- The <b>Device Release Number</b> will be shown in Windows and Linux systems as “Firmware Revision”. The number will
+  be interpreted as “binary coded decimal”, meaning that 0x0101 will be shown as firmware revision 1.01.
+- The \b Manufacturer, \b Product and the \b Serial \b Number \b String can be set to identify the USB Device on the USB Host.
+
+Refer to \ref usbd_coreFunctions_conf "USB Core Configuration" for more configuration options of the USB Device.
+
+\note You can configure the USB Device at run-time using the functions from the
+\ref usbd_coreFunctions_api "USB Device Core API". The section \ref usbd_coreFunctions "USB Device Core" explains the
+details. Implement the run-time specific behavior with the user code template
+\ref USBD_User_Device_UCT "USBD_User_Device_n.c".
+
+
+\subsection USB_Device_Class_Configuration USB Device Class Configuration and USB Endpoint Settings
+
+The USB Device Class Parameters and Endpoint Settings are configured in separate files for each USB Device Class and separately
+for each instance. The configuration files contain Device Class specific Endpoint Settings Numbers and are listed in the
+Project Window under the Component USB.
+
+ - <b>USBD_Config_ADC_<i>n</i>.h</b> configuration for Audio Device Class (ADC).
+ - <b>USBD_Config_CDC_<i>n</i>.h</b> configuration for Communication Device Class (CDC).
+ - <b>USBD_Config_HID_<i>n</i>.h</b> configuration for Human Interface Device Class (HID).
+ - <b>USBD_Config_MSC_<i>n</i>.h</b> configuration for Mass Storage Device Class (MSC).
+ - <b>USBD_Config_CustomClass_<i>n</i>.h</b> configuration for Custom Class.
+ 
+Each \ref USB_Endpoints "USB Endpoint" can only be used once on the same USB Device. It has to be made sure that the different USB Device Classes 
+or multiple instances of the same USB Device Class use different Endpoints. The default configuration supports applications that use a single USB Device Class.
+The remaining parameters are specific settings that configure parameters for USB communication speed and the USB Device Class.
+
+\subsection usbd_system_resources System Resource Configuration
+
+For proper operation, the USB Device Component requires some system configuration settings. The requirements are:
+- Additional \b stack size of <b>512 bytes</b>. This can be configured in the device's \b startup_device.s file (\c Stack_Size).
+- The USB Device Component uses CMSIS-RTOS threads.
+  In case <b>RTX v5</b> is used <b>no changes to RTX settings</b> are necessary as all resources are allocated statically.
+  In case <b>RTX v4</b> is used you need to change following settings in \urlout{RTX-Conf-CM4} file: 
+  - Increase the <b>Number of concurrent running user threads</b> by number of threads required by USB Device
+  - Increase the <b>Number of threads with user-provided stack size</b> by number of threads required by USB Device
+  - Increase <b>Total stack size [bytes] for threads with user-provided stack size</b> by size of threads required by USB Device
+  - Enable <b>User Timers</b> if HID class is used
+
+For more information, check the USB Device component's \ref usbd_res_req "Resource Requirements" section.
+
+  
+\subsection User_Code_Implementation User Code Implementation
+\urlout{uv4_ca_sourcefiles} files provide function templates used to implement USB Device Class functionality. The available functions are
+explained in the \ref usbd_DevClassFunctions "Reference" section of the USB Component. These routines
+can be adapted to the needs of the microcontroller application, in case different then default functionality is needed. 
+
+The following templates are available for the USB Device component:
+|Template Name                                                             | Purpose|
+|--------------------------------------------------------------------------|--------|
+|\ref USBD_User_ADC_UCT "USBD_User_ADC_n.c"                                | Required functions to create an ADC device.|
+|\ref USBD_User_CDC_ACM_UCT "USBD_User_CDC_ACM_n.c"                        | Required functions to create a CDC (ACM) device.|
+|\ref USBD_User_CDC_ACM_RNDIS_VETH_UCT "USBD_User_CDC_ACM_RNDIS_VETH_n.c"  | Required functions to create a CDC (ACM) RNDIS virtual Ethernet device.|
+|\ref USBD_User_CDC_ACM_RNDIS_ETH_UCT "USBD_User_CDC_ACM_RNDIS_ETH_n.c"    | Required functions to create a CDC (ACM) RNDIS and Ethernet bridge device (Ethernet-over-USB).|
+|\ref USBD_User_CDC_ACM_UART_UCT "USBD_User_CDC_ACM_UART_n.c"              | Required functions to create a CDC (ACM) device demonstrating a USB <-> UART bridge.|
+|\ref USBD_User_CDC_NCM_UCT "USBD_User_CDC_NCM_n.c"                        | Required functions to create a CDC (NCM) device.|
+|\ref USBD_User_CDC_NCM_ETH_UCT "USBD_User_CDC_NCM_ETH_n.c"                | Required functions to create a CDC (NCM) device (Ethernet-over-USB).|
+|\ref USBD_User_Cust_UCT "USBD_User_CustomClass_n.c"                       | Required functions to create a device supporting a custom USB Device class.|
+|\ref USBD_User_Device_UCT "USBD_User_Device_n.c"                          | Required functions for run-time configuration of the USB Device.|
+|\ref USBD_User_Device_SerNum_UCT "USBD_User_SerNum_n.c"                   | Example for run-time configuration: Changing the serial number of the USB Device.|
+|\ref USBD_User_HID_UCT "USBD_User_HID_n.c"                                | Required functions to create a HID device.|
+|\ref USBD_User_HID_Mouse_UCT "USBD_User_HID_Mouse_n.c"                    | Implements functions to create a USB HID device acting as a mouse pointer input device.|
+|\ref USBD_User_MSC_UCT "USBD_User_MSC_n.c"                                | Required functions to create a MSC device.|
+|\ref USBD_MSC_UCT "USBD_MSC_n.c"                                          | Shows how to get access to storage media either from the application/File System or from the USB host.|
+
+
+\subsection Overriding_Descriptors Changing Default USB Descriptors
+
+If there are different requirements regarding the \ref USB_Descriptors than the USB Component allows, a user can change any
+or all of the default USB descriptors. Default descriptors are the ones that library creates based on
+\ref USB_Device_Configuration "Device" and \ref USB_Device_Class_Configuration "Classes" configuration file settings and are
+located in code memory.
+
+The descriptors can be changed in two of the following ways:
+
+- <b>Static change</b>
+
+Static change of descriptors can be done to replace default descriptors if they will not change at runtime. The descriptors
+can be easily overridden by user code by creating descriptors with the same name.
+
+| USB Device Descriptor                                           | Purpose 
+|-----------------------------------------------------------------|------------------------------------------------------
+| \c const \c uint8_t \c usbdn_ep0_descriptor[]                   | Control Endpoint 0 descriptor
+| \c const \c uint8_t \c usbdn_device_descriptor[]                | USB Device descriptor
+| \c const \c uint8_t \c usbdn_string_descriptor[]                | String descriptors
+| \c const \c uint8_t \c usbdn_device_qualifier_fs[]              | Device qualifier for low/full-speed
+| \c const \c uint8_t \c usbdn_device_qualifier_hs[]              | Device qualifier for high-speed
+| \c const \c uint8_t \c usbdn_config_descriptor_fs[]             | Configuration descriptor for low/full-speed
+| \c const \c uint8_t \c usbdn_config_descriptor_hs[]             | Configuration descriptor for high-speed
+| \c const \c uint8_t \c usbdn_other_speed_config_descriptor_fs[] | Other speed configuration descriptor for low/full-speed
+| \c const \c uint8_t \c usbdn_other_speed_config_descriptor_hs[] | Other speed configuration descriptor for high-speed
+
+\note
+- \c n in \c usbdn_ represents the USB Device instance. So for the USB Device 0 instance, you have to use \c usbd0_...
+
+<b>Code Example</b>
+\code
+// Statically change USB Device 0 Device Descriptor
+const uint8_t usbd0_device_descriptor[] = { 
+  18U,         // bLength = 7 bytes
+  1U,          // bDescriptorType = 1 = Device Descriptor Type
+  0U,2U,       // bcdUSB = 2.00 (little-endian)
+  0U,          // bDeviceClass = 0 = Defined in interface
+  0U,          // bDeviceSubClass = 0 = Defined in interface
+  0U,          // bDeviceProtocol = 0 = Defined in interface
+  64U,         // bMaxPacketSize = 64
+  0x51U,0xC2U, // idVendor = 0xC251 (little-endian)
+  0x34U,0x12U, // idProduct = 0x1234 (little-endian)
+  0U,1U,       // bcdDevice = 1.00 (little-endian)
+  0U,          // iManufacturer = 0 = No Manufacturer string
+  0U,          // iProduct = 0 = No Product string
+  0U,          // iSerialNumber = 0 = No Serial Number string
+  1U           // bNumConfigurations = 1 = 1 configuration
+};
+\endcode
+
+- <b>Dynamic change</b>
+
+Dynamic change of descriptors can be done to change descriptors at runtime. The \c struct \b usbd_desc_t contains the
+required information. It is stored in RAM and contains pointers to the USB descriptors. If you change the pointers in the
+structure to the point to the externally created ones, you can change the descriptors at runtime.
+
+The actual variable names of the structures holding descriptor pointers are \c usbdn_desc (n indicating the USB Device instance number).
+The following code example shows how to override the device descriptor for the <b>USB Device 0</b> (\c usbd0_desc):
+
+<b>Code Example</b>
+\code
+// Dynamically change USB Device 0 Device Descriptor
+const uint8_t dev0_device_descriptor[] = { 
+  18U,         // bLength = 7 bytes
+  1U,          // bDescriptorType = 1 = Device Descriptor Type
+  0U,2U,       // bcdUSB = 2.00 (little-endian)
+  0U,          // bDeviceClass = 0 = Defined in interface
+  0U,          // bDeviceSubClass = 0 = Defined in interface
+  0U,          // bDeviceProtocol = 0 = Defined in interface
+  64U,         // bMaxPacketSize = 64
+  0x51U,0xC2U, // idVendor = 0xC251 (little-endian)
+  0x34U,0x12U, // idProduct = 0x1234 (little-endian)
+  0U,1U,       // bcdDevice = 1.00 (little-endian)
+  0U,          // iManufacturer = 0 = No Manufacturer string
+  0U,          // iProduct = 0 = No Product string
+  0U,          // iSerialNumber = 0 = No Serial Number string
+  1U           // bNumConfigurations = 1 = 1 configuration
+};
+ 
+ 
+extern usbd_desc_t usbd0_desc;
+ 
+int main (void) {
+ 
+...
+usbd0_desc.device_descriptor = (uint8_t *)dev0_device_descriptor;
+...
+ 
+}
+\endcode
+
+\note For changing just serial number string use function \ref USBD_SetSerialNumber!
+
+\note For non high-speed capable device following descriptors are not important:
+- \ref USB_Device_Qualifier_Descriptor for low/full-speed
+- \ref USB_Device_Qualifier_Descriptor for high-speed
+- \ref USB_Configuration_Descriptor for low/full-speed
+- \ref USB_Configuration_Descriptor for high-speed
+- Other speed \ref USB_Configuration_Descriptor for low/full-speed
+- Other speed \ref USB_Configuration_Descriptor high-speed
+
+\subsection usbd_debugging Debugging
+
+USB Device Component is distributed in library form and doesn't allow direct code debug.
+However it can be easily configured to generate debug events and provide dynamic visibility to the component operation.
+
+Following variants can be selected for the <b>USB:CORE</b> component in the <b>Manage Run-Time Environment</b> window:
+ - <b>Debug</b>: this variant supports event annotations for the \urlout{Event-Recorder-About}
+and makes it very easy to analyze the internal operation of the USB Device Component during application debug.
+\ref usbDevEvrSupport "Event Recorder Support" below explains how to configure and use this variant.
+ - <b>Release</b>: this variant does not include additional debugging code. Use this variant when deploying the application.
+
+The figure below shows selection of the <b>Debug</b> variant.
+\image html "usbd_debug_variant.png"
+
+The \ref usbd_evr "USB Device:Debug Events" describes the events implemented in the USB Device Component.
+
+\anchor usbDevEvrSupport
+Event Recorder Support
+----------------------
+\urlout{Event-Recorder-About} is a powerful tool that provides visibility to the dynamic execution of the program.
+
+The USB Device Component generates \ref usbd_evr "a broad set of Debug Events" for the Event Recorder and implements required infrastructure to interface with it.
+
+To use the Event Recorder it is required to create an image with event generation support. The necessary steps are:
+  1. \urlout{Debug-Variant-Select}: in the RTE management dialog select the \b Debug variant for the <b>USB:CORE</b> software component. 
+  2. \urlout{Event-Recorder-Enable}: in the RTE management dialog enable the software component <b>CMSIS-View:Event Recorder</b>.
+  3. Ensure that Event Recorder is initialized preferably by \urlout{RTX5-Event-Recorder-Config} if CMSIS-RTOS2 RTX v5 is used, 
+     or alternatively by calling the function \urlout{Event-Recorder-Initialize-Func} in the application code. 
+  4. \ref usbDevEvrConfig "Event Recorder Configuration": if necessary, adjust default Event Recorder configuration.
+  5. Build the application code, download it to the target hardware and start debug session.
+
+Now, when the USB Device generates event information, it can be viewed in the \urlout{uv4-Event-Recorder}.
+
+\anchor usbDevEvrConfig
+Event Recorder Configuration
+----------------------
+This section describes the configuration settings for the Event Recorder. The usage requires the debug variant of the
+<b>USB:CORE</b> software component; refer to \ref usbDevEvrSupport "Event Recorder Support" for more information.
+
+<b>USB Event Generation Configuration</b>
+
+Selecting the <b>USB:CORE</b> debug variant will add the file \c USB_Debug.c to your project. Use this file to set the event
+generation configuration for USB core, drivers, and device classes separately. The file is available for USB Device and Host components.
+
+\image html USBD_USB_Debug_c.png "USB_Debug.c file for event generation configuration"
+
+The following settings are available for event generation configuration of each module:
+- \b Off means no events will be generated by the module
+- \b Errors means only error events will be generated by the module
+- <b>Errors + API</b> means error and API call events will be generated by the module
+- \b All means all available events will be generated by the module. Besides error and API call events, this contains operation and detailed events.
+
+<b>Event IDs</b>
+
+The USB Device component uses the following event IDs:
+| Component   | Event ID |
+|-------------|----------|
+| USBD_Core   | 0xA0     |
+| USBD_Driver | 0xA1     |
+| USBD_CC     | 0xA2     |
+| USBD_ADC    | 0xA3     |
+| USBD_CDC    | 0xA4     |
+| USBD_HID    | 0xA5     |
+| USBD_MSC    | 0xA6     |
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Host USB Host (MDK-Professional only)
+
+This chapter describes the software structure of the USB Host Component and explains its use for creating a USB Host
+application. This software component is available to users of MDK-Professional only.
+
+The USB Host Component simplifies software development of microcontroller systems that allow to connect USB Devices.
+The attributes of the USB Host Component are:
+
+  - Complies with the USB 2.0 specification.
+  - Support for \ref HID "HID", \ref MSC "MSC", \ref CDC "CDC", and \ref CustomClass "Custom" USB Device Classes to be
+    connected to the USB Host.
+  - Support for \ref USB_Control_Transfers "control", \ref USB_Interrupt_Transfers "interrupt" and \ref USB_Bulk_Transfers
+    "bulk" transfer types.
+
+\section usbh_rte_components RTE Components
+
+The following picture shows the relationships of the RTE Components with the microcontroller's USB Host peripheral (USB
+Controller). RTE Components provide configuration files and user code templates. <b>Configuration files</b> configure the RTE
+Components, hardware interfaces, memory resources and USB Host parameters. <b>User code templates</b> provide the skeleton
+for implementing support for different USB Device classes.
+
+\image html "usb_host_blocks_config_files.png" USB Host Structure
+
+\section Create_a_USB_Host_Application Create an Application
+
+The steps to create a microcontroller application that functions as an USB Host are:
+ -# Select \ref RTE_Software_Component_Selection_USBH "RTE Components" that are required for your application.
+ -# \ref USB_Driver_Configuration_USBH "Enable and configure the USB Host Driver".
+ -# Configure the \ref USB_Host_Configuration_USBH "USB Host" that connects the USB Middleware to the microcontroller USB
+    peripheral.
+ -# Configure the \ref usbh_system_resources "System Resources" according to the USB Host component's
+    \ref usbh_res_req "Resource Requirements".
+ -# Configure the parameters of the attached \ref USB_Device_Class_Configuration_USBH "USB Devices".
+ -# Implement the \ref USBH_User_Code_Implementation "Application Code" using code templates that are provided to support
+    various USB Device Classes.
+ -# \ref usbh_debugging "Debug" you application using the built-in mechanisms of the USB Component.
+ 
+
+\subsection RTE_Software_Component_Selection_USBH RTE Component Selection
+
+The RTE Component selection is done in a few steps: 
+ 
+ -# From the USB Component:
+   - Select <b>USB:CORE</b> that provides the basic functionality required for USB communication.
+   - Set <b>USB:Host</b> to '1'. This creates one USB Host for communication with attached USB Devices.
+   - Select the desired support for USB Classes (HID/MSC/CDC/Custom Class). For example, select <b>USB:Host:HID</b>
+     to support HID Class Devices only.
+ -# From the Drivers Component:
+   - Select an appropriate USB Host driver suitable for your application.
+ -# From the Device Component:
+   - Additional device specific drivers may be required according to the validation output.
+ -# From the CMSIS Component:
+   - Select the <b>CMSIS:CORE</b> to provide the core interface to the processor.
+   - Select a suitable <b>CMSIS:RTOS</b> or <b>CMSIS:RTOS2</b> that is a required for the application.
+
+\image html "USBH_RTE.png" RTE Component Selection
+
+\subsection USB_Driver_Configuration_USBH USB Driver and Controller
+
+The USB Host Driver and the USB Controller of the microcontroller need to be correctly configured. In particular this means:
+
+ - The USB Host Driver selected under the Drivers Component is typically configured with the \b RTE_Device.h configuration file.
+   While this file provides multiple options, it is typically sufficient to enable the USB Host peripheral related to this driver.
+   Some microcontrollers may require settings that related to a physical layer interface \b (PHY), the USB \b VBUS power and
+   \b Overcurrent protection.
+ - The USB Controller of the microcontroller needs typically specific clock settings. Consult the user's guide of the microcontroller
+   to understand the requirements. Alternatively you may copy the setup of an USB Host example that is provided for various 
+   evaluation boards.
+
+
+\subsection USB_Host_Configuration_USBH USB Host Configuration
+
+The <b>USBH_Config_<i>n</i>.c</b> file contains additional settings for the specific USB Host:
+- The \b Driver \b Number is set according to the selected USB Controller. For single USB Device Controllers it will be '0'.
+- Some microcontrollers can make use of different hardware \b Controller \b Interfaces. Consult the user's guide of the selected
+  microcontroller to choose the correct setting.
+
+Refer to \ref usbh_coreFunctions_conf for a detailed list of all available settings.
+
+
+\subsection usbh_system_resources System Resource Configuration
+
+For proper operation, the USB Host Component requires some system configuration settings. The requirements are:
+- Additional \b stack size of <b>512 bytes</b>. This can be configured in the device's \b startup_device.s file (\c Stack_Size).
+- The USB Device Component uses CMSIS-RTOS threads.
+  In case <b>RTX v5</b> is used <b>no changes to RTX settings</b> are necessary as all resources are allocated statically.
+  In case <b>RTX v4</b> is used you need to change following settings in \urlout{RTX-Conf-CM4} file: 
+  - Increase the <b>Number of concurrent running user threads</b> by number of threads required by USB Host
+  - Increase the <b>Number of threads with user-provided stack size</b> by number of threads required by USB Host
+  - Increase <b>Total stack size [bytes] for threads with user-provided stack size</b> by size of threads required by USB Host
+  - Enable <b>User Timers</b>
+
+For more information, check the USB Host component's \ref usbh_res_req "Resource Requirements" section.
+  
+  
+\subsection USB_Device_Class_Configuration_USBH Configuration of Attachable USB Devices
+In the \b USBH_Config_HID.h, \b USBH_Config_MSC.h, \b USBH_Config_CDC.h, or \b USBH_Config_CustomClass.h you can specify the number of concurrent USB Devices
+that the USB Host will support. This has an impact on the amount of memory that will be reserved in your application for the
+attachment of USB Devices. The \subpage USB_Host_Tutorial shows how to configure an USB Host to interact with different HID, MSC or
+CDC peripheral devices.
+
+
+\subsection USBH_User_Code_Implementation User Code Implementation
+\urlout{uv4_ca_sourcefiles} files provide function templates to support various USB Device Classes on the USB Host. The available functions are
+explained in the \ref usbh_DevClassFunctions "Reference" section of the USB Host Component. These routines
+can be adapted to the needs of the microcontroller application, in case different then default functionality is needed. 
+
+The following templates are available for the USB Host component:
+|Template Name           | Purpose|
+|------------------------|--------|
+|USBH_MSC.c              | Required functions to support MSC devices. The template can be found \ref USBH_MSC_UCT "here".|
+|USBH_PL2303.c           | Required functions to support the <a class=el href="https://www.prolific.com.tw/US/index.aspx" target="_blank">Prolific PL2303</a> USB to serial RS232 adapter. The template can be found \ref USBH_PL2303_UCT "here".|
+|USBH_User_CustomClass.c | Required functions to support any USB Device class. The template can be found \ref USBH_Cust_UCT "here".|
+
+\subsection usbh_debugging Debugging
+
+USB Host Component is distributed in library form and doesn't allow its direct code debug.
+However it can be easily configured to generate debug events and provide dynamic visibility to the component operation.
+
+Following variants can be selected for the <b>USB:CORE</b> software component in the <b>Manage Run-Time Environment</b> window:
+ - <b>Debug</b>: this variant supports event annotations for the \urlout{Event-Recorder-About}
+and makes it very easy to analyze the internal operation of the USB Host Component during application debug.
+\ref usbHostEvrSupport "Event Recorder Support" below explains how to configure and use this variant.
+ - <b>Release</b>: this variant does not include additional debugging code. Use this variant when deploying the application.
+
+The figure below shows selection of the <b>Debug</b> variant.
+\image html "usbh_debug_variant.png"
+
+The \ref usbh_evr "USB Host:Debug Events" describes the events implemented in the USB Device Component.
+
+\anchor usbHostEvrSupport
+Event Recorder Support
+----------------------
+\urlout{Event-Recorder-About} is a powerful tool that provides visibility to the dynamic execution of the program.
+
+The USB Host Component generates \ref usbh_evr "a broad set of Debug Events" for the Event Recorder and implements required infrastructure to interface with it.
+
+To use the Event Recorder it is required to create an image with event generation support. The necessary steps are:
+  1. \urlout{Debug-Variant-Select}: in the RTE management dialog select the \b Debug variant for the <b>USB:CORE</b> software component. 
+  2. \urlout{Event-Recorder-Enable}: in the RTE management dialog enable the software component <b>CMSIS-View:Event Recorder</b>.
+  3. Ensure that Event Recorder is initialized preferably by \urlout{RTX5-Event-Recorder-Config} if CMSIS-RTOS2 RTX v5 is used, 
+     or alternatively by calling the function \urlout{Event-Recorder-Initialize-Func} in the application code. 
+  4. \ref usbHostEvrConfig "Event Recorder Configuration": if necessary, adjust default Event Recorder configuration.
+  5. Build the application code, download it to the target hardware and start debug session.
+
+Now, when the USB Host generates event information, it can be viewed in the \urlout{uv4-Event-Recorder}.
+
+\anchor usbHostEvrConfig
+Event Recorder Configuration
+----------------------
+This section describes the configuration settings for the Event Recorder. The usage requires the debug variant of the
+<b>USB:CORE</b> software component; refer to \ref usbHostEvrSupport "Event Recorder Support" for more information.
+
+<b>USB Event Generation Configuration</b>
+
+Selecting the <b>USB:CORE</b> debug variant will add the file \c USB_Debug.c to your project. Use this file to set the event
+generation configuration for USB core, drivers, and device classes separately. The file is available for USB Device and Host components.
+
+\image html USBH_USB_Debug_c.png "USB_Debug.c file for event generation configuration"
+
+The following settings are available for event generation configuration of each module:
+- \b Off means no events will be generated by the module
+- \b Errors means only error events will be generated by the module
+- <b>Errors + API</b> means error and API call events will be generated by the module
+- \b All means all available events will be generated by the module. Besides error and API call events, this contains operation and detailed events.
+
+<b>Event IDs</b>
+
+The USB Host component uses the following event IDs:
+| Component   | Event ID |
+|-------------|----------|
+| USBH_Core   | 0xB0     |
+| USBH_Driver | 0xB1     |
+| USBH_CC     | 0xB2     |
+| USBH_CDC    | 0xB3     |
+| USBH_HID    | 0xB4     |
+| USBH_MSC    | 0xB5     |
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Endpoints USB Communication
+
+USB is a polled bus, where the USB Host initiates all data exchanges. The data travels to or from \ref endpoints in an USB Device.
+The \b client in the USB Host stores data in buffers, but does not have endpoints.
+The USB Host and the peripheral USB Device have distinct layers, as shown in the picture below. The connections between the
+layers are \b logical Host-Device interfaces between each horizontal layer. Between the logical connections data is transferred
+using \ref pipe_types. 
+
+\image html "usb_endpoints.png" "Logical Connections Between USB Host Clients and USB Device Endpoints"
+
+\section pipe_types Pipes
+
+Basically, two types of \b pipes exist:
+- <b>Message pipes</b> have a defined USB format and are host controlled. Message pipes allow data to flow in both directions and
+  support \ref USB_Control_Transfers only.
+- <b>Stream pipes</b> have no defined USB format and can either be controlled by the host or by the device. The data stream has
+  a predefined direction, either \b IN or \b OUT. Stream pipes support \ref USB_Interrupt_Transfers, \ref USB_Isochronous_Transfers, 
+  and \ref USB_Bulk_Transfers.
+
+Most pipes come into existence when an USB Device has been connected to the USB Bus and configured by the USB Host.
+A pipe originates from a \b data \b buffer within the host \b client and terminates inside the USB Device at an \ref endpoints
+"Endpoint".
+
+\section transfers Transfers
+
+<b>Transfers</b> (data flow types) can consist of one or more transactions. A pipe supports only one of the following transfer types:
+- \subpage USB_Control_Transfers are typically used to setup an USB device. They always use IN/OUT Endpoint 0.
+- \subpage USB_Interrupt_Transfers can be used where data is sent regularly, for example for status updates.
+- \subpage USB_Isochronous_Transfers transmit real-time data such as audio and video. They have a guaranteed, fixed bandwidth, but no error detection.
+- \subpage USB_Bulk_Transfers can be used to send data where timing is not important, for example to a printer.
+
+\section endpoints Endpoints
+
+\b Endpoints can be described as data sources or sinks and exists in USB Devices only. The data stored at an endpoint may either be
+received from or waiting for being sent to the USB Host. An endpoint can be configured to support four \ref transfers "transfer types"
+defined in the USB specification (\ref USB_Control_Transfers, \ref USB_Interrupt_Transfers, \ref USB_Isochronous_Transfers, and
+\ref USB_Bulk_Transfers). Within the limits of the hardware, endpoints can be configured using the USB Middleware
+(e.g. limit an endpoint to a certain transfer type).
+\n An endpoint acts as a kind of buffer. A USB Host's client may send data to Endpoint 1 for example. Coming from the USB Host,
+the data will be sent to the <b>OUT Endpoint 1</b>. The program on the microcontroller will then read the data as soon as it
+is ready to do so. Returning data has to be written to the <b>IN Endpoint 1</b>, as the program cannot access the USB bus freely
+(the USB bus being controlled by the USB Host). The data in IN Endpoint 1 stays there until the host sends an IN packet to Endpoint 1
+requesting the data.
+\n 
+ 
+These rules apply to all microcontroller devices:
+    - A device can have up to \b 16 \b OUT and \b 16 \b IN endpoints. 
+    - Each endpoint can have only \b one \b transfer \b direction. 
+    - \b Endpoint \b 0 is used for control transfers only and can not be assigned to any other function.
+    - <b>OUT</b> always refers to the direction pointing from the host to the device. 
+    - <b>IN</b> always refers to the direction pointing towards the host.
+
+\note The total number of endpoints and the capability of each endpoint is defined by the underlying hardware. Please consult
+the hardware reference manual of your microcontroller.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Concepts USB Concepts
+
+The <b>Universal Serial Bus</b> (USB) is a serial interface designed to be plug-and-play making it easy to connect
+peripherals to a host. The following pages are intended to help the designer to get a better understanding about the USB
+protocol in general. They are divided into different pages as follows:
+- \subpage USB_Network shows the topology of the USB network.
+- \subpage USB_Transfer_Rates gives a quick glance at the theoretical maximum data rates that are supported by USB.
+- \subpage USB_Endpoints shows how data is exchanged on the USB bus.
+- \subpage USB_Protocol page gives an overview over the protocol and the basic communication model.
+- \subpage USB_Descriptors explains the data structure that is used in USB devices to report their attributes to a host. Most
+  of these descriptors can be matched to configuration settings in MDK.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Transfer_Rates USB Transfer Rates
+
+USB uses two wires to supply power and two wires to transfer signals. The following data transfer rates are supported:
+
+|Performance                |Attributes                                                |Applications                       |
+|---------------------------|----------------------------------------------------------|-----------------------------------|
+|Low-Speed: 1.5 Mbits/s     | Lower cost <br> Hot-pluggable <br> Multiple peripherals  | interactive devices: <br>    mouse, keyboards, game peripherals |
+|Full-Speed: 12 Mbits/s     | Low cost <br>  Hot-pluggable <br>  Multiple peripherals <br> Guaranteed latency <br> Guaranteed bandwidth                                     | phone, audio, compressed video, printers, scanners |
+|High-Speed: 480 Mbits/s    | Guaranteed latency <br>      High bandwidth              | video, mass storage |
+
+\note
+- SuperSpeed - 5 Gbits/s - is not covered in this document.
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Network USB Network
+
+The <b>physical USB network</b> is implemented as a tiered star network with one host (master) and several devices (slaves).
+
+The USB Host provides one attachment port. If more peripherals are required, connect a hub to the root port to provide
+additional connection ports. The USB network can support up to 127 external nodes. Due to timing constraints for signal
+propagation, the maximum number of tiers allowed is seven:
+  - One tier for the host (bus master).
+  - Six tiers for hubs and devices.
+
+\image html "tiernetwork.png" "Tier Network"
+
+USB devices are divided into device classes:
+- \b Hubs provide additional attachment points and simplify USB connectivity from the user perspective. Each hub converts 
+   a single attachment point into multiple attachment points referred to as ports.
+- \b Functions provide capabilities to the system for transmitting or receiving data and control information. Each function 
+   contains configuration information describing the device capabilities and resource requirements.
+- <b>Compound Devices</b> are physical packages that implement multiple functions and include an embedded hub. A compound
+  device appears to the host as a hub with one or more non-removable USB devices.
+- <b>Composite Devices</b> support more than one class and thus, provide more than one function to the host.
+
+Examples of functions:
+- A human interface device such as a mouse, keyboard, tablet, or game controller.
+- An imaging device such as a scanner, printer, or camera.
+- A mass storage device such as a CD-ROM drive, floppy drive, or  DVD drive.
+
+The <b>logical USB network</b> appears as a star network to the developer with the host at the centre. Hubs do not introduce
+any programming complexity and are transparent as far as the programmer is concerned. An USB device will work the same way
+whether connected directly to a root-hub or whether connected via intermediate hubs. All USB devices are available as
+addressable nodes in this master/slave network. Only the host can initiate a data transfer in the network.
+
+\image html "starnetwork.png" "Star Network"
+
+\note
+- Only one host exists in any USB system.
+- Only functions can be enabled in tier seven.
+- Compound devices occupy two tiers.
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Protocol USB Protocol
+
+USB is a polled bus, where the host initiates all data exchanges.
+
+Transactions
+------------
+Data is transferred in so called <b>transactions</b>. Normally, they consist of three packets:
+-# The <b>token packet</b> is the header defining the transaction type and direction, the device address, and the endpoint.
+-# Data is transferred in a <b>data packet</b>.
+-# The final status of the transaction is acknowledges in the <b>handshake packet</b>.
+
+\image html "pipemodel.png" "Pipe Model"
+
+In a transaction, data is transferred either from the USB Host to an USB Device or vice-versa. The transfer direction
+is specified in the token packet that is sent from the USB Host. Then, the source sends a data packet or indicates it has no
+data to transfer. In general, the destination responds with a handshake packet indicating whether the transfer was successful.
+
+\image html "packetmodel.png" "Packet Model"
+
+Packets
+-------
+<b>Packets</b> could be thought of as the smallest element of data transmission. Each packet transmits an integral number 
+of bytes at the current transmission rate. Packets start with a synchronization pattern, followed by the data bytes of the packet, 
+and concluded with an End-of-Packet (EOP) signal. All USB packet patterns are transmitted <i>least significant bit first</i>. 
+Before and after the packet, the bus is in <i>idle</i> state.
+
+\image html "startofframe.png" "Start-of-Frame (SOF) Packet"
+
+A special packet is the <b>Start-of-Frame</b> packet (SOF) that splits the USB bus into time segments. Each pipe is allocated 
+a slot in each frame. The Start-of-Frame packet is sent every 1ms on full speed links. At high speed, the 1ms frame is divided 
+into 8 microframes of 125&mu;s each. A Start-of-Frame packet is sent at the beginning of each microframe using the same 
+frame number. The frame number increments every 1ms.
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Control_Transfers Control Transfers
+
+<b>Control Transfers</b> are bi-directional transfers reserved for the host to send and request configuration information to 
+and from the device using the IN and OUT Endpoint 0. 
+
+Each Control Transfer consists of 2 to several transactions. The maximum packet size for the control endpoint data is: 
+- 8 bytes for low-speed
+- 8, 16, 32, or 64 bytes for full-speed 
+- 64 bytes for high-speed 
+
+In general, the application software does not use this type of transfer.
+
+Control Transfers have three stages:
+-# The <b>SETUP</b> stage carries 8 bytes called the Setup packet, defining the request, and specifying how many data should be
+  transferred in the DATA stage.
+\image html "ctrlTransferSetup.png" "Control SETUP Transaction Format"
+\n
+-# The <b>DATA</b> stage is optional. If present, it always starts with a transaction containing a DATA1 packet. 
+  Then, the transaction type alternates between DATA0 and DATA1 until all required data have been transferred.
+-# The <b>STATUS</b> stage is a transaction containing a zero-length DATA1 packet. If the DATA stage was IN, then the STATUS
+  stage is OUT, and vice-versa.
+\image html "ctrlTransferRedWriteSeq.png" "Control Read and Write Sequences"
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Interrupt_Transfers Interrupt Transfers
+
+<b>Interrupt Transfers</b> have a limited latency to or from a device. In USB, an Interrupt Transfer, or Interrupt Pipe, has a
+defined polling rate between: 
+- 1ms and 255ms for full and low-speed
+- 125&mu;s to 4096ms for high-speed endpoints.
+
+The maximum packet size for the interrupt endpoint data is: 
+- 64 or less bytes for full-speed 
+- 1024 or less bytes for high-speed 
+
+The developer can define how often the host can request a data transfer from the device.
+
+For example, for a mouse, a data transfer rate at every 10 ms can be guaranteed. However, defining the polling rate does not guarantee
+that data will be transferred every 10 ms, but rather that the transaction will occur somewhere within the tenth frame. For this
+reason, a certain amount of timing jitter is inherent in an USB transaction.
+
+Typically, Interrupt Transfer data consists of event notifications, characters, or coordinates from a pointing device.
+
+\image html "interruptTransfer.png" "Interrupt Transfer Format"
+
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Isochronous_Transfers Isochronous Transfers
+
+<b>Isochronous Transfers</b> are used for transmitting real-time information such as audio and video data, and must be sent at 
+a constant rate. USB isochronous data streams are allocated a dedicated portion of USB bandwidth to ensure that data can be 
+delivered at the desired rate. An Isochronous pipe sends a new data packet in every frame, regardless of the success or failure 
+of the last packet.
+
+The maximum packet size for the isochronous endpoint data is: 
+- 1023 or less bytes for full-speed 
+- 1024 or less bytes for high-speed 
+
+Isochronous Transfers have no error detection. Any error in electrical transmission is not corrected.
+
+Isochronous Transfers are also subject to timing jitters as described for \ref USB_Interrupt_Transfers.
+
+\image html "isochronousTransfer.png" "Isochronous Transfer Format"
+
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Bulk_Transfers Bulk Transfers
+
+<b>Bulk Transfers</b> are used for data which are not of the type Control, Interrupt, or Isochronous. Reliable exchange of data 
+is ensured at the hardware level using error detection.
+
+Data are transferred in the same manner as in \ref USB_Interrupt_Transfers, but have no defined 
+polling rate. Bulk Transfers take up all the bandwidth that is available after the other transfers have finished. If the bus is 
+very busy, then a Bulk Transfer may be delayed. 
+
+The maximum packet size for the bulk endpoint data is: 
+- 8, 16, 32 or 64 bytes for full-speed 
+- 512 bytes for high-speed 
+
+For low-speed and full-speed endpoints the following is valid: If the bus is idle, multiple Bulk Transfers can take place 
+in a single 1ms frame (Interrupt and Isochronous Transfers are limited to a maximum of one packet per frame).
+
+For example, Bulk Transfers send data to a printer. As long as the data is printed in a reasonable time frame, the exact transfer 
+rate is not important.
+
+\image html "bulkTransfer.png" "Bulk Transfer Read and Writes"
+
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Descriptors USB Descriptors
+
+USB devices report their attributes using <b>descriptors</b>, which are data structures with a defined format. Each
+descriptor begins with a byte-wide field containing the total number of bytes in the descriptor followed by a byte-wide field
+identifying the descriptor type.
+
+When an USB device is attached to the USB bus, the host uses a process known as <b>bus enumeration</b> to identify and
+configure the device. The USB Host sends setup requests as soon as the device has joined the USB network. The device will be
+instructed to select a configuration and an interface to match the needs of the application running on the USB Host. Once a
+configuration and an interface have been selected, the device must service the active endpoints to exchange data with the USB
+Host.
+
+
+This is not a complete list of all the possible descriptors an USB host can request. The usual number of descriptors are:
+- One \subpage USB_Device_Descriptor
+- One \subpage USB_Configuration_Descriptor
+- One \subpage USB_Interface_Descriptor
+- One or more \subpage USB_Endpoint_Descriptor "Endpoint_Descriptors"
+
+\subpage USB_String_Descriptor describe the above mentioned descriptors in human readable format.
+
+\image html "deviceconfig.png" "Device Configuration"
+
+Alternative information that is needed when the device can operate in different speed modes can be defined in a
+\subpage USB_Device_Qualifier_Descriptor.
+
+Complex devices have multiple interfaces. Each interface can have
+a number of endpoints representing a functional unit. For example, a
+voice-over-IP phone might have:
+- One audio class interface with 2 isochronous endpoints for transferring audio data in each direction.
+- One HID interface with a single IN interrupt endpoint for a built-in keypad.
+
+Provisions have been made in the USB component to give the user the option to
+\subpage Overriding_Descriptors "override the USB descriptors" if necessary. This can be the case when the device class needs
+to be changed at runtime or other reports need to be created.
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Device_Descriptor Device Descriptor
+
+The <b>Device Descriptor</b> (USB_DEVICE_DESCRIPTOR) is the root of the descriptor tree and contains basic device information. The unique numbers,
+<b><i>idVendor</i></b> and <b><i>idProduct</i></b>, identify the connected device. The Windows operating system uses these numbers 
+to determine which device driver must be loaded.
+
+<b><i>idVendor</i></b> is the number assigned to each company producing USB-based devices. The <a class="el" href="https://www.usb.org/" target=
+"_blank">USB Implementers Forum</a> is responsible for administering the assignment of Vendor IDs.
+
+The <b><i>idProduct</i></b> is another 16-bit field containing a number assigned by the manufacturer to identify a specific product.
+
+<table class="cmtable" summary="Device Descriptor">
+    <tr>
+      <th>Offset</th>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Size</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>bLength</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>Size of this descriptor in bytes.</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>bDescriptorType</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Constant</td>
+      <td>Device Descriptor Type = 1.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>bcdUSB</td>
+      <td>uint16_t</td>
+      <td>2</td>
+      <td>BCD</td>
+      <td>USB Specification Release Number in Binary-Coded Decimal (i.e., 2.10 is 210h). 
+      
+      This field identifies the release of the USB Specification with which the device and its descriptors are compliant.</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>bDeviceClass</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Class</td>
+      <td>Class code (assigned by the USB-IF).
+      
+      If this field is
+      - reset to zero, each interface within a
+      configuration specifies its own class information and the
+      various interfaces operate independently.
+      - set to a value between 1 and FEh, the device
+      supports different class specifications on different interfaces
+      and the interfaces may not operate independently. This value
+      identifies the class definition used for the aggregate
+      interfaces.
+      - set to FFh, the device class is vendor specific.</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>bDeviceSubClass</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>SubClass</td>
+      <td>Subclass code (assigned by the USB-IF).
+      
+      These codes are qualified by the value of the \em bDeviceClass field.
+      
+      If \em bDeviceClass is
+      - reset to zero, this field must also be reset to zero.
+      - not set to FFh, all values are reserved for assignment by the USB-IF.</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>bDeviceProtocol</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Protocol</td>
+      <td>Protocol code (assigned by the USB-IF). 
+      
+      These codes are qualified by the value of the \em bDeviceClass and \em bDeviceSubClass fields. If a device supports class-specific
+      protocols on a device basis as opposed to an interface basis, this code identifies the protocols that the device uses as
+      defined by the specification of the device class.
+      
+      If this field is
+      - reset to zero, the device does not use class specific protocols on a device basis. However, it may use class
+      specific protocols on an interface basis.
+      - set to FFh, the device uses a vendor specific protocol on a device basis.</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>bMaxPacketSize0</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>Maximum packet size for Endpoint zero (only 8, 16, 32, or
+      64 are valid).</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>idVendor</td>
+      <td>uint16_t</td>
+      <td>2</td>
+      <td>ID</td>
+      <td>Vendor ID (assigned by the USB-IF).</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>idProduct</td>
+      <td>uint16_t</td>
+      <td>2</td>
+      <td>ID</td>
+      <td>Product ID (assigned by the manufacturer).</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>bcdDevice</td>
+      <td>uint16_t</td>
+      <td>2</td>
+      <td>BCD</td>
+      <td>Device release number in binary-coded decimal.</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>iManufacturer</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Index</td>
+      <td>Index of string descriptor describing manufacturer.</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>iProduct</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Index</td>
+      <td>Index of string descriptor describing product.</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>iSerialNumber</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Index</td>
+      <td>Index of string descriptor describing the device's serial
+      number.</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>bNumConfigurations</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>Number of possible configurations.</td>
+    </tr>
+</table>
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Configuration_Descriptor Configuration Descriptor
+
+The <b>Configuration Descriptor</b> (USB_CONFIGURATION_DESCRIPTOR) contains information about the device power requirements
+and the number of interfaces it can support. A device can have multiple configurations. The host can select the
+configuration that best matches the requirements of the application software.
+
+<table class="cmtable" summary="Configuration Descriptor">
+    <tr>
+      <th>Offset</th>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Size</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>bLength</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>Size of this descriptor in bytes.</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>bDescriptorType</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Constant</td>
+      <td>Configuration Descriptor Type = 2.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>wTotalLength</td>
+      <td>uint16_t</td>
+      <td>2</td>
+      <td>Number</td>
+      <td>Total length of data returned for this configuration.
+      Includes the combined length of all descriptors (configuration,
+      interface, endpoint, and class or vendor specific) returned
+      for this configuration.</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>bNumInterfaces</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>Number of interfaces supported by this configuration.</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>bConfigurationValue</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>Value to select this configuration with \em SetConfiguration().</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>iConfiguration</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Index</td>
+      <td>Index of string descriptor describing this configuration.</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>bmAttributes</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Bitmap</td>
+      <td>Configuration characteristics
+      - D7: Reserved (must be set to \b one for historical reasons)
+      - D6: Self-powered
+      - D5: Remote Wakeup
+      - D4...0: Reserved (reset to zero)
+      
+      A device configuration that uses power from the bus and a local source reports a non-zero value in \em bMaxPower to indicate the
+      amount of bus power required and sets D6. The actual power source at runtime can be determined using the GetStatus(DEVICE)
+      request. If a device configuration supports remote wakeup, D5 is set to 1.</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>bMaxPower</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>mA</td>
+      <td>Maximum power consumption of the USB device from the bus in this specific configuration when the device is fully
+      operational. Expressed in 2mA units (i.e., 50 = 100mA).</td>
+    </tr>
+</table>
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Interface_Descriptor Interface Descriptor
+
+The <b>Interface Descriptor</b> (USB_INTERFACE_DESCRIPTOR) defines the collection of endpoints. This interface supports a group of pipes that are suitable
+for a particular task. Each configuration can have multiple interfaces. The interface can be selected dynamically by the USB
+Host. The <b>Interface Descriptor</b> can associate its collection of pipes with a device class, which in turn has an associated class
+device driver within the host operating system. Typically, the device class is a functional type such as a printer class or mass storage
+class.
+
+An interface descriptor never includes Endpoint 0 in the numbering of endpoints. If an interface uses only Endpoint 0, then the field
+<i>bNumEndpoints</i> must be set to zero.
+
+If no class type has been selected for the device, then none of the standard USB drivers is loaded, and the developer has to provide
+its own device driver.
+
+<table class="cmtable" summary="Interface Descriptor">
+    <tr>
+      <th>Offset</th>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Size</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>bLength</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>Size of this descriptor in bytes.</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>bDescriptorType</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Constant</td>
+      <td>Interface Descriptor Type = 4.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>bInterfaceNumber</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>The number of this interface. 
+      
+      Zero-based value identifying the index in the array of concurrent interfaces supported by
+      this configuration.</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>bAlternateSetting</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>Value used to select an alternate setting for the
+      interface identified in the prior field. Allows an interface to
+      change the settings on the fly.</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>bNumEndpoints</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>Number of endpoints used by this interface (excluding endpoint zero). 
+      
+      - If this value is zero, this interface uses the Default Control Pipe only.</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>bInterfaceClass</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Class</td>
+      <td>Class code (assigned by the USB-IF). 
+      
+      - A value of zero is reserved for future standardization.
+      - If this field is set to FFh, the interface class is vendor specific. 
+      - All other values are reserved for assignment by the USB-IF.</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>bInterfaceSubClass</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>SubClass</td>
+      <td>Subclass code (assigned by the USB-IF).
+
+      If \em bInterfaceClass 
+      - is reset to zero, this field must also be reset to zero.
+      - is not set to FFh, all values are reserved for assignment by the USB-IF.</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>bInterfaceProtocol</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Protocol</td>
+      <td>Protocol code (assigned by the USB).
+
+      If an interface supports class-specific requests, this code identifies the protocols that the device uses as defined in the
+      device class.<br>
+      If this field 
+      - is reset to zero, the device does not use a class-specific protocol on this interface.
+      - is set to FFh, the device uses a vendor specific  protocol for this interface.</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>iInterface</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Index</td>
+      <td>Index of string descriptor describing this interface.</td>
+    </tr>
+</table>
+
+For example, two devices with different interfaces are needed. 
+
+The first interface, <i>Interface0</i>, has the field <i>bInterfaceNumber</i> set to 0.
+The next interface, <i>Interface1</i>, has the field <i>bInterfaceNumber</i> set to 1 and the field <i>bAlternativeSetting</i> also set to 0 (default). 
+It is possible to define an alternative setting for this device, by leaving the field <i>bInterfaceNumber</i> set to 1 and with the field
+<i>bAlternativeSetting</i> set to 1 instead of 0.
+
+The first two interface descriptors with <i>bAlternativeSettings</i> equal to 0 are used. However, the host can send a <i>SetInterface()</i> 
+request to enable the alternative setting.
+
+\image html "alt_interface.png" "Alternative Interface"
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Endpoint_Descriptor Endpoint Descriptor
+
+The <b>Endpoint Descriptor</b> (USB_ENDPOINT_DESCRIPTOR) specifies the transfer
+type, direction, polling interval, and maximum packet size for each
+endpoint. Endpoint 0 (zero), the default endpoint, is always assumed to
+be a control endpoint and never has a descriptor.
+
+<table class="cmtable" summary="Endpoint Descriptor">
+    <tr>
+      <th>Offset</th>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Size</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>bLength</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>Size of this descriptor in bytes.</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>bDescriptorType</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Constant</td>
+      <td>Endpoint Descriptor Type = 5.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>bEndpointAddress</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Endpoint</td>
+      <td>The address of the endpoint on the USB device described by this descriptor. The address is encoded as follows:
+      - Bit 3...0: The endpoint number
+      - Bit 6...4: Reserved, reset to zero
+      - Bit 7: Direction, ignored for control endpoints.
+          - 0 = OUT endpoint
+          - 1 = IN endpoint</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>bmAttributes</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Bitmap</td>
+      <td>The endpoint attribute when configured through <i>bConfigurationValue</i>.
+      - Bits 1..0: Transfer Type
+          - 00 = Control
+          - 01 = Isochronous
+          - 10 = Bulk
+          - 11 = Interrupt
+
+      For non-isochronous endpoints, bits 5..2 must be set to zero. For isochronous endpoints, they are defined as:
+      - Bits 3..2: Synchronization Type
+          - 00 = No Synchronization
+          - 01 = Asynchronous
+          - 10 = Adaptive
+          - 11 = Synchronous
+      - Bits 5..4: Usage Type
+          - 00 = Data
+          - 01 = Feedback
+          - 10 = Implicit feedback
+          - 11 = Reserved
+      
+      All other bits are reserved and must be reset to zero.</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>wMaxPacketSize</td>
+      <td>uint16_t</td>
+      <td>2</td>
+      <td>Number</td>
+      <td>Is the maximum packet size of this endpoint.
+      For isochronous endpoints, this value is used to reserve the
+      time on the bus, required for the per-(micro)frame data
+      payloads.
+      
+      - Bits 10..0 = max. packet size (in bytes).
+      
+      For high-speed isochronous and interrupt endpoints:
+      - Bits 12..11 = number of additional transaction opportunities per micro-frame:
+          - 00 = None (1 transaction per micro-frame)
+          - 01 = 1 additional (2 per micro-frame)
+          - 10 = 2 additional (3 per micro-frame)
+          - 11 = Reserved
+      - Bits 15..13 are reserved and must be set to zero.</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>bInterval</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>Interval for polling endpoint for data transfers. Expressed
+      in frames or micro-frames depending on the operating speed (1ms, or 125&mu;s units).
+
+      - For full-/high-speed isochronous endpoints, this value must be in the range from 1 to 16. The \em bInterval value
+        is used as the exponent for a 2<sup>bInterval-1</sup> value; For example, a \em bInterval of 4 means 
+        a period of 8 (2<sup>4-1</sup>).
+      - For full-/low-speed interrupt endpoints, the value of this field may be from 1 to 255.
+      - For high-speed interrupt endpoints, the \em bInterval value is used as the exponent for a 2<sup>bInterval-1</sup> value; 
+        For Example, a \em bInterval of 4 means a period of 8 (2<sup>4-1</sup>). This value must be from 1 to 16.
+      - For high-speed bulk/control OUT endpoints, the \em bInterval must specify the maximum NAK rate of the endpoint. 
+        A value of 0 indicates the endpoint never NAKs. Other values indicate at most 1 NAK each \em bInterval number of microframes. 
+        This value must be in the range from 0 to 255.
+      </td>
+    </tr>
+</table>
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_Device_Qualifier_Descriptor Device Qualifier Descriptor
+
+A high-speed capable device that has different device information for full-speed and high-speed must have a <b>Device Qualifier
+Descriptor</b> (USB_DEVICE_QUALIFIER_DESCRIPTOR). For example, if the device is currently operating at full-speed, the <b>Device Qualifier</b> returns information 
+about how it would operate at high-speed and vice-versa.
+
+The fields for the vendor, product, device, manufacturer, and
+serial number are not included. This information is constant for a
+device regardless of the supported speeds.
+
+If a full-speed only device receives a <i>GetDescriptor()</i> request for a <i>device_qualifier</i>, it must respond with a request
+error. Then, the host must not make a request for an <i>other_speed_configuration descriptor</i>.
+
+<table class="cmtable" summary="Device Qualifier Descriptor">
+    <tr>
+      <th>Offset</th>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Size</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>bLength</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>Size of this descriptor in bytes.</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>bDescriptorType</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Constant</td>
+      <td>Device Qualifier Descriptor Type = 6.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>bcdUSB</td>
+      <td>uint16_t</td>
+      <td>2</td>
+      <td>BCD</td>
+      <td>USB Specification Release Number in Binary-Coded Decimal (i.e., 2.10 is 210h). This field identifies the release of the
+      USB Specification with which the device and its descriptors are compliant. At least V2.00 is required to use this descriptor.</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>bDeviceClass</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Class</td>
+      <td>Class code (assigned by the USB-IF).
+      
+      If this field is 
+      - reset to zero, each interface within a configuration specifies its own class information and the various interfaces 
+      operate independently.
+      - set to a value between 1 and FEh, the device supports different class specifications on different interfaces
+      and the interfaces may not operate independently. This value identifies the class definition used for the aggregate interfaces.
+      
+      If this field is set to FFh, the device class is vendor specific.</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>bDeviceSubClass</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>SubClass</td>
+      <td>Subclass code (assigned by the USB-IF).
+
+      These codes are qualified by the value of the \em bDeviceClass field. If \em bDeviceClass is 
+      - reset to zero, this field must also be reset to zero.
+      - not set to FFh, all values are reserved for assignment by the USB-IF.</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>bDeviceProtocol</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Protocol</td>
+      <td>Protocol code (assigned by the USB-IF). These codes are qualified by the values of the \em bDeviceClass and \em bDeviceSubClass fields. 
+      If a device supports class-specific protocols on a device basis as opposed to an interface basis, this code identifies the protocols 
+      that the device uses as defined by the specification of the device class.
+      
+      If this field is 
+      - reset to zero, the device does not use class-specific protocols on a device basis. However, it may use class-specific protocols 
+      on an interface basis.
+      - set to FFh, the device uses a vendor specific protocol on a device basis.</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>bMaxPacketSize0</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>Maximum packet size for other speed.</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>bNumConfigurations</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>Number of other-speed configurations.</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>bReserved</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Zero</td>
+      <td>Reserved for future use, must be zero.</td>
+    </tr>
+</table>
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page USB_String_Descriptor String Descriptors
+
+\b String \b descriptors (USB_STRING_DESCRIPTOR) are optional and add human readable information to the other descriptors. If
+a device does not support string descriptors, all references to string descriptors within device, configuration, and
+interface descriptors must be set to zero.
+
+String descriptors are encoded in <a href="https://en.wikipedia.org/wiki/Unicode" target="_blank">Unicode</a> so that
+multiple languages can be supported with a single product. When requesting a string descriptor, the requester specifies the
+desired language using a 16-bit language ID (LANGID) defined by the USB-IF. String
+index zero is used for all languages and returns a string descriptor that contains an array of two-byte LANGID codes
+supported by the device.
+
+The array of LANGID codes is not NULL-terminated. The size of the array (in byte) is computed by subtracting two from the
+value of the first byte to the descriptor.
+
+<table class="cmtable" summary="String Descriptor Zero">
+    <tr>
+      <th>Offset</th>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Size</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>bLength</td>
+      <td>uint8_t</td>
+      <td>N + 2</td>
+      <td>Number</td>
+      <td>Size of this descriptor in bytes.</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>bDescriptorType</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Constant</td>
+      <td>String Descriptor Type</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>wLANGID[0]</td>
+      <td>uint8_t</td>
+      <td>2</td>
+      <td>Number</td>
+      <td>LANGID code zero (for example 0x0407 German (Standard)).</td>
+    </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td>N</td>
+      <td>wLANGID[x]</td>
+      <td>uint8_t</td>
+      <td>2</td>
+      <td>Number</td>
+      <td>LANGID code zero x (for example 0x0409 English (United States)).</td>
+    </tr>
+</table>
+
+The UNICODE string descriptor is not NULL-terminated. The string length is computed by subtracting two from the value of the
+first byte of the descriptor.
+
+<table class="cmtable" summary="String Descriptor Zero">
+    <tr>
+      <th>Offset</th>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Size</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>bLength</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Number</td>
+      <td>Size of this descriptor in bytes.</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>bDescriptorType</td>
+      <td>uint8_t</td>
+      <td>1</td>
+      <td>Constant</td>
+      <td>String Descriptor Type</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>bString</td>
+      <td>uint8_t</td>
+      <td>N</td>
+      <td>Number</td>
+      <td>UNICODE encoded string.</td>
+    </tr>
+</table>
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/*
+\defgroup   usbd_structs  Structures
+\ingroup    usbd
+\brief      Structures of USB Device component
+
+\struct usbd_desc_t
+\brief USB Descriptors Structure
+\details
+
+<b>Used in</b>
+- \ref Overriding_Descriptors
+
+*/

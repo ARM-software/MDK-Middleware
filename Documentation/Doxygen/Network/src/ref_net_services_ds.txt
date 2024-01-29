@@ -1,0 +1,2452 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netServices Services
+\brief Services provide program templates for common networking tasks.
+\details
+The Network Component has several integrated high level services for common networking tasks.
+
+\note  Some services require adding user interface modules to your project and customizing them to your needs. You can also
+write your own service applications and use only the built-in socket interface. The Network Component has various 
+\ref netSockets integrated.
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netHTTP_Func HTTP Server
+\ingroup netServices
+\brief HTTP Web Server routines are used to run and configure services of the embedded web server.
+\details
+A <a href="https://en.wikipedia.org/wiki/Web_server" target="_blank">HTTP or web server</a> processes requests via
+<a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol" target="_blank">HTTP</a>, a network protocol used to
+exchange information on the <a href="https://en.wikipedia.org/wiki/World_Wide_Web" target="_blank">World Wide Web (WWW)</a>.
+The main function of a HTTP server is to store, process and deliver web pages to clients. Pages delivered are usually
+<a href="https://en.wikipedia.org/wiki/HTML" target="_blank">HTML</a> documents, which may
+include images, style sheets and scripts in addition to text content. Using HTML, you describe what a page must look like,
+what types of fonts to use, what color the text should be, where paragraph marks must come, and many more aspects of the
+document.
+
+Using SSL/TLS, you can securely communicate with the web server through HTTPS. The ARM \b mbed \b TLS software component
+enables this for the Network component's web server. Refer to \ref secure_communication for more information.
+
+There are two types of web pages which are stored on a web server and sent to a web client on request:
+- <b>Static Web pages</b> do not change their content. When the page is requested, it is sent to the web client as it is. It
+  is not modified.
+- <b>Dynamic Web pages</b> are generated when the page is requested. Pages that show system settings or log records are
+  examples of dynamic pages.
+
+The Network Component supports both of them. Static web pages are generally stored in a ROM file system. The files are
+converted into C-code by the \ref nw_sw_util_fcarm "FCARM" file converter and compiled into code.
+
+The Network Component supports two types of HTTP servers: the <b>Compact Web Server</b> can store HTML files only in a
+read-only memory (ROM). An update of pages stored in ROM is not possible. The <b>Full Web Server</b> uses the \url{MW-FileSystem} to store data on a rewritable
+storage device. These files can be updated in the field. Several advanced features are integrated into both web servers:
+- A \ref ws_script_langugage "scripting language" is used to generate Dynamic Web pages.
+- \ref ws_ajax "AJAX" allows you to move the web page processing from the web server to the client browser.
+- \ref ws_soap "SOAP" allows you to produce some cutting edge user interfaces.
+- \ref ws_web_on_sd "Web on SD card" allows you to store web site resource files on an SD Card.
+
+\image html http_server_block_diagram.png
+
+This documentation is separated as follows:
+- \ref ws_web_technologies can be generated using CGI and JavaScript.
+- \ref ws_web_pages supports static and dynamic content and can be used with browser caching.
+- \ref ws_user_api explains how to start/stop the HTTP Server and to manage built-in user accounts.
+- \ref ws_access_filtering_mui shows how to filter out hosts, which are <b>not allowed</b> to connect to the HTTP Server and
+  how to add additional user accounts and to manage access rights for each user.
+- \ref ws_fs_interface gives you details about the functions that are used to read/write data on the HTTP server's storage
+  device.
+- \ref ws_cgi_script explains the script functions that are used for the \ref ws_script_langugage "scripting language".
+- \ref ws_configuration explains the configuration options of the HTTP server.
+- The \ref nw_sw_util_fcarm utility can be used to compress static web pages for storing in ROM.
+*/
+
+
+/**
+\defgroup ws_web_technologies Dynamic Web Content
+\ingroup netHTTP_Func
+\brief Advanced Web Technologies for modern Web-based User Interfaces.
+\details
+To create dynamic web pages on an embedded system, you can use various techniques that are state-of-the-art for modern
+computer systems:
+- \ref ws_script_langugage is the standard method used to generate dynamic content on web pages. A scripting language
+  provides access to the underlying hardware.
+- \ref ws_ajax is a group of web development techniques used on the client-side (in the browser) to create interactive web
+  applications. With AJAX, web applications can retrieve data from the server asynchronously in the background without
+  interfering with the display and behavior of the existing page.
+- \ref ws_soap provides a way to communicate between applications running on different operating systems, with different
+  technologies and programming languages.
+
+\note  
+The examples used in these sections are based on the \ref Compact_Web_Server_Example example. All file names mentioned in
+the sections can be found in this example. If this example is not available for your target hardware, have a look at the code
+for another development platform. Porting the code to your underlying hardware is easy when using the MDK-Professional
+Middleware.
+*/
+
+/**
+\defgroup ws_script_langugage CGI Programming
+\ingroup ws_web_technologies
+\brief Scripting Language for the Common Gateway Interface (CGI)
+\details
+<a href="https://en.wikipedia.org/wiki/Common_Gateway_Interface" target="_blank">CGI</a> is a standard method used to generate
+dynamic content on web pages. CGI stands for <b>Common Gateway Interface </b> and provides an interface between the HTTP
+server and programs generating web content. These programs are better known as CGI scripts. They are written in a scripting
+language. The Network Component provides such a scripting language. The HTTP server processes the script source file line by
+line and calls the \ref ws_cgi_script "CGI functions" as needed. The output from a CGI function is sent to the web client
+(browser) as a part of the web page.
+
+Each script line starts with a <b>command character</b> which specifies a command for the script interpreter. The scripting
+language itself is simple and works as follows:
+|Command|Description|
+|-------|-----------|
+|i      |The script interpreter <b>include a file</b> from the file system and sends the content to the web browser.|
+|t      |The <b>line of text</b> that follows will be sent to the browser.|
+|c      |Calls the function \ref netCGI_Script from the \b %HTTP_Server_CGI.c file. It may be followed by a line of text which is passed to \ref netCGI_Script as a pointer to an environment variable.|
+|#      |This is a comment line and is ignored by the interpreter.|
+|.      |Denotes the end of the script.|
+
+\note
+- The script files need to use the reserved filename extension of \b cgi, for the HTTP server's script interpreter to
+  recognize and process the files accordingly.
+- The script line length is \b limited to 120 characters.
+
+Application Example
+-------------------
+\note  
+The examples used in this section are based on the \ref Compact_Web_Server_Example example. All file names mentioned in
+the sections can be found in this example.
+
+Here is an example of a web page written in the scripting language. This web page is used to edit or change the system
+password. The web page is stored in three files. Two of them are static: \b %pg_header.inc and \b %pg_footer.inc. The third
+(the main file) is the script file that generates dynamic data: \b %system.cgi. It contains the following:
+\code
+t <html><head><title>System Settings</title>
+t <script language=JavaScript>
+t function changeConfirm(f){
+t  if(!confirm('Are you sure you want\nto change the password?')) return;
+t  f.submit();
+t }
+t </script></head>
+i pg_header.inc
+t <h2 align=center><br>System Settings</h2>
+t <p><font size="2">This page allows you to change the system
+t  <b>Password</b>, for the username <b>admin</b>. Default <b>realm</b>, 
+t  <b>user</b> and <b>password</b> can be set in configuraton file.<br><br>
+t  This Form uses a <b>POST</b> method to send data to a Web server.</font></p>
+t <form action=index.htm method=post name=cgi>
+t <input type=hidden value="sys" name=pg>
+t <table border=0 width=99%><font size="3">
+t <tr bgcolor=#aaccff>
+t  <th width=40%>Item</th>
+t  <th width=60%>Setting</th></tr>
+# Here begin data setting which is formatted in HTTP_Server_CGI.C module
+c d 1 <tr><td><img src=pabb.gif>Authentication</TD><TD><b>%s</b></td></tr>
+t <tr><td><img src=pabb.gif>Password for user 'admin'</td>
+c d 2 <td><input type=password name=pw0 size=10 maxlength=10 value="%s"></td></tr>
+t <tr><td><img src=pabb.gif>Retype your password</td>
+c d 2 <td><input type=password name=pw2 size=10 maxlength=10 value="%s"></td></tr>
+t </font></table>
+# Here begin button definitions
+t <p align=center>
+t <input type=button name=set value="Change" onclick="changeConfirm(this.form)">
+t <input type=reset value="Undo">
+t </p></form>
+i pg_footer.inc
+. End of script must be closed with period.
+\endcode
+
+The web page header, which is \b static and does not change when the web page is generated, is moved into the separate
+header file \b pg_header.inc. It is included in the final HTML that will be delivered by the HTTP server. This is done using
+\code
+i pg_header.inc
+\endcode
+The web page footer is also \b static and is moved into the \b pg_footer.inc file. It is not changed when the web page
+generates but is simply included in the script using 
+\code
+i pg_footer.inc
+\endcode
+
+This is how the generated web page looks like, with the dynamically generated items in the \b Setting column:
+
+\image html generated_page.png
+
+You can see the HTML source code of this web page. This data is actually sent to the web client when the client requests
+the web page \b %system.cgi. The script file is processed by the script interpreter, and the following data is generated by
+the HTTP Server. You can compare the generated HTML source with the script file to see where the CGI interface comes in.
+\code{.html}
+<html>
+  <head>
+    <meta name="generator"
+    content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+    <title>System Settings</title>
+    <script language="JavaScript">
+    function changeConfirm(f){ if(!confirm(&#39;Are you sure you want\nto change the password?&#39;)) return; f.submit();}
+    </script>
+  </head>
+  <body bgcolor="#FFFFFF" leftmargin="0" topmargin="10" marginwidth="0" marginheight="0">
+    <div align="center" style="width: 833; height: 470">
+      <table style="border: 1px solid #000080" height="384" cellspacing="0" cellpadding="0" width="815">
+        <tbody>
+          <tr bgcolor="#EEEEEE">
+            <td style="border-bottom: 1px solid #000080" valign="bottom" nowrap="nowrap" height="70" margin="50" width="567">
+              <h2 align="center">
+                <font face="verdana" color="#006699">Embedded Development Tools</font>
+              </h2>
+            </td>
+            <td style="border-bottom: 1px solid #000080" valign="center" nowrap="nowrap" height="73" width="170">
+              <a href="https://www.keil.com">
+                <img border="0" src="keil.gif" align="left" width="151" height="47" />
+              </a>
+            </td>
+            <td style="border-bottom: 1px solid #000080" align="center" valign="center" nowrap="nowrap" width="70">
+              <a href="index.htm">
+                <img border="0" src="home.png" width="31" height="29" />
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" height="380" width="815" valign="top" background="llblue.jpg" style="background-repeat: repeat-y;">
+              <div align="center">
+                <center>
+                  <table width="90%" border="0" align="center">
+                    <tbody>
+                      <tr>
+                        <td width="95%">
+                          <h2 align="center">
+                          <br />System Settings</h2>
+                          <p>
+                            <font size="2">This page allows you to change the system 
+                            <b>Password</b>, for the username 
+                            <b>admin</b>. Default 
+                            <b>realm</b>, 
+                            <b>user</b> and 
+                            <b>password</b> can be set in configuraton file.
+                            <br />
+                            <br />This Form uses a 
+                            <b>POST</b> method to send data to a Web server.</font>
+                          </p>
+                          <form action="index.htm" method="post" name="cgi">
+                            <input type="hidden" value="sys" name="pg" />
+                            <table border="0" width="99%">
+                              <tr bgcolor="#AACCFF">
+                                <th width="40%">
+                                  <font size="3">Item</font>
+                                </th>
+                                <th width="60%">Setting</th>
+                              </tr>
+                              <tr>
+                                <td>
+                                <img src="pabb.gif" />Authentication</td>
+                                <td>
+                                  <b>Enabled</b>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                <img src="pabb.gif" />Password for user &#39;admin&#39;</td>
+                                <td>
+                                  <input type="password" name="pw0" size="10" maxlength="10" value="" />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                <img src="pabb.gif" />Retype your password</td>
+                                <td>
+                                  <input type="password" name="pw2" size="10" maxlength="10" value="" />
+                                </td>
+                              </tr>
+                            </table>
+                            <p align="center">
+                              <input type="button" name="set" value="Change" onclick="changeConfirm(this.form)" />
+                              <input type="reset" value="Undo" />
+                            </p>
+                          </form>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </center>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="5" height="20" width="805" background="llblue.jpg" style="background-repeat: repeat-y;">
+              <p align="center">
+                <font face="Verdana" size="1">
+                <a href="https://www.keil.com/company/copyright.asp">Copyright</a> © 2004-2014 
+                <a href="https://www.keil.com/company/">KEIL - An ARM Company</a> All rights reserved.</font>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
+\endcode
+*/
+
+
+/**
+\defgroup ws_ajax AJAX Programming
+\ingroup ws_web_technologies
+\brief Using Asynchronous JavaScript and XML
+\details
+<a href="https://en.wikipedia.org/wiki/Ajax_(programming)" target="_blank">Asynchronous JavaScript and XML (AJAX)</a> is a
+group of web development techniques used on the client-side to create interactive web applications. With AJAX, web
+applications can retrieve data from the server asynchronously in the background without interfering with the display and
+behavior of the existing page. AJAX is based on
+<a href="https://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> and <b>HTTP requests</b>. JavaScript is the
+most popular language for AJAX programming as it is widely supported in web browsers.
+
+The <a href="https://en.wikipedia.org/wiki/XML" target="_blank">eXtensible Markup Language (XML)</a> is a simple and very
+flexible text format. It is a generic framework for storing any amount of any data whose structure can be represented as a
+\b tree. It allows the user to create the mark-up elements. XML has become the almost universally supported way of exchanging
+documents and data across applications and platforms. The benefits of using XML technology for web page update are obvious:
+- Instead of several files, only <b>one small</b> XML file is transferred for web page update.
+- This allows \b faster, \b flicker-free screen updates.
+- The used LAN bandwidth is very small.
+- The web server can easily handle <b>more clients</b> at the same time.
+
+The components of XML file are \b tagged. You must use this format for generated XML responses. The object ID's and
+their values must be specified within XML body - enclosed with tags \b \<form\> and \b \</form\>. The following objects are
+already defined:
+- \b Text object:
+\code
+<text>
+  <id>text_id</id>
+  <value>text_value</value>
+</text>
+\endcode
+- \b Checkbox object:
+\code
+<checkbox>
+  <id>checkbox_id</id>
+  <checked>true/false</checked>
+</checkbox>
+\endcode
+- \b Select object:
+\code
+<select>
+  <id>option_id</id>
+  <value>true/false</value>
+</select>
+\endcode
+- \b Radio object:
+\code
+<radio>
+  <id>radio_id</id>
+  <value>true/false</value>
+</radio>
+\endcode
+
+Other objects are optional. You can add them yourself.
+
+How it works
+------------
+The browser sends a standard HTTP request to the HTTP server, such as \b GET or \b POST. The web server checks the file
+extension of the requested file. If the file extension is \b cgx, the requested file is an XML script file. This file is then
+processed by the internal script interpreter running on the HTTP server. As a result, an XML response is generated and sent
+back to the browser.
+
+Application Example
+-------------------
+\note  
+The examples used in this section are based on the \ref Compact_Web_Server_Example example. All file names mentioned in
+the sections can be found in this example.
+
+Here is a an example of a typical data flow. It assumes that you have clicked on the link to the \b AD page. This calls the
+file \b %ad.cgi:
+\code
+t <html><head><title>AD Input</title>
+t <script language=JavaScript type="text/javascript" src="xml_http.js"></script>
+t <script language=JavaScript type="text/javascript">
+# Define URL and refresh timeout
+t var formUpdate = new periodicObj("ad.cgx", 500);
+t function plotADGraph() {
+t  adVal = document.getElementById("ad_value").value;
+t  numVal = parseInt(adVal, 16);
+t  voltsVal = (3.3*numVal)/4096;
+t  tableSize = (numVal*100/4096);
+t  document.getElementById("ad_table").style.width = (tableSize + '%');
+t  document.getElementById("ad_volts").value = (voltsVal.toFixed(3) + ' V');
+t }
+t function periodicUpdateAd() {
+t  if(document.getElementById("adChkBox").checked == true) {
+t   updateMultiple(formUpdate,plotADGraph);
+t   ad_elTime = setTimeout(periodicUpdateAd, formUpdate.period);
+t  }
+t  else
+t   clearTimeout(ad_elTime);
+t }
+t </script></head>
+i pg_header.inc
+t <h2 align="center"><br>AD Converter Input</h2>
+t <p><font size="2">This page allows you to monitor AD input value in numeric
+t  and graphics form. Periodic screen update is based on <b>xml</b> technology.
+t  This results in smooth flicker-free screen update.<br><br>
+t  Turn potentiometer on an evaluation board clockwise or counterclockwise
+t  and observe the change of AD value on the screen.</font></p>
+t <form action="ad.cgi" method="post" name="ad">
+t <input type="hidden" value="ad" name="pg">
+t <table border=0 width=99%><font size="3">
+t <tr style="background-color: #aaccff">
+t  <th width=15%>Item</th>
+t  <th width=15%>Value</th>
+t  <th width=15%>Volts</th>
+t  <th width=55%>Bargraph</th></tr>
+t <tr><td><img src="pabb.gif">POT1:</td>
+t   <td align="center">
+t <input type="text" readonly style="background-color: transparent; border: 0px"
+c g 1  size="10" id="ad_value" value="0x%03X"></td>
+t <td align="center"><input type="text" readonly style="background-color: transparent; border: 0px"
+c g 2  size="10" id="ad_volts" value="%5.3f V"></td>
+t <td height=50><table bgcolor="#FFFFFF" border="2" cellpadding="0" cellspacing="0" width="100%"><tr>
+c g 3 <td><table id="ad_table" style="width: %d%%" border="0" cellpadding="0" cellspacing="0">
+t <tr><td bgcolor="#0000FF">&nbsp;</td></tr></table></td></tr></table></td></tr>
+t </font></table>
+t <p align=center>
+t <input type=button value="Refresh" onclick="updateMultiple(formUpdate,plotADGraph)">
+t Periodic:<input type="checkbox" id="adChkBox" onclick="periodicUpdateAd()">
+t </p></form>
+i pg_footer.inc
+. End of script must be closed with period
+\endcode
+
+which will then make the browser to send a standard HTTP GET request: 
+\code
+GET /ad.cgx HTTP/1.1\r\n
+\endcode
+
+The HTTP server processes the script \b %ad.cgx file:
+\code
+t <form>
+t <text>
+t <id>ad_value</id>
+c x<value>0x%03X</value>
+t </text>
+t </form>
+.
+\endcode
+
+The \c c in the fourth line tells the HTTP server to call \ref netCGI_Script. The rest of the line will be passed as a
+parameter to this function. The function will check the meaning of \a x:
+\code
+  switch (env[0]) {
+  ...
+    case 'x':
+      // AD Input from 'ad.cgx'
+      adv = AD_in (0);
+      len = sprintf (buf, &env[1], adv);
+      break;
+\endcode
+
+This will lead to this (exemplary) XML response:
+\code
+<form><text><id>ad_value</id><value>0x06A</value></text></form>
+\endcode
+
+The JavaScript function \b periodicUpdateAd() activates the periodic time-outs for the page update. This function is
+specific for the AD page module and is included in the \b %ad.cgi script file: 
+\code
+function periodicUpdateAd() {
+  if(document.getElementById("adChkBox").checked == true) {
+    updateMultiple(formUpdate,plotADGraph);
+    ad_elTime = setTimeout(periodicUpdateAd, formUpdate.period);
+  }
+  else
+    clearTimeout(ad_elTime);
+}
+\endcode
+
+The update \b interval and \b URL are defined in the \b formUpdate object. When update interval expires, an XML response is
+requested from the URL specified in this JavaScript object. 
+\code
+var formUpdate = new periodicObj("ad.cgx", 500);
+\endcode
+
+The actual update of the analog bar and AD values on the web page is done by the JavaScript function \b plotADGraph():
+\code
+function plotADGraph() {
+  adVal = document.getElementById("ad_value").value;
+  numVal = parseInt(adVal, 16);
+  voltsVal = (3.3*numVal)/1024;
+  tableSize = (numVal*100/1024);
+  document.getElementById("ad_table").style.width = (tableSize + '%');
+  document.getElementById("ad_volts").value = (voltsVal.toFixed(3) + ' V');
+}
+\endcode
+This function is called as a callback function from the \b updateMultiple() JavaScript function. 
+
+\note 
+- The XML script files need to use the reserved filename extension \b cgx, for the HTTP server's script interpreter to
+  recognize and process the files accordingly.
+- There must be <b>no spaces</b> or CR-LF characters between XML tags, or some web browsers might have problems when parsing
+  the XML response.
+- The script line length is <b>limited to 120 characters</b>.
+
+This is how the generated web page looks like, with the dynamically generated items in the \b Values and \b Volts column:
+
+\image html xml_example_page.png
+*/
+
+
+/**
+\defgroup ws_soap SOAP Programming
+\ingroup ws_web_technologies
+\brief Using the Simple Object Access Protocol
+\details
+SOAP Support
+------------
+The <a href="https://en.wikipedia.org/wiki/SOAP" target="_blank">Simple Object Access Protocol (SOAP)</a> is an XML-based
+protocol to let applications exchange information over HTTP. It is created to enable communication between applications. It
+is important for application development to allow Internet communication between programs. A better way to communicate
+between applications is over HTTP, because HTTP is supported by all Internet browsers and servers. SOAP provides a way to
+communicate between applications running on different operating systems, with different technologies and programming
+languages.
+
+SOAP Interface
+--------------
+SOAP messages in HTTP consist of a \b POST request, submitted by the client, and a response generated by the web server.
+The Network Component's HTTP server handles SOAP messages differently. Instead of processing them internally and notifying
+the user via a callback function, it delivers a complete SOAP message to the user via the callback function.
+
+In general, SOAP messages are large. Embedded systems that run a web server with SOAP, need much more RAM for message
+buffering and processing. A typical configuration would have:
+- a few MBytes of RAM.
+- a SD Card for deploying a web service application.
+
+The following extensions have been added to the HTTP server:
+- the \ref netCGI_ProcessData function has been extended with code 4 and 5 to allow processing of fragmented large
+  POST messages.
+- the \c Content-Type HTTP header for XML-encoded POST requests is \b buffered. The function
+  \ref netHTTPs_GetContentType returns a pointer to the Content-Type string, which was received in the XML POST request.
+- the \c Content-Type header for the response can be defined by the user in the \ref netCGX_ContentType function.
+- the \ref netHTTPs_GetSession function is used to identify which web server session has called a \ref netCGI_ProcessData
+  callback function, if two or more clients have sent XML-POST requests at the same time.
+
+Large POST Messages
+-------------------
+When the web server receives a POST request, the server checks the \c Content-Type header. All XML-encoded content
+types are not processed further, but the data is delivered to the user in a callback function. It is the responsibility
+of the user to correctly \b assemble large POST messages, because they are fragmented and delivered from several TCP
+packets. For the first and subsequent packets, the web server calls the callback function with code 5:
+\code
+netCGI_ProcessData (5, dat, len);
+\endcode
+
+The user should now start to buffer the data.
+
+For the \b last or \b single data packet, the web server calls the callback function with code 4:
+\code
+netCGI_ProcessData (4, dat, len);
+\endcode
+
+The XML-POST data is now complete and the user can start parsing the XML encoded data. In addition the user might check
+what was the \c Content-Type with the function \ref netHTTPs_GetContentType.
+*/
+
+
+/**
+\defgroup ws_web_pages Delivering Web Pages
+\ingroup netHTTP_Func
+\brief How web pages are stored on and delivered by the HTTP Server.
+\details
+Creating and storing static web pages
+=====================================
+Static web pages for the HTTP server are created in the same way as web pages for any other web server. You can use any
+text editor to edit the HTML code. Here are a few guidelines:
+- Design web pages in HTML code. You can add \b images and \ref ws_ajax "JavaScript" functions as well.
+- If a web page needs to show dynamic values, code it using the \ref ws_script_langugage "scripting language". You must also
+  update the CGI callback function, \ref netCGI_Script, accordingly. It is a good practice to program the script code and
+  \ref netCGI_Script in parallel. Note that the module \b %HTTP_Server_CGI.c must be included in your project.
+- Images on a web page can be of type GIF, BMP, JPEG, or PNG for example. A good choice is to select the image type with the
+  best compression because these files are included in the code. Large image files might increase the application code size
+  above average.
+- To keep track of the web content, be advised to create a sub-folder in the µVision project  called \b Web (for
+  example). Add all files that the web server will deliver (HTML, images, etc.) as file type "Image File":
+  
+  \image html image_file.png "Add web content as Image File"
+  
+- Compile all web files using the \ref nw_sw_util_fcarm tool. To setup FCARM, go to \b Project -> \b Options \b for \b Target
+  and select the \b Utilities tab. At the bottom, you can configure how FCARM compiles the image files. Here's an example:
+  
+  \image html fcarm_configuration.png "Configure Image File Processing (FCARM) Dialog"
+  
+
+Default Page
+============
+When you type the HTTP Server's URL or IP address in the browser's address bar, the HTTP Server sends the content of the
+\b %index.htm web page. This \b default \b page is opened, as long as no other filename is specified in the URL. If you enter
+a URL, including a filename (for example http://mcb1700/ad.htm), the HTTP Server tries to open this page.
+
+The default page \b %index.htm is a static page. This means the content of this page is stored on the HTTP Server and sent
+unmodified to the web client on request. Usually, this page contains links to other static or
+\ref ws_web_technologies "dynamic pages" on the server.
+
+If required, you can have a dynamic page as the default web page. When a browser requests the default page, the HTTP Server
+tries to open \b %index.htm as default web page. If this page does not exist, web server tries to open \b %index.cgi instead.
+If this page is also not present, the web server responds with an \ref ws_error_pages "Error 404 - Not Found".
+
+The process of finding the default dynamic page stored on the SD card is more complex. The HTTP Server first tries to open
+\b %index.htm on the SD card. If this page does not exist, the web server tries to open \b %index.htm stored in ROM (Web.c).
+If this page does not exist, the web server tries to open the \b %index.cgi that is stored on the SD card. Finally, if this
+also fails, the web server tries to open the \b %index.cgi stored in ROM. Because the default Web.c is in the Network library,
+it is used if you do not provide your own. The web server then falsely sends this page instead of \b %index.cgi, which is stored
+on the SD card.
+   
+  \image html http_default_page.png "Default Page (index.htm) from the Network library"
+
+To use the dynamic default page stored on the SD card, there must be \b Web.c in your project. It must contain an empty web page
+stored in a ROM. If you do not do this, the default Web.c from the network library will be used.
+
+\note If you want to use a dynamic default page, then the file %index.htm <b>must not exist</b> on the HTTP server. 
+  
+\anchor ws_error_pages
+Error Pages
+===========
+The HTTP server shows an error page when encountering error conditions.
+|Error Code|Title               |Description                                       |
+|:--------:|--------------------|--------------------------------------------------|
+|401       | Unauthorized Access| You are not authorized to access this server     |
+|403       | Forbidden          | You don't have permission to access this resource|
+|404       | Not Found          | The requested URL was not found on this server   |
+|501       | Not Implemented    | The requested method is not supported            |
+
+These error pages are already included in the Network Component. If you want to modify them, you must copy the user code
+template \b %HTTP_Server_Error.c to your project and customize it. To add it to your project, simply right-click on the
+Source group, select <b>Add New Item to Group</b>, then click on <b>User Code Template</b> and scroll in the template
+files list until you find the <b>HTTP Server Error Messages</b> template. Modified error pages must be small because
+they are sent in a single TCP packet.
+
+<b>Code Example</b>
+\snippet HTTP_Server_Error.c code_HTTP_Server_Error
+
+\anchor ws_http_caching
+HTTP Caching
+============
+The HTTP protocol supports <b>local caching</b> of static resources by the browser. Most web pages include resources that
+change infrequently, such as CSS/JavaScript files, images and so on. These resources take time to download over the network,
+which increases the time it takes to load a web page. HTTP caching allows these resources to be saved, or cached, by the
+browser. Once a resource is cached, the browser can refer to the locally cached copy instead of having to download it again
+on subsequent visits to the web page.
+
+The advantage of caching is obvious:
+- The page \b load \b time for subsequent user visits is reduced, eliminating numerous HTTP requests for the required
+  resources.
+- The total \b payload \b size of the responses is reduced.
+
+The HTTP Server supports HTTP <b>local caching</b> by the browser. For static resources (basically everything except the
+scripts themselves), the server sends the HTTP header with the <b>last modified</b> date tag in the response.
+
+Caching of web resources stored in ROM
+--------------------------------------
+The internal web pages are included and compiled into the code. When the \ref nw_sw_util_fcarm reformats the web files into a
+single C-file, a timestamp is also added:
+\code
+const uint32_t imageLastModified = 1380695329;
+\endcode
+This time is used by the web server as the \b File \b Modification \b Date. It is specified in UTF format. The web server
+uses this date in the HTTP responses.
+
+File caching improves the web server performance a lot. The following table lists the times required to load the default
+page from an example:
+|%index.html not cached|%index.html cached|
+|:-------------------:|:---------------:|
+|447.5 ms             |53.1 ms          |
+
+Caching of externally stored web resources
+------------------------------------------
+The HTTP Server also supports browser local caching of web pages stored on SD Card. In general, files on an SD Card are
+bigger, thus the performance gain is much better. The available space for internal web pages is limited to the size of the
+internal flash memory. Thus, all large images, JavaScript archives and other large web resources, have to be located on
+an externally attached SD Card.
+
+### Static Web Resources ###
+The static web resource files are copied to a SD Card when the application is built. They will not be modified later. You
+might use a SD Card Reader attached to your PC to copy the files. In this case, the file modification date is set correctly
+by the PC. If you use an embedded application to copy the files, the file modification date is most likely set to the
+File System's default time. However, this does not create any problems for browser local caching. Once the web is locally
+cached by the browser, the cache is always valid and is used in subsequent browser requests.
+
+### Using Web Update ###
+Files, which are updated later with one of the update options provided by the Network Component, are called dynamic web
+resource files. You must provide the file modification date and time to the File System. If this information is not
+available, the File System uses a default file modification time. This might create browser local caching problems.
+
+If you upload an updated web page with a wrong file modification date to the server, the HTTP Server is not able to recognize
+the updated files. It always reports the same \b last \b modified date. The browser then uses the locally cached page
+instead. So the updated pages will never be used. You can force the browser to load the updated pages by manually clearing
+the browser cache and reloading the web page.
+
+\note If the File System does not have access to Real Time Clock information, the HTTP Server will not work for updated web
+pages. 
+*/
+
+
+/**
+\defgroup ws_user_api Control Interface
+\ingroup netHTTP_Func
+\brief Functions to work with the HTTP server.
+\details
+Like all services, the HTTP server is normally started automatically if \c NET_START_SERVICE is set to \token{1} in the
+\b %Net_Config.c configuration file. If it is set to \token{0}, the HTTP server needs to be started manually in the user
+application using \ref netHTTPs_Start. At runtime, it is always possible to stop the HTTP server using the function
+\ref netHTTPs_Stop. The user application can check for a running server using the \ref netHTTPs_Running function.
+
+To change the port of the HTTP server at runtime, first call \ref netHTTPs_Stop (if the server is running) and then use the
+\ref netHTTPs_SetPort function. Afterwards, the HTTP server needs to be (re-)started by the application calling
+\ref netHTTPs_Start.
+
+To change the path to a root folder of the HTTP server at runtime, first call \ref netHTTPs_Stop (if the server is running)
+and then use the \ref netHTTPs_SetRootPath function. Afterwards, the HTTP server needs to be (re-)started by the application
+calling \ref netHTTPs_Start.
+
+The HTTP server supports a built-in user account if the \c HTTP_SERVER_AUTH_ADMIN is set to \token{1}. In this case, the user
+specified by \c HTTP_SERVER_AUTH_USER is created and the password \c HTTP_SERVER_AUTH_PASS is used for this user. The HTTP
+server control interface provides functions to work with this built-in account. To retrieve the username in the application,
+use \ref netHTTPs_GetUsername. To change this username at runtime, use \ref netHTTPs_SetUsername. The same pair of functions
+is available for managing the password (\ref netHTTPs_GetPassword / \ref netHTTPs_SetPassword).
+
+It is also possible to check if this login is active (\ref netHTTPs_LoginActive) and to enable or disable it at runtime using
+\ref netHTTPs_LoginOnOff. Please note that the function \ref netHTTPs_LoginOnOff is only available at runtime if the define
+\c HTTP_SERVER_AUTH_ENABLE is set to \token{1} in the \b %Net_Config_HTTP_Server.h file. Otherwise, this command will not be
+compiled into the project to save resources. For more complex account management, use the \ref ws_access_filtering_mui.
+
+For some of the \ref ws_web_technologies you need information from the client/browser that is connected to the HTTP server.
+To retrieve the IP address and port number of the connected client, use \ref netHTTPs_GetClient. For the current session
+number you are working with, use \ref netHTTPs_GetSession. To display web sites in the correct language, you can examine the
+preferred language used by the browser with \ref netHTTPs_GetLanguage. \ref netHTTPs_GetContentType returns the content-type
+HTML header for further processing.
+*/
+
+
+/**
+\defgroup ws_access_filtering_mui Access and Multi-User Interface
+\ingroup netHTTP_Func
+\brief Functions to filter access to the HTTP server and to work with user accounts.
+\details
+To filter the access to the HTTP server based on the IP address and port of the connecting client, the optional function
+\ref netHTTPs_AcceptClient is used. It is part of the template file \b %HTTP_Server_Access.c. If this template file is
+missing in the µVision project, the function will not be available and thus connections from all remote clients will be
+accepted. You need to adapt the function to the application's needs by specifying the rules for allowed/blocked clients. The
+HTTP server will use the information in this function to filter the access. 
+
+The multi-user login allows you to create different profiles for different users or groups of users. The profiles define
+the access rights to different files on the HTTP server. The users which are allowed to access the HTTP server are stored in
+an user database.
+
+If you want to use multi-user authentication, you need to check the <b>Enable User Authentication</b> in the
+\ref ws_configuration "configuration file" (\b %Net_Config_HTTP_Server.h). The default account is a system administrator
+account, which has no restrictions. All other accounts are created in a separate \b %HTTP_Server_Multiuser.c module. To
+enable a list of users, you need to adapt the following functions that are included in this module:
+- \ref netHTTPs_CheckAccount - checks if the user account exists for the provided credentials.
+- \ref netHTTPs_FileAccess - check if the access to the file is allowed for a provided user.
+- \ref netHTTPs_GetUserId - retrieves the user identification number for the user, which is trying to access the file or
+  folder.
+  
+\note
+- To add the template files to your project, simply right-click on the Source group, select <b>Add New Item to Group</b>,
+  then click on <b>User Code Template</b> and scroll in the template files list until you find the required template.
+- If the \b %HTTP_Server_Multiuser.c is not added to the project, but Authentication is enabled, the web server runs in
+  single user authentication mode.
+*/
+
+
+/**
+\defgroup ws_fs_interface File System Interface
+\ingroup netHTTP_Func
+\brief HTTP server functions that work with a File System.
+\details
+All File System Interface functions are located in \b %HTTP_Server_FS.c, which will be automatically added to your project's
+\b Network folder. The file is preconfigured for the \url{MW-FileSystem}, so no modifications are
+required. If you wish to use another type of file system, you need to override these weak procedures with your required
+functionality.
+
+The following functions are implemented in this module:
+- \ref netHTTPs_fopen - open a file for reading or writing.
+- \ref netHTTPs_fclose - close a file that was previously opened.
+- \ref netHTTPs_fread - read a block of data from a file.
+- \ref netHTTPs_fgets - read a string from a file.
+- \ref netHTTPs_fstat - retrieve size and last modification time of a file.
+
+\anchor ws_web_on_sd
+Web on SD Card
+--------------
+The <b>Web Server</b> supports storing of web pages on a SD Card, which is attached to the embedded system. This
+is useful if you want to update or change the web content remotely. In this case, the File System Component is used, which
+must be configured for a target device Memory Card Drive.
+
+You can use any of the update methods to change the content of web pages:
+- <b>HTTP File Upload</b>: The web files are uploaded using a web browser. The HTTP server must be configured for the file
+  upload.
+- <b>FTP Server</b>: The web files are uploaded and managed with a FTP Client.
+
+Web Update
+----------
+When the Web Server tries to open a web page, it searches the <b>external file system</b> first. This is usually an
+externally attached SD Card. As the Compact Web Server is not configured to use an external file system, it searches only
+the internal ROM file system.
+
+If the requested file is found on the SD Card, the content is sent to the web client. If the requested file does not exist on
+the SD Card, it is opened from the internal ROM file system and transferred to the web client. This concept allows you to
+replace easily the web content from the internal ROM file system with a new one stored on the external SD Card.
+
+You should carefully update the \b cgi and \b cgx script files, as changes in the script files usually need to be reflected
+in the application code, which is in the module \b %HTTP_Server_CGI.c. If you have made a mistake in the uploaded script
+files, the web pages might not be accessible any more.
+
+To enable the SD-Card File System, you need the select the <b>Web Server</b> in the Manage Run-Time Environment window under
+<b>Network:Service</b>:
+
+\image html nw_service_web_server.png
+*/
+
+
+/**
+\defgroup ws_cgi_script Common Gateway Interface (CGI)
+\ingroup netHTTP_Func
+\brief Functions reacting on CGI requests to the HTTP server.
+\details
+To process a query string that was received by a \b GET request, the function \ref netCGI_ProcessQuery is used while serving
+a \b POST request is done with \ref netCGI_ProcessData. The function \ref netCGI_Script generates a HTML web page based on
+CGI scripting. Processing and conversion of environment variables is done using \ref netCGI_GetEnvVar, while the preferred
+character set (language) of a browser can be retrieved with \ref netCGI_Charset.
+*/
+
+
+/**
+\defgroup ws_configuration Configuration
+\ingroup netHTTP_Func
+\brief Configuration of the HTTP server in µVision.
+\details
+\image html "net_config_http_server_h.png" "HTTP Server Configuration File"
+
+The HTTP server configuration file <b>%Net_Config_HTTP_Server.h</b> contains the following settings:
+- <b>Number of Sessions</b> specifies the number of simultaneously active HTTP sessions. This number should be increased
+  when delays are observed while loading pages in a web browser. This increases also total RAM usage.
+  Web pages can contain many objects (like GIF or JPEG images). The remote HTTP client (web browser) opens multiple connections
+  when downloading such pages. If there are not enough sessions configured for a parallel load, excess connections are
+  rejected by the HTTP server. The browser then starts the socket recovery mode and retries to load missing resources. This
+  recovery causes a delay which varies for different browsers.
+- <b>Port Number</b> specifies the listening TCP port number. The default HTTP server listening port is 80. For 
+  HTTP over SSL/TLS (HTTPS) the default listening port is 443. If the Port Number is 0, the system automatically selects the
+  appropriate port number for communication.
+- <b>Server-Id header</b> specifies the custom HTTP server header identification. This identification is contained in each
+  Web server response packet. When this option contains an empty string, a default Server-Id from the library is used instead.
+- The <b>Enable User Authentication</b> switch enables or disables authentication with a username and a password.
+  - <b>Authentication Scheme</b> specifies the type of authentication to be used. The types supported are 
+    \b Basic and \b Digest.
+  - <b>Authentication Realm</b> is the string which is displayed in the browser's authentication dialog if an
+    authentication is required. This is a \token{null}-terminated string.
+  - <b>Built-In Administrator Account</b> enables the usage of a built-in user account.
+    - <b>Administrator Username</b> sets the username for the built-in account. The application can change the username at
+      runtime using \ref netHTTPs_SetUsername.
+    - <b>Administrator Secret</b> sets the default secret word. This can be a clear text password or a pre-calculated
+      HA1 value for Digest authentication. The application can change the secret word at runtime using \ref netHTTPs_SetPassword.
+- <b>Enable Root Folder</b> can be used to specify a root folder on the current storage device that will be used as
+  the entry point for all HTTP operations.
+  - <b>Web Root Folder</b> specifies the directory that is to be used as root folder.
+
+Additional configuration settings for HTTP server:
+- The \b HTTP_SERVER_NONCE_TAB_SIZE defines the number of nonce cache entries. The default setting is \token{8}.
+- The \b HTTP_SERVER_NONCE_CACHE_TOUT defines the expiration time for the nonce cache entries. The default setting is \token{60}
+  seconds.\n
+  These settings are used in the digest authentication. You can increase the size of the cache table if you experience problems
+  with the user authentication for the digest authentication mode. It is recommended that you keep the default setting.
+*/
+
+
+/**
+\defgroup nw_sw_util_fcarm FCARM File Converter
+\ingroup netHTTP_Func
+\brief Software utility to compile static web pages.
+\details
+The FCARM file converter reformats all web files into a single C-file which is then included and compiled into the project.
+All files are stored in the Virtual ROM File System.
+
+Automatic Invocation
+--------------------
+If configured appropriately, FCARM will be invoked automatically during a project build. For setup, go to \b Project ->
+\b Options \b for \b Target and select the \b Utilities tab. At the bottom, you can configure how FCARM compiles the image
+files. Here's an example:
+
+\anchor fcarm_setup_ds
+\image html "fcarm_configuration.png" "Configure Image File Processing (FCARM) Dialog"
+
+Manual Invocation
+-----------------
+FCARM can also be invoked from the command line. You will find the executable in your MDK installation's sub-directory
+\c \\ARM\\BIN. FCARM has the following syntax:
+
+\code
+FCARM @commandfile
+\endcode
+\b Where
+- \c commandfile is the name of a command file that can contain an \em inputlist, \em outputfile, and \em directives. (See below.)
+
+If you do not wish to use the command file, you can invoke FCARM like this:
+\code
+FCARM <{>inputlist<}> <{> TO outputfile<}> <{>directives<}>
+\endcode
+\b Where
+- \c inputlist is a comma-separated list of files. The files get converted into one output file. File names must be specified
+  with the file extension, but without the path information.
+- \c outputfile is the name of the output C-file containing the converted web files.
+- \c directives are commands and parameters that control the operation of the file converter. Available directives are:
+
+|Directive |Description                                                                                                    |
+|----------|---------------------------------------------------------------------------------------------------------------|
+|PRINT     |Specifies the name of the listing file. Default is the base name of the output C-file with the extension *.LST.|
+|NOPRINT   |Disables the generation of the listing (LST) file.                                                             |
+|PAGEWIDTH |Specifies the number of characters on a line in the listing file.                                              |
+|PAGELENGTH|Specifies the number of lines on a page in the listing file.                                                   |
+|ROOT      |Specifies the root path where web files are located relative to the project directory path.                    |
+
+Optimization
+------------
+FCARM integrates a \b file \b optimization algorithm to compress files and creates more compact and smaller executable images.
+FCARM decides on the file extension which kind of compression is used. Each file group has a different compression and
+optimization flavor.
+
+When the filename has the \b tilde \b prefix (for example, \e ~doStuff.js) then compression or certain compression optimizations
+are disabled. This is useful when debugging a file. It is hard to trace code compacted to a single line with no spaces, no
+comments, and no line feeds.
+
+Compression and optimization is performed in two iterations. In a 2nd pass, further optimization is performed resulting in
+better code density.
+
+<table>
+  <tr>
+    <th>Group</th>
+    <th>Extension</th>
+    <th>Optimization</th>
+    <th style="width:10%;">~Optimization (disabled)</th>
+  </tr>
+  <tr>
+    <td>HTML</td>
+    <td>html<br>
+    htm<br>
+    inc</td>
+    <td>
+      HTML compression<br>
+      Performs the following optimizations:
+      <ul>
+        <li>replaces tab characters with spaces</li>
+        <li>removes line-termination <code>CR-LF</code> characters</li>
+        <li>replaces multiple spaces with a single space</li>
+        <li>removes leading and trailing spaces</li>
+        <li>removes space between two html tags (for example, <code>&lt;ul&gt;&lt;li&gt;</code>)
+        </li>
+      </ul>
+    </td>
+    <td>no compression</td>
+  </tr>
+  <tr>
+    <td>CGI</td>
+    <td>cgi<br>
+    cgx</td>
+    <td>
+      CGI compression<br>
+      Optimizes scripts for maximum performance on embedded web server:
+      <ul>
+        <li>checks the script syntax</li>
+        <li>replaces <code>T,C,I,#</code> script commands with tokens</li>
+        <li>replaces tab characters with spaces</li>
+        <li>removes line-termination <code>CR-LF</code> characters</li>
+        <li>removes multiple spaces</li>
+        <li>removes comments from script lines</li>
+        <li>groups small t-commands</li>
+      </ul>
+    </td>
+    <td>white space removal but without grouping of small t-commands</td>
+  </tr>
+  <tr>
+    <td>CSS</td>
+    <td>css</td>
+    <td>
+      CSS compression<br>
+      Parses and removes redundant information:
+      <ul>
+        <li>replaces multiple spaces with a single space</li>
+        <li>removes line-termination <code>CR-LF</code> characters</li>
+        <li>replaces tab characters with spaces</li>
+        <li>removes <code>/\*</code> and <code>//</code>-style comments</li>
+        <li>removes redundant spaces inserted in the 1<sup>st</sup>step</li>
+        <li>removes spaces nearby a delimiter: <code>:;{}</code></li>
+      </ul>
+    </td>
+    <td>no optimization</td>
+  </tr>
+  <tr>
+    <td>JS</td>
+    <td>js</td>
+    <td>
+      JS compression<br>
+      Parses and removes redundant information:
+      <ul>
+        <li>replaces tab characters with spaces</li>
+        <li>replaces multiple spaces with a single space</li>
+        <li>removes line-termination <code>CR-LF</code> characters</li>
+        <li>removes <code>/\*</code> and <code>//</code>-style comments</li>
+        <li>removes redundant spaces inserted in the 1<sup>st</sup>step</li>
+        <li>removes spaces nearby a delimiter:&nbsp;<code>.,:;=!+-*\/&amp;|&lt;&gt;(){}""?</code></li>
+      </ul>
+    </td>
+    <td>no optimization</td>
+  </tr>
+  <tr>
+    <td>others</td>
+    <td>.*</td>
+    <td>not affected</td>
+    <td>not affected</td>
+  </tr>
+</table>
+
+Examples
+--------
+The following command line converts and optimizes <b>index.htm</b>, creates the output C-file <b>index.c</b>, and creates
+the listing file <b>index.lst</b>.
+\code
+FCARM index.htm
+\endcode
+
+The following command line converts and optimizes a list of files, creates the output C-file <b>web.c</b>, and creates the
+listing file <b>web.lst</b>.
+\code
+FCARM index.htm, keil.gif, llblue.jpg, system.cgi TO web.c
+\endcode
+
+The following command line converts and optimizes a list of files, creates the output C-file <b>Web.c</b>, and suppresses
+the creation of the listing file (nopr - directive). The files are located in the project's sub-folder \b Web. This command
+reflects the settings from the configuration dialog as shown \ref fcarm_setup_ds "here".
+\code
+FCARM index.htm, keil.gif, llblue.jpg, system.cgi TO Web.c nopr root(Web)
+\endcode
+
+The following command line converts and optimizes a list of files, creates the output C-file <b>web.c</b>, and creates the
+listing file <b>web.lst</b>. The file <b>doStuff.js</b> is excluded from optimization.
+\code
+FCARM index.htm, keil.gif, llblue.jpg, system.cgi, ~doStuff.js TO web.c
+\endcode
+
+The following command line uses a command file.
+\code
+FCARM @FCARM_command_file
+\endcode
+*/
+
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netFTPs_Func FTP Server
+\brief FTP Server is used for file transfer supporting sub-directories, log-in and a set of manipulation commands.
+\ingroup netServices
+\details
+<a href="https://en.wikipedia.org/wiki/File_Transfer_Protocol" target="_blank">File Transfer Protocol (FTP)</a> is a network
+protocol used to \b exchange and \b manipulate files over a TCP/IP-based network. FTP is built on a client-server
+architecture and utilizes separate control and data connections between the client and server applications. FTP is used
+either with user-based password authentication or with anonymous user access.
+
+FTP file manipulation means that you can: \b create and \b delete files on FTP server, \b rename files, \b create \b folders
+and sub-folders, \b print the folder listings, etc.
+
+FTP can be run in \b active or in \b passive \b mode, which control how the data connection is opened. The mode of operation
+is defined by the command, received from the client.
+- In <b>active mode</b> the \ref netFTPc_Func sends the server the IP address and port number that the client will use for
+  the data connection, and the \b server \b opens the connection.
+- In <b>passive mode</b> the server sends the client an IP address and port number and the \b client \b opens the connection
+  to the server. This mode is used, when the client is located behind a firewall and unable to accept incoming TCP
+  connection.
+
+The FTP Server can also be used to \b upload HTML pages onto the \ref netHTTP_Func or to \b download log files to a
+remote PC. In this case, the \url{MW-FileSystem} component must be used,
+and the \ref netHTTP_Func must be properly configured.
+
+\image html ftp_server_block_diagram.png
+
+This documentation is separated as follows:
+- \ref ftp_user_api explains how to start/stop the FTP Server and to manage built-in user accounts.
+- \ref ftp_access_filter_mui shows how to filter out hosts, which are <b>not allowed</b> to connect to the FTP Server and how
+  to add additional user accounts and to manage access rights for each user.
+- A \ref ftp_user_notification function sends notifications about events in FTP server to the user application.
+- \ref ftp_supported_cmds lists the available standard FTP commands that the FTP server understands.
+- \ref ftp_fs_interface gives you details about the functions that are used to read/write data on the FTP server's storage
+  device.
+- \ref using_ftp_server_conf explains the configuration options of the FTP server.
+*/
+
+
+/**
+\defgroup ftp_user_api Control Interface
+\ingroup netFTPs_Func
+\brief Functions to work with the FTP server.
+\details
+Like all services, the FTP server is normally started automatically if \c NET_START_SERVICE is set to \token{1} in the
+\b %Net_Config.c configuration file. If it is disabled, the FTP server needs to be started manually in the user
+application using \ref netFTPs_Start. At runtime, it is always possible to stop the FTP server using the function
+\ref netFTPs_Stop. The user application can check for a running server using the \ref netFTPs_Running function.
+
+To change the port of the FTP server at runtime, first call \ref netFTPs_Stop (if the server is running) and then use the
+\ref netFTPs_SetPort function. Afterwards, the FTP server needs to be (re-)started by the application calling
+\ref netFTPs_Start.
+
+<b>Code Example</b>
+\code
+void change_server_port (uint16_t port) {
+  if (netFTPs_Running() == true) {
+    netFTPs_Stop();
+  }
+  netFTPs_SetPort (port);
+  netFTPs_Start();
+}
+\endcode
+
+To change the path to a root folder of the FTP server at runtime, first call \ref netFTPs_Stop (if the server is running)
+and then use the \ref netFTPs_SetRootPath function. Afterwards, the FTP server needs to be (re-)started by the application
+calling \ref netFTPs_Start.
+
+The FTP server supports a built-in user account if the \c FTP_SERVER_AUTH_ADMIN is set to \token{1}. In this case, the user
+specified by \c FTP_SERVER_AUTH_USER is created and the password \c FTP_SERVER_AUTH_PASS is used for this user. The FTP
+server control interface provides functions to work with this built-in account. To retrieve the username in the application,
+use \ref netFTPs_GetUsername. To change this username at runtime, use \ref netFTPs_SetUsername. The same pair of functions
+is available for managing the password (\ref netFTPs_GetPassword / \ref netFTPs_SetPassword).
+
+It is also possible to check if this login is active (\ref netFTPs_LoginActive) and to enable or disable it at runtime using
+\ref netFTPs_LoginOnOff. Please note that the function \ref netFTPs_LoginOnOff is only available at runtime if the define
+\c FTP_SERVER_AUTH_ENABLE is set to \token{1} in the \b %Net_Config_FTP_Server.h file. Otherwise, this command will not be
+compiled into the project to save resources. For more complex account management, use the \ref ftp_access_filter_mui.
+*/
+
+
+/**
+\defgroup ftp_access_filter_mui Access and Multi-User Interface
+\ingroup netFTPs_Func
+\brief Functions to filter access to the FTP server and to work with user accounts.
+\details
+
+To filter the access to the FTP server based on the IP address and port of the connecting client, the optional function
+\ref netFTPs_AcceptClient is used. It is part of the template file \b %FTP_Server_Access.c. If this template file is missing
+in the µVision project, the function will not be available and thus connections from all remote clients will be accepted. You
+need to adapt the function to the application's needs by specifying the rules for allowed/blocked clients. The FTP server
+will use the information in this function to filter the access. 
+
+The multi-user login allows you to create different profiles for different users or groups of users. The profiles define
+the access rights to different files on the FTP server. The users which are allowed to access the FTP server are stored in
+an user database.
+
+If you want to use multi-user authentication, you need to check the <b>Enable User Authentication</b> in the
+\ref using_ftp_server_conf "configuration file" (\b %Net_Config_FTP_Server.h). The default account is a system administrator
+account, which has no restrictions. All other accounts are created in a separate \b %FTP_Server_Multiuser.c module. To enable
+a list of users, you need to adapt the following functions that are included in this module:
+- \ref netFTPs_CheckUsername - checks if the user account exists for the provided credentials.
+- \ref netFTPs_CheckPassword - checks if the password fits to the user account for the provided credentials.
+- \ref netFTPs_FileAccess - check if the access to the file is allowed for a provided user.
+
+The following function is included in the Network Component library %rl_net.h:
+- \ref netFTPs_GetUserId - retrieves the user identification number for the user, which is trying to access the file or
+  folder.
+
+\note
+- To add the template files to your project, simply right-click on the Source group, select <b>Add New Item to Group</b>,
+  then click on <b>User Code Template</b> and scroll in the template files list until you find the required template.
+- If the \b %FTP_Server_Multiuser.c is not added to the project, but Authentication is enabled, the FTP server runs in single
+  user authentication mode (refer to \ref ftp_user_api).
+*/
+
+
+/**
+\defgroup ftp_user_notification User Callback
+\ingroup netFTPs_Func
+\brief Function to notify the user application about events on the FTP server.
+\details
+In case you need to notify your application about events that are happening on the FTP server, the function
+\ref netFTPs_Notify is to be used. It is part of the file \b %FTP_Server_Event.c. You need to adapt the function to the
+application's needs.
+*/
+
+
+/**
+\defgroup ftp_supported_cmds Supported FTP Commands
+\ingroup netFTPs_Func
+\brief List of standard FTP commands that can be used on the FTP server.
+\details
+The Network Component's FTP server supports only a subset of standard FTP commands. The following FTP commands are supported:
+|Code|Command                 |Description|
+|----|------------------------|-----------|
+|USER|User Name               |Starts login with name identifying the user.|
+|PASS|Password                |Continues login with the user's password.|
+|QUIT|Logout                  |Closes the user connection.|
+|SYST|System                  |Identifies the operating system at the server.|
+|NOOP|No Operation            |Sends an OK reply.|
+|XNOP|No Operation            |Same as NOOP|
+|PWD |Print Working Directory |Returns the name of the current working directory.|
+|XPWD|Print Working Directory |Same as PWD|
+|CWD |Change Working Directory|Changes the current working directory of the user.|
+|XCWD|Change Working Directory|Same as CWD|
+|CDUP|Change Directory Up     |Changes working directory to the parent of the current directory.|
+|XCUP|Change Directory Up     |Same as CDUP|
+|MKD |Make Directory          |Creates a sub directory in the current working directory.|
+|XMKD|Make Directory          |Same as MKD|
+|RMD |Remove Directory        |Removes the directory.|
+|XRMD|Remove Directory        |Same as RMD|
+|TYPE|Representation Type     |Supports ASCII and Image types.|
+|PORT|Data Port               |Specifies the data port to be used in data connection.|
+|PASV|Passive                 |Requests the server to listen on a data port and wait for a connection.|
+|LIST|List                    |Sends a directory listing to the user.|
+|NLST|Name List               |Sends a directory listing to the user.|
+|RETR|Retrieve                |Sends a file content to the user.|
+|STOR|Store                   |Saves a captured user file on server.|
+|APPE|Append                  |Appends a captured user file to an existing file on server.|
+|DELE|Delete                  |Deletes a specified file from server.|
+|RNFR|Rename From             |Specifies the name of existing file to rename (must be followed by RNTO).|
+|RNTO|Rename To               |Renames an existing file to new name.|
+|HELP|Help                    |Returns a list of supported commands.|
+|SIZE|Size                    |Returns the size of a specified file.|
+|MDTM|Last-modified Time      |Returns last-modified time of a specified file.|
+|FEAT|Extended Features       |Returns a list of supported extended features.|
+|EPRT|Extended Data Port      |Set Extended Address for data connection.|
+|EPSV|Extended Passive        |Change to Extended passive mode and wait for a connection.|
+*/
+
+
+/**
+\defgroup ftp_fs_interface File System Interface
+\ingroup netFTPs_Func
+\brief FTP server functions that work with a File System.
+\details
+
+All File System Interface functions are located in \b %FTP_Server_FS.c, which will be automatically added to your project's
+\b Network folder. The file is preconfigured for the \url{MW-FileSystem} component, so no modifications are
+required. If you wish to use another type of file system, you need to override these weak procedures with your required
+functionality.
+
+The following functions are implemented in this module:
+- \ref netFTPs_fopen - open a file for reading or writing.
+- \ref netFTPs_fclose - close a file that was previously opened.
+- \ref netFTPs_fread - read a block of data from a file to the FTP data buffer.
+- \ref netFTPs_fwrite - write a block of data from the FTP data buffer to a file.
+- \ref netFTPs_fdelete - delete a specified file.
+- \ref netFTPs_frename - rename a file from old to a new name.
+- \ref netFTPs_ffind - find a file in a folder for printing a directory listing.
+- \ref netFTPs_mkdir - make a new directory.
+- \ref netFTPs_rmdir - delete an empty directory.
+- \ref netFTPs_chdir - verify that specified directory exists.
+*/
+
+
+/**
+\defgroup using_ftp_server_conf Configuration
+\ingroup netFTPs_Func
+\brief Configuration of the FTP server in µVision.
+\details
+
+\image html "net_config_ftp_server_h.png" "FTP Server Configuration File"
+
+The FTP server configuration file <b>Net_Config_FTP_Server.h</b> contains the following settings:
+- <b>Number of Sessions</b> specifies the number of available FTP sessions. The default value is one, and this enables
+  only one concurrent client connection. You should increase this number if multiple FTP clients must connect to the FTP
+  server at the same time. If you are using Windows Explorer as a FTP client, you should also increase this number because
+  Windows Explorer creates multiple simultaneous connections.
+- <b>Port Number</b> specifies the listening TCP port number. The default FTP server listening port is 21.
+- <b>Welcome Message</b> specifies the custom FTP server welcome message. This message is sent to the user on login. When
+  this option contains an empty string, a default Welcome Message from the library is used instead.
+- <b>Idle Session Timeout in seconds</b> specifies the interval of user inactivity, after which the connection is
+  automatically closed. During an idle session, no TCP frames are exchanged. A value of 0 disables a disconnection on
+  timeout.
+- The <b>Enable User Authentication</b> switch enables or disables authentication with a username and a password.
+  - <b>Built-In Administrator Account</b> enables the usage of a built-in user account.
+    - <b>Authentication Username</b> sets the username for the built-in account. The application can change the username at
+      runtime using \ref netFTPs_SetUsername.
+    - <b>Authentication Password</b> sets the default password. The application can change the password at runtime using
+      \ref netFTPs_SetPassword.
+- <b>Enable Root Folder</b> can be used to specify a local root folder on the current storage device that will be used as
+  the entry point for all FTP operations.
+  - <b>Local Root Folder</b> specifies the directory that is to be used as root folder.
+	
+\note One FTP session uses two TCP sockets, one control and one data socket. Have this in mind when you are configuring the
+number of TCP sockets. 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netFTPc_Func FTP Client
+\brief FTP Client is used to connect to an FTP Server for file transfer.
+\ingroup netServices
+\details
+The <a href="https://en.wikipedia.org/wiki/File_Transfer_Protocol" target="_blank">FTP</a> Client allows you to connect to an
+\ref netFTPs_Func and perform various file operations. Using the FTP Client you can:
+- upload files from the local system onto a FTP server,
+- download files from a FTP server to the local system,
+- append a local file to a file on the FTP server,
+- delete a file on the FTP server,
+- list the files stored on the FTP server,
+- rename a file or directory on the FTP server,
+- create a directory on the FTP server,
+- remove a directory from the FTP server.
+
+\image html ftp_client_block_diagram.png
+
+This documentation is separated as follows:
+- \ref ftpc_user_api explains how to start the FTP Client.
+- \ref ftpc_operation describes the operation of a FTP client session and how event notifications are sent to the user
+  application.
+- \ref ftpc_fs_interface gives you details about the functions that are used to read/write data on the FTP server's storage
+  device.
+- \ref using_ftpc_conf explains the configuration options of the FTP client.
+*/
+
+
+/**
+\defgroup ftpc_user_api Control Interface
+\ingroup netFTPc_Func
+\brief Functions to connect to an FTP server.
+\details
+The FTP client session starts with a connect request using \ref netFTPc_Connect. The FTP client then opens a FTP connection
+to the server. The FTP command that is to be performed by the FTP server is specified in the connect request parameter. Once
+the operation has completed, the FTP session ends and the connection closes. If you want to issue another command or transfer
+files, you need to start a FTP session again.
+*/
+
+
+/**
+\defgroup ftpc_operation User Callbacks
+\ingroup netFTPc_Func
+\brief Functions to notify the user application about FTP client events.
+\details
+All required session parameters are given in the \ref netFTPc_Process callback function. This function is in the
+\b %FTP_Client_UIF.c module. From the callback function, you can specify the username/password to access the FTP server, a
+working directory on the FTP server, a filename for the file operation, etc.
+
+The FTP client's operation mode is working with a relative path. This means the filename can not contain a path information.
+Instead of this, a working directory must be specified in the \b %FTP_Client_UIF.c user interface module. After login, the
+FTP client first changes the working directory to the path specified in user interface module, and then performs a file
+command. To add the module to your project, simply right-click on the Source group, select <b>Add New Item to Group</b>, then
+click on <b>User Code Template</b> and scroll in the template files list until you find the <b>FTP Client User Interface</b>
+template. The FTP client also supports directory manipulation and rename commands. This allows you to create or remove
+directories, and to rename files or directories on the server.
+
+The end of a FTP client operation can be notified to the user utilizing the \ref netFTPc_Notify function. It is part of
+the file \b %FTP_Client_UIF.c module as well. You need to adapt the function to the application's needs.
+*/
+
+
+/**
+\defgroup ftpc_fs_interface File System Interface
+\ingroup netFTPc_Func
+\brief FTP client functions that work with a File System.
+\details
+All File System Interface functions are located in \b %FTP_Client_FS.c, which will be automatically added to your project's
+\b Network folder. The file is preconfigured for the File System Component, so no modifications are required.
+If you wish to use another type of file system, you need to add a similar file to your project.
+
+The following functions are implemented in this module:
+- \ref netFTPc_fopen - open a file for reading or writing.
+- \ref netFTPc_fclose - close a file that was previously opened.
+- \ref netFTPc_fread - read a block of data from a file to the FTP data buffer.
+- \ref netFTPc_fwrite - write a block of data from the FTP data buffer to a file.
+*/
+
+
+/**
+\defgroup using_ftpc_conf Configuration
+\ingroup netFTPc_Func
+\brief Configuration of the FTP client in µVision.
+\details
+\image html "net_config_ftp_client_h.png" "FTP Client Configuration File"
+
+The FTP client configuration file <b>Net_Config_FTP_Client.h</b> contains the following settings:
+- <b>Response Timeout in seconds</b> is an inactivity timeout. When the FTP client does not receive a response from a FTP
+  server within this timeout, the operation is aborted.
+- In <b>Passive mode (PASV)</b>, the FTP client initiates both connections (control and data) to the server. This solves the
+  problem of firewalls filtering the incoming data port connection to the client from the server.
+	
+\note One FTP session uses two TCP sockets, one control and one data socket. Have this in mind when you are configuring the
+number of TCP sockets. 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netTFTPs_Func TFTP Server
+\brief TFTP Server is used for simple file transfer (typically for boot-loading remote devices).
+\ingroup netServices
+\details
+<a href="https://en.wikipedia.org/wiki/Trivial_File_Transfer_Protocol" target="_blank">Trivial File Transfer Protocol (TFTP)</a>
+is a simple protocol for \b exchanging \b files between two TCP/IP machines. TFTP servers allow connections from a
+\ref netTFTPc_Func for sending and receiving files. The TFTP protocol supports only file send and receive operations. File
+delete, move, and rename are not supported. Due to its limitations, TFTP is a complement to the regular
+\ref netFTPs_Func "FTP" and not a replacement. It is only used when its simplicity is important, and its lack of features is
+acceptable. The most common application is bootstrapping, although it can be used for other purposes as well.
+
+The TFTP Server can also be used to \b upload HTML pages onto the \ref netHTTP_Func or to \b download log files to a
+remote PC. In this case, the \url{MW-FileSystem} must be used,
+and the \ref netHTTP_Func must be properly configured.
+
+\image html tftp_server_block_diagram.png
+
+This documentation is separated as follows:
+- \ref tftp_server_user_api explains how to start/stop the TFTP Server and to manage built-in user accounts.
+- \ref tftp_server_access shows how to filter out hosts, which are <b>not allowed</b> to connect to the TFTP Server.
+- \ref tftp_server_fs_interface gives you details about the functions that are used to read/write data on the TFTP server's
+  storage device.
+- \ref using_tftp_server_conf explains the configuration options of the TFTP server.
+*/
+
+
+/**
+\defgroup tftp_server_user_api Control Interface
+\ingroup netTFTPs_Func
+\brief Functions to work with the TFTP server.
+\details
+Like all services, the TFTP server is normally started automatically if \c NET_START_SERVICE is set to \token{1} in the
+\b %Net_Config.c configuration file. If it is disabled, the TFTP server needs to be started manually in the user
+application using \ref netTFTPs_Start. At runtime, it is always possible to stop the TFTP server using the function
+\ref netTFTPs_Stop. The user application can check for a running server using the \ref netTFTPs_Running function.
+
+To change the port of the TFTP server at runtime, first call \ref netTFTPs_Stop (if the server is running) and then use the
+\ref netTFTPs_SetPort function. Afterwards, the TFTP server needs to be (re-)started by the application calling
+\ref netTFTPs_Start.
+
+<b>Code Example</b>
+\code
+void change_port (uint16_t port) {}
+  if (netTFTPs_Running() == true) {
+    netTFTPs_Stop();
+  }
+  netTFTPs_SetPort (port);
+  netTFTPs_Start();
+}  
+\endcode
+
+To change the path to a root folder of the TFTP server at runtime, first call \ref netTFTPs_Stop (if the server is running)
+and then use the \ref netTFTPs_SetRootPath function. Afterwards, the TFTP server needs to be (re-)started by the application
+calling \ref netTFTPs_Start.
+*/
+
+
+/**
+\defgroup tftp_server_access Access Interface
+\ingroup netTFTPs_Func
+\brief Functions to filter access to the TFTP server.
+\details
+To filter the access to the TFTP server, the optional function \ref netTFTPs_AcceptClient is used. It is part of the template
+file \b %TFTP_Server_Access.c. If this template file is missing in the µVision project, the function will not be available
+and thus connections from all remote clients will be accepted. You need to adapt the function to the application's needs by
+specifying the rules for allowed/blocked clients. The TFTP server will use the information in this function to filter the
+access. 
+*/
+
+
+/**
+\defgroup tftp_server_fs_interface File System Interface
+\ingroup netTFTPs_Func
+\brief TFTP server functions that work with a File System.
+\details
+All File System Interface functions are located in \b %TFTP_Server_FS.c, which will be automatically added to your project's
+\b Network folder. The file is preconfigured for the \url{MW-FileSystem} component, so no modifications are
+required. If you wish to use another type of file system, you need to override these weak procedures with your required
+functionality.
+
+The following functions are implemented in this module:
+- \ref netTFTPs_fopen - open a file for reading or writing.
+- \ref netTFTPs_fclose - close a file that was previously opened.
+- \ref netTFTPs_fread - read a block of data from a file to the TFTP data buffer.
+- \ref netTFTPs_fwrite - write a block of data from the TFTP data buffer to a file.
+*/
+
+
+/**
+\defgroup using_tftp_server_conf Configuration
+\ingroup netTFTPs_Func
+\brief Configuration of the TFTP server in µVision.
+\details
+\image html "net_config_tftp_server_h.png" "TFTP Server Configuration File"
+
+The TFTP server configuration file <b>Net_Config_TFTP_Server.h</b> contains the following settings:
+- <b>Number of Sessions</b> specifies the number of available TFTP sessions. The default value is one, and this enables
+  only one concurrent client connection. You should increase this number if multiple TFTP clients must connect to the TFTP
+  server at the same time.
+- <b>Port Number</b> specifies the listening UDP port number. The default TFTP server listening port is 69.
+- The <b>Enable Firewall Support</b> switch should be selected if the TFTP server runs behind a firewall. It then uses the
+  listening UDP port not only to receive requests, but also to send the answers to the clients. If this is not enabled,
+  the TFTP server runs in RFC1350 compliant mode. 
+- <b>Inactive Session Timeout in seconds</b> tells the TFTP server to close a session if the TFTP file transfer
+  is interrupted for some reason and the timeout timer expires.
+- <b>Number of Retries</b> specifies how many times the TFTP Server tries to retransmit the data before giving up.
+- <b>Enable Root Folder</b> can be used to specify a local root folder on the current storage device that will be used as
+  the entry point for all TFTP operations.
+  - <b>Local Root Folder</b> specifies the directory that is to be used as root folder.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netTFTPc_Func TFTP Client
+\brief TFTP Client is used to connect to a TFTP Server for simple file transfer.
+\ingroup netServices
+\details
+A <a href="https://en.wikipedia.org/wiki/Trivial_File_Transfer_Protocol" target="_blank">TFTP</a> Client can exchange files
+with a \ref netTFTPs_Func. File delete, file move, and file rename are not impossible, because the TFTP protocol does not
+support these file operations in general.
+
+\image html tftp_client_block_diagram.png
+
+This documentation is separated as follows:
+- \ref tftpc_user_api explains how to start the TFTP Client.
+- \ref tftpc_operation describes the operation of a TFTP client session and how an event notification is sent to the user
+  application.
+- \ref tftpc_fs_interface gives you details about the functions that are used to read/write data on the TFTP server's storage
+  device.
+- \ref using_tftpc_conf explains the configuration options of the TFTP client.
+*/
+
+
+/**
+\defgroup tftpc_user_api Control Interface
+\ingroup netTFTPc_Func
+\brief Functions to connect to a TFTP server.
+\details
+Due to the simplicity of the
+<a href="https://en.wikipedia.org/wiki/Trivial_File_Transfer_Protocol" target="_blank">TFTP protocol</a>, there are only two
+user commands for interaction with a remote TFTP server. \ref netTFTPc_Get is used to download a file from the server,
+whereas \ref netTFTPc_Put uploads a file onto the server. TFTP servers do not support directories, so all files will be
+up-/downloaded from the same root-directory.
+*/
+
+
+/**
+\defgroup tftpc_operation User Callback
+\ingroup netTFTPc_Func
+\brief Function to notify the user application about TFTP client events.
+\details
+The success of a TFTP client operation can be notified to the user utilizing the \ref netTFTPc_Notify function. It is part of
+the file \b %TFTP_Client_UIF.c module. You need to adapt the function to the application's needs. To add the module to your
+project, simply right-click on the Source group, select <b>Add New Item to Group</b>, then click on <b>User Code Template</b>
+and scroll in the template files list until you find the <b>TFTP Client User Interface</b> template. 
+*/
+
+
+/**
+\defgroup tftpc_fs_interface File System Interface
+\ingroup netTFTPc_Func
+\brief TFTP client functions that work with a File System.
+\details
+All File System Interface functions are located in \b %TFTP_Client_FS.c, which will be automatically added to your project's
+\b Network folder. The file is preconfigured for the File System Component, so no modifications are required.
+If you wish to use another type of file system or to use a different storage media such as a hard disk, you need to add a
+similar file to your project.
+
+The following functions are implemented in this module:
+- \ref netTFTPc_fopen - open a file for reading or writing.
+- \ref netTFTPc_fclose - close a file that was previously opened.
+- \ref netTFTPc_fread - read a block of data from a file to the TFTP data buffer.
+- \ref netTFTPc_fwrite - write a block of data from the TFTP data buffer to a file.
+*/
+
+
+/**
+\defgroup using_tftpc_conf Configuration
+\ingroup netTFTPc_Func
+\brief Configuration of the TFTP client in µVision.
+\details
+\image html "net_config_tftp_client_h.png" "TFTP Client Configuration File"
+
+The TFTP client configuration file <b>Net_Config_TFTP_Client.h</b> contains the following settings:
+- <b>Block Size</b> specifies the size of transfer block in bytes.
+- <b>Number of Retries</b> specifies how many times the TFTP client tries to retransmit the data before giving up.
+- <b>Retry Timeout</b> is the timeout, after which the TFTP Client retransmits the data. Values, specified in 100
+  milliseconds, can be selected from a list. The default value is 500 ms, represented as \#define TFTP_CLIENT_RETRY_TOUT 5.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netTELNET_Func Telnet Server
+\ingroup netServices
+\brief Telnet Server allows command line access to an embedded module over an IP network.
+\details
+<a href="https://en.wikipedia.org/wiki/Telnet" target="_blank">Telnet</a> is a protocol used on a network to provide a two-way
+interactive command line interface (CLI) using a virtual terminal connection. User data and Telnet control information is
+transferred on a data connection using \ref tcp_user_api "TCP".
+
+\image html telnet_server_block_diagram.png
+
+This documentation is separated as follows:
+- \ref telnet_user_api explains how to start/stop the Telnet Server and to manage built-in user accounts.
+- \ref telnet_access_filter_mui shows how to filter out hosts, which are <b>not allowed</b> to connect to the Telnet Server
+  and how to add additional user accounts and to manage access rights for each user.
+- \ref telnet_user_notification sends notification about events in Telnet server to the user application.
+- \ref telnet_server_conf explains the configuration options of the Telnet server.
+*/
+
+/**
+\defgroup telnet_user_api Control Interface
+\ingroup netTELNET_Func
+\brief Functions to work with the Telnet server.
+\details
+Like all services, the Telnet server is normally started automatically if \c NET_START_SERVICE is set to \token{1} in the
+\b %Net_Config.c configuration file. If it is disabled, the Telnet server needs to be started manually in the user
+application using \ref netTELNETs_Start. At runtime, it is always possible to stop the Telnet server using the function
+\ref netTELNETs_Stop. The user application can check for a running server using the \ref netTELNETs_Running function.
+
+To change the port of the Telnet server at runtime, first call \ref netTELNETs_Stop (if the server is running) and then use
+the \ref netTELNETs_SetPort function. Afterwards, the Telnet server needs to be (re-)started by the application calling
+\ref netTELNETs_Start.
+
+<b>Code Example</b>
+\code
+void change_server_port (uint16_t port) {
+  if (netTELNETs_Running() == true) {
+    netTELNETs_Stop();
+  }
+  netTELNETs_SetPort (port);
+  netTELNETs_Start();
+}
+\endcode
+
+The Telnet server supports a built-in user account if the \c TELNET_SERVER_AUTH_ADMIN is set to \token{1}. In this case, the
+user specified by \c TELNET_SERVER_AUTH_USER is created and the password \c TELNET_SERVER_AUTH_PASS is used for this user.
+The Telnet server control interface provides functions to work with this built-in account. To retrieve the username in the
+application, use \ref netTELNETs_GetUsername. To change this username at runtime, use \ref netTELNETs_SetUsername. The same
+pair of functions is available for managing the password (\ref netTELNETs_GetPassword / \ref netTELNETs_SetPassword).
+
+It is also possible to check if this login is active (\ref netTELNETs_LoginActive) and to enable or disable it at runtime
+using \ref netTELNETs_LoginOnOff. Please note that the function \ref netTELNETs_LoginOnOff is only available at runtime if
+the define \c TELNET_SERVER_AUTH_ENABLE is set to \token{1} in the \b %Net_Config_Telnet_Server.h file. Otherwise, this
+command will not be compiled into the project to save resources. For more complex account management, use the
+\ref telnet_access_filter_mui.
+
+The command line interface functions are located in the \b %Telnet_Server_UIF.c template file. You must add this file to your
+project and customize it. You can add new commands or remove existing commands from the file. To add the template file to
+your project, simply right-click on the Source group, select <b>Add New Item to Group</b>, then click on
+<b>User Code Template</b> and scroll in the template files list until you find the <b>Telnet Server</b> template.
+*/
+
+
+/**
+\defgroup telnet_access_filter_mui Access and Multi-User Interface
+\ingroup netTELNET_Func
+\brief Functions to filter access to the Telnet server and to work with user accounts.
+\details
+To filter the access to the Telnet server based on the IP address and port of the connecting client, the optional function
+\ref netTELNETs_AcceptClient is used. It is part of the template file \b %Telnet_Server_Access.c. If this template file is
+missing in the µVision project, the function will not be available and thus connections from all remote clients will be
+accepted. You need to adapt the function to the application's needs by specifying the rules for allowed/blocked clients. The
+Telnet server will use the information in this function to filter the access. 
+
+The multi-user login allows you to create different profiles for different users or groups of users. The profiles define
+the access rights to different commands executed on the Telnet server. The users which are allowed to access the Telnet
+server are stored in an user database.
+
+If you want to use multi-user authentication, you need to check the <b>Enable User Authentication</b> in the
+\ref telnet_server_conf "configuration file" (\b %Net_Config_Telnet_Server.h). The default account is a system administrator
+account, which has no restrictions. All other accounts are created in a separate \b %Telnet_Server_Multiuser.c module.
+
+To enable a list of users, you need to adapt the function \ref netTELNETs_CheckUsername, which checks if the user account
+exists for the provided credentials, and the function \ref netTELNETs_CheckPassword, which checks if the password fits to the
+user account for the provided credentials.
+
+The following function is included in the Network Component library %rl_net.h:
+- \ref netTELNETs_GetUserId - retrieves the user identification number for the user, which is trying to execute a command.
+
+\note
+- To add the template files to your project, simply right-click on the Source group, select <b>Add New Item to Group</b>,
+  then click on <b>User Code Template</b> and scroll in the template files list until you find the required template.
+- If the \b %Telnet_Server_Multiuser.c is not added to the project, but authentication is enabled, the Telnet server runs
+  in single user authentication mode.
+*/
+
+
+/**
+\defgroup telnet_user_notification User Callbacks
+\ingroup netTELNET_Func
+\brief Functions to notify the user application about events on the Telnet server.
+\details
+The \ref netTELNETs_ProcessCommand function processes the Telnet command when it is received from a remote client.
+A command is any sequence of characters that is terminated by the CRLF sequence (the Enter key is pressed). 
+The Telnet server assembles this command and passes it as an argument to the \ref netTELNETs_ProcessCommand function.
+This function then generates a reply message and sends it back to the user. It is part of the \b %Telnet_Server_UIF.c
+template file.
+
+
+When the reply message is short, the whole message can be sent in a <b>single TCP packet</b>. However, when long reports are
+generated, <b>multiple TCP packets</b> must be sent to transfer the whole message. For example, when the log files are
+displayed this is often the case. Both single and multiple packets are supported by the Embedded Telnet Server.
+
+Short Reply
+-----------
+In the following example, the Telnet command HELP is sent by the Telnet client:
+\code
+cmd> HELP
+\endcode
+This command is answered by the predefined help message  \a telnet_help. This message is copied to the output buffer and
+sent to the remote Telnet client. The following code sends the reply message:
+\code
+uint32_t netTELNETs_ProcessCommand (const char *cmd, char *buf, uint32_t buf_len, uint32_t *pvar) {
+   ..
+  if (netTELNETs_CheckCommand (cmd, "HELP") == true) {
+    // HELP command, print help text
+    len = sprintf (buf, telnet_help);
+    return (len);
+  }
+   ..
+}
+\endcode
+
+Long Reply
+----------
+A long reply message requires multiple calls to the function \ref netTELNETs_ProcessCommand. Each call to this function
+generates part of the reply message until the entire message is generated and sent. To distinguish between different calls to
+the function, the argument \a pvar is used. This argument is a pointer to a variable that is set to \token{0} on the first
+call and not altered on each subsequent call to this function. The function's return value, which specifies the number of
+bytes in the reply message, cannot exceed \token{1500}. Hence the high bits of the function's return value are used to store
+the flags:
+- <b>Repeat flag</b> - bit 31\n
+  This flag tells the Telnet Server whether the function \ref netTELNETs_ProcessCommand must be called again or not (because
+  the command processing is complete). The return value must be OR-ed with \token{1u<<31} to call the function again.
+- <b>Disconnect flag</b> - bit 30\n
+  This flag tells the Telnet Server to disconnect the Telnet connection. If this flag is set, the Telnet Server disconnects
+  the current Telnet session. The return value must be OR-ed with \token{1u<<30} to disconnect.
+
+In the following example, the \b MEAS command is given by the user using the Telnet client.
+\code
+cmd> MEAS
+\endcode
+When a new Telnet command is received, the function \ref netTELNETs_ProcessCommand is called with the argument \a pvar set to
+\token{0}. The command buffer \a cmd is checked to identify the command.
+\code
+uint32_t netTELNETs_ProcessCommand (const char *cmd, char *buf, uint32_t buf_len, uint32_t *pvar) {
+  uint32_t len = 0;
+ 
+  switch (MYBUF(pvar)->id) {
+    case 0:
+      // First call to this function
+      break;
+
+    case 1:
+      // Command MEAS, repeated call
+      ..
+      // Set request for another callback
+      return (len | (1u << 31));
+  ..
+  }
+
+  if (netTELNETs_CheckCommand (cmd, "MEAS") == true) {
+    // MEAS command given, monitor analog inputs
+    MYBUF(pvar)->id = 1;
+    if (len > 5) {
+      uint32_t nmax;
+      sscanf (&cmd[5], "%u", &nmax);
+      if (nmax > 255) nmax = 255;
+      MYBUF(pvar)->nmax = nmax;
+    }
+    len = sprintf (buf, meas_header);
+    if (MYBUF(pvar)->nmax) {
+      // Bit-31 is a repeat flag
+      len |= (1u << 31);
+    }
+    return (len);
+  }
+  ..
+}
+\endcode
+
+The above example uses 3 bytes of a storage variable pointed by \a pvar pointer for the following structure:
+\code
+typedef struct {
+  uint8_t id;
+  uint8_t nmax;
+  uint8_t idx;
+} MY_BUF;
+#define MYBUF(p)        ((MY_BUF *)p)
+\endcode
+When the call to \ref netTELNETs_ProcessCommand is repeated for the same command, the value of a storage variable pointed to
+by argument \a pvar is not altered any more. You can use the value of \a pvar to process the command differently. The \a pvar
+buffer now holds the private structure \c MYBUF, which is valid for the lifetime of processing the command. When the command
+processing is finished, this buffer is not used any more until the next command.
+\code
+uint32_t netTELNETs_ProcessCommand (const char *cmd, char *buf, uint32_t buf_len, uint32_t *pvar) {
+  uint32_t len = 0;
+ 
+  switch (MYBUF(pvar)->id) {
+    case 0:
+      // First call to this function
+      break;
+
+    case 1:
+      // Command MEAS, repeated call
+      while (len < buf_len-80) {
+        // Let's use as much of the buffer as possible
+        len += sprintf (buf+len, "\r\n%4d", MYBUF(pvar)->idx);
+        for (val = 0; val < 8; val++) {
+          len += sprintf (buf+len, "%7d", AD_in(val));
+        }
+        if (++MYBUF(pvar)->idx >= MYBUF(pvar)->nmax) {
+          // Requested number of measurements done
+          return (len);
+        }
+      }
+      // Set request for another callback
+      return (len | (1u << 31));
+
+    case 2:
+      // Repeated call, TCP status display
+      ..
+}
+\endcode
+After giving a \c meas \c 4 command, the Telnet Client screen looks like this:
+
+\image html "telnet_meas.png"
+
+\note You can check the \ref Telnet_Example to see how it works.
+*/
+
+
+/**
+\defgroup telnet_server_options Option Negotiation
+\ingroup netTELNET_Func
+\brief Telnet options required to establish a Telnet connection.
+\details
+The Network Component's Telnet server is configured to work with most of the available Telnet clients.
+If the connection fails, this may be because Telnet options are not agreed as required on the Telnet server.
+To establish a Telnet connection, the following Telnet options are negotiated:
+- \b ECHO 
+- \b SUPPRESS-GO-AHEAD
+
+If the Telnet negotiation reply does not match the required one, the Telnet server disconnects.
+
+The Telnet server sends Telnet negotiation options that depend on the settings in the Telnet
+configuration, this is the configuration option \b Disable \b Echo:
+- \b Disable \b Echo not active
+|Send Command               |Send binary  |Required Reply             |Reply binary |
+|:-------------------------:|-------------|---------------------------|-------------|
+|IAC DO SUPPRESS-GO-AHEAD   |255, 253, 3  |IAC WILL SUPPRESS-GO-AHEAD |255, 251, 3   |
+|IAC WILL SUPPRESS-GO-AHEAD |255, 251, 3  |IAC DO SUPPRESS-GO-AHEAD   |255, 253, 3   |
+|IAC DON'T ECHO             |255, 254, 1  |IAC WON'T ECHO             |255, 252, 1   |
+|IAC WILL ECHO              |255, 254, 1  |IAC DO ECHO                |255, 253, 1   |
+\n 
+- \b Disable \b Echo active
+|Send Command               |Send binary  |Required Reply             |Reply binary  |
+|:-------------------------:|-------------|---------------------------|--------------|
+|IAC DO SUPPRESS-GO-AHEAD   |255, 253, 3  |IAC WILL SUPPRESS-GO-AHEAD |255, 251, 3   |
+|IAC WILL SUPPRESS-GO-AHEAD |255, 251, 3  |IAC DO SUPPRESS-GO-AHEAD   |255, 253, 3   |
+|IAC DO ECHO                |255, 253, 1  |IAC WILL ECHO              |255, 251, 1   |
+|IAC WON'T ECHO             |255, 252, 1  |IAC DON'T ECHO             |255, 254, 1   |
+*/
+
+
+/**
+\defgroup telnet_server_conf Configuration
+\ingroup netTELNET_Func
+\brief Configuration of the Telnet server in µVision.
+\details
+\image html "net_config_telnet_server_h.png" "Telnet Server Configuration File"
+
+The Telnet server configuration file <b>Net_Config_Telnet_Server.h</b> contains the following settings:
+- <b>Number of Connections</b> specifies the number of available Telnet sessions. The default value is one, and this
+  enables only one concurrent client connection. You should increase this number if multiple Telnet clients must connect
+  to the Telnet server at the same time.
+- <b>Port Number</b> specifies the listening TCP port number. The default Telnet server listening port is 23.
+- <b>Idle Connection Timeout in seconds</b> specifies the interval of user inactivity, after which the connection is
+  automatically closed. During an idle session, no TCP frames are exchanged. A value of 0 disables a disconnection on
+  timeout.
+- The <b>Disable Echo</b> switch enables or disables the Telnet Server echo mode. When disabled, the Telnet Server will not
+  echo characters it receives.
+- The <b>Enable User Authentication</b> switch enables or disables authentication with a username and a password.
+  - <b>Built-In Administrator Account</b> enables the usage of a built-in user account.
+    - <b>Authentication Username</b> sets the username for the built-in account. The application can change the username at
+      runtime using \ref netTELNETs_SetUsername.
+    - <b>Authentication Password</b> sets the default password. The application can change the password at runtime using
+      \ref netTELNETs_SetPassword.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netSNMP_Func SNMP Agent
+\ingroup netServices
+\brief An SNMP Agent enables network management features.
+\details
+<a href="https://en.wikipedia.org/wiki/Simple_Network_Management_Protocol" target="_blank">Simple Network Management Protocol (SNMP)</a>
+is mainly used in network management systems to monitor network-attached devices for conditions that warrant administrative
+attention. It is the most popular network management protocol in the TCP/IP protocol suite.
+
+\note The Network Component's SNMP Agent supports IPv4 connections only.
+
+SNMP is a simple request/response protocol that communicates management information between two types of SNMP software
+entities: SNMP \b managers and SNMP \b agents. The following picture shows an exemplary setup:
+
+\image html "snmp_overview.png"
+
+In summary, SNMP performs the following operations:
+
+- The \b GET operation receives a specific value about a managed object, such as the available hard disk space from the
+  agent's MIB.
+- The \b GET-NEXT operation returns the "next" value by traversing the MIB tree of managed object variables.
+- The \b SET operation changes the value of a managed object's variable. Only variables whose object definition allows
+  read/write access can be changed.
+- The \b Trap operation sends a message to the Management Station when a change occurs in a managed object, and that change
+  is important enough to send an alert message.
+
+The SNMP Agent validates each request from a SNMP manager before responding to the request, by verifying that the manager
+belongs to a SNMP community with access privileges to the agent. A SNMP community is a logical relationship between a
+SNMP agent and one or more SNMP managers. The community has a name, and all members of a community have the same access
+privileges: either read-only or read-write.
+
+The SNMP Agent in the Network Component is an optimized and compact implementation for embedded systems.
+Currently it implements SNMP version 1.
+
+This documentation is separated as follows:
+- \ref snmp_user_api shows how to send trap messages to the Trap Manager and how to switch communities.
+- \ref mib_interface explains how to setup MIB variables to be entered in the MIB database.
+- \ref using_snmp_agent_conf explains the configuration options of the SNMP agent.
+	
+*/
+
+
+/**
+\defgroup snmp_user_api Control Interface
+\ingroup netSNMP_Func
+\brief Functions to communicate with the Trap Manager.
+\details
+To notify the SNMP manager of significant events, so called traps are used. The Network Component's \ref netSNMP_Trap
+function is used to send these unsolicited messages to the manager. The SNMP community string is a kind of password that is
+used to authenticate the SNMP agent (SNMP v1 and v2 only; SNMP v3 has dedicated username/password protection). To change the
+SNMP community string, use \ref netSNMP_SetCommunity.
+*/
+
+
+/**
+\defgroup mib_interface Management Information Base (MIB) Interface
+\ingroup netSNMP_Func
+\brief Management Information Base (MIB) Interface.
+\details
+The database controlled by the SNMP Agent is referred to as the
+<a href="https://en.wikipedia.org/wiki/Management_information_base" target="_blank">Management Information Base (MIB)</a>. It
+is a standard set of statistical and control values. SNMP allows the extension of these standard values with values specific
+to a particular agent through the use of private MIBs.
+
+The definitions of MIB variables supported by a particular agent are incorporated in descriptor files, written in
+<a href="https://en.wikipedia.org/wiki/Abstract_Syntax_Notation_One" target="_blank">Abstract Syntax Notation (ASN.1)</a>
+format, made available to network management client programs so that they can become aware of these MIB variables and their
+usage.
+
+The MIB variables are referred to as MIB
+<a href="https://en.wikipedia.org/wiki/Object_identifier" target="_blank">Object Identifiers (OIDs)</a>. OID names are
+hierarchy structured and unique. SNMP uses the OID to identify objects on each network element (device running SNMP agent)
+that can be managed using SNMP.
+
+The SNMP Agent manages MIB variables that are located in the \b %SNMP_Agent_MIB.c template file. To add the file to your
+project, simply right-click on the Source group, select <b>Add New Item to Group</b>, then click on <b>User Code Template</b>
+and scroll in the template files list until you find the <b>SNMP Agent</b> template. The \b %SNMP_Agent_MIB.c file has
+implemented a scaled-down \b MIB-II Management Information Base. Only the System \b MIB is defined by default. The user might
+expand this table by adding his own MIB variables.
+
+The user can register a callback function with a MIB variable. This function gets called, when the SNMP Manager accesses the
+MIB variable. This concept allows the SNMP Manager to control the SNMP Agent system. For example to change LED outputs, to
+write text on embedded LCD module, to read push buttons or analog inputs, etc.
+
+\anchor mib_entry
+MIB Entry
+---------
+The SNMP MIB entry information structure \ref NET_SNMP_MIB_INFO describes the MIB variable. The SNMP Agent uses this
+description to process local MIB variables. This structure is defined as follows:
+\code
+typedef struct net_snmp_mib_info {
+  uint8_t  type;                        // Object Type
+  uint8_t  oid_len;                     // Object ID length
+  uint8_t  oid[NET_SNMP_MIB_OID_SIZE];  // Object ID value
+  uint8_t  var_size;                    // Size of a variable
+  void     *var;                        // Pointer to a variable
+  void     (*cb_func)(int32_t mode);    // Write/Read event callback function
+} const NET_SNMP_MIB_INFO;
+\endcode
+The components of NET_SNMP_MIB_INFO structure are:
+- the \a type defines the MIB variable type:
+  |MIB Type                |Description                       |Size               |
+  |------------------------|----------------------------------|-------------------|
+  |NET_SNMP_MIB_INTEGER    |Signed Integer                    |1, 2 or 4 bytes    |
+  |NET_SNMP_MIB_OCTET_STR  |Octet String entry                |max. 110 characters|
+  |NET_SNMP_MIB_BYTE_STR   |Byte String entry                 |max. 110 bytes     |
+  |NET_SNMP_MIB_OBJECT_ID  |Object Identifier entry           |max. 17 bytes      |
+  |NET_SNMP_MIB_IP_ADDR    |IP Address entry                  |4 bytes            |
+  |NET_SNMP_MIB_COUNTER    |Counter entry                     |1, 2 or 4 bytes    |
+  |NET_SNMP_MIB_GAUGE      |Gauge entry                       |1, 2 or 4 bytes    |
+  |NET_SNMP_MIB_TIME_TICKS |Time Ticks entry                  |4 bytes            |
+  The \a type component may be OR-ed with the \b NET_SNMP_MIB_ATR_RO read-only attribute. A read-only variable can not be changed by
+  the SNMP Manager.
+
+- the OID specifies the Object Identification Name of the variable. It is length encoded:
+  - \a oid_len specifies the length of the \a oid[] array.
+  - \a oid[NET_SNMP_MIB_OID_SIZE] array specifies the OID name - a length encoded binary array.
+
+- \a var specifies the Pointer to the variable and its Size:
+  - \a var_size specifies the size of var variable.
+  - \a var is a pointer to the actual variable. 
+
+- the \a cb_func specifies a callback function which is called, when the variable is accessed by SNMP Manager. The callback
+  function is not registered, when the value of \a cb_func is \token{NULL}. The argument \a mode of the callback function specifies
+  the access mode of SNMP Manager:
+  |Mode              |Type of Access           |
+  |------------------|-------------------------|
+  |NET_SNMP_MIB_READ |Reads a MIB variable.    |
+  |NET_SNMP_MIB_WRITE|Writes to a MIB variable.|
+ 
+\anchor mib_data_table
+MIB Table
+---------
+The \b MIB Table table is defined as an array. The components of this array are of type \ref NET_SNMP_MIB_INFO.
+\code
+static const NET_SNMP_MIB_INFO mib_table[] = {
+// ---------- System MIB ----------- 
+  // SysDescr Entry
+  { NET_SNMP_MIB_OCTET_STR | NET_SNMP_MIB_ATR_RO,
+    8, {NET_SNMP_MIB_OID0(1,3), 6, 1, 2, 1, 1, 1, 0},
+    NET_SNMP_MIB_STR("Embedded System SNMP V1.0"),
+    NULL },
+  // SysObjectID Entry
+  { NET_SNMP_MIB_OBJECT_ID | NET_SNMP_MIB_ATR_RO,
+    8, {NET_SNMP_MIB_OID0(1,3), 6, 1, 2, 1, 1, 2, 0},
+    NET_SNMP_MIB_STR("\x2b\x06\x01\x02\x01\x01\x02\x00"),
+    NULL },
+  // SysUpTime Entry
+  { NET_SNMP_MIB_TIME_TICKS | NET_SNMP_MIB_ATR_RO,
+    8, {NET_SNMP_MIB_OID0(1,3), 6, 1, 2, 1, 1, 3, 0},
+    4, &snmp_SysUpTime,
+    NULL },
+    ..
+}
+\endcode
+In the following example, we will construct a MIB variable entry \b LedOut. It will allow the SNMP Manager to control LEDs on
+an evaluation board.
+
+The MIB variable \b type is Integer. An uint8_t variable is sufficient, because the LED port is 8-bit: 
+\code
+  // LedOut Entry
+  { NET_SNMP_MIB_INTEGER,
+\endcode
+
+The OID reference is 1.3.6.1.3.1.0. It is defined in the \b Experimental MIB branch of the MIB tree: 
+\code
+    6, {NET_SNMP_MIB_OID0(1,3), 6, 1, 3, 1, 0},
+\endcode
+- the first byte defines the \b length of the OID name,
+- macro \b NET_SNMP_MIB_OID0 calculates the first byte of OID value from 1st and 2nd address byte,
+- the value of an OID address byte must be less than 128, otherwise an \b extended encoding must be used.
+
+The variable size and location is described with the help of \b NET_SNMP_MIB_INT macro: 
+\code
+    NET_SNMP_MIB_INT(LedOut),
+\endcode
+The following macros are defined:
+|Macro             |Variable Definition                          |
+|------------------|---------------------------------------------|
+|NET_SNMP_MIB_STR  |Octet or Byte String size and location.      |
+|NET_SNMP_MIB_INT  |Signed or Unsigned Integer size and location.|
+|NET_SNMP_MIB_IP   |IP Address size and location.                |
+
+The \b write_leds is specified as callback function. It gets called when the \b LedOut is written:
+\code
+   write_leds },
+\endcode
+
+Finally we need the actual variable definition: 
+\code
+static uint8_t LedOut;
+\endcode
+
+For the \b LedOut control we actually need the following parts of code to be defined in \b %SNMP_Agent_MIB.c module:
+\code
+static uint8_t LedOut;
+static void write_leds (int32_t mode);
+ 
+const NET_SNMP_MIB_INFO snmp_mib[] = {
+    ..
+  // LedOut Entry
+  { NET_SNMP_MIB_INTEGER,
+    6, {NET_SNMP_MIB_OID0(1,3), 6, 1, 3, 1, 0},
+    NET_SNMP_MIB_INT(LedOut),
+    write_leds },
+    ..
+}
+ 
+static void write_leds (int32_t mode) {
+  // No action on read access.
+  if (mode == NET_SNMP_MIB_WRITE) {
+    LED_SetOut (LedOut);
+  }
+}
+\endcode
+
+String Handling
+---------------
+Two types of read/write strings are supported:
+|Type          |Description                   |
+|--------------|------------------------------|
+|OCTET_STRING  |An 0-terminating ascii string.|
+|BYTE_STRING   |Length-encoded binary string. |
+
+The \b OCTET_STRING is treated as an 0-terminating ascii string, the last character
+in the string is a zero character. When the ascii string is written in the SET request,
+a 0-termination is added. The position of the zero character specifies the length
+of the data encoded in the GET response.
+
+\code
+static char ascii_str[20];
+    ..
+  strcpy (ascii_str, "embedded");
+    ..
+ 
+const NET_SNMP_MIB_INFO snmp_mib[] = {
+    ..
+  // Ascii String Entry
+  { NET_SNMP_MIB_OCTET_STR,
+    6, {NET_SNMP_MIB_OID0(1,3), 6, 1, 3, 2, 0},
+    NET_SNMP_MIB_STR(ascii_str),
+    NULL },
+    ..
+}
+\endcode
+
+The \b BYTE_STRING is treated as a length-encoded binary string. The first byte in
+the string is the length of the string. The contents of the string are stored from
+the second byte onwards. When the byte string is written in the SET request, the
+\e len is updated. The \e len specifies the length of the data encoded in the GET
+response. 
+
+\code
+static uint8_t byte_str[20];
+    ..
+  NET_SNMP_BYTE_STR *bp = (NET_SNMP_BYTE_STR *)&byte_str;
+  bp->len = 4;
+  bp->data[0] = 0;
+  bp->data[1] = 2;
+  bp->data[2] = 0;
+  bp->data[3] = 0;
+    ..
+ 
+const NET_SNMP_MIB_INFO snmp_mib[] = {
+    ..
+  // Byte String Entry
+  { NET_SNMP_MIB_BYTE_STR,
+    6, {NET_SNMP_MIB_OID0(1,3), 6, 1, 3, 3, 0},
+    NET_SNMP_MIB_STR(byte_str),
+    NULL },
+    ..
+}
+\endcode
+ 
+Extended OID Encoding
+---------------------
+The value of OID address byte must be less than \b 128. If it is not, an OID address must be encoded in extended format.
+This is because the high bit of an address byte is an address <b>extension bit</b>.
+
+For example, the OID address 1.3.6.1.4.1.<b>311</b>.0 is encoded as:
+\code
+8, {NET_SNMP_MIB_OID0(1,3), 6, 1, 4, 1, 130, 55, 0},
+\endcode
+
+The address value for the highlighted numbers is calculated as:
+\code
+(130-128) * 128 + 55 = 311
+\endcode
+
+The OID address 1.3.6.1.4.1.<b>31036</b>.50.1.1.0 is encoded as:
+\code
+12, {NET_SNMP_MIB_OID0(1,3), 6, 1, 4, 1, 129, 242, 60, 50, 1, 1, 0},
+\endcode
+
+where the value 31036 is calculated as:
+\code
+(129-128) * 128 * 128 + (242-128) * 128 + 60 = 31036
+\endcode
+*/
+
+
+/**
+\defgroup using_snmp_agent_conf Configuration
+\ingroup netSNMP_Func
+\brief Configuration of the SNMP agent in µVision.
+\details
+\image html "net_config_snmp_agent_h.png" "SNMP Agent Configuration File"
+
+The SNMP agent configuration file <b>Net_Config_SNMP_Agent.h</b> contains the following settings:
+- <b>Community Name</b> specifies the SNMP Community where an SNMP message is destined for. Only the members of the same
+  community can communicate with each other using SNMP protocol. Default Community name is \b public.
+- <b>Port Number</b> specifies the listening UDP port number. The default SNMP Agent listening port is 161.
+- <b>Trap Port Number</b>  specifies the UDP port number for Trap operations. The default SNMP Agent trap port is 162.
+- <b>Trap Server</b> specifies the IP address of the Trap Server which receives Trap messages. This IP address is used when
+  the Trap Server IP is not specified in \ref netSNMP_Trap function parameter. 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netDNSc_Func DNS Client
+\ingroup netServices
+\brief A DNS Client helps to resolve DNS requests using an external DNS server.
+\details
+<a href="https://en.wikipedia.org/wiki/Domain_Name_System" target="_blank">Domain Name System (DNS)</a> servers store and
+manage information about \b domains and respond to <b>resolution requests</b> for clients (in some cases millions of times
+each day). The DNS database is a \b distributed name database stored on many DNS servers. DNS uses a hierarchical tree
+structure for its name space and a hierarchical tree for name authorities and registration.
+
+Since information in DNS is stored in a distributed form, there is no single server that has information about every domain
+in the system. The process of resolution instead relies on the hierarchy of name servers as described above.
+
+At the top of the DNS hierarchy is the <b>root domain</b> and the <b>root name servers</b>. These are the most important
+servers because they maintain information about the top-level domains within the root. They also know the servers that can
+be used to resolve domains one level below them. Those servers can reference servers that are responsible for second-level
+domains. Thus, a DNS resolution requests might be sent to more than one server.
+
+The DNS Client is capable of resolving the <b>IP address</b> of a host from the <b>host's name</b>. It does this by sending
+DNS requests to a DNS Server. The IP address of a DNS Server is specified in the network interface configuration file or
+can be obtained from the DHCP Server for the Local Area Network.
+
+The DNS Client \b caches the resolved IP addresses. The length of time the resolved host IP address is kept in the local
+cache depends on the Time to Live (TTL) timeout. This is returned in an answering packet from the DNS Server. The next time
+a DNS is requested, the cache table is checked first. If a valid host is found, the IP address is resolved from the cache
+and no actual DNS request is sent to the DNS Server.
+
+You must use the DNS Client when a remote host uses a <b>Dynamic IP</b>, which changes each time the remote host logs on to
+the Internet.
+*/
+
+
+/**
+\defgroup starting_dns Control Interface
+\ingroup netDNSc_Func
+\brief Functions to start the DNS Client.
+\details
+Start the DNS Client by calling the function \ref netDNSc_GetHostByName. DNS requests are routed to the DNS Server IP
+address of an active network interface. If you are using a \ref netPPP_Func "PPP" or
+\ref netSLIP_Func "SLIP" interface and no \ref netETH_Func interface, you must enable the
+"Use default Gateway on remote Network" option in the configuration file (\b %Net_Config_PPP.h or \b %Net_Config_SLIP.h).
+
+You must also specify a callback function, which is called from the DNS Client when a DNS event occurs.
+\code
+static void dns_cbfunc (netDNSc_Event event, const NET_ADDR *addr) {
+  char ip_ascii[40];
+ 
+  switch (event) {
+    case netDNSc_EventSuccess:
+      // Host Address successfully resolved.
+      netIP_ntoa (addr->addr_type, addr->addr, ip_ascii, sizeof (ip_ascii));
+      printf ("IP Address: %s\n", ip_ascii)
+      break;
+    case netDNSc_EventTimeout:
+      // All DNS Resolver retries used up and timeouts expired.
+      printf ("DNS Resolver Timeout expired, Host Address not resolved.\n");
+      break;
+    case netDNSc_EventNotResolved:
+      // Host Name does not exist in DNS record database.
+      printf ("Host name does not exist.\n");
+      break;
+    case netDNSc_EventError:
+      // DNS Protocol Error, invalid or corrupted reply received.
+      printf ("DNS Resolver Protocol Error, Host Address not resolved.\n");
+      break;
+  }
+}
+\endcode
+
+When the required host is found in the local DNS Cache, the callback function is called immediately with the result code
+\c \token{netDNSc_EventSuccess} and provides the IP address of the host to the function. In this case, no actual DNS request
+packet is sent to the remote DNS Server.
+
+\note You can also provide the IP address in a string format to specify the host name. The DNS Client decodes it and returns
+the decoded IP address to the callback function. 
+*/
+
+
+/**
+\defgroup using_dns_client_conf Configuration
+\ingroup netDNSc_Func
+\brief Configuration of the DNS client in µVision.
+\details
+\image html net_config_dns_client_h.png "DNS Client Configuration File"
+
+The DNS client configuration file <b>Net_Config_DNS_Client.h</b> contains only the setting <b>Cache Table Size</b> which
+specifies the size of the DNS Cache by defining the number of entries for the DNS Cache table. When the IP address is
+resolved, it is also stored to the local cache. When a request for resolving an IP address is received, the DNS Client first
+checks the local cache memory. If a valid entry is found there, the IP address is taken from the cache, and the request is
+not sent on to the remote DNS Server.
+
+\note DNS Cache entries expire after a <b>Time to Live (TTL)</b> timeout. This is defined by the DNS Server. The TTL value
+for resolved IP addresses is received in an answer packet from the DNS Server. The DNS Client manages the timeouts. When a
+timeout counter \b expires, the DNS Cache entry is \b deleted from the Cache.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netSNTPc_Func SNTP Client
+\ingroup netServices
+\brief An SNTP Client delivers precise timing information over an IP network.
+\details
+<a href="https://en.wikipedia.org/wiki/Network_Time_Protocol#SNTP" target="_blank">Simple Network Time Protocol (SNTP)</a> is
+a networking protocol for \b clock \b synchronization between computer systems over IP based, variable-latency data networks.
+SNTP does not require the storage of the state over extended periods of time, so that it is used mostly in memory limited
+embedded devices and in applications where high accuracy timing is not required.
+
+\note The Network Component's SNTP Client supports IPv4 connections only.
+
+The protocol provides <b>Coordinated Universal Time (UTC)</b> including scheduled leap second adjustments. No information
+about time zones or daylight saving time is transmitted. This information must be obtained separately.
+
+The SNTP Client enables the retrieval of UTC coded time information from a given NTP server. The IP address of the server can
+be specified separately.
+*/
+
+
+/**
+\defgroup starting_sntp Control Interface
+\ingroup netSNTPc_Func
+\brief Functions to start the SNTP Client.
+\details
+The SNTP Client is started by calling the function \ref netSNTPc_GetTime. In unicast mode, SNTP client requests the UTC coded
+time from the SNTP time server specified by the IP address. You must specify a callback function, which is called from the
+SNTP Client when the session ends. This callback function will carry the UTC coded time stamp. In broadcast mode, SNTP Client
+opens UDP port for receiving broadcasted NTP messages in local network.
+*/
+
+
+/**
+\defgroup using_sntp_client_conf Configuration
+\ingroup netSNTPc_Func
+\brief Configuration of the SNTP client in µVision.
+\details
+\image html "net_config_sntp_client_h.png" "SNTP Client Configuration File"
+
+The SNTP client configuration file <b>Net_Config_SNTP_Client.h</b> contains the following settings:
+- <b>Broadcast Mode</b> enables or disables the broadcast mode of SNTP Client service. This option should be disabled to access
+  a public NTP server located on the Internet. 
+- <b>NTP Server</b> specifies the IP address of the NTP Server which receives get time requests in unicast mode (usually a
+  public NTP server on the Internet) or broadcasts NTP messages in broadcast mode (local NTP server in local network). This IP
+  address is used when the NTP Server IP is not specified in \ref netSNTPc_GetTime function parameter. 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netSMTPc_Func SMTP Client
+\ingroup netServices
+\brief An SMTP Client allows sending of e-mail notifications using a SMTP server.
+\details
+<a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol" target="_blank">Simple Mail Transfer Protocol (SMTP)</a>
+is a widely used protocol for the delivery of \b e-mails between TCP/IP systems and users. 
+
+The SMTP Client can send e-mails to various recipients. A typical use case is to send <b>automated e-mail notifications</b>
+to different e-mail addresses. To send e-mails, the SMTP Client needs to connect to an SMTP server that will send the
+messages to the targeted recipients. Nowadays, SMTP servers usually require a client authentication using credentials. The
+SMTP Client can send these credentials to get access to the server. In the current version, the SMTP Client supports 
+LOGIN, PLAIN and CRAM-MD5 atuthentication methods.
+
+E-mails may contain a <b>static predefined</b> message or a \b dynamic message. An example of dynamic e-mail content is to
+include measurement results from a log file or from a current measurement.
+
+\image html smtp_client_block_diagram.png
+
+This documentation is separated as follows:
+- \ref smtpc_user_api explains how to start the SMTP Client.
+- \ref smtpc_operation describes the operation of a SMTP client session and how event notifications are sent to the user
+  application.
+- \ref smtpc_fs_interface gives you details about the functions that are used to read data on the SMTP client's storage
+  device.
+- \ref using_smtpc_conf explains the configuration options of the SMTP client.
+*/
+
+The SMTP Client supports LOGIN, PLAIN and CRAM-MD5 authentication methods.
+
+/**
+\defgroup smtpc_user_api Control Interface
+\ingroup netSMTPc_Func
+\brief Functions to connect to an SMTP server.
+\details
+The SMTP Client supports two modes of operation. Mode of operation is selected with the function, which is used to send an
+email. The following are available:
+- \ref netSMTPc_SendMail function starts <b>blocking mode</b>,  
+- \ref netSMTPc_Connect function starts <b>legacy mode</b>.
+
+The <b>blocking mode</b> starts with a call to \ref netSMTPc_SendMail function. In this mode user callbacks are not used. 
+The calling function is blocked until the operation completes and then returns the state of the operation. The blocking mode
+supports additional features, which are not available in legacy mode:
+- multiple email recipients,
+- additional address friendly names,
+- encoding support for non ascii characters (ie. utf-8),
+- email attachments. 
+
+When the \ref netSMTPc_SendMail function is called, the SMTP client resolves the IP address from the specified server name
+and opens a SMTP connection to the server. After handshaking, the SMTP Client transmits the message content. If the email
+attachments are specified, the client composes a multipart MIME message with the attachments. If you want to send an email
+with the attachment, you have to enable SMTP Client (full variant) in µVision configuration and specify file name(s) to attach.
+
+The <b>legacy mode</b> starts with a connect request using \ref netSMTPc_Connect. The SMTP client then opens a SMTP 
+connection to the specified server. The user application then needs to wait for the callback function \ref netSMTPc_Notify
+to return the state of the operation. Based on the callback event, further processing can be started.
+*/
+
+
+/**
+\defgroup smtpc_operation User Callbacks
+\ingroup netSMTPc_Func
+\brief Functions to notify the user application about SMTP client events.
+\details
+SMTP Client user callbacks are used in <b>legacy mode</b>, which is started with the function \ref netSMTPc_Connect.
+User callback functions are inside the user interface module \b %SMTP_Client_UIF.c. To add the module to your
+project, simply right-click on the Source group, select <b>Add New Item to Group</b>, then click on <b>User Code Template</b>
+and scroll in the template files list until you find the <b>SMTP Client</b> template. Customize this module by changing the
+<b>sender's address</b>, the <b>recipient's address</b>, the \b subject, and the \b body of the email message.
+
+The following functions are available:
+- \ref netSMTPc_Process - request parameters for SMTP client session (such as username, password for secure connections).
+- \ref netSMTPc_Notify - notify the user application when the SMTP client operation ends.
+- \ref netSMTPc_AcceptAuthentication - callback function to accept/deny the authentication advertised by SMTP Server.
+
+\note When SMTP Client is used with the function \ref netSMTPc_SendMail, user callbacks are not used and interface module
+\b %SMTP_Client_UIF.c can be omitted.
+*/
+
+
+/**
+\defgroup smtpc_fs_interface File System Interface
+\ingroup netSMTPc_Func
+\brief SMTP client functions that work with a File System.
+\details
+All File System Interface functions are located in \b %SMTP_Client_FS.c, which will be automatically added to your project's
+\b Network folder. The file is preconfigured for the File System Component, so no modifications are required.
+If you wish to use another type of file system, you need to add a similar file to your project.
+
+The following functions are implemented in this module:
+- \ref netSMTPc_fopen - open a file for reading.
+- \ref netSMTPc_fclose - close a file that was previously opened.
+- \ref netSMTPc_fread - read a block of data from a file to the SMTP data buffer.
+
+\note File System Interface functions are used with the function \ref netSMTPc_SendMail, if support for email attachments is 
+enabled in the \ref using_smtpc_conf, otherwise the functions are not used.
+*/
+
+
+/**
+\defgroup using_smtpc_conf Configuration
+\ingroup netSMTPc_Func
+\brief Configuration of the SMTP client in µVision. 
+\details
+\image html net_config_smtp_client_h.png "SMTP Client Configuration File"
+
+The SMTP client configuration file <b>Net_Config_SMTP_Client.h</b> contains the following settings:
+- <b>Response Timeout in seconds</b> which is an inactivity timeout. When the SMTP Client does not receive a response from the
+  SMTP server within this timeout, it \b aborts the operation. 
+- <b>Email Attachments</b> which enables or disables support for email attachments. If the attachments are enabled, a File
+  System Component is required.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netPing_Func Ping Client
+\ingroup netServices
+\brief A Ping Client checks the reachability of a host on IP network.
+\details
+The Ping Client is used to test the reachability of a network device on an IP network and to measure the round-trip time for
+messages sent from the host to a destination node. It operates by sending
+<a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol" target="_blank">Internet Control Message Protocol (ICMP)</a>
+Echo <a href="https://en.wikipedia.org/wiki/Ping_%28networking_utility%29#Echo_request" target="_blank">request</a> packets to
+the target and waiting for an ICMP Echo
+<a href="https://en.wikipedia.org/wiki/Ping_%28networking_utility%29#Echo_reply" target="_blank">reply</a>. 
+*/

@@ -1,0 +1,139 @@
+/**
+\page fs_diffs Differences to RL-FlashFS
+
+The following tables give an overview of the changes to the API functions of the File System Component compared to
+RL-FlashFS, the Real-Time Library provided with MDK-ARM Version 4. The MDK-ARM Version 5 File System Component requires
+CMSIS-RTOS functionality. Events are no longer called by interrupt service routines which makes the timing of the overall
+system more predictable.
+\n The API functions along with the differences are shown in the order:
+
+<hr>
+<tt>RL-FlashFS</tt>: MDK-ARM Version 4 with links to the RL-ARM online manual.\n
+<tt>File System Component</tt>: MDK-ARM Version 5.\n
+<p>Description of the difference.</p>
+<hr>
+
+\section fs_changes_gen General changes
+
+- SPI memory is now accessed using a configurable NOR Drive using the drive letter "N:", "N0:", or "N1:".
+  The drive letter S: is not longer supported.
+- All file system functions return <b>\ref fsStatus</b> (File System Component) instead of <b>\em BOOL</b> (RL-FlashFS).
+
+\section fs_changes_sysFuncs System Routines changes
+
+<hr>
+<pre>
+<i>did not exist</i>
+\ref fsStatus  \ref fmount    (const char * drive)
+</pre>
+Mount the File System of the specified Drive. A previous to call \ref finit is required.
+<hr>
+
+<pre>
+<i>did not exist</i>
+\ref fsStatus  \ref funmount  (const char * drive)
+</pre>
+Unmount the File System of the specified Drive. To completely release all resources related to the \a drive, a subsequent to call \ref funinit is required.
+<hr>
+
+
+\section fs_changes_utilFuncs Utility Routines changes
+
+<hr>
+<pre>
+<i>did not exist</i>
+\ref fsStatus  \ref fmedia    (const char *drive)
+</pre>
+Check if media is present on a removable FAT drive.
+<hr>
+
+<pre>
+<i>did not exist</i>
+\ref fsStatus  \ref finfo  (const char *drive, fsDriveInfo *info)
+</pre>
+Read general drive information from the volume.
+<hr>
+
+<pre>
+int      \refrlarm{fvol}  (const char *drive, char *buf)
+\ref fsStatus  \ref fvol  (const char *drive, char *label, uint32_t *serial)
+</pre>
+Extended to read the volume label. Now returns the volume's serial number.
+<hr>
+
+
+\section fs_changes_io_cntr I/O Control Interface Routines changes
+
+The IOC Interface was reworked completely. 
+
+<hr>
+<pre>
+int      \refrlarm{ioc_init}              (FAT_VI *vi)
+<i>removed</i>
+</pre>
+Not needed any more. User \ref finit instead.
+<hr>
+ 
+<pre>
+int      \refrlarm{ioc_uninit}            (FAT_VI *vi)
+<i>removed</i>
+</pre>
+Not needed any more. User \ref funinit instead.
+<hr>
+ 
+<pre>
+FAT_VI   \refrlarm{ioc_getcb}             (const char *drive)
+int32_t   \ref fs_ioc_get_id         (const char *drive)
+</pre>
+Identical functionality, but not returning FAT_VI any more.
+<hr>
+ 
+<pre>
+BOOL     \refrlarm{ioc_read_info}         (                 Media_INFO *info, FAT_VI *vi)
+\ref fsStatus  \ref fs_ioc_read_info      (int32_t drv_id, fsMediaInfo *info)
+</pre>
+Identical functionality; added drive identifier and removed access to FAT_VI structure.
+<hr>
+
+<pre>
+BOOL     \refrlarm{ioc_read_sect}         (                U32      sect, U8      *buf, U32      cnt, FAT_VI *vi)
+\ref fsStatus  \ref fs_ioc_read_sector    (int32_t drv_id, uint32_t sect, uint8_t *buf, uint32_t cnt)
+</pre>
+Identical functionality; added drive identifier and removed access to FAT_VI structure.
+<hr>
+
+<pre>
+BOOL     \refrlarm{ioc_write_sect}        (                U32      sect, U8      *buf, U32      cnt, FAT_VI *vi)
+\ref fsStatus  \ref fs_ioc_write_sector   (int32_t drv_id, uint32_t sect, uint8_t *buf, uint32_t cnt)
+</pre>
+Identical functionality; added drive identifier and removed access to FAT_VI structure.
+<hr>
+
+<pre>
+<i>did not exist</i>
+\ref fsStatus  \ref fs_ioc_get_cache      (int32_t drv_id, fsIOC_Cache *cache_info)
+</pre>
+Gain information about the file system cache buffer location and its size.
+<hr>
+
+<pre>
+<i>did not exist</i>
+\ref fsStatus  \ref fs_ioc_device_ctrl    (int32_t drv_id, uint32_t code, void *p)
+</pre>
+Send control code directly to the device driver, causing the device to perform a corresponding operation.
+<hr>
+
+<pre>
+<i>did not exist</i>
+\ref fsStatus  \ref fs_ioc_lock           (int32_t drv_id)
+</pre>
+Lock a drive in order to block media access to the file system layer while the I/O Control Interface routines are in use.
+<hr>
+
+<pre>
+<i>did not exist</i>
+\ref fsStatus  \ref fs_ioc_unlock         (int32_t drv_id)
+</pre>
+Unlock a drive and release media access to the File System layer.
+<hr>
+*/

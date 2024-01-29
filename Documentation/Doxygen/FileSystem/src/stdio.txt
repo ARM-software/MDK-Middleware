@@ -1,0 +1,914 @@
+/**
+\defgroup stdio_routines Standard I/O Routines
+\brief Standard I/O Routines perform input and output operations on files.
+\details
+Input and Output operations are performed in C using the Standard Input and Output Library (stdio.h). This library uses
+\b streams to operate with physical devices such as keyboards, printers, terminals or with any other type of files supported
+by the system. Streams are used to interact with all these devices in the same way. All streams share similar properties,
+regardless of the <b>physical media</b> they are associated with.
+
+In the stdio library, all streams are defined as pointers to FILE objects, being used as a parameter in the operations
+involving the stream.
+
+Three standard streams are available: \b stdin, \b stdout and \b stderr. They are automatically being created and opened for
+all programs using the stdio library.
+*/
+
+/**
+\addtogroup stdio_routines
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int fclose(FILE * stream)
+\details
+The function \b fclose causes the stream to be flushed and the associated file to be closed. Any unwritten buffered data for
+the stream are delivered to the host environment to be written to the file; any unread buffered data are discarded. The stream
+is disassociated from the file. If the associated buffer was automatically allocated, it is deallocated.
+
+The argument \a stream is a file pointer specifying the data stream.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_fclose (void)  {
+  FILE *fin;
+
+  fin = fopen ("Test.txt","r");
+  if (fin == NULL) {
+    printf ("File not found!\n");
+  }
+  else {
+    // process file content
+    if (fclose (fin) == 0) {
+      printf ("File closed!\n");
+    }
+    else  {
+      printf ("File could not be closed!\n");
+    }
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int fflush(FILE * stream)
+\details
+The function \b fflush enforces a write operation to a data stream. Associated buffers are emptied and the content is written
+to the file. The function writes the File Allocation Record to the File System along with the file data. \b fflush leaves the
+file open.
+
+The argument \a stream is a pointer defining the data stream.
+
+\note
+On FAT drives, \b fflush will only flush buffer in the File System Component and flushed content will remain in the File
+System cache buffers. To write entire file content on FAT drive and create a consistent file with proper size, you must close
+the file using the \ref fclose library function.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void main (void)  {
+  FILE *fout;
+  int i;
+
+  fout = fopen ("Flush.test", "w");
+  if (fout != NULL)  {
+    for (i = 'A'; i < 'Z'; i++)  {
+      fputc (i, fout);
+    }
+    // Now flush the file buffers
+    if (fflush (fout))  {
+      printf ("An error occurred while flushing the buffer.\n");
+    }
+    else  {
+      printf ("Writing to the file went OK.\n");
+    }
+    fclose (fout);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn FILE *fopen(const char * filename, const char * mode)
+\details
+The function \b fopen opens a file for reading or writing.
+
+The argument \a filename is a pointer defining the file to open. It can contain a path. If the path does not exist, all
+subfolders are created. The path may contain \ref drive "drive prefixes". If the drive prefix is omitted, the
+\ref cur_sys_drive "Current Drive" is used.
+
+The argument \a mode is a pointer defining the access type and can have the following values:
+|Mode|Description|
+|----|-----------|
+|"r" |Read mode. Opens a file for reading.|
+|"w" |Write mode. Opens an empty file for writing. If the file exists, the content is destroyed. If the file does not exist, an empty file is opened for writing.|
+|"a" |Append mode. Opens a file for appending text. If the file already exists, data is appended. If the file does not exist, an empty file is opened for writing. Opening a file with append mode causes all subsequent writes to be placed at the then current end-of-file, regardless of interfering calls to \ref fseek.|
+|"b" |Binary mode. Can be appended to any character above, but has no effect. The character is allowed for ISO C standard conformance.|
+|"+" |Update mode. Can be used with any character above as a second or third character. When a file is opened with update mode, both reading and writing can be performed. Programmers must ensure that reading is not directly followed by writing without an interfering call to \ref fflush or to a file positioning function (\ref fseek or \ref rewind). Also, writing should not be followed directly by reading without an interfering call to a file positioning function, unless the writing operation encounters EOF.|
+     
+\note - File update modes are only supported on FAT file system!
+\note - Multiple active file handles (FILE *) per file are allowed only for files opened in read mode.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_fopen (void)  {
+  FILE *f;
+
+  f = fopen ("Test.txt","r");                      /* Open a file from current drive. */
+  if (f == NULL)  {
+    printf ("File not found!\n");
+  }
+  else  {
+    // process file content
+    fclose (f);
+  }
+
+  f = fopen ("M:\\Temp_Files\\Dump_file.log","w"); /* Create a file in subfolder on SD card.*/
+  if (f == NULL)  {
+    printf ("Failed to create a file!\n");
+  }
+  else  {
+    // write data to file
+    fclose (f);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn FILE *freopen(const char * filename, const char * mode, FILE * stream)
+\details
+The function \b freopen first attempts to close any file that is associated with the specified stream. Failure to close the
+file successfully is ignored. The error and end-of-file indicators for the stream are cleared.
+\b freopen opens a file whose name is the string pointed to by \a filename and associates the stream pointed to by \a stream
+with it.
+
+The argument \a mode is used just as in the \ref fopen function.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_freopen (void)  {
+  FILE *f;
+
+  f = freopen ("Test.txt","r");                      /* Open a file from current drive. */
+  // do some file manipulation here
+  fclose (f);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn void setbuf(FILE *, char * buf)
+\details
+Calling the function \b setbuf is equivalent to invoking \ref setvbuf with _IOFBF as \a mode and BUFSIZ as \a size (when
+\a buf is not a null pointer), or equivalent to calling it with _IONBF as \a mode (when it is a null pointer). Also, \b setbuf
+does not return a value.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void main (void)
+{
+  char buffer[BUFSIZ];
+  FILE *stream1, *stream2;
+
+  stream1=fopen ("file.txt","w");
+  stream2=fopen ("file2.txt","a");
+
+  setbuf (stream1, buffer);
+  fputs ("Sent to a buffered stream",stream1);
+  fflush (stream1);
+
+  setbuf (stream2, NULL);
+  fputs ("Sent to an unbuffered stream",stream2);
+
+  fclose (stream1);
+  fclose (stream2);
+
+  return 0;
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int setvbuf(FILE * stream, char * buf, int mode, size_t size)
+\details
+The function \b setvbuf may be used after the stream pointed to by \a stream has been associated with an open file but before
+it is read or written.
+
+The argument \a mode determines how stream will be buffered.
+
+If \a buf is not the null pointer, the array it points to may be used instead of an automatically allocated buffer (the
+buffer must have a lifetime at least as great as the open stream, so the stream should be closed before a buffer that has
+automatic storage duration is deallocated upon block exit).
+
+The argument \a size specifies the size of the array. The contents of the array at any time are indeterminate.
+
+<b>Stream buffers</b> (blocks of data) are the <b>link between I/O operations and the physical file</b> that is represented
+by the stream: In case of output buffers, data is sent to the buffer until its maximum capacity is reached. Afterwards, it is
+flushed (i.e.: all data is written to the physical file at once and the buffer is cleared). Accordingly, input buffers are
+filled from the physical file, from which data is sent to the I/O operations until emptied, at which point new data is
+acquired from the file and the buffer being filled up again.
+
+Stream buffers can be forced to flush by calling \ref fflush. During normal operation, they are flushed by \ref fclose and
+\ref freopen, or when the program terminates without errors.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void main (void)
+{
+  FILE *stream;
+  stream=fopen ("file.txt","w");
+  setvbuf (stream, NULL, _IOFBF, 1024);
+  // Do some other file operations
+  fclose (stream);
+  return 0;
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int fprintf(FILE * stream, const char * format, ...)
+\details
+The function \b fprintf writes a string to a data stream.
+
+The argument \a stream is a pointer defining the data stream. The argument \a format is a pointer defining the format for
+the output. The rules correspond to the standard \c printf formatting string. The optional arguments are converted and
+output according to the corresponding format specifications in \a format.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_fprintf (void)  {
+  FILE *fout;
+  int i = 56;
+
+  fout = fopen ("Test.txt","w");
+  if (fout == NULL)  {
+    printf ("File open error!\n");
+  }
+  else  {
+    fprintf (fout, "printf test: val = %i fval =%f\n", i, i * 3.45);
+    fclose (fout);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int fscanf(FILE * stream, const char * format, ...)
+\details
+The function \b fscanf reads values from a data stream and stores them with the specified format to a variable.
+
+The argument \a stream is a file pointer defining the data stream to read. The argument \a format is a character pointer
+defining the formatting string. The parameters additional arguments store the data according to the format string \a format.
+Each argument must be a pointer to a variable corresponding to the type defined in \a format.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_fread (void)  {
+  int index, count;
+  FILE *fin;
+
+  fin = fopen ("Counter.log","r");
+  if (fin != NULL)  {
+    fscanf (fin, "%d, %d",&index, &count);
+    fclose (fin);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int vfscanf(FILE * stream, const char * format, va_list arg)
+\details
+The function \b vfscanf reads data from the \a stream and stores them according to the argument \a format at the locations
+pointed to by the elements in the \a arg argument list.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void ReadStream (FILE * stream, const char * format, ...)
+{
+  va_list args;
+  va_start (args, format);
+  vfscanf (stream, format, args);
+  va_end (args);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int vfprintf(FILE * stream, const char * format, va_list arg)
+\details
+Equivalent to \ref fprintf, with the variable argument list replaced by \a arg, which has been initialized by the va_start macro
+(and possibly subsequent va_arg calls). The \b vfprintf function does not invoke the va_end function.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void WriteStream (FILE * stream, const char * format, ...)
+{
+  va_list args;
+  va_start (args, format);
+  vfprintf (stream, format, args);
+  va_end (args);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int fgetc(FILE * stream)
+\details
+The function \b fgetc reads a single character from a data steam and moves the pointer to the next character.
+
+The argument \a stream is a pointer defining the data steam.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_fgetc (void)  {
+  FILE *fin;
+  int ch;
+
+  fin = fopen ("Test.txt","r");
+  if (fin != NULL)  {
+    // dump the character to a screen
+    while ((ch = fgetc (fin)) != EOF)  {
+      putchar (ch);
+    }
+    fclose (fin);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn char *fgets(char * s, int n, FILE * stream)
+\details
+The function \b fgets reads a string from a data steam.
+
+The argument \a s is a pointer defining the buffer to store the string.
+
+The function reads at most one less than the number of characters specified by the argument \a n.
+	
+The argument \a stream is a pointer defining the data stream to read from.
+
+Characters are read from the current cursor position:
+- until length characters have been read.
+- up to and including the first new-line ('\n').
+- up to the end of the stream.
+
+A null character ('\0') is appended to \a s.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_fgets (void)  {
+  FILE *fin;
+  char line[80];
+
+  fin = fopen ("Test.txt","r");
+  if (fin != NULL)  {
+    while (fgets (line, sizeof (line), fin) != NULL)  {
+      puts (line);
+    }
+    fclose (fin);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int fputc(int c, FILE * stream)
+\details
+The function \b fputc writes a character to a data stream.
+
+The argument \a c is an integer value defining the character to write.
+
+The argument \a stream is a file pointer defining the data stream.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_fputc (void)  {
+  FILE *fout;
+  int ch;
+
+  fout = fopen ("Test.txt","w");
+  if (fout != NULL)  {
+    while ((ch = getchar ()) != EOF)  {
+      fputc (ch, fout);                             /* copy the stdin to a file */
+    }
+    fclose (fout);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int fputs(const char * s, FILE * stream)
+\details
+The function \b fputs writes a string to a data stream.
+
+The argument \a s is a constant character pointer defining the string to write.
+
+The argument \a stream is a file pointer defining the data stream.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_fputs (void) {
+  FILE *fout;
+
+  fout = fopen ("Test.txt","w");
+  if (fout != NULL) {
+    fputs("This is an example for fputs.\n", fout);
+    fclose (fout);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int getc(FILE * stream)
+\details
+The function \b getc is equivalent to \ref fgetc except that it may be implemented as an unsafe macro (\a stream may be
+evaluated more than once, so the argument should never be an expression with side-effects).
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_getc (void)  {
+  FILE *fin;
+  int ch;
+
+  fin = fopen ("Test.txt","r");
+  if (fin != NULL)  {
+    // dump the character to a screen
+    while ((ch = getc (fin)) != EOF)  {
+      putchar (ch);
+    }
+    fclose (fin);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int putc(int c, FILE * stream)
+\details
+The function \b putc is equivalent to \ref fputc except that it may be implemented as an unsafe macro (\a stream may be
+evaluated more than once, so the argument should never be an expression with side-effects).
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_putc (void)  {
+  FILE *fout;
+  int ch;
+
+  fout = fopen ("Test.txt","w");
+  if (fout != NULL)  {
+    while ((ch = getchar ()) != EOF)  {
+      putc (ch, fout);                 /* Copy the STDIN to a file */
+    }
+    fclose (fout);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int ungetc(int c, FILE * stream)
+\details
+The function \b ungetc stores a character back into the data stream.
+
+The argument \a c defines the character to store.
+
+The argument \a stream is a file pointer defining the data stream to write to.
+
+The function can be invoked only once between function calls that read from the data stream. Subsequent calls to \b ungetc
+fail with an EOF return value.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void main (void)  {
+  int c;
+  FILE *fin;
+
+  fin = fopen ("Test.txt","r");
+  if (fin != NULL)  {
+    while ((c = fgetc (fin)) == ' ');    // Skip leading spaces
+    ungetc (c, fin);                     // Unget the first non-space
+    ungetc (c, fin);                     // This call fails with EOF. File cursor is now positioned to a non-space character.
+    fclose (fin);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn size_t fread(void * ptr, size_t size, size_t nmemb, FILE * stream)
+\details
+The function \b fread reads a number of items with a given size from a data stream to a buffer.
+
+The argument \a ptr is a void pointer to a buffer to store the items read.
+
+The argument \a size defines the item size in bytes.
+
+The argument \a nmemb defines the number of items to read.
+
+The argument \a stream is a file pointer defining the data stream to read.
+
+\note The file position indicator is undefined when errors occurred.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_fread (void)  {
+  int count[10];
+  FILE *fin;
+
+  fin = fopen ("Counter.log","r");
+  if (fin != NULL)  {
+    fread (&count[0], sizeof (int), 10, fin);
+    fclose (fin);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn size_t fwrite(const void * ptr, size_t size, size_t nmemb, FILE * stream)
+\details
+The function \b fwrite writes items from a buffer to a data stream.
+
+The argument \a ptr is a void pointer defining the items to write.
+
+The argument \a size defines the size of the item to write.
+
+The argument \a nmemb defines the number of times to write the item.
+
+The argument \a stream is a file pointer defining the data stream to write to.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_fwrite (void) {
+  int  count[10];
+  FILE *fout;
+
+  fout = fopen ("Counter.log","w");
+  if (fout != NULL) {
+    fwrite (&count[0], sizeof (int), 10, fout);   // write an item 10 times to the file
+    fclose (fout);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int fgetpos(FILE * stream, fpos_t * pos)
+\details
+The function \b stores the current value of the file position indicator for the stream pointed to by \a stream in the object
+pointed to by \a pos. The value stored contains unspecified information usable by the \ref fsetpos function for
+repositioning the stream to its position at the time  of the call to the \b fgetpos function.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+int main (void)
+{
+   FILE * stream;
+   int c;
+   fpos_t pos;
+ 
+   stream = fopen ("file.txt","r");
+   if (stream==NULL) {
+     perror ("Error: Cannot open file");
+   }
+   else {
+     c = fgetc (stream);
+     printf ("1st character is %c\n",c);
+     fgetpos (stream,&pos);
+     fsetpos (stream,&pos);
+     c = fgetc (stream);
+     printf ("2nd character is %c\n",c);
+     fclose (stream);
+   }
+   return 0;
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int fseek(FILE * stream, long int offset, int whence)
+\details
+The function \b fseek positions the file cursor to a new location.
+
+The argument \a stream is a file pointer defining the file.
+
+The argument \a offset is a long value defining the number of bytes to move.
+
+The argument \a whence is an integer defining the file cursor location.
+
+The argument \a whence can have one of the following values:
+|Origin Value|Description                        |
+|------------|-----------------------------------|
+|SEEK_CUR    |Current position of the file cursor|
+|SEEK_END    |End of the file                    |
+|SEEK_SET    |Beginning of the file              |
+
+The file cursor can be positioned anywhere within the file or past the end of the file.
+
+\note
+ - On a 32-bit system, an object of type long int consists of 32-bits. Seeking capabilities are therefore limited to the area of two gigabytes.
+ - When using EFS, \b fseek works only for files opened in read mode. Seeking within files opened for writing is not
+supported.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_fseek (void)  {
+  FILE *fin;
+  char ch;
+
+  fin = fopen ("Test.txt","r");
+  if (fin != NULL)  {
+    fseek (fin, 5L, SEEK_SET);                     // Read the 5th character from file
+    ch = fgetc (fin);
+    fseek (fin, -1L, SEEK_END);                    // Read the last character from file
+    ch = fgetc (fin);
+    fclose (fin);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int fsetpos(FILE * stream, const fpos_t * pos)
+\details
+The function \b fsetpos sets the file position indicator for the stream pointed to by \a stream according to the value of the
+object pointed to by \a pos, which shall be a value returned by an earlier call to the \b fgetpos function on the same
+stream.
+
+The \b fsetpos function clears the end-of-file indicator and undoes any effects of the \ref ungetc function on the same
+stream. After an \b fsetpos call, the next operation on an update stream may be either input or output.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+int main (void)
+{
+   FILE * stream;
+   int c;
+   fpos_t pos;
+ 
+   stream = fopen ("file.txt","r");
+   if (stream==NULL) {
+     perror ("Error: Cannot open file");
+   }
+   else {
+     c = fgetc (stream);
+     printf ("1st character is %c\n",c);
+     fgetpos (stream,&pos);
+     fsetpos (stream,&pos);
+     c = fgetc (stream);
+     printf ("2nd character is %c\n",c);
+     fclose (stream);
+   }
+   return 0;
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn long int ftell(FILE * stream)
+\details
+The function \b ftell reads the file cursor position.
+
+The argument \a stream is a file pointer defining the data stream.
+
+\note
+ - On a 32-bit system, an object of type long int consists of 32-bits. Therefore, ftell operation is limited to the area of two gigabytes.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_ftell (void)  {
+  long int fpos;
+  char line[80];
+  FILE *fin;
+
+  fin = fopen ("Counter.log","r");
+  if (fin != NULL)  {
+    fgets (&line, sizeof (char), fin);
+    fpos = ftell (fin);                             // Get position after read operation
+    fclose (fin);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn void rewind(FILE * stream)
+\details
+The function \b rewinds positions of the file cursor to the beginning of a data stream.
+
+The argument \a stream is a file pointer defining the data stream. End-of-file and error indicators are cleared.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_rewind (void) {
+  char line[80];
+  FILE *fin;
+
+  fin = fopen ("Test.txt","r");
+  if (fin != NULL)  {
+    if (fgets (&line, sizeof (line), fin) != NULL)  {
+      rewind (fin);                                           // move cursor to beginning of file
+      fgets (&line, sizeof (line), fin);                      // read first line again
+    }
+    fclose (fin);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn void clearerr(FILE * stream)
+\details
+The function \b clearerr clears the end-of-file and error indicators for the stream pointed to by \a stream.
+
+These indicators are cleared when the file is opened or by an explicit call to the \b clearerr, \ref rewind, \ref fseek, or
+\ref fsetpos function.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void main (void)
+{
+  FILE * stream;
+  stream = fopen("file.txt","r");
+  if (stream==NULL) perror ("Can't open file");
+  else {
+    fputc ('x',stream);
+    if (ferror (stream)) {
+      printf ("Error: Cannot write to file.txt\n");
+      clearerr (stream);
+    }
+    fgetc (stream);
+    if (!ferror (stream))
+      printf ("No errors reading file.txt\n"); 
+    fclose (stream);
+  }
+  return 0;
+}\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int feof(FILE * stream)
+\details
+The function \b feof determines whether an end-of-file condition has occurred.
+
+The argument \a stream is a file pointer specifying a data stream.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_feof (void)  {
+  FILE *fin;
+  char ch;
+
+  if (fin = fopen ("Test_feof") != NULL)  {
+    // Read all characters from the file
+    while (!feof (fin))  {
+      ch = fgetc (fin);
+    }
+    fclose (fin);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int ferror(FILE * stream)
+\details
+The function \b ferror tests a data stream for read or write errors.
+
+The argument \a stream is a pointer defining the data stream. If an error has occurred, the error indicator remains set
+until the file is closed or rewound.
+
+<b>Code Example</b>
+\code
+#include <stdio.h>                      /* Standard I/O .h-file               */
+#include "rl_fs.h"                      /* FileSystem definitions             */
+ 
+void tst_ferror (void)  {
+  FILE *fin;
+
+  if (fin = fopen ("Test_ferror") != NULL)  {
+    // Read all characters from the file
+    while (!feof (fin))  {
+      printf ("%s\n", fgetc (fin));
+    }
+    if (ferror (fin))  {
+      printf ("Errors occurred while reading the file!\n");
+    }
+    fclose (fin);
+  }
+}
+\endcode
+*/
+
+/**
+@}
+*/

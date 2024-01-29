@@ -1,0 +1,33 @@
+===============================================================================
+This file lists the package level copyright and license information for third 
+party software included in this release of 'MDK Middleware Source'. Refer to 
+the License Agreement (End User License Agreement (EULA)) that accompanies 
+this release of 'MDK Middleware Source' for terms and conditions relating to 
+your use of such third party software.
+
+The information is grouped into two sections. The first section lists out 
+details of third party software projects, including names of the applicable 
+licenses as per the SPDX format (http://spdx.org/licenses). The second section 
+includes the full license text of all applicable licenses referenced in the 
+first section.
+===============================================================================
+
+SECTION 1: THIRD PARTY SOFTWARE PROJECTS
+===============================================================================
+
+Name:         The MDK Middleware Source for FileSystem component, fs_fat.c file.
+Summary:      Above mentioned file includes source code that is capable of 
+              supporting a file system with long filenames in Software 
+              Applications that you develop.
+License(s):   You warrant to ARM that unless you have first obtained a license 
+              from Microsoft for its FAT file system with long filename support 
+              then you will not develop or distribute Software Applications that 
+              include a file system with long filenames see
+https://www.microsoft.com/en-us/legal/intellectualproperty/mtl/technologylicensing.aspx
+
+Note: The code supporting the long filenames is enabled when fs_fat.c is 
+compiled with FS_FAT_LFN define. Otherwise the compiled code is not capable of 
+supporting a file system with long filenames and the FileSystem component is 
+licensed to you as part of the Arm Software provided under this Licence.
+===============================================================================
+END OF FILE: third_party_licenses.txt

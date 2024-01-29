@@ -1,0 +1,1135 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<component_viewer schemaVersion="0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
+  <component name="File System" shortname="FS" version="6.16.6"/>    <!-- name and version of the component  -->
+
+  <typedefs>
+    <!-- Flash Sector information (Driver_Flash.h line 58) -->
+    <typedef name="ARM_FLASH_SECTOR" info="Flash Sector information" size="8">
+      <member name="start" type="uint32_t" offset="0" info="Sector start address"/>
+      <member name="end"   type="uint32_t" offset="4" info="Sector end address (start+size-1)"/>
+    </typedef> 
+
+    <!-- FS_DEV volume mapping structure (rl_fs_lib.h line 71) -->
+    <typedef name="FS_DEV" info="File System volume mapping descriptor" size="8">
+      <member name="dcb"  type="uint32_t" offset="0"  info="Pointer to volume description structure"/>
+      <member name="id0"  type="uint8_t"  offset="4"  info="Drive letter"/>
+      <member name="id1"  type="uint8_t"  offset="5"  info="Drive index"/>
+      <member name="id2"  type="uint8_t"  offset="6"  info="Null terminator"/>
+      <member name="attr" type="uint8_t"  offset="7"  info="Volume attributes"/>
+    </typedef>
+
+    <!-- Flash Device Timeouts (fs_nor_flash.h line 16) -->
+    <typedef name="FLASH_TIMEOUT" info="Flash Device Timeouts" size="8">
+      <member name="EraseChip"   type="uint16_t" offset="0" info="Chip erase operation timeout"/>
+      <member name="EraseSector" type="uint16_t" offset="2" info="Sector erase operation timeout"/>
+      <member name="Program"     type="uint16_t" offset="4" info="Program data operation timeout"/>
+      <member name="Read"        type="uint16_t" offset="6" info="Read data operation timeout"/>
+    </typedef>
+
+    <!-- Flash Device (fs_nor_flash.h line 24) -->
+    <typedef name="FLASH_DEVICE" info="Flash Device" size="20">
+      <member name="SectArray" type="uint32_t" offset="0"  info="Flash sectors array"/>
+      <member name="SectCnt"   type="uint32_t" offset="4"  info="Total number of sectors"/>
+      <member name="SectSize"  type="uint32_t" offset="8"  info="Uniform sector size"/>
+      <member name="InitVal"   type="uint32_t" offset="12" info="Erased memory content value"/>
+      <member name="Timeout"   type="uint32_t" offset="16" info="Common operation timeouts"/>
+    </typedef>
+
+    <!-- NOR Flash Media control block (fs_nor_flash.h line 32) -->
+    <typedef name="NOR_MEDIA" info="NOR Flash Media control block" size="32">
+      <member name="Driver"       type="uint32_t" offset="0"  info="Registered Flash driver"/>
+      <member name="Callback"     type="uint32_t" offset="4"  info="Driver Callback"/>
+      <member name="Capabilities" type="uint32_t" offset="8"  info="Driver Capabilities"/>
+
+<!--  <member name="Device"     type="FLASH_DEVICE" offset="12" info="Flash device description"/> -->
+<!--  FLASH_DEVICE structure inlined for easy processing                                          -->
+      <member name="SectArray"    type="uint32_t" offset="12 + 0"  info="Flash sectors array"/>
+      <member name="SectCnt"      type="uint32_t" offset="12 + 4"  info="Total number of sectors"/>
+      <member name="SectSize"     type="uint32_t" offset="12 + 8"  info="Uniform sector size"/>
+      <member name="Timeout"      type="uint32_t" offset="12 + 12" info="Common operation timeouts"/>
+     
+      <member name="Status"       type="uint8_t"  offset="28" info="Device status"/>
+      <member name="Event"        type="uint8_t"  offset="29"  info="Driver event flags"/>
+
+      <var name="drvLet" type="uint8_t"  size="3" info="Associated drive letter as string"/>
+      <var name="sidx"   type="uint32_t"          info="Index in sector array"/>
+    </typedef>
+
+    <!-- MC_MCI structure (rl_fs_lib.h line 83) -->
+    <typedef name="MC_MCI" info="Memory Card (MCI) layer control block" size="35">
+      <member name="Driver"       type="uint32_t" offset="0"  info="Pointer to registered MCI driver"/>
+      <member name="Capabilities" type="uint32_t" offset="8"  info="Driver capabilities"/>
+      <member name="Property"     type="uint32_t" offset="16" info="Memory card properties"/>
+      <member name="SerialNumber" type="uint32_t" offset="20" info="Card serial number"/>
+      <member name="SectorCount"  type="uint32_t" offset="24" info="Device density in 512B sectors"/>
+      <member name="RCA"          type="uint16_t" offset="28" info="Relative card address"/>
+      <member name="MediaStatus"  type="uint8_t"  offset="32" info="Media status"/>
+      <member name="Status"       type="uint8_t"  offset="33" info="Device status"/>
+
+      <var name="drvLet" type="uint8_t"  size="3" info="Associated drive letter as string"/>
+    </typedef>
+
+    <!-- MC_SPI structure (rl_fs_lib.h line 99) -->
+    <typedef name="MC_SPI" info="Memory Card (SPI) layer control block" size="35">
+      <member name="Driver"       type="uint32_t" offset="0"  info="Pointer to registered SPI driver"/>
+
+      <member name="Property"     type="uint32_t" offset="12" info="Memory card properties"/>
+      <member name="SerialNumber" type="uint32_t" offset="16" info="Card serial number"/>
+      <member name="SectorCount"  type="uint32_t" offset="20" info="Device density in 512B sectors"/>
+      
+      <member name="MediaStatus"  type="uint8_t"  offset="27" info="Media status"/>
+      <member name="Status"       type="uint8_t"  offset="28" info="Device status"/>
+
+      <var name="drvLet" type="uint8_t"  size="3" info="Associated drive letter as string"/>
+    </typedef>
+
+    <!-- NAND_FTL_DEV structure (rl_fs_lib.h line 224) -->
+    <typedef name="NAND_FTL_DEV" info="NAND Flash Translation Layer (NFTL) layer control block" size="80">
+
+<!--  <member name="PgLay"     type="NAND_PAGE_LAYOUT"   offset="28" info="Page layout definition"/> -->
+<!--  NAND_PAGE_LAYOUT structure inlined for easy processing                                        -->
+      <member name="spare_ofs_lsn"  type="uint8_t"  offset="28+0" info="LSN position"/>
+      <member name="spare_ofs_dcm"  type="uint8_t"  offset="28+1" info="DCM position"/>
+      <member name="spare_ofs_bbm"  type="uint8_t"  offset="28+2" info="BBM position"/>
+      <member name="spare_ofs_ecc"  type="uint8_t"  offset="28+3" info="ECC position"/>
+      <member name="spare_ofs"      type="uint16_t" offset="28+4" info="Spare area offcet from start of page"/>
+      <member name="spare_inc"      type="uint16_t" offset="28+6" info="Column increment till next spare"/>
+      <member name="sector_inc"     type="uint16_t" offset="28+8" info="Column increment till next sector"/>
+
+      <member name="SPP"            type="uint8_t"  offset="39" info="Number of sectors/page (2^n, n = SPP)"/>
+      <member name="PPB"            type="uint8_t"  offset="40" info="Number of pages/block (2^n, n = PPB)"/>
+      <member name="SPB"            type="uint8_t"  offset="41" info="Number of sectors/block (2^n, n = SPB)"/>
+      
+      <member name="Status"         type="uint8_t"  offset="76" info="NFTL status"/>
+      
+      <var name="drvLet" type="uint8_t"  size="3" info="Drive letter as string"/>
+    </typedef>
+    
+    <!-- RAM_DEV structure (rl_fs_lib.h line 77) -->
+    <typedef name="RAM_DEV" info="RAM memory control block" size="8">
+      <member name="Base" type="uint32_t" offset="0" info="Memory buffer base address"/>
+      <member name="Size" type="uint32_t" offset="4" info="Memory buffer size"/>
+      
+      <var name="drvLet" type="uint8_t"  size="3" info="Drive letter as string"/>
+    </typedef>
+
+    <!-- FAT Volume Description (rl_fs_lib.h line 340) -->
+    <typedef name="fsFAT_Volume" info="FAT Volume" size="132">
+      <member name="DrvLet"         type="uint32_t"  offset="0"  info="4-byte encoded drive letter string"/>
+      <member name="Mutex"          type="uint32_t"  offset="4"  info="Volume mutex"/>
+      <member name="Drv"            type="uint32_t"  offset="8"  info="Registered Device Driver"/>
+      <member name="Status"         type="uint32_t"  offset="12" info="Volume status flags"/>
+      <member name="free_clus_cnt"  type="uint32_t"  offset="24" info="FAT32: Number of free clusters"/>
+
+<!--  <member name="cfg"     type="FATINFO"   offset="44" info="Volume properties"/> -->
+<!--  FATINFO structure inlined for easy processing                                  -->
+      <member name="FatType"         type="uint8_t"  offset="44+10"  info="File system type">
+        <enum name="Unknown" value="0x00"  info="File system is unknown"/>
+        <enum name="FAT-12"  value="0x01"  info="File system is FAT-12"/>
+        <enum name="FAT-16"  value="0x02"  info="File system is FAT-16"/>
+        <enum name="FAT-32"  value="0x03"  info="File system is FAT-32"/>
+      </member>
+      <member name="SecPerClus"      type="uint8_t"  offset="44+11"  info="Sectors per cluster"/>
+      <member name="BootSector"      type="uint32_t" offset="44+12"  info="Boot sector offset"/>
+      <member name="FatSize"         type="uint16_t" offset="44+16"  info="Allocation table size in sectors"/>
+      <member name="RsvdSecCnt"      type="uint16_t" offset="44+18" info="Number of reserved sectors"/>
+      <member name="DskSize"         type="uint32_t" offset="44+20" info="Disk size in sectors"/>
+      <member name="DataSecCnt"      type="uint32_t" offset="44+24" info="Number of data sectors"/>
+      <member name="BytesPerSec"     type="uint16_t" offset="44+30" info="Sector size in bytes"/>
+      <member name="DataClusCnt"     type="uint32_t" offset="44+32" info="Number of data clusters"/>
+      <member name="ClusSize"        type="uint32_t" offset="44+40" info="Cluster size in bytes"/>
+      
+      <var name="drvLet"     type="uint8_t"  size="3" info="Drive letter as string"/>
+      <var name="vidx"       type="uint32_t"          info="Index in volume array"/>
+      <var name="capacity"   type="uint64_t"          info="Total space on drive"/>
+      <var name="free_space" type="uint64_t"          info="Free space on drive"/>
+    </typedef>
+
+    <!-- EFS Volume Description (rl_fs_lib.h line 374) -->
+    <typedef name="fsEFS_Volume" info="EFS Volume" size="32">
+      <member name="DrvLet"      type="uint32_t"  offset="0"  info="4-byte encoded drive letter string"/>
+      <member name="Mutex"       type="uint32_t"  offset="4"  info="Volume mutex"/>
+      <member name="Drv"         type="uint32_t"  offset="8"  info="Registered EFS media driver"/>
+      <member name="Status"      type="uint32_t"  offset="12" info="Volume status"/>
+      <member name="Size"        type="uint32_t"  offset="16" info="Volume size"/>
+      <member name="SectorCount" type="uint32_t"  offset="20" info="Number of available memory sectors"/>
+      <member name="ErasedValue" type="uint32_t"  offset="24" info="Erased memory value (0xFF or 0x00)"/>
+      <member name="TopID"       type="uint16_t"  offset="28" info="Top used FileID"/>
+      <member name="Reserved"    type="uint16_t"  offset="30" info=""/>
+       
+      <var name="drvLet" type="uint8_t"  size="3" info="Drive letter as string"/>
+      <var name="vidx"   type="uint32_t"          info="Index in volume array"/>
+    </typedef>
+
+    <!-- FAT File Handle (rl_fs_lib.h line 358) -->
+    <typedef name="fsFAT_Handle" info="FAT File Handle" size="36">
+      <member name="vol"            type="*fsFAT_Volume" offset="0"  info="Associated FAT volume"/>
+      <member name="fsize"          type="uint32_t"      offset="4"  info="File size (registered)"/>
+      <member name="fcsz"           type="uint32_t"      offset="8"  info="File size (current)"/>
+      <member name="fpos"           type="uint32_t"      offset="12" info="File position indicator"/>
+      <member name="flags"          type="uint16_t"      offset="16" info="File status flags"/>
+      <member name="short_ent_offs" type="uint16_t"      offset="18" info="Short entry sector offset"/>
+      <member name="short_ent_clus" type="uint32_t"      offset="20" info="Short entry cluster number"/>
+      <member name="first_clus"     type="uint32_t"      offset="24" info="First data cluster"/>
+      <member name="current_clus"   type="uint32_t"      offset="28" info="Current data cluster"/>
+      <member name="current_sect"   type="uint8_t"       offset="32" info="Current data sector"/>
+
+      <var name="vidx" type="uint32_t" info="Volume index in FAT volume array"/>
+    </typedef>
+
+    <!-- EFS File Handle (rl_fs_lib.h line 389) -->
+    <typedef name="fsEFS_Handle" info="EFS File Handle" size="28">
+      <member name="vol"    type="*fsEFS_Volume" offset="0"  info="Associated EFS volume"/>
+      <member name="fsize"  type="uint32_t"      offset="4"  info="File size"/>
+      <member name="fpos"   type="uint32_t"      offset="8"  info="File position indicator"/>
+      <member name="flags"  type="uint16_t"      offset="12" info="File status flags"/>
+      <member name="fileID" type="uint16_t"      offset="14" info="File identification number"/>
+      <member name="fidx"   type="uint16_t"      offset="16" info="Current file chunk index"/>
+      <member name="fblock" type="uint16_t"      offset="18" info="Current block index"/>
+      <member name="fbot"   type="uint32_t"      offset="20" info="Block bottom position"/>
+      <member name="ftop"   type="uint32_t"      offset="24" info="Block top position"/>
+
+      <var name="vidx" type="uint32_t" info="Volume index in EFS volume array"/>
+    </typedef>
+
+<!-- Helpers................................................................................... -->
+
+    <!-- FAT File Open Mode -->
+    <typedef name="FAT_OpenMode" info="FAT File Open Mode" size="4">
+      <member name="mode" type="uint16_t" offset="0">
+        <enum name="Closed"      value="0"/>
+        <enum name="Read"        value="1"/>
+        <enum name="Write"       value="2"/>
+        <enum name="Read/Write"  value="3"/>
+        <enum name="Append"      value="6"/>
+      </member>
+    </typedef>
+
+    <!-- EFS File Open Mode -->
+    <typedef name="EFS_OpenMode" info="EFS File Open Mode" size="4">
+      <member name="mode" type="uint16_t" offset="0">
+        <enum name="Closed"      value="0"/>
+        <enum name="Read"        value="1"/>
+        <enum name="Write"       value="2"/>
+        <enum name="Append"      value="6"/>
+      </member>
+    </typedef>
+
+    <!-- Format options -->
+    <typedef name="FATType" info="FAT file system type" size="1">
+      <member name="id" type="uint8_t" offset="0">
+        <enum name="FAT 12"  value="1"/>
+        <enum name="FAT 16"  value="2"/>
+        <enum name="FAT 32"  value="3"/>
+      </member>
+    </typedef>
+
+    <!-- Format options -->
+    <typedef name="FormatOpt" info="Format options" size="1">
+      <member name="id" type="uint8_t" offset="0">
+        <enum name="/L"      value="0"/>
+        <enum name="/FAT32"  value="1"/>
+        <enum name="/W"      value="2"/>
+        <enum name="/LL"     value="3"/>
+        <enum name="/LLEB"   value="4"/>
+      </member>
+    </typedef>
+
+    <!-- DeviceCtrl parameter codes -->
+    <typedef name="fsDevCtrlCode" info="DeviceCtrl parameter codes" size="1">
+      <member name="id" type="uint8_t" offset="0">
+        <enum name="fsDevCtrlCodeCheckMedia"   value="0"/>
+        <enum name="fsDevCtrlCodeControlMedia" value="1"/>
+        <enum name="fsDevCtrlCodeFormat"       value="2"/>
+        <enum name="fsDevCtrlCodeSerial"       value="3"/>
+        <enum name="fsDevCtrlCodeGetCID"       value="4"/>
+        <enum name="fsDevCtrlCodeLockUnlock"   value="5"/>
+      </member>
+    </typedef>
+
+    <!-- NAND media execution status -->
+    <typedef name="NAND" info="NAND media execution status" size="1">
+      <member name="ExecStat" type="uint8_t" offset="0">
+        <enum name="OK"                    value="0"/>
+        <enum name="Unspecified error"     value="1"/>
+        <enum name="Invalid parameter"     value="2"/>
+        <enum name="Unsupported"           value="3"/>
+        <enum name="Operation timeout"     value="4"/>
+        <enum name="ECC corrected"         value="5"/>
+        <enum name="ECC correction failed" value="6"/>
+        <enum name="Program failed"        value="7"/>
+        <enum name="Erase failed"          value="8"/>
+      </member>
+      <member name="BusMode" type="uint8_t" offset="0">
+        <enum name="ARM_NAND_BUS_SDR"  value="0"/>
+        <enum name="ARM_NAND_BUS_DDR"  value="1"/>
+        <enum name="ARM_NAND_BUS_DDR2" value="2"/>
+      </member>
+      <member name="BusDataWidth" type="uint8_t" offset="0">
+        <enum name="ARM_NAND_BUS_DATA_WIDTH_8"  value="0"/>
+        <enum name="ARM_NAND_BUS_DATA_WIDTH_16" value="1"/>
+      </member>
+      <member name="PowerVCC" type="uint8_t" offset="0">
+        <enum name="ARM_NAND_POWER_VCC_OFF" value="1"/>
+        <enum name="ARM_NAND_POWER_VCC_3V3" value="2"/>
+        <enum name="ARM_NAND_POWER_VCC_1V8" value="3"/>
+      </member>
+      <member name="PowerVCCQ" type="uint8_t" offset="0">
+        <enum name="ARM_NAND_POWER_VCCQ_OFF" value="1"/>
+        <enum name="ARM_NAND_POWER_VCCQ_3V3" value="2"/>
+        <enum name="ARM_NAND_POWER_VCCQ_1V8" value="3"/>
+      </member>
+    </typedef>
+
+    <!-- File System module identification -->
+    <typedef name="Module" info="File System module identification" size="1">
+      <member name="id" type="uint8_t" offset="0">
+        <enum name="File System:Core"              value="0"/>
+        <enum name="File System:FAT"               value="1"/>
+        <enum name="File System:EFS"               value="2"/>
+        <enum name="File System:IOC"               value="3"/>
+        <enum name="File System:NAND FTL"          value="4"/>
+        <enum name="File System:NAND"              value="5"/>
+        <enum name="File System:Memory Card (MCI)" value="6"/>
+        <enum name="File System:Memory Card (SPI)" value="7"/>
+      </member>
+    </typedef>
+
+    <!-- Generic event messages -->
+    <typedef name="Generic" info="Generic event messages" size="1">
+      <member name="msg" type="uint8_t" offset="0">
+        <enum value="0" name="Media is not initialized" />
+        <enum value="1" name="Media driver is not initialized" />
+        <enum value="2" name="Volume is not mounted" />
+        <enum value="3" name="Password protection is active" />
+        <enum value="4" name="Invalid function parameters" />
+        <enum value="5" name="Device control code is not supported" />
+      </member>
+    </typedef>
+    
+    <!-- Timestamp types -->
+    <typedef name="TimeType" info="Timestamp types" size="1">
+      <member name="id" type="uint8_t" offset="0">
+        <enum value="0" name="Create Time" />
+        <enum value="1" name="Last Access Time" />
+        <enum value="2" name="Last Write Time" />
+      </member>
+    </typedef>
+    
+    <!-- Timestamp data -->
+    <typedef name="TimeData" info="Timestamp data" size="4">
+      <member name="hr"   type="uint8_t"  offset="0"/>
+      <member name="min"  type="uint8_t"  offset="1"/>
+      <member name="sec"  type="uint8_t"  offset="2"/>
+
+      <member name="day"  type="uint8_t"  offset="0"/>
+      <member name="mon"  type="uint8_t"  offset="1"/>
+      <member name="year" type="uint16_t" offset="2"/>
+    </typedef>
+
+  </typedefs>
+
+  <objects>
+    <object name="File System Object">
+      <var name="i"    type="uint32_t" value="0" />
+      <var name="j"    type="uint32_t" value="0" />
+      <var name="k"    type="uint32_t" value="0" />
+      <var name="addr" type="uint32_t" value="0" />
+
+<!-- Media control objects -->
+
+<!-- Volumes -->
+      <read     name="VolCnt" type="uint8_t" symbol="fs_ndrv"                            const="1" />  <!-- Number of enabled drives -->
+      <readlist name="VolArr" type="FS_DEV"  symbol="fs_DevPool" count="VolCnt" init="1" const="1" />  <!-- List of all drives -->
+      
+      <!-- Read media control block: NOR0 -->
+      <readlist name="M_NOR" cond="__Symbol_exists(&quot;fs_nor0&quot;)" type="NOR_MEDIA" symbol="fs_nor0" count="1" />
+        
+      <calc cond="__Symbol_exists(&quot;fs_nor0&quot;)">
+          M_NOR[M_NOR._count-1].drvLet[0] = 'F';
+          M_NOR[M_NOR._count-1].drvLet[1] = '0';
+          M_NOR[M_NOR._count-1].drvLet[2] = '\0';
+      </calc>
+
+      <!-- Read media control block: NOR1 -->
+      <readlist name="M_NOR" cond="__Symbol_exists(&quot;fs_nor1&quot;)" type="NOR_MEDIA" symbol="fs_nor1" count="1" />
+        
+      <calc cond="__Symbol_exists(&quot;fs_nor1&quot;)">
+          M_NOR[M_NOR._count-1].drvLet[0] = 'F';
+          M_NOR[M_NOR._count-1].drvLet[1] = '1';
+          M_NOR[M_NOR._count-1].drvLet[2] = '\0';
+      </calc>
+      
+      <!-- Read media control block: MC0 MCI -->
+      <readlist name="M_MCI" cond="__Symbol_exists(&quot;fs_mc0_mci&quot;)" type="MC_MCI" symbol="fs_mc0_mci" count="1" />
+        
+      <calc cond="__Symbol_exists(&quot;fs_mc0_mci&quot;)">
+          M_MCI[M_MCI._count-1].drvLet[0] = 'M';
+          M_MCI[M_MCI._count-1].drvLet[1] = '0';
+          M_MCI[M_MCI._count-1].drvLet[2] = '\0';
+      </calc>
+
+      <!-- Read media control block: MC1 MCI -->
+      <readlist name="M_MCI" cond="__Symbol_exists(&quot;fs_mc1_mci&quot;)" type="MC_MCI" symbol="fs_mc1_mci" count="1" />
+        
+      <calc cond="__Symbol_exists(&quot;fs_mc1_mci&quot;)">
+          M_MCI[M_MCI._count-1].drvLet[0] = 'M';
+          M_MCI[M_MCI._count-1].drvLet[1] = '1';
+          M_MCI[M_MCI._count-1].drvLet[2] = '\0';
+      </calc>
+
+      <!-- Read media control block: MC0 SPI -->
+      <readlist name="M_SPI" cond="__Symbol_exists(&quot;fs_mc0_spi&quot;)" type="MC_SPI" symbol="fs_mc0_spi" count="1" />
+        
+      <calc cond="__Symbol_exists(&quot;fs_mc0_spi&quot;)">
+          M_SPI[M_SPI._count-1].drvLet[0] = 'M';
+          M_SPI[M_SPI._count-1].drvLet[1] = '0';
+          M_SPI[M_SPI._count-1].drvLet[2] = '\0';
+      </calc>
+
+      <!-- Read media control block: MC1 SPI -->
+      <readlist name="M_SPI" cond="__Symbol_exists(&quot;fs_mc1_spi&quot;)" type="MC_SPI" symbol="fs_mc1_spi" count="1" />
+        
+      <calc cond="__Symbol_exists(&quot;fs_mc1_spi&quot;)">
+          M_SPI[M_SPI._count-1].drvLet[0] = 'M';
+          M_SPI[M_SPI._count-1].drvLet[1] = '1';
+          M_SPI[M_SPI._count-1].drvLet[2] = '\0';
+      </calc>
+
+      <!-- Read media control block: NFTL0 -->
+      <readlist name="N_FTL" cond="__Symbol_exists(&quot;fs_nand0_handle&quot;)" type="NAND_FTL_DEV" symbol="fs_nand0_handle" count="1" />
+        
+      <calc cond="__Symbol_exists(&quot;fs_nand0_handle&quot;)">
+          N_FTL[N_FTL._count-1].drvLet[0] = 'N';
+          N_FTL[N_FTL._count-1].drvLet[1] = '0';
+          N_FTL[N_FTL._count-1].drvLet[2] = '\0';
+      </calc>
+
+      <!-- Read media control block: NFTL1 -->
+      <readlist name="N_FTL" cond="__Symbol_exists(&quot;fs_nand1_handle&quot;)" type="NAND_FTL_DEV" symbol="fs_nand1_handle" count="1" />
+        
+      <calc cond="__Symbol_exists(&quot;fs_nand1_handle&quot;)">
+          N_FTL[N_FTL._count-1].drvLet[0] = 'N';
+          N_FTL[N_FTL._count-1].drvLet[1] = '1';
+          N_FTL[N_FTL._count-1].drvLet[2] = '\0';
+      </calc>
+      
+      <!-- Read media control block: RAM0 -->
+      <readlist name="R_MEM" cond="__Symbol_exists(&quot;fs_ram0_dev&quot;)" type="RAM_DEV" symbol="fs_ram0_dev" count="1" />
+
+      <calc cond="__Symbol_exists(&quot;fs_ram0_dev&quot;)">
+          R_MEM[R_MEM._count-1].drvLet[0] = 'R';
+          R_MEM[R_MEM._count-1].drvLet[1] = '0';
+          R_MEM[R_MEM._count-1].drvLet[2] = '\0';
+      </calc>
+
+      <!-- Read media control block: RAM1 -->
+      <readlist name="R_MEM" cond="__Symbol_exists(&quot;fs_ram1_dev&quot;)" type="RAM_DEV" symbol="fs_ram1_dev" count="1" />
+
+      <calc cond="__Symbol_exists(&quot;fs_ram1_dev&quot;)">
+          R_MEM[R_MEM._count-1].drvLet[0] = 'R';
+          R_MEM[R_MEM._count-1].drvLet[1] = '1';
+          R_MEM[R_MEM._count-1].drvLet[2] = '\0';
+      </calc>
+
+      <!-- Read volumes -->
+      <list name="i" start="0" limit="VolCnt">
+        <readlist cond="VolArr[i].attr &amp; 0x04" name="Vol_FAT" type="fsFAT_Volume" offset="VolArr[i].dcb"/>
+        <readlist cond="VolArr[i].attr &amp; 0x02" name="Vol_EFS" type="fsEFS_Volume" offset="VolArr[i].dcb"/>
+
+        <calc cond="VolArr[i].attr &amp; 0x04">
+          Vol_FAT[Vol_FAT._count-1].vidx = i;
+
+          Vol_FAT[Vol_FAT._count-1].drvLet[0] = VolArr[i].id0;
+          Vol_FAT[Vol_FAT._count-1].drvLet[1] = VolArr[i].id1;
+          Vol_FAT[Vol_FAT._count-1].drvLet[2] = VolArr[i].id2;
+        </calc>
+        
+        <calc cond="VolArr[i].attr &amp; 0x02">
+          Vol_EFS[Vol_EFS._count-1].vidx = i;
+
+          Vol_EFS[Vol_EFS._count-1].drvLet[0] = VolArr[i].id0;
+          Vol_EFS[Vol_EFS._count-1].drvLet[1] = VolArr[i].id1;
+          Vol_EFS[Vol_EFS._count-1].drvLet[2] = VolArr[i].id2;
+        </calc>
+      </list>
+
+      <!-- Determine FAT volume capacity and free space -->
+      <list name="i" start="0" limit="Vol_FAT._count">
+        <calc>
+          Vol_FAT[i].capacity  = Vol_FAT[i].DataClusCnt;
+          Vol_FAT[i].capacity *= Vol_FAT[i].ClusSize;
+
+          Vol_FAT[i].free_space  = Vol_FAT[i].free_clus_cnt;
+          Vol_FAT[i].free_space *= Vol_FAT[i].ClusSize;
+        </calc>
+      </list>
+
+      <!-- Read Flash Sector Array (FSA) -->
+      <list name="i" start="0" limit="M_NOR._count">
+        <calc cond="(M_NOR[i].Status &amp; 0x01) &amp;&amp; (M_NOR[i].SectArray)">
+          M_NOR[i].sidx = F_FSA._count;
+        </calc>
+        <readlist cond="(M_NOR[i].Status &amp; 0x01) &amp;&amp; (M_NOR[i].SectArray)" name="F_FSA" type="ARM_FLASH_SECTOR" offset="M_NOR[i].SectArray" based="0" count="M_NOR[i].SectCnt"/>
+      </list>
+
+<!-- File Handles -->
+      <var name="FH_Active" type="uint32_t" value="0"/> <!-- Num of active FAT handles -->
+      <var name="EH_Active" type="uint32_t" value="0"/> <!-- Num of active EFS handles -->
+
+      <read name="FH_Cnt" type="uint8_t" symbol="fs_fat_fh_cnt" const="1" />  <!-- Number of FAT handles -->
+      <read name="EH_Cnt" type="uint8_t" symbol="fs_efs_fh_cnt" const="1" />  <!-- Number of EFS handles -->
+
+      <readlist name="FH_Arr" type="fsFAT_Handle" symbol="fs_fat_fh" count="FH_Cnt" init="1"/>  <!-- Array of FAT handles -->
+      <readlist name="EH_Arr" type="fsEFS_Handle" symbol="fs_efs_fh" count="EH_Cnt" init="1"/>  <!-- Array of EFS handles -->
+
+      <!-- Construct an array of open modes and determine number of open files (active) -->
+      <list name="i" start="0" limit="FH_Cnt">
+        <calc>
+          addr = FH_Arr[i]._addr; addr += __Offset_of(fsFAT_Handle:flags);
+        </calc>
+        <readlist name="FH_Mode" type="FAT_OpenMode" offset="addr" count="1"/>
+
+        <calc>
+          FH_Mode[i].mode = FH_Mode[i].mode &amp; 0x07;
+          FH_Active      += (FH_Mode[i].mode) ? 1 : 0;
+        </calc>
+      </list>
+
+      <list name="i" start="0" limit="EH_Cnt">
+        <calc>
+          addr = EH_Arr[i]._addr; addr += __Offset_of(fsEFS_Handle:flags);
+        </calc>
+        <readlist name="EH_Mode" type="EFS_OpenMode" offset="addr" count="1"/>
+
+        <calc>
+          EH_Mode[i].mode = EH_Mode[i].mode &amp; 0x07;
+          EH_Active      += (EH_Mode[i].mode) ? 1 : 0;
+        </calc>
+      </list>
+
+      <!-- Take FAT file handles and determine associated volumes -->
+      <list name="i" start="0" limit="Vol_FAT._count">        
+        <list name="j" start="0" limit="FH_Cnt">
+          <calc cond="Vol_FAT[i]._addr == FH_Arr[j].vol">
+            FH_Arr[j].vidx = i;
+          </calc>
+        </list>
+      </list>
+
+      <!-- Take EFS file handles and determine associated volumes -->
+      <list name="i" start="0" limit="Vol_EFS._count">        
+        <list name="j" start="0" limit="EH_Cnt">
+          <calc cond="Vol_EFS[i]._addr == EH_Arr[j].vol">
+            EH_Arr[j].vidx = i;
+          </calc>
+        </list>
+      </list>
+
+      <out name="File System">
+
+<!-- Watch: Handles............................................................................ -->
+
+        <item property="EFS File Handles" cond="EH_Cnt" value="Used: %d[EH_Active] (Available: %d[EH_Cnt])">
+          <list name="i" start="0" limit="EH_Cnt">
+            <item property="Handle id: %d[i]" cond="EH_Arr[i].flags &amp; 0x03"
+                  value="Drive: %t[Vol_EFS[EH_Arr[i].vidx].drvLet], Mode: %E[EH_Mode[i].mode], Size: %d[EH_Arr[i].fsize], Pos: %d[EH_Arr[i].fpos]">
+            </item>
+          </list>
+        </item>
+
+        <item property="FAT File Handles" cond="FH_Cnt" value="Used: %d[FH_Active] (Available: %d[FH_Cnt])">
+          <list name="i" start="0" limit="FH_Cnt">
+            <item property="Handle id: %d[i]" cond="FH_Arr[i].flags &amp; 0x03"
+                  value="Drive: %t[Vol_FAT[FH_Arr[i].vidx].drvLet], Mode: %E[FH_Mode[i].mode], Size: %d[FH_Arr[i].fcsz], Pos: %d[FH_Arr[i].fpos]">
+            </item>
+          </list>
+        </item>
+
+<!-- Watch: Drives............................................................................. -->
+
+        <item property="Drives">
+
+          <!-- EFS drives -->
+          <list name="i" start="0" limit="Vol_EFS._count">
+            <item property="Drive %t[Vol_EFS[i].drvLet]">
+
+              <item property="Status"    value="%t[Vol_EFS[i].Status ? &quot;Valid&quot; : &quot;Uninitialized&quot;]">
+                <item property="Driver initialized" value="%t[(Vol_EFS[i].Status &amp; 0x01) ?  &quot;True&quot; : &quot;False&quot;]" />
+                <item property="Mounted"            value="%t[(Vol_EFS[i].Status &amp; 0x02) ?  &quot;True&quot; : &quot;False&quot;]" />
+              </item>
+              <item property="Total size" value="%d[Vol_EFS[i].Size] bytes" />
+
+              <!-- Output info: NOR -->
+              <list name="j" start="0" limit="M_NOR._count">
+
+                <item property="Memory Media" cond="(M_NOR[j].drvLet[0] == Vol_EFS[i].drvLet[0]) &amp;&amp; (M_NOR[j].drvLet[1] == Vol_EFS[i].drvLet[1])">
+                  <item property="Status" value="%t[M_NOR[j].Status ? &quot;Valid&quot; : &quot;Uninitialized&quot;]">
+                    <item property="Driver initialized"  value="%t[(M_NOR[j].Status &amp; 0x01)      ?  &quot;True&quot; : &quot;False&quot;]" />
+                  </item>
+
+                  <item property="Driver" cond="M_NOR[j].Driver" value="%S[M_NOR[j].Driver]" />
+                  
+                  <!-- Output info: NOR flash device (uniform sectors) -->
+                  <item property="Sector count" value="%d[M_NOR[j].SectCnt]"  cond="M_NOR[j].SectArray == 0"/>
+                  <item property="Sector size"  value="%d[M_NOR[j].SectSize]" cond="M_NOR[j].SectArray == 0"/>
+
+              <!-- Output info: NOR flash device (sector array) -->
+                  <item property="Sector count" value="%d[M_NOR[j].SectCnt]"  cond="M_NOR[j].SectArray">
+                  <item property="Sector (size in bytes)"  value="Address: start, end"/>
+                    
+                    <list name="k" start="0" limit="M_NOR[j].SectCnt">
+                      <item property="%d[k] (%d[(F_FSA[M_NOR[j].sidx + k].end + 1) - F_FSA[M_NOR[j].sidx + k].start])"
+                            value="%x[F_FSA[M_NOR[j].sidx + k].start], %x[F_FSA[M_NOR[j].sidx + k].end]"/>
+                  </list>
+                </item>
+
+              </item>
+              </list>
+            </item>
+          </list>
+
+          <!-- FAT drives -->
+          <list name="i" start="0" limit="Vol_FAT._count">
+            <item property="Drive %t[Vol_FAT[i].drvLet]">
+
+              <item property="Status"      value="%t[Vol_FAT[i].Status ? &quot;Valid&quot; : &quot;Uninitialized&quot;]">
+                <item property="Driver initialized" value="%t[(Vol_FAT[i].Status &amp; 0x01) ?  &quot;True&quot; : &quot;False&quot;]" />
+                <item property="Media initialized"  value="%t[(Vol_FAT[i].Status &amp; 0x02) ?  &quot;True&quot; : &quot;False&quot;]" />
+                <item property="Mounted"            value="%t[(Vol_FAT[i].Status &amp; 0x08) ?  &quot;True&quot; : &quot;False&quot;]" />
+                <item property="Removable"          value="%t[(Vol_FAT[i].Status &amp; 0x20) ?  &quot;True&quot; : &quot;False&quot;]" />
+                <item property="Journal"            value="%t[(Vol_FAT[i].Status &amp; 0x40) ?  &quot;Active&quot; : &quot;Disabled&quot;]" />
+              </item>
+              <item property="File System"  value="%E[Vol_FAT[i].FatType]" />
+              <item property="Total size"   value="%d[Vol_FAT[i].capacity] bytes" />
+              <item property="Free space"   value="%d[Vol_FAT[i].free_space] bytes" cond="Vol_FAT[i].FatType == 0x03"/>
+              <item property="Cluster size" value="%d[Vol_FAT[i].ClusSize] bytes" />
+              
+              <!-- Output info: Memory Card using MCI -->
+              <list name="j" start="0" limit="M_MCI._count">
+
+                <item property="Memory Media" cond="(M_MCI[j].drvLet[0] == Vol_FAT[i].drvLet[0]) &amp;&amp; (M_MCI[j].drvLet[1] == Vol_FAT[i].drvLet[1])">
+                  <item property="Status" value="%t[M_MCI[j].Status ? &quot;Valid&quot; : &quot;Uninitialized&quot;]">
+                    <item property="Driver initialized"  value="%t[(M_MCI[j].Status &amp; 0x01)      ?  &quot;True&quot; : &quot;False&quot;]" />
+                    <item property="Media present"       value="%t[(M_MCI[j].MediaStatus &amp; 0x01) ?  &quot;True&quot; : &quot;False&quot;]" />
+                    <item property="Media initialized"   value="%t[(M_MCI[j].MediaStatus &amp; 0x04) ?  &quot;True&quot; : &quot;False&quot;]" />
+                    <item property="Write protection"    value="%t[(M_MCI[j].MediaStatus &amp; 0x02) ?  &quot;Active&quot; : &quot;Inactive&quot;]" />
+                    <item property="Password protection" value="%t[(M_MCI[j].Status &amp; 0x04)      ?  &quot;Active&quot; : &quot;Inactive&quot;]" />
+                  </item>
+   
+                  <item property="Type" cond="(M_MCI[j].Property &amp; 0x03) == 0" value="Unknown"/>
+                  <item property="Type" cond="M_MCI[j].Property &amp; 0x01"        value="SD device"/>
+                  <item property="Type" cond="M_MCI[j].Property &amp; 0x02"        value="MMC device"/>
+                  <item property="Capacity"       value="%d[M_MCI[j].SectorCount] sectors" />
+                  <item property="Serial number"  value="%x[M_MCI[j].SerialNumber]" />
+                  <item property="Driver" cond="M_MCI[j].Driver" value="%S[M_MCI[j].Driver]" />
+                </item>
+              </list>
+
+              <!-- Output info: Memory Card using SPI -->
+              <list name="j" start="0" limit="M_SPI._count">
+                <item property="Memory Media" cond="(M_SPI[j].drvLet[0] == Vol_FAT[i].drvLet[0]) &amp;&amp; (M_SPI[j].drvLet[1] == Vol_FAT[i].drvLet[1])">
+                  
+                  <item property="Status" value="%t[M_SPI[j].Status ? &quot;Valid&quot; : &quot;Uninitialized&quot;]">
+                    <item property="Driver initialized"  value="%t[(M_SPI[j].Status &amp; 0x01)      ?  &quot;True&quot; : &quot;False&quot;]" />
+                    <item property="Media present"       value="%t[(M_SPI[j].MediaStatus &amp; 0x01) ?  &quot;True&quot; : &quot;False&quot;]" />
+                    <item property="Media initialized"   value="%t[(M_SPI[j].MediaStatus &amp; 0x04) ?  &quot;True&quot; : &quot;False&quot;]" />
+                    <item property="Write protection"    value="%t[(M_SPI[j].MediaStatus &amp; 0x02) ?  &quot;Active&quot; : &quot;Inactive&quot;]" />
+                    <item property="Password protection" value="%t[(M_SPI[j].Status &amp; 0x04)      ?  &quot;Active&quot; : &quot;Inactive&quot;]" />
+                  </item>
+   
+                  <item property="Type" cond="(M_SPI[j].Property &amp; 0x03) == 0" value="Unknown"/>
+                  <item property="Type" cond="M_SPI[j].Property &amp; 0x01"        value="SD device"/>
+                  <item property="Type" cond="M_SPI[j].Property &amp; 0x02"        value="MMC device"/>
+                  <item property="Capacity"       value="%d[M_SPI[j].SectorCount] sectors" />
+                  <item property="Serial number"  value="%x[M_SPI[j].SerialNumber]" />
+                  <item property="Driver" cond="M_SPI[j].Driver" value="%S[M_SPI[j].Driver]" />
+                </item>
+              </list>
+              
+              <!-- Output info: NFTL & NAND -->
+              <list name="j" start="0" limit="N_FTL._count">
+                <item property="NAND Translation Layer" cond="(N_FTL[j].drvLet[0] == Vol_FAT[i].drvLet[0]) &amp;&amp; (N_FTL[j].drvLet[1] == Vol_FAT[i].drvLet[1])">
+
+                  <item property="Status" value="%t[N_FTL[j].Status ? &quot;Valid&quot; : &quot;Uninitialized&quot;]">
+                    <item property="Initialized" value="%t[(N_FTL[j].Status &amp; 0x01) ?  &quot;True&quot; : &quot;False&quot;]" />
+                    <item property="Formatted"   value="%t[(N_FTL[j].Status &amp; 0x02) ?  &quot;True&quot; : &quot;False&quot;]" />
+                    <item property="Mounted"     value="%t[(N_FTL[j].Status &amp; 0x04) ?  &quot;True&quot; : &quot;False&quot;]" />
+                  </item>
+
+                  <item property="Page layout" value="Sector offset: 0, Spare offset: %d[N_FTL[j].spare_ofs], Sector increment: %d[N_FTL[j].sector_inc], Spare increment: %d[N_FTL[j].spare_inc]" />
+                  <item property="Spare layout" value="LSN offset: %d[N_FTL[j].spare_ofs_lsn], Bad block marker offset: %d[N_FTL[j].spare_ofs_bbm], ECC offset: %d[N_FTL[j].spare_ofs_ecc]" />
+
+                  <item property="Sectors per page"  value="%d[(1 &lt;&lt; N_FTL[j].SPP)]" />
+                  <item property="Sectors per block" value="%d[(1 &lt;&lt; N_FTL[j].SPB)]" />
+
+                </item>
+              </list>
+              
+              <!-- Output info: RAM drive memory info -->
+              <list name="j" start="0" limit="R_MEM._count">
+                <item property="Memory Media" cond="(R_MEM[j].drvLet[0] == Vol_FAT[i].drvLet[0]) &amp;&amp; (R_MEM[j].drvLet[1] == Vol_FAT[i].drvLet[1])">
+                  <item property="Buffer address" value="%x[R_MEM[j].Base]" />
+                  <item property="Buffer size"    value="%d[R_MEM[j].Size]" />
+                </item>
+              </list>
+
+            </item>
+          </list>
+        </item>
+      </out>
+    </object>
+  </objects>
+
+<!-- File System events......................................................................... -->
+  <events>
+ 
+    <group name="File System">
+      <component name="Core Management"              brief="FsCore"  no="0x80" prefix="EvrFsCore_"  info="File System - Core Management" />
+      <component name="FAT File System"              brief="FsFAT"   no="0x81" prefix="EvrFsFAT_"   info="File System - FAT File System" />
+      <component name="EFS File System"              brief="FsEFS"   no="0x82" prefix="EvrFsEFS_"   info="File System - Embedded File System" />
+      <component name="I/O Control Interface"        brief="FsIOC"   no="0x83" prefix="EvrFsIOC_"   info="File System - I/O Control Interface" />
+      <component name="NAND Flash Translation Layer" brief="FsNFTL"  no="0x84" prefix="EvrFsNFTL_"  info="File System - NAND Flash Translation Layer" />
+      <component name="NAND Device Interface"        brief="FsNAND"  no="0x85" prefix="EvrFsNAND_"  info="File System - NAND Flash Device Interface" />
+      <component name="Memory Card MCI"              brief="FsMcMCI" no="0x86" prefix="EvrFsMcMCI_" info="File System - Memory Card MCI" />
+      <component name="Memory Card SPI"              brief="FsMcSPI" no="0x87" prefix="EvrFsMcSPI_" info="File System - Memory Card SPI" />
+    </group>
+
+    <!-- Core events -->
+    <event id=" 0 + 0x8000" level="API"    property="sys_open"              value="name=%x[val1], openmode=%x[val2]" info="Open a file"/>
+    <event id=" 1 + 0x8000" level="API"    property="sys_close"             value="fh=%x[val1]" info="Close a file"/>
+    <event id=" 2 + 0x8000" level="API"    property="sys_write"             value="fh=%x[val1], buf=%x[val2], len=%d[val3]" info="Write to a file"/>
+    <event id=" 3 + 0x8000" level="API"    property="sys_read"              value="fh=%x[val1], buf=%x[val2], len=%d[val3]" info="Read from a file"/>
+    <event id=" 4 + 0x8000" level="API"    property="sys_seek"              value="fh=%x[val1], pos=%d[val2]" info="Move the file position"/>
+    <event id=" 5 + 0x8000" level="API"    property="sys_flen"              value="fh=%x[val1]" info="Return the current length of a file"/>
+    <event id=" 6 + 0x8000" level="Op"     property="sys_handle_assign"     value="name=%x[val1], fh=%x[val2]" info="Assigned file handle to a opened file"/>
+    <event id=" 7 + 0x8000" level="API"    property="finit"                 value="drive=%x[val1]" info="Initialize drive"/>
+    <event id=" 8 + 0x8000" level="API"    property="funinit"               value="drive=%x[val1]" info="Uninitialize drive"/>
+    <event id=" 9 + 0x8000" level="API"    property="fmount"                value="drive=%x[val1]" info="Mount drive"/>
+    <event id="10 + 0x8000" level="API"    property="funmount"              value="drive=%x[val1]" info="Unmount drive"/>
+    <event id="11 + 0x8000" level="API"    property="fdelete"               value="path=%x[val1]" info="Delete a file"/>
+    <event id="12 + 0x8000" level="API"    property="fdelete"               value="path=%x[val1], options=%x[val2]" info="Delete one or more files"/>
+    <event id="13 + 0x8000" level="API"    property="ffind"                 value="pattern=%x[val1], info=%x[val2]" info="Find a file or directory"/>
+    <event id="14 + 0x8000" level="API"    property="frename"               value="path=%x[val1], newname=%x[val2]" info="Rename a file or directory"/>
+    <event id="15 + 0x8000" level="API"    property="fattrib"               value="path=%x[val1], attr=%x[val2]" info="Change file attributes"/>
+    <event id="16 + 0x8000" level="API"    property="fpwd"                  value="drive=%x[val1], buf=%x[val2], len=%d[val3]" info="Print working directory"/>
+    <event id="17 + 0x8000" level="API"    property="fchdir"                value="path=%x[val1]" info="Change working directory"/>
+    <event id="18 + 0x8000" level="API"    property="fmkdir"                value="path=%x[val1]" info="Create a directory"/>
+    <event id="19 + 0x8000" level="API"    property="frmdir"                value="path=%x[val1], options=%x[val2]" info="Remove a directory"/>
+    <event id="20 + 0x8000" level="API"    property="fchdrive"              value="drive=%x[val1]" info="Change current drive"/>
+    <event id="21 + 0x8000" level="API"    property="ffree"                 value="drive=%x[val1]" info="Retrieve drive free space"/>
+    <event id="22 + 0x8000" level="API"    property="fformat"               value="drive=%x[val1], options=%x[val2]" info="Format drive"/>    
+    <event id="23 + 0x8000" level="API"    property="fanalyse"              value="drive=%x[val1]" info="Analyse drive fragmentation"/>
+    <event id="24 + 0x8000" level="API"    property="fcheck"                value="drive=%x[val1]" info="Check drive consistency"/>
+    <event id="25 + 0x8000" level="API"    property="fdefrag"               value="drive=%x[val1]" info="Defragment drive"/>
+    <event id="26 + 0x8000" level="API"    property="fmedia"                value="drive=%x[val1]" info="Check media presence on removable drive"/>
+    <event id="27 + 0x8000" level="API"    property="finfo"                 value="drive=%x[val1], info=%x[val2]" info="Read drive information"/>    
+    <event id="28 + 0x8000" level="API"    property="fvol"                  value="drive=%x[val1], label=%x[val2], serial=%x[val3]" info="Read volume label and serial number"/>
+    <event id="29 + 0x8000" level="Error"  property="InvalidDrive"          value="drive=%t[val1]" info="Invalid or disabled drive specified"/>
+    <event id="30 + 0x8000" level="Op"     property="CurrentDriveSelect"    value="drive=%t[val1]" info="Drive not specified, using current drive"/>
+    <event id="31 + 0x8000" level="API"    property="ftime_set"             value="path=%x[val1], create=%x[val2], access=%x[val3], write=%x[val4]" info="Set file or directory timestamp" />
+    <event id="32 + 0x8000" level="API"    property="ftime_get"             value="path=%x[val1], create=%x[val2], access=%x[val3], write=%x[val4]" info="Get file or directory timestamp" />
+    <event id="33 + 0x8000" level="API"    property="fversion"              value="FileSystem version=%d[val1 >> 16].%d[val1 &amp; 0xFFFF].%d[val2 &amp; 0xFFFF]" info="FileSystem component version number"/>
+    <event id="34 + 0x8000" level="API"    property="fs_fopen"              value="path=%x[val1], mode=%x[val2]" info="Open a file"/>
+    <event id="35 + 0x8000" level="API"    property="fs_fclose"             value="handle=%x[val1]" info="Close a file"/>
+    <event id="36 + 0x8000" level="API"    property="fs_fwrite"             value="handle=%x[val1], buf=%x[val2], cnt=%d[val3]" info="Write to a file"/>
+    <event id="37 + 0x8000" level="API"    property="fs_fread"              value="handle=%x[val1], buf=%x[val2], cnt=%d[val3]" info="Read from a file"/>
+    <event id="38 + 0x8000" level="API"    property="fs_fflush"             value="handle=%x[val1]" info="Flush file buffers"/>
+    <event id="39 + 0x8000" level="API"    property="fs_fseek"              value="handle=%x[val1], offset=%d[(uint64_t)val3 &lt;&lt; 32) | val2], whence=%d[val4]" info="Move the file position"/>
+    <event id="40 + 0x8000" level="API"    property="fs_fsize"              value="handle=%x[val1]" info="Retrieve the file size"/>
+
+    <!-- FAT events -->
+    <event id=" 0 + 0x8100" level="Op"     property="InitDrive"             value="drive=%t[val1]" info="Initializing drive"/>
+    <event id=" 1 + 0x8100" level="Op"     property="InitDriveSuccess"      value="drive=%t[val1]" info="Drive successfully initialized"/>
+    <event id=" 2 + 0x8100" level="Error"  property="InitDriverCfgError"    value="drive=%t[val1]" info="Driver configuration error"/>
+    <event id=" 3 + 0x8100" level="Error"  property="InitDriverError"       value="drive=%t[val1]" info="Failed to initialize the driver"/>
+    <event id=" 4 + 0x8100" level="Op"     property="UninitDrive"           value="drive=%t[val1]" info="Uninitialize drive"/>
+    <event id=" 5 + 0x8100" level="Op"     property="MountDrive"            value="drive=%t[val1]" info="Mount drive"/>
+    <event id=" 6 + 0x8100" level="Error"  property="InitMediaError"        value="drive=%t[val1]" info="Media init failed"/>
+    <event id=" 7 + 0x8100" level="Error"  property="MediaInsertStatError"  value="drive=%t[val1]" info="Media is not inserted"/>
+    <event id=" 8 + 0x8100" level="Error"  property="MediaInitStatError"    value="drive=%t[val1]" info="Media is not initialized"/>
+    <event id=" 9 + 0x8100" level="Error"  property="VolumeReadyStatError"  value="drive=%t[val1]" info="Volume is not ready"/>
+    <event id="10 + 0x8100" level="Error"  property="VolumeWriteStatError"  value="drive=%t[val1]" info="Volume write protection is active"/>
+    <event id="11 + 0x8100" level="Error"  property="VolumeNotMounted"      value="drive=%t[val1]" info="Volume is not mounted"/>
+    <event id="12 + 0x8100" level="Op"     property="ReadMBR"               value="drive=%t[val1], sector=%d[val2]" info="Read Master Boot Record"/>
+    <event id="13 + 0x8100" level="Error"  property="InvalidMBR"            value="drive=%t[val1]" info="Invalid Master Boot Record, boot signature not found"/>
+    <event id="14 + 0x8100" level="Op"     property="NonexistentMBR"        value="drive=%t[val1]" info="Master Boot Record does not exist"/>
+    <event id="15 + 0x8100" level="Op"     property="ReadBootSector"        value="drive=%t[val1], sector=%d[val2]" info="Read Boot Sector"/>
+    <event id="16 + 0x8100" level="Error"  property="InvalidBootSector"     value="drive=%t[val1]" info="Invalid Boot Sector, boot signature not found"/>
+    <event id="17 + 0x8100" level="Error"  property="InvalidFAT"            value="drive=%t[val1]" info="Invalid volume configuration parameters"/>
+    <event id="18 + 0x8100" level="Op"     property="ReadFSInfo"            value="drive=%t[val1], sector=%d[val2]" info="Read FS Info sector"/>
+    <event id="19 + 0x8100" level="Error"  property="InvalidFSInfo"         value="drive=%t[val1]" info="Invalid FS Info, signature mismatched"/>
+    <event id="20 + 0x8100" level="Error"  property="InvalidFreeClusFSInfo" value="drive=%t[val1]" info="FS Info: number of free clusters invalid" />
+    <event id="21 + 0x8100" level="Error"  property="InvalidNextClusFSInfo" value="drive=%t[val1]" info="FS Info: next free cluster number invalid" />
+    <event id="22 + 0x8100" level="Op"     property="WriteFSInfo"           value="drive=%t[val1], sector=%d[val2]" info="Write FS Info sector"/>
+    <event id="23 + 0x8100" level="Op"     property="CountFreeClus"         value="drive=%t[val1]" info="Count number of free clusters"/>
+    <event id="24 + 0x8100" level="Op"     property="MountDriveSuccess"     value="drive=%t[val1]" info="Drive successfully mounted"/>
+    <event id="25 + 0x8100" level="Op"     property="UnmountDrive"          value="drive=%t[val1]" info="Unmount drive"/>
+    <event id="26 + 0x8100" level="Op"     property="UnmountDriveSuccess"   value="drive %t[val1]" info="Drive successfully unmounted"/>
+    <event id="27 + 0x8100" level="Op"     property="FormatDrive"           value="drive=%t[val1]" info="Format drive"/>
+    <event id="28 + 0x8100" level="Op"     property="FormatDriveSuccess"    value="drive=%t[val1]" info="Drive successfully formatted"/>
+    <event id="29 + 0x8100" level="Op"     property="ResetHandles"          value="drive=%t[val1]" info="Reset drive associated file handles"/>
+    <event id="30 + 0x8100" level="Op"     property="FormatOptionDetected"  value="drive=%t[val1], option=%E[val2, FormatOpt:id]" info="Detected format option"/>
+    <event id="31 + 0x8100" level="Op"     property="FormatMediaCapacity"   value="drive=%t[val1], capacity=%d[val2] sectors" info="Detected media capacity"/>
+    <event id="32 + 0x8100" level="Op"     property="FormatLowLevel"        value="drive=%t[val1]" info="Attempting low level media format"/>
+    <event id="33 + 0x8100" level="Error"  property="FormatNoSpace"         value="drive=%t[val1]" info="Not enough space to complete format"/>
+    <event id="34 + 0x8100" level="Error"  property="FormatNoSpaceFAT32"    value="drive=%t[val1]" info="Volume is too small for FAT32"/>
+    <event id="35 + 0x8100" level="Op"     property="WriteMBR"              value="drive=%t[val1], sector=%d[val2]" info="Write Master Boot Record"/>
+    <event id="36 + 0x8100" level="Op"     property="WriteBootSector"       value="drive=%t[val1], sector=%d[val2]" info="Write Boot Sector"/>
+    <event id="37 + 0x8100" level="Op"     property="ClearHiddenSectors"    value="drive=%t[val1], sector=%d[val2], count=%d[val3]" info="Clear hidden sectors"/>
+    <event id="38 + 0x8100" level="Op"     property="ClearReservedSectors"  value="drive=%t[val1], sector=%d[val2], count=%d[val3]" info="Clear reserved sectors"/>
+    <event id="39 + 0x8100" level="Op"     property="ClearRootSectors"      value="drive=%t[val1], sector=%d[val2], count=%d[val3]" info="Clear root area sectors"/>
+    <event id="40 + 0x8100" level="Op"     property="CreateFAT"             value="drive=%t[val1], sector=%d[val2], count=%d[val3]" info="Create File Allocation Table"/>
+    <event id="41 + 0x8100" level="Op"     property="FormatProperties"      value="drive=%t[val1], type=%E[val2, FATType:id], clus_size=%d[val3] bytes, data_clus=%d[val4]" info="Volume formatting properties" />
+    <event id="42 + 0x8100" level="Op"     property="FileOpen"              value="h=%d[val1], path=%x[val2], openmode=%x[val3]" val3="uint8_t" info="Open file"/>
+    <event id="43 + 0x8100" level="Error"  property="PathInvalidChar"       value="ch=%x[val1]" />
+    <event id="44 + 0x8100" level="Error"  property="PathIsTooLong"         value="max_len=%d[val1]" />
+    <event id="45 + 0x8100" level="Error"  property="PathIsDirNotFile"      value="drive=%t[val1]" info="Specified path is a directory" />
+    <event id="46 + 0x8100" level="Error"  property="FileIsInUse"           value="drive=%t[val1]" info="Specified file is already in use" />
+    <event id="47 + 0x8100" level="Error"  property="FileIsReadOnly"        value="drive=%t[val1]" info="Specified file is read only" />
+    <event id="48 + 0x8100" level="Error"  property="FileIsNonExistent"     value="drive=%t[val1]" info="Specified file does not exist" />
+    <event id="49 + 0x8100" level="Op"     property="PathProcessing"        value="drive=%t[val1], path=%x[val2]" info="Processing path" />
+    <event id="50 + 0x8100" level="Error"  property="FileHandleUnavailable" value="drive=%t[val1]" info="No free file handle available"/>
+    <event id="51 + 0x8100" level="Error"  property="FileHandleInvalid"     value="h=%d[val1]" info="Invalid file handle specified" />
+    <event id="52 + 0x8100" level="Error"  property="Labellnvalid"          value="drive=%t[val1]" info="Volume label contains invalid character(s)" />
+    <event id="53 + 0x8100" level="Op"     property="LabelNotSet"           value="drive=%t[val1]" info="Volume label is not set" />
+    <event id="54 + 0x8100" level="Error"  property="SectorReadFailed"      value="drive=%t[val1], sector=%d[val2], count=%d[val3]" info="Sector read failed"/>
+    <event id="55 + 0x8100" level="Error"  property="SectorWriteFailed"     value="drive=%t[val1], sector=%d[val2], count=%d[val3]" info="Sector write failed"/>
+    <event id="56 + 0x8100" level="Error"  property="DiskFull"              value="drive=%t[val1]" info="Out of free space"/>
+    <event id="57 + 0x8100" level="Error"  property="DirEntryAllocFailed"   value="drive=%t[val1], dir_clus=%d[val2]" info="Directory entry allocation failed"/>
+    <event id="58 + 0x8100" level="Error"  property="PathBufferToSmall"     value="drive=%t[val1]" info="Specified file name buffer is too small" />
+    <event id="59 + 0x8100" level="Op"     property="InitJournal"           value="drive=%t[val1]" info="Initialize FAT journal" />
+    <event id="60 + 0x8100" level="Op"     property="InitJournalSuccess"    value="drive=%t[val1]" info="FAT journal initialized and active" />
+    <event id="61 + 0x8100" level="Op"     property="InitJournalFATError"   value="drive=%t[val1]" info="Two allocation tables are required for journal" />
+    <event id="62 + 0x8100" level="Op"     property="FileClose"             value="h=%d[val1]" info="Close file"/>
+    <event id="63 + 0x8100" level="Error"  property="FileHandleError"       value="h=%d[val1], flags=%x[val2]" info="File handle error or file not opened"/>
+    <event id="64 + 0x8100" level="Op"     property="FileRead"              value="h=%d[val1], buf=%x[val2], len=%d[val3]" info="Read file"/>
+    <event id="65 + 0x8100" level="Op"     property="FileWrite"             value="h=%d[val1], buf=%x[val2], len=%d[val3]" info="Write file"/>
+    <event id="66 + 0x8100" level="Op"     property="FileFlush"             value="h=%d[val1]" info="Flush file buffer"/>
+    <event id="67 + 0x8100" level="Op"     property="FileSeek"              value="h=%d[val1], offset=%d[(uint64_t)val3 &lt;&lt; 32) | val2], whence=%d[val4]" info="Set file position"/>
+    <event id="68 + 0x8100" level="Op"     property="FileSeekIncrease"      value="h=%d[val1], csize=%d[val2], nsize=%d[val3]" info="Increasing file size from csize to nsize"/>
+    <event id="69 + 0x8100" level="Op"     property="FileDelete"            value="drive=%t[val1], path=%x[val2]" info="Delete file"/>
+    <event id="70 + 0x8100" level="Op"     property="FileDeleteSuccess"     value="drive=%t[val1], path=%x[val2]" info="File delete successful"/>
+    <event id="71 + 0x8100" level="Op"     property="FileRename"            value="drive=%t[val1], path=%x[val2], newname=%x[val3]" info="Rename file or directory"/>
+    <event id="72 + 0x8100" level="Op"     property="FileRenameSuccess"     value="drive=%t[val1], path=%x[val2], name=%x[val3]" info="File or directory renamed successfully"/>
+    <event id="73 + 0x8100" level="Op"     property="DirCreate"             value="drive=%t[val1], path=%x[val2]" info="Create a directory"/>
+    <event id="74 + 0x8100" level="Op"     property="DirCreateSuccess"      value="drive=%t[val1], path=%x[val2]" info="Directory created"/>
+    <event id="75 + 0x8100" level="Op"     property="DirRemove"             value="drive=%t[val1], path=%x[val2], options=%x[val3]" info="Remove a directory"/>
+    <event id="76 + 0x8100" level="Op"     property="DirRemoveSuccess"      value="drive=%t[val1], path=%x[val2], options=%x[val3]" info="Directory removed"/>
+    <event id="77 + 0x8100" level="Op"     property="ChDir"                 value="drive=%t[val1], path=%x[val2]" info="Change current directory"/>
+    <event id="78 + 0x8100" level="Op"     property="ChDirSuccess"          value="drive=%t[val1], path=%x[val2]" info="Current directory changed"/>
+    <event id="79 + 0x8100" level="Op"     property="Pwd"                   value="drive=%t[val1], path=%x[val2], len=%d[val3]" info="Retrieve working directory path" />
+    <event id="80 + 0x8100" level="Op"     property="PwdSuccess"            value="drive=%t[val1], path=%x[val2], len=%d[val3]" info="Working directory printed" />
+    <event id="81 + 0x8100" level="Op"     property="AttribSet"             value="drive=%t[val1], path=%x[val2], attrib=%x[val3]" info="Set file attributes" />
+    <event id="82 + 0x8100" level="Op"     property="AttribSetSuccess"      value="drive=%t[val1], path=%x[val2], attrib=%x[val3]" info="File attributes set" />
+    <event id="83 + 0x8100" level="Op"     property="GetFreeSpace"          value="drive=%t[val1]" info="Retrieve free space" />
+    <event id="84 + 0x8100" level="Op"     property="FreeAmount"            value="drive=%t[val1], free=%d[(uint64_t)val2*val3]" />
+    <event id="85 + 0x8100" level="Error"  property="FileModeRead"          value="h=%d[val1]" info="File is opened in read mode" />
+    <event id="86 + 0x8100" level="Error"  property="InvalidParameter"      value="drive=%d[val1]" info="Invalid function parameter(s) detected" />    
+    <event id="87 + 0x8100" level="Error"  property="PathNotSpecified"      value="drive=%t[val1]" info="Invalid parameter(s) specified"/>
+    <event id="88 + 0x8100" level="Error"  property="DriverNotInitialized"  value="drive=%d[val1]" info="Media driver is not initialized" />
+    <event id="89 + 0x8100" level="Detail" property="PathName"              value="%t[val1]" info="Current path" />
+    <event id="90 + 0x8100" level="Detail" property="OptionsString"         value="%t[val1]" info="Options string" />
+    <event id="91 + 0x8100" level="Detail" property="LabelString"           value="%t[val1]" info="Current volume label" />
+    <event id="92 + 0x8100" level="Op"     property="NameCacheHit"          value="drive=%t[val1], name=%x[val2], len=%d[val3]" info="Specified name was found in name cache" />
+    <event id="93 + 0x8100" level="Op"     property="NameCacheMiss"         value="drive=%t[val1], name=%x[val2], len=%d[val3]" info="Specified name was not found in name cache" />
+    <event id="94 + 0x8100" level="Detail" property="NameCacheEntryFound"   value="drive=%t[val1], clus=%d[val2], offs=%d[val3], cnt=%d[val4]" info="Found name entry in the name cache" />
+    <event id="95 + 0x8100" level="Detail" property="NameCacheEntryInsert"  value="drive=%t[val1], clus=%d[val2], offs=%d[val3], cnt=%d[val4]" info="Added name entry to the name cache" />
+    <event id="96 + 0x8100" level="Detail" property="NameCacheEntryDelete"  value="drive=%t[val1], clus=%d[val2], offs=%d[val3], cnt=%d[val4]" info="Deleted name entry from the name cache" />
+    <event id="97 + 0x8100" level="Op"     property="TimeSet"               value="drive=%t[val1], path=%x[val2]" info="Set file or directory timestamp"/>
+    <event id="98 + 0x8100" level="Op"     property="TimeGet"               value="drive=%t[val1], path=%x[val2]" info="Get file or directory timestamp"/>
+    <event id="99 + 0x8100" level="Detail" property="TimeData"              value="%E[val1, TimeType:id]: %d[val2, TimeData:hr]:%d[val2, TimeData:min]:%d[val2, TimeData:sec], %d[val3, TimeData:day].%d[val3, TimeData:mon].%d[val3, TimeData:year]" info="Timestamp data: hour:minute:second, day.month.year"/>
+
+    <!-- EFS events -->
+    <event id=" 0 + 0x8200" level="Op"     property="InitDrive"             value="drive=%t[val1]" info="Initializing drive"/>
+    <event id=" 1 + 0x8200" level="Op"     property="InitDriver"            value="drive=%t[val1], driver=%S[val2]" info="Initializing driver"/>
+    <event id=" 2 + 0x8200" level="Error"  property="InitDriverFailed"      value="drive=%t[val1], driver=%S[val2]" info="Failed to initialize the driver"/>
+    <event id=" 3 + 0x8200" level="Op"     property="UninitDrive"           value="drive=%t[val1]" info="Uninitializing drive"/>
+    <event id=" 4 + 0x8200" level="Op"     property="UninitDriver"          value="drive=%t[val1], driver=%S[val2]" info="Uninitializing driver"/>
+    <event id=" 5 + 0x8200" level="Op"     property="MountDrive"            value="drive=%t[val1]" info="Mounting drive"/>
+    <event id=" 6 + 0x8200" level="Op"     property="MountDriveSuccess"     value="drive=%t[val1]" info="Drive successfully mounted"/>
+    <event id=" 7 + 0x8200" level="Op"     property="FlashGetInfo"          value="drive=%t[val1]" info="Retrieving flash device information"/>
+    <event id=" 8 + 0x8200" level="Error"  property="FlashProgUnitTooBig"   value="drive=%t[val1], current=%d[val2], required=%d[val3]" info="Programmable unit is to big"/>
+    <event id=" 9 + 0x8200" level="Op"     property="FlashCapacity"         value="drive=%t[val1], capacity=%d[val2] bytes" info="Retrieved flash device capacity"/>
+    <event id="10 + 0x8200" level="Op"     property="UnmountDrive"          value="drive=%t[val1]" info="Unmounting drive"/>
+    <event id="11 + 0x8200" level="Op"     property="UnmountDriveSuccess"   value="drive=%t[val1]" info="Drive unmounted"/>
+    <event id="12 + 0x8200" level="Op"     property="FormatDrive"           value="drive=%t[val1]" info="Formatting drive"/>
+    <event id="13 + 0x8200" level="Op"     property="FormatDriveSuccess"    value="drive=%t[val1]" info="Drive successfully formatted"/>
+    <event id="14 + 0x8200" level="Op"     property="FlashEraseChip"        value="drive=%t[val1]" info="Erasing chip"/>
+    <event id="15 + 0x8200" level="Error"  property="FlashEraseChipFailed"  value="drive=%t[val1]" info="Chip erase failed"/>
+    <event id="16 + 0x8200" level="Error"  property="FlashEraseChipTimeout" value="drive=%t[val1]" info="Chip erase timed out"/>
+    <event id="17 + 0x8200" level="Op"     property="FlashEraseSectors"     value="drive=%t[val1], sector=%d[val2], cnt=%d[val3]" info="Erasing sectors"/>
+    <event id="18 + 0x8200" level="Op"     property="FileOpen"              value="h=%d[val1], path=%x[val2], openmode=%x[val3]" val3="uint8_t" info="Open file"/>
+    <event id="19 + 0x8200" level="Error"  property="FileNameInvalid"       value="name=%t[val1]" info="File name is invalid"/>
+    <event id="20 + 0x8200" level="Error"  property="OpenModeUnsupported"   value="h=%d[val1], openmode=%x[val2]" val2="uint8_t" info="File open mode is unsupported"/>
+    <event id="21 + 0x8200" level="Op"     property="FileClose"             value="h=%d[val1]" info="Close file"/>
+    <event id="22 + 0x8200" level="Error"  property="FileNotOpened"         value="h=%d[val1], flags=%x[val2]" val2="uint8_t" info="File is not opened"/>
+    <event id="23 + 0x8200" level="Op"     property="FileRead"              value="h=%d[val1], buf=%x[val2], len=%d[val3]" info="Read file"/>
+    <event id="24 + 0x8200" level="Error"  property="FileOpenWriteMode"     value="h=%d[val1]" info="File is opened in write mode"/>
+    <event id="25 + 0x8200" level="Op"     property="FileWrite"             value="h=%d[val1], buf=%x[val2], len=%d[val3]" info="Write file"/>
+    <event id="26 + 0x8200" level="Error"  property="FileOpenReadMode"      value="h=%d[val1]" info="File is opened in read mode"/>
+    <event id="27 + 0x8200" level="Op"     property="FileFlush"             value="h=%d[val1]" info="Flush file buffer"/>
+    <event id="28 + 0x8200" level="Error"  property="OpenModeInvalid"       value="h=%d[val1], flags=%x[val2]" val2="uint8_t" info="File open mode is invalid"/>
+    <event id="29 + 0x8200" level="Op"     property="FileSeek"              value="h=%d[val1], offset=%d[val2], whence=%d[val3]" info="Set file position"/>
+    <event id="30 + 0x8200" level="Error"  property="FileSeekEOF"           value="h=%d[val1], size=%d[val2], pos=%d[val3]" info="File position is beyond EOF"/>
+    <event id="31 + 0x8200" level="Op"     property="FileDelete"            value="drive=%t[val1], path=%x[val2]" info="Delete file"/>
+    <event id="32 + 0x8200" level="Op"     property="FileRename"            value="drive=%t[val1], path=%x[val2], newname=%x[val3]" info="Rename file"/>
+    <event id="33 + 0x8200" level="Error"  property="FileNotFound"          value="drive=%t[val1]" info="Specified file was not found"/>
+    <event id="34 + 0x8200" level="Error"  property="FileAlreadyExists"     value="drive=%t[val1]" info="Specified file already exists"/>
+    <event id="35 + 0x8200" level="Op"     property="FreeSpaceRetrieve"     value="drive=%t[val1]" info="Retrieve free space" />
+    <event id="36 + 0x8200" level="Op"     property="FreeSpaceAmount"       value="drive=%t[val1], free=%d[val2] bytes" info="Free space amount retrieved" />
+    <event id="37 + 0x8200" level="Op"     property="DriveAnalyze"          value="drive=%t[val1]" info="Analyzing drive defragmentation" />
+    <event id="38 + 0x8200" level="Op"     property="DriveAnalyzeSuccess"   value="drive=%t[val1], factor=%d[val2]" info="Defragmentation factor determined" />
+    <event id="39 + 0x8200" level="Op"     property="DriveCheck"            value="drive=%t[val1]" info="Checking drive integrity" />
+    <event id="40 + 0x8200" level="Error"  property="DriveCheckSuccess"     value="drive=%t[val1]" info="Drive integrity check passed" />
+    <event id="41 + 0x8200" level="Error"  property="DataAreaOverlap"       value="drive=%t[val1]" info="Data and allocation area overlapped" />
+    <event id="42 + 0x8200" level="Error"  property="FileIdInvalid"         value="drive=%t[val1]" info="Invalid file ID detected" />
+    <event id="43 + 0x8200" level="Error"  property="AllocationOrderInvalid" value="drive=%t[val1]" info="Non ascending allocation pointer detected" />
+    <event id="44 + 0x8200" level="Error"  property="AllocationAreaOverlap" value="drive=%t[val1]" info="Overlapping file allocation record detected" />
+    <event id="45 + 0x8200" level="Op"     property="DriveDefrag"           value="drive=%t[val1]" info="Defragmenting drive" />
+    <event id="46 + 0x8200" level="Error"  property="FileHandleActive"      value="drive=%t[val1], h=%d[val2]" info="Active file handle detected" />
+    <event id="47 + 0x8200" level="Error"  property="FileHandleUnavailable" value="drive=%t[val1]" info="All file handles already in use" />
+    <event id="48 + 0x8200" level="Error"  property="FileHandleInvalid"     value="h=%d[val1]" info="Invalid file handle specified" />
+    <event id="49 + 0x8200" level="Error"  property="FileInUse"             value="h=%t[val1]" info="File is already in use" />
+    <event id="50 + 0x8200" level="Error"  property="FlashWriteFailed"      value="drive=%t[val1], addr=%x[val2], buf=%x[val3], cnt=%d[val4]" info="Flash write failed" />
+    <event id="51 + 0x8200" level="Error"  property="FlashReadFailed"       value="drive=%t[val1], addr=%x[val2], buf=%x[val3], cnt=%d[val4]" info="Flash read failed" />
+    <event id="52 + 0x8200" level="Error"  property="FlashReadTimeout"      value="drive=%t[val1], addr=%x[val2], buf=%x[val3], cnt=%d[val4]" info="Flash read timed out" />
+    <event id="53 + 0x8200" level="Error"  property="FlashEraseFailed"      value="drive=%t[val1], block=%d[val2], addr=%x[val3]" info="Flash erase failed" />
+    <event id="54 + 0x8200" level="Error"  property="DiskFull"              value="drive=%t[val1]" info="Out of free space" />
+    <event id="55 + 0x8200" level="Error"  property="InvalidParameter"      value="drive=%t[val1]" info="Invalid function parameter(s) detected" />
+    <event id="56 + 0x8200" level="Error"  property="DriveNotMounted"       value="drive=%t[val1]" info="Drive is not mounted" />
+    <event id="57 + 0x8200" level="Error"  property="DriverNotInitialized"  value="drive=%t[val1]" info="Media driver is not initialized" />
+    <event id="58 + 0x8200" level="Detail" property="FileName"              value="%t[val1]" info="Current file name" />
+    <event id="59 + 0x8200" level="Detail" property="FileAllocWrite"        value="addr=%x[val1], end=%x[val2], fileID=%x[val3], index=%d[val4]" info="File allocation info write" />
+    <event id="60 + 0x8200" level="Detail" property="FileAllocRead"         value="addr=%x[val1], end=%x[val2], fileID=%x[val3], index=%d[val4]" info="File allocation info read" />
+
+    <!-- IOC events -->
+    <event id=" 0 + 0x8300" level="API"   property="GetId"                value="drive=%t[val1]"  info="Retrieving drive ID" />
+    <event id=" 1 + 0x8300" level="Op"    property="GetIdSuccess"         value="drive=%t[val1], drv_id=%d[val2]" info="Drive ID retrieved" />
+    <event id=" 2 + 0x8300" level="Error" property="GetIdError"           value="drive=%t[val1]" info="Invalid or nonexisting drive specified" />
+    <event id=" 3 + 0x8300" level="API"   property="Lock"                 value="drv_id=%d[val1]" info="Locking drive access" />
+    <event id=" 4 + 0x8300" level="Op"    property="LockSuccess"          value="drv_id=%d[val1]" info="Drive access locked" />
+    <event id=" 5 + 0x8300" level="API"   property="Unlock"               value="drv_id=%d[val1]" info="Unlocking drive access" />
+    <event id=" 6 + 0x8300" level="Op"    property="UnlockSuccess"        value="drv_id=%d[val1]" info="Drive access unlocked" />
+    <event id=" 7 + 0x8300" level="API"   property="GetCache"             value="drv_id=%d[val1], cache_info=%x[val2]" info="Retrieving drive cache buffer information" />
+    <event id=" 8 + 0x8300" level="Op"    property="GetCacheSuccess"      value="drv_id=%d[val1], buf=%x[val2], size=%d[val3]" info="Cache buffer information retrieved" />
+    <event id=" 9 + 0x8300" level="API"   property="ReadSector"           value="drv_id=%d[val1], sector=%d[val2], buf=%x[val3], count=%d[val4]" info="Read sector" />
+    <event id="10 + 0x8300" level="Op"    property="ReadSectorSuccess"    value="drv_id=%d[val1], sector=%d[val2], buf=%x[val3], count=%d[val4]" info="Read sector completed" />
+    <event id="11 + 0x8300" level="Error" property="ReadSectorError"      value="drv_id=%d[val1], sector=%d[val2], buf=%x[val3], count=%d[val4]" info="Read sector failed" />
+    <event id="12 + 0x8300" level="API"   property="WriteSector"          value="drv_id=%d[val1], sector=%d[val2], buf=%x[val3], count=%d[val4]" info="Write sector" />
+    <event id="13 + 0x8300" level="Op"    property="WriteSectorSuccess"   value="drv_id=%d[val1], sector=%d[val2], buf=%x[val3], count=%d[val4]" info="Write sector completed" />
+    <event id="14 + 0x8300" level="Error" property="WriteSectorError"     value="drv_id=%d[val1], sector=%d[val2], buf=%x[val3], count=%d[val4]" info="Write sector failed" />    
+    <event id="15 + 0x8300" level="API"   property="ReadInfo"             value="drv_id=%d[val1], info=%x[val2]" info="Retrieving media information" />
+    <event id="16 + 0x8300" level="Op"    property="ReadInfoSuccess"      value="drv_id=%d[val1], block_count=%d[val2]" info="Media information retrieved" />
+    <event id="17 + 0x8300" level="Error" property="ReadInfoError"        value="drv_id=%d[val1]" info="Media information retrieve failed" />    
+    <event id="18 + 0x8300" level="API"   property="DeviceControl"        value="drv_id=%d[val1], code=%E[val2, fsDevCtrlCode:id], p=%x[val3]" info="Device control" />
+    <event id="19 + 0x8300" level="Op"    property="DeviceControlSuccess" value="drv_id=%d[val1], code=%E[val2, fsDevCtrlCode:id], p=%x[val3]" info="Device control operation completed" />
+    <event id="20 + 0x8300" level="Error" property="DriveIdInvalid"       value="drv_id=%d[val1]" info="Drive ID is invalid" />
+    <event id="21 + 0x8300" level="Error" property="DriveNotFAT"          value="drv_id=%d[val1]" info="Drive ID does not specify FAT drive" />
+    <event id="22 + 0x8300" level="Error" property="NotAllowed"           value="drv_id=%d[val1]" info="I/O control access is not allowed on given drive" />    
+
+    <!-- NFTL events -->
+    <event id=" 0 + 0x8400" level="Op"     property="Init"                 value="instance=%d[val1]" info="Initializing NAND FTL" />
+    <event id=" 1 + 0x8400" level="Error"  property="InitMediaFailed"      value="instance=%d[val1]" info="Initializing NAND memory media" />
+    <event id=" 2 + 0x8400" level="Op"     property="Mount"                value="instance=%d[val1]" info="Mounting NAND FTL" />
+    <event id=" 3 + 0x8400" level="Op"     property="MountSuccess"         value="instance=%d[val1]" info="NAND FTL mounted" />
+    <event id=" 4 + 0x8400" level="Error"  property="DeviceNotInitialized" value="instance=%d[val1]" info="NAND device is not initialized" />
+    <event id=" 5 + 0x8400" level="Op"     property="ResetDevice"          value="instance=%d[val1]" info="Resetting NAND device" />
+    <event id=" 6 + 0x8400" level="Error"  property="ResetDeviceFailed"    value="instance=%d[val1]" info="Device reset failed" />
+    <event id=" 7 + 0x8400" level="Error"  property="ResetDeviceTimeout"   value="instance=%d[val1]" info="Device reset timed out" />
+    <event id=" 8 + 0x8400" level="Op"     property="ReadBootBlock"        value="instance=%d[val1]" info="Reading NFTL Boot Block" />
+    <event id=" 9 + 0x8400" level="Error"  property="ReadBootBlockFailed"  value="instance=%d[val1]" info="NFTL Boot Block read failed" />
+    <event id="10 + 0x8400" level="Op"     property="BootSignatureValid"   value="instance=%d[val1]" info="NFTL boot signature is valid" />
+    <event id="11 + 0x8400" level="Op"     property="BootSignatureInvalid" value="instance=%d[val1]" info="NFTL boot signature is invalid" />
+    <event id="12 + 0x8400" level="Op"     property="DataBlockCapacity"    value="instance=%d[val1], capacity=%d[val2]" info="Determined number of available data blocks" />    
+    <event id="13 + 0x8400" level="Op"     property="ReadTable"            value="instance=%d[val1]" info="Reading translation table" />
+    <event id="14 + 0x8400" level="Error"  property="ReadTableFailed"      value="instance=%d[val1]" info="Translation table read failed" />
+    <event id="15 + 0x8400" level="Op"     property="Uninit"               value="instance=%d[val1]" info="Uninitializing NAND FTL" />
+    <event id="16 + 0x8400" level="Op"     property="UninitDriver"         value="instance=%d[val1]" info="Uninitializing NAND FTL driver" />
+    <event id="17 + 0x8400" level="Error"  property="UninitDriverFailed"   value="instance=%d[val1]" info="NAND FTL driver uninitialization failed" />    
+    <event id="18 + 0x8400" level="Op"     property="ReadInfo"             value="instance=%d[val1], info=%x[val2]" info="Retrieving media information" />
+    <event id="19 + 0x8400" level="Op"     property="ReadInfoSuccess"      value="instance=%d[val1], sect_count=%x[val2] (%d[val2])" info="Media device capacity retrieved"/>
+    <event id="20 + 0x8400" level="Op"     property="DevCtrl"              value="instance=%d[val1], code=%E[val2, fsDevCtrlCode:id], p=%x[val3]" info="Device control operation"/>
+    <event id="21 + 0x8400" level="Error"  property="DevCtrlUnsupported"   value="instance=%d[val1], code=%E[val2, fsDevCtrlCode:id]" info="Device control code is not supported"/>
+    <event id="22 + 0x8400" level="Op"     property="Format"               value="instance=%d[val1]" info="Formatting NAND FTL" />
+    <event id="23 + 0x8400" level="Op"     property="FormatSuccess"        value="instance=%d[val1]" info="NAND FTL formatted" />
+    <event id="24 + 0x8400" level="Op"     property="FormatLLEB"           value="instance=%d[val1]" info="Formatting NAND FTL and erasing bad blocks" />
+    <event id="25 + 0x8400" level="Op"     property="BBMPositionSet"       value="instance=%d[val1], pos=%d[val2]" info="Bad Block Marker position set" />
+    <event id="26 + 0x8400" level="Op"     property="BadBlockDetected"     value="instance=%d[val1], block=%d[val2]" info="Detected bad block" />
+    <event id="27 + 0x8400" level="Op"     property="BadBlockMark"         value="instance=%d[val1], block=%d[val2]" info="Marking block as bad" />
+    <event id="28 + 0x8400" level="Op"     property="WriteSector"          value="instance=%d[val1], sector=%d[val2], buf=%x[val3], cnt=%d[val4]" info="Write sector" />
+    <event id="29 + 0x8400" level="Op"     property="WriteSectorSuccess"   value="instance=%d[val1]" info="Write sector completed" />
+    <event id="30 + 0x8400" level="Op"     property="ReadSector"           value="instance=%d[val1], sector=%d[val2], buf=%x[val3], cnt=%d[val4]" info="Read sector" />
+    <event id="31 + 0x8400" level="Op"     property="ReadSectorSuccess"    value="instance=%d[val1]" info="Read sector completed" />
+    <event id="32 + 0x8400" level="Op"     property="LsnToLbn"             value="instance=%d[val1], lsn=%d[val2], lbn=%d[val3]" info="Resolved logical sector to logical block number" />
+    <event id="33 + 0x8400" level="Op"     property="LbnToPbn"             value="instance=%d[val1], lbn=%d[val2], pbn_0=%d[val3], pbn_1=%d[val4]" info="Resolving logical block to physical block number" />
+    <event id="34 + 0x8400" level="Error"  property="LbnOutOfRange"        value="instance=%d[val1], lbn=%d[val2], max=%d[val3]" info="Logical block number is out of range" />
+    <event id="35 + 0x8400" level="Error"  property="PbnOutOfRange"        value="instance=%d[val1], pbn=%d[val2], max=%d[val3]" info="Physical block number is out of range" />
+    <event id="36 + 0x8400" level="Op"     property="TableLookup"          value="instance=%d[val1], lbn=%d[val2]" info="Retrieving LBN translation info" />
+    <event id="37 + 0x8400" level="Op"     property="TableEntryNotFound"   value="instance=%d[val1], lbn=%d[val2]" info="LBN translation entry does not exists" />
+    <event id="38 + 0x8400" level="Op"     property="AllocateBlock"        value="instance=%d[val1], area=%d[val2]" info="Allocating NAND block" />
+    <event id="39 + 0x8400" level="Op"     property="LsnFind"              value="instance=%d[val1], lsn=%d[val2], pbn=%d[val3]" info="Searching for logical sector number within physical block" />
+    <event id="40 + 0x8400" level="Op"     property="LsnFound"             value="instance=%d[val1], lsn=%d[val2], pbn=%d[val3], pg=%d[val4]" info="Logical sector number found within physical block" />
+    <event id="41 + 0x8400" level="Op"     property="LsnNotFound"          value="instance=%d[val1], lsn=%d[val2], pbn=%d[val3]" info="Logical sector number not found within physical block" />
+    <event id="42 + 0x8400" level="Op"     property="GarbageCollection"    value="instance=%d[val1], src[%d[val2],%d[val3]], dst=%d[val4]" info="Logical sector number not found within physical block" />
+    <event id="43 + 0x8400" level="Op"     property="SetBadBlockMarker"    value="instance=%d[val1], pbn=%d[val2]" info="Marking block as bad" />
+    <event id="44 + 0x8400" level="Op"     property="MoveData"             value="instance=%d[val1], src=%d[val2], dst=%d[val3]" info="Move data from source to destination block" />
+    <event id="45 + 0x8400" level="Op"     property="RelocateBlock"        value="instance=%d[val1], pbn=%d[val2]" info="Relocating block to new location" />
+    <event id="46 + 0x8400" level="Error"  property="RelocateBlockFailed"  value="instance=%d[val1], pbn=%d[val2]" info="Block relocation failed" />
+    <event id="47 + 0x8400" level="Op"     property="SkipBadBlock"         value="instance=%d[val1], pbn=%d[val2]" info="Skipping bad block" />
+    <event id="48 + 0x8400" level="Error"  property="PageReadFailed"       value="instance=%d[val1], row=%d[val2]" info="Page read failed" />
+    <event id="49 + 0x8400" level="Op"     property="PageProgramStatusErr" value="instance=%d[val1], row=%d[val2]" info="Page program status error" />
+    <event id="50 + 0x8400" level="Error"  property="PageProgramFailed"    value="instance=%d[val1], row=%d[val2]" info="Page program failed" />
+    <event id="51 + 0x8400" level="Error"  property="PageProgramTimeout"   value="instance=%d[val1], row=%d[val2]" info="Page program operation timed out" />
+    <event id="52 + 0x8400" level="Error"  property="BlockEraseStatusErr"  value="instance=%d[val1], row=%d[val2]" info="Block erase status error" />
+    <event id="53 + 0x8400" level="Error"  property="BlockEraseFailed"     value="instance=%d[val1], row=%d[val2]" info="Block erase failed" />
+    <event id="54 + 0x8400" level="Error"  property="BlockEraseTimeout"    value="instance=%d[val1], row=%d[val2]" info="Block erase operation timed out" />
+    <event id="55 + 0x8400" level="Op"     property="BitErrorCorrected"    value="instance=%d[val1], row=%d[val2]" info="ECC corrected bit error" />
+    <event id="56 + 0x8400" level="Error"  property="ParameterInvalid"     value="instance=%d[val1]" info="Invalid function parameter(s) detected" />
+    <event id="57 + 0x8400" level="Op"     property="TableUpdate"          value="instance=%d[val1], lbn=%d[val2], pbn_0=%d[val3], pbn_1=%d[val4]" info="Update LBN translation table info" />
+    <event id="58 + 0x8400" level="Op"     property="AllocatedBlock"       value="instance=%d[val1], pbn=%d[val2]" info="Physical block allocated" />
+    <event id="59 + 0x8400" level="Detail" property="LoadSector"           value="instance=%d[val1], lsn=%d[val2], offs=%d[val3], spare=%d[val4]" info="Loading sector data from/to page buffer" />    
+    <event id="60 + 0x8400" level="Detail" property="LoadTableLayout"      value="instance=%d[val1], pbn_0=%d[val2], pbn_1=%d[val3]" info="Setting translation table structure layout" />
+    <event id="61 + 0x8400" level="Detail" property="LoadDataLayout"       value="instance=%d[val1], pbn_0=%d[val2], pbn_1=%d[val3]" info="Setting file data structure layout" />
+    <event id="62 + 0x8400" level="Detail" property="SetupPageLayout"      value="instance=%d[val1], sector_inc=%d[val2], spare_ofs=%d[val3], spare_inc=%d[val4]" info="Page layout information" />
+    <event id="63 + 0x8400" level="Detail" property="SetupSpareLayout"     value="instance=%d[val1], ofs_lsn=%d[val2 &amp; 0xFF], ofs_dcm=%d[val2 / 65536], ofs_bbm=%d[val3], ofs_ecc=%d[val4]" info="Spare layout information" />
+    <event id="64 + 0x8400" level="Op"     property="PageWrite"            value="instance=%d[val1], pbn=%d[val2], pg=%d[val3]" info="Write NAND page" />
+    <event id="65 + 0x8400" level="Op"     property="PageRead"             value="instance=%d[val1], pbn=%d[val2], pg=%d[val3]" info="Read NAND page" />
+    <event id="66 + 0x8400" level="Op"     property="BlockErase"           value="instance=%d[val1], pbn=%d[val2]" info="Erase NAND block" />
+    <event id="67 + 0x8400" level="Op"     property="StatusRead"           value="instance=%d[val1], status=%x[val2]" val2="uint8_t" info="Read NAND status" />
+    <event id="68 + 0x8400" level="Op"     property="CacheWrite"           value="instance=%d[val1], pbn=%d[val2], pg=%d[val3]" info="Write NAND page through cache" />
+    <event id="69 + 0x8400" level="Op"     property="CacheRead"            value="instance=%d[val1], pbn=%d[val2], pg=%d[val3], col=%d[val4]" info="Read NAND page through cache" />
+    
+    <!-- NAND events -->
+    <event id=" 0 + 0x8500" level="Op"     property="Init"                  value="instance=%d[val1]" info="Initializing NAND media layer" />
+    <event id=" 1 + 0x8500" level="Op"     property="InitDriver"            value="instance=%d[val1], driver=%S[val2]" info="Initializing NAND driver" />
+    <event id=" 2 + 0x8500" level="Error"  property="InitDriverError"       value="instance=%d[val1], driver=%S[val2]" info="NAND driver initialization failed" />
+    <event id=" 3 + 0x8500" level="Error"  property="DriverPowerCtrlError"  value="instance=%d[val1], driver=%S[val2], state=%x[val3]" info="Driver power control failed" />    
+    <event id=" 4 + 0x8500" level="Op"     property="DriverBusModeSelect"   value="instance=%d[val1], driver=%S[val2], mode=%E[val3, NAND:BusMode]" info="Setting bus mode" />    
+    <event id=" 5 + 0x8500" level="Op"     property="DriverBusWidthSelect"  value="instance=%d[val1], driver=%S[val2], width=%E[val3, NAND:BusDataWidth]" info="Setting bus data width" />
+    <event id=" 6 + 0x8500" level="Error"  property="DriverBusWidthError"   value="instance=%d[val1], driver=%S[val2], width=%E[val3, NAND:BusDataWidth]" info="Specified bus width is invalid or not supported" />    
+    <event id=" 7 + 0x8500" level="Op"     property="DriverDevPowerSelect"  value="instance=%d[val1], driver=%S[val2], volt=%x[val3]" info="Setting device power" /> 
+    <event id=" 8 + 0x8500" level="Op"     property="DriverEccInquire"      value="instance=%d[val1], driver=%S[val2]" info="Inquire ECC info" />
+    <event id=" 9 + 0x8500" level="Op"     property="DriverEccSelect"       value="instance=%d[val1], driver=%S[val2], index=%d[val3]" info="Selected ECC index" />
+    <event id="10 + 0x8500" level="Error"  property="DriverEccInquireError" value="instance=%d[val1], driver=%S[val2]" info="ECC inquiry failed" />    
+    <event id="11 + 0x8500" level="Error"  property="DriverTimeoutError"    value="instance=%d[val1], driver=%S[val2]" info="Timeout expired, driver is busy" />    
+    <event id="12 + 0x8500" level="Error"  property="DeviceTimeoutError"    value="instance=%d[val1], driver=%S[val2], device=%d[val3]" info="Timeout expired, device is busy" />    
+    <event id="13 + 0x8500" level="Op"     property="Uninit"                value="instance=%d[val1]" info="Uninitializing NAND media layer" />    
+    <event id="14 + 0x8500" level="Detail" property="StatusRead"            value="instance=%d[val1], status=%x[val2]" val2="uint8_t" info="Device status retrieved" />
+    <event id="15 + 0x8500" level="Op"     property="BlockErase"            value="instance=%d[val1], row=%x[val2]" info="Erasing block" />
+    <event id="16 + 0x8500" level="Op"     property="PageWrite"             value="instance=%d[val1], row=%x[val2], col=%x[val3], len=%d[val4]" info="Writing page" />
+    <event id="17 + 0x8500" level="Op"     property="PageRead"              value="instance=%d[val1], row=%x[val2], col=%x[val3], len=%d[val4]" info="Reading page" />
+    <event id="18 + 0x8500" level="Op"     property="ParamPageRead"         value="instance=%d[val1], col=%x[val2], len=%d[val3]" info="Reading parameter page" />
+    <event id="19 + 0x8500" level="Op"     property="IdRead"                value="instance=%d[val1], addr=%d[val2], len=%d[val3]" info="Reading device ID" />
+    <event id="20 + 0x8500" level="Op"     property="DeviceReset"           value="instance=%d[val1]" info="Resetting device" />
+
+    <!-- Memory Card (MCI) events -->
+    <event id=" 0 + 0x8600" level="Op"    property="InitDriver"           value="instance=%d[val1], driver=%S[val2]" info="Initializing MCI driver" />
+    <event id=" 1 + 0x8600" level="Error" property="InitDriverError"      value="instance=%d[val1], driver=%S[val2]" info="MCI driver initialization failed" />
+    <event id=" 2 + 0x8600" level="Error" property="InitDriverPowerError" value="instance=%d[val1], driver=%S[val2], state=%x[val3]" info="MCI driver power control failed" />
+    <event id=" 3 + 0x8600" level="Op"    property="InitMedia"            value="instance=%d[val1]" info="Initializing memory media" />
+    <event id=" 4 + 0x8600" level="Error" property="MediaNotInitialized"  value="instance=%d[val1]" info="Media is not initialized" />
+    <event id=" 5 + 0x8600" level="Op"    property="MediaCdActive"        value="instance=%d[val1]" info="Media is inserted" />
+    <event id=" 6 + 0x8600" level="Error" property="MediaCdInactive"      value="instance=%d[val1]" info="Media is not inserted" />
+    <event id=" 7 + 0x8600" level="Op"    property="MediaWpActive"        value="instance=%d[val1]" info="Media write protection is active" />
+    <event id=" 8 + 0x8600" level="Op"    property="MediaWpInactive"      value="instance=%d[val1]" info="Media write protection is not active" />
+    <event id=" 9 + 0x8600" level="Op"    property="MediaReset"           value="instance=%d[val1]" info="Reseting memory media" />
+    <event id="10 + 0x8600" level="Op"    property="MediaDetectionSD"     value="instance=%d[val1]" info="Detecting SD device" />
+    <event id="11 + 0x8600" level="Op"    property="MediaSD_V2"           value="instance=%d[val1]" info="Device responded with SD V2.00 response" />
+    <event id="12 + 0x8600" level="Op"    property="MediaReady"           value="instance=%d[val1], OCR=%x[val2]" info="Device is ready" val1="uint32_t" />
+    <event id="13 + 0x8600" level="Op"    property="MediaNoResponse"      value="instance=%d[val1]" info="No response from media device" />
+    <event id="14 + 0x8600" level="Op"    property="MediaDetectionMMC"    value="instance=%d[val1]" info="Detecting MMC/eMMC device" />
+    <event id="15 + 0x8600" level="Op"    property="MediaDetectionError"  value="instance=%d[val1]" info="Media device detection failed" />
+    <event id="16 + 0x8600" level="Error" property="CidReadError"         value="instance=%d[val1]" info="Failed to retrieve CID register" />
+    <event id="17 + 0x8600" level="Error" property="RcaReadError"         value="instance=%d[val1]" info="Failed to retrieve Relative Card Address (RCA)" />
+    <event id="18 + 0x8600" level="Error" property="RcaWriteError"        value="instance=%d[val1]" info="Failed to set Relative Card Address (RCA)" />
+    <event id="19 + 0x8600" level="Error" property="CsdReadError"         value="instance=%d[val1]" info="Failed to retrieve CSD register" />
+    <event id="20 + 0x8600" level="Error" property="TranStateError"       value="instance=%d[val1]" info="Failed to switch to TRAN state" />
+    <event id="21 + 0x8600" level="Error" property="BlenWriteError"       value="instance=%d[val1], blen=%d[val2]" info="Failed to set block length to 'blen' bytes" />
+    <event id="22 + 0x8600" level="Error" property="ExtCsdReadError"      value="instance=%d[val1]" info="Failed to retrieve EXT_CSD register" />
+    <event id="23 + 0x8600" level="Error" property="HighSpeedSwitchError" value="instance=%d[val1]" info="Failed to switch to high-speed mode" />
+    <event id="24 + 0x8600" level="Error" property="DataBusSwitchError"   value="instance=%d[val1]" info="Failed to switch data bus width" />
+    <event id="25 + 0x8600" level="Error" property="StbyStateError"       value="instance=%d[val1]" info="Failed to switch to STBY state" />
+    <event id="26 + 0x8600" level="Op"    property="InitSuccess"          value="instance=%d[val1]" info="Memory media initialized" />
+    <event id="27 + 0x8600" level="Op"    property="UninitDriver"         value="instance=%d[val1], driver=%S[val2]" info="Uninitializing MCI driver" />
+    <event id="28 + 0x8600" level="Op"    property="UninitMedia"          value="instance=%d[val1]" info="Uninitializing memory media" />
+    <event id="29 + 0x8600" level="Op"    property="SectorRead"           value="instance=%d[val1], sector=%d[val2], count=%d[val3]" info="Sector read operation" />
+    <event id="30 + 0x8600" level="Error" property="SectorReadError"      value="instance=%d[val1], sector=%d[val2], count=%d[val3]" info="Sector read operation failed" />
+    <event id="31 + 0x8600" level="Op"    property="SectorWrite"          value="instance=%d[val1], sector=%d[val2], count=%d[val3]" info="Sector write operation" />
+    <event id="32 + 0x8600" level="Error" property="SectorWriteError"     value="instance=%d[val1], sector=%d[val2], count=%d[val3]" info="Sector write operation failed" />
+    <event id="33 + 0x8600" level="Error" property="TransferError"        value="instance=%d[val1], events=%x[val2]" info="Transfer incomplete" />
+    <event id="34 + 0x8600" level="Op"    property="TransferRetry"        value="instance=%d[val1], retry=%d[val2]" info="Retrying transfer" />
+    <event id="35 + 0x8600" level="Op"    property="ReadInfo"             value="instance=%d[val1]" info="Retrieving media information" />
+    <event id="36 + 0x8600" level="Op"    property="ReadInfoSuccess"      value="instance=%d[val1], sect_count=%x[val2] (%d[val2])" info="Media device capacity retrieved"/>
+    <event id="37 + 0x8600" level="Op"    property="DevCtrl"              value="instance=%d[val1], code=%E[val2, fsDevCtrlCode:id], p=%x[val3]" info="Device control operation"/>
+    <event id="38 + 0x8600" level="Error" property="DevCtrlUnsupported"   value="instance=%d[val1], code=%E[val2, fsDevCtrlCode:id]" info="Device control code is not supported"/>
+    <event id="39 + 0x8600" level="Op"    property="LockUnlockExec"       value="instance=%d[val1]" info="Executing lock/unlock operation" />
+    <event id="40 + 0x8600" level="Op"    property="LockUnlockExecError"  value="instance=%d[val1]" info="Lock/Unlock operation failed" />
+    <event id="41 + 0x8600" level="Op"    property="LockActive"           value="instance=%d[val1]" info="Device is locked" />
+    <event id="42 + 0x8600" level="Op"    property="LockDeactivated"      value="instance=%d[val1]" info="Device is unlocked" />
+    <event id="43 + 0x8600" level="Error" property="DeviceStateUnknown"   value="instance=%d[val1]" info="Device state is unknown" />
+    <event id="44 + 0x8600" level="Error" property="DeviceStateInvalid"   value="instance=%d[val1]" info="Device state is invalid" />
+    <event id="45 + 0x8600" level="Error" property="DeviceStateTimeout"   value="instance=%d[val1]" info="Device state transition timed out" />
+    <event id="46 + 0x8600" level="Error" property="TransferAbort"        value="instance=%d[val1]" info="Aborting data transfer" />
+    <event id="47 + 0x8600" level="Error" property="SleepAwakeControl"    value="instance=%d[val1]" info="Controlling device SLEEP/AWAKE state" />
+    <event id="48 + 0x8600" level="Error" property="SleepActive"          value="instance=%d[val1]" info="Device is in SLEEP" />
+    <event id="49 + 0x8600" level="Error" property="AwakeActive"          value="instance=%d[val1]" info="Device is AWAKE" />
+    <event id="50 + 0x8600" level="Error" property="CardPowerControl"     value="instance=%d[val1]" info="Setting card power: %d[val1]" />
+    <event id="51 + 0x8600" level="Error" property="SendCommandError"     value="instance=%d[val1], cmd=%d[val2], arg=%x[val3]" info="SendCommand operation failed" />
+    <event id="52 + 0x8600" level="Error" property="ReadXferSetupError"   value="instance=%d[val1], buf=%x[val2], cnt=%d[val3], size=%d[val4]" info="MCI SetupTransfer for block read failed" />
+    <event id="53 + 0x8600" level="Error" property="WriteXferSetupError"  value="instance=%d[val1], buf=%x[val2], cnt=%d[val3], size=%d[val4]" info="MCI SetupTransfer for block write failed" />
+    <event id="54 + 0x8600" level="Error" property="ParameterInvalid"     value="instance=%d[val1]" info="Invalid function parameter(s) detected" />
+    <event id="55 + 0x8600" level="Op"    property="MediaPasswordEnabled" value="instance=%d[val1]" info="Memory media password protection is active" />
+
+    <!-- Memory Card (SPI) events -->
+    <event id=" 0 + 0x8700" level="Op"    property="InitDriver"           value="instance=%d[val1], driver=%S[val2]" info="Initializing SPI driver" />
+    <event id=" 1 + 0x8700" level="Op"    property="InitDriverSuccess"    value="instance=%d[val1], driver=%S[val2]" info="SPI driver initialized" />
+    <event id=" 2 + 0x8700" level="Error" property="InitDriverError"      value="instance=%d[val1], driver=%S[val2]" info="SPI driver initialization failed" />
+    <event id=" 3 + 0x8700" level="Error" property="InitDriverPowerError" value="instance=%d[val1], driver=%S[val2]" info="SPI driver power control failed" />
+    <event id=" 4 + 0x8700" level="Op"    property="InitMedia"            value="instance=%d[val1]" info="Initializing memory media" />
+    <event id=" 5 + 0x8700" level="Op"    property="InitMediaSuccess"     value="instance=%d[val1]" info="Memory media initialized" />    
+    <event id=" 6 + 0x8700" level="Error" property="MediaNotInitialized"  value="instance=%d[val1]" info="Media is not initialized" />
+    <event id=" 7 + 0x8700" level="Error" property="MediaCdActive"        value="instance=%d[val1]" info="Memory media is inserted" />    
+    <event id=" 8 + 0x8700" level="Op"    property="MediaCdInactive"      value="instance=%d[val1]" info="Memory media is not inserted" />
+    <event id=" 9 + 0x8700" level="Op"    property="MediaWpActive"        value="instance=%d[val1]" info="Memory media write protection is active" />
+    <event id="10 + 0x8700" level="Op"    property="MediaWpInactive"      value="instance=%d[val1]" info="Memory media write protection is inactive" />
+    <event id="11 + 0x8700" level="Op"    property="MediaReset"           value="instance=%d[val1]" info="Reseting memory media" />
+    <event id="12 + 0x8700" level="Error" property="MediaResetError"      value="instance=%d[val1]" info="Failed to reset memory media" />
+    <event id="13 + 0x8700" level="Op"    property="MediaDetectionSD"     value="instance=%d[val1]" info="Detecting SD device" />
+    <event id="14 + 0x8700" level="Op"    property="MediaSD_V2"           value="instance=%d[val1]" info="Device responded with SD V2.00 response" />
+    <event id="15 + 0x8700" level="Op"    property="MediaReady"           value="instance=%d[val1], OCR=%x[val2]" info="Device is ready" val2="uint32_t" />
+    <event id="16 + 0x8700" level="Error" property="MediaNoResponse"      value="instance=%d[val1]" info="No response from media device"/>
+    <event id="17 + 0x8700" level="Error" property="MediaDetectionMMC"    value="instance=%d[val1]" info="Detecting MMC/eMMC device" />
+    <event id="18 + 0x8700" level="Error" property="MediaDetectionError"  value="instance=%d[val1]" info="Media device detection failed" />
+    <event id="19 + 0x8700" level="Error" property="CidReadError"         value="instance=%d[val1]" info="Failed to retrieve CID register" />
+    <event id="20 + 0x8700" level="Error" property="CsdReadError"         value="instance=%d[val1]" info="Failed to retrieve CSC register" />
+    <event id="21 + 0x8700" level="Error" property="BlenWriteError"       value="instance=%d[val1]" info="Failed to set block length" />
+    <event id="22 + 0x8700" level="Op"    property="UninitDriver"         value="instance=%d[val1], driver=%S[val2]" info="Uninitializing SPI driver" />
+    <event id="23 + 0x8700" level="Op"    property="UninitMedia"          value="instance=%d[val1]" info="Uninitializing memory media" />
+    <event id="24 + 0x8700" level="Op"    property="SectorRead"           value="instance=%d[val1], sector=%d[val2], count=%d[val3]" info="Reading sector" />
+    <event id="25 + 0x8700" level="Error" property="SectorReadError"      value="instance=%d[val1], sector=%d[val2], count=%d[val3]" info="Sector read failed" />
+    <event id="26 + 0x8700" level="Op"    property="SectorWrite"          value="instance=%d[val1], sector=%d[val2], count=%d[val3]" info="Writing sector" />
+    <event id="27 + 0x8700" level="Error" property="SectorWriteError"     value="instance=%d[val1], sector=%d[val2], count=%d[val3]" info="Sector write failed" />    
+    <event id="28 + 0x8700" level="Op"    property="ReadInfo"             value="instance=%d[val1]" info="Retrieving media information" />
+    <event id="29 + 0x8700" level="Op"    property="ReadInfoSuccess"      value="instance=%d[val1], sect_count=%d[val2]" info="Media information retrieved" />
+    <event id="30 + 0x8700" level="Op"    property="DevCtrl"              value="instance=%d[val1], code=%E[val2, fsDevCtrlCode:id], p=%x[val3]" info="Device control operation" />
+    <event id="31 + 0x8700" level="Error" property="DevCtrlUnsupported"   value="instance=%d[val1], code=%E[val2, fsDevCtrlCode:id]" info="Device control code is not supported"/>
+    <event id="32 + 0x8700" level="Op"    property="LockUnlockExec"       value="instance=%d[val1]" info="Executing lock/unlock operation" />
+    <event id="33 + 0x8700" level="Error" property="LockUnlockExecError"  value="instance=%d[val1]" info="Lock/Unlock operation failed" />
+    <event id="34 + 0x8700" level="Op"    property="LockActive"           value="instance=%d[val1]" info="Device is locked" />
+    <event id="35 + 0x8700" level="Op"    property="LockDeactivated"      value="instance=%d[val1]" info="Device is unlocked" />
+    <event id="36 + 0x8700" level="Op"    property="BusSpeedControl"      value="instance=%d[val1], speed=%d[val2]" info="Setting SPI bus speed" />
+    <event id="37 + 0x8700" level="Op"    property="SlaveSelCtrlMissing"  value="instance=%d[val1]" info="Function fs_mc_spi_control_ss is not implemented" />
+    <event id="38 + 0x8700" level="Op"    property="ReadCdMissing"        value="instance=%d[val1]" info="Function fs_mc_read_cd is not implemented" />
+    <event id="39 + 0x8700" level="Op"    property="ReadWpMissing"        value="instance=%d[val1]" info="Function fs_mc_read_wp is not implemented" />
+    <event id="40 + 0x8700" level="Error"  property="CrcDisableError"      value="instance=%d[val1]" info="CRC check disable failed" />
+    <event id="41 + 0x8700" level="Error" property="DriverSendError"      value="instance=%d[val1], event=%x[val2]" info="Driver Send operation failed" />
+    <event id="42 + 0x8700" level="Error" property="DriverReceiveError"   value="instance=%d[val1], event=%x[val2]" info="Driver Receive operation failed" />
+    <event id="43 + 0x8700" level="Error" property="CmdSendError"         value="instance=%d[val1], cmd=CMD%d[val2], arg=%x[val3]" info="Command send failed" />
+    <event id="44 + 0x8700" level="Error" property="CmdResponseError"     value="instance=%d[val1], cmd=CMD%d[val2]" info="Command response is missing or invalid" />
+    <event id="45 + 0x8700" level="Error" property="ACmdResponseError"    value="instance=%d[val1], cmd=ACMD%d[val2]" info="Application command response is missing or invalid" />
+    <event id="46 + 0x8700" level="Error" property="ParameterInvalid"     value="instance=%d[val1]" info="Invalid function parameter(s) detected" />
+    <event id="47 + 0x8700" level="Op"    property="MediaPasswordEnabled" value="instance=%d[val1]" info="Memory media password protection is active" />
+    </events>
+</component_viewer>

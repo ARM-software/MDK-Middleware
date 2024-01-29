@@ -1,0 +1,698 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netSockets Sockets
+\brief Sockets are required for communication purposes in a network.
+\details
+A socket is an endpoint of an inter-process communication flow in a given network. All \ref netServices rely on a network
+socket for communication.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netBSD_Func BSD Socket
+\ingroup netSockets
+\brief BSD socket routines enable BSD compliant communication over TCP/IP.
+\details
+The <a href="https://en.wikipedia.org/wiki/Berkeley_sockets" target="_blank">BSD sockets</a> application programming
+interface (API) is a set of standard function calls that can be used to add Internet communication to an application.
+
+A client/server architecture is mandatory for BSD sockets. Using \ref tcp_user_api "TCP", a host listens for incoming
+connection requests. Upon accepting an incoming request, data can be transferred between the hosts. \ref udp_user_api "UDP"
+can also be used to establish a connection.
+
+As you can see, BSD sockets is not a stand-alone socket solution, but it is an API that relies on other socket communication
+for data exchange. Thus, you always need to add \ref tcp_user_api "TCP" and \ref udp_user_api "UDP" to your project if you
+wish to use BSD sockets.
+
+This documentation is separated as follows:
+- \ref using_network_sockets_bsd_func describes the communication flow and operation of BSD Sockets.
+- \ref using_network_sockets_bsd_conf explains the configuration options of the BSD Sockets.
+*/
+
+
+/**
+\defgroup using_network_sockets_bsd_func User API
+\ingroup netBSD_Func
+\brief BSD Socket functions and communication flow.
+\details
+The following table shows the available API functions for BSD sockets.
+
+| Function           | Description                                                               |
+|--------------------|---------------------------------------------------------------------------|
+| \ref accept        | Accepts a connection request queued for a listening socket.               |
+| \ref bind          | Assigns a name (local address) to a socket.                               |
+| \ref closesocket   | Closes an existing socket and releases a socket descriptor.               |
+| \ref connect       | Establishes connection between the endpoints on stream sockets.           |
+| \ref gethostbyname | Retrieves host address corresponding to a host name from a host database. |
+| \ref getpeername   | Retrieves the address of the peer to which a socket is connected.         |
+| \ref getsockopt    | Retrieves options for the socket.                                         |
+| \ref getsockname   | Retrieves the local address of the socket.                                |
+| \ref ioctlsocket   | Sets or retrieves some of the operating parameters on a socket.           |
+| \ref listen        | Sets the socket in a listen mode.                                         |
+| \ref recv          | Receives incoming data that has been queued for a socket.                 |
+| \ref recvfrom      | Receives incoming data on a datagram socket.                              |
+| \ref recvmsg       | Receives a message from a socket.                                         |
+| \ref select        | Tests sockets if ready for reading, writing or have an error pending.     |
+| \ref send          | Sends outgoing data on a socket.                                          |
+| \ref sendto        | Sends outgoing data on a datagram socket to destination address.          |
+| \ref sendmsg       | Sends a message to destination address.                                   |
+| \ref setsockopt    | Manipulate options for the socket.                                        |
+| \ref socket        | Creates a communication socket.                                           |
+| \ref inet_addr     | Converts address from text address to a network address.                  |
+| \ref inet_aton     | Converts address from text address to a network address.                  |
+| \ref inet_ntoa     | Converts address from network address to a text string.                   |
+| \ref inet_pton     | Converts address from text address to a binary network address.           |
+| \ref inet_ntop     | Converts address from binary network address to a text string.            |
+
+\note
+- The BSD sockets implementation in the Network Component is not a complete implementation of the BSD API.
+- The BSD functions are \b thread \b safe and must be used with a CMSIS-RTOS.
+
+Communication Flow
+------------------
+The image below explains the basic communication flow using BSD sockets with TCP.
+
+\image html "NW_Diagrams.png" "Flow Diagram for BSD Sockets Communication using TCP"
+
+\anchor using_network_sockets_bsd_server
+BSD Server
+----------
+The BSD server creates a \ref socket, uses \ref bind to attach that socket to a port, and configures it as a
+\ref listen "listening" socket. This allows the server to receive incoming connection requests. Afterwards, \ref accept is
+called, which will block the socket, until an incoming connection request is received. When \ref accept returns, the
+\ref SOCKADDR structure will have been filled out with the originating IP Address and port of the incoming connection.
+Then, \ref accept creates a new socket, which is then used to \ref recv "receive" data until the connection is
+\ref closesocket "closed" by the other side.
+
+<b>Code Example</b>
+\code
+void Server_Thread (void *arg) {
+  SOCKADDR_IN addr;
+  int32_t sock, sd, res;
+  char dbuf[4];
+ 
+  while (1) {
+    sock = socket (AF_INET, SOCK_STREAM, 0);
+ 
+    // Bind to IPv4 any address
+    addr.sin_family      = AF_INET;
+    addr.sin_port        = htons(1000);
+    addr.sin_addr.s_addr = INADDR_ANY;
+    bind (sock, (SOCKADDR *)&addr, sizeof(addr));
+ 
+    listen (sock, 1);
+    sd = accept (sock, NULL, NULL);
+    closesocket (sock);
+ 
+    while (1) {
+      res = recv (sd, dbuf, sizeof (dbuf), 0);
+      if (res <= 0) {
+        break;
+      }
+      if (dbuf[0] == BLINKLED) {
+        LED_SetOut (dbuf[1]);
+      }
+    }
+    closesocket (sd);
+    osDelay (100);
+  }
+}
+\endcode
+
+\anchor using_network_sockets_bsd_server_ds
+BSD Server Dual-Stack
+---------------------
+Dual-Stack sockets offer the ability to create a single IPv6 socket which can handle both IPv6 and IPv4 communication.
+For example, a TCP listening socket for IPv6 is created, put into dual-stack mode, and bound to port 1000. The dual-stack
+socket can accept connections from IPv6 TCP clients and IPv4 TCP clients that connect to port 1000. 
+
+The IPv4 address is encoded in the \b IPv4-mapped IPv6 address with the address prefix <b>0:0:0:0:0:FFFF</b>, last four bytes
+of the address are the IPv4 address. The IPv4 address in this format can be used in a dual-stack socket communication.
+If the IPv4 address is converted to a string address with the function \ref inet_ntop, the result is represented in a hybrid
+dotted decimal notation. For example, the address 192.168.0.100 is converted to a string:
+\code
+::FFFF:192.168.0.100
+\endcode
+ 
+<b>Code Example</b>
+\code
+void ServerDS_Thread (void *arg) {
+  SOCKADDR_IN6 addr;
+  int32_t sock, sd, res, on;
+  char dbuf[4];
+ 
+  while (1) {
+    sock = socket (AF_INET6, SOCK_STREAM, 0);
+ 
+    // Disable IPv6-only
+    on = 0;
+    setsockopt (sock, IPPROTO_IPV6, IPV6_V6ONLY, (char *)&on, sizeof(on));
+    
+    // Bind to IPv6 any address
+    addr.sin6_family   = AF_INET6;
+    addr.sin6_port     = htons(1000);
+    addr.sin6_addr     = in6addr_any;
+    addr.sin6_flowinfo = 0;
+    bind (sock, (SOCKADDR *)&addr, sizeof(addr));
+ 
+    listen (sock, 1);
+    sd = accept (sock, NULL, NULL);
+    closesocket (sock);
+ 
+    while (1) {
+      res = recv (sd, dbuf, sizeof (dbuf), 0);
+      if (res <= 0) {
+        break;
+      }
+      if (dbuf[0] == BLINKLED) {
+        LED_SetOut (dbuf[1]);
+      }
+    }
+    closesocket (sd);
+    osDelay (100);
+  }
+}
+\endcode
+
+\anchor using_network_sockets_bsd_client
+BSD Client
+----------
+The BSD Client creates a \ref socket calls \ref connect, because TCP requires a negotiated connection. Afterwards, 
+\ref send is called to send the data to the server. Note that \ref bind is never called, because the stack will pick a random
+port and an appropriate IP address. To finish the communication, the client calls \ref closesocket.
+ 
+<b>Code Example</b>
+\code
+void Client_Thread (void *arg) {
+  SOCKADDR_IN addr;
+  int32_t sock, res;
+  char dbuf[4];
+  uint8_t leds;
+ 
+  while (1) {
+    sock = socket (AF_INET, SOCK_STREAM, 0);
+ 
+    addr.sin_family = AF_INET;
+    addr.sin_port   = htons(1000);
+    addr.sin_addr   = inet_addr ("192.168.0.100");
+ 
+    connect (sock, (SOCKADDR *)&addr, sizeof (addr));
+ 
+    leds = 0x01;
+    while (1) {
+      // Shift the LEDs
+      LED_SetOut (leds);
+      if (leds == 0x80) leds = 0x01;
+      else              leds <<= 1;
+    
+      // Send the data to LED Server.
+      dbuf[0] = BLINKLED;
+      dbuf[1] = p2val;
+      res = send (sock, (char *)&dbuf, 2, 0);
+      if (res < 0) {
+        break;
+      }
+      osDelay (300);
+    }
+    closesocket (sock);
+  }
+}
+\endcode
+*/
+
+/**
+\defgroup using_network_sockets_bsd_conf Configuration
+\ingroup netBSD_Func
+\brief How to configure BSD sockets in µVision.
+\details
+\image html "net_config_bsd_h.png" "BSD Socket Configuration File"
+
+The BSD sockets configuration file <b>Net_Config_BSD.h</b> contains the following settings:
+- <b>Number of BSD Sockets</b> specifies the number of available BSD sockets. This number specifies the maximum number of
+  simultaneously opened connections. 
+- <b>Number of Streaming Server Sockets</b>  specifies the number of streaming (TCP) server sockets. The server sockets
+  listen for an incoming connection from the client.
+- <b>Receive Timeout in seconds</b> is the timeout, after which the receiving socket returns from blocking mode.
+- The <b>Hostname Resolver</b> switch enables or disables the Berkeley style hostname resolver.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netTCP_Func TCP Socket
+\ingroup netSockets
+\brief TCP socket routines enable reliable IP communication using the transmission control protocol (TCP).
+\details
+This section describes the implementation of the
+<a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol" target="_blank">Transmission Control Protocol (TCP)</a>
+in the Network Component. TCP runs on top of the Internet Protocol (IP). TCP is a \b connection-oriented and
+<b>reliable, full duplex protocol</b> supporting a pair of byte streams, one for each direction. A TCP connection must be
+\b established before exchanging data. TCP \b retransmits data that do not reach the final destination due to errors or data
+corruption. Data is delivered in the sequence of its transmission. Applications that do not require the reliability of a TCP
+connection may instead use the connectionless \ref netUDP_Func "User Datagram Protocol (UDP)".
+
+This documentation is separated as follows:
+- \ref tcp_user_api describes the communication flow and operation of TCP Sockets.
+- \ref using_network_sockets_tcp_conf explains the configuration options of the TCP Sockets.
+*/
+
+
+/**
+\defgroup tcp_user_api User API
+\ingroup netTCP_Func
+\brief TCP Socket functions and communication flow.
+\details
+TCP operations can be divided into three distinct phases (SYN, SYN-ACK, ACK). All connections must be properly established in
+this three-step handshake process before any data can be transfered. After the data transfer has finished, the connection
+termination closes established sockets and releases all allocated resources. The basic communication flow using TCP sockets
+is shown in this picture:
+
+\image html tcp_communication_flow.png "Flow Diagram for TCP Sockets Communication"
+
+Connection Establishment
+------------------------
+For establishing a connection, TCP uses a three-way handshake. Before a client can connect to a server, the server must first
+open a socket for incoming connections (using \ref netTCP_Listen): this is called a passive open. Once the passive open is
+established, a client may initiate an active open. To establish a connection, the three-way handshake takes place:
+
+-# The active open is performed by the client sending a SYN to the server (using \ref netTCP_Connect).
+-# In response, the server replies with an ACK and an own SYN.
+-# Finally, the client sends an ACK back to the server.
+
+At this point, a full-duplex communication is established.
+
+Connection Termination
+----------------------
+The connection can be terminated from each side independently. When an endpoint wishes to stop the connection
+(by calling \ref netTCP_Close), it transmits a FIN packet, which the other end acknowledges with an ACK. Therefore, a typical
+connection close requires a pair of FIN and ACK segments from each TCP endpoint and takes some time. After both FIN/ACK
+exchanges are concluded, the side that sent the first FIN before receiving one waits for a timeout before finally closing the
+connection, during which time the local port is unavailable for new connections; this prevents confusion due to delayed
+packets being delivered during subsequent connections.
+
+Operation Modes
+===============
+The TCP Socket API distinguishes two operation modes: \ref tcp_server "Server" and \ref tcp_client "Client". Both modes have
+distinct functions that can either be used in the respective mode only or are available for multiple operation modes. 
+
+\anchor tcp_server
+TCP Server Mode
+===============
+The function \ref netTCP_Listen opens a TCP socket on a local port for any incoming connection and starts
+<b>TCP Server Mode</b>. The next free socket can be allocated using the function \ref netTCP_GetSocket. This function
+requires a callback function to be present that is called by the Network Core whenever a TCP event occurs. The TCP Server
+callback function is inside the module \b %TCP_Socket_Server.c. To add the module to your project, simply right-click on the
+Source group, select <b>Add New Item to Group</b>, then click on <b>User Code Template</b> and scroll in the template files
+list until you find the <b>TCP Socket Server</b> template. Customize this module to the application's needs.
+
+It is not allowed to call \ref netTCP_Listen with a port number of \token{0}, because this is a reserved port number.
+To determine the state of a TCP socket, use \ref netTCP_GetState. The user application can monitor the progress when
+establishing or closing a connection with this function.
+
+As soon as a client requests to connect, the socket/port combination is used for the data transfer. For that, the function
+\ref netTCP_GetMaxSegmentSize helps to determine the maximum number of data bytes that can be sent in a TCP packet. Call this
+function after the remote client is connected. To retrieve information about the client that is connected to the server,
+use \ref netTCP_GetPeer which returns the IP address and port of the connected remote client.
+
+For the data transmission, the functions \ref netTCP_GetBuffer, \ref netTCP_SendReady, and \ref netTCP_Send are used. The
+first one allocates memory for the TCP send buffer. The second one checks if the TCP socket is free for sending data, while
+the third one does the actual transmission.
+
+To instantly stop TCP communication (even during data transmission), use \ref netTCP_Abort. Use this only for cases, where
+the transmission really needs to be aborted. Normally, TCP communication will be stopped using \ref netTCP_Close. In server
+mode, this does not close the socket, but only ends the active client connection. To fully close the listener socket as well,
+call \ref netTCP_Close a second time. In that case, call \ref netTCP_ReleaseSocket as well, as this function finally frees
+the memory used by the TCP socket.
+
+\b Code \b Example
+\code
+#include "rl_net.h"
+ 
+// Notify the user application about TCP socket events.
+uint32_t tcp_cb_func (int32_t socket, netTCP_Event event,
+                      const NET_ADDR *addr, const uint8_t *buf, uint32_t len) {
+ 
+  switch (event) {
+    case netTCP_EventConnect:
+      // Connect request received in server mode
+      if (addr->addr_type == NET_ADDR_IP4) {
+        // IPv4 client
+        if (addr->addr[0] == 192  &&
+            addr->addr[1] == 168  &&
+            addr->addr[2] == 0    &&
+            addr->addr[3] == 1) {
+          // Accept connection from client at 192.168.0.1
+          return (1);
+        }
+      }
+      else {
+        // IPv6 client
+        const uint8_t ip6_addr[NET_ADDR_IP6_LEN] = { 
+                         0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                         0x1c, 0x30, 0x6c, 0xff, 0xfe, 0xa2, 0x45, 0x5e };
+        if (memcmp (addr->addr, ip6_addr, NET_ADDR_IP6_LEN) == 0) {
+          // Accept connection from client at [fe80::1c30:6cff:fea2:455e]
+          return (1);
+        }
+      }
+      // Deny connection.
+      return (0);
+ 
+    case netTCP_EventEstablished:
+      // Connection established
+      break;
+ 
+    case netTCP_EventClosed:
+      // Connection was properly closed
+      break;
+ 
+    case netTCP_EventAborted:
+      // Connection is for some reason aborted
+      break;
+ 
+    case netTCP_EventACK:
+      // Previously sent data acknowledged
+      break;
+ 
+    case netTCP_EventData:
+      // Data received
+      if ((buf[0] == 0x01) && (len == 2)) {
+        // Switch LEDs on and off
+        // LED_out (buf[1]);
+      }
+      break;
+  }
+  return (0);
+}
+ 
+// Allocate and initialize the socket.
+int main (void) {
+  int32_t tcp_sock;
+ 
+  netInitialize ();
+ 
+  // Initialize TCP Socket and start listening on port 2000
+  tcp_sock = netTCP_GetSocket (tcp_cb_func);
+  if (tcp_sock >= 0) {
+    netTCP_Listen (tcp_sock, 2000);
+  }
+}
+\endcode
+
+\anchor tcp_client
+TCP Client Mode
+===============
+The function \ref netTCP_Connect initiates a connection to a remote TCP server and starts <b>TCP Client Mode</b>. You need to
+specify the socket number, the IP address and port of the remote machine and the local port.
+
+If \ref netTCP_Connect is called with a local port number of \token{0}, the Network Core determines which port to use. Later,
+this information can be retrieved using the function \ref netTCP_GetLocalPort. To determine the state of a TCP socket, use
+\ref netTCP_GetState. The user application can monitor the progress when establishing or closing a connection with this
+function.
+
+As soon as a client requests to connect, the socket/port combination is used for the data transfer. For that, the function
+\ref netTCP_GetMaxSegmentSize helps to determine the maximum number of data bytes that can be sent in a TCP packet. Call this
+function after the client is connected to remote server.
+
+Sending Data
+------------
+To be able to successfully send data via TCP, you first need to request a buffer to be allocated using \ref netTCP_GetBuffer.
+Then, fill the buffer with the data to be sent and send it using \ref netTCP_Send. The buffer will be released by the Network
+Component automatically. If the buffer is not valid (not allocated with the \ref netTCP_GetBuffer function), the buffer is
+ignored.
+
+The Network Component does not send 0-length packets. So it is possible to release a buffer that has been allocated, by
+simply calling \ref netTCP_Send with parameter \a len = 0.
+
+The user code template \b %TCP_Socket_Client.c contains an exemplary send function, called \b send_data. The send_data
+function must be implemented as a state machine. It opens an active TCP connection, sends data, and closes the TCP connection
+at the end. To add the template to your project, simply right-click on the Source group, select <b>Add New Item to Group</b>,
+then click on <b>User Code Template</b> and scroll in the template files list until you find the <b>TCP Socket Client</b>
+template. Adapt the \b send_data function to your application's needs.
+
+Stopping TCP Communication
+--------------------------
+To instantly stop TCP communication (even during data transmission), use \ref netTCP_Abort. Use this only for cases, where
+the transmission really needs to be aborted. In client mode, TCP communication will be stopped using \ref netTCP_Close. The
+TCP socket will be closed. Subsequently, call \ref netTCP_ReleaseSocket as well, as this function finally frees the memory
+used by the TCP socket.
+
+\b Code \b Example
+\code
+#include "rl_net.h"
+ 
+int32_t tcp_sock;                       // TCP socket handle
+ 
+// Notify the user application about TCP socket events.
+uint32_t tcp_cb_client (int32_t socket, netTCP_Event event,
+                        const NET_ADDR *addr, const uint8_t *buf, uint32_t len) {
+ 
+  switch (event) {
+    case netTCP_EventConnect:
+      // Connect request received in server mode
+      break;
+ 
+    case netTCP_EventEstablished:
+      // Connection established
+      break;
+ 
+    case netTCP_EventClosed:
+      // Connection was properly closed
+      break;
+ 
+    case netTCP_EventAborted:
+      // Connection is for some reason aborted
+      break;
+ 
+    case netTCP_EventACK:
+      // Previously sent data acknowledged
+      break;
+ 
+    case netTCP_EventData:
+      // Data received
+      break;
+  }
+  return (0);
+}
+ 
+// Connect to TCP server and send data.
+void send_data (void) {
+  // IPv4 address: 192.168.0.1
+  NET_ADDR addr = { NET_ADDR_IP4, 2000,
+                    192, 168, 0, 1 };
+  // IPv6 address: [fe80::1c30:6cff:fea2:455e]
+  //NET_ADDR addr = { NET_ADDR_IP6, 2000,
+  //                  0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  //                  0x1c, 0x30, 0x6c, 0xff, 0xfe, 0xa2, 0x45, 0x5e };
+ 
+  if (tcp_sock >= 0) {
+    switch (netTCP_GetState (tcp_sock)) {
+      case netTCP_StateUNUSED:
+      case netTCP_StateCLOSED:
+        // Connect to TCP socket server on port 2000
+        netTCP_Connect (tcp_sock, &addr, 0);
+        break;
+ 
+      case netTCP_StateESTABLISHED:
+        // Connected, send the data
+        if (netTCP_SendReady (tcp_sock) == true) {
+          uint8_t *sendbuf;
+ 
+          sendbuf = netTCP_GetBuffer (2);
+          sendbuf[0] = 0x01;
+          sendbuf[1] = 0x55;
+ 
+          netTCP_Send (tcp_sock, sendbuf, 2);
+        }
+        break;
+ 
+      default:
+        break;
+    }
+  }
+}
+ 
+// Allocate and initialize the socket.
+int main (void) {
+ 
+  netInitialize ();
+ 
+  // Allocate a free TCP socket.
+  tcp_sock = netTCP_GetSocket (tcp_cb_client);
+}
+\endcode
+*/
+
+
+/**
+\defgroup using_network_sockets_tcp_conf Configuration
+\ingroup netTCP_Func
+\brief Configuration of the TCP sockets in µVision.
+\details
+\image html "net_config_tcp_h.png" "TCP Socket Configuration File"
+
+The TCP sockets configuration file <b>Net_Config_TCP.h</b> contains the following settings:
+- <b>Number of TCP Sockets</b> specifies the number of available TCP sockets. This number specifies the maximum number of
+  simultaneously opened TCP connections. 
+- <b>Number of Retries</b> specifies the number of retransmissions before the TCP module gives up. Data is retransmitted if
+  it is not acknowledged within the timeout frame defined by the <b>Retry Timeout in seconds</b>.
+- <b>Retry Timeout in seconds</b> is the timeout after which the TCP module retransmits the data. This is the initial
+  timeout value. When the data exchange is going on, the system measures the response time and corrects this timeout. 
+- <b>Default Connect Timeout in seconds</b> is the default
+  <a class=el href="https://en.wikipedia.org/wiki/Keep-alive_connection" target="_blank">keep-alive</a> timeout. After this
+  timeout has expired, the TCP link is either:
+  - disconnected when TCP keep-alive is not enabled. 
+  - retained when TCP keep-alive is enabled by sending a keep-alive message to prevent the link from being broken.
+  \n This parameter is used for services such as \ref netHTTP_Func and \ref netTELNET_Func.
+- <b>Maximum Segment Size</b> (MSS) specifies the maximum number of bytes in the TCP segment's data field. Acceptable values
+  for this parameter are in the range from 536 to 1440 bytes. This value is used by default for any TCP communication. Use
+  \ref netTCP_GetMaxSegmentSize to determine the actual MSS that can be used in a data transmission.
+- <b>Receive Window Size</b> specifies the amount of data the TCP socket is able to buffer.
+
+Additional configuration settings for TCP sockets:
+- \b TCP_INITIAL_RETRY_TOUT defines the initial retransmission period in seconds.
+- \b TCP_SYN_RETRY_TOUT defines the subsequent SYN frame retransmission periods in seconds.
+- \b TCP_CONNECT_RETRY defines the number of retries to establish a connection.\n
+  These settings are used when the socket connects to a remote server. It is recommended that you keep the default setting.
+- \b TCP_DYN_PORT_START defines the beginning of the dynamic port range.
+- \b TCP_DYN_PORT_END defines the end of the dynamic port range.\n
+  The default dynamic port range, also called private ports, is from \token{49152} to \token{65535}. TCP dynamic ports are
+  selected in this range if the system itself selects the local TCP port. It is recommended that you keep the default setting.
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netUDP_Func UDP Socket
+\ingroup netSockets
+\brief UDP socket routines enable simple IP communication using the user datagram protocol (UDP).
+\details
+The <a href="https://en.wikipedia.org/wiki/User_Datagram_Protocol" target="_blank">User Datagram Protocol (UDP)</a> runs on
+top of the Internet Protocol (IP) and was developed for applications that do not require reliability, acknowledgment, or flow
+control features at the transport layer. This <b>simple protocol</b> provides transport layer addressing in the form of UDP
+ports and an optional checksum capability.
+
+UDP is a very simple protocol. Messages, so called \b datagrams, are sent to other hosts on an IP network without the need to
+set up special transmission channels or data paths beforehand. The UDP socket only needs to be opened for communication. It
+listens for incoming messages and sends outgoing messages on request.
+
+This documentation is separated as follows:
+- \ref udp_user_api describes the operation of UDP Sockets.
+- \ref using_network_sockets_udp_conf explains the configuration options of the UDP Sockets.
+*/
+
+
+/**
+\defgroup udp_user_api User API
+\ingroup netUDP_Func
+\brief UDP Socket functions.
+\details
+UDP is a byte stream service. It does not know anything about the format of the data being sent. It simply takes the data,
+\b encapsulates it into a UDP packet, and sends it to the remote peer.
+
+The UDP protocol does not wait for any acknowledgment and is unable to detect any lost packets. If this is required, it must
+be done by the application layer. However, it is better to use a \ref netTCP_Func for reliable communication.
+
+
+\anchor udp_send_data
+Sending Data via UDP in Unicast Mode
+------------------------------------
+The function \ref netUDP_Open opens a socket for communication. You need to specify the socket number and the local port to
+be used. As a first step, you need to establish the communication between two nodes, otherwise \ref netUDP_Send will fail
+with netError. To avoid this, call a \ref netARP_CacheIP in a first step.
+
+If \ref netUDP_Open is called with a local port number of \token{0}, the Network Core determines which port to use. Later,
+this information can be retrieved using the function \ref netUDP_GetLocalPort. To set certain UDP options (for IPv4 or IPv6)
+for the opened socket, use \ref netUDP_SetOption.
+
+To send data via UDP, you first need to request a buffer to be allocated using \ref netUDP_GetBuffer. Then, fill the buffer
+with the data to be sent and send it using \ref netUDP_Send. The buffer will be released by the Network Component
+automatically. If the buffer is not valid (not allocated with the \ref netUDP_GetBuffer function), the buffer is ignored.
+
+The Network Component does not send 0-length packets. So it is possible to release a buffer that has been allocated, by
+simply calling \ref netUDP_Send with parameter \a len = 0.
+
+The user code template file \b %UDP_Socket.c contains an exemplary send function, called \b send_data. This shows how to
+use \ref netUDP_GetBuffer (for memory allocation) and \ref netUDP_Send for data transmission. To add the template to your
+project, simply right-click on the Source group, select <b>Add New Item to Group</b>, then click on <b>User Code Template</b>
+and scroll in the template files list until you find the <b>UDP Socket</b> template. Adapt the \b send_data function to your
+application's needs.
+
+UDP communication will be stopped using \ref netUDP_Close. The UDP socket will be closed. Subsequently, call
+\ref netUDP_ReleaseSocket as well, as this function finally frees the memory used by the UDP socket.
+
+\b Code \b Example
+\code
+#include "rl_net.h"
+ 
+int32_t udp_sock;                       // UDP socket handle
+ 
+// Notify the user application about UDP socket events.
+uint32_t udp_cb_func (int32_t socket, const NET_ADDR *addr, const uint8_t *buf, uint32_t len) {
+ 
+  // Data received
+  if ((buf[0] == 0x01) && (len == 2)) {
+    // Switch LEDs on and off
+    LED_out (buf[1]);
+  }
+  return (0);
+}
+ 
+// Send UDP data to destination client.
+void send_udp_data (void) {
+ 
+  if (udp_sock >= 0) {
+    // IPv4 address: 192.168.0.1
+    NET_ADDR addr = { NET_ADDR_IP4, 2000, 192, 168, 0, 1 };
+    // IPv6 address: [fe80::1c30:6cff:fea2:455e]
+    //  NET_ADDR addr = { NET_ADDR_IP6, 2000,
+    //                    0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    //                    0x1c, 0x30, 0x6c, 0xff, 0xfe, 0xa2, 0x45, 0x5e };
+    uint8_t *sendbuf;
+ 
+    sendbuf = netUDP_GetBuffer (2);
+    sendbuf[0] = 0x01;
+    sendbuf[1] = 0xAA;
+ 
+    netUDP_Send (udp_sock, &addr, sendbuf, 2);
+  }
+}
+ 
+// Allocate and initialize the socket.
+int main (void) {
+ 
+  netInitialize ();
+ 
+  // Initialize UDP socket and open port 2000
+  udp_sock = netUDP_GetSocket (udp_cb_func);
+  if (udp_sock >= 0) {
+    netUDP_Open (udp_sock, 2000);
+  }
+}
+\endcode
+
+\anchor udp_send_data_mcast
+Sending Data via UDP in Multicast Mode
+--------------------------------------
+To send and receive data to/from multiple hosts, you need to join a specific group of hosts with \ref netIGMP_Join function. Then you can use
+the same functions as described in \ref udp_send_data "Sending Data via UDP in Unicast Mode". When you want to stop sending
+and receiving the data from that group address, you have to leave a specific group with \ref netIGMP_Leave function.
+*/
+
+
+/**
+\defgroup using_network_sockets_udp_conf Configuration
+\ingroup netUDP_Func
+\brief Configuration of the UDP Sockets in µVision.
+\details
+\image html "net_config_udp_h.png" "UDP Socket Configuration File"
+
+The UDP sockets configuration file <b>Net_Config_UDP.h</b> contains the following settings:
+- <b>Number of UDP Sockets</b> specifies the number of available UDP sockets. This number specifies the maximum number of
+  simultaneously opened UDP connections.
+
+Additional configuration settings for UDP sockets:
+- \b UDP_DYN_PORT_START defines the beginning of the dynamic port range.
+- \b UDP_DYN_PORT_END defines the end of the dynamic port range.\n
+  The default dynamic port range, also called private ports, is from \token{49152} to \token{65535}. UDP dynamic ports are
+  selected in this range if the system itself selects the local UDP port. It is recommended that you keep the default setting.
+*/

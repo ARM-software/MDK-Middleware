@@ -1,0 +1,104 @@
+/**
+\defgroup netDS_Modem Modem Driver Functions
+\brief Modem driver functions
+\details
+The functions are part of the Network Component and are defined in \b %Modem_Null.c and \b %Modem_Standard.c.
+*/
+
+/**
+\addtogroup netDS_Modem
+@{
+*/
+
+//*** Enumerations ***
+/**
+\details Modem Driver Status
+*/
+typedef enum MODEM_STATUS {};
+
+/**
+\details Modem Driver Callback Events
+*/
+typedef enum MODEM_EVENT {};
+
+//*** Structures ***
+/**
+\struct DRIVER_MODEM
+*/
+
+//*** Functions ***
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+MODEM_STATUS Modem_Initialize (Modem_Request_t cb_request, const char *init_string) {
+	return MODEM_STATUS;
+}
+/**
+\fn          MODEM_STATUS Modem_Initialize (Modem_Request_t cb_request, const char *init_string)
+\details
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+MODEM_STATUS Modem_Uninitialize (void) {
+	return MODEM_STATUS;
+}
+/**
+\fn          MODEM_STATUS Modem_Uninitialize (void)
+\details
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+MODEM_STATUS Modem_Listen (void) {
+	return MODEM_STATUS;
+}
+/**
+\fn          MODEM_STATUS Modem_Listen (void)
+\details
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+MODEM_STATUS Modem_Dial (const char *dial_num) {
+	return MODEM_STATUS;
+}
+/**
+\fn          MODEM_STATUS Modem_Dial (const char *dial_num)
+\details
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+MODEM_STATUS Modem_Hangup (void) {
+	return MODEM_STATUS;
+}
+/**
+\fn          MODEM_STATUS Modem_Hangup (void)
+\details
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+bool Modem_IsOnline (void) {
+	return bool;
+}
+/**
+\fn          bool Modem_IsOnline (void)
+\details
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+MODEM_STATUS Modem_Notify (MODEM_EVENT event, const char *response) {
+	return { 0 };
+}
+/**
+\fn          MODEM_STATUS Modem_Notify (MODEM_EVENT event, const char *response)
+\details
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+void Modem_Request (const char *command, const char *response, uint32_t timeout, uint32_t retries) {
+	return { 0 };
+}
+/**
+\fn          void Modem_Request (const char *command, const char *response, uint32_t timeout, uint32_t retries)
+\details
+*/
+
+/**
+@}
+*/

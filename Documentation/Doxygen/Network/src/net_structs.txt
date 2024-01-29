@@ -1,0 +1,38 @@
+/// Generic IPv4 Address structure.
+typedef struct in_addr {
+                      /// Union members for different data accesses
+  union {
+                      /// IP address, byte access
+    struct {
+                      ///   byte 1
+      uint8_t s_b1;
+                      ///   byte 2
+      uint8_t s_b2;
+                      ///   byte 3
+      uint8_t s_b3;
+                      ///   byte 4
+      uint8_t s_b4;
+    } s_b;
+                      /// IP address, unsigned short integer access
+    struct {
+                      ///   unsigned short integer 1 
+      uint16_t s_w1;
+                      ///   unsigned short integer 2
+      uint16_t s_w2;
+    } s_w;
+                      /// IP address, unsigned integer access in network byte order
+    uint32_t s_addr;
+  } u;
+} IN_ADDR;
+
+/// Generic IPv6 Address structure.
+typedef struct in6_addr {
+                      /// Union members for different data accesses
+  union {
+                      /// IP6 address, array for byte access 
+    uint8_t  s6_b[16];
+                      /// IP6 address, array for unsigned short integer access 
+    uint16_t s6_w[8];
+  } u;
+} IN6_ADDR;
+

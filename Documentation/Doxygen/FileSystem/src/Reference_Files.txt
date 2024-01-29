@@ -1,0 +1,53 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/* Reference Section */
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+
+/**
+\defgroup   FS_files Directories and Files
+\brief      Folders and files related to the File System Component
+\details
+
+
+<b>Directories</b>
+
+The table below provides a complete overview of the folders that contain the files related to the File System Component.
+
+Directory              | Description
+:--------------------- | :---------------------
+./FileSystem/Config    | Configuration Files that are copied to the project when components are selected.
+./FileSystem/Driver    | Configurable drivers for external NAND and NOR flash devices.
+./FileSystem/Include   | Include files; once a component is select an Include Path is set for the C/C++ compiler to this directory.
+./FileSystem/Lib       | Library files for File System component. The linker includes the library for the selected processor from this directory.
+./FileSystem/Template  | User Code Templates simplify creating application-specific functionality. Refer to \urlout{uv4_ca_sourcefiles} for more information.
+
+
+<b>Header Files</b>
+
+The API interface of the File System component is provided in the header files %rl_fs.h.
+The table below provides a complete overview of all header files.
+
+Header File     | Used by                | Description
+:-------------- | :--------------------- | :------------------------------------
+%rl_fs.h        | application code       | API interface for the File System component
+rl_fs_lib.h     | fs_config.h            | Access structures and internal interface functions
+fs_config.h     | FS_Config.c            | Resource definitions for the File System component
+
+
+<b>Library Files</b>
+
+The File System component is provided in the following library files.
+
+Library            | Description
+:----------------- | :---------------------
+FS_LFN_CM0_B.lib   | Library with long filename support for devices based on \b Cortex-M0 and \b Cortex-M0+ in big endian configuration.
+FS_LFN_CM0_L.lib   | Library with long filename support for devices based on \b Cortex-M0 and \b Cortex-M0+ in little endian configuration.
+FS_LFN_CM3_B.lib   | Library with long filename support for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in big endian configuration.
+FS_LFN_CM3_L.lib   | Library with long filename support for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in little endian configuration.
+FS_SFN_CM0_B.lib   | Library with short (8.3) filename support for devices based on \b Cortex-M0 and \b Cortex-M0+ in big endian configuration.
+FS_SFN_CM0_L.lib   | Library with short (8.3) filename support for devices based on \b Cortex-M0 and \b Cortex-M0+ in little endian configuration.
+FS_SFN_CM3_B.lib   | Library with short (8.3) filename support for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in big endian configuration.
+FS_SFN_CM3_L.lib   | Library with short (8.3) filename support for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in little endian configuration.
+
+\note The Run-Time Environment manager selects automatically the correct library required for a device.
+
+*/

@@ -1,0 +1,40 @@
+/*------------------------------------------------------------------------------
+ * MDK Middleware - Component ::USB:Device
+ * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ *------------------------------------------------------------------------------
+ * Name:    usbd_lib_core_adc.c
+ * Purpose: USB Device - Audio Device Class (ADC) core module header file
+ *----------------------------------------------------------------------------*/
+
+#ifndef __USBD_LIB_CORE_ADC_H__
+#define __USBD_LIB_CORE_ADC_H__
+
+#include <stdint.h>
+#include <stdbool.h>
+
+
+/// \brief USB Device Endpoint 0 Event Callback - ADC specific handling (Setup Request To Interface)
+/// \param[in]     device        device index.
+/// \return        true          setup interface request ok
+/// \return        false         setup interface request not supported
+extern bool USBD_Endpoint0_Setup_ADC_ReqToIF (uint8_t device);
+
+/// \brief USB Device Endpoint 0 Event Callback - ADC specific handling (Setup Request To Endpoint)
+/// \param[in]     device        device index.
+/// \return        true          setup endpoint request ok
+/// \return        false         setup endpoint request not supported
+extern bool USBD_Endpoint0_Setup_ADC_ReqToEP (uint8_t device);
+
+/// \brief USB Device Endpoint 0 Event Callback - ADC specific handling (Out Request To Interface)
+/// \param[in]     device        device index.
+/// \return        true          out interface request ok
+/// \return        false         out interface request not supported
+extern bool USBD_Endpoint0_Out_ADC_ReqToIF (uint8_t device);
+
+/// \brief USB Device Endpoint 0 Event Callback - ADC specific handling (Out Request To Endpoint)
+/// \param[in]     device        device index.
+/// \return        true          out endpoint request ok
+/// \return        false         out endpoint request not supported
+extern bool USBD_Endpoint0_Out_ADC_ReqToEP (uint8_t device);
+
+#endif  // __USBD_LIB_CORE_ADC_H__

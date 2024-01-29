@@ -1,0 +1,157 @@
+/**
+\page nw_resource_requirements Resource Requirements
+
+This section describes the resource requirements of the <b>Network</b> component. 
+The actual requirements depend on the features used in the application. Therefore, the numbers provided here are guidelines
+only and the actual numbers may differ.
+
+\section nw_mem_req Stack Requirements
+
+The Network Core receives events sent from the interrupt service routine (ISR) of the Ethernet (or Serial) \b Driver. 
+The stack requirements for the ISR are typically less than 512 Bytes. The total stack space required for ISR depends
+on the interrupt nesting and therefore on the priority settings of these ISR.
+The stack requirements for ISR is configured in the \b startup_device.s file located under the \b Device component class.
+
+| Option (under section Stack Configuration)                        | Increase Value by
+| :---------------------------------------------------------------- | :----------------------
+| Stack Size (in Bytes)                                             | + 512 for Ethernet (or Serial) Driver
+\note
+When using a CMSIS-RTOS, the Stack Size in the startup_<i>device</i>.s file configures only the 
+stack space that is used by exception and interrupt service routines of the drivers. The stack size requirements
+depend on the maximum nesting of exception and ISR execution and therefore on the priority settings 
+of the various interrupt and exception sources.
+
+User code that calls API functions of the Network Component should have a minimum of 512 Bytes of stack space available.
+Since API functions are frequently called from threads, the thread stack size should be at least 512 Bytes (see below).
+
+
+\section nw_heap_req Heap Requirements
+The mbed TLS component requires 90 kB of heap memory. The heap requirements are configured in the \b startup_device.s
+file located under the \b Device component class.
+
+| Option (under section Stack Configuration)                        | Increase Value to at least
+| :---------------------------------------------------------------- | :----------------------
+| Heap Size (in Bytes)                                              | 0x16000
+
+
+\section nw_rtos_req CMSIS-RTOS Requirements
+
+Currently, the Network component works in four different RTOS configurations:
+-# <b>CMSIS-RTOS2 RTX5</b>: This mode uses Keil RTX5 natively. In the Manage Run-Time Environment window, the component
+   <b>CMSIS:RTOS2 (API):Keil RTX5</b> must be selected. The RTOS resources are static, configured by the system. There is
+   <b>no need for additional user configuration</b>. This is the suggested option for new development.
+-# <b>CMSIS-RTOS RTX5</b>: this mode uses RTX5 under a compatibility layer, which uses CMSIS-RTOS v1.
+   In the Manage Run-Time Environment window, the components <b>CMSIS:RTOS (API):Keil RTX5</b> and
+   <b>CMSIS:RTOS2 (API):Keil RTX5</b> must be selected.
+-# <b>CMSIS-RTOS RTX</b>: In the Manage Run-Time Environment window, the component
+   <b>CMSIS:RTOS (API):Keil RTX</b> must be selected. For the RTOS configuration, please refer to section \ref nw_req_rtx4.
+-# <b>CMSIS-RTOS2 with a generic RTOS</b>: this mode uses a generic RTOS (such as FreeRTOS). The RTOS
+   resources (thread, mutex and semaphore control blocks and thread stacks) are dynamically allocated. The user needs to
+   provide memory pools big enough for the allocations in RTOS configuration.
+
+The Network component uses threads. The Network Core thread is always started. Each Network interface starts
+its own thread when the interface is enabled. Thread execution starts with \ref netInitialize.
+
+The following table lists the components, the default thread name and priority, the default stack size
+and the configuration file with <b>OS Resource Settings</b> for stack size adjustments.
+
+| Component                         | Thread Name     | Default Priority         | Default Stack Size | Configuration File
+| :---------------------------------| :---------------| :----------------------: | :----------------- | :-------------------
+| <b>\::Network:Core</b>            | netCore_Thread  | \c osPriorityNormal      | 1024 Bytes         | Net_Config.c
+| <b>\::Network:Interface:ETH</b>   | netETH0_Thread  | \c osPriorityAboveNormal | 512 Bytes          | Net_Config_ETH_0.h
+| <b>\::Network:Interface:WiFi</b>  | netWiFi0_Thread | \c osPriorityAboveNormal | 512 Bytes          | Net_Config_WiFi_0.h
+| <b>\::Network:Interface:PPP</b>   | netPPP_Thread   | \c osPriorityAboveNormal | 512 Bytes          | Net_Config_PPP.h
+| <b>\::Network:Interface:SLIP</b>  | netSLIP_Thread  | \c osPriorityAboveNormal | 512 Bytes          | Net_Config_SLIP.h
+| <b>\::Security:mbed TLS</b>       | netTLS_Thread   | \c osPriorityNormal      | 4096 Bytes         | TLS_mbed.c
+
+For the Network Component, the number of threads and stack size requirements are calculated as follows:
+- <b>Number of Threads</b>: sum up the number of used <i>Components</i>. 
+- <b>Total stack size</b>: sum up the <i>Default Stack Sizes</i> of the related threads.
+
+\subsection nw_req_rtx5 RTX v5 Requirements
+
+The Network component allocates all necessary resources statically so no changes to RTX settings are necessary.
+
+\subsection nw_req_rtx4 RTX v4 Requirements
+
+Requirements are configured in the \urlout{RTX-Conf-CM4} file located under the \b CMSIS component class:
+ - Thread Configuration
+ | Option                                                             | Value
+ | :----------------------------------------------------------------- | :----------------------
+ | Number of concurrent running user threads                          | + <b>Number of Threads</b>
+ | Number of threads with user-provided stack size                    | + <b>Number of Threads</b>
+ | Total stack size [bytes] for threads with user-provided stack size | + <b>Total stack size</b>
+
+ - System Configuration
+ | Option          | Value
+ | :-------------- | :----------------------
+ | User Timers     | Enable
+ 
+
+\b Timers
+
+The Network component requires timers which need to be enabled in RTOS.
+
+\b Signals
+
+When using BSD sockets in blocking mode, the signal (1<<15) in that thread is reserved for the Network library. A user
+thread, when blocked on BSD sockets, is waiting for the signal 0x8000 to resume. The event, which has caused the thread to
+resume, is provided internally in the library. Therefore, signal 0x8000 must not be used by the user application in that
+thread.
+
+\section nw_spec_mem_req Memory Requirements
+
+The following table shows the memory requirements for read-only (Flash) and read-write (RAM) memory.
+These numbers may be used to estimate the total size requirements of the application, but the actual numbers depend
+on compiler optimizations and target processor and may be therefore slightly different.
+
+\b Network (IPv4/IPv6)
+
+| Component                                                     | RO Memory [Bytes] | RW Memory (Data) [Bytes] 
+| :------------------------------------------------------------ | :---------------: | :------------------------:
+| <b>\::Network:Core</b> (with IPv4/IPv6)                       |      7.5 k        | 0.4 k + <i>Memory Pool size</i> (configured in Net_Config.c)
+| <b>\::Network:Interface:ETH</b> (with ARP,NDP,IGMP,DHCP,NBNS) |     15.7 k        | 0.9 k
+| <b>\::Network:Interface:WiFi</b> (with ARP,NDP,IGMP,DHCP,NBNS)|     15.6 k        | 0.9 k
+| <b>\::Network:Interface:PPP</b> (with CHAP/PAP and Modem)     |      8.3 k        | 0.6 k
+| <b>\::Network:Interface:SLIP</b> (with Modem)                 |      2.8 k        | 0.5 k
+| <b>\::Network:Socket:UDP</b>                                  |      1.5 k        | 0.1 k
+| <b>\::Network:Socket:TCP</b>                                  |      6.1 k        | 0.6 k
+| <b>\::Network:Socket:BSD</b> (without UDP/TCP)                |      6.5 k        | 0.3 k
+| <b>\::Network:Service:DNS Client</b>                          |      1.8 k        | 0.3 k
+| <b>\::Network:Service:FTP Client</b>                          |      2.5 k        | < 0.1 k
+| <b>\::Network:Service:FTP Server</b>                          |      5.4 k        | 0.2 k
+| <b>\::Network:Service:SMTP Client</b>                         |      5.6 k        | 0.2 k
+| <b>\::Network:Service:SNMP Agent</b>                          |      2.7 k        | < 0.1 k
+| <b>\::Network:Service:SNTP Client</b>                         |      0.8 k        | < 0.1 k
+| <b>\::Network:Service:TFTP Client</b>                         |      1.4 k        | < 0.1 k
+| <b>\::Network:Service:TFTP Server</b>                         |      2.3 k        | 0.1 k
+| <b>\::Network:Service:Telnet Server</b>                       |      3.2 k        | 0.4 k
+| <b>\::Network:Service:Web Server</b> (HTTP Server)            |      7.6 k        | 0.5 k
+| <b>Ethernet MAC Driver</b>                                    |     1 .. 4 k      | 0 .. 10 k
+| <b>Ethernet PHY Driver</b>                                    |      < 1 k        |< 0.1 k
+
+\b Network (IPv4)
+
+| Component                                                     | RO Memory [Bytes] | RW Memory (Data) [Bytes] 
+| :------------------------------------------------------------ | :---------------: | :------------------------:
+| <b>\::Network:Core</b> (with IPv4)                            |      4.6 k        | 0.4 k + <i>Memory Pool size</i> (configured in Net_Config.c)
+| <b>\::Network:Interface:ETH</b> (with ARP,IGMP,DHCP,NBNS)     |      9.3 k        | 0.3 k
+| <b>\::Network:Interface:WiFi</b> (with ARP,IGMP,DHCP,NBNS)    |      9.3 k        | 0.3 k
+| <b>\::Network:Interface:PPP</b> (with CHAP/PAP and Modem)     |      8.3 k        | 0.6 k
+| <b>\::Network:Interface:SLIP</b> (with Modem)                 |      2.8 k        | 0.5 k
+| <b>\::Network:Socket:UDP</b>                                  |      1.4 k        | < 0.1 k
+| <b>\::Network:Socket:TCP</b>                                  |      5.7 k        | 0.5 k
+| <b>\::Network:Socket:BSD</b> (without UDP/TCP)                |      5.9 k        | 0.2 k
+| <b>\::Network:Service:DNS Client</b>                          |      1.6 k        | 0.2 k
+| <b>\::Network:Service:FTP Client</b>                          |      2.5 k        | < 0.1 k
+| <b>\::Network:Service:FTP Server</b>                          |      5.4 k        | 0.2 k
+| <b>\::Network:Service:SMTP Client</b>                         |      5.6 k        | 0.2 k
+| <b>\::Network:Service:SNMP Agent</b>                          |      2.7 k        | < 0.1 k
+| <b>\::Network:Service:SNTP Client</b>                         |      0.8 k        | < 0.1 k
+| <b>\::Network:Service:TFTP Client</b>                         |      1.4 k        | < 0.1 k
+| <b>\::Network:Service:TFTP Server</b>                         |      2.3 k        | 0.1 k
+| <b>\::Network:Service:Telnet Server</b>                       |      3.2 k        | 0.4 k
+| <b>\::Network:Service:Web Server</b> (HTTP Server)            |      7.6 k        | 0.5 k
+| <b>Ethernet MAC Driver</b>                                    |     1 .. 4 k      | 0 .. 10 k
+| <b>Ethernet PHY Driver</b>                                    |      < 1 k        |< 0.1 k
+*/

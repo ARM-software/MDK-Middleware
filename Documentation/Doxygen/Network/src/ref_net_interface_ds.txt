@@ -1,0 +1,1088 @@
+﻿/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netInterfaces Interfaces
+\brief Interfaces are used for communication between two network nodes.
+\details
+Physical interfaces can be either \ref netETH_Func "Ethernet", \ref netWiFi_Func "WiFi" or a serial connection (used for
+\ref netPPP_Func "PPP" and \ref netSLIP_Func "SLIP"). For debugging purposes, the \ref using_loopback_interface "Loopback"
+interface can be used.
+
+\ref netInterfaces_Common "Common Interface" functions are available that can be used for all these interfaces for
+retrieving or setting interface specific options.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netInterfaces_Common Common Interface
+\ingroup netInterfaces
+\brief Generic functions for all kinds of interfaces help to get or set interface options.
+\details
+These functions are used to read various interface settings (such as the IP4 address, subnet mask, default gateway etc.), and
+to change these settings at run time. For example, you can read the IP address assigned via DHCP using the
+\ref netIF_GetOption function, or change a static IP address using the \ref netIF_SetOption function.
+
+This documentation is separated as follows:
+- \ref common_user_api explains the Ethernet API of the Network Component.
+- \ref common_interface_callbacks describes the user callback functions that can be used to notify the application about
+  events on the Ethernet interface.
+
+\anchor interface_id
+Interface Identification Number
+-------------------------------
+Several functions have a parameter \a if_id to indicate the network interface. It is composed of the network interface class
+identifier and an interface number (or-ed).
+
+The <b>interface class identifier</b> is specified with the following defines:
+- \ref NET_IF_CLASS_ETH for Ethernet interface,
+- \ref NET_IF_CLASS_WIFI for WiFi interface,
+- \ref NET_IF_CLASS_PPP for PPP interface,
+- \ref NET_IF_CLASS_SLIP for SLIP interface.
+
+The <b>interface number</b> is a zero-based number to identify the interface within the class.
+
+\note
+Currently two Ethernet interfaces and two WiFi interfaces are supported, so the interface number in \a if_id
+is set to \token{0} or \token{1}.
+
+\b Code \b Example
+\code
+// Ethernet interface 0
+uint32_t if_id = NET_IF_CLASS_ETH | 0;
+ 
+// Ethernet interface 1
+uint32_t if_id = NET_IF_CLASS_ETH | 1;
+ 
+// WiFi interface 0
+uint32_t if_id = NET_IF_CLASS_WIFI | 0;
+ 
+// WiFi interface 1
+uint32_t if_id = NET_IF_CLASS_WIFI | 1;
+ 
+// PPP interface
+uint32_t if_id = NET_IF_CLASS_PPP;
+ 
+// SLIP interface
+uint32_t if_id = NET_IF_CLASS_SLIP;
+\endcode
+
+\anchor interface_num
+Interface Number
+----------------
+Several functions have a parameter \a if_num, which indicates an instance of the Ethernet or Wifi interface.
+The <b>interface number</b> is a zero-based number to identify the interface within the Ethernet or WiFi class.
+
+\note
+Currently two Ethernet interfaces and two WiFi interfaces are supported, so \em if_num is set to \token{0} or \token{1}.
+*/
+
+/**
+\defgroup common_user_api User API
+\ingroup netInterfaces_Common
+\brief Common functions for all Interfaces.
+\details
+In the Network Component, the Common interface API is responsible for various Application/Internet/Link layer protocols
+such as \ref ethernet_arp "ARP", \ref ethernet_ndp "NDP", \ref ethernet_igmp "IGMP", and \ref ethernet_dhcp "DHCP". In the
+Network Component v7, these protocols are supported for IPv4 and IPv6 connections (where applicable).
+*/
+
+/**
+\defgroup common_interface_callbacks User Callbacks
+\ingroup netInterfaces_Common
+\brief Functions to notify the user application about events on the interface.
+\details
+An interface configuration change is reported by the function \ref netDHCP_Notify for IPv4 and \ref netDHCP6_Notify for IPv6.
+If you need to monitor the status of your connection, you must implement these functions.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netETH_Func Ethernet Interface
+\ingroup netInterfaces
+\brief Ethernet routines enable communication over an Ethernet-based IP network.
+\details
+<a href="https://en.wikipedia.org/wiki/Ethernet" target="_blank">Ethernet</a> is a family of networking technologies for local
+area (LAN) and wider networks. It was introduced and standardized in the 1980's as
+<a href="https://en.wikipedia.org/wiki/IEEE_802.3" target="_blank">IEEE 802.3</a>, and has since been updated regularly to
+support higher bit rates and longer link distances. Most embedded microcontrollers with Ethernet support bit rates of up to
+100 Mbit/s which is also fully supported by the Network Component.
+
+This documentation is separated as follows:
+- \ref ethernet_user_api explains the Ethernet API of the Network Component.
+- \ref ethernet_interface_callbacks describes the user callback functions that can be used to notify the application about
+  events on the Ethernet interface.
+- \ref using_ethernet_interfaces_ip_assign describes the various methods that are used to assign an IP address to the
+  embedded system.
+- \ref using_ethernet_interfaces_conf explains the configuration options of the Ethernet interface.
+
+Checksum Offloading
+-------------------
+The Network Component also supports the <b>Checksum offloading</b>. To send the packet, the network library will not
+calculate the checksum itself, but would simply hand over an empty checksum field to the driver. For the receiving packet,
+the network library won't validate the checksum fields in the packet. To use the checksum offloading, it must be supported
+by the ethernet driver. 
+*/
+
+
+/**
+\defgroup ethernet_user_api User API
+\ingroup netETH_Func
+\brief Functions of the Ethernet Interface.
+\details
+In the Network Component, the Ethernet interface API is responsible for various Application/Internet/Link layer protocols
+such as \ref ethernet_arp "ARP", \ref ethernet_ndp "NDP", \ref ethernet_igmp "IGMP", and \ref ethernet_dhcp "DHCP". In the
+Network Component v7, these protocols are supported for IPv4 and IPv6 connections (where applicable).
+
+To get or set Ethernet options, use the generic \ref netIF_GetOption and \ref netIF_SetOption. The available options are as
+follows:
+
+| Option                                     | Description                   |
+|-------------------------------------------|--------------------------------|
+| \token{netIF_OptionMAC_Address}           | Ethernet MAC Address           |
+| \token{netIF_OptionVLAN_Identifier}       | Ethernet VLAN Identifier       |
+| \token{netIF_OptionIP4_MTU}               | IPv4 Maximum Transmission Unit |
+| \token{netIF_OptionIP4_Address}           | IPv4 Address                   |
+| \token{netIF_OptionIP4_SubnetMask}        | IPv4 Subnet mask               |
+| \token{netIF_OptionIP4_DefaultGateway}    | IPv4 Default Gateway           |
+| \token{netIF_OptionIP4_PrimaryDNS}        | IPv4 Primary DNS               |
+| \token{netIF_OptionIP4_SecondaryDNS}      | IPv4 Secondary DNS             |
+| \token{netIF_OptionIP6_MTU}               | IPv6 Maximum Transmission Unit | 
+| \token{netIF_OptionIP6_LinkLocalAddress}  | IPv6 Link-local Address        |
+| \token{netIF_OptionIP6_StaticAddress}     | IPv6 Static Address            |
+| \token{netIF_OptionIP6_DynamicAddress}    | IPv6 Dynamic Address           |
+| \token{netIF_OptionIP6_SubnetPrefixLength}| IPv6 Subnet Prefix-length      |
+| \token{netIF_OptionIP6_DefaultGateway}    | IPv6 Default Gateway           |
+| \token{netIF_OptionIP6_PrimaryDNS}        | IPv6 Primary DNS               |
+| \token{netIF_OptionIP6_SecondaryDNS}      | IPv6 Secondary DNS             |
+
+The callback function \ref netETH_Notify informs the user application about state changes on the Ethernet link.
+
+
+\anchor ethernet_arp
+Address Resolution Protocol (ARP, IPv4 only)
+--------------------------------------------
+
+The <a href="https://en.wikipedia.org/wiki/Address_Resolution_Protocol" target="_blank">Address Resolution Protocol (ARP)</a>
+is used to resolve network layer (IP) addresses to link layer (MAC) addresses. It is being used in IPv4 networks only. In
+IPv6 networks, \ref ethernet_ndp "Neighbor Discovery Protocol (NDP)" is used instead.
+
+The Network Component provides five functions for ARP. Two functions are working on the ARP table, two functions actually 
+resolve the IP or MAC address and one function that checks whether the IP address is already in use.
+\ref netARP_CacheIP determines whether the ARP table has a MAC address resolved for a certain IP address. \ref netARP_CacheMAC 
+determines whether the ARP table has an IP address resolved for a certain MAC address. To retrieve the MAC address for an
+IP address from the ARP table, use \ref netARP_GetMAC, while \ref netARP_GetIP provides the IP address for a given MAC address.
+To verify that the IP address is not used in local area network, use \ref netARP_Probe.
+
+
+\anchor ethernet_ndp
+Neighbor Discovery Protocol (NDP, IPv6 only)
+--------------------------------------------
+
+The <a href="https://en.wikipedia.org/wiki/Neighbor_Discovery_Protocol" target="_blank">Neighbor Discovery Protocol (NDP)</a>
+operates on the link layer and is responsible for
+- address auto-configuration of a node
+- discovery of other nodes on the link
+- determining the link layer (MAC) addresses of other nodes
+- duplicate address detection
+- finding available routers and \ref netDNSc_Func "Domain Name System (DNS)" servers
+- address prefix discovery and
+- maintaining trace information to other neighboring nodes.
+
+It is available for IPv6 only.
+
+The function \ref netNDP_CacheIP checks if the NDP table has a MAC address resolved for a certain IPv6 address. To retrieve
+this MAC address, use \ref netNDP_GetMAC. To retrieve an IPv6 address for any given MAC address, use \ref netNDP_GetIP.
+To verify that the IPv6 address is not used in local area network, use \ref netNDP_Probe.
+
+\anchor ethernet_igmp
+Internet Group Management Protocol (IGMP, IPv4 only)
+----------------------------------------------------
+
+The
+<a href="https://en.wikipedia.org/wiki/Internet_Group_Management_Protocol" target="_blank">Internet Group Management Protocol (IGMP)</a>
+is used to do IP Multicasting. This means that an IP datagram is sent to a "host group". A multicast datagram is delivered to
+all the members of its destination host group. IGMPv1 and IGMPv2 protocol specification are supported in the Network
+Component. It is available for IPv4 only.
+
+To add a host to a certain host group, use \ref netIGMP_Join. To leave a host group, \ref netIGMP_Leave is used.
+
+
+\anchor ethernet_dhcp
+Dynamic Host Configuration Protocol (DHCP, IPv4 only)
+-----------------------------------------------------
+
+The
+<a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol" target="_blank">Dynamic Host Configuration Protocol (DHCP)</a>
+is used  for dynamically distributing network configuration parameters, such as IP addresses for interfaces and services.
+Using DHCP, network nodes request IP addresses and networking parameters automatically from a DHCP server, eliminating the
+need to configure these settings manually (refer to \ref using_ethernet_interfaces_ip_assign for more information). Although
+DHCP is specified for IPv4 and IPv6 networks, the Network Component is only supporting IPv4 networks at the moment.
+
+Like all services, the DHCP is normally started automatically if \c NET_START_SERVICE is set to \token{1} in the
+\b %Net_Config.c configuration file. If it is disabled, DHCP needs to be started manually in the user
+application using \ref netDHCP_Enable. At runtime, it is always possible to stop DHCP using the function
+\ref netDHCP_Disable. In this case, the Network Core will revert the IP address of the node to the static IP address
+specified in the \b %Net_Config_ETH_<i>n</i>.h file.
+
+The callback function \ref netDHCP_Notify notifies the user application of DHCP events or extended DHCP options. This
+function is optional and not required for a default DHCP client configuration. However, if your application requires the
+ability to react on changes of the IP address, you need to implement this function in the user code.
+*/
+
+
+/**
+\defgroup using_ethernet_interfaces_ip_assign IP Address Assignment
+\ingroup netETH_Func
+\brief Explanation of the IP address assignment using Ethernet.
+\details
+*/
+
+/**
+\defgroup using_ethernet_interfaces_ipv4_assign IPv4 Address Assignment
+\ingroup using_ethernet_interfaces_ip_assign
+\brief Explanation of the IPv4 address assignment using Ethernet.
+\details
+The <a href="https://en.wikipedia.org/wiki/IPv4" target="_blank">IPv4</a> address for the Ethernet network interface is
+assigned in several ways using the following modes:
+
+- <b>Static IP</b>
+  \n The IP address, network mask and default gateway are \b configured \b manually in the system configuration file.
+  However, it is possible to <b>change the IP address at</b> \ref nw_runtime_config "runtime". The static configuration
+  specifies also a primary and optional secondary DNS server. To make use of the static IP configuration, you need to disable
+  DHCP.
+
+- <b>Dynamic Host Configuration Protocol (DHCP)</b>
+  \n This mode is mostly used. It requires a centralized DHCP server in the local area network (LAN). DHCP server maintains a
+  database of leased IP addresses, and assigns to the client an unused \b IP \b address. It specifies also a \b network
+  \b mask and a \b default \b gateway to use, when the system wants to access the Internet. The DHCP server specifies also a
+  primary and optional secondary DNS server. The \b DNS \b server is used to resolve the IP address for a known host name.
+
+- <b>AutoIP</b>
+  \n The system tries the DHCP mode first. If it fails after a 60 seconds timeout, then the system starts an
+  auto-configuration mode (\b AutoIP mode). It randomly selects an IP address and starts using it when the address is free. 
+  Otherwise, the system tries a different <b>random IP address</b>. In this
+  mode, an IP address and network mask are assigned. The default gateway is not assigned, because it is not known. Connecting
+  to the Internet is thus not possible from the \b AutoIP mode. The IP address is picked from the
+  <b>link-local IP address block</b> (169.254.1.0 - 169.254.254.255). The network mask is 255.255.0.0.
+  
+\note
+- The \b AutoIP mode is an extension of the DHCP mode. As a consequence, the \b AutoIP mode is enabled permanently with DHCP and cannot be 
+  enabled or disabled manually.
+- In \b AutoIP mode, a DHCP client is still trying to obtain an IP address every 120 seconds. On success, the IP address is
+  re-assigned. The system then starts using a new, DHCP-assigned IP address and the mode is changed back to DHCP mode. 
+- All available functions for using Ethernet are explained in \ref netETH_Func.
+*/
+  
+/**
+\defgroup using_ethernet_interfaces_ipv6_fundamentals IPv6 Fundamentals
+\ingroup using_ethernet_interfaces_ip_assign
+\brief Explanation of the IPv6 address space and other fundamentals.
+\details
+The main difference of <a href="https://en.wikipedia.org/wiki/IPv6" target="_blank">IPv6</a> over
+<a href="https://en.wikipedia.org/wiki/IPv4" target="_blank">IPv4</a> is the extended address space, that is roughly 8*10^28
+times larger. The reason for address space extension is caused by the IPv4 address exhaustion that became reality in 2011
+when <a href="https://www.iana.org" target="_blank">IANA</a> allocated the last block of
+addresses to a regional address authority.
+
+Every endpoint on the Internet requires a unique IP address to realize point-to-point connections. As of 2014, already more
+than 10*10^9 devices are connected to the Internet. To bypass the fact that there are not enough IPv4 addresses available,
+technologies like 
+<a href="https://en.wikipedia.org/wiki/Network_address_translation" target="_blank">Network Address Translation (NAT)</a>
+are used. NAT connects full TCP/IP networks using a single registered IPv4 address to the Internet.
+
+IPv4 Address representation and interpretation
+----------------------------------------------
+An IPv4 address is composed of 4 decimal byte values in the so called dot-decimal notation. There are three IPv4 address
+types (the examples assume a netmask of 255.255.0.0):
+- Network address: The least significant bytes (depending on the netmask) are 0. Typically not used in real communication. It
+  is used to describe a  network address range.
+  \verbatim
+10.41.0.0
+  \endverbatim
+- Broadcast address is used to communicate with all hosts on a network. It can be obtained by performing a bitwise OR
+  operation between the bit complement of the subnet mask and the host's IP address.
+  \verbatim
+10.41.255.255
+  \endverbatim
+- Host address: any address between 10.41.0.1 and 10.41.255.254. Host addresses identify a specific host on an IP
+  network and have to be unique. 
+  \verbatim
+10.41.0.23
+  \endverbatim
+
+IPv6 Address representation and interpretation
+----------------------------------------------
+An IPv6 address consists of 16 bytes organized in blocks of two bytes separated by \b : The most significant change in
+representation is the hexadecimal notation. Example:
+\verbatim
+2002:0a29:0017:0000:0000:ffff:0a29:0017
+\endverbatim
+IPv6 addresses often contain fields of zeros. <a href="https://tools.ietf.org/html/rfc5952" target="_blank">RFC5952</a>
+allows two methods to compress the textual representation to increase readability:
+-# \b Zero \b Compression replaces an arbitrary number of consecutive 16-bit groups of zeros with an additional \b :
+   \verbatim
+2002:0a29:0017::ffff:0a29:0017
+   \endverbatim
+-# Leading zeros within a 16-bit field can be \b omitted:
+   \verbatim
+2002:a29:17::ffff:a29:17
+   \endverbatim
+
+\note \ref netIP_aton handles the full and compressed text representation.
+
+IPv6 Address Types 
+==================
+In the following section you will find a list of the various address types used in IPv6. The \ref netIF_SetOption function
+allows you to change the unicast link-local address and a static address (which will typically a unicast global address). 
+
+Unicast Global Addresses
+------------------------
+IPv6 unicast global addresses are similar to IPv4 public addresses. They are globally routable. The structure of an IPv6
+unicast global address creates a three-level topology of public and site information and the local host interface.
+
+|3 bits | 13 bits  | 8 bits | 24 bits               | 16 bits        | 64 bits  |
+|-------|----------|--------|-----------------------|----------------|----------|
+| 001   | TLA      |Reserved|   NLA                 | SLA            |Interface |
+
+- \a TLA identifies the highest level in route hierarchy. TLAs are managed by the IANA and registered to Internet registries.
+- \a NLA represents the local site or ISP network.
+- \a SLA holds the subnet information within a local site.
+- \a Interface identifies the specific node on a subnet.
+
+Unicast site-local addresses (FC80::/48)
+----------------------------------------
+IPv6 unicast site-local addresses are similar to IPv4 private addresses. The scope of a site-local address is the
+intercommunication between subnets on an organization's site.
+
+Unicast link-local addresses (FE80::/64)
+----------------------------------------
+Addresses in the link-local prefix are only valid and unique on a single link. Within this prefix only one subnet is
+allocated (54 zero bits), yielding an effective format of \c fe80::/64. The least significant 64 bits are usually chosen as
+the interface hardware address constructed in modified
+<a href="https://en.wikipedia.org/w/index.php?title=MAC_address" target="_blank">EUI-64</a> format. It can be derived from an
+Ethernet MAC address. 
+
+Unicast loopback address
+------------------------
+0:0:0:0:0:0:0:1
+
+Unicast 6to4 address (2002::/16)
+--------------------------------
+<a href="https://en.wikipedia.org/wiki/6to4" target="_blank">6to4</a> addresses are used when two IPv6 nodes communicate on
+an IPv4 network. 
+
+|00100000 000000010  | 32 bits               | 16 bits        | 64 bits  |
+|--------------------|-----------------------|----------------|----------|
+| 6to4 prefix        |  IPv4 Address         | SLA            |Interface |
+
+
+Neighbor Discovery Protocol and Dynamic Address Assignment
+==========================================================
+The
+<a href="https://en.wikipedia.org/wiki/Neighbor_Discovery_Protocol" target="_blank"> Neighbor Discovery Protocol (NDP)</a>
+mainly replaces <a href="https://en.wikipedia.org/wiki/Address_Resolution_Protocol" target="_blank">ARP</a> known from IPv4.
+The main advantage is that it operates on the
+<a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol" target="_blank">ICMP</a> layer and is less
+dependent on the physical layer.
+
+Rather than using e.g. MAC addresses, NDP uses the link local address. This also allows endpoints to keep router associations
+even if the global prefix of the network is changed. Link detection is also handled by NDP detecting full or partial link
+failures or routing failures.
+
+<a href="https://en.wikipedia.org/wiki/IPv6_address#Stateless_address_autoconfiguration" target="_blank">Stateless Address Autoconfiguration (SLAAC)</a>
+is part of NDP and mostly replaces dynamic address assignment technologies from IPv4 networks like DHCP and Auto-IP. SLAAC
+assigns the link-local address to an interface and uses this to assign a global IP. Typically this is a unicast address type.
+Main difference to DHCP is that after a router solicitation (a broadcast on the local network to discover available routers),
+SLAAC self-assigns an IP address using
+<a href="https://en.wikipedia.org/wiki/IPv6_address#Modified_EUI-64" target="_blank">modified EUI-64</a>. The
+<a href="https://en.wikipedia.org/wiki/IPv6_address#Duplicate_address_detection" target="_blank">Duplicate Address Detection</a>
+tests this new address for duplicates on the network. <a href="https://en.wikipedia.org/wiki/DHCPv6" target="_blank">DHCPv6</a>
+can replicate the stateful address assignment trough a single authority on the network to replace or extend SLAAC. It is
+similar to DHCP on IPv4 networks also advertising additional information like time servers, name servers and bootfile servers
+which would be missing using SLAAC only.
+
+\note MDK-Pro supports both, SLAAC and DHCPv6 dynamic address discovery methods.
+*/
+
+
+/**
+\defgroup using_ethernet_interfaces_ipv6_assign IPv6 Address Assignment
+\ingroup using_ethernet_interfaces_ip_assign
+\brief Explanation of the IPv6 address assignment using Ethernet.
+\details
+The Network library maintains several <a href="https://en.wikipedia.org/wiki/IPv6" target="_blank">IPv6</a> addresses for 
+the Ethernet network interface:
+
+- <b>Static Address</b>
+  \n is used to communicate globally over internet. It is configured manually or via DHCPv6 in stateful mode.
+- <b>Dynamic Address</b>
+  \n is configured by a Stateless Address Autoconfiguration and also used to communicate globally.
+- <b>Link-local Address</b>
+  \n is automatically configured from the interface MAC address. The scope of a link-local address is the intercommunication
+  between hosts on the local area network. The link-local address allows IPv6 hosts to communicate when there is no router 
+  and no DHCPv6 server available on the local area network (LAN).
+
+The IPv6 addresses for the Ethernet network interface are assigned in several ways:
+
+- <b>Static IPv6</b>
+  \n The IPv6 address, subnet prefix length and default gateway are \b configured \b manually in the system configuration file.
+  However, it is possible to <b>change the IPv6 address at</b> \ref nw_runtime_config "runtime". The static configuration
+  specifies also a primary and optional secondary DNS server. To make use of the static IPv6 configuration, you need to disable
+  DHCP for IPv6.
+
+- <b>Dynamic Host Configuration Protocol for IPv6 (DHCPv6)</b>
+  \n This mode is mostly used. It requires a centralized DHCPv6 server in the local area network (LAN). There are two methods of
+  DHCPv6:
+  - \b stateless \b mode
+    \n Only extended information, such as primary and optional secondary DNS server, is obtained from a DHCPv6 server. IPv6 address
+    is not assigned, so the IPv6 address from the Ethernet configuration is set for a Static address of Ethernet interface.
+  - \b stateful \b mode
+    \n DHCPv6 server maintains a database of leased IPv6 addresses, and assigns to the client an unused \b IPv6 \b address. The DHCPv6
+    server specifies also a primary and optional secondary DNS server. The \b DNS \b server is used to resolve the IP address for a
+    known host name.
+
+- <b>IPv6 Stateless Address Autoconfiguration (SLAAC)</b>
+  \n This mode is always used and configures a Dynamic Address. SLAAC provides the ability to address a host based on a network prefix
+  that is advertised from a local network router via Router Advertisements (RA). 
+  
+\note
+- Stateless Address Autoconfiguration is always active, no matter if DHCPv6 client is enabled in the system configuration or not.
+- All available functions for using Ethernet are explained in \ref netETH_Func section of the
+  <a class=el href="./modules.html">Reference</a>.
+- <a href="https://en.wikipedia.org/wiki/Link-local_Multicast_Name_Resolution" target="_blank">Link-local Multicast Name Resolution</a>
+  is not supported.
+*/
+
+
+/**
+\defgroup ethernet_interface_callbacks User Callbacks
+\ingroup netETH_Func
+\brief Functions to notify the user application about events on the Ethernet interface.
+\details
+An Ethernet link state change is reported by the function \ref netETH_Notify. If you need to monitor the status of your 
+connection, you must implement this function.
+*/
+
+
+/**
+\defgroup using_ethernet_interfaces_conf Configuration
+\ingroup netETH_Func
+\brief Configuration of the Ethernet interface in µVision.
+\details
+
+The Ethernet interface is configured using the \b %Net_Config_ETH_<i>n</i>.h file. \a n stands for the number of the Ethernet
+interface. In general, most microcontrollers will have one Ethernet interface, thus the configuration file will be
+%Net_Config_ETH_0.h. The options are set in the file directly or using the
+<a class=el href="https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard" target="_blank">Configuration Wizard</a>.
+
+\image html "net_config_eth_0_h.png" "Ethernet Interface Configuration File"
+
+The Ethernet configuration file contains the following settings:
+- <b>Connect to hardware via Driver_ETH#</b> defines the number of the Ethernet MAC peripheral on the microcontroller
+  device to be used. Unless it contains multiple Ethernet MACs, this should always be "0".
+- <b>MAC Address</b> specifies the six byte Ethernet MAC address of the device. It must be unique for each Ethernet
+  controller that is part of a LAN. The value FF:FF:FF:FF:FF:FF is not allowed. During mass-production, this value
+  needs to be changed for every single device that is manufactured using the \ref nw_runtime_config.
+- To use <b>VLAN</b>, enable the check box.
+  - <b>VLAN Identifier</b> is a unique 12-bit number, that identifies the virtual LAN number to which the interface is connected.
+  \n\n
+- To use \b IPv4, enable the check box. 
+  - <b>IP Address</b> specifies a static local 4 bytes IP address. The value 255.255.255.255 is not allowed. This IP
+    address is only used by the device if the <b>Dynamic Host Configuration</b> is disabled. If DHCP is enabled, the IP
+    address is obtained automatically from the DHCP server or an
+    <a class=el href="https://en.wikipedia.org/wiki/AutoIP" target="_blank">AutoIP</a> is used. A static IP address can also
+    be changed at \ref nw_runtime_config "runtime".
+  - <b>Subnet mask</b> defines the <a class=el href="https://en.wikipedia.org/wiki/Net_mask" target="_blank">net mask</a>.
+    The value of the net mask has to to be in line with the above specified IP address.
+  - <b>Default Gateway</b> specifies the IP address of the default gateway. It is used when accessing the external WAN.
+    If the application is used on a local LAN only, then the value is irrelevant. 
+  - <b>Primary DNS Server</b> specifies the IP address of the primary DNS server. The \ref netDNSc_Func sends IP
+    address resolution requests to this address. The setting is irrelevant if the DNS Client is disabled. 
+  - <b>Secondary DNS Server</b> specifies the IP address of the secondary DNS server. It is used if the primary DNS server
+    is down or not accessible. In this case, the \ref netDNSc_Func automatically switches to the secondary DNS server
+    if a non-zero address is provided. The setting is irrelevant if the DNS Client is disabled.
+  - <b>IP Fragmentation</b> enables fragmentation of outgoing IP datagrams, and reassembling the fragments of incoming IP
+    datagrams.
+    - <b>MTU size</b> lets you specify the
+      <a class="el" target="_blank" href="https://en.wikipedia.org/wiki/Maximum_transmission_unit">maximum transmission unit</a>
+      in bytes if required.
+  - <b>ARP Definitions</b> configures various parameters of the
+    <a class=el href="https://en.wikipedia.org/wiki/Address_Resolution_Protocol" target="_blank">Address Resolution Protocol</a>
+    that is used to cache the IP addresses of remote peers.
+    - <b>Cache Table size</b> specifies the size of ARP cache table. It defines how many cache entries can be kept in the ARP
+      cache. Increase this value when using multiple simultaneous IP connections.
+    - <b>Cache Timeout in seconds</b> specifies the timeout for an ARP cache entry. After a timeout, the Permanent IPs are
+      refreshed, and the Temporary IPs are removed from the cache. The Timeout (Keep-alive) Timer is reset on every access to
+      the cache entry.
+    - <b>Number of Retries</b> is the maximum number of retries to resolve the Ethernet MAC address of the remote peer.
+    - <b>Resend Timeout in seconds</b> specifies the waiting interval between two re-sends. When this timeout has expired and
+      no response has been received from the remote peer, the ARP request is resent.
+    - <b>Send Notification on Address changes</b> enables or disables the Gratuitous ARP Service. When it is enabled, the
+      embedded host will broadcast a Gratuitous ARP notification at startup, or when the local IP address has changed.
+  - <b>IGMP Group Management</b> enables or disables sending or receiving
+    <a class=el href="https://en.wikipedia.org/wiki/IP_multicast" target="_blank">IP Multicast</a> packets. In order to
+    receive Multicast packets, a host must first join a Host Group with a specified Host Group IP address.
+    - <b>Membership Table size</b> specifies the size of IGMP Host Group table. It defines how many Host Groups a host can
+      join.
+  - If the <b>NetBIOS Name Service</b> is enabled, the device can be accessed by its local host name in a LAN. For example:
+    \code
+    ping my_device_server
+    \endcode
+    instead of
+    \code
+    ping 192.168.0.100
+    \endcode
+  - If <b>Dynamic Host Configuration</b> is enabled, the device obtains all network parameters like IP address, net mask,
+    default gateway, primary and secondary DNS servers automatically from the DHCP server on the LAN. Enable also the option
+    <b>NetBIOS Name Service</b> to access the hardware by its name. DHCP requires \ref netUDP_Func "UDP Sockets"
+    to be enabled as it uses one UDP socket for communication with the DHCP server.
+    - <b>Vendor Class Identifier</b> (VCI) specifies a string, which is added to the DHCP request message. The 
+      VCI can be used to selectively identify a device on a DHCP server (option 60). For example, the DHCP server can assign
+      an IP address to a specific Vendor Class group and ignore all other DHCP clients with a different VCI.
+    - <b>Bootfile Name</b> enables or disables the DHCP option 67. If this option is enabled, a DHCP client requests also a
+      Bootfile Name parameter from a DHCP server. When enabled, the user needs to provide a \ref netDHCP_Notify callback
+      function in his application.
+    - <b>NTP Servers</b> specifies that a list of NTP servers (option 42) is also requested from the DHCP server.
+    \n\n
+- To use \b IPv6, enable the check box. 
+  - \b IPv6 \b Address specifies the static IP address in text representation. If no static IP address is assigned, use "::".
+  - In the \b Subnet \b prefix-length you can enter the number of bits that define the network address.
+  - <b>Default Gateway</b> specifies the IP address of the default gateway. It is used when accessing the external WAN.
+    If the application is used on a local LAN only, then the value is irrelevant. 
+  - <b>Primary DNS Server</b> specifies the IP address of the primary DNS server. The setting is irrelevant if the DNS Client
+    is disabled. 
+  - <b>Secondary DNS Server</b> specifies the IP address of the secondary DNS server. It is used if the primary DNS server
+    is down or not accessible. The setting is irrelevant if the DNS Client is disabled.
+  - <b>IPv6 Fragmentation</b> enables fragmentation of outgoing IPv6 datagrams, and reassembling the fragments of incoming IPv6
+    datagrams.
+    - <b>MTU size</b> lets you specify the
+      <a class="el" target="_blank" href="https://en.wikipedia.org/wiki/Maximum_transmission_unit">maximum transmission unit</a>
+      in bytes if required.
+  - The \b Cache \b Table \b Size of the \b Neighbor \b Discovery sets the number of cached neighbor node addresses.
+  - The \b Cache \b Timeout \b in \b seconds specifies the timeout for cached node addresses.
+  - The \b Number \b of \b Retries is used to resolve an IP address before the NDP module gives up and stops the resolution.
+  - The \b Resend \b Timeout \b in \b seconds specifies the timeout for resending Neighbor Solicitation.
+  - If <b>Dynamic Host Configuration</b> is enabled, the device obtains all network parameters like IP address and
+    primary/secondary DNS servers automatically from the DHCPv6 server on the LAN.
+    - Two \b DHCPv6 \b Client \b Modes are used to connect to a DHCPv6 server: in \b stateless \b mode, the client obtains
+      only extended information from the DHCPv6 server, such as DNS server addresses. In \b stateful \b mode, the client
+      connects to a DHCPv6 server for a leased IPv6 address and DNS server addresses.
+    - <b>Vendor Class Option</b> is used to send vendor information to the DHCPv6 server. This information can be used to
+      selectively identify a device on a DHCPv6 server, similar to VCI in IPv4.
+      - <b>Enterprise ID</b> specifies Enterprise-number as assigned by IANA.
+      - <b>Vendor Class Data</b> specifies a string, which is added to the DHCPv6 request message.
+  \n\n
+- <b>OS Resources Settings</b> are used to optimize usage of OS resources.
+  - The default <b>Interface Thread Stack Size</b> is 512 bytes.
+  - The default Interface Thread priority is <b>osPriorityAboveNormal</b>.
+    You can change this priority by changing the \b ETH<i>n</i>_THREAD_PRIORITY defined in this configuration file. This priority must
+    be high enough for the Ethernet interface to respond to events in a timely manner. Due to this requirement, it is recommended
+    that this setting remain the default. For more information on default settings, see the section \ref nw_rtos_req.
+
+Additional Ethernet configuration settings:
+- The \b ETH<i>n</i>_ICMP_NO_ECHO defines the Echo response mode that is enabled by default. A value of \token{1} disables the echo
+  response, and a value of \token{0} enables it. Alternatively, you can change it from a running application with the
+  \ref netICMP_SetNoEcho function.
+- The \b ETH<i>n</i>_ICMP6_NO_ECHO defines the Echo response mode for IPv6 that is enabled by default. A value of \token{1} disables
+  the echo response, and a value of \token{0} enables it. Alternatively, you can change it from a running application with the
+  \ref netICMP6_SetNoEcho function.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netWiFi_Func WiFi Interface
+\ingroup netInterfaces
+\brief WiFi routines enable wireless communication over an IP network.
+\details
+The <a href="https://en.wikipedia.org/wiki/IEEE_802.11" target="_blank">IEEE 802.11</a> is a set of LAN protocols for implementing
+wireless local area network. The Network Component supports the WiFi interface modules that are operating in <b>transparent mode</b>.
+The WiFi interface module provides full Ethernet packet access. It's actually a Wireless Ethernet network where the Ethernet packets
+are exchanged in the same way as on wired networks. This brings the complete functionality of the Network Component to the Wireless
+network and bypass the limitations of the embedded WiFi sockets that usually come with the WiFi modules with their own TCP/IP stack
+on board.
+
+For communication with the host MCU typically an SPI interface is required. Other interfaces such as UART, SDIO, I2C or RMII might
+be supported by the module as well. 
+
+This documentation is separated as follows:
+- \ref wifi_user_api explains the WiFi API of the Network Component.
+- \ref using_wifi_interfaces_ip_assign describes the various methods that are used to assign an IP address to the
+  embedded system using WiFi.
+- \ref using_wifi_interfaces_conf explains the configuration options of the WiFi interface.
+*/
+
+/**
+\defgroup wifi_user_api User API
+\ingroup netWiFi_Func
+\brief Functions of the WiFi interface.
+\details
+In the Network Component, the WiFi interface is, similar to an Ethernet interface, responsible for various Application/Internet/Link
+layer protocols such as \ref ethernet_arp "ARP", \ref ethernet_ndp "NDP", \ref ethernet_igmp "IGMP", and \ref ethernet_dhcp "DHCP".
+In the Network Component v7, these protocols are supported for IPv4 and IPv6 connections (where applicable).
+*/
+
+/**
+\defgroup using_wifi_interfaces_conf Configuration
+\ingroup netWiFi_Func
+\brief Configuration of the WiFi interface in µVision.
+\details
+
+The WiFi interface is configured using the \b %Net_Config_WiFi_<i>n</i>.h file. \a n stands for the number of the WiFi
+interface. The options are set in the file directly or using the
+<a class=el href="https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard" target="_blank">Configuration Wizard</a>.
+
+\image html "net_config_wifi_0_h.png" "WiFi Interface Configuration File"
+
+The WiFi configuration file contains the following settings:
+- <b>Connect to hardware via Driver_WiFi#</b> defines the number of the WiFi driver to be used. This is usually "0".
+- <b>WiFi Mode</b> defines the operation mode of the WiFi interface. This is usually "Station".
+- To use <b>WiFi MAC</b> from the configuration, enable the check box.
+  - <b>MAC Address</b> specifies the six byte WiFi MAC address of the device. It must be unique for each WiFi interface
+    that is part of a WLAN. The value FF:FF:FF:FF:FF:FF is not allowed. This option is usually disabled and the MAC address
+    available in the WiFi module is used.
+    \n\n
+- To use \b IPv4, enable the check box.
+  - <b>IP Address</b> specifies a static local 4 bytes IP address. The value 255.255.255.255 is not allowed. This IP
+    address is only used by the device if the <b>Dynamic Host Configuration</b> is disabled. If DHCP is enabled, the IP
+    address is obtained automatically from the DHCP server or an
+    <a class=el href="https://en.wikipedia.org/wiki/AutoIP" target="_blank">AutoIP</a> is used. A static IP address can also
+    be changed at \ref nw_runtime_config "runtime".
+  - <b>Subnet mask</b> defines the <a class=el href="https://en.wikipedia.org/wiki/Net_mask" target="_blank">net mask</a>.
+    The value of the net mask has to to be in line with the above specified IP address.
+  - <b>Default Gateway</b> specifies the IP address of the default gateway. It is used when accessing the external WAN.
+    If the application is used on a local LAN only, then the value is irrelevant. 
+  - <b>Primary DNS Server</b> specifies the IP address of the primary DNS server. The \ref netDNSc_Func sends IP
+    address resolution requests to this address. The setting is irrelevant if the DNS Client is disabled. 
+  - <b>Secondary DNS Server</b> specifies the IP address of the secondary DNS server. It is used if the primary DNS server
+    is down or not accessible. In this case, the \ref netDNSc_Func automatically switches to the secondary DNS server
+    if a non-zero address is provided. The setting is irrelevant if the DNS Client is disabled.
+  - <b>IP Fragmentation</b> enables fragmentation of outgoing IP datagrams, and reassembling the fragments of incoming IP
+    datagrams.
+    - <b>MTU size</b> lets you specify the
+      <a class="el" target="_blank" href="https://en.wikipedia.org/wiki/Maximum_transmission_unit">maximum transmission unit</a>
+      in bytes if required.
+  - <b>ARP Definitions</b> configures various parameters of the
+    <a class=el href="https://en.wikipedia.org/wiki/Address_Resolution_Protocol" target="_blank">Address Resolution Protocol</a>
+    that is used to cache the IP addresses of remote peers.
+    - <b>Cache Table size</b> specifies the size of ARP cache table. It defines how many cache entries can be kept in the ARP
+      cache. Increase this value when using multiple simultaneous IP connections.
+    - <b>Cache Timeout in seconds</b> specifies the timeout for an ARP cache entry. After a timeout, the Permanent IPs are
+      refreshed, and the Temporary IPs are removed from the cache. The Timeout (Keep-alive) Timer is reset on every access to
+      the cache entry.
+    - <b>Number of Retries</b> is the maximum number of retries to resolve the WiFi MAC address of the remote peer.
+    - <b>Resend Timeout in seconds</b> specifies the waiting interval between two re-sends. When this timeout has expired and
+      no response has been received from the remote peer, the ARP request is resent.
+    - <b>Send Notification on Address changes</b> enables or disables the Gratuitous ARP Service. When it is enabled, the
+      embedded host will broadcast a Gratuitous ARP notification at startup, or when the local IP address has changed.
+  - <b>IGMP Group Management</b> enables or disables sending or receiving
+    <a class=el href="https://en.wikipedia.org/wiki/IP_multicast" target="_blank">IP Multicast</a> packets. In order to
+    receive Multicast packets, a host must first join a Host Group with a specified Host Group IP address.
+    - <b>Membership Table size</b> specifies the size of IGMP Host Group table. It defines how many Host Groups a host can
+      join.
+  - If the <b>NetBIOS Name Service</b> is enabled, the device can be accessed by its local host name in a LAN. For example:
+    \code
+    ping my_device_server
+    \endcode
+    instead of
+    \code
+    ping 192.168.0.100
+    \endcode
+  - If <b>Dynamic Host Configuration</b> is enabled, the device obtains all network parameters like IP address, net mask,
+    default gateway, primary and secondary DNS servers automatically from the DHCP server on the LAN. Enable also the option
+    <b>NetBIOS Name Service</b> to access the hardware by its name. DHCP requires \ref netUDP_Func "UDP Sockets"
+    to be enabled as it uses one UDP socket for communication with the DHCP server.
+    - <b>Vendor Class Identifier</b> (VCI) specifies a string, which is added to the DHCP request message. The 
+      VCI can be used to selectively identify a device on a DHCP server (option 60). For example, the DHCP server can assign
+      an IP address to a specific Vendor Class group and ignore all other DHCP clients with a different VCI.
+    - <b>Bootfile Name</b> enables or disables the DHCP option 67. If this option is enabled, a DHCP client requests also a
+      Bootfile Name parameter from a DHCP server. When enabled, the user needs to provide a \ref netDHCP_Notify callback
+      function in his application.
+    - <b>NTP Servers</b> specifies that a list of NTP servers (option 42) is also requested from the DHCP server.
+    \n\n
+- To use \b IPv6, enable the check box. 
+  - \b IPv6 \b Address specifies the static IP address in text representation. If no static IP address is assigned, use "::".
+  - In the \b Subnet \b prefix-length you can enter the number of bits that define the network address.
+  - <b>Default Gateway</b> specifies the IP address of the default gateway. It is used when accessing the external WAN.
+    If the application is used on a local LAN only, then the value is irrelevant. 
+  - <b>Primary DNS Server</b> specifies the IP address of the primary DNS server. The setting is irrelevant if the DNS Client
+    is disabled. 
+  - <b>Secondary DNS Server</b> specifies the IP address of the secondary DNS server. It is used if the primary DNS server
+    is down or not accessible. The setting is irrelevant if the DNS Client is disabled.
+  - <b>IPv6 Fragmentation</b> enables fragmentation of outgoing IPv6 datagrams, and reassembling the fragments of incoming IPv6
+    datagrams.
+    - <b>MTU size</b> lets you specify the
+      <a class="el" target="_blank" href="https://en.wikipedia.org/wiki/Maximum_transmission_unit">maximum transmission unit</a>
+      in bytes if required.
+  - The \b Cache \b Table \b Size of the \b Neighbor \b Discovery sets the number of cached neighbor node addresses.
+  - The \b Cache \b Timeout \b in \b seconds specifies the timeout for cached node addresses.
+  - The \b Number \b of \b Retries is used to resolve an IP address before the NDP module gives up and stops the resolution.
+  - The \b Resend \b Timeout \b in \b seconds specifies the timeout for resending Neighbor Solicitation.
+  - If <b>Dynamic Host Configuration</b> is enabled, the device obtains all network parameters like IP address and
+    primary/secondary DNS servers automatically from the DHCPv6 server on the LAN.
+    - Two \b DHCPv6 \b Client \b Modes are used to connect to a DHCPv6 server: in \b stateless \b mode, the client obtains
+      only extended information from the DHCPv6 server, such as DNS server addresses. In \b stateful \b mode, the client
+      connects to a DHCPv6 server for a leased IPv6 address and DNS server addresses.
+    - <b>Vendor Class Option</b> is used to send vendor information to the DHCPv6 server. This information can be used to
+      selectively identify a device on a DHCPv6 server, similar to VCI in IPv4.
+      - <b>Enterprise ID</b> specifies Enterprise-number as assigned by IANA.
+      - <b>Vendor Class Data</b> specifies a string, which is added to the DHCPv6 request message.
+  \n\n
+- <b>OS Resources Settings</b> are used to optimize usage of OS resources.
+  - The default <b>Interface Thread Stack Size</b> is 512 bytes.
+  - The default Interface Thread priority is <b>osPriorityAboveNormal</b>.
+    You can change this priority by changing the \b WIFI<i>n</i>_THREAD_PRIORITY defined in this configuration file. This priority must
+    be high enough for the WiFi interface to respond to events in a timely manner. Due to this requirement, it is recommended
+    that this setting remain the default. For more information on default settings, see the section \ref nw_rtos_req.
+
+Additional WiFi configuration settings:
+- The \b WIFI<i>n</i>_ICMP_NO_ECHO defines the Echo response mode that is enabled by default. A value of \token{1} disables the echo
+  response, and a value of \token{0} enables it. Alternatively, you can change it from a running application with the
+  \ref netICMP_SetNoEcho function.
+- The \b WIFI<i>n</i>_ICMP6_NO_ECHO defines the Echo response mode for IPv6 that is enabled by default. A value of \token{1} disables
+  the echo response, and a value of \token{0} enables it. Alternatively, you can change it from a running application with the
+  \ref netICMP6_SetNoEcho function.
+*/
+
+/**
+\defgroup using_wifi_interfaces_ip_assign IP Address Assignment
+\ingroup netWiFi_Func
+\brief Explanation of the IP address assignment using WiFi.
+\details
+The WiFi interface works with the Ethernet packets and therefore the automatic configuration is the same as in Ethernet
+interface:
+
+- \ref using_ethernet_interfaces_ipv4_assign
+  \n The <a href="https://en.wikipedia.org/wiki/IPv4" target="_blank">IPv4</a> address for the WiFi network interface is
+  assigned in several ways using the following modes:
+  - <b>Static IP</b>,
+  - <b>Dynamic Host Configuration Protocol</b>,
+  - <b>AutoIP</b>. 
+- \ref using_ethernet_interfaces_ipv6_assign
+  \n The <a href="https://en.wikipedia.org/wiki/IPv6" target="_blank">IPv6</a> addresses for the WiFi network interface are
+  assigned in several ways:
+  - <b>Static IPv6</b>,
+  - <b>Dynamic Host Configuration Protocol for IPv6</b>,
+  - <b>IPv6 Stateless Address Autoconfiguration</b>. 
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netPPP_Func PPP Interface
+\ingroup netInterfaces
+\brief PPP routines enable IP communication over a direct connection between two networking nodes.
+\details
+The <a href="https://en.wikipedia.org/wiki/Point-to-Point_Protocol" target="_blank">Point-to-Point Protocol (PPP)</a> is a
+link layer protocol used to establish a direct connection between two nodes. Authentication, data transmission encryption,
+and data compression are supported. PPP can be used over many types of physical networks. In the Network Component, a serial
+connection over UART is the only supported type.
+
+\note The Network Component's PPP interface supports IPv4 connections only.
+
+This documentation is separated as follows:
+- \ref ppp_user_api explains the PPP API of the Network Component.
+- \ref using_ppp_interfaces_ip_assign describes the various methods that are used to assign an IP address to the
+  embedded system using PPP.
+- \ref using_ppp_interfaces_conf explains the configuration options of the PPP interface.
+
+<b>Software Structure</b>
+
+\msc
+ a [label="", textcolor="indigo", linecolor="indigo", arclinecolor="red"],
+ b [label="Network_Core_Thread", textcolor="blue",   linecolor="blue",   arclinecolor="blue"];
+ 
+ a note a [label="User Application",       textbgcolour="#FFCCCF"],
+ b note b [label="Handle Network Events",  textbgcolour="#E0E0FF"];
+ 
+ a box a [label="netInitialize", URL="\ref netInitialize"];
+ ...;
+ ---  [ label = "Network Thread started"];
+
+ ...;
+ a box a [label="netPPP_Connect", URL="\ref netPPP_Connect"];
+ ---  [ label = "Connect to a remote PPP server"];
+
+ ...;
+ a box a [label="netPPP_Listen", URL="\ref netPPP_Listen"];
+ ---  [ label = "Listen for an incoming PPP connection"];
+
+ ...;
+ a box a  [label="netPPP_LinkUp", URL="\ref netPPP_LinkUp"];
+ ---  [ label = "Check link status"];
+ 
+ ...;
+ a box a  [label="netPPP_Close", URL="\ref netPPP_Close"];
+ ---  [ label = "Disconnect PPP link between two modems"];
+ 
+ ...;
+ ---  [ label = "Session closes"];
+ 
+ ...;
+\endmsc
+&nbsp;
+*/
+
+
+/**
+\defgroup ppp_user_api User API
+\ingroup netPPP_Func
+\brief Functions of the PPP interface.
+\details
+To start a dial-up connection to a remote PPP server, use \ref netPPP_Connect (client mode). If you want to wait for an
+incoming connection, use \ref netPPP_Listen instead (server mode). To check the link status, use \ref netPPP_LinkUp. This can
+be done in client and server mode and can be used to continuously monitor the PPP link. To disconnect the PPP link, use
+\ref netPPP_Close (for client and server mode). Usually, this is done by the client. Note that the \ref netPPP_Close function
+does not change the running mode of the PPP daemon. If the PPP daemon was in server mode, PPP daemon re-initializes the modem
+driver to accept further incoming calls.
+*/
+
+
+/**
+\defgroup using_ppp_interfaces_ip_assign IP Address Assignment
+\ingroup netPPP_Func
+\brief Explanation of the IP address assignment using PPP.
+\details
+The IP address for the PPP network interface is assigned using the following modes:
+
+- <b>Static IP</b>
+  \n The <b>IP address</b> is configured manually in the \b Net_Config_PPP.h file. However, it is possible to 
+  <b>change the IP address at</b> \ref nw_runtime_config "runtime". The static configuration specifies also a primary and
+  optional secondary DNS server.
+
+- <b>Automatic IP</b>
+  \n This mode is mostly used. The IP address for the PPP client is <b>obtained from the Dial-up server</b>. The Dial-up server
+  specifies also a primary and optional secondary DNS server. In order to use this mode, the option "Obtain Client IP address
+  automatically" must be enabled in the system configuration. When this option is enabled the Local IP address configuration
+  settings are ignored.
+
+\note All available functions for using PPP are explained in \ref netPPP_Func section of the
+<a class=el href="./modules.html">Reference</a>.
+*/
+
+
+/**
+\defgroup using_ppp_interfaces_conf Configuration
+\ingroup netPPP_Func
+\brief Configuration of the PPP interface in µVision.
+\details
+The PPP interface is configured using the \b %Net_Config_PPP.h file. The options are set in the file directly or using the
+<a class=el href="https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard" target="_blank">Configuration Wizard</a>.
+
+\image html "net_config_ppp_h.png" "PPP Interface Configuration File"
+
+The PPP configuration file contains the following settings:
+- <b>Connect to hardware via Driver_UART#</b> defines the number of the UART peripheral on the microcontroller
+  device to be used.
+- <b>Modem Settings</b> specifies connection parameters for the serial modem like baud rate, flow control, and an
+  initialization string.
+  - <b>Speed</b> specifies the baud rate that is to be used for the UART.
+  - The <b>Flow Control</b> switch enables the usage of
+    <a class=el href="https://en.wikipedia.org/wiki/RS-232_RTS/CTS#RTS.2FCTS_handshaking" target="_blank">RTS/CTS</a>
+	flow control in the UART.
+  - <b>Initialization String</b> specifies a string that is to be used for modem initialization. 
+- <b>IP Address</b> specifies a static local 4 bytes IP address. The value 255.255.255.255 is not allowed.
+- <b>Primary DNS Server</b> specifies the IP address of the primary DNS server. The \ref netDNSc_Func sends IP
+  address resolution requests to this address. The setting is irrelevant if the DNS Client is disabled. 
+- <b>Secondary DNS Server</b> specifies the IP address of the secondary DNS server. It is used if the primary DNS server
+  is down or not accessible. In this case, the \ref netDNSc_Func automatically switches to the secondary DNS server
+  if a non-zero address is provided. The setting is irrelevant if the DNS Client is disabled.
+- <b>IP Fragmentation</b> enables fragmentation of outgoing IP datagrams, and reassembling the fragments of incoming IP
+  datagrams.
+  - <b>MTU size</b> lets you specify the
+    <a class="el" target="_blank" href="https://en.wikipedia.org/wiki/Maximum_transmission_unit">maximum transmission unit</a>
+    in bytes if required.
+- The <b>Logon Authentication</b> switch enables or disables the logon authentication. When the authentication is not used,
+  it should be disabled to reduce the application's code size.
+  - The <b>Unsecured password (PAP)</b> switch enables or disables the
+    <a class=el href="https://en.wikipedia.org/wiki/Password_authentication_protocol" target="_blank">Password Authentication Protocol</a>.
+	PAP transmits unencrypted ASCII passwords over the network and is therefore considered insecure. 
+  - The <b>Secured password (CHAP-MD5)</b> switch enables or disables the
+    <a class=el href="https://en.wikipedia.org/wiki/Challenge-Handshake_Authentication_Protocol" target="_blank">Challenge-Handshake Authentication Protocol</a>
+    with a <a class=el href="https://en.wikipedia.org/wiki/Md5" target="_blank">MD5</a> digest algorithm. CHAP requires that
+	both the client and server know the plaintext of the secret password, although it is never sent over the network. 
+- The <b>Obtain Client IP address automatically</b> option applies when the PPP dial-up connection dials to a remote PPP
+  Server. If it is enabled, the local PPP IP address is obtained from the remote server automatically. In this case, the
+  Local IP address setting is ignored.
+- The <b>Use Default Gateway on remote Network</b> option applies when both Ethernet and PPP dial-up networks are used
+  simultaneously. If a packet with a destination IP address does not belong to either the LAN or the PPP interface is found,
+  this option determines which gateway to use. If this option is disabled, these packets are forwarded to the default
+  gateway on the LAN. If this option is enabled, these packets are forwarded to the Dial-up PPP network. 
+- <b>Async Control Character Map</b> specifies the map of control characters that are transmitted with an escape character.
+  All 32 control characters are mapped into a 4-byte map table.
+- <b>LCP Echo Interval in seconds</b> configures the idle timeout of the
+  <a class=el href="https://en.wikipedia.org/wiki/Link_Control_Protocol" target="_blank">Link Control Protocol (LCP)</a>.
+  If no frames are received within this time interval, PPP sends an Echo Request and expects an Echo Response from the peer.
+  If the response is not received, after certain number of retries, the link is terminated.
+- <b>Number of Retries</b> specifies the number of retransmissions before the PPP protocol module gives up.
+- <b>Retry Timeout in seconds</b> is the timeout after which the PPP protocol module retransmits the packet.
+  \n\n
+- <b>OS Resources Settings</b> are used to optimize usage of OS resources.
+  - The default <b>Interface Thread Stack Size</b> is 512 bytes.
+  - The default Interface Thread priority is <b>osPriorityAboveNormal</b>.
+    You can change this priority by changing the \b PPP_THREAD_PRIORITY defined in this configuration file. This priority must
+    be high enough for the PPP interface to respond to events in a timely manner. Due to this requirement, it is recommended
+    that this setting remain the default. For more information on default settings, see the section \ref nw_rtos_req.
+
+Additional PPP configuration settings:
+- The \b PPP_ICMP_NO_ECHO defines the Echo response mode that is enabled by default. A value of \token{1} disables the echo
+  response, and a value of \token{0} enables it. Alternatively, you can change it from a running application with the
+  \ref netICMP_SetNoEcho function.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup netSLIP_Func SLIP Interface
+\ingroup netInterfaces
+\brief SLIP routines enable IP communication over a serial line.
+\details
+The
+<a href="https://en.wikipedia.org/wiki/Serial_Line_Internet_Protocol" target="_blank">Serial Line Internet Protocol (SLIP)</a>
+is a link layer protocol used to establish a direct connection between two nodes over serial ports or modems. Feature wise,
+it is superseded by \ref netPPP_Func "PPP" (more features, such as authentication and encryption). But many
+microcontroller applications still use SLIP instead due to its very small overhead.
+
+This documentation is separated as follows:
+- \ref slip_user_api explains the SLIP API of the Network Component.
+- \ref using_slip_interfaces_ip_assign describes the various methods that are used to assign an IP address to the
+  embedded system using SLIP.
+- \ref using_slip_interfaces_conf explains the configuration options of the SLIP interface.
+
+<b>Software Structure</b>
+
+\msc
+ a [label="", textcolor="indigo", linecolor="indigo", arclinecolor="red"],
+ b [label="Network_Core_Thread", textcolor="blue",   linecolor="blue",   arclinecolor="blue"];
+ 
+ a note a [label="User Application",       textbgcolour="#FFCCCF"],
+ b note b [label="Handle Network Events",  textbgcolour="#E0E0FF"];
+ 
+ a box a [label="netInitialize", URL="\ref netInitialize"];
+ ...;
+ ---  [ label = "Network Thread started"];
+
+ ...;
+ a box a [label="netSLIP_Connect", URL="\ref netSLIP_Connect"];
+ ---  [ label = "Connect to a remote SLIP server"];
+
+ ...;
+ a box a [label="netSLIP_Listen", URL="\ref netSLIP_Listen"];
+ ---  [ label = "Listen for an incoming SLIP connection"];
+
+ ...;
+ a box a  [label="netSLIP_LinkUp", URL="\ref netSLIP_LinkUp"];
+ ---  [ label = "Check link status"];
+ 
+ ...;
+ a box a  [label="netSLIP_Close", URL="\ref netSLIP_Close"];
+ ---  [ label = "Disconnect SLIP link between two modems"];
+ 
+ ...;
+ ---  [ label = "Session closes"];
+ 
+ ...;
+\endmsc
+*/
+
+
+/**
+\defgroup slip_user_api User API
+\ingroup netSLIP_Func
+\brief Functions of the SLIP interface.
+\details
+To start a dial-up connection to a remote SLIP server, use \ref netSLIP_Connect (client mode). If you want to wait for an
+incoming connection, use \ref netSLIP_Listen instead (server mode). To check the link status, use \ref netSLIP_LinkUp. This
+can be done in client and server mode and can be used to continuously monitor the SLIP link. To disconnect the SLIP link, use
+\ref netSLIP_Close (for client and server mode). Usually, this is done by the client. Note that the \ref netSLIP_Close
+function does not change the running mode of the SLIP daemon. If the SLIP daemon was in server mode, SLIP daemon
+re-initializes the modem driver to accept further incoming calls.
+*/
+
+
+/**
+\defgroup using_slip_interfaces_ip_assign IP Address Assignment
+\ingroup netSLIP_Func
+\brief Explanation of the IP address assignment using SLIP.
+\details
+This is a simple protocol and does not allow automatic configuration, therefore only one configuration mode is supported:
+
+- <b>Static IP</b>
+  \n The <b>IP address</b> is is configured manually in the \b Net_Config_SLIP.h file. It is possible to change the IP address
+  at \ref nw_runtime_config "runtime". The static configuration specifies also a primary and (optional) secondary DNS server.
+  
+\note
+- If both SLIP and Ethernet interfaces are used simultaneously, you must not set the same network address for both.
+- All available functions for using SLIP are explained in \ref netSLIP_Func section of the
+  <a class=el href="./modules.html">Reference</a>.
+*/
+
+
+/**
+\defgroup using_slip_interfaces_conf Configuration
+\ingroup netSLIP_Func
+\brief Configuration of the SLIP interface in µVision.
+\details
+The SLIP interface is configured using the \b %Net_Config_SLIP.h file.The options are set in the file directly or using the
+<a class=el href="https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard" target="_blank">Configuration Wizard</a>.
+
+\image html "net_config_slip_h.png" "SLIP Interface Configuration File"
+
+The SLIP configuration file contains the following settings:
+- <b>Connect to hardware via Driver_UART#</b> defines the number of the UART peripheral on the microcontroller
+  device to be used.
+- <b>Modem Settings</b> specifies connection parameters for the serial modem like baud rate, flow control, and an
+  initialization string.
+  - <b>Speed</b> specifies the baud rate that is to be used for the UART.
+  - The <b>Flow Control</b> switch enables the usage of
+    <a class=el href="https://en.wikipedia.org/wiki/RS-232_RTS/CTS#RTS.2FCTS_handshaking" target="_blank">RTS/CTS</a>
+	flow control in the UART.
+  - <b>Initialization String</b> specifies a string that is to be used for modem initialization. 
+- <b>IP Address</b> specifies a static local 4 bytes IP address. The value 255.255.255.255 is not allowed.
+- <b>Primary DNS Server</b> specifies the IP address of the primary DNS server. The \ref netDNSc_Func sends IP
+  address resolution requests to this address. The setting is irrelevant if the DNS Client is disabled. 
+- <b>Secondary DNS Server</b> specifies the IP address of the secondary DNS server. It is used if the primary DNS server
+  is down or not accessible. In this case, the \ref netDNSc_Func automatically switches to the secondary DNS server
+  if a non-zero address is provided. The setting is irrelevant if the DNS Client is disabled.
+- <b>IP Fragmentation</b> enables fragmentation of outgoing IP datagrams, and reassembling the fragments of incoming IP
+  datagrams.
+  - <b>MTU size</b> lets you specify the
+    <a class="el" target="_blank" href="https://en.wikipedia.org/wiki/Maximum_transmission_unit">maximum transmission unit</a>
+    in bytes if required.
+- The <b>Use Default Gateway on remote Network</b> option applies when both Ethernet and SLIP dial-up networks are used
+  simultaneously. If enabled, data that cannot be sent to a local LAN is forwarded to the Dial-up SLIP network instead.
+  \n\n
+- <b>OS Resources Settings</b> are used to optimize usage of OS resources.
+  - The default <b>Interface Thread Stack Size</b> is 512 bytes.
+  - The default Interface Thread priority is <b>osPriorityAboveNormal</b>.
+    You can change this priority by changing the \b SLIP_THREAD_PRIORITY defined in this configuration file. This priority must
+    be high enough for the SLIP interface to respond to events in a timely manner. Due to this requirement, it is recommended
+    that this setting remain the default. For more information on default settings, see the section \ref nw_rtos_req.
+
+Additional SLIP configuration settings:
+- The \b SLIP_ICMP_NO_ECHO defines the Echo response mode that is enabled by default. A value of \token{1} disables the echo 
+  response, and a value of \token{0} enables it. Alternatively, you can change it from a running application with the
+  \ref netICMP_SetNoEcho function.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup using_loopback_interface Loopback Interface
+\ingroup netInterfaces
+\brief Using the Loopback Interface for Debugging.
+\details
+The <a href="https://en.wikipedia.org/wiki/Localhost" target="_blank">localhost</a> is the standard host name given to the 
+address of the \b loopback network interface. The IP address of the localhost is:
+- IPv4: \b 127.0.0.1,
+- IPv6: <b>[::1]</b>.
+
+Packets that are destined for the localhost address, are routed back internally by the IP layer of the Network Component. 
+Such packets are never delivered to any network interface controller.
+
+Using the loopback interface is useful for \b testing the software, since it bypasses the local network interface hardware.
+Connecting to locally hosted network services using loopback addresses puts less of a load on network resources.
+
+You can also use the local host IP address to communicate between different applications using sockets on the same
+system, for example between a FTP server and FTP client. The FTP client connects to the FTP server and manages files on the
+FTP server using the localhost address. Of course, the files are manipulated locally on the same system. No IP packets
+actually appear on any of the hardware interfaces.
+
+\note
+- The loopback interface is created in the Network Component internally and does not require a physical network connection.
+*/

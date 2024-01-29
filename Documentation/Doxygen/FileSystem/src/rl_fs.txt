@@ -1,0 +1,1410 @@
+/*------------------------------------------------------------------------------
+ * MDK Middleware - Component ::File System
+ * Copyright (c) 2004-2017 ARM Germany GmbH. All rights reserved.
+ *------------------------------------------------------------------------------
+ * Name:    rl_fs.h
+ * Purpose: File System API
+ *----------------------------------------------------------------------------*/
+
+/**
+\defgroup system_routines System Routines 
+\brief System Routines initialize the File System or Drive.
+\details
+The following diagram shows the basic flow of how to call the system routines to get access to a drive and a drive's media:
+-# Call \ref finit to initialize the drive itself.
+-# Call \ref fmount to get access to the drive's media.
+-# Work with the media.
+-# Call \ref funmount to give up access to the media.
+-# Call \ref funinit to uninitialize the drive.
+
+\image html "fs_system_routines.png" "Basic Flow Diagram for Calling System Routines"
+
+The routines are thread safe.
+
+<b>Code Example</b>
+\code
+void main (void) {
+  FILE *f;
+
+  // Initialize the M: drive.
+  if (finit ("M:") != fsOK) {
+    // error handling
+	...
+  }
+  // Mount the M: drive.
+  if (fmount ("M:") != fsOK) {
+    // error handling
+	...
+  }
+  // Update a log file on SD card.
+  f = fopen ("M:\\Logs\\Test_file.log","a");
+  if (f == NULL) {
+    // error handling
+	...
+  }
+  else {
+    // write data to file
+    fclose (f);
+  }
+  // The drive is no more needed.
+  funmount ("M:");
+  funinit ("M:");
+  ..
+}
+\endcode
+*/
+
+/**
+\defgroup file_maintenance_routines File Maintenance Routines 
+\brief File maintenance routines perform file management operations.
+\details
+The routines are thread safe.
+*/
+
+/**
+\defgroup directory_maintenance_routines Directory Maintenance Routines
+\brief Directory maintenance routines perform directory management operations.
+\details
+The routines are thread safe.
+*/
+
+/**
+\defgroup utility_routines Utility Routines 
+\brief Utility Routines provide analytical and utility operations on drives.
+\details
+You can change current drive, print working directory, analyse, format, and defragment drives.
+Also, reading drive and volume information data is supported.
+*/
+
+/**
+\defgroup file_time_routines File Time Support Routines 
+\brief File time support routines return the current date and time. 
+\details
+They can be used to set the file timestamp. The file timestamp information is available in devices with the FAT file system,
+it is not supported for non-FAT volumes.
+*/
+
+/**
+\defgroup media_support_routines Media Support Routines
+\brief Media support routines provide media management functions
+\details
+*/
+
+/**
+\defgroup ioc_interface_routines I/O Control Interface Routines 
+\brief I/O control interface routines provide operate on FAT formatted media devices.
+\details
+*/
+
+//  ==== System Routines ====
+/**
+\addtogroup system_routines
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus finit (const char *drive)
+\details
+The function \b finit initializes the software library resources required for a certain \a drive, including the File System
+and the related driver. It must be called before invoking any other function accessing the file system of the \a drive.
+Calling \b finit does not access the actual media on the specified \a drive. Before working with the drive's media, a call to
+\ref fmount is required. \ref fmount checks if the media is present and formatted. \b finit fails if the File System
+Component in general or the driver cannot be initialized.
+
+Once the drive is successfully initialized, all subsequent calls of finit will return execution status fsOK, leaving
+internal drive state unchanged.
+
+The argument \a drive specifies the \ref drive to be initialized. Every drive that is used in the system must be 
+initialized separately using this function. The \ref cur_sys_drive "Current Drive" is used if an empty string is provided.
+A NULL pointer is not allowed and will be rejected.
+
+\note Function finit initializes operating system resources and should not be called from multiple threads.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus funinit (const char *drive)
+\details
+The \b funinit function uninitializes the File System. This is necessary if during application run time the drive volume
+needs to be disabled (for example for lowering power consumption). To reinitialize the drive afterwards, \b finit needs to be
+called again.
+
+The execution of funinit is unconditional and will always uninitialize available drive resources.
+
+The argument \a drive specifies the \ref drive to be uninitialized. Every drive that is used in the system must be 
+uninitialized separately using this function. The \ref cur_sys_drive "Current Drive" is used if an empty string is provided.
+A NULL pointer is not allowed and will be rejected.
+
+\note Function funinit uninitializes operating system resources and should not be called from multiple threads.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fmount (const char *drive)
+\details
+
+The function \b fmount is used to mount the File System of the specified \ref drive. It initializes memory media,
+media management layer and the file system on top of it. Mounting means that it will be checked if the drive's
+media is attached and formatted. After a successful mount, drive is ready for file I/O operations (such as \ref fread,
+\ref fwrite, etc.).
+
+The argument \a drive specifies the \ref drive to be mounted. Every drive that is used in the system must be 
+mounted separately using this function. The \ref cur_sys_drive "Current Drive" is used if an empty string is provided.
+A NULL pointer is not allowed and will be rejected.
+
+The drive that requires formatting also requires operational memory media and therefore \b fmount shall be called before
+attempting to format the drive. The memory media is operational when \b fmount successfully examines the drive and returns
+with execution status \b fsOK or \b fsNoFileSystem. Execution status \b fsNoFileSystem is returned when the file system
+on the memory media is not present or is unrecognized.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus funmount (const char *drive)
+\details
+
+The function \b funmount is used to unmount a File System volume. When called, it flushes the data from internal file system
+buffers, closes all opened file handlers associated with the specified drive and disconnects the memory media. In case when
+removable memory media is not present only file handlers associated with the specified drive are closed.
+
+The argument \a drive specifies the \ref drive to be unmounted. Every drive that is used in the system must be 
+unmounted separately using this function. The \ref cur_sys_drive "Current Drive" is used if an empty string is provided.
+A NULL pointer is not allowed and will be rejected.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t fversion (void)
+\details
+The function \b fversion retrieves the version of the File System component.
+Returned version is encoded in BCD format \b 0xMMmmbbbb where \b MM represents major version, \b mm minor version and \b bbbb
+build version.
+
+<b>Code Example</b>
+\code
+void print_version (void) {
+  uint32_t fs_ver;
+ 
+  fs_ver = fversion();
+ 
+  // Extract and printf FileSystem version
+  printf ("Major: %d%d, Minor: %d%d, Build: %d%d%d%d\n", \
+          (fs_ver >> 28) & 0xF, (fs_ver >> 24) & 0xF,    \
+          (fs_ver >> 20) & 0xF, (fs_ver >> 16) & 0xF,    \
+          (fs_ver >> 12) & 0xF, (fs_ver >> 8)  & 0xF,    \
+          (fs_ver >>  4) & 0xF, (fs_ver & 0xF));
+}
+\endcode
+*/
+
+/**
+@}
+*/
+
+//  ==== File Maintenance Routines ====
+
+/**
+\addtogroup file_maintenance_routines
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fdelete (const char *path, const char *options)
+\details
+The function \b fdelete deletes one or more files. If \a path argument points to the existing file, it is removed. If \a path
+argument points to the directory, all files within that directory are removed. File(s) specified by the \a path argument shall
+not have any active file handle, otherwise the delete will fail and fsAccessDenied status code will be returned.
+
+The \a path argument is specifying the file or directory path. If the drive prefix is omitted, the
+\ref cur_sys_drive "Current Drive" is used.
+           
+The \a options argument can be NULL when options are not used or a pointer to a string specifying following options:
+|Option |Description      |
+|-------|-----------------|
+|   /S   | Remove all files within specified directory and all subdirectories. |
+
+<b>Code Example</b>
+\code
+void tst_fdelete (void) {
+ 
+  if (fdelete ("TEST.TXT", NULL) == fsOK) {                   // Delete a file from current drive.
+    printf ("Deleted: TEST.TXT\n");
+  }
+ 
+  if (fdelete ("R:DATA.LOG", NULL) == fsOK) {                 // Delete a file from RAM drive.
+    printf ("Deleted: DATA.LOG\n");
+  }
+ 
+  if (fdelete ("M:\\Work dir\\Temp log.txt", NULL) == fsOK) { // Delete a file from sub-folder.
+    printf ("Deleted: Temporary log.txt\n");
+  }
+ 
+  if (fdelete "M0:\\Working folder\\", NULL) == fsOK) {       // Delete all files within a directory.
+    printf ("Deleted: Working folder.\n");
+  }
+ 
+  if (fdelete "M0:\\Working folder\\", "/S") == fsOK) {       // Delete all files within a directory and its subdirectories.
+    printf ("Deleted: Working folder.\n");
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus ffind (const char *pattern, fsFileInfo *info)
+\details
+The function \b ffind searches for files or directories that match a specific pattern. It can be used for explicit search,
+when full path is specified or iterative search, when using wildcard character within path.
+
+The argument \a pattern is specifying the file or directory path. If the drive prefix is omitted, the
+\ref cur_sys_drive "Current Drive" is used. If the drive prefix specifies non-existing drive function returns \ref fsInvalidDrive
+status code. If targeted drive is not mounted \ref fsAccessDenied is returned.
+Wildcard character * can be used when searching for multiple files. The following search rules apply:
+
+|Pattern     |Description                                                      |
+|------------|-----------------------------------------------------------------|
+|"*" or "*.*"|Searches for all files in the directory                          |
+|"abc*"      |Searches for files that begin with \a abc                        |
+|"*.htm"     |Searches for files that end with \a .htm                         |
+|"abc*.text" |Searches for files that begin with abc and end with \a .text     |
+
+If file or directory matching to the specified pattern is found, \ref fsOK status code is returned and its name, size, attributes
+and time stamps are returned to the info structure. Status code \ref fsFileNotFound is returned when function fails to find any
+file or directory that matches to the specified pattern.
+
+If arguments \a pattern or \a info are NULL or if \a pattern specifies only directory path (i.e. ends with slash or backslash) 
+the \ref fsInvalidParameter status code is returned.  
+
+Member \b fileID of the fsFileInfo structure is used to control the file search and must be <b>set to 0 (zero) before starting a new search</b>.
+
+When performing iterative search (using wildcard character), function must be called repeatedly and in that case fileID
+shall not be changed until the search ends. To re-start the search during iterative operation set fileID to 0 (zero).
+When performing search using full file name as search pattern (without wildcard character), fileID must be set to 0 (zero) before
+each search, otherwise \ref fsError status code is returned.
+
+\note
+File attributes and time stamps are only supported on FAT drive and will not be returned if EFS drive is specified.
+
+<b>Code Example</b>
+\code
+void file_directory (void)  {
+  fsFileInfo info;
+ 
+  info.fileID = 0;                             // info.fileID must be set to 0
+ 
+  while (ffind ("R:*.*", &info) == fsOK) {     // find whatever is in drive "R0:"
+    printf ("\n%-32s %5d bytes, ID: %04d",
+            info.name,
+            info.size,
+            info.fileID);
+  }
+}
+\endcode
+\code
+bool log_exists (void)  {
+  fsFileInfo info;
+ 
+  info.fileID = 0;                             // info.fileID must be set to 0
+ 
+  if (ffind ("R:\measure.log", &info) == fsOK) {
+    return (true);                             // log file exists
+  }
+  return (false);                              // log file not found
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus frename (const char *path, const char *newname)
+\details
+The function \b frename replaces the name of a file or directory. File specified by the \a path argument shall
+not have any active file handle, otherwise the rename will fail and fsAccessDenied status code will be returned.
+
+The \a path argument is specifying the current name of the file or directory. If the drive prefix is omitted, the
+\ref cur_sys_drive "Current Drive" is used.
+
+The argument \a newname is specifying the new name of the file or directory. If \a newname is specifying a file or directory
+that already exists, function returns with status code \ref fsAlreadyExists.
+
+<b>Code Example</b>
+\code
+void tst_frename (void)  {
+ 
+  if (frename ("F:Test.txt", "New name.txt") == fsOK)  {
+    printf ("Rename Successful.\n");
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fattrib (const char *path, const char *attr)
+\details
+The function \b fattrib changes file or directory attributes. File specified by the \a path argument shall
+not have any active file handle, otherwise the delete will fail and fsAccessDenied status code will be returned.
+
+The \a path argument is specifying the file or directory path. If the drive prefix is omitted, the \ref cur_sys_drive "Current Drive" is used.
+
+The argument \a attr is specifying file or directory attributes to be modified. The following characters are allowed within \a par string:
+|Character|Function                |
+|---------|------------------------|
+|+        |Sets an attribute       |
+|-        |Clears an attribute     |
+|R        |Read-only file attribute|
+|A        |Archive file attribute  |
+|S        |System file attribute   |
+|H        |Hidden file attribute   |
+
+<b>Code Example</b>
+\code
+void cmd_attrib (void)  {
+  char *arg, *path;
+ 
+  // Set parameters
+  path = "M0:\\Abstract.txt";
+  arg  = "+R -S";
+ 
+  if (fattrib (path, arg) != fsOK) {
+    printf ("Failed to change file attributes.\n");
+  }
+  else {
+    printf ("File attributes changed.\n");
+  }
+}
+\endcode
+*/
+
+/**
+@}
+*/
+
+//  ==== Directory Maintenance Routines ====
+
+/**
+\addtogroup directory_maintenance_routines
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fpwd (const char *drive, char *buf, uint32_t len)
+\details
+The function \b fpwd prints the current working directory.
+
+The argument \a drive specifies the \ref drive. The \ref cur_sys_drive "Current Drive" is used if an empty string is
+provided. A NULL pointer is not allowed and will be rejected.
+
+The argument \a buf point to the array where the absolute path of the current working directory is stored.
+
+The argument \a len is the size in bytes of the \a buf array. If \a len argument is less than maximum path length of the
+target file system, function returns with \ref fsInvalidParameter and content of \a buf remains unchanged.
+
+\note
+- Maximum path length for FAT file system with LFN support is 260 bytes and 80 bytes for FAT without LFN support.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fchdir (const char *path)
+\details
+The function \b fchdir changes the current working directory. It causes the directory named by the \a path argument to become
+the current working directory, which is the starting point for path searches for pathnames not beginning with '/' or '\'.
+
+The argument \a path is specifying the directory path. If the drive prefix is omitted, the \ref cur_sys_drive "Current Drive" is used.
+If \a path is specifying a file, function returns with status code \ref fsNotDirectory.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fmkdir (const char *path)
+\details
+The function \b fmkdir is used to make a new directory or any intermediate directories in the path.
+
+The argument \a path is specifying the directory path. If the drive prefix is omitted, the \ref cur_sys_drive "Current Drive" is used.
+If \a path is specifying a file or directory that already exists, function returns with status code \ref fsAlreadyExists.
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus frmdir (const char *path, const char *options)
+\details
+The function \b frmdir removes a directory if it is empty. Argument options is used to specify function options.
+
+The argument \a path is specifying the directory path. If the drive prefix is omitted, the \ref cur_sys_drive "Current Drive" is used.
+If \a path is specifying a file, function returns with status code \ref fsNotDirectory.
+
+The argument \a options can be NULL when options are not used or a pointer to a string specifying following option:
+|Option |Description      |
+|-------|-----------------|
+|/S     | Remove all directories and files in the specified directory including the directory itself. |
+*/
+
+/**
+@}
+*/
+
+//  ==== Utility Routines ====
+
+/**
+\addtogroup utility_routines
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fchdrive (const char *drive)
+\details
+The function \b fchdrive changes the \ref cur_sys_drive "Current Drive".
+
+The argument \a drive specifies the \ref drive to be selected as the \ref cur_sys_drive "Current Drive".
+A NULL pointer is not allowed and will be rejected.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int64_t ffree (const char *drive)
+\details
+The function \b ffree calculates the free space on a device.
+
+The argument \a drive specifies the \ref drive. The \ref cur_sys_drive "Current Drive" is used if an empty string is provided.
+A NULL pointer is not allowed and will be rejected.
+
+<b>Code Example</b>
+\code
+void free_space (void)  {
+ 
+  printf ("Flash Drive free: %lld bytes.\n", ffree("F:"));
+  printf ("Ram Drive free: %lld bytes.\n", ffree("R:"));
+  printf ("SD Card Drive 1 free: %lld bytes.\n", ffree("M0:"));
+  printf ("SD Card Drive 2 free: %lld bytes.\n", ffree("M1:"));
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fformat (const char *drive, const char *options)
+\details
+The function \b fformat formats an EFS or FAT storage media for using a file system. The function closes all open files on
+the specified \a drive. Existing file handles become invalid.
+
+The argument \a drive specifies the \ref drive. The \ref cur_sys_drive "Current Drive" is used if an empty string is provided.
+A NULL pointer is not allowed and will be rejected.
+
+The argument \a options can be pointer to a string or NULL when formatting options are not used.
+
+<b>FAT drive formatting options:</b>
+
+<table class="cmtable">
+    <tr>
+      <th>Option</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>/L label</td>
+      <td>
+          Specifies \ref fat_volume_label "volume label". If /L option is not specified or if label is not given, then volume
+          label will not be written. Terminating character for label can be slash (/) or NUL character. Trailing spaces will
+          be ignored.
+      </td>
+    </tr>
+    <tr>
+      <td>/FAT32</td>
+      <td>
+          Formats the media for using the FAT32 file system. FAT32 can be used on media devices with size >= 256MB.
+      </td>
+    </tr>
+    <tr>
+      <td>/W</td>
+      <td>
+          Clears all data. Erases all available data sectors.
+      </td>
+    </tr>
+    <tr>
+      <td>/LL</td>
+      <td>
+          Clears all data. Performs low-level formatting first (NAND drive only).
+      </td>
+    </tr>
+    <tr>
+      <td>/LLEB</td>
+      <td>
+          Clears all data. Performs low-level formatting and erases bad blocks first (NAND drive only).
+          /LLEB has higher priority than /LL in case if both options are specified.
+      </td>
+    </tr>
+    <tr>
+      <td>/\<other\></td>
+      <td>
+          Unknown options are ignored.
+      </td>
+    </tr>
+ </table>
+ 
+When formatting option /FAT32 is not used, the media device will be formatted using 
+default, predefined settings. The file system type depends then on media device size and will be chosen as follows:
+ - FAT12 for devices with < 128MB
+ - FAT16 for devices with >= 128MB and <= 2GB
+ - FAT32 for devices with > 2GB
+ 
+<b>EFS drive formatting options:</b>
+
+There are no special formatting options available for the Embedded File System. Argument \a options is ignored.
+
+\note Before formatting the drive, \ref fmount must be called to initialize the memory media and media management layer.
+
+<b>Code Example</b>
+\code
+void format_drive (void) {
+  char *opt;
+ 
+  // Set formatting options
+  opt = "/L SD Card /FAT32";
+ 
+  if (fformat ("M:", opt) != fsOK) {
+    printf ("Formatting failed!\n");
+  }
+  else {
+    printf ("Drive formatted using FAT 32 with label SD Card.\n");
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t fanalyse (const char *drive)
+\details
+The function \b fanalyse examines the Embedded File System and checks for file fragmentation.
+
+The argument \a drive specifies the \ref drive to be analysed. The \ref cur_sys_drive "Current Drive" is used if an empty string is provided.
+A NULL pointer is not allowed and will be rejected.
+
+
+<b>Code Example</b>
+\code
+void free_space (void) {
+ 
+  printf ("\nFree space before defrag: %d bytes.", ffree(""));
+  if (fanalyse("") > 50) {
+    fdefrag ("");
+  }
+  printf ("\nFree space after defrag: %d bytes.", ffree(""));
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fcheck (const char *drive)
+\details
+The function \b fcheck analyses the consistency of the Embedded File System and determines if it has been initialized.
+
+The argument \a drive specifies the \ref drive to be checked. The \ref cur_sys_drive "Current Drive" is used if an empty string is provided.
+A NULL pointer is not allowed and will be rejected.
+
+<b>Code Example</b>
+\code
+void tst_files (void) {
+ 
+  if (fcheck ("F:") != fsOK) {
+    printf ("Embedded File System inconsistent, formatting...\n");
+ 
+    if (fformat ("F:") != fsOK) {
+      printf ("Formatting failed.\n");
+    }
+    else {
+      printf ("Format done.\n");
+    }
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fdefrag (const char *drive)
+\details
+The function \b fdefrag de-fragments the Embedded File System. Drive is examined for used blocks which are without valid file
+allocation records. Such blocks are erased and marked as empty. Fragmented files are consolidated. The result of file
+consolidation is faster file access and increased overall performance.
+
+The argument \a drive specifies the \ref drive to be de-fragmented. The \ref cur_sys_drive "Current Drive" is used if an empty string is provided.
+A NULL pointer is not allowed and will be rejected.
+
+<b>Code Example</b>
+\code
+void free_space (void)  {
+ 
+  printf ("\nFree space before defrag: %d bytes.", ffree("F:"));
+ 
+  if (fanalyse("F:") > 50) {
+     fdefrag ("F:");
+  }
+  printf ("\nFree space after defrag: %d bytes.", ffree("F:"));
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fmedia (const char *drive)
+\details
+
+The function \b fmedia uses media device interface driver to detect the presence of a removable drive in the system (such as
+SD/MMC cards or USB Flash drives).
+In case of SD/MMC cards, it can be used even when card socket does not provide card detection pin, but only after a successful
+device initialization (i.e. after a successful call of \ref fmount or \ref fs_ioc_device_ctrl using \b fsDevCtrlCodeControlMedia).
+In such case, device presence is determined using internal register states.
+
+
+The argument \a drive specifies the \ref drive. The \ref cur_sys_drive "Current Drive" is used if an empty string is provided.
+A NULL pointer is not allowed and will be rejected.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus finfo (const char *drive, fsDriveInfo *info)
+\details
+
+The function \b finfo reads general drive informations from the volume and puts them into the \a info structure.
+
+The argument \a drive specifies the \ref drive. The \ref cur_sys_drive "Current Drive" is used if an empty string is provided.
+A NULL pointer is not allowed and will be rejected.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fvol (const char *drive, char *label, uint32_t *serial)
+\details
+The function \b fvol reads the volume label.
+
+The argument \a drive specifies the \ref drive. The \ref cur_sys_drive "Current Drive" is used if an empty string is provided.
+A NULL pointer is not allowed and will be rejected.
+
+The argument \a label specifies a buffer where the volume label will be stored as a null terminated string. Its size
+must be at least 12 bytes to prevent buffer overflow. If volume has no label an empty string is returned.
+
+The argument \a serial specifies a pointer to a 32-bit variable where the volume serial number will be stored. The serial
+number is usually written when the volume is formatted and can be used to distinguish between volumes on removable devices.
+
+<b>Code Example</b>
+\code
+void tst_fvol (void) {
+  char label[12];
+  uint32_t ser_num;
+ 
+  if (fvol("U0:", label, &ser_num) == fsOK) {
+    if (label_buf[0]) {
+      printf ("Volume in drive U0 is %s\n", label);
+    }
+    else {
+      printf ("Volume in drive U0 has no label.\n");
+    }
+    printf ("Volume serial number is %x\n", ser_num);
+  }
+  else {
+    printf ("Volume access error!\n");
+  }
+}
+\endcode
+*/
+
+/**
+@}
+*/
+
+//  ==== File Time Support Routines ====
+
+/**
+\addtogroup file_time_routines
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus ftime_set (const char *path, fsTime *create, fsTime *access, fsTime *write)
+\details
+The function \b ftime_set sets the file or directory timestamp information.
+
+The \a path argument is specifying the file or directory path. If the drive prefix is omitted, the
+\ref cur_sys_drive "Current Drive" is used.
+
+The argument \a create is specifying a pointer to the \ref fsTime structure containing the create time and can be NULL.
+
+The argument \a access is specifying a pointer to the \ref fsTime structure containing the last access time and can be NULL.
+
+The argument \a write is specifying a pointer to the \ref fsTime structure containing the last write time and can be NULL.
+
+The timestamp of the corresponding argument is not modified if that argument equals to NULL.
+
+\note This function supports FAT drives only.
+\note FAT last access timestamp only stores date and therefore the time members (hour, min, sec) in the fsTime structure are ignored.
+
+<b>Code Example</b>
+\code
+void set_timestamp (void) {
+  fsTime timedate;
+ 
+  // Set time and date
+  timedate.hr   = 17;
+  timedate.min  = 30;
+  timedate.sec  = 2;
+ 
+  timedate.day  = 25;
+  timedate.mon  = 10;
+  timedate.year = 2019;
+ 
+  // Modify the timestamps
+  if (ftime_set ("file.txt", &timedate, &timedate, &timedate) == fsOK) {
+    printf ("File create, last access and last write time were successfully modified.\n");
+  }
+  else {
+    printf ("Failed to set the file timestamp.\n");
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus ftime_get (const char *path, fsTime *create, fsTime *access, fsTime *write)
+\details
+The function \b ftime_get retrieves the file or directory timestamp information.
+
+The \a path argument is specifying the file or directory path. If the drive prefix is omitted, the
+\ref cur_sys_drive "Current Drive" is used.
+
+The argument \a create is specifying a pointer to the \ref fsTime structure where the create time will be stored and can be NULL.
+
+The argument \a access is specifying a pointer to the \ref fsTime structure where the last access time will be stored and can be NULL.
+
+The argument \a write is specifying a pointer to the \ref fsTime structure where the last write time will be stored and can be NULL.
+
+The timestamp of the corresponding argument is not retrieved if that argument equals to NULL.
+
+\note This function supports FAT drives only.
+\note FAT last access timestamp only stores date and therefore the time members (hour, min, sec) in the fsTime structure will be set to 0 (zero).
+
+<b>Code Example</b>
+\code
+void get_timestamp (void) {
+  fsTime create, access, write;
+ 
+  // Get the timestamps
+  if (ftime_get ("file.txt", &create, &access, &write) == fsOK) {
+    printf ("File create, last access and last write time were successfully retrieved.\n");
+ 
+    //Output the file create time and date information
+    printf ("Create Time: %d:%d:%d, %d.%d.%d\n", create.hr,  create.min, create.sec, \
+                                                 create.day, create.mon, create.year);
+  }
+  else {
+    printf ("Failed to get the file timestamp.\n");
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fs_get_time (fsTime *time)
+\details
+The function \b fs_get_time function returns a \a time value.
+
+The argument \a time is a pointer to the values of the hour, minute, second, day, month, and year in a \ref fsTime structure.
+
+<b>Code Example</b>
+\code
+fsStatus fs_get_time (fsTime *time) {
+  ..
+  // Real time should be read from the RTC
+  ..
+  // Fill the FS_TIME structure with the time information
+  time->hr   = 12;    // Hours:   0 - 23
+  time->min  = 0;     // Minutes: 0 - 59
+  time->sec  = 0;     // Seconds: 0 - 59
+
+  time->day  = 1;     // Day:     1 - 31
+  time->mon  = 1;     // Month:   1 - 12
+  time->year = 2013;  // Year:    1980 - 2107
+
+  return (fsOK);
+}
+\endcode
+*/
+
+/**
+@}
+*/
+
+//  ==== Media Support Routines ====
+
+/**
+\addtogroup media_support_routines
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t fs_mc_read_cd (uint32_t drive_num)
+\details
+The function \b fs_mc_read_cd returns memory card detection state. Application optionally implements this function and
+ensure proper \a drive_num mapping to Card Detect (CD) pin on the Memory Card socket.
+
+The argument \a drive_num is specifying a Memory Card drive instance number.
+
+<b> Code Example </b>
+\code
+int32_t fs_mc_read_cd (uint32_t drive_num) {
+  
+  switch (drive_num) {
+    case 0:
+      printf ("Drive M0 requests Memory Card detection state!\n");
+      if (GPIO->PINSTATE & MC0_CARD_DETECT_PIN) {
+        // Memory Card is detected
+        return 1;
+      }
+      break;
+
+    case 1:
+      printf ("Drive M1 requests Memory Card detection state!\n");
+      if (GPIO->PINSTATE & MC1_CARD_DETECT_PIN) {
+        // Memory Card is detected
+        return 1;
+      }
+      break;
+    default:
+      break;
+  }
+  // Card not detected or error
+  return (0);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t fs_mc_read_wp (uint32_t drive_num)
+\details
+The function \b fs_mc_read_wp returns memory card write protection state.  Application optionally implements this function
+and ensure proper \a drive_num mapping to Write Protect (WP) pin on the Memory Card socket.
+
+The argument \a drive_num is specifying a Memory Card drive instance number.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t fs_mc_spi_control_ss (uint32_t drive_num, uint32_t ss)
+\details
+The function \b fs_mc_spi_control_ss controls the Slave Select (SS) signal state.  Application optionally implements this
+function and ensure proper \a drive_num mapping to SS pin on the Memory Card socket. Its return value indicates current SS
+signal state or when -1 is returned, that SS signal control is not implemented by this function and must be controlled using
+an SPI driver.
+
+The argument \a drive_num is specifying a Memory Card drive instance number.
+
+The argument \a ss is specifying a Slave Select signal state: 0=inactive, 1=active
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsLockUnlock *fs_mc_lock_unlock (uint32_t drive_num)
+\details
+The function \b fs_mc_lock_unlock returns the media lock/unlock information structure. Application optionally implements this
+function and ensure proper \a drive_num mapping.
+
+The argument \a drive_num is specifying a Memory Card drive instance number.
+
+<b> Code Example </b>
+\code
+// Memory card password
+const uint8_t mc0_pass[] = { 0x01, 0x02, 0x03, 0x04, 0x05 };
+ 
+// Media lock/unlock information structure
+fsLockUnlock  mc0_lock;
+ 
+// Provide password management information
+fsLockUnlock *fs_mc_lock_unlock (uint32_t drive_num) {
+ 
+  if (drive_num == 0) {
+    // Drive M0 is requesting password protection info
+    mc0_lock.password = mc0_pass;
+    mc0_lock.length   = 5;
+    mc0_lock.flags    = 0; // Unlock memory card
+ 
+    return (&mc0_lock);
+  }
+  return (NULL);
+}
+\endcode
+*/
+
+/**
+@}
+*/
+
+//  ==== I/O Control Interface Routines ====
+
+/**
+\addtogroup ioc_interface_routines
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t fs_ioc_get_id (const char *drive)
+\details
+
+The function \b fs_ioc_get_id is used to get the drive identifier associated with the specified drive letter.
+
+The argument \a drive is specifying a FAT volume \ref drive "drive". The \ref cur_sys_drive "Current Drive"
+is used, if an empty string "" is provided.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fs_ioc_lock (int32_t drv_id)
+\details
+
+The function \b fs_ioc_lock locks a drive in order to block media access to the file system layer while the I/O Control Interface
+routines are in use. The I/O Control Interface should only be used in the locked state due to possible interference with
+file system accesses to the media. All file operations will fail while the drive is in the locked state. The function
+\ref fs_ioc_unlock is used to unlock the drive.
+
+The argument \a drv_id identifies the drive and must be obtained using the \ref fs_ioc_get_id function.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fs_ioc_unlock (int32_t drv_id)
+\details
+
+The function \b fs_ioc_unlock unlocks a drive and releases media access to the file system layer. The I/O Control Interface
+should only be used in the locked state due to possible interference with file system accesses to the media.
+The function \ref fs_ioc_lock is used to lock the drive.
+
+The argument \a drv_id identifies the drive and must be obtained using the \ref fs_ioc_get_id function.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fs_ioc_get_cache (int32_t drv_id, fsIOC_Cache *cache_info)
+\details
+
+The function \b fs_ioc_get_cache is used to gain information about the file system cache buffer location and its size. The I/O
+Control Interface can use this buffer as a temporary storage for sector operations using \ref fs_ioc_read_sector
+and \ref fs_ioc_write_sector or for any other data storage.
+
+The argument \a cache_info is a pointer to the \ref fsIOC_Cache structure where the buffer location and its size will be stored.
+
+\note The buffer size is defined in the configuration file for a particular drive using <b>File System Cache</b> setting.
+
+<b>Code Example</b>
+\code
+void chk_cache_buffer (void) {
+  fsIOC_Cache info;
+  int32_t id;
+ 
+  id = fs_ioc_get_id ("M:");
+  fs_ioc_lock (id);
+ 
+  if (fs_ioc_get_cache (id, &info) == fsOK) {
+    printf ("Cache buffer location: 0x%X\n", info.buffer);
+    printf ("Cache buffer size: %d bytes.\n", info.size);
+  }
+  fs_ioc_unlock (id);
+}
+\endcode
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fs_ioc_read_sector (int32_t drv_id, uint32_t sect, uint8_t *buf, uint32_t cnt)
+\details
+The function \b fs_ioc_read_sector reads data from one or more sectors of FAT formatted media.
+
+The argument \a drv_id identifies the drive.
+
+The argument \a sect specifies the starting sector from where to read the data.
+
+The argument \a buf is a pointer to the buffer that stores the data.
+
+The argument \a cnt specifies the number of sectors to read.
+
+<b>Code Example</b>
+\code
+bool sector_read (uint32_t sector_addr, uint8_t *buf) {
+  int32_t id;
+ 
+  id = fs_ioc_get_id ("U:");
+ 
+  if (fs_ioc_lock (id) == fsOK) {
+    fs_ioc_read_sector (id, sector_addr, buf, 1);
+    fs_ioc_unlock (id);
+ 
+    return true;
+  }
+  return false;
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fs_ioc_write_sector (int32_t drv_id, uint32_t sect, const uint8_t *buf, uint32_t cnt)
+\details
+The function \b fs_ioc_write_sector writes data to one or more sectors of FAT formatted media.
+
+The argument \a drv_id identifies the drive.
+
+The argument \a sect specifies the starting sector to write the data.
+
+The argument \a buf is a pointer to the buffer that contains the data to write.
+
+The argument \a cnt specifies the number of sectors to write to.
+
+<b>Code Example</b>
+\code
+bool sector_write (uint32_t sector_addr, const uint8_t *buf) {
+  int32_t id;
+ 
+  id = fs_ioc_get_id ("U:");
+ 
+  if (fs_ioc_lock (id) == fsOK) {
+    fs_ioc_write_sector (id, sector_addr, buf, 1);
+    fs_ioc_unlock (id);
+ 
+    return true;
+  }
+  return false;
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fs_ioc_read_info (int32_t drv_id, fsMediaInfo *info)
+\details
+The function \b fs_ioc_read_info reads the media configuration.
+
+The argument \a drv_id identifies the drive.
+
+The argument \a info returns the media information structure as specified in \ref fsMediaInfo.
+
+<b>Code Example</b>
+\code
+void get_device_size (void) {
+  fsMediaInfo info;
+  int32_t id;
+ 
+  id = fs_ioc_get_id ("M:");
+  fs_ioc_lock (id);
+ 
+  if (fs_ioc_read_info (id, &info) == fsOK) {
+    printf ("Device size is %d bytes.\n", info.block_cnt * info.read_blen);
+  }
+  fs_ioc_unlock (id);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn fsStatus fs_ioc_device_ctrl (int32_t drv_id, fsDevCtrlCode code, void *p)
+
+\details
+The function \b fs_ioc_device_ctrl is used to send control code directly to the device driver, causing the device to perform a
+corresponding operation.
+
+The argument \a drv_id identifies the drive.
+
+The argument \a code is specifying the control code to be sent.
+
+The argument \a p is a generic pointer and is used if the control code requires additional parameters to be passed to the
+driver or causes return values. The object to which pointer \a p points to, depends on the control code used.
+
+|Control code             |Generic pointer|Operation description                                            |
+|-------------------------|---------------|-----------------------------------------------------------------|
+|fsDevCtrlCodeCheckMedia  |uint32_t       |Checks presence and write protection status of a removable media.|
+|fsDevCtrlCodeControlMedia|uint32_t       |Control media device.                                            |
+|fsDevCtrlCodeFormat      |char           |Performs a low level format.                                     |
+|fsDevCtrlCodeGetCID      |fsCID_Register |Reads memory card CID register.                                  |
+|fsDevCtrlCodeSerial      |uint32_t       |Reads device serial number.                                      |
+|fsDevCtrlCodeLockUnlock  |fsLockUnlock   |Manage memory card password protection.                          |
+|fsDevCtrlCodeHealthStatus|fsHealthStatus |Access memory device S.M.A.R.T data.
+
+
+When \b fsDevCtrlCodeCheckMedia is specified, argument \a p is used to return the bitmask of the following
+values:
+
+|Bit value            |Description                                                                          |
+|---------------------|-------------------------------------------------------------------------------------|
+|FS_MEDIA_INSERTED    |Media device is inserted                                                             |
+|FS_MEDIA_PROTECTED   |Media device has write protection enabled                                            |
+|FS_MEDIA_INITIALIZED |Media device is initialized                                                          |
+|FS_MEDIA_NOCHKMEDIA  |Nonremovable media device or unable to detect media presence and write protection    |
+
+Argument \a p must point to valid memory location otherwise it will be rejected.
+
+
+When \b fsDevCtrlCodeControlMedia is specified, argument \a p is used to specify the following operations:
+
+|Value                    |Operation description                                                            |
+|-------------------------|---------------------------------------------------------------------------------|
+|FS_CONTROL_MEDIA_INIT    |Initialize media device                                                          |
+|FS_CONTROL_EMMC_SLEEP    |Switch eMMC device to Sleep State and turn off VCC power supply.                 |
+|FS_CONTROL_EMMC_AWAKE    |Wake-up eMMC device from Sleep State and turn on VCC power supply.               |
+
+Argument \a p must point to valid memory location otherwise it will be rejected.
+
+
+When \b fsDevCtrlCodeFormat is specified, argument \a p is used to specify low level format options.
+It can be NULL or point to char array containing following option:
+
+|Option|Operation description                                                                               |
+|------|----------------------------------------------------------------------------------------------------|
+|LLEB  |Performs low-level formatting and erases bad block markers.                                         |
+
+If argument \a p is NULL or unspecified options are specified, only low level format is performed which
+preserves bad block information.
+
+
+When \b fsDevCtrlCodeGetCID is specified, argument \a p is used to specify the location of \ref fsCID_Register
+structure where CID register values will be stored. A NULL pointer is not allowed and will be rejected.
+
+
+When \b fsDevCtrlCodeSerial is specified, argument \a p is used to specify the location of 32-bit variable
+where device serial number will be stored. A NULL pointer is not allowed and will be rejected.
+
+
+When \b fsDevCtrlCodeLockUnlock is specified, argument \a p is used to specify the location of \ref fsLockUnlock
+structure. A NULL pointer is not allowed and will be rejected.\n
+Structure \ref fsLockUnlock consists of the following members:
+
+|Member   |Description                                                                  |
+|---------|-----------------------------------------------------------------------------|
+|password |Pointer to uint8_t buffer containing password data.                          |
+|length   |Defines password length in bytes. The password length is up to 16 bytes.     |
+|flags    |Bit mask which defines set/clear password and/or device lock/erase operation.|
+
+Valid bit mask values for member \a flags are the following:
+
+|Value                  |Description                                                |
+|-----------------------|-----------------------------------------------------------|
+|FS_DEVICE_SET_PASSWORD |Set new password.                                          |
+|FS_DEVICE_CLR_PASSWORD |Clear current password.                                    |
+|FS_DEVICE_LOCK_UNLOCK  |Lock the card. Omit this flag to specify unlock operation. |
+|FS_DEVICE_ERASE        |Force device erase operation.                              |
+
+For detailed functionality description refer to Memory Card Control Layer section \ref mci_device_specifics "Device Specific Features".
+
+
+When \b fsDevCtrlCodeHealthStatus is specified, argument \a p is used to specify the location of \ref fsHealthStatus
+structure. A NULL pointer is not allowed and will be rejected.\n
+
+Structure \ref fsHealthStatus consists of the following members:
+
+|Member |Description                                                                  |
+|-------|-----------------------------------------------------------------------------|
+|arg    |Argument used to control health status access behavior.                      |
+|buf    |Defines buffer used to retrieve or to write data and must be 4 byte aligned. |
+|buf_sz |Defines buffer size in bytes.                                                |
+
+The behavior of fsDevCtrlCodeHealthStatus is device specific and only supported for eMMC and SD devices. See
+Memory Card Control Layer section \ref mci_device_specifics "Device Specific Features" for more information.
+
+<b>Code Examples</b>
+\code
+void tst_device_status (void) {
+  int32_t  id;
+  uint32_t status;
+ 
+  id = fs_ioc_get_id ("M:");
+  fs_ioc_lock (id);
+ 
+  if (fs_ioc_device_ctrl (id, fsDevCtrlCodeCheckMedia, &status) == fsOK) {
+    if (status & FS_MEDIA_INSERTED) {
+      printf ("Removable media is present.\n");
+    }
+    if (status & FS_MEDIA_PROTECTED) {
+      printf ("Removable media is write protected.\n");
+    }
+    if (status & FS_MEDIA_INITIALIZED) {
+      printf ("Removable media is initialized.\n");
+    }
+    if (status & FS_MEDIA_NOCHKMEDIA) {
+      printf ("Unable to detect media presence and media write protection.\n");
+    }
+  }
+  fs_ioc_unlock (id);
+}
+\endcode
+\code
+void get_device_serial (void) {
+  int32_t  id;
+  uint32_t serial;
+ 
+  id = fs_ioc_get_id ("M:");
+  fs_ioc_lock (id);
+ 
+  if (fs_ioc_device_ctrl (id, fsDevCtrlCodeSerial, &serial) == fsOK) {
+    printf ("Device serial number is %d.\n", serial);
+  }
+  fs_ioc_unlock (id);
+}
+\endcode
+\code
+void read_cid (void) {
+  int32_t        id;
+  fsCID_Register cid;
+ 
+  id = fs_ioc_get_id ("M:");
+  fs_ioc_lock (id);
+ 
+  if (fs_ioc_device_ctrl (id, fsDevCtrlCodeGetCID, &cid) == fsOK) {
+    printf ("Manufacturer ID: %d (0x%.2X)\n", cid.MID, cid.MID);
+    printf ("OEM/Application ID: %c%c\n",     cid.OID >> 8, cid.OID & 0xFF);
+    printf ("Product name: %c%c%c%c%c\n",     cid.PNM[0], cid.PNM[1], cid.PNM[2], cid.PNM[3], cid.PNM[4]);
+    printf ("Product revision: %d.%d\n",      cid.PRV >> 4, cid.PRV & 0x0F);
+    printf ("Product serial number: 0x%X\n",  cid.PSN);
+    printf ("Manufacturing date: %d/%.2d\n",  cid.MDT & 0x0F, cid.MDT >> 4);
+  }
+  fs_ioc_unlock (id);
+}
+\endcode
+\code
+void format_nand (void) {
+  int32_t id;
+ 
+  id = fs_ioc_get_id ("N:");
+  fs_ioc_lock (id);
+ 
+  if (fs_ioc_device_ctrl (id, fsDevCtrlCodeFormat, NULL) == fsOK) {
+    printf ("Low level NAND formatting succeeded.\n");
+  }
+  fs_ioc_unlock (id);
+}
+\endcode
+\code
+ 
+// Memory card password
+uint8_t pass[] = "12345";
+ 
+// Media lock/unlock information structure
+fsLockUnlock mc_lock;
+ 
+// Password management function
+void mc_password_manage (uint32_t operation) {
+  int32_t id;
+  fsStatus status;
+ 
+  // Set password data buffer and password length
+  mc_lock.password = pass;
+  mc_lock.length   = 5;
+  
+  switch (operation) {
+    case 0: // Set password and lock memory card
+      mc_lock.flags = FS_DEVICE_SET_PASSWORD | FS_DEVICE_LOCK_UNLOCK;
+      break;
+ 
+    case 1: // Set password
+      mc_lock.flags = FS_DEVICE_SET_PASSWORD;
+      break;
+ 
+    case 2: // Clear password
+      mc_lock.flags = FS_DEVICE_CLR_PASSWORD;
+      break;
+ 
+    case 3: // Lock memory card
+      mc_lock.flags = FS_DEVICE_LOCK_UNLOCK;
+      break;
+ 
+    case 4: //Unlock memory card
+      mc_lock.flags = 0;
+      break;
+ 
+    case 5: // Force device erase (forgotten password)
+      mc_lock.flags = FS_DEVICE_ERASE;
+      break;
+  }
+
+  id = fs_ioc_get_id ("M0:");
+  
+  if (id < 0) {
+    printf ("Invalid drive specified!\n");
+  }
+  else {
+    fs_ioc_lock (id);
+    // Execute memory card lock/unlock operation
+    status = fs_ioc_device_ctrl (id, fsDevCtrlCodeLockUnlock, &mc_lock);
+ 
+    if (status == fsOK) {
+      printf ("Operation succeeded!\n");
+    }
+    else if (status == fsAccessDenied) {
+      printf ("Invalid password data. Operation failed!\n");
+    }
+    else {
+      printf ("Operation failed! Error no.: %d\n", status);
+    }
+    fs_ioc_unlock (id);
+  }
+}
+\endcode
+\code
+#include "cmsis_compiler.h"
+ 
+// 4-byte aligned buffer to store eMMC/SD card S.M.A.R.T data
+uint8_t SMART_Data[512] __ALIGNED(4U);
+ 
+void get_health_status (void) {
+  int32_t id;
+  fsHealthStatus cmd;
+ 
+  id  = fs_ioc_get_id ("M:");
+  if (id >= 0 && (fs_ioc_lock (id) == fsOK)) {
+    // Prepare health status access argument and buffer
+    cmd.arg    = 1;
+    cmd.buf    = SMART_Data;
+    cmd.buf_sz = sizeof(SMART_Data);
+ 
+    if (fs_ioc_device_ctrl (id, fsDevCtrlCodeHealthStatus, &cmd) == fsOK) {
+      printf ("Health status was sucessfully retrieved.\n");
+    }
+    else {
+      printf ("Failed to access memory device health status.\n");
+    }
+    fs_ioc_unlock (id);
+  }
+  else printf ("Specified drive doesn't exists!");
+}
+\endcode
+*/
+
+/**
+@}
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\defgroup status_error_codes_fs Status and Error Codes
+\brief    Status and Error Codes returned by File System functions. 
+\details
+The Status and Error Codes section lists all the return values that the File System Component functions will return.
+*/
+
+/**
+\ingroup status_error_codes_fs
+*/
+
+/**
+\typedef fsStatus
+*/

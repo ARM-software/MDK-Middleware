@@ -1,0 +1,1791 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package schemaVersion="1.7.28" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.28/schema/PACK.xsd">
+  <vendor>Keil</vendor>
+  <name>MDK-Middleware</name>
+  <description>Middleware for Keil MDK</description>
+  <url>https://www.keil.com/pack/</url>
+  <license>license_terms/license_terms.txt</license>
+  <releases>
+    <release version="8.0.0-dev">
+      MDK bundle with source code replaces MDK-Pro and MDK-Plus bundles with pre-built libraries.
+      Removed support for CMSIS-RTOS version 1.
+      Removed Board Support APIs.
+    </release>
+    <release version="7.17.0" date="2024-01-17">
+      Network Component Version 7.19.0
+      - using Event Recorder component from CMSIS-View pack (instead of deprecated ARM_Compiler pack)
+      - fixed netNBNS_Resolve function to return resolved IP address when TTL=0 in response message
+      - fixed netDNSc_GetHostByNameX function to return netTimeout instead of netError status on timeout
+      - updated Net_Config.c configuration file
+      - updated BSD socket API, type int changed to type int32_t
+      - updated the default HTTP web page and error pages
+      - fixed ARP issue that discarded ARP probe messages
+      - fixed Neighbor Discovery issue that discarded NA messages if override flag not set
+      - fixed possible allocation limit exceeded in debug version of SNMP agent
+      - fixed possible NET_ERROR_MEM_FREE error when flooded with ARP requests
+      - extended HTTP server functionality, added processing of query string in POST method
+      - corrected BSD datagram socket to return BSD_EMSGSIZE error if message size is too large
+      - fixed BSD socket datagram sending so that a large message is not split into smaller datagram messages
+      - fixed possible buffer overflow in netMAC_ntoa function
+      Network Component Version 6.7.7 removed
+      FileSystem Component Version 6.16.6
+      - using Event Recorder component from CMSIS-View pack (instead of deprecated ARM_Compiler pack)
+      - using File Interface API from CMSIS-Compiler pack (instead of deprecated ARM_Compiler pack)
+      - added File Interface implementation (CMSIS-Compiler:File Interface:MDK-MW File System)
+      - updated FS_Config.c configuration file (clean-up)
+      - fixed buffer alignment passed to MCI driver when using fsDevCtrlCodeLockUnlock control code
+      - fixed FAT journaling interference with Android OS
+      USB Component Version 6.17.0
+      - USB Device/Host: using Event Recorder component from CMSIS-View pack (instead of deprecated ARM_Compiler pack)
+      - USB Device/Host: updated main Config files (clean-up)
+      - USB Device/Host: fixed issue with Arm Compiler 5 (Warning: L6418W: Tagging symbol not recognized)
+      - USB Device: increased maximum number of HID instances from 4 to 8
+      - USB Device: corrected Control Transfer data stage ZLP termination
+    </release>
+    <release version="7.16.0" date="2022-11-11">
+      Network Component Version 7.18.0
+      - aligned with mbed TLS version 3.1.0, SMTPS server verification is now mandatory
+      - fixed ethernet issue not receiving VLAN-tagged frames
+      - fixed DHCP client issue with relay agent causing "RelayAgentAddressInvalid" error
+      - fixed un-initialize function to resume blocked threads if they are waiting for network resources
+      - added functions netNBNS_Resolve and netNBNS_ClearCache in NBNS client
+      - updated telnet server to allow three authorization attempts before closing connection
+      - corrected md5 hash calculation in BE library versions
+      - minor stability and performance improvements
+      - improved code robustness
+      Network Component Version 6.7.7 (unchanged)
+      FileSystem Component Version 6.15.3
+      - enforced push-pull CMD bus mode for SD cards in native bus mode
+      - prevent Flash ProgramData call with cnt equal to zero
+      - removed unnecessary value display from component view
+      USB Component Version 6.16.1
+      - USB Device/Host: improved code robustness
+    </release>
+    <release version="7.15.0" date="2022-04-26">
+      Added support for Arm Cortex-M85 processor based devices.
+      Added support for Arm China Star-MC1 processor based devices.
+      Network Component Version 7.17.0
+      - libraries built with Arm Compiler 6
+      - updated FTP server to check the specified path in change directory command
+      - improved FTP server file system interface for easier integration with a custom file system
+      - improved Event Recorder debug, updated documentation for debug events
+      Network Component Version 6.7.7 (unchanged)
+      FileSystem Component Version 6.15.0
+      - libraries built with Arm Compiler 6
+      USB Component Version 6.16.0
+      - USB Host: libraries built with Arm Compiler 6
+      - USB Device: libraries built with Arm Compiler 6
+      - USB Device: fixed Control Transfer data stage ZLP termination
+    </release>
+    <release version="7.14.0" date="2022-02-25">
+      Network Component Version 7.16.0
+      - added support for HTTP cookies
+      - fixed issue with netHTTPs_GetSession function, which may have returned an invalid session number
+      - upgraded BSD sockets to dual-stack sockets for IPv6
+      - added netCGI_ProcessRequest function to provide users with access to HTTP request headers
+      - added option in SNMP agent to send NULL character in "OCTET STREAM" objects
+      - fixed issue with netSNMP_Trap function when parameter "addr" is NULL
+      - extended permission to change the root path (until the user logs in)
+      - corrected processing of truncated DNS response messages
+      - added support for IPv6 fragmentation and reassembly
+      - added configurable MTU parameter for network interfaces that support IPv6
+      Network Component Version 6.7.7 (unchanged)
+      FileSystem Component Version 6.14.4
+      - enhance memory card error handling after failure to switch to high speed mode
+      - fixed regression in EFS when Flash driver ProgramData returns with zero
+      USB Component Version 6.15.4
+      - USB Host: improved enumeration process
+      - USB Host: improved handling for HID keyboard device including Report ID in the Input Report
+      - USB Host: fixed USBH_HID_Read function to return all data received on the Interrupt IN pipe
+      - USB Device: enabled automatic driver installation on Microsoft Windows 8.1 and later for full-speed devices
+      - USB Device: fixed Mass Storage device mounting as read-only on MAC OS
+      Graphics component Segger emWin removed (moved to standalone MDK-Middleware_Graphics pack)
+    </release>
+    <release version="7.13.0" date="2021-05-25">
+      Network Component Version 7.15.0 (see revision history for details)
+      - added functions netARP_ClearCache and netNDP_ClearCache to clear the ARP or NDP cache at runtime
+      - improved dynamic memory debugging, added more memory allocation and memory free debug events
+      - improved DNS response validation to improve robustness and resilience against DNS cyber attacks
+      - updated for use with the FuSa C Library, sprintf and sscanf are no longer used in the network library
+      - fixed duplicate AutoIP addresses if the same firmware is deployed on multiple devices
+      - fixed nonce caching issue in HTTP Digest authentication
+      - corrected BSD select function to report a socket closed by a peer as readable
+      - fixed an Ethernet connectivity issue when the ARP cache table is fully utilized
+      - added functions in the user API that enable or disable echo response at runtime
+      - fixed Ethernet driver handling so that the receive function is not called before the link-up
+      - fixed possible NULL pointer dereference in a multi-interface configuration
+      - fixed issue with HTTP Digest authentication with Apple Safari browser
+      Network Component Version 6.7.7 (unchanged)
+      FileSystem Component Version 6.14.1 (see revision history for details)
+      - added health status (S.M.A.R.T.) access support for eMMC and SD devices
+      - enhanced error handling and return status propagation in EFS
+      - corrected bug in ftime_set which could cause long file name entry overwrite
+      - corrected bug in FAT name cache which could cause a cache miss situation when switching directories using fchdir
+      USB Component Version 6.15.0
+      - USB Host: Added support for Isochronous transfers (only for EHCI full-speed)
+      - USB Host: Fixed sporadic crash when disconnecting device from port 1
+      - USB Host: Fixed OHCI driver causing HardFault during debugging
+      - USB Device: ClearEndpointFeature request passes to low level driver even if endpoint was not in halt state
+      Graphics Component Segger emWin to version 6.16.3  (see revision history for details)
+    </release>
+    <release version="7.12.0" date="2020-07-01">
+      Network Component Version 7.14.0 (see revision history for details)
+      Network Component Version 6.7.7 (unchanged)
+      FileSystem Component Version 6.13.8 (see revision history for details)
+      USB Component Version 6.14.1 (see revision history for details)
+      Graphics Component Segger emWin to version 6.10.8 (unchanged)
+    </release>
+    <release version="7.11.1" date="2020-04-28">
+      Network Component Version 7.13.1 (see revision history for details)
+      - fixed backward compatibility with a few older versions of network configurations, causing build failures.
+      Network Component Version 6.7.7 (unchanged)
+      FileSystem Component Version 6.13.5 (unchanged)
+      USB Component Version 6.14.0 (unchanged)
+      Graphics Component Segger emWin to version 6.10.8 (unchanged)
+    </release>
+    <release version="7.11.0" date="2020-04-21">
+      Network Component Version 7.13.0 (see revision history for details)
+      Network Component Version 6.7.7 (see revision history for details)
+      FileSystem Component Version 6.13.5 (see revision history for details)
+      USB Component Version 6.14.0 (see revision history for details)
+      Graphics Component Segger emWin to version 6.10.8 (see revision history for details)
+    </release>
+    <release version="7.10.0" date="2019-11-08">
+      Network Component Version 7.12.0 (see revision history for details)
+      Network Component Version 6.7.6 (see revision history for details)
+      FileSystem Component Version 6.13.0 (see revision history for details)
+      USB Component Version 6.13.7 (see revision history for details)
+      Graphics Component Segger emWin to version 5.50.0 (unchanged)
+    </release>
+    <release version="7.9.0" date="2019-07-15">
+      Network Component Version 7.11.0 (see revision history for details)
+      FileSystem Component Version 6.12.0 (see revision history for details)
+      USB Component Version 6.13.6 (see revision history for details)
+      Graphics Component Segger emWin to version 5.50.0 (see revision history for details)
+      Updated WinUSB_Test application to handle multiple interfaces.
+    </release>
+    <release version="7.8.0" date="2018-11-12">
+      Added support for Arm Cortex-M1 processor based devices.
+      FileSystem Component Version 6.11.0 (see revision history for details)
+      Network Component Version 7.10.0 (see revision history for details)
+      USB Component Version 6.13.0 (see revision history for details)
+    </release>
+    <release version="7.7.0" date="2018-05-25">
+      Network Component Version 7.9.0 (see revision history for details)
+      FileSystem Component Version 6.10.1 (see revision history for details)
+      USB Component Version 6.12.8 (see revision history for details)
+    </release>
+    <release version="7.6.0" date="2018-02-22">
+      Removed CMSIS Drivers for Ethernet, Ethernet PHY and Flash from this pack.
+      Please install the ARM.CMSIS-Driver pack if required!
+      Network Component Version 7.8.0 (see revision history for details)
+      FileSystem Component Version 6.10.0 (unchanged)
+      USB Component Version 6.12.4 (see revision history for details)
+      Segger emWin 5.46e (see revision history for details)
+    </release>
+    <release version="7.5.0" date="2017-12-14">
+      Network Component Version 7.7.0 (see revision history for details)
+      FileSystem Component Version 6.10.0 (see revision history for details)
+      USB Component Version 6.12.0 (see revision history for details)
+      Segger emWin 5.42i (see revision history for details)
+      CMSIS driver
+      - added LAN8710A Ethernet PHY driver
+      - added N25Q032A Flash driver
+      - corrected busy signaling in AT45DB641E Flash driver
+    </release>
+    <release version="7.4.1" date="2017-04-21">
+      Network Component Version 7.5.0 (see revision history for details)
+      FileSystem Component Version 6.9.8 (see revision history for details)
+      USB Component Version 6.11.0 (see revision history for details)
+      Updated BSP Touchscreen API (minor compatible change - added padding to remove compiler warning)
+    </release>
+    <release version="7.4.0" date="2017-02-06">
+      Added CMSIS-RTOS2 support in addition to CMSIS-RTOS version 1
+      Network Component Version 7.4.0 (see revision history for details)
+      - V6 API Network Component Version 6.7.5
+      USB Component Version 6.10.0 (see revision history for details)
+      FileSystem Component Version 6.9.4 (see revision history for details)
+      Segger emWin: added file IMAGE_Private.h.
+    </release>
+    <release version="7.3.0" date="2016-11-11">
+      Network Component Version 7.3.0 (see revision history for details)
+      FileSystem Component Version 6.9.0 (see revision history for details)
+      USB Component Version 6.9.0 (see revision history for details)
+      Segger emWin 5.36f (see revision history for details)
+      Added support for Cortex-M23/33 and ARMv8M
+    </release>
+    <release version="7.2.0" date="2016-08-11">
+      Network Component Version 7.2.0 (see revision history for details)
+      FileSystem Component Version 6.8.0 (see revision history for details)
+      USB Component Version 6.8.0 (see revision history for details)
+      CMSIS Flash driver
+      - corrected power handling for ARM_POWER_FULL in all drivers
+      - uniform sector description added for M29EW 128Mb (16-bit) driver
+      Added Network Version 6.7.0 (IPv4 only) in "MDK-Pro Net_v6" bundle
+    </release>
+    <release version="7.1.0" date="2016-05-09">
+      Network Component Version 7.1.0 (see revision history for details)
+      File System Component Version 6.7.0 (see revision history for details)
+      USB Component Version 6.7.0 (see revision history for details)
+      Segger emWin 5.32b (see revision history for details)
+      CMSIS Flash driver
+      - corrected addressing in AT45DB641E driver
+      Introducing the MDK-Plus Bundles for Network, FileSystem, USB and emWin
+    </release>
+    <release version="7.0.0" date="2015-12-08">
+      Network Dual Stack Component (IPv4/IPv6) Version 7.0.0
+      - incompatible API to Network Stack Version 6 (install MDK-Middleware 6.6.0 to avoid migration)
+      - see revision history for details
+      Ethernet PHY driver
+      - added driver flow control flags
+      - updated KSZ8851SNL power safe state procedure
+      - corrected KSZ8061RNB driver tracking initialization and power state
+      USB Component Version 6.6.10
+      - see revision history for details
+      - USB documentation updated for USB Device NCM
+      File System Component Version 6.6.0
+      - see revision history for details
+      CMSIS Flash driver
+      - added CMSIS Flash AT45DB641E driver
+      - added driver flow control flags
+    </release>
+    <!--
+    <release version="7.0.0-beta" date="2015-07-22">
+      This is the Beta version of the MDK-Middleware PACK containing the new Dual Stack Network component.
+      If you are not planning to migrate your applications to the new Network 7.0 interface, please install
+      MDK-Middleware Version 6.5.0.
+      File System 6.5.0 (see revision history for details)
+      USB 6.5.0 (see revision history for details)
+      Network 7.0.0 Beta3 (see revision history for details)
+      Segger emWin 5.30.0 (see revision history for details)
+      Added Ethernet PHY LAN8742A Driver
+      Corrected Ethernet KSZ8851SNL driver (MAC_ReadFrame)
+    </release>
+    -->
+    <!-- not published -->
+    <!--
+    <release version="6.7.0">
+      Network Component Version 6.7.0 (IPv4 only)
+      - see revision history for details
+      File System Component Version 6.7.0
+      - see revision history for details
+      USB Component Version 6.7.0
+      - see revision history for details
+      Segger emWin 5.32b (see revision history for details)
+      CMSIS Flash driver
+      - corrected addressing in AT45DB641E driver
+    </release>
+    -->
+    <release version="6.6.0" date="2015-12-08">
+      Network Component Version 6.6.0 (IPv4 only)
+      - see revision history for details
+      Ethernet PHY driver
+      - added driver flow control flags
+      - updated KSZ8851SNL power safe state procedure
+      - corrected KSZ8061RNB driver tracking initialization and power state
+      USB Component Version 6.6.10
+      - see revision history for details
+      - USB documentation updated for USB Device NCM
+      File System Component Version 6.6.0
+      - see revision history for details
+      CMSIS Flash driver
+      - added CMSIS Flash AT45DB641E driver
+      - added driver flow control flags
+    </release>
+    <release version="6.5.0" date="2015-07-16">
+      File System 6.5.0 (see revision history for details)
+      USB 6.5.0 (see revision history for details)
+      Network 6.5.0 (see revision history for details)
+      Segger emWin 5.30.0 (see revision history for details)
+      Added M29EW 128Mb (16-bit) Flash driver
+      Added Ethernet PHY LAN8742A Driver
+      Corrected Ethernet KSZ8851SNL driver (MAC_ReadFrame)
+    </release>
+    <release version="6.4.0" date="2015-04-24">
+      Supporting Cortex-M7 based devices
+      File System 6.4.0 (see revision history for details)
+      USB 6.4.0 (see revision history for details)
+      Network 6.4.0 (see revision history for details)
+      Added Ethernet PHY KSZ8061RNB Driver
+    </release>
+    <release version="6.3.0" date="2015-03-20">
+      Required PACKs: ARM.CMSIS.4.3.0.pack, Keil.ARM_Compiler.1.0.0.pack
+      - added to Board Support Interfaces
+      -- Audio Interface
+      -- D/A Converter Interface
+      -- Magnetometer Interface
+      - added KSZ8081RNA PHY driver
+      - updated KSZ8851SNL ETH driver (GetMacAddress)
+      Network 6.3.0 (see revision history for details)
+      File System 6.3.0 (see revision history for details)
+      USB 6.3.0 (see revision history for details)
+    </release>
+    <release version="6.2.0" date="2014-10-24">
+      File System 6.2.0 (see revision history for details)
+      Network 6.2.0 (see revision history for details)
+      USB 6.2.0 (see revision history for details)
+      Segger emWin 5.26.1
+      Corrected Ethernet KSZ8851SNL driver (Power Status)
+    </release>
+    <release version="6.1.1" date="2014-09-24">
+      Patch Release for 6.1.0:
+      Network/Driver/ETH_KSZ8851SNL.c: invalid power status in MAC_PowerControl corrected
+    </release>
+    <release version="6.1.0">
+      File System 6.1.0 (see revision history for details)
+      Network 6.1.0 (see revision history for details)
+      USB 6.1.0 (see revision history for details)
+      Graphics:
+      - moved GUI Builder component to "Tools" group
+      - moved VNC Server component to standalone group
+    </release>
+    <release version ="6.0.0" date="2014-06-12">
+      Supports CMSIS Driver V2 (requires ARM.CMSIS.4.1.0)
+      Introduces Board Support Interfaces
+      Documents Middleware Resource Requirements
+      (see Revision History for further details)
+    </release>
+    <release version="5.1.6" date="2014-06-13">
+      File System: added absacc.h to include folder for MDK 5.11 compatibility
+    </release>
+    <release version="5.1.5">
+      USB Device:
+      - corrected issues in USB Custom Class event handling
+      - corrected USB Custom Class build issue
+      - updated USB Custom Class Template
+      USB Host:
+      - corrected USB host polling rate issue when Interrupt Endpoint requests "bInterval = 1"
+      Network:
+      - Added sntp_client_init and sntp_client_run prototypes in rl_net_lib.h
+    </release>
+    <release version="5.1.4">
+      FileSystem:
+      - FAT filename processing bug fixes
+      Network:
+      - corrected a bug in FTP Server File System interface file
+    </release>
+    <release version="5.1.3">
+      USB Device:
+      - added Custom Class class
+    </release>
+    <release version="5.1.2">
+      - updated drivers (namespace prefix ARM_ added)
+    </release>
+    <release version="5.1.1">
+      - moved Driver API and Driver and Pack documentation to CMSIS pack version 3.20.2
+    </release>
+    <release version="5.1.0">
+      Graphics:
+      - Segger emWin components added (Ver 5.20.4)
+      Network:
+      - Added driver for KSZ8851SNL Ethernet Controller with SPI Interface
+    </release>
+    <release version="5.0.2">
+      Network:
+      - corrected potential memory dead-lock in HTTP server
+      USB Host:
+      - improved robustness (enumeration procedure)
+    </release>
+    <release version="5.0.1">
+      Drivers moved to "Drivers" Class
+      Added I2C Driver API
+      Updated UART Driver API V1.01
+      FileSystem:
+      - added mount, unmount, fmedia and finfo functions
+      Network:
+      - added support for multicast MAC filtering
+      - added support for IP checksum offload
+      - added abort file transfer on error in FTP client
+      - added name list command in FTP client
+      USB Host:
+      - soft connect debounce
+      - 2 resets at enumeration
+    </release>
+    <release version="5.0.0">
+      Initial release
+    </release>
+  </releases>
+
+  <requirements>
+    <packages>
+      <package vendor="ARM"  name="CMSIS"          version="5.9.0-0"/>
+      <package vendor="ARM"  name="CMSIS-Compiler" version="2.0.0-0"/>
+      <package vendor="ARM"  name="CMSIS-View"     version="1.0.0-0"/>
+    </packages>
+  </requirements>
+
+  <conditions>
+    <condition id="Cortex-M Device">
+      <description>Cortex-M processor based device: Cortex-M0/M0+/M1/M3/M4/M7/M23/M33/M35P/M55/M85, ARMV8MBL/ML, Star-MC1, SC000/300</description>
+      <accept Dcore="Cortex-M0"/>
+      <accept Dcore="Cortex-M0+"/>
+      <accept Dcore="Cortex-M1"/>
+      <accept Dcore="Cortex-M3"/>
+      <accept Dcore="Cortex-M4"/>
+      <accept Dcore="Cortex-M7"/>
+      <accept Dcore="Cortex-M23"/>
+      <accept Dcore="Cortex-M33"/>
+      <accept Dcore="Cortex-M35P"/>
+      <accept Dcore="Cortex-M55"/>
+      <accept Dcore="Cortex-M85"/>
+      <accept Dcore="ARMV8MBL"/>
+      <accept Dcore="ARMV8MML"/>
+      <accept Dcore="Star-MC1"/>
+      <accept Dcore="SC000"/>
+      <accept Dcore="SC300"/>
+    </condition>
+    <condition id="CMSIS Core">
+      <description>CMSIS Core for Cortex-M</description>
+      <require condition="Cortex-M Device"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+    <condition id="CMSIS RTOS">
+      <description>CMSIS RTOS (API2)</description>
+      <require Cclass="CMSIS" Cgroup="RTOS2"/>
+    </condition>
+    <condition id="CMSIS Core with RTOS">
+      <description>CMSIS Core with RTOS for Cortex-M</description>
+      <require condition="CMSIS Core"/>
+      <require condition="CMSIS RTOS"/>
+    </condition>
+    <condition id="CMSIS Core with RTOS and Event Recorder">
+      <description>CMSIS Core with RTOS for Cortex-M and Event Recorder</description>
+      <require condition="CMSIS Core"/>
+      <require condition="CMSIS RTOS"/>
+      <require Cclass="CMSIS-View" Cgroup="Event Recorder"/>
+    </condition>
+    <condition id="CMSIS Core with RTOS and STDOUT">
+      <description>CMSIS Core with RTOS for Cortex-M and STDOUT</description>
+      <require condition="CMSIS Core"/>
+      <require condition="CMSIS RTOS"/>
+      <require Cclass="CMSIS-Compiler" Cgroup="STDOUT"/>
+    </condition>
+    <condition id="CMSIS Core with RTOS and File System I/O">
+      <description>CMSIS Core with RTOS for Cortex-M and File System I/O</description>
+      <require condition="CMSIS Core"/>
+      <require condition="CMSIS RTOS"/>
+      <require Cclass="CMSIS-Compiler" Cgroup="File Interface" Csub="MDK-MW File System"/>
+    </condition>
+    <condition id="CMSIS Core with RTOS and File System I/O and Event Recorder">
+      <description>CMSIS Core with RTOS for Cortex-M and File System I/O and Event Recorder</description>
+      <require condition="CMSIS Core"/>
+      <require condition="CMSIS RTOS"/>
+      <require Cclass="CMSIS-Compiler" Cgroup="File Interface" Csub="MDK-MW File System"/>
+      <require Cclass="CMSIS-View" Cgroup="Event Recorder"/>
+    </condition>
+    <condition id="File System Core">
+      <description>File System CORE component</description>
+      <require condition="CMSIS Core"/>
+      <require Cbundle="MDK" Cclass="File System" Cgroup="CORE"/>
+    </condition>
+    <condition id="File System Drive">
+      <description>File System Drive component</description>
+      <require condition="CMSIS Core"/>
+      <require Cbundle="MDK" Cclass="File System" Cgroup="Drive"/>
+    </condition>
+    <condition id="File System and CMSIS Compiler">
+      <description>File System Core and CMSIS Compiler</description>
+      <require condition="File System Core"/>
+      <require Cclass="CMSIS-Compiler" Cgroup="CORE"/>
+      <deny    Cclass="Compiler"       Cgroup="I/O"/>
+    </condition>
+    <condition id="File System and Flash Driver">
+      <description>File System Core and Flash Driver</description>
+      <require condition="File System Core"/>
+      <require Cclass="CMSIS Driver" Cgroup="Flash" Capiversion="2.0.0"/>
+    </condition>
+    <condition id="File System and NAND Driver">
+      <description>File System and NAND Driver</description>
+      <require condition="File System Core"/>
+      <require Cclass="CMSIS Driver" Cgroup="NAND" Capiversion="2.1.0"/>
+    </condition>
+    <condition id="File System and SD/MMC Driver">
+      <description>File System and SD/MMC Driver</description>
+      <require condition="File System Core"/>
+      <accept Cclass="CMSIS Driver" Cgroup="MCI" Capiversion="2.2.0"/>
+      <accept Cclass="CMSIS Driver" Cgroup="SPI" Capiversion="2.1.0"/>
+    </condition>
+    <condition id="File System and USB Host MSC">
+      <description>File System and USB Host MSC component</description>
+      <require condition="File System Core"/>
+      <require Cclass="USB" Cgroup="Host" Csub="MSC"/>
+    </condition>
+    <condition id="Network Core">
+      <description>Network CORE component</description>
+      <require condition="CMSIS Core"/>
+      <require Cbundle="MDK" Cclass="Network" Cgroup="CORE"/>
+    </condition>
+    <condition id="Network Interface">
+      <description>Network Interface and CORE component</description>
+      <require condition="Network Core"/>
+      <require Cclass="Network" Cgroup="Interface"/>
+    </condition>
+    <condition id="Network UDP">
+      <description>Network UDP and CORE component</description>
+      <require condition="Network Core"/>
+      <require Cclass="Network" Cgroup="Socket" Csub="UDP"/>
+    </condition>
+    <condition id="Network UDP and File System Drive">
+      <description>Network UDP and CORE component with File System Drive</description>
+      <require condition="Network Core"/>
+      <require Cclass="Network" Cgroup="Socket" Csub="UDP"/>
+      <require condition="File System Drive"/>
+    </condition>
+    <condition id="Network TCP">
+      <description>Network TCP and CORE component</description>
+      <require condition="Network Core"/>
+      <require Cclass="Network" Cgroup="Socket" Csub="TCP"/>
+    </condition>
+    <condition id="Network TCP TLS">
+      <description>Network TCP and CORE component with TLS</description>
+      <require condition="Network Core"/>
+      <require Cclass="Network" Cgroup="Socket" Csub="TCP"/>
+      <require Cclass="Security" Cgroup="mbed TLS" Cversion="3.1.0"/>
+    </condition>
+    <condition id="Network TCP and File System Drive">
+      <description>Network TCP and CORE component with File System Drive</description>
+      <require condition="Network Core"/>
+      <require Cclass="Network" Cgroup="Socket" Csub="TCP"/>
+      <require condition="File System Drive"/>
+    </condition>
+    <condition id="Network UDP/TCP">
+      <description>Network UDP/TCP and CORE component</description>
+      <require condition="Network Core"/>
+      <require Cclass="Network" Cgroup="Socket" Csub="UDP"/>
+      <require Cclass="Network" Cgroup="Socket" Csub="TCP"/>
+    </condition>
+    <condition id="Network Web Server Compact">
+      <description>Network Web Server Compact</description>
+      <require condition="Network Core"/>
+      <require Cclass="Network" Cgroup="Socket" Csub="TCP"/>
+      <deny Cclass="Network" Cgroup="Service" Csub="Web Server"/>
+    </condition>
+    <condition id="Network Web Server Compact TLS">
+      <description>Network Web Server Compact with TLS</description>
+      <require condition="Network Core"/>
+      <require Cclass="Network" Cgroup="Socket" Csub="TCP"/>
+      <require Cclass="Security" Cgroup="mbed TLS" Cversion="3.1.0"/>
+      <deny Cclass="Network" Cgroup="Service" Csub="Web Server"/>
+    </condition>
+    <condition id="Network Web Server">
+      <description>Network Web Server</description>
+      <require condition="Network Core"/>
+      <require Cclass="Network" Cgroup="Socket" Csub="TCP"/>
+      <require condition="File System Drive"/>
+      <deny Cclass="Network" Cgroup="Service" Csub="Web Server Compact"/>
+    </condition>
+    <condition id="Network Web Server TLS">
+      <description>Network Web Server with TLS</description>
+      <require condition="Network Core"/>
+      <require Cclass="Network" Cgroup="Socket" Csub="TCP"/>
+      <require condition="File System Drive"/>
+      <require Cclass="Security" Cgroup="mbed TLS" Cversion="3.1.0"/>
+      <deny Cclass="Network" Cgroup="Service" Csub="Web Server Compact"/>
+    </condition>
+    <condition id="ETH Driver Single-file">
+      <description>Ethernet Driver: MAC with built-in PHY</description>
+      <require Cclass="CMSIS Driver" Cgroup="Ethernet" Capiversion="2.1.0"/>
+      <deny    Cclass="CMSIS Driver" Cgroup="Ethernet MAC"/>
+      <deny    Cclass="CMSIS Driver" Cgroup="Ethernet PHY"/>
+    </condition>
+    <condition id="ETH Driver Single- and Multi-file">
+      <description>Ethernet Driver: MAC with built-in PHY and MAC and PHY separate</description>
+      <require Cclass="CMSIS Driver" Cgroup="Ethernet" Capiversion="2.1.0"/>
+      <require Cclass="CMSIS Driver" Cgroup="Ethernet MAC" Capiversion ="2.1.0"/>
+      <require Cclass="CMSIS Driver" Cgroup="Ethernet PHY" Capiversion="2.0.0"/>
+    </condition>
+    <condition id="ETH Driver Multi-file">
+      <description>Ethernet Driver: MAC and PHY</description>
+      <deny    Cclass="CMSIS Driver" Cgroup="Ethernet"/>
+      <require Cclass="CMSIS Driver" Cgroup="Ethernet MAC" Capiversion="2.1.0"/>
+      <require Cclass="CMSIS Driver" Cgroup="Ethernet PHY" Capiversion="2.0.0"/>
+    </condition>
+    <condition id="Network Driver ETH">
+      <description>Network Ethernet Driver can be either a single file ETH or a combination of a PHY and MAC driver or all three</description>
+      <require condition="Network Core"/>
+      <accept condition="ETH Driver Single- and Multi-file"/>
+      <accept condition="ETH Driver Single-file"/>
+      <accept condition="ETH Driver Multi-file"/>
+    </condition>
+    <condition id="Network Driver WiFi">
+      <description>Network WiFi Driver</description>
+      <require condition="Network Core"/>
+      <require Cclass="CMSIS Driver" Cgroup="WiFi" Capiversion="1.0.0"/>
+    </condition>
+    <condition id="Network Driver PPP">
+      <description>Network PPP Driver</description>
+      <require condition="Network Core"/>
+      <require Cclass="CMSIS Driver" Cgroup="USART" Capiversion="2.1.0"/>
+      <deny Cclass="Network" Cgroup="Interface" Csub="SLIP"/>
+    </condition>
+    <condition id="Network Driver SLIP">
+      <description>Network SLIP Driver</description>
+      <require condition="Network Core"/>
+      <require Cclass="CMSIS Driver" Cgroup="USART" Capiversion="2.1.0"/>
+      <deny Cclass="Network" Cgroup="Interface" Csub="PPP"/>
+    </condition>
+    <condition id="Network IPv6">
+      <description>Network Core with IPv6</description>
+      <accept Cclass="Network" Cgroup="CORE" Cvariant="IPv4/IPv6*"/>
+    </condition>
+    <condition id="Network UDP/IPv6">
+      <description>Network UDP and IPv6</description>
+      <require condition="Network UDP"/>
+      <require condition="Network IPv6"/>
+    </condition>
+    <condition id="Network DNS">
+      <description>DNS Client resolver</description>
+      <require Cclass="Network" Cgroup="Service" Csub="DNS Client"/>
+    </condition>
+    <condition id="USB Core">
+      <description>USB Core</description>
+      <require condition="CMSIS Core with RTOS"/>
+      <require Cbundle="MDK"         Cclass="USB"        Cgroup="CORE"/>
+    </condition>
+    <condition id="USB Core and Host Driver and Class Instance">
+      <description>USB Core and Host Driver and Class Instance</description>
+      <require condition="USB Core"/>
+      <require Cclass="CMSIS Driver" Cgroup="USB Host"   Capiversion="2.0.0"/>
+      <accept  Cclass="USB"          Cgroup="Host"       Csub="CDC"/>
+      <accept  Cclass="USB"          Cgroup="Host"       Csub="Custom Class"/>
+      <accept  Cclass="USB"          Cgroup="Host"       Csub="HID"/>
+      <accept  Cclass="USB"          Cgroup="Host"       Csub="MSC"/>
+    </condition>
+    <condition id="USB Core and Host Instance and Host Driver">
+      <description>USB Core and Host Instance and Host Driver</description>
+      <require condition="USB Core"/>
+      <require Cclass="USB"          Cgroup="Host"       Csub=""/>
+      <require Cclass="CMSIS Driver" Cgroup="USB Host"   Capiversion="2.0.0"/>
+    </condition>
+    <condition id="USB Core and Host Instance and Host Driver and File System USB Drive">
+      <description>USB Core and Host Instance and Host Driver and File System USB Drive</description>
+      <require condition="USB Core and Host Instance and Host Driver"/>
+      <require Cclass="File System"  Cgroup="Drive"      Csub="USB"/>
+    </condition>
+    <condition id="USB Core and Host Instance and Host Driver and Custom Class">
+      <description>USB Core and Host Instance and Host Driver and Custom Class</description>
+      <require condition="USB Core and Host Instance and Host Driver"/>
+      <require Cclass="USB"          Cgroup="Host"       Csub="Custom Class"/>
+    </condition>
+    <condition id="USB Core and Host Instance and Host Driver and CDC">
+      <description>USB Core and Host Instance and Host Driver and CDC</description>
+      <require condition="USB Core and Host Instance and Host Driver"/>
+      <require Cclass="USB"          Cgroup="Host"       Csub="CDC"/>
+    </condition>
+    <condition id="USB Core and Device Driver and Class Instance">
+      <description>USB Core and Device Driver and Class Instance</description>
+      <require condition="USB Core"/>
+      <require Cclass="CMSIS Driver" Cgroup="USB Device" Capiversion="2.1.0"/>
+      <accept  Cclass="USB"          Cgroup="Device"     Csub="ADC"/>
+      <accept  Cclass="USB"          Cgroup="Device"     Csub="CDC"/>
+      <accept  Cclass="USB"          Cgroup="Device"     Csub="Custom Class"/>
+      <accept  Cclass="USB"          Cgroup="Device"     Csub="HID"/>
+      <accept  Cclass="USB"          Cgroup="Device"     Csub="MSC"/>
+    </condition>
+    <condition id="USB Core and Device Instance and Device Driver">
+      <description>USB Core and Device Instance and Device Driver</description>
+      <require condition="USB Core"/>
+      <require Cclass="USB"          Cgroup="Device"     Csub=""/>
+      <require Cclass="CMSIS Driver" Cgroup="USB Device" Capiversion="2.1.0"/>
+    </condition>
+    <condition id="USB Core and Device Instance and Device Driver and CDC">
+      <description>USB Core and Device Instance and Device Driver and CDC</description>
+      <require condition="USB Core and Device Instance and Device Driver"/>
+      <require Cclass="USB"          Cgroup="Device"     Csub="CDC"/>
+    </condition>
+  </conditions>
+
+  <taxonomy>
+    <description Cclass="File System" Cgroup="Drive">Storage Devices and Media Types</description>
+    <description Cclass="Network" Cgroup="Interface">Connection Mechanism</description>
+    <description Cclass="Network" Cgroup="Service">Network Services</description>
+    <description Cclass="Network" Cgroup="Socket">Network Sockets</description>
+    <description Cclass="USB" Cgroup="Device">USB Device Classes</description>
+    <description Cclass="USB" Cgroup="Host">USB Host Classes</description>
+  </taxonomy>
+
+  <components>
+
+    <!-- Network (MDK) -->
+    <bundle Cbundle="MDK" Cclass="Network" Cversion="7.19.0">
+      <description>IPv4/IPv6 Networking using Ethernet or Serial protocols</description>
+      <doc>Documentation/Network/html/index.html</doc>
+      <component Cgroup="CORE" Cvariant="IPv4/IPv6 Release" isDefaultVariant="true" condition="CMSIS Core with RTOS">
+        <description>IPv4/IPv6 Networking Core for Cortex-M (Release)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Core                /* Network Core */
+          #define RTE_Network_IPv4                /* Network IPv4 Stack */
+          #define RTE_Network_IPv6                /* Network IPv6 Stack */
+          #define RTE_Network_Release             /* Network Release Version */
+          #define RTE_Network_Source              /* Network Source Variant */
+        </RTE_Components_h>
+        <files>
+          <file category="other"   name="Network/Network.scvd"/>
+          <file category="header"  name="Network/Include/rl_net.h"/>
+          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
+          <file category="include" name="Network/Source/Include/"/>
+          <!-- Core -->
+          <file category="source"  name="Network/Source/net_ip4.c"/>
+          <file category="source"  name="Network/Source/net_ip4_frag.c"/>
+          <file category="source"  name="Network/Source/net_icmp.c"/>
+          <file category="source"  name="Network/Source/net_ip6.c"/>
+          <file category="source"  name="Network/Source/net_ip6_frag.c"/>
+          <file category="source"  name="Network/Source/net_icmp6.c"/>
+          <file category="source"  name="Network/Source/net_ping.c"   condition="Network DNS"/>
+          <file category="source"  name="Network/Source/net_ping_core.c"/>
+          <file category="source"  name="Network/Source/net_loopback.c"/>
+          <!-- System -->
+          <file category="source"  name="Network/Source/net_sys.c"/>
+          <file category="source"  name="Network/Source/net_mem.c"/>
+          <file category="source"  name="Network/Source/net_common.c"/>
+          <file category="source"  name="Network/Source/net_addr.c"/>
+          <file category="source"  name="Network/Source/net_md5.c"/>
+          <file category="source"  name="Network/Source/net_base64.c"/>
+          <file category="source"  name="Network/Source/net_version.c"/>
+        </files>
+      </component>
+      <component Cgroup="CORE" Cvariant="IPv4/IPv6 Debug" condition="CMSIS Core with RTOS and Event Recorder">
+        <description>IPv4/IPv6 Networking Core for Cortex-M (Debug)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Core                /* Network Core */
+          #define RTE_Network_IPv4                /* Network IPv4 Stack */
+          #define RTE_Network_IPv6                /* Network IPv6 Stack */
+          #define RTE_Network_Debug               /* Network Debug Version */
+          #define RTE_Network_Source              /* Network Source Variant */
+        </RTE_Components_h>
+        <files>
+          <file category="other"   name="Network/Network.scvd"/>
+          <file category="header"  name="Network/Include/rl_net.h"/>
+          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
+          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.1.0"/>
+          <file category="include" name="Network/Source/Include/"/>
+          <!-- Core -->
+          <file category="source"  name="Network/Source/net_ip4.c"/>
+          <file category="source"  name="Network/Source/net_ip4_frag.c"/>
+          <file category="source"  name="Network/Source/net_icmp.c"/>
+          <file category="source"  name="Network/Source/net_ip6.c"/>
+          <file category="source"  name="Network/Source/net_ip6_frag.c"/>
+          <file category="source"  name="Network/Source/net_icmp6.c"/>
+          <file category="source"  name="Network/Source/net_ping.c"   condition="Network DNS"/>
+          <file category="source"  name="Network/Source/net_ping_core.c"/>
+          <file category="source"  name="Network/Source/net_loopback.c"/>
+          <!-- System -->
+          <file category="source"  name="Network/Source/net_sys.c"/>
+          <file category="source"  name="Network/Source/net_mem.c"/>
+          <file category="source"  name="Network/Source/net_common.c"/>
+          <file category="source"  name="Network/Source/net_addr.c"/>
+          <file category="source"  name="Network/Source/net_md5.c"/>
+          <file category="source"  name="Network/Source/net_base64.c"/>
+          <file category="source"  name="Network/Source/net_version.c"/>
+        </files>
+      </component>
+      <component Cgroup="CORE" Cvariant="IPv4/IPv6 Debug STDIO" condition="CMSIS Core with RTOS and STDOUT">
+        <description>IPv4/IPv6 Networking Core for Cortex-M (Debug STDIO)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Core                /* Network Core */
+          #define RTE_Network_IPv4                /* Network IPv4 Stack */
+          #define RTE_Network_IPv6                /* Network IPv6 Stack */
+          #define RTE_Network_Debug_STDIO         /* Network Debug STDIO Version */
+          #define RTE_Network_Source              /* Network Source Variant */
+        </RTE_Components_h>
+        <files>
+          <file category="other"   name="Network/Network.scvd"/>
+          <file category="header"  name="Network/Include/rl_net.h"/>
+          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
+          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.1.0"/>
+          <file category="include" name="Network/Source/Include/"/>
+          <!-- Core -->
+          <file category="source"  name="Network/Source/net_ip4.c"/>
+          <file category="source"  name="Network/Source/net_ip4_frag.c"/>
+          <file category="source"  name="Network/Source/net_icmp.c"/>
+          <file category="source"  name="Network/Source/net_ip6.c"/>
+          <file category="source"  name="Network/Source/net_ip6_frag.c"/>
+          <file category="source"  name="Network/Source/net_icmp6.c"/>
+          <file category="source"  name="Network/Source/net_ping.c"   condition="Network DNS"/>
+          <file category="source"  name="Network/Source/net_ping_core.c"/>
+          <file category="source"  name="Network/Source/net_loopback.c"/>
+          <!-- System -->
+          <file category="source"  name="Network/Source/net_sys.c"/>
+          <file category="source"  name="Network/Source/net_mem.c"/>
+          <file category="source"  name="Network/Source/net_common.c"/>
+          <file category="source"  name="Network/Source/net_addr.c"/>
+          <file category="source"  name="Network/Source/net_md5.c"/>
+          <file category="source"  name="Network/Source/net_base64.c"/>
+          <file category="source"  name="Network/Source/net_version.c"/>
+        </files>
+      </component>
+      <component Cgroup="CORE" Cvariant="IPv4 Release" condition="CMSIS Core with RTOS">
+        <description>IPv4 Networking Core for Cortex-M (Release)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Core                /* Network Core */
+          #define RTE_Network_IPv4                /* Network IPv4 Stack */
+          #define RTE_Network_Release             /* Network Release Version */
+          #define RTE_Network_Source              /* Network Source Variant */
+        </RTE_Components_h>
+        <files>
+          <file category="other"   name="Network/Network.scvd"/>
+          <file category="header"  name="Network/Include/rl_net.h"/>
+          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
+          <file category="include" name="Network/Source/Include/"/>
+          <!-- Core -->
+          <file category="source"  name="Network/Source/net_ip4.c"/>
+          <file category="source"  name="Network/Source/net_ip4_frag.c"/>
+          <file category="source"  name="Network/Source/net_icmp.c"/>
+          <file category="source"  name="Network/Source/net_ping.c"   condition="Network DNS"/>
+          <file category="source"  name="Network/Source/net_ping_core.c"/>
+          <file category="source"  name="Network/Source/net_loopback.c"/>
+          <!-- System -->
+          <file category="source"  name="Network/Source/net_sys.c"/>
+          <file category="source"  name="Network/Source/net_mem.c"/>
+          <file category="source"  name="Network/Source/net_common.c"/>
+          <file category="source"  name="Network/Source/net_addr.c"/>
+          <file category="source"  name="Network/Source/net_md5.c"/>
+          <file category="source"  name="Network/Source/net_base64.c"/>
+          <file category="source"  name="Network/Source/net_version.c"/>
+        </files>
+      </component>
+      <component Cgroup="CORE" Cvariant="IPv4 Debug" condition="CMSIS Core with RTOS and Event Recorder">
+        <description>IPv4 Networking Core for Cortex-M (Debug)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Core                /* Network Core */
+          #define RTE_Network_IPv4                /* Network IPv4 Stack */
+          #define RTE_Network_Debug               /* Network Debug Version */
+          #define RTE_Network_Source              /* Network Source Variant */
+        </RTE_Components_h>
+        <files>
+          <file category="other"   name="Network/Network.scvd"/>
+          <file category="header"  name="Network/Include/rl_net.h"/>
+          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
+          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.1.0"/>
+          <file category="include" name="Network/Source/Include/"/>
+          <!-- Core -->
+          <file category="source"  name="Network/Source/net_ip4.c"/>
+          <file category="source"  name="Network/Source/net_ip4_frag.c"/>
+          <file category="source"  name="Network/Source/net_icmp.c"/>
+          <file category="source"  name="Network/Source/net_ping.c"   condition="Network DNS"/>
+          <file category="source"  name="Network/Source/net_ping_core.c"/>
+          <file category="source"  name="Network/Source/net_loopback.c"/>
+          <!-- System -->
+          <file category="source"  name="Network/Source/net_sys.c"/>
+          <file category="source"  name="Network/Source/net_mem.c"/>
+          <file category="source"  name="Network/Source/net_common.c"/>
+          <file category="source"  name="Network/Source/net_addr.c"/>
+          <file category="source"  name="Network/Source/net_md5.c"/>
+          <file category="source"  name="Network/Source/net_base64.c"/>
+          <file category="source"  name="Network/Source/net_version.c"/>
+        </files>
+      </component>
+      <component Cgroup="CORE" Cvariant="IPv4 Debug STDIO" condition="CMSIS Core with RTOS and STDOUT">
+        <description>IPv4 Networking Core for Cortex-M (Debug STDIO)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Core                /* Network Core */
+          #define RTE_Network_IPv4                /* Network IPv4 Stack */
+          #define RTE_Network_Debug_STDIO         /* Network Debug STDIO Version */
+          #define RTE_Network_Source              /* Network Source Variant */
+        </RTE_Components_h>
+        <files>
+          <file category="header"  name="Network/Include/rl_net.h"/>
+          <file category="other"   name="Network/Network.scvd"/>
+          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
+          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.1.0"/>
+          <file category="include" name="Network/Source/Include/"/>
+          <!-- Core -->
+          <file category="source"  name="Network/Source/net_ip4.c"/>
+          <file category="source"  name="Network/Source/net_ip4_frag.c"/>
+          <file category="source"  name="Network/Source/net_icmp.c"/>
+          <file category="source"  name="Network/Source/net_ping.c"   condition="Network DNS"/>
+          <file category="source"  name="Network/Source/net_ping_core.c"/>
+          <file category="source"  name="Network/Source/net_loopback.c"/>
+          <!-- System -->
+          <file category="source"  name="Network/Source/net_sys.c"/>
+          <file category="source"  name="Network/Source/net_mem.c"/>
+          <file category="source"  name="Network/Source/net_common.c"/>
+          <file category="source"  name="Network/Source/net_addr.c"/>
+          <file category="source"  name="Network/Source/net_md5.c"/>
+          <file category="source"  name="Network/Source/net_base64.c"/>
+          <file category="source"  name="Network/Source/net_version.c"/>
+        </files>
+      </component>
+      <component Cgroup="Legacy API" condition="Network Core">
+        <description>Network Legacy API support</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Legacy              /* Network Legacy */
+        </RTE_Components_h>
+        <files>
+          <file category="header" name="Network/Config/Net_Config_Legacy.h" attr="config" version="7.0.0"/>
+          <file category="source" name="Network/Lib/Net_Legacy.c"/>
+        </files>
+      </component>
+      <component Cgroup="Interface" Csub="ETH" condition="Network Driver ETH" maxInstances="2">
+        <description>Network Ethernet Interface</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Interface_ETH_%Instance%     /* Network Interface ETH %Instance% */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_e_t_h___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_ETH.h" attr="config" version="7.4.0"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_eth.c"/>
+          <file category="source" name="Network/Source/net_arp.c"/>
+          <file category="source" name="Network/Source/net_igmp.c"/>
+          <file category="source" name="Network/Source/net_dhcp_client.c"  condition="Network UDP"/>
+          <file category="source" name="Network/Source/net_nbns_client.c"  condition="Network UDP"/>
+          <file category="source" name="Network/Source/net_ndp.c"          condition="Network IPv6"/>
+          <file category="source" name="Network/Source/net_dhcp6_client.c" condition="Network UDP/IPv6"/>
+        </files>
+      </component>
+      <component Cgroup="Interface" Csub="WiFi" condition="Network Driver WiFi" maxInstances="2">
+        <description>Network WiFi Interface</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Interface_WiFi_%Instance%    /* Network Interface WiFi %Instance% */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_wi_fi___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_WiFi.h" attr="config" version="7.2.0"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_wifi.c"/>
+          <file category="source" name="Network/Source/net_arp.c"/>
+          <file category="source" name="Network/Source/net_igmp.c"/>
+          <file category="source" name="Network/Source/net_dhcp_client.c"  condition="Network UDP"/>
+          <file category="source" name="Network/Source/net_nbns_client.c"  condition="Network UDP"/>
+          <file category="source" name="Network/Source/net_ndp.c"          condition="Network IPv6"/>
+          <file category="source" name="Network/Source/net_dhcp6_client.c" condition="Network UDP/IPv6"/>
+        </files>
+      </component>
+      <component Cgroup="Interface" Csub="PPP" Cvariant="Standard Modem" condition="Network Driver PPP">
+        <description>Network PPP over Serial Interface - Standard Modem</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Interface_PPP       /* Network Interface PPP */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_p_p_p___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_PPP.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Network/Driver/Modem_Standard.c"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_ppp.c"/>
+          <file category="source" name="Network/Source/net_ppp_lcp.c"/>
+          <file category="source" name="Network/Source/net_ppp_ipcp.c"/>
+          <file category="source" name="Network/Source/net_ppp_pap.c"/>
+          <file category="source" name="Network/Source/net_ppp_chap.c"/>
+          <file category="source" name="Network/Source/net_serial.c"/>
+          <file category="source" name="Network/Source/net_modem_drv.c"/>
+        </files>
+      </component>
+      <component Cgroup="Interface" Csub="PPP" Cvariant="Null Modem" condition="Network Driver PPP">
+        <description>Network PPP over Serial Interface - Null Modem</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Interface_PPP       /* Network Interface PPP */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_p_p_p___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_PPP.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Network/Driver/Modem_Null.c"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_ppp.c"/>
+          <file category="source" name="Network/Source/net_ppp_lcp.c"/>
+          <file category="source" name="Network/Source/net_ppp_ipcp.c"/>
+          <file category="source" name="Network/Source/net_ppp_pap.c"/>
+          <file category="source" name="Network/Source/net_ppp_chap.c"/>
+          <file category="source" name="Network/Source/net_serial.c"/>
+          <file category="source" name="Network/Source/net_modem_drv.c"/>
+        </files>
+      </component>
+      <component Cgroup="Interface" Csub="PPP" Cvariant="Custom Modem" condition="Network Driver PPP">
+        <description>Network PPP over Serial Interface</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Interface_PPP       /* Network Interface PPP */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_p_p_p___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_PPP.h" attr="config" version="7.2.0"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_ppp.c"/>
+          <file category="source" name="Network/Source/net_ppp_lcp.c"/>
+          <file category="source" name="Network/Source/net_ppp_ipcp.c"/>
+          <file category="source" name="Network/Source/net_ppp_pap.c"/>
+          <file category="source" name="Network/Source/net_ppp_chap.c"/>
+          <file category="source" name="Network/Source/net_serial.c"/>
+          <file category="source" name="Network/Source/net_modem_drv.c"/>
+        </files>
+      </component>
+      <component Cgroup="Interface" Csub="SLIP" Cvariant="Standard Modem" condition="Network Driver SLIP">
+        <description>Network SLIP Interface - Standard Modem</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Interface_SLIP      /* Network Interface SLIP */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_s_l_i_p___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_SLIP.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Network/Driver/Modem_Standard.c"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_slip.c"/>
+          <file category="source" name="Network/Source/net_serial.c"/>
+          <file category="source" name="Network/Source/net_modem_drv.c"/>
+        </files>
+      </component>
+      <component Cgroup="Interface" Csub="SLIP" Cvariant="Null Modem" condition="Network Driver SLIP">
+        <description>Network SLIP Interface - Null Modem</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Interface_SLIP      /* Network Interface SLIP */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_s_l_i_p___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_SLIP.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Network/Driver/Modem_Null.c"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_slip.c"/>
+          <file category="source" name="Network/Source/net_serial.c"/>
+          <file category="source" name="Network/Source/net_modem_drv.c"/>
+        </files>
+      </component>
+      <component Cgroup="Interface" Csub="SLIP" Cvariant="Custom Modem" condition="Network Driver SLIP">
+        <description>Network SLIP Interface</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Interface_SLIP      /* Network Interface SLIP */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_s_l_i_p___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_SLIP.h" attr="config" version="7.2.0"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_slip.c"/>
+          <file category="source" name="Network/Source/net_serial.c"/>
+          <file category="source" name="Network/Source/net_modem_drv.c"/>
+        </files>
+      </component>
+      <component Cgroup="Socket" Csub="UDP" condition="Network Interface">
+        <description>UDP Socket</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Socket_UDP          /* Network Socket UDP */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_u_d_p___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_UDP.h" attr="config" version="5.1.0"/>
+          <file category="source" name="Network/Template/UDP_Socket.c" attr="template" select="UDP Socket"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_udp.c"/>
+        </files>
+      </component>
+      <component Cgroup="Socket" Csub="TCP" condition="Network Interface">
+        <description>TCP Socket</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Socket_TCP          /* Network Socket TCP */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_t_c_p___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_TCP.h" attr="config" version="7.1.1"/>
+          <file category="source" name="Network/Template/TCP_Socket_Server.c" attr="template" select="TCP Socket Server"/>
+          <file category="source" name="Network/Template/TCP_Socket_Client.c" attr="template" select="TCP Socket Client"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_tcp.c"/>
+        </files>
+      </component>
+      <component Cgroup="Socket" Csub="BSD" condition="Network UDP/TCP">
+        <description>BSD Socket</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Socket_BSD          /* Network Socket BSD */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_b_s_d___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_BSD.h" attr="config" version="5.0.0"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_bsd.c"/>
+          <file category="source" name="Network/Source/net_bsd_host.c" condition="Network DNS"/>
+        </files>
+      </component>
+      <component Cgroup="Service" Csub="Web Server Compact" Cvariant="HTTP" isDefaultVariant="true" condition="Network Web Server Compact">
+        <description>Web Server (HTTP) with Read-only Web Resources (Compact)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Web_Server_RO       /* Network Web Server with Read-only Web Resources */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_h_t_t_p___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
+          <file category="source" name="Network/Template/HTTP_Server_Access.c" attr="template" select="HTTP Server Access"/>
+          <file category="source" name="Network/Template/HTTP_Server_Multiuser.c" attr="template" select="HTTP Server Multi-user"/>
+          <file category="source" name="Network/Template/HTTP_Server_Error.c" attr="template" select="HTTP Server Error Messages"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_http_server.c"/>
+          <file category="source" name="Network/Source/net_http_server_err.c"/>
+          <file category="source" name="Network/Source/net_http_server_web.c"/>
+          <file category="source" name="Network/Source/net_http_server_auth.c"/>
+        </files>
+      </component>
+      <component Cgroup="Service" Csub="Web Server Compact" Cvariant="HTTPS" condition="Network Web Server Compact TLS">
+        <description>Web Server (HTTPS) with Read-only Web Resources (Compact)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Web_Server_RO       /* Network Web Server with Read-only Web Resources */
+          #define RTE_Network_Web_Server_RO_TLS   /* Network Web Server with Read-only Web Resources and TLS */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_h_t_t_p___func.html"/>
+          <file category="other"  name="Network/Tool/Net_Security.bat" attr="copy"/>
+          <file category="source" name="Network/Config/Net_Security.c" attr="config" version="7.2.0"/>
+          <file category="header" name="Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Network/Interface/TLS_mbed.c"/>
+          <file category="source" name="Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
+          <file category="source" name="Network/Template/HTTP_Server_Access.c" attr="template" select="HTTP Server Access"/>
+          <file category="source" name="Network/Template/HTTP_Server_Multiuser.c" attr="template" select="HTTP Server Multi-user"/>
+          <file category="source" name="Network/Template/HTTP_Server_Error.c" attr="template" select="HTTP Server Error Messages"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_http_server.c"/>
+          <file category="source" name="Network/Source/net_http_server_err.c"/>
+          <file category="source" name="Network/Source/net_http_server_web.c"/>
+          <file category="source" name="Network/Source/net_http_server_auth.c"/>
+        </files>
+      </component>
+      <component Cgroup="Service" Csub="Web Server" Cvariant="HTTP" isDefaultVariant="true" condition="Network Web Server">
+        <description>Web Server (HTTP) with Web Resources on File System</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Web_Server_FS       /* Network Web Server with Web Resources on File System */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_h_t_t_p___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Network/Interface/HTTP_Server_FS.c"/>
+          <file category="source" name="Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
+          <file category="source" name="Network/Template/HTTP_Server_Access.c" attr="template" select="HTTP Server Access"/>
+          <file category="source" name="Network/Template/HTTP_Server_Multiuser.c" attr="template" select="HTTP Server Multi-user"/>
+          <file category="source" name="Network/Template/HTTP_Server_Error.c" attr="template" select="HTTP Server Error Messages"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_http_server.c"/>
+          <file category="source" name="Network/Source/net_http_server_err.c"/>
+          <file category="source" name="Network/Source/net_http_server_web.c"/>
+          <file category="source" name="Network/Source/net_http_server_auth.c"/>
+        </files>
+      </component>
+      <component Cgroup="Service" Csub="Web Server" Cvariant="HTTPS" condition="Network Web Server TLS">
+        <description>Web Server (HTTPS) with Web Resources on File System</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Web_Server_FS       /* Network Web Server with Web Resources on File System */
+          #define RTE_Network_Web_Server_FS_TLS   /* Network Web Server with Web Resources on File System and TLS */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_h_t_t_p___func.html"/>
+          <file category="other"  name="Network/Tool/Net_Security.bat" attr="copy"/>
+          <file category="source" name="Network/Config/Net_Security.c" attr="config" version="7.2.0"/>
+          <file category="header" name="Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Network/Interface/TLS_mbed.c"/>
+          <file category="source" name="Network/Interface/HTTP_Server_FS.c"/>
+          <file category="source" name="Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
+          <file category="source" name="Network/Template/HTTP_Server_Access.c" attr="template" select="HTTP Server Access"/>
+          <file category="source" name="Network/Template/HTTP_Server_Multiuser.c" attr="template" select="HTTP Server Multi-user"/>
+          <file category="source" name="Network/Template/HTTP_Server_Error.c" attr="template" select="HTTP Server Error Messages"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_http_server.c"/>
+          <file category="source" name="Network/Source/net_http_server_err.c"/>
+          <file category="source" name="Network/Source/net_http_server_web.c"/>
+          <file category="source" name="Network/Source/net_http_server_auth.c"/>
+        </files>
+      </component>
+      <component Cgroup="Service" Csub="Telnet Server" condition="Network TCP">
+        <description>Telnet Server</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_Telnet_Server       /* Network Telnet Server */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_t_e_l_n_e_t___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_Telnet_Server.h" attr="config" version="7.0.1"/>
+          <file category="source" name="Network/Template/Telnet_Server_UIF.c" attr="template" select="Telnet Server"/>
+          <file category="source" name="Network/Template/Telnet_Server_Access.c" attr="template" select="Telnet Server Access"/>
+          <file category="source" name="Network/Template/Telnet_Server_Multiuser.c" attr="template" select="Telnet Server Multi-user"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_telnet_server.c"/>
+        </files>
+      </component>
+      <component Cgroup="Service" Csub="TFTP Server" condition="Network UDP and File System Drive">
+        <description>TFTP Server</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_TFTP_Server         /* Network TFTP Server */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_t_f_t_ps___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_TFTP_Server.h" attr="config" version="7.0.0"/>
+          <file category="source" name="Network/Interface/TFTP_Server_FS.c"/>
+          <file category="source" name="Network/Template/TFTP_Server_Access.c" attr="template" select="TFTP Server Access"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_tftp_server.c"/>
+        </files>
+      </component>
+      <component Cgroup="Service" Csub="TFTP Client" condition="Network UDP and File System Drive">
+        <description>TFTP Client</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_TFTP_Client         /* Network TFTP Client */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_t_f_t_pc___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_TFTP_Client.h" attr="config" version="5.0.0"/>
+          <file category="source" name="Network/Interface/TFTP_Client_FS.c"/>
+          <file category="source" name="Network/Template/TFTP_Client_UIF.c" attr="template" select="TFTP Client"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_tftp_client.c"/>
+        </files>
+      </component>
+      <component Cgroup="Service" Csub="FTP Server" condition="Network TCP and File System Drive">
+        <description>FTP Server</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_FTP_Server          /* Network FTP Server */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_f_t_ps___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_FTP_Server.h" attr="config" version="7.0.0"/>
+          <file category="source" name="Network/Interface/FTP_Server_FS.c"/>
+          <file category="source" name="Network/Template/FTP_Server_Event.c" attr="template" select="FTP Server Notification Events"/>
+          <file category="source" name="Network/Template/FTP_Server_Access.c" attr="template" select="FTP Server Access"/>
+          <file category="source" name="Network/Template/FTP_Server_Multiuser.c" attr="template" select="FTP Server Multi-user"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_ftp_server.c"/>
+        </files>
+      </component>
+      <component Cgroup="Service" Csub="FTP Client" condition="Network TCP and File System Drive">
+        <description>FTP Client</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_FTP_Client          /* Network FTP Client */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_f_t_pc___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_FTP_Client.h" attr="config" version="5.0.0"/>
+          <file category="source" name="Network/Interface/FTP_Client_FS.c"/>
+          <file category="source" name="Network/Template/FTP_Client_UIF.c" attr="template" select="FTP Client"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_ftp_client.c"/>
+        </files>
+      </component>
+      <component Cgroup="Service" Csub="DNS Client" condition="Network UDP">
+        <description>DNS Client</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_DNS_Client          /* Network DNS Client */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_d_n_sc___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_DNS_Client.h" attr="config" version="5.0.0"/>
+          <file category="source" name="Network/Template/DNS_Client.c" attr="template" select="DNS Client"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_dns_client.c"/>
+        </files>
+      </component>
+      <component Cgroup="Service" Csub="SMTP Client" Cvariant="SMTP" isDefaultVariant="true" condition="Network TCP">
+        <description>Email Client (SMTP)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_SMTP_Client         /* Network SMTP Client */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_s_m_t_pc___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_SMTP_Client.h" attr="config" version="5.1.0"/>
+          <file category="source" name="Network/Interface/SMTP_Client_FS.c"/>
+          <file category="source" name="Network/Template/SMTP_Client_UIF.c" attr="template" select="SMTP Client"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_smtp_client.c"   condition="Network DNS"/>
+          <file category="source" name="Network/Source/net_smtp_client_core.c"/>
+          <file category="source" name="Network/Source/net_smtp_client_legacy.c"/>
+        </files>
+      </component>
+      <component Cgroup="Service" Csub="SMTP Client" Cvariant="SMTPS" condition="Network TCP TLS">
+        <description>Email Client (SMTPS)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_SMTP_Client         /* Network SMTP Client */
+          #define RTE_Network_SMTP_Client_TLS     /* Network SMTP Client and TLS */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_s_m_t_pc___func.html"/>
+          <file category="source" name="Network/Config/Net_Security.c" attr="config" version="7.2.0"/>
+          <file category="header" name="Network/Config/Net_Config_SMTP_Client.h" attr="config" version="5.1.0"/>
+          <file category="source" name="Network/Interface/SMTP_Client_FS.c"/>
+          <file category="source" name="Network/Interface/TLS_mbed.c"/>
+          <file category="source" name="Network/Template/SMTP_Client_UIF.c" attr="template" select="SMTP Client"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_smtp_client.c"   condition="Network DNS"/>
+          <file category="source" name="Network/Source/net_smtp_client_core.c"/>
+          <file category="source" name="Network/Source/net_smtp_client_legacy.c"/>
+        </files>
+      </component>
+      <component Cgroup="Service" Csub="SNMP Agent" condition="Network UDP">
+        <description>SNMP Agent</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_SNMP_Agent          /* Network SNMP Agent */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_s_n_m_p___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_SNMP_Agent.h" attr="config" version="7.0.0"/>
+          <file category="source" name="Network/Template/SNMP_Agent_MIB.c" attr="template" select="SNMP Agent"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_snmp_agent.c"/>
+        </files>
+      </component>
+      <component Cgroup="Service" Csub="SNTP Client" condition="Network UDP">
+        <description>SNTP Client</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_Network_SNTP_Client         /* Network SNTP Client */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/Network/html/group__net_s_n_t_pc___func.html"/>
+          <file category="header" name="Network/Config/Net_Config_SNTP_Client.h" attr="config" version="7.0.0"/>
+          <!-- Library source files -->
+          <file category="source" name="Network/Source/net_sntp_client.c"  condition="Network DNS"/>
+          <file category="source" name="Network/Source/net_sntp_client_core.c"/>
+        </files>
+      </component>
+    </bundle>
+
+    <!-- File System (MDK) -->
+    <bundle Cbundle="MDK" Cclass="File System" Cversion="6.16.6">
+      <description>File Access on various storage devices</description>
+      <doc>Documentation/FileSystem/html/index.html</doc>
+      <component Cgroup="CORE" Cvariant="LFN" isDefaultVariant="true" condition="CMSIS Core with RTOS and File System I/O">
+        <description>File System with Long Filename support for Cortex-M (Release)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_FileSystem_Core             /* File System Core */
+          #define RTE_FileSystem_LFN              /* File System with Long Filename support */
+          #define RTE_FileSystem_Release          /* File System Release Version */
+        </RTE_Components_h>
+        <files>
+          <file category="other"   name="FileSystem/FileSystem.scvd"/>
+          <file category="header"  name="FileSystem/Include/rl_fs.h"/>
+          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.4.0"/>
+          <file category="include" name="FileSystem/Source/Include/"/>
+          <file category="source"  name="FileSystem/Source/fs_common.c"/>
+          <file category="source"  name="FileSystem/Source/fs_efs.c"/>
+          <file category="source"  name="FileSystem/Source/fs_fat.c"/>
+          <file category="source"  name="FileSystem/Source/fs_fat_elink.c"/>
+          <file category="source"  name="FileSystem/Source/fs_ioc.c"/>
+          <file category="source"  name="FileSystem/Source/fs_journal.c"/>
+          <file category="source"  name="FileSystem/Source/fs_mapi.c"/>
+          <file category="source"  name="FileSystem/Source/fs_sys.c"/>
+          <file category="source"  name="FileSystem/Source/fs_time.c"/>
+          <file category="source"  name="FileSystem/Source/fs_version.c"/>
+        </files>
+      </component>
+      <component Cgroup="CORE" Cvariant="LFN Debug" condition="CMSIS Core with RTOS and File System I/O and Event Recorder">
+        <description>File System with Long Filename support for Cortex-M (Debug)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_FileSystem_Core             /* File System Core */
+          #define RTE_FileSystem_LFN              /* File System with Long Filename support */
+          #define RTE_FileSystem_Debug            /* File System Debug Version */
+        </RTE_Components_h>
+        <files>
+          <file category="other"   name="FileSystem/FileSystem.scvd"/>
+          <file category="header"  name="FileSystem/Include/rl_fs.h"/>
+          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.4.0"/>
+          <file category="source"  name="FileSystem/Config/FS_Debug.c"  attr="config" version="1.0.0"/>
+          <file category="include" name="FileSystem/Source/Include/"/>
+          <file category="source"  name="FileSystem/Source/fs_common.c"/>
+          <file category="source"  name="FileSystem/Source/fs_efs.c"/>
+          <file category="source"  name="FileSystem/Source/fs_fat.c"/>
+          <file category="source"  name="FileSystem/Source/fs_fat_elink.c"/>
+          <file category="source"  name="FileSystem/Source/fs_ioc.c"/>
+          <file category="source"  name="FileSystem/Source/fs_journal.c"/>
+          <file category="source"  name="FileSystem/Source/fs_mapi.c"/>
+          <file category="source"  name="FileSystem/Source/fs_sys.c"/>
+          <file category="source"  name="FileSystem/Source/fs_time.c"/>
+          <file category="source"  name="FileSystem/Source/fs_version.c"/>
+        </files>
+      </component>
+      <component Cgroup="CORE" Cvariant="SFN" condition="CMSIS Core with RTOS and File System I/O">
+        <description>File System without Long Filename support for Cortex-M (Release)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_FileSystem_Core             /* File System Core */
+          #define RTE_FileSystem_SFN              /* File System without Long Filename support */
+          #define RTE_FileSystem_Release          /* File System Release Version */
+        </RTE_Components_h>
+        <files>
+          <file category="other"   name="FileSystem/FileSystem.scvd"/>
+          <file category="header"  name="FileSystem/Include/rl_fs.h"/>
+          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.4.0"/>
+          <file category="include" name="FileSystem/Source/Include/"/>
+          <file category="source"  name="FileSystem/Source/fs_common.c"/>
+          <file category="source"  name="FileSystem/Source/fs_efs.c"/>
+          <file category="source"  name="FileSystem/Source/fs_fat.c"/>
+          <file category="source"  name="FileSystem/Source/fs_fat_elink.c"/>
+          <file category="source"  name="FileSystem/Source/fs_ioc.c"/>
+          <file category="source"  name="FileSystem/Source/fs_journal.c"/>
+          <file category="source"  name="FileSystem/Source/fs_mapi.c"/>
+          <file category="source"  name="FileSystem/Source/fs_sys.c"/>
+          <file category="source"  name="FileSystem/Source/fs_time.c"/>
+          <file category="source"  name="FileSystem/Source/fs_version.c"/>
+        </files>
+      </component>
+      <component Cgroup="CORE" Cvariant="SFN Debug" condition="CMSIS Core with RTOS and File System I/O and Event Recorder">
+        <description>File System without Long Filename support for Cortex-M (Debug)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_FileSystem_Core             /* File System Core */
+          #define RTE_FileSystem_SFN              /* File System without Long Filename support */
+          #define RTE_FileSystem_Debug            /* File System Debug Version */
+        </RTE_Components_h>
+        <files>
+          <file category="other"   name="FileSystem/FileSystem.scvd"/>
+          <file category="header"  name="FileSystem/Include/rl_fs.h"/>
+          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.4.0"/>
+          <file category="source"  name="FileSystem/Config/FS_Debug.c"  attr="config" version="1.0.0"/>
+          <file category="include" name="FileSystem/Source/Include/"/>
+          <file category="source"  name="FileSystem/Source/fs_common.c"/>
+          <file category="source"  name="FileSystem/Source/fs_efs.c"/>
+          <file category="source"  name="FileSystem/Source/fs_fat.c"/>
+          <file category="source"  name="FileSystem/Source/fs_fat_elink.c"/>
+          <file category="source"  name="FileSystem/Source/fs_ioc.c"/>
+          <file category="source"  name="FileSystem/Source/fs_journal.c"/>
+          <file category="source"  name="FileSystem/Source/fs_mapi.c"/>
+          <file category="source"  name="FileSystem/Source/fs_sys.c"/>
+          <file category="source"  name="FileSystem/Source/fs_time.c"/>
+          <file category="source"  name="FileSystem/Source/fs_version.c"/>
+        </files>
+      </component>
+      <component Cgroup="Drive" Csub="RAM" condition="File System Core" maxInstances="2">
+        <description>BUS-mapped RAM using drive letter "R:", "R0:" or "R1:"</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_FileSystem_Drive_RAM_%Instance%      /* File System RAM Drive %Instance% */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/FileSystem/html/fs_create_app.html#ram_usage"/>
+          <file category="header" name="FileSystem/Config/FS_Config_RAM.h" attr="config" version="6.2.0"/>
+          <!-- Library source files -->
+          <file category="source" name="FileSystem/Source/fs_ram_drv.c"/>
+        </files>
+      </component>
+      <component Cgroup="Drive" Csub="NOR" condition="File System and Flash Driver" maxInstances="2">
+        <description>SPI or BUS-mapped NOR Flash using drive letter "F:", "F0:" or "F1:"</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_FileSystem_Drive_NOR_%Instance%      /* File System NOR Flash Drive %Instance% */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/FileSystem/html/fs_create_app.html#nor_usage"/>
+          <file category="header" name="FileSystem/Config/FS_Config_NOR.h" attr="config" version="6.2.0"/>
+          <!-- Library source files -->
+          <file category="source" name="FileSystem/Source/fs_nor_media.c"/>
+        </files>
+      </component>
+      <component Cgroup="Drive" Csub="NAND" condition="File System and NAND Driver" maxInstances="2">
+        <description>NAND Flash using drive letter "N:", "N0:" or "N1:"</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_FileSystem_Drive_NAND_%Instance%     /* File System NAND Flash Drive %Instance% */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/FileSystem/html/fs_create_app.html#nand_usage"/>
+          <file category="header" name="FileSystem/Config/FS_Config_NAND.h" attr="config" version="6.3.0"/>
+          <!-- Library source files -->
+          <file category="source" name="FileSystem/Source/fs_nand_media.c"/>
+          <file category="source" name="FileSystem/Source/fs_nftl.c"/>
+        </files>
+      </component>
+      <component Cgroup="Drive" Csub="Memory Card" condition="File System and SD/MMC Driver" maxInstances="2">
+        <description>SD, SDHC, or MMC Memory Card using drive letter "M:", "M0:" or "M1:"</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_FileSystem_Drive_MC_%Instance%       /* File System Memory Card Drive %Instance% */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/FileSystem/html/fs_create_app.html#mc_usage"/>
+          <file category="header" name="FileSystem/Config/FS_Config_MC.h" attr="config" version="6.2.0"/>
+          <!-- Library source files -->
+          <file category="source" name="FileSystem/Source/fs_mc_mci.c"/>
+          <file category="source" name="FileSystem/Source/fs_mc_spi.c"/>
+        </files>
+      </component>
+      <component Cgroup="Drive" Csub="USB" condition="File System and USB Host MSC" maxInstances="2">
+        <description>USB Stick via USB Host using drive letter "U:", "U0:" or "U1:"</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_FileSystem_Drive_USB_%Instance%      /* File System USB Drive %Instance% */
+        </RTE_Components_h>
+        <files>
+          <file category="doc" name="Documentation/FileSystem/html/fs_create_app.html#usb_usage"/>
+          <file category="header" name="FileSystem/Config/FS_Config_USB.h" attr="config" version="6.2.0"/>
+        </files>
+      </component>
+    </bundle>
+
+    <!-- USB (MDK) -->
+    <bundle Cbundle="MDK" Cclass="USB" Cversion="6.17.0">
+      <description>USB Communication with various device classes</description>
+      <doc>Documentation/USB/html/index.html</doc>
+      <component Cgroup="CORE" Cvariant="Release" isDefaultVariant="true" condition="CMSIS Core with RTOS">
+        <description>USB Core for Cortex-M (Release)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Core                    /* USB Core */
+          #define RTE_USB_Core_Release            /* USB Core Release Version */
+        </RTE_Components_h>
+        <files>
+          <file category="other"   name="USB/USB.scvd"/>
+          <file category="header"  name="USB/Include/rl_usb.h"/>
+          <!-- Library source files -->
+          <file category="include" name="USB/Source/Include/"/>
+          <file category="source"  name="USB/Source/usb_lib_ver.c"/>
+        </files>
+      </component>
+      <component Cgroup="CORE" Cvariant="Debug" condition="CMSIS Core with RTOS and Event Recorder">
+        <description>USB Core for Cortex-M (Debug)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Core                    /* USB Core */
+          #define RTE_USB_Core_Debug              /* USB Core Debug Version */
+        </RTE_Components_h>
+        <files>
+          <file category="other"   name="USB/USB.scvd"/>
+          <file category="header"  name="USB/Include/rl_usb.h"/>
+          <file category="source"  name="USB/Config/USB_Debug.c" attr="config" version="1.0.0"/>
+          <!-- Library source files -->
+          <file category="include" name="USB/Source/Include/"/>
+          <file category="source"  name="USB/Source/usb_lib_ver.c"/>
+        </files>
+      </component>
+      <component Cgroup="Host" condition="USB Core and Host Driver and Class Instance" maxInstances="4">
+        <description>USB Host</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Host_%Instance%                  /* USB Host %Instance% */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/USB/html/_u_s_b__host.html"/>
+          <file category="source" name="USB/Config/USBH_Config.c" attr="config" version="5.3.0"/>
+          <!-- Library source files -->
+          <file category="source" name="USB/Source/usbh_lib_core.c"/>
+          <file category="source" name="USB/Source/usbh_lib_mem.c"/>
+          <file category="source" name="USB/Source/usbh_lib_drv.c"/>
+          <file category="source" name="USB/Source/usbh_lib_ohci.c"/>
+          <file category="source" name="USB/Source/usbh_lib_ehci_tt.c"/>
+        </files>
+      </component>
+      <component Cgroup="Host" Csub="HID" condition="USB Core and Host Instance and Host Driver">
+        <description>USB Host: Human Interface Device (HID) Class</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Host_HID                /* USB Host HID */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/USB/html/_h_i_d.html"/>
+          <file category="header" name="USB/Config/USBH_Config_HID.h" attr="config" version="5.1.0"/>
+          <!-- Library source files -->
+          <file category="source" name="USB/Source/usbh_lib_hid.c"/>
+          <file category="source" name="USB/Source/usbh_lib_hid_idtoascii.c"/>
+        </files>
+      </component>
+      <component Cgroup="Host" Csub="MSC" condition="USB Core and Host Instance and Host Driver and File System USB Drive">
+        <description>USB Host: Mass Storage Class (MSC)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Host_MSC                /* USB Host MSC */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/USB/html/_m_s_c.html"/>
+          <file category="header" name="USB/Config/USBH_Config_MSC.h" attr="config"   version="5.0.0"/>
+          <file category="source" name="USB/Template/USBH_MSC.c"      attr="template" select="USB Host Mass Storage Access"/>
+          <file category="source" name="USB/Template/USBH_MSC.h"      attr="template" select="USB Host Mass Storage Access"/>
+          <!-- Library source files -->
+          <file category="source" name="USB/Source/usbh_lib_msc.c"/>
+        </files>
+      </component>
+      <component Cgroup="Host" Csub="CDC" condition="USB Core and Host Instance and Host Driver">
+        <description>USB Host: Communication Device Class (CDC)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Host_CDC                /* USB Host CDC */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/USB/html/_c_d_c.html"/>
+          <file category="header" name="USB/Config/USBH_Config_CDC.h" attr="config" version="5.0.0"/>
+          <!-- Library source files -->
+          <file category="source" name="USB/Source/usbh_lib_cdc.c"/>
+        </files>
+      </component>
+      <component Cgroup="Host" Csub="Custom Class" condition="USB Core and Host Instance and Host Driver">
+        <description>USB Host: Custom Class</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Host_CustomClass        /* USB Host Custom Class */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/USB/html/_custom_class.html"/>
+          <file category="header" name="USB/Config/USBH_Config_CustomClass.h" attr="config"   version="5.0.0"/>
+          <file category="source" name="USB/Template/USBH_User_CustomClass.c" attr="template" select="USB Host Generic Custom Class"/>
+          <file category="source" name="USB/Template/USBH_PL2303.c"           attr="template" select="USB Host Prolific PL2303"/>
+        </files>
+      </component>
+      <component Cgroup="Device" condition="USB Core and Device Driver and Class Instance" maxInstances="4">
+        <description>USB Device</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Device_%Instance%                /* USB Device %Instance% */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/USB/html/_u_s_b__device.html"/>
+          <file category="source" name="USB/Config/USBD_Config.c"               attr="config"   version="5.3.0"/>
+          <file category="source" name="USB/Template/USBD_User_Device.c"        attr="template" select="USB Device"/>
+          <file category="source" name="USB/Template/USBD_User_Device_SerNum.c" attr="template" select="USB Device Serial Number"/>
+          <!-- Library source files -->
+          <file category="source" name="USB/Source/usbd_lib_core.c"/>
+          <file category="source" name="USB/Source/usbd_lib_drv.c"/>
+          <file category="source" name="USB/Source/usbd_lib_core_device.c"/>
+        </files>
+      </component>
+      <component Cgroup="Device" Csub="HID" condition="USB Core and Device Instance and Device Driver" maxInstances="8">
+        <description>USB Device: Human Interface Device (HID) Class</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Device_HID_%Instance%            /* USB Device HID instance %Instance% */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/USB/html/_h_i_d.html"/>
+          <file category="header" name="USB/Config/USBD_Config_HID.h"       attr="config"   version="5.1.0"/>
+          <file category="source" name="USB/Template/USBD_User_HID.c"       attr="template" select="USB Device HID (Human Interface Device)"/>
+          <file category="source" name="USB/Template/USBD_User_HID_Mouse.c" attr="template" select="USB Device HID Mouse"/>
+          <!-- Library source files -->
+          <file category="source" name="USB/Source/usbd_lib_core_hid.c"/>
+          <file category="source" name="USB/Source/usbd_lib_hid.c"/>
+        </files>
+      </component>
+      <component Cgroup="Device" Csub="MSC" condition="USB Core and Device Instance and Device Driver" maxInstances="4">
+        <description>USB Device: Mass Storage Class (MSC)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Device_MSC_%Instance%            /* USB Device MSC instance %Instance% */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/USB/html/_m_s_c.html"/>
+          <file category="header" name="USB/Config/USBD_Config_MSC.h"     attr="config"   version="5.2.0"/>
+          <file category="source" name="USB/Template/USBD_User_MSC.c"     attr="template" select="USB Device MSC (Mass Storage Class)"/>
+          <file category="source" name="USB/Template/USBD_User_MSC_LUN.c" attr="template" select="USB Device MSC multiple Logical Units (Mass Storage Class)"/>
+          <file category="source" name="USB/Template/USBD_MSC.c"          attr="template" select="USB Device MSC Media Ownership Control"/>
+          <file category="source" name="USB/Template/USBD_MSC.h"          attr="template" select="USB Device MSC Media Ownership Control"/>
+          <!-- Library source files -->
+          <file category="source" name="USB/Source/usbd_lib_core_msc.c"/>
+          <file category="source" name="USB/Source/usbd_lib_msc.c"/>
+        </files>
+      </component>
+      <component Cgroup="Device" Csub="CDC" condition="USB Core and Device Instance and Device Driver" maxInstances="8">
+        <description>USB Device: Communication Device Class (CDC)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Device_CDC_%Instance%            /* USB Device CDC instance %Instance% */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/USB/html/_c_d_c.html"/>
+          <file category="header" name="USB/Config/USBD_Config_CDC.h"                attr="config"   version="5.3.0"/>
+          <file category="source" name="USB/Template/USBD_User_CDC_ACM.c"            attr="template" select="USB Device CDC ACM (Abstract Control Model)"/>
+          <file category="source" name="USB/Template/USBD_User_CDC_ACM_RNDIS_ETH.c"  attr="template" select="USB Device CDC ACM RNDIS and Ethernet Bridge"/>
+          <file category="source" name="USB/Template/USBD_User_CDC_ACM_RNDIS_VETH.c" attr="template" select="USB Device CDC ACM RNDIS Virtual Ethernet"/>
+          <file category="source" name="USB/Template/USBD_User_CDC_ACM_UART.c"       attr="template" select="USB Device CDC ACM and UART Bridge"/>
+          <file category="source" name="USB/Template/USBD_User_CDC_NCM.c"            attr="template" select="USB Device CDC NCM (Network Control Model)"/>
+          <file category="source" name="USB/Template/USBD_User_CDC_NCM_ETH.c"        attr="template" select="USB Device CDC NCM and Ethernet Bridge"/>
+          <!-- Library source files -->
+          <file category="source" name="USB/Source/usbd_lib_core_cdc.c"/>
+          <file category="source" name="USB/Source/usbd_lib_cdc.c"/>
+        </files>
+      </component>
+      <component Cgroup="Device" Csub="ADC" condition="USB Core and Device Instance and Device Driver" maxInstances="4">
+        <description>USB Device: Audio Device Class (ADC)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Device_ADC_%Instance%            /* USB Device ADC instance %Instance% */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/USB/html/_a_d_c.html"/>
+          <file category="header" name="USB/Config/USBD_Config_ADC.h"       attr="config"   version="5.3.0"/>
+          <file category="source" name="USB/Template/USBD_User_ADC_Audio.c" attr="template" select="USB Device ADC (Audio Interface)"/>
+          <!-- Library source files -->
+          <file category="source" name="USB/Source/usbd_lib_core_adc.c"/>
+          <file category="source" name="USB/Source/usbd_lib_adc.c"/>
+        </files>
+      </component>
+      <component Cgroup="Device" Csub="Custom Class" condition="USB Core and Device Instance and Device Driver" maxInstances="4">
+        <description>USB Device: Custom Class</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Device_CustomClass_%Instance%    /* USB Device Custom Class instance %Instance% */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/USB/html/_custom_class.html"/>
+          <file category="header" name="USB/Config/USBD_Config_CustomClass.h" attr="config"   version="5.3.0"/>
+          <file category="source" name="USB/Template/USBD_User_CustomClass.c" attr="template" select="USB Device Custom Class"/>
+          <!-- Library source files -->
+          <file category="source" name="USB/Source/usbd_lib_core_custom_class.c"/>
+          <file category="source" name="USB/Source/usbd_lib_custom_class.c"/>
+        </files>
+      </component>
+    </bundle>
+
+    <!-- CMSIS-Compiler -->
+    <component Cvendor="Keil" Cclass="CMSIS-Compiler" Cgroup="File Interface" Csub="MDK-MW File System" Capiversion="1.0.0" Cversion="1.0.0" condition="File System and CMSIS Compiler">
+      <description>File Interface implementation using Keil MDK-Middleware File System</description>
+      <RTE_Components_h>
+        #define RTE_CMSIS_Compiler_File_Interface        /* CMSIS-Compiler File Interface */
+        #define RTE_CMSIS_Compiler_File_Interface_MDK_MW /* CMSIS-Compiler File Interface: MDK-Middleware File System */
+      </RTE_Components_h>
+      <files>
+        <file category="source" name="FileSystem/Interface/retarget_mdk-fs.c"/>
+      </files>
+    </component>
+
+    <!-- CMSIS Driver -->
+    <component Cvendor="Keil" Cclass="CMSIS Driver" Cgroup="Ethernet" Csub="RNDIS" Capiversion="2.1.0" Cversion="1.2.0" condition="USB Core and Device Instance and Device Driver and CDC">
+      <description>Ethernet MAC + PHY USB Device RNDIS Driver</description>
+      <RTE_Components_h>
+        <!-- the following content goes into file 'RTE_Components.h' -->
+        #define RTE_Drivers_ETH_CDC_ACM_RNDIS   /* Driver ETH CDC ACM RNDIS */
+      </RTE_Components_h>
+      <files>
+        <file category="source" name="USB/Driver/EMAC_CDC_ACM_RNDIS.c"/>
+      </files>
+    </component>
+    <component Cclass="CMSIS Driver" Cgroup="USART" Csub="PL2303" Capiversion="2.1.0" Cversion="1.10.0" condition="USB Core and Host Instance and Host Driver and Custom Class">
+      <!-- short component description -->
+      <description>Prolific PL2303 USB to serial RS232 adapter (requires USB Host Prolific PL2303 Template)</description>
+      <RTE_Components_h>
+        <!-- the following content goes into file 'RTE_Components.h' -->
+        #define RTE_Drivers_USART_PL2303        /* Driver USART PL2303 */
+      </RTE_Components_h>
+      <files>
+        <file category="source" name="USB/Driver/USART_PL2303.c"/>
+      </files>
+    </component>
+    <component Cclass="CMSIS Driver" Cgroup="USART" Csub="CDC" Capiversion="2.1.0" Cversion="1.10.0" condition="USB Core and Host Instance and Host Driver and CDC">
+      <!-- short component description -->
+      <description>Usb Host CDC ACM Compliant Device</description>
+      <RTE_Components_h>
+        <!-- the following content goes into file 'RTE_Components.h' -->
+        #define RTE_Drivers_USART_CDC_ACM       /* Driver USART CDC ACM */
+      </RTE_Components_h>
+      <files>
+        <file category="source" name="USB/Driver/USART_CDC_ACM.c"/>
+      </files>
+    </component>
+  </components>
+</package>

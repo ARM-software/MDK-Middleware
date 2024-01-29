@@ -1,0 +1,615 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page network_create_app Creating a Network Application
+
+The steps to create a microcontroller application that uses TCP/IP communication are:
+ -# Select \ref nw_RTE_Software_Component_Selection "RTE Components" along with the Network Services that are
+    required for your application.
+ -# \ref nw_Driver_Configuration "Enable the Network Driver and Controller" that is integrated in the microcontroller.
+ -# Configure the various \ref nw_Device_Configuration "Network Components".
+ -# Configure the \ref nw_system_resources "system resources" according to the network component's
+    \ref nw_resource_requirements.
+ -# Implement the \ref nw_User_Code_Implementation "User Code" using code templates that are provided for the Network
+    Component.
+ -# \ref nw_debugging "Debug" your application using the built-in mechanisms of the Network Component.
+ -# Sometimes, it is necessary to change some network settings at \ref nw_runtime_config "runtime".
+  
+\section nw_RTE_Software_Component_Selection RTE Component Selection
+
+Only a few steps are necessary to complete the RTE Component selection: 
+ 
+ -# From the \b Network Component:
+   - Select <b>Network:CORE</b> that provides the basic functionality required for TCP/IP communication. Note that users
+     of MDK-Professional can select between an IPv4/IPv6 dual-stack and an IPv4-only implementation, while users of MDK-Plus
+     can only select the IPv4 implementation.
+   - Select your desired <b>Network:Interface</b>. For example, set <b>Network:Interface:Ethernet</b> to '1' for enabling
+     Ethernet communication.
+   - Select the desired Network Services. For example, select <b>Network:Service:Web Server Compact</b> to create a simple
+     Web Server.
+   - Select the desired Network Sockets. For example, select <b>Network:Socket:TCP</b> for TCP communication. Usually, you
+     will also select <b>Network:Socket:UDP</b> for stateless communication.
+ -# From the <b>CMSIS Driver</b> Component:
+   - If you do Ethernet communication, select appropriate <b>CMSIS Driver:Ethernet (API)</b> or
+     <b>CMSIS Driver:Ethernet MAC (API)</b> \a and <b>CMSIS Driver:Ethernet PHY (API)</b> drivers suitable for your
+     application. For PPP or SLIP communication simply select <b>CMSIS Driver:USART (API):USART</b>. If you use wireless
+     communication, select appropriate <b>CMSIS Driver:WiFi (API)</b> driver that supports transparent mode.
+ -# From the \b Device Component:
+   - Additional device specific drivers may be required according to the validation output.
+ -# From the \b CMSIS Component:
+   - Select the <b>CMSIS:CORE</b> to provide the core interface to the processor.
+   - Select a suitable <b>CMSIS:RTOS</b> or <b>CMSIS:RTOS2</b> that is required for the Networking Component.
+ -# If you need to \ref secure_communication "secure the communication", select from the \b Security Component:
+   - \b mbed \b TLS
+   
+\image html "nw_rte_comp_selection.png" "RTE Component Selection Example"
+
+\section nw_Driver_Configuration Network Driver and Controller Configuration
+
+The Network Device Driver and the Network Controller of the microcontroller need to be correctly configured. This means:
+- The \ref netETH_Func "Ethernet interface" or \b UART (for
+  \ref netSLIP_Func "SLIP"/\ref netPPP_Func "PPP") is typically configured in the \b RTE_Device.h
+  configuration file. While this file provides multiple options, it is typically sufficient to enable the Ethernet/UART
+  interface. \b Note: Some microcontrollers may require settings that are related to a physical layer interface (PHY).
+- The Network Controller of the microcontroller typically needs specific clock settings. Consult the user's guide of the
+  microcontroller to understand the requirements. Alternatively, you may copy the setup of an
+  \ref nw_examples "example project" that is provided for various evaluation boards.
+  
+\section nw_PHY_Configuration Ethernet PHY Configuration
+
+For Ethernet network communication, usually an external Ethernet PHY is required to interface the physical line to the
+digital MAC of the microcontroller device. The MAC usually contains two buses:
+-# Data bus: <a href="https://en.wikipedia.org/wiki/Media-independent_interface" target="_blank">MII, RMII,</a> or Serial
+   Network Interface (SNI)
+-# Management bus: Serial Management Interface (\b SMI) (using MDC and MDIO)
+
+SMI is used to access the PHY’s internal registers to read the state of the link (up/down), duplex mode, speed, and to
+restart auto-negotiation etc. SMI is a serial bus, which allows to connect up to 32 devices. Devices on the bus are accessed
+using a 5-bit device address. A default device address is hardware configurable by pin-strapping on the device (some pins are
+sampled when a reset is asserted or at power-up).
+
+The device’s internal weak pull-up or pull-down resistors define a default device address. This address can be changed by
+connecting strong pull-up or pull-down resistors externally. In this case, the \c ETH_PHY_ADDR in the PHY driver needs to be
+changed accordingly to be able to control the PHY and to communicate with it. Use the <b>Options for Component</b> dialog to
+override the default setting for \c ETH_PHY_ADDR:
+
+\image html eth_phy_config.png
+
+  
+\section nw_Device_Configuration Network Configuration
+
+All configuration files for the Network Component are listed in the Project window below the Component Class \b Network.
+
+Network Core
+------------
+
+\image html net_config_c.png "Net_Config.c Configuration File"
+
+The Network Core configuration file \b %Net_Config.c contains the setting for the <b>Local Host Name</b>. This is a name
+under which the network device can be accessed on a local area network (\b LAN). This requires a
+\ref using_ethernet_interfaces_conf "NetBIOS Name Service" to be enabled in the configuration. This name is very useful if
+you don't know the IP address that has been assigned to your device by the DHCP server.
+
+The <b>Memory Pool Size</b> specifies the amount of RAM in bytes allocated for the memory pool. The buffers for the network
+packets are allocated from this memory pool. Usually, the default value of 12000 bytes is sufficient.
+
+Many \ref netServices "Network Services" are started by the Network Core automatically. If you disable
+<b>Start System Service</b>, you need to enable/start them at runtime using the dedicated functions for that.
+
+To change the default OS resource settings for the Network Core, use <b>Core Thread Stack Size</b>. The default value is 1024 bytes.
+The default Core Thread priority is <b>osPriorityNormal</b>. You can change this priority by changing the \b NET_THREAD_PRIORITY
+defined in this configuration file. This priority must be lower than the priorities of the network interface threads.
+
+Network Interface
+-----------------
+
+The Network Interface configuration files <b>Net_Config_<i>Interface</i>_<i>n</i>.h</b> contain general IP address and other
+settings. You also need to specify the hardware driver number that is to be used with the network interface. In case of
+Ethernet for example, this is usually 0. If you are using a SLIP or PPP over a serial connection, you need to specify the
+hardware driver number of the exact UART you wish to use. All settings for the different interfaces are described here:
+- \ref using_ethernet_interfaces_conf "Net_Config_ETH_0.h"
+- \ref using_wifi_interfaces_conf "Net_Config_WiFi_0.h"
+- \ref using_ppp_interfaces_conf "Net_Config_PPP.h"
+- \ref using_slip_interfaces_conf "Net_Config_SLIP.h"
+
+Network Socket
+--------------
+
+Usually, the needs of most applications are served by using the default settings for the sockets. Of course, there are
+configuration files for all three socket types that are specified in
+- \ref using_network_sockets_bsd_conf "Net_Config_BSD.h"
+- \ref using_network_sockets_tcp_conf "Net_Config_TCP.h"
+- \ref using_network_sockets_udp_conf "Net_Config_UDP.h"
+
+Network Service
+---------------
+
+The configuration files for all the Network Services are explained in the respective section:
+- \ref ws_configuration "Net_Config_HTTP_Server.h"
+- \ref using_ftp_server_conf "Net_Config_FTP_Server.h"
+- \ref using_ftpc_conf "Net_Config_FTP_Client.h"
+- \ref using_tftp_server_conf "Net_Config_TFTP_Server.h"
+- \ref using_tftpc_conf "Net_Config_TFTP_Client.h"
+- \ref telnet_server_conf "Net_Config_Telnet_Server.h"
+- \ref using_snmp_agent_conf "Net_Config_SNMP_Agent.h"
+- \ref using_dns_client_conf "Net_Config_DNS_Client.h"
+- \ref using_sntp_client_conf "Net_Config_SNTP_Client.h"
+- \ref using_smtpc_conf "Net_Config_SMTP_Client.h"
+
+
+\section nw_security_config Security Configuration
+
+The \b mbed \b TLS component provides an API for \ref secure_communication "secure communication". When selecting this
+software component, the \b mbedTLS_config.h configuration file is added to the project. The proper usage of this file is out
+of the scope of this document. For further information, check the online documentation of
+\urlout{mbedTLS}.
+
+
+\section nw_system_resources System Resource Configuration
+
+For proper operation, the Network Component requires some system configuration settings. The requirements are:
+- Additional \b stack size of <b>512 bytes</b>. This can be configured in the device's \b startup_device.s file (\c Stack_Size).
+- Additional two \b threads when Ethernet Interface is enabled (\c netCore_Thread and \c netETH_Thread).
+  - If you use <b>RTX v5</b>, you do not need to change the <b>RTX settings</b>, because all resources are statically allocated.
+  - If you use <b>RTX v4</b>, you must change the following settings in the \urlout{RTX-Conf-CM4} file: 
+    - Increase the <b>Number of concurrent running user threads</b> by \b 2
+    - Increase the <b>Number of threads with user-provided stack size</b> by \b 2
+    - Increase <b>Total stack size [bytes] for threads with user-provided stack size</b> by <b>1536 bytes</b>
+    - Enable <b>User Timers</b>
+ 
+For more information, check the Network Component's \ref nw_resource_requirements section.
+
+  
+\section nw_User_Code_Implementation User Code Implementation
+
+Before using the networking communications, the Network Core must be initialized with the function \ref netInitialize.
+The function initializes the Network system resources and creates threads and other RTOS objects. The initialization is
+usually executed from the \b app_main thread.
+
+The initialization process is different depending on which network interface is used:
+
+- \b Ethernet \b interface
+\code
+__NO_RETURN static void app_main (void *arg) {
+  (void)arg;
+ 
+  netInitialize ();
+ 
+  osThreadTerminate(osThreadGetId());
+  for(;;);
+}
+\endcode
+
+- \b WiFi \b interface
+\code
+__NO_RETURN static void app_main (void *arg) {
+  NET_WIFI_CONFIG wifi_config;
+  (void)arg;
+ 
+  netInitialize ();
+ 
+  // Configure wireless parameters
+  wifi_config.ssid       = "GuestAccess";
+  wifi_config.password   = "guest";
+  wifi_config.security   = netWiFi_SecurityWPA2;
+  wifi_config.channel    = 0;
+  wifi_config.wps_method = netWiFi_WPS_None;
+ 
+  // Connect to wireless network
+  netWiFi_Activate (0, &wifi_config);
+ 
+  osThreadTerminate(osThreadGetId());
+  for(;;);
+}
+\endcode
+
+- \b PPP \b interface
+\code
+__NO_RETURN static void app_main (void *arg) {
+  (void)arg;
+ 
+  netInitialize ();
+ 
+  // Connect to remote PPP server
+  netPPP_Connect ("04213372", "Guest", "test")
+ 
+  osThreadTerminate(osThreadGetId());
+  for(;;);
+}
+\endcode
+
+User Code Templates
+-------------------
+
+\urlout{uv4_user_code_template} files provide access to all functions that are required to communicate over the Network. The available
+functions are explained in the <a class=el href="./modules.html">Reference</a> section of the Network
+Component. These routines can be adapted to the needs of the microcontroller application, in case more functionality is
+needed.
+
+The following templates are available for the Network component:
+|Template Name|User Functions|
+|-------------|-------|
+|%DNS_Client.c | \c dns_cbfunc (Callback function for notification about DNS client events), \c resolve_host (DNS resolving process)|
+|%FTP_Client_UIF.c | \ref netFTPc_Process (Request parameters for FTP client session), \ref netFTPc_Notify (Notify the user application when FTP client operation ends)|
+|%FTP_Server_Access.c | \ref netFTPs_AcceptClient (Accept or deny connection from remote FTP client)|
+|%FTP_Server_Event.c | \ref netFTPs_Notify (Notify the user application about events in FTP server service)|
+|%FTP_Server_Multiuser.c | \ref netFTPs_CheckUsername (Check if an user account exists), \ref netFTPs_CheckPassword (Check user account password), \ref netFTPs_FileAccess (Check if remote user is allowed to access a file)|
+|%HTTP_Server_Access.c | \ref netHTTPs_AcceptClient (Accept or deny connection from remote HTTP client)|
+|%HTTP_Server_CGI.c | \ref netCGI_ProcessQuery (Process query string received by GET request), \ref netCGI_ProcessData (Process data received by POST request), \ref netCGI_Script (Generate dynamic web data from a script line)|
+|%HTTP_Server_Error.c | \c net_http_error (Define user-friendly HTTP error messages)|
+|%HTTP_Server_Multiuser.c | \ref netHTTPs_CheckAccount (Check if an user account exists), \ref netHTTPs_FileAccess (Check if remote user is allowed to access a file)|
+|%SMTP_Client_UIF.c | \ref netSMTPc_Process (Request parameters for SMTP client session), \ref netSMTPc_Notify (Notify the user application when SMTP client operation ends), \ref netSMTPc_AcceptAuthentication (Accept or deny authentication requested by SMTP server)|
+|%SNMP_Agent_MIB.c | \c mib_table (Defines MIB information data table), \c register_mib_table (Registers a MIB table in SNMP agent) |
+|%TCP_Socket_Client.c | \c tcp_cb_client (Notify the user application about TCP socket events), \c send_data (Connect to TCP server and send data)|
+|%TCP_Socket_Server.c | \c tcp_cb_server (Notify the user application about TCP socket events)|
+|%Telnet_Server_Access.c | \ref netTELNETs_AcceptClient (Accept or deny connection from remote Telnet client)|
+|%Telnet_Server_Multiuser.c | \ref netTELNETs_CheckUsername (Check if an user account exists), \ref netTELNETs_CheckPassword (Check user account password)|
+|%Telnet_Server_UIF.c | \ref netTELNETs_ProcessMessage (Request message for Telnet server session), \ref netTELNETs_ProcessCommand (Process a command and generate response)|
+|%TFTP_Client_UIF.c | \c tftp_client_notify (Notify the user application when TFTP client operation ends)|
+|%TFTP_Server_Access.c | \ref netTFTPs_AcceptClient (Accept or deny connection from remote TFTP client)|
+|%UDP_Socket.c | \c udp_cb_func (Notify the user application about UDP socket events), \c send_udp_data (Send UDP data to destination client)|
+
+
+\section nw_debugging Debugging 
+
+The Network Component is distributed in library form and doesn't allow direct code debug.
+However, it can be configured to generate debug events and provide dynamic visibility to the component operation.
+
+The following variants can be selected for the <b>Network:Core</b> component in the <b>Manage Run-Time Environment</b> window:
+ - \ref netEvrSupport "Debug": this variant supports event annotations for the \urlout{Event-Recorder-About}
+and makes it very easy to analyze the internal operation of the Network Component during application debug.
+ - \subpage netDebugStdio "Debug STDIO": this is a legacy debug variant that prints event information as ASCII messages. 
+ - <b>Release</b>: this variant does not include additional debugging code. Use this variant when deploying the application.
+
+The figure below shows selection of <b>IPv4/IPv6 Debug</b> variant as an example.
+\image html "nw_debug_variant.png"  
+
+The \ref net_evr describes the events implemented in Network Services.
+
+\note
+Users of MDK-Plus edition can only access <b> IPv4 Debug/Debug STDIO/Release</b> variants.
+
+\subsection netEvrSupport Event Recorder Support
+
+\urlout{Event-Recorder-About} is a powerful tool that provides visibility to the dynamic execution of the program.
+The Network Component generates \ref net_evr "a broad set of Debug Events" for the Event Recorder and implements required infrastructure to interface with it.
+
+To use the Event Recorder together with Network Component, it is required to create an image with event generation support. The necessary steps are:
+  1. \urlout{Debug-Variant-Select}: in the RTE management dialog select the \b Debug variant for the target <b>Network:Core</b> software component. 
+  2. \urlout{Event-Recorder-Enable}: in the RTE management dialog enable the software component <b>CMSIS-View:Event Recorder</b>.
+  3. \urlout{Event-Recorder-Initialize}: in the application code, call the function <b>EventRecorderInitialize</b>.  
+  4. \urlout{Event-Recorder-Configure}: if necessary, adjust default Event Recorder configuration.
+  5. Build the application code, download it to the target hardware and start debug session.
+
+Now, when the network services generate event information, it can be viewed in the \urlout{uv4-Event-Recorder}.
+
+Event filtering
+---------------
+The Network debug variant generates lots of debug events. This might have an impact on the operation of the Network library.
+It is a good idea to disable debug for modules, which are not used, or at least to reduce the number of messages, that
+are generated. Therefore, enable \b Error events for such modules and enable \b Debug events only for the modules you are
+focused on.
+
+Event IDs
+---------
+
+The network component uses the following event IDs:
+
+| Component   | Event ID |
+|-------------|----------|
+| Net_SYS     | 0xC0     |
+| Net_MEM     | 0xC1     |
+| Net_ETH     | 0xC2     |
+| Net_WiFi    | 0xDD     |
+| Net_PPP     | 0xC3     |
+| Net_SLIP    | 0xC4     |
+| Net_LOOP    | 0xC5     |
+| Net_IP4     | 0xC6     |
+| Net_ICMP    | 0xC7     |
+| Net_IGMP    | 0xC8     |
+| Net_NBNS    | 0xC9     |
+| Net_DHCP    | 0xCA     |
+| Net_ARP     | 0xCB     |
+| Net_IP6     | 0xCC     |
+| Net_ICMP6   | 0xCD     |
+| Net_DHCP6   | 0xCE     |
+| Net_NDP     | 0xCF     |
+| Net_UDP     | 0xD0     |
+| Net_TCP     | 0xD1     |
+| Net_BSD     | 0xD2     |
+| Net_HTTPs   | 0xD3     |
+| Net_FTPs    | 0xD4     |
+| Net_FTPc    | 0xD5     |
+| Net_Teln    | 0xD6     |
+| Net_TFTPs   | 0xD7     |
+| Net_TFTPc   | 0xD8     |
+| Net_SMTP    | 0xD9     |
+| Net_DNS     | 0xDA     |
+| Net_SNMP    | 0xDB     |
+| Net_SNTP    | 0xDC     |
+
+\section nw_runtime_config Runtime Configuration
+
+It is often necessary to change the parameters and mode of operation of the network interface at startup or runtime. System
+control functions allow reading and changing the settings of the network interface and the system (for example the
+<a href="https://en.wikipedia.org/wiki/Hostname" target="_blank">hostname</a>).
+
+This is required for using the same application code for serial production of embedded devices. The \b runtime
+\b configuration feature enables reading of configuration parameters from an EEPROM or SD Card and configuring the 
+network interface for each embedded device differently.
+
+To control the network interface options, you can use:
+- \ref netIF_GetOption function to retrieve the options
+- \ref netIF_SetOption function to set the options
+- \ref netIF_SetDefault function to set default interface for internet access
+
+The options which can be changed are defined in the \ref netIF_Option enumerator. However, some interfaces do not support the
+complete set of available options. For example, the PPP interface does not have a MAC address. If you try to modify an
+unsupported option, an error is returned.
+
+The <a href="https://en.wikipedia.org/wiki/Localhost" target="_blank">localhost</a> name is used to access the embedded
+system without knowledge of its IP address. \ref netSYS_GetHostName is used to retrieve the localhost name, whereas
+\ref netSYS_SetHostName changes the localhost name.
+
+The <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol" target="_blank">DHCP</a> client can be
+disabled or enabled at runtime. When disabled, the user provided network parameters defined in the \b %Net_Config_ETH_0.h
+or \b %Net_Config_WiFi_0.h configuration files are used. Switch the state of the DHCP client using \ref netDHCP_Disable and
+\ref netDHCP_Enable.
+
+\note Each embedded Ethernet device must have a unique \b MAC \b address, \b IP \b address, and \b hostname. This is very
+important when multiple devices are connected to the same LAN. Otherwise, the system might not work (due to collisions or
+disturbed network communications).
+
+\b Code \b Example
+\code
+#include "rl_net.h"
+ 
+/* The following values are read from EEPROM */
+const char mac_addr[]  = { "00-01-02-32-3c-46" };
+const char ip_addr[]   = { "192.168.0.150"     };
+const char def_gw[]    = { "192.168.0.1"       };
+const char net_mask[]  = { "255.255.255.0"     };
+const char pri_dns[]   = { "194.25.2.129"      };
+const char sec_dns[]   = { "194.25.2.130"      };
+const char host_name[] = { "Keil_MCB"          };
+bool DHCP_enabled      = false;
+ 
+int main (void) {
+  uint8_t buf[8];
+ 
+  netInitialize ();
+ 
+  /* Change host name */
+  netSYS_SetHostName (host_name);
+ 
+  /* Change MAC address */
+  netMAC_aton (mac_addr, buf);
+  netIF_SetOption (NET_IF_CLASS_ETH | 0, netIF_OptionMAC_Address, buf, NET_ADDR_ETH_LEN);
+ 
+  if (DHCP_enabled == false) {
+    /* Static configuration mode */ 
+    netDHCP_Disable (NET_IF_CLASS_ETH | 0);
+ 
+    /* Change IP address */
+    netIP_aton (ip_addr, NET_ADDR_IP4, buf);
+    netIF_SetOption (NET_IF_CLASS_ETH | 0, netIF_OptionIP4_Address, buf, NET_ADDR_IP4_LEN);
+ 
+    /* Change Network mask */
+    netIP_aton (net_mask, NET_ADDR_IP4, buf);
+    netIF_SetOption (NET_IF_CLASS_ETH | 0, netIF_OptionIP4_SubnetMask, buf, NET_ADDR_IP4_LEN);
+ 
+    /* Change Default Gateway address */
+    netIP_aton (def_gw, NET_ADDR_IP4, buf);
+    netIF_SetOption (NET_IF_CLASS_ETH | 0, netIF_OptionIP4_DefaultGateway, buf, NET_ADDR_IP4_LEN);
+ 
+    /* Change Primary DNS Server address */
+    netIP_aton (pri_dns, NET_ADDR_IP4, buf);
+    netIF_SetOption (NET_IF_CLASS_ETH | 0, netIF_OptionIP4_PrimaryDNS, buf, NET_ADDR_IP4_LEN);
+ 
+    /* Change Secondary DNS Server address */
+    netIP_aton (sec_dns, NET_ADDR_IP4, buf);
+    netIF_SetOption (NET_IF_CLASS_ETH | 0, netIF_OptionIP4_SecondaryDNS, buf, NET_ADDR_IP4_LEN);
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\page network_troubleshoot Troubleshooting a Network Application
+
+\section trbl_nw_hierachry Network library hierarchy
+
+<b>BSD sockets</b> represent the Session layer in the OSI model. 
+They are using the native TCP and UDP sockets of the Network library. The debug messages from the BSD module are very compact
+and provide as less information as possible. You can see how the BSD functions are called and their return values. Most of
+the time this is sufficient. If not, enable the underlying layers as well.
+
+<b>TCP, UDP sockets</b> implement the TCP/UDP protocol, which is then used by BSD sockets. Their debug messages show the
+details of the TCP/UDP protocol in the communication stream. Information about error recovery, flow control and
+re-transmissions is displayed. In case the BSD socket communication fails, this can point to the underlying problem.
+
+The <b>IPv4, IPv6 network layer</b> adds the concept of routing above the Data Link Layer. When data arrives at the network
+layer, the source and destination addresses are examined to determine if the data has reached the final destination. If this
+is true, the data is formatted into packets and delivered up to the TCP/UDP layer. The IP layer debug messages show details
+about IP addresses, routing and packet fragmentation and reassembly (if this is used in communication).
+
+On the <b>Ethernet, WiFi, PPP and SLIP layer</b>, bits are packed into data frames and physical addressing is managed (for example
+using MAC addresses).
+
+\image html nw_hierarchy.png "Network library hierarchy"
+
+
+\section trbl_bestpractice Best practices
+
+This section shows some of the best practices that are used by the developers of the network stack when troubleshooting
+communication issues. Following them should usually quickly help identifying the underlying problem of a non-working project.
+
+\note
+The following assumes that you are using \ref netEvrSupport "Event Recorder" based debugging.
+
+
+\subsection trbl_verify_eth Check the Ethernet interface 
+
+<a href="">Component Viewer</a> shows you static information about the operation of a software component. In the µVision
+debugger, go to <b>Debug -> View -> Watch windows -> Network</b> to see the status information of the network library:
+
+\image html trbl_cv_nw.png "Component Viewer for the Network library"
+
+This indicates the following:
+| Property | Description |
+|-----------|-------------|
+| ETH interface | Shows physical connection problems; Link-Up indicates a stable connection |
+| IP Address| Shows DHCP address assignment problems; for an unassigned IP address the entry reads 0.0.0.0 |
+  
+The Ethernet interface is operational when the link-up state is indicated and a DHCP address is assigned. When using a static
+IP address, DHCP assignment is skipped. Thus, only the link-up state is required.
+
+If the DHCP client is enabled, but fails to receive an IP address from the DHCP server, use DHCP events to follow the DHCP
+assignment process and possibly identify the root-cause of the problem. Usually, DHCP assignment fails when the DHCP server
+is not available or is not operational in the local network.
+
+\subsection trbl_verify_sock Verify Socket Communication
+
+Event Recorder shows the sequence of events for the connection. The following example shows the BSD event log of a successful
+communication:
+
+\verbatim
+10  13.11487039  NetBSD  SocketAllocated      sock=1  type=SOCK_STREAM
+11  13.11487544  NetBSD  ConnectSocket        sock=1
+12  13.14889442  NetBSD  CbfuncTcpEvent       sock=1  event=Established
+13  13.14891358  NetBSD  ConnectStreamSuccess sock=1
+14  18.14885683  NetBSD  Closesocket          sock=1
+\endverbatim
+
+When the BSD socket is connected, the state of the underlying TCP socket is shown in the viewer as well:
+
+\image html trbl_cv_nw_tcp.png
+
+This shows the remote IP address and port number, as well as the local port number, the value for the timeout timer and the
+active TCP socket options. This is valuable information in addition to the events shown in Event Recorder.
+
+The following example shows the BSD event log in case a target cannot be reached:
+
+\verbatim
+3   7.41687549   NetBSD  SocketAllocated      sock=1  type=SOCK_STREAM
+4   7.41688068   NetBSD  ConnectSocket        sock=1
+5   22.41490458  NetBSD  CbfuncTcpEvent       sock=1  event=Aborted
+6   22.41491838  NetBSD  ConnectStreamTimeout sock=1
+7   27.41486937  NetBSD  Closesocket          sock=1
+\endverbatim
+             
+After a timeout, BSD connect fails with the log "ConnectStreamTimeout". From the timestamp records, you can observe that this
+happened 15 seconds later. During this time, a TCP module has made several retries to establish a connection with the remote
+host, but finally gave up.
+
+Possible reasons for the connection to fail:
+
+-# a remote host is not reachable (either not running or switched off).
+-# a firewall blocks the outbound connection.
+-# a firewall blocks the inbound connection.
+-# a local port number used for communication is reserved for other means in the communication equipment (ie. modem/router).
+   For example, the TCP port 49152 is sometimes reserved by the Internet provider for remote management of the communication
+   device. In general, communication using reserved ports is not possible.
+  
+After a BSD connect() is called and before the function completes, many events are generated from the TCP socket, indicating
+how the TCP is performing the connect. Here is a log of successful connect with BSD and TCP events enabled:
+
+\verbatim
+6   13.41688149  NetBSD  ConnectSocket        sock=1
+7   13.41688457  NetTCP  ConnectSocket        sock=1  loc_port=0
+8   13.41688673  NetTCP  ShowNetAddressIp4    ip=64.233.184.206  port=8883
+9   13.41688979  NetTCP  ConnectLocalPortAssigned    loc_port=49152
+10  13.41689299  NetTCP  ShowRttVariables     rto=4000  sa=0  sv=40
+11  13.41689612  NetTCP  SendControl          sock=1
+12  13.41690353  NetTCP  ShowFrameHeader      dport=8883  sport=49152  seq=0x1B35487F  ack=0x00000000  flags=0x02  win=4320  cksum=0x0000
+13  13.45960305  NetTCP  ReceiveFrame         len=24  ver=IPv4
+14  13.45960505  NetTCP  ShowFrameHeader      dport=49152  sport=8883  seq=0x22F3D202  ack=0x1B354880  flags=0x12  win=42780  cksum=0xF859
+15  13.45961008  NetTCP  MappedToSocket       sock=1  state=SYN_SENT
+16  13.45961235  NetTCP  ParseHeaderOptions   opt_len=4
+17  13.45961427  NetTCP  OptionMss            mss=1380
+18  13.45961622  NetTCP  ShowCongestionVariables     cwnd=4140  ssth=65535
+19  13.45961786  NetTCP  ShowSendWindow       send_win=42780
+20  13.45961948  NetTCP  NextState            state=ESTABLISHED
+21  13.45962121  NetTCP  SendControl          sock=1
+22  13.4596284   NetTCP  ShowFrameHeader      dport=8883  sport=49152  seq=0x1B354880  ack=0x22F3D203  flags=0x10  win=4320  cksum=0x0000
+23  13.45964949  NetBSD  CbfuncTcpEvent       sock=1  event=Established
+24  13.45966893  NetBSD  ConnectStreamSuccess sock=1
+\endverbatim
+
+To trace all events that are relevant for the BSD connect, also enable IPv4 and ETH events. In this case, the number of
+generated events is much larger. Tracking the Event Recorder log becomes more difficult:
+
+\verbatim
+48  7.41688149   NetBSD  ConnectSocket         sock=1
+49  7.41688458   NetTCP  ConnectSocket         sock=1  loc_port=0
+50  7.41688674   NetTCP  ShowNetAddressIp4     ip=64.233.184.206  port=8883
+51  7.41688979   NetTCP  ConnectLocalPortAssigned    loc_port=49152
+52  7.416893     NetTCP  ShowRttVariables      rto=4000  sa=0  sv=40
+53  7.41689613   NetTCP  SendControl           sock=1
+54  7.41690354   NetTCP  ShowFrameHeader       dport=8883  sport=49152  seq=0x00828ADD  ack=0x00000000  flags=0x02  win=4320  cksum=0x0000
+55  7.41690848   NetIP4  SendFrame             proto=TCP  len=24
+56  7.41691169   NetIP4  ShowFrameHeader       dst=64.233.184.206  src=192.168.3.49  proto=TCP  id=0x0002  frag=0x4000  len=44
+57  7.41691642   NetETH  SendFrame             len=44  ver=IPv4
+58  7.4169189    NetARP  CacheFind             ip=64.233.184.206
+59  7.41692122   NetARP  UsingGateway          gw=192.168.3.1
+60  7.41692342   NetARP  EntryFound            entry=1
+61  7.4169255    NetETH  ShowFrameHeader       dst=C0-A0-BB-77-4F-B8  src=1E-30-6C-A2-45-5A  proto=IP4
+62  7.41692896   NetETH  OutputLowLevel        len=58
+63  7.4508298    NetETH  ReceiveFrame          len=60
+64  7.45083195   NetETH  ShowFrameHeader       dst=1E-30-6C-A2-45-5A  src=C0-A0-BB-77-4F-B8  proto=IP4
+65  7.45083569   NetIP4  ReceiveFrame          len=46
+66  7.45083735   NetIP4  ShowFrameHeader       dst=192.168.3.49  src=64.233.184.206  proto=TCP  id=0x1AB4  frag=0x0000  len=44
+67  7.45084473   NetTCP  ReceiveFrame          len=24  ver=IPv4
+68  7.45084669   NetTCP  ShowFrameHeader       dport=49152  sport=8883  seq=0x3E8D5ACA  ack=0x00828ADE  flags=0x12  win=42780  cksum=0x2C4D
+69  7.45085173   NetTCP  MappedToSocket        sock=1  state=SYN_SENT
+70  7.45085574   NetTCP  ParseHeaderOptions    opt_len=4
+71  7.45085765   NetTCP  OptionMss             mss=1380
+72  7.45085961   NetTCP  ShowCongestionVariables     cwnd=4140  ssth=65535
+73  7.45086124   NetTCP  ShowSendWindow        send_win=42780
+74  7.45086286   NetTCP  NextState             state=ESTABLISHED
+75  7.4508646    NetTCP  SendControl           sock=1
+76  7.45087179   NetTCP  ShowFrameHeader       dport=8883  sport=49152  seq=0x00828ADE  ack=0x3E8D5ACB  flags=0x10  win=4320  cksum=0x0000
+77  7.45087673   NetIP4  SendFrame             proto=TCP  len=20
+78  7.45087994   NetIP4  ShowFrameHeader       dst=64.233.184.206  src=192.168.3.49  proto=TCP  id=0x0003  frag=0x4000  len=40
+79  7.45088467   NetETH  SendFrame             len=40  ver=IPv4
+80  7.45088715   NetARP  CacheFind             ip=64.233.184.206
+81  7.45088947   NetARP  UsingGateway          gw=192.168.3.1
+82  7.45089167   NetARP  EntryFound            entry=1
+83  7.45089374   NetETH  ShowFrameHeader       dst=C0-A0-BB-77-4F-B8  src=1E-30-6C-A2-45-5A  proto=IP4
+84  7.4508972    NetETH  OutputLowLevel        len=54
+85  7.45090824   NetBSD  CbfuncTcpEvent        sock=1  event=Established
+86  7.45092768   NetBSD  ConnectStreamSuccess  sock=1
+\endverbatim
+
+This is what happens when the BSD connect() function is called:
+-# The TCP connect process is started.
+-# The current local port is \token{0}. The system allocates port 49152 from the dynamic ports range for the local port.
+-# The TCP layer creates a TCP header and sends the control frame with a SYN flag set to the IPv4 network.
+-# The IPv4 network adds the IPv4 header with the source and destination IP address and sends the frame to the ETH interface.
+-# The ETH interface checks the ARP cache if the destination IP address 64.233.184.206 has already been resolved, (the target
+   IP address is not local, so the gateway is selected to forward the packet to).
+-# The MAC address of a gateway is resolved and the Ethernet frame is sent to the gateway.
+-# After a small delay, an Ethernet frame is received from the gateway (MAC=C0-A0-BB-77-4F-B8).
+-# The IPv4 network shows that it is originating from IP address 64.233.184.206; protocol is TCP.
+-# TCP shows the TCP header information and maps this frame to the existing TCP socket 1.
+-# As the control frame has the SYN+ACK flags set, TCP generates an ACK response and transits to ESTABLISHED state.
+-# The outgoing TCP ACK frame traverses IPv4 and ETH layers and is sent to the gateway.
+-# TCP also generates an event for the BSD socket 1, which is blocked and waiting to resume.
+-# BSD socket 1 resumes with an event "ConnectStreamSuccess" (this signals that the BSD socket 1 is now connected).
+
+\subsection trbl_verify_secure Verify Secure Communication
+
+If the BSD socket has connected successfully to the IoT Cloud, but the TLS handshake has failed, no secure connection will be
+established. An established network connection is indicated with the NetBSD event "ConnectStreamSuccess" in the Event
+Recorder log. 
+
+Usually, \ref use_mbed_tls "Mbed TLS" is used as the security layer for MDK-Middleware. To successfully debug the Mbed TLS
+security layer, read the related MbedTLS documentation.
+
+Typical errors in the security layer are:
+
+- heap size too small and Mbed TLS cannot allocate enough memory for the requested operation.
+- thread stack size of the thread running Mbed TLS is too small and thus stack overflows are detected. This leads to
+  sporadic crashes of the IoT application.
+- invalid credentials or security certificates are used so that the certificate verification fails during the TLS handshake.
+*/

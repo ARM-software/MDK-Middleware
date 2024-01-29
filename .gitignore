@@ -1,1 +1,3 @@
 # list files that shall be ignored by git
+/build/
+/output/

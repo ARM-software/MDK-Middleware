@@ -1,0 +1,220 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/* Reference Section */
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+
+/**
+\defgroup function_categories Overview
+\brief Network Component v7 Function Overview.
+\details
+This reference section is divided into the following subsections:
+- The Network Component v7 implements API functions for the various \ref netServices, \ref netSockets, and \ref netInterfaces
+  as described in the \ref netDSOverview "overview".
+- \ref netGen_Func functions allow IP address conversion and describes the related data format.
+- \ref netSys_Func initialize the Network Component and allow for hostname management.
+- \ref netStatusErrorCodes are described that are returned by the API functions.
+- \ref netDS_Modem implement the interface to an on-chip or external Modem for \ref netPPP_Func "PPP" and
+  \ref netSLIP_Func "SLIP" networking.
+
+Function Categories
+-------------------
+Each API function of the Network Component v7 indicates a category:
+
+\anchor thread-safe
+  - <b>[thread-safe]</b> functions can be called from different threads without any harm. They are either \b re-entrant or
+  internally protected from re-entering. Internal protection is usually achieved using RTOS mutexes.
+
+\anchor not_thread-safe
+  - <b>[not_thread-safe]</b> functions cannot be used from different threads. It is allowed to be used from the same thread,
+  in which the Network Core super-loop is running.  
+
+\anchor user-provided
+  - <b>[user-provided]</b> functions need to be provided by the programmer. Some of user-provided functions are \b optional,
+  others are \b mandatory. If an optional function is not provided, a default function from the Network library is used.
+  Mandatory user-provided functions do not exist in the Network library. They have to be provided by the user if required
+  in the application.
+
+\anchor interface
+  - <b>[interface]</b> functions are connecting to a different Middleware component (for example the File System). All
+  interface functions are tagged as weak, so they can be replaced with an application specific implementation if required
+  (for example if a different file system is to be used). Usually, the default functions are sufficient for proper operation.
+*/
+
+/**
+\defgroup Net_files Directories and Files
+\ingroup function_categories
+\brief Folders and files related to the Network Component.
+\details
+
+Directories and Files
+---------------------
+
+\b Directories
+
+The table below provides a complete overview of the folders that contain the files related to the Network Component v7.
+
+Directory           | Description
+:------------------ | :---------------------
+./Network/Config    | Configuration Files that are copied to the project when components are selected.
+./Network/Driver    | Driver implementations for external MAC and PHY devices available as Driver Components.
+./Network/Include   | Include files; once a component is select an Include Path is set for the C/C++ compiler to this directory.
+./Network/Interface | Interface files to other Middleware Components. Files are included when a related component is selected (\b read-only).
+./Network/Lib/ARM   | Library files for Network. The linker includes the library for the selected processor from this directory.
+./Network/Template  | \urlout{uv4_ca_sourcefiles} simplify creating application specific functionality. Adapt the template functions to the application's needs.
+
+
+\b Header \b Files
+
+The API interface of the Network Component v7 is provided using different header files:
+
+Header File         | Used by            | Description
+:------------------ | :----------------- | :------------------------------------
+\b rl_net.h         | Application Code   | API for the Network Component v7
+\b rl_net_ds.h      | %rl_net.h          | Network Component v7 API header file included from \b %rl_net.h 
+\b rl_net_legacy.h  | %rl_net.h          | Legacy IPv4-only API Header file included from \b %rl_net.h 
+\b rl_net_lib.h     | Internal Library   | The functions in this header file are for <b>internal use only</b>. They should no be called by user applications.
+\b net_config.h     | %Net_Config.c      | Resource definitions for the Network component
+\b net_rtos.h       | %Net_Config.c      | Network CMSIS-RTOS abstraction layer
+\b net_rtos2.h      | %Net_Config.c      | Network CMSIS-RTOS2 abstraction layer
+\b net_debug.h      | %Net_Debug.c       | Definitions for Network Debug Configuration
+\b net_evr.h        | Internal Library   | Network debug definitions for Event Recorder
+\b net_modem.h      | %Modem_*.c         | API for the Network Modem Driver
+
+
+\b Library \b Files
+
+The Network Component is provided in the following library files:
+
+Library                | Description
+:--------------------- | :---------------------
+\b %Net_CM0_B.lib      | IPv4/IPv6 library for devices based on \b Cortex-M0 and \b Cortex-M0+ in big-endian configuration.
+\b %Net_CM0_L.lib      | IPv4/IPv6 library for devices based on \b Cortex-M0 and \b Cortex-M0+ in little-endian configuration.
+\b %Net_CM3_B.lib      | IPv4/IPv6 library for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in big-endian configuration.
+\b %Net_CM3_L.lib      | IPv4/IPv6 library for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in little-endian configuration.
+\b %Net_Dbg_CM0_B.lib  | IPv4/IPv6 library with Event Recorder Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in big-endian configuration.
+\b %Net_Dbg_CM0_L.lib  | IPv4/IPv6 library with Event Recorder Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in little-endian configuration.
+\b %Net_Dbg_CM3_B.lib  | IPv4/IPv6 library with Event Recorder Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in big-endian configuration.
+\b %Net_Dbg_CM3_L.lib  | IPv4/IPv6 library with Event Recorder Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in little-endian configuration.
+\b %Net_D_CM0_B.lib    | IPv4/IPv6 library with Standard output Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in big-endian configuration.
+\b %Net_D_CM0_L.lib    | IPv4/IPv6 library with Standard output Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in little-endian configuration.
+\b %Net_D_CM3_B.lib    | IPv4/IPv6 library with Standard output Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in big-endian configuration.
+\b %Net_D_CM3_L.lib    | IPv4/IPv6 library with Standard output Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in little-endian configuration.
+\b %Net4_CM0_B.lib     | IPv4 only library for devices based on \b Cortex-M0 and \b Cortex-M0+ in big-endian configuration.
+\b %Net4_CM0_L.lib     | IPv4 only library for devices based on \b Cortex-M0 and \b Cortex-M0+ in little-endian configuration.
+\b %Net4_CM3_B.lib     | IPv4 only library for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in big-endian configuration.
+\b %Net4_CM3_L.lib     | IPv4 only library for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in little-endian configuration.
+\b %Net4_Dbg_CM0_B.lib | IPv4 only library with Event Recorder Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in big-endian configuration.
+\b %Net4_Dbg_CM0_L.lib | IPv4 only library with Event Recorder Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in little-endian configuration.
+\b %Net4_Dbg_CM3_B.lib | IPv4 only library with Event Recorder Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in big-endian configuration.
+\b %Net4_Dbg_CM3_L.lib | IPv4 only library with Event Recorder Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in little-endian configuration.
+\b %Net4_D_CM0_B.lib   | IPv4 only library with Standard output Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in big-endian configuration.
+\b %Net4_D_CM0_L.lib   | IPv4 only library with Standard output Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in little-endian configuration.
+\b %Net4_D_CM3_B.lib   | IPv4 only library with Standard output Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in big-endian configuration.
+\b %Net4_D_CM3_L.lib   | IPv4 only library with Standard output Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in little-endian configuration.
+
+\note The Run-Time Environment Manager automatically selects the correct library required for a certain device.
+*/
+
+/**
+\defgroup RFC_list Implemented RFCs
+\ingroup function_categories
+\brief List of RFCs that are covered by the Network Component.
+\details
+A <a href="https://en.wikipedia.org/wiki/Request_for_Comments" target="_blank">Request for Comments (RFC)</a> is a document
+from the <a href="https://www.ietf.org/" target="_blank">Internet Engineering Task Force (IETF)</a> and the
+<a href="https://www.internetsociety.org/" target="_blank">Internet Society</a>, the main technical development and
+standards-setting bodies for the Internet. RFCs are official documents of Internet specifications, communications protocols,
+procedures, and events. The following RFCs are currently implemented in the Network Component v7:
+|RFC | Title |
+|----|:------|
+|<a href="https://tools.ietf.org/html/rfc768" target="_blank">RFC768</a> | User Datagram Protocol (UDP)
+|<a href="https://tools.ietf.org/html/rfc791" target="_blank">RFC791</a> | Internet Protocol (IPv4)
+|<a href="https://tools.ietf.org/html/rfc792" target="_blank">RFC792</a> | Internet Control Message Protocol (ICMP)
+|<a href="https://tools.ietf.org/html/rfc793" target="_blank">RFC793</a> | Transmission Control Protocol (TCP)
+|<a href="https://tools.ietf.org/html/rfc815" target="_blank">RFC815</a> | IP Datagram Reassembly Algorithms
+|<a href="https://tools.ietf.org/html/rfc821" target="_blank">RFC821</a> | Simple Mail Transfer Protocol (SMTP)
+|<a href="https://tools.ietf.org/html/rfc826" target="_blank">RFC826</a> | An Ethernet Address Resolution Protocol (ARP)
+|<a href="https://tools.ietf.org/html/rfc854" target="_blank">RFC854</a> | Telnet Protocol Specification
+|<a href="https://tools.ietf.org/html/rfc855" target="_blank">RFC855</a> | Telnet Option Specifications
+|<a href="https://tools.ietf.org/html/rfc857" target="_blank">RFC857</a> | Telnet Echo Option
+|<a href="https://tools.ietf.org/html/rfc858" target="_blank">RFC858</a> | Telnet Suppress Go Ahead Option
+|<a href="https://tools.ietf.org/html/rfc894" target="_blank">RFC894</a> | A Standard for the Transmission of IP Datagrams over Ethernet
+|<a href="https://tools.ietf.org/html/rfc951" target="_blank">RFC951</a> | Bootstrap Protocol (BOOTP)
+|<a href="https://tools.ietf.org/html/rfc959" target="_blank">RFC959</a> | File Transfer Protocol (FTP)
+|<a href="https://tools.ietf.org/html/rfc1001" target="_blank">RFC1001</a> | Protocol Standard for a NetBIOS Service on a TCP/UDP Transport: Concepts and Methods
+|<a href="https://tools.ietf.org/html/rfc1002" target="_blank">RFC1002</a> | Protocol Standard for a NetBIOS Service on a TCP/UDP Transport: Detailed Specifications
+|<a href="https://tools.ietf.org/html/rfc1034" target="_blank">RFC1034</a> | Domain Names - Concepts and Facilities (DNS)
+|<a href="https://tools.ietf.org/html/rfc1035" target="_blank">RFC1035</a> | Domain Names - Implementation and Specification
+|<a href="https://tools.ietf.org/html/rfc1042" target="_blank">RFC1042</a> | Standard for the transmission of IP datagrams over IEEE 802 networks
+|<a href="https://tools.ietf.org/html/rfc1055" target="_blank">RFC1055</a> | A Nonstandard for Transmission of IP Datagrams over Serial Lines (SLIP)
+|<a href="https://tools.ietf.org/html/rfc1101" target="_blank">RFC1101</a> | Encoding of Network Names and Other Types
+|<a href="https://tools.ietf.org/html/rfc1112" target="_blank">RFC1112</a> | Host Extensions for IP Multicasting (IGMP)
+|<a href="https://tools.ietf.org/html/rfc1122" target="_blank">RFC1122</a> | Requirements for Internet Hosts - Communication Layers
+|<a href="https://tools.ietf.org/html/rfc1123" target="_blank">RFC1123</a> | Requirements for Internet Hosts - Application and Support
+|<a href="https://tools.ietf.org/html/rfc1155" target="_blank">RFC1155</a> | Structure and Identification of Management Information for TCP/IP-based Internets
+|<a href="https://tools.ietf.org/html/rfc1156" target="_blank">RFC1156</a> | Management Information Base for Network Management of TCP/IP-based internets				   
+|<a href="https://tools.ietf.org/html/rfc1157" target="_blank">RFC1157</a> | A Simple Network Management Protocol (SNMP))
+|<a href="https://tools.ietf.org/html/rfc1321" target="_blank">RFC1321</a> | The MD5 Message-Digest Algorithm
+|<a href="https://tools.ietf.org/html/rfc1332" target="_blank">RFC1332</a> | The PPP Internet Protocol Control Protocol (IPCP)
+|<a href="https://tools.ietf.org/html/rfc1334" target="_blank">RFC1334</a> | PPP Authentication Protocols (PAP, CHAP) 
+|<a href="https://tools.ietf.org/html/rfc1350" target="_blank">RFC1350</a> | The TFTP Protocol (Revision 2)
+|<a href="https://tools.ietf.org/html/rfc1542" target="_blank">RFC1542</a> | Clarifications and Extensions for BOOTP
+|<a href="https://tools.ietf.org/html/rfc1661" target="_blank">RFC1661</a> | The Point-to-Point Protocol (PPP)
+|<a href="https://tools.ietf.org/html/rfc1662" target="_blank">RFC1662</a> | PPP in HDLC-like Framing
+|<a href="https://tools.ietf.org/html/rfc1700" target="_blank">RFC1700</a> | Assigned Numbers 
+|<a href="https://tools.ietf.org/html/rfc1769" target="_blank">RFC1769</a> | Simple Network Time Protocol (SNTP) 
+|<a href="https://tools.ietf.org/html/rfc1867" target="_blank">RFC1867</a> | Form-based File Upload in HTML
+|<a href="https://tools.ietf.org/html/rfc1869" target="_blank">RFC1869</a> | SMTP Service Extensions
+|<a href="https://tools.ietf.org/html/rfc1877" target="_blank">RFC1877</a> | PPP Internet Protocol Control Protocol Extensions for Name Server Addresses
+|<a href="https://tools.ietf.org/html/rfc2045" target="_blank">RFC2045</a> | Multipurpose Internet Mail Extensions (MIME) Part One: Format of Internet Message Bodies
+|<a href="https://tools.ietf.org/html/rfc2046" target="_blank">RFC2046</a> | Multipurpose Internet Mail Extensions (MIME) Part Two: Media Types
+|<a href="https://tools.ietf.org/html/rfc2047" target="_blank">RFC2047</a> | Multipurpose Internet Mail Extensions (MIME) Part Three: Message Header Extensions for Non-ASCII Text
+|<a href="https://tools.ietf.org/html/rfc2104" target="_blank">RFC2104</a> | HMAC: Keyed-Hashing for Message Authentication
+|<a href="https://tools.ietf.org/html/rfc2113" target="_blank">RFC2113</a> | IP Router Alert Option
+|<a href="https://tools.ietf.org/html/rfc2131" target="_blank">RFC2131</a> | Dynamic Host Configuration Protocol (DHCP)
+|<a href="https://tools.ietf.org/html/rfc2132" target="_blank">RFC2132</a> | DHCP Options and BOOTP Vendor Extensions
+|<a href="https://tools.ietf.org/html/rfc2181" target="_blank">RFC2181</a> | Clarifications to the DNS Specification
+|<a href="https://tools.ietf.org/html/rfc2195" target="_blank">RFC2195</a> | IMAP/POP AUTHorize Extension for Simple Challenge/Response
+|<a href="https://tools.ietf.org/html/rfc2236" target="_blank">RFC2236</a> | Internet Group Management Protocol, Version 2 (IGMPv2)
+|<a href="https://tools.ietf.org/html/rfc2292" target="_blank">RFC2292</a> | Advanced Sockets API for IPv6
+|<a href="https://tools.ietf.org/html/rfc2347" target="_blank">RFC2347</a> | TFTP Option Extension
+|<a href="https://tools.ietf.org/html/rfc2348" target="_blank">RFC2348</a> | TFTP Blocksize Option
+|<a href="https://tools.ietf.org/html/rfc2390" target="_blank">RFC2390</a> | Inverse Address Resolution Protocol (InARP)
+|<a href="https://tools.ietf.org/html/rfc2428" target="_blank">RFC2428</a> | FTP Extensions for IPv6 and NATs
+|<a href="https://tools.ietf.org/html/rfc2460" target="_blank">RFC2460</a> | Internet Protocol, Version 6 (IPv6) Specification
+|<a href="https://tools.ietf.org/html/rfc2464" target="_blank">RFC2464</a> | Transmission of IPv6 Packets over Ethernet Networks
+|<a href="https://tools.ietf.org/html/rfc2554" target="_blank">RFC2554</a> | SMTP Service Extension for Authentication
+|<a href="https://tools.ietf.org/html/rfc2616" target="_blank">RFC2616</a> | Hypertext Transfer Protocol -- HTTP/1.1
+|<a href="https://tools.ietf.org/html/rfc2617" target="_blank">RFC2617</a> | HTTP Authentication: Basic and Digest Access Authentication
+|<a href="https://tools.ietf.org/html/rfc2818" target="_blank">RFC2818</a> | HTTP over TLS
+|<a href="https://tools.ietf.org/html/rfc2988" target="_blank">RFC2988</a> | Computing TCP's Retransmission Timer
+|<a href="https://tools.ietf.org/html/rfc3207" target="_blank">RFC3207</a> | SMTP Service Extension for Secure SMTP over Transport Layer Security
+|<a href="https://tools.ietf.org/html/rfc3315" target="_blank">RFC3315</a> | Dynamic Host Configuration Protocol for IPv6 (DHCPv6)
+|<a href="https://tools.ietf.org/html/rfc3390" target="_blank">RFC3390</a> | Increasing TCP's Initial Window
+|<a href="https://tools.ietf.org/html/rfc3493" target="_blank">RFC3493</a> | Basic Socket Interface Extensions for IPv6
+|<a href="https://tools.ietf.org/html/rfc3596" target="_blank">RFC3596</a> | DNS Extensions to Support IP Version 6
+|<a href="https://tools.ietf.org/html/rfc3646" target="_blank">RFC3646</a> | DNS Configuration options for Dynamic Host Configuration protocol for IPv6 (DHCPv6)
+|<a href="https://tools.ietf.org/html/rfc3927" target="_blank">RFC3927</a> | Dynamic Configuration of IPv4 Link-Local Addresses
+|<a href="https://tools.ietf.org/html/rfc4007" target="_blank">RFC4007</a> | IPv6 Scoped Address Architecture
+|<a href="https://tools.ietf.org/html/rfc4291" target="_blank">RFC4291</a> | IP Version 6 Addressing Architecture 
+|<a href="https://tools.ietf.org/html/rfc4361" target="_blank">RFC4361</a> | Node-specific Client Identifiers for Dynamic Host Configuration Protocol Version four (DHCPv4) 
+|<a href="https://tools.ietf.org/html/rfc4443" target="_blank">RFC4443</a> | Internet Control Message Protocol (ICMPv6)
+|<a href="https://tools.ietf.org/html/rfc4861" target="_blank">RFC4861</a> | Neighbor Discovery for IP version 6 (IPv6)
+|<a href="https://tools.ietf.org/html/rfc4862" target="_blank">RFC4862</a> | IPv6 Stateless Address Autoconfiguration
+|<a href="https://tools.ietf.org/html/rfc5342" target="_blank">RFC5342</a> | IANA Considerations and IETF Protocol Usage for IEEE 802 Parameters
+|<a href="https://tools.ietf.org/html/rfc5681" target="_blank">RFC5681</a> | TCP Congestion Control
+|<a href="https://tools.ietf.org/html/rfc5735" target="_blank">RFC5735</a> | Special Use IPv4 Addresses
+|<a href="https://tools.ietf.org/html/rfc5952" target="_blank">RFC5952</a> | A Recommendation for IPv6 Address Text Representation
+|<a href="https://tools.ietf.org/html/rfc5961" target="_blank">RFC5961</a> | Improving TCP's Robustness to Blind In-Window Attacks
+|<a href="https://tools.ietf.org/html/rfc6298" target="_blank">RFC6298</a> | Computing TCP's Retransmission Timer
+|<a href="https://tools.ietf.org/html/draft-henry-DHCP-opt61-UUID-type-00" target="_blank">Draft-00</a> | DHCP Option 61 UUID Type Definition
+
+Using the \b ARM:mbedTLS Software Pack, additional RFCs are covered:
+\anchor mbed_rfcs
+|RFC | Title |
+|----|:------|
+|<a href="https://tools.ietf.org/html/rfc5077" target="_blank">RFC5077</a> | Transport Layer Security (TLS) Session Resumption without Server-Side State
+|<a href="https://tools.ietf.org/html/rfc5746" target="_blank">RFC5746</a> | Transport Layer Security (TLS) Renegotiation Indication Extension
+|<a href="https://tools.ietf.org/html/rfc6066" target="_blank">RFC6066</a> | Transport Layer Security (TLS) Extensions: Extension Definitions
+|<a href="https://tools.ietf.org/html/rfc7302" target="_blank">RFC7301</a> | Transport Layer Security (TLS) Application-Layer Protocol Negotiation Extension
+
+*/

@@ -1,0 +1,172 @@
+/**
+\page fs_resource_requirements Resource Requirements
+
+This section describes the resource requirements of the <b>File System</b> component. 
+The actual requirements depend on the features used in the application. Therefore, the numbers provided here are guidelines
+only and the actual numbers may differ. 
+
+
+\section fs_stack_req Stack Requirements
+
+The File System component receives events sent from the interrupt service routine (ISR) of the drivers of the different
+drives. The stack requirements for the ISR are typically less than 512 Bytes. The stack requirements for ISR are configured
+in the \b startup_device.s file located under the \b Device component class.
+
+| Option (under section Stack Configuration)                        | Increase Value by
+| :---------------------------------------------------------------- | :----------------------
+| Stack Size (in Bytes)                                             | + 512 for Driver of a Drive
+\note
+- When using a CMSIS-RTOS, the Stack Size in the startup_<i>device</i>.s file configures only the stack space that is used by
+  exception and interrupt service routines of the drivers. The stack size requirements depend on the maximum nesting of
+  exception and ISR execution and therefore on the priority settings of the various interrupt and exception sources.
+- If you have multiple drives configured in your system with the same interrupt priority, you only need to add the stack
+  of the drive with the largest requirement. If you have drives with nested interrupts (different priorities), you need to
+  add the sum of all stack requirements.
+  
+
+
+\section fs_heap_req Heap Requirements
+Heap is used by memory allocation functions. It is also configured in the \b startup_device.s file located under the \b Device component class. 
+For every simultaneously opened file, you need to configure 512 + 96 Bytes of additional heap. If you wish to have three files open simultaneously, 
+you need to configure an additional heap size of 3 x (512 + 96) Bytes.
+
+| Option (under section Heap Configuration)                         | Increase Value by
+| :---------------------------------------------------------------- | :----------------------
+| Heap Size (in Bytes)                                              | + (512 + 96) for each open file
+
+
+\section fs_rtos_req CMSIS-RTOS Requirements
+
+Thread Stack Requirements
+-------------------------
+
+Although the File System component requires a CMSIS-RTOS to be present, it is not creating any additional threads.
+
+<b>Using CMSIS-RTOS RTX v5</b>
+
+The calling thread can no longer be \c main but can be a thread with a default stack size (dynamic memory) or a thread with
+a complete stack or only stack size provided using \c osThreadAttr_t structure (static or dynamic memory).
+
+<b>Using CMSIS-RTOS RTX v4</b>
+
+For proper operation, you need to add a certain amount of thread stack size to the calling thread. This calling thread
+can be the \c main thread, a thread with a default stack size or a thread with a user provided stack size. For the additional
+required stack size, please refer to the following table:
+
+<table class="doxtable" summary="Memory Requirements">
+    <tr>
+      <th>Drive Type</th>
+      <th  align="left">Value</th>
+    </tr>
+    <tr>
+      <td align="center">RAM</td>
+      <td>min. 0.6 kBytes</td>
+    </tr>
+    <tr>
+      <td align="center">MCI</td>
+      <td>min. 0.7 kBytes + MCI Driver</td>
+    </tr>
+    <tr>
+      <td align="center">NAND</td>
+      <td>min. 1.3 kBytes + NAND Driver</td>
+    </tr>
+    <tr>
+      <td align="center">NOR</td>
+      <td>min. 0.4 kBytes + Flash Driver</td>
+    </tr>
+    <tr>
+      <td align="center">USB</td>
+      <td>min. 1.1 kBytes + USB Driver</td>
+    </tr>
+</table>
+
+\note
+ - The stack in bytes stated is required to work with the files from top level functions like fopen, fclose, …, fdelete,
+   frename and so on.
+ - The drivers for the different types of drives require additional stack. This differs from device to device, but in general
+   the stack usage for MCI, NAND, and Flash should not exceed additional 100 bytes. Refer to \urlout{USB-Resource-Req} for details.
+ - If your application supports a combination of multiple drives, you need to configure your system to the the combined stack
+   size for the sum of all drives. 
+   
+The thread requirements need to be reflected in the CMSIS-RTOS configuration. Refer to the \b Reference section of \urlout{CMSIS-RTOS1} for further details.
+
+For \urlout{CMSIS-RTX5}, the threads requirements are configured in the \urlout{RTX-Conf-CM5} file located
+under the \b CMSIS component class:
+
+<table class="doxtable" summary="CMSIS-RTOS Configuration">
+    <tr>
+      <th align="left">Option (under section Thread Configuration)</th>
+      <th>Increase Value by</th>
+    </tr>
+    <tr>
+      <td>Default Thread stack size [bytes]</td>
+      <td>Stack size from table above</td>
+    </tr>
+    <tr>
+      <td align="center" colspan="2"><b>or</b></td>
+    </tr>
+    <tr>
+      <td>Main Thread stack size [bytes]</td>
+      <td>Stack size from table above</td>
+    </tr>
+    <tr>
+      <td align="center" colspan="2"><b>or</b></td>
+    </tr>
+    <tr>
+      <td>Total stack size [bytes]for threads with user-provided stack size</td>
+      <td>Stack size from table above</td>
+    </tr>
+</table>
+
+Mutex Requirements
+------------------
+
+Additionally, you may also need to adjust the number of mutex objects required by the C stdio library. Total number of mutex
+objects required for proper operation is as follows:
+ - 2 (internal stdio operations) + 3 (stdin, stdout and stderr file streams) + 1 for each active file stream
+
+<b>Using CMSIS-RTOS RTX v5</b>
+
+Memory for mutex objects is allocated from the dynamic memory pool (RTX_Config.h - System Configuration - Global Dynamic
+Memory size [bytes]). The size of dynamic memory pool must be configured so that the control blocks for the mutexes mentioned
+above fit inside. The size of a control block for a mutex depends on the RTOS2 implementation. For RTX5 can be found in
+rtx_os.h and is equal to the size of \c osRtxMutex_t.
+
+<b>Using CMSIS-RTOS RTX v4</b>
+
+The number of mutex objects required by stdio library is configured in the \urlout{RTX-Conf-CM4} file located under the \b CMSIS component class.
+
+\note
+ - This configuration option is not available from the Configuration Wizard, it must be modified manually.
+ - Default setting allows three concurrent open files and must be adjusted if this is below application requirement.
+ - If you have not enough mutexes available for your application, \ref fopen will end up blocking in function _mutex_initialize(), supplied by \urlout{CMSIS-RTX5}.
+
+
+| Definition (under section Standard library system mutexes) | Set value to
+| :------------------------------------------------------------| :----------------------
+| OS_MUTEXCNT                                                  | 5 + 1 for each open file
+
+\section fs_spec_mem_req Memory Requirements
+
+The following table shows the memory requirements for read-only (Flash) and read-write (RAM) memory.
+These numbers may be used to estimate the total size requirements of the application, but the actual numbers depend
+on compiler optimizations and target processor and may be therefore slightly different.
+
+| Component                                                  | RO Memory [Bytes] | RW Memory (Data) [Bytes] 
+| :--------------------------------------------------------- | :---------------: | :------------------------
+| <b>C stdio Library</b>                                     |    < 5.0 k        | < 0.3 k
+| <b>\::File System:Core</b> Common                          |    < 3.5 k        | 0
+| <b>\::File System:Core</b> EFS (Embedded File System)      |    < 6.0 k        | < 0.4 k
+| <b>\::File System:Core</b> FAT with SFN (Short File Name)  |   < 13.0 k        | 1.2 k
+| <b>\::File System:Core</b> FAT with LFN (Long File Name)   |   < 14.4 k        | 1.2 k
+| <b>\::File System:Core</b> FAT Name caching                |      1.6 k        | 48 * <i>FAT Name Cache Size</i> (configured in FS_Config_<i>Drive</i>_<i>n</i>.h)
+| <b>\::File System:Core</b> FAT Journaling                  |      0.7 k        | 0.5 k (configured in FS_Config_<i>Drive</i>_<i>n</i>.h)
+| <b>\::File System:Drive:Memory Card</b> (FAT)              |      2.7 k        | < 0.2 k + <i>Drive Cache Size</i> (configured in FS_Config_MC_<i>n</i>.h)
+| <b>\::File System:Drive:NAND</b> (FAT)                     |   < 10.6 k        | < 0.7 k + <i>Drive Cache Size</i> + <i>Page Caching</i> + <i>Block Indexing</i> (configured in FS_Config_NAND_<i>n</i>.h)
+| <b>\::File System:Drive:NOR</b> (EFS)                      |    < 0.1 k        | < 0.1 k
+| <b>\::File System:Drive:RAM</b> (FAT)                      |    < 0.2 k        | < 0.2 k
+| <b>\::File System:Drive:USB</b> (FAT)                      |    < 0.6 k        | < 0.2 k + <i>Drive Cache Size</i> (configured in FS_Config_USB_<i>n</i>.h)
+| <b>MCI Driver</b>                                          |   1 .. 4 k        | 0.1 .. 2 k
+| <b>NAND Driver</b>                                         | 0.5 .. 4 k        | 0.1 .. 4 k
+| <b>Flash Driver</b>                                        |      < 2 k        | < 0.1 k
+*/
