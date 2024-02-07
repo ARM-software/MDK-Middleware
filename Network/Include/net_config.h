@@ -107,10 +107,6 @@ static NET_SLIP_CFG slip0_ll_config;
   #include "net_modem.h"
 #endif
 
-#ifdef RTE_Network_Legacy
-  #include "rl_net_legacy.h"
-#endif
-
 /* Non-Critical configuration upgrade */
 #if (SMTP_CLIENT_ENABLE && !defined(SMTP_CLIENT_ATTACH_ENABLE))
   #define SMTP_CLIENT_ATTACH_ENABLE 0
@@ -1669,28 +1665,6 @@ NET_ICMP_CFG *const net_icmp_list[] = {
   };
 #endif
 
-/* Local Machine info IPv4 */
-#ifdef RTE_Network_Legacy
-  NET_LOCALM *const net_localm[4] = {
-  #if (ETH0_IP4_ENABLE)
-    &eth0_localm,
-  #else
-    NULL,
-  #endif
-  #if (PPP_ENABLE)
-    &ppp0_localm,
-  #else
-    NULL,
-  #endif
-  #if (SLIP_ENABLE)
-    &slip0_localm,
-  #else
-    NULL,
-  #endif
-    NULL
-  };
-#endif
-
 /* IPv4 fragmentation and reassembly */
 #if (__IP4_FRAG_ENA)
  #ifndef IP4_FRAG_REASS_NUM
@@ -1753,9 +1727,6 @@ NET_ICMP_CFG *const net_icmp_list[] = {
 
 #if (UDP_ENABLE)
   static NET_UDP_INFO udp_scb[UDP_NUM_SOCKS];
- #ifdef RTE_Network_Legacy
-  net_udp_cb_t net_udp_cb_legacy[UDP_NUM_SOCKS];
- #endif
   NET_UDP_CFG net_udp_config = {
     udp_scb,
     UDP_NUM_SOCKS,
@@ -1771,9 +1742,6 @@ NET_ICMP_CFG *const net_icmp_list[] = {
 
 #if (TCP_ENABLE)
   static NET_TCP_INFO tcp_scb[TCP_NUM_SOCKS];
- #ifdef RTE_Network_Legacy
-  net_tcp_cb_t net_tcp_cb_legacy[TCP_NUM_SOCKS];
- #endif
   NET_TCP_CFG net_tcp_config = {
     tcp_scb,
     TCP_NUM_SOCKS,

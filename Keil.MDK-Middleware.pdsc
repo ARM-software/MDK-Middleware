@@ -12,6 +12,7 @@
       Network Component Version 8.0.0
       - removed support for legacy Arm Compiler 5
       - removed support for CMSIS-RTOS version 1
+      - removed legacy API interface version 6
     </release>
     <release version="7.17.0" date="2024-01-17">
       Network Component Version 7.19.0
@@ -912,17 +913,6 @@
           <file category="source"  name="Network/Source/net_md5.c"/>
           <file category="source"  name="Network/Source/net_base64.c"/>
           <file category="source"  name="Network/Source/net_version.c"/>
-        </files>
-      </component>
-      <component Cgroup="Legacy API" condition="Network Core">
-        <description>Network Legacy API support</description>
-        <RTE_Components_h>
-          <!-- the following content goes into file 'RTE_Components.h' -->
-          #define RTE_Network_Legacy              /* Network Legacy */
-        </RTE_Components_h>
-        <files>
-          <file category="header" name="Network/Config/Net_Config_Legacy.h" attr="config" version="7.0.0"/>
-          <file category="source" name="Network/Lib/Net_Legacy.c"/>
         </files>
       </component>
       <component Cgroup="Interface" Csub="ETH" condition="Network Driver ETH" maxInstances="2">

@@ -891,7 +891,6 @@ INPUT                  = src/network.txt \
                          src/network_resource_requirements.txt \
                          src/net_modem.txt \
                          ../../../Network/Include/rl_net.h \
-                         ../../../Network/Include/rl_net_ds.h \
                          ../../../Network/Include/net_modem.h \
                          src/net_function_overview.txt \
                          ../../../Network/Include/net_evr.h \

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    rl_net_lib.h
  * Purpose: Network Library Definitions
@@ -9,7 +9,7 @@
 #ifndef __RL_NET_LIB_H
 #define __RL_NET_LIB_H
 
-#include "rl_net_ds.h"
+#include "rl_net.h"
 #include "rl_net_rte.h"
 
 #ifdef __clang__
@@ -840,11 +840,6 @@ extern NET_PPP_AUTH     net_ppp0_chap_auth;
 extern NET_SMTP_ATTACH  net_smtp_attach_func;
 extern NET_HTTP_AUTH    net_http_auth_basic_func;
 extern NET_HTTP_AUTH    net_http_auth_digest_func;
-
-/// Local machine info
-#ifdef RTE_Network_Legacy
-extern NET_LOCALM  *const net_localm[4];
-#endif
 
 /// Network Security Credentials
 extern const uint8_t  NetSecurity_ServerCA[];
