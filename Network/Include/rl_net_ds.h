@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    rl_net_ds.h
  * Purpose: Network API (Dual-stack IPv4/IPv6)
@@ -26,10 +26,6 @@ extern "C"  {
 #if defined(__BIG_ENDIAN) || defined(__ARM_BIG_ENDIAN)
   #define ntohl(v)              (uint32_t)(v)
   #define ntohs(v)              (uint16_t)(v)
-#elif defined (__CC_ARM)
-  /* ARM Compiler 4/5 */
-  #define ntohl(v)              (uint32_t)(__rev(v))
-  #define ntohs(v)              (uint16_t)(__rev(v) >> 16)
 #else
   /* ARM Compiler 6 */
   #define ntohl(v)              __builtin_bswap32((uint32_t)(v))
@@ -249,10 +245,7 @@ typedef struct sockaddr {
   int8_t   sa_data[14];                 ///< Direct address (up to 14 bytes)
 } SOCKADDR;
 
-#if   defined(__CC_ARM)
-  #pragma push
-  #pragma anon_unions
-#elif defined(__clang__)
+#if defined(__clang__)
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wc11-extensions"
 #endif
@@ -283,9 +276,7 @@ typedef struct in6_addr {
 
 #endif
 
-#if   defined(__CC_ARM)
-  #pragma pop
-#elif defined(__clang__)
+#if defined(__clang__)
   #pragma clang diagnostic pop
 #endif
 

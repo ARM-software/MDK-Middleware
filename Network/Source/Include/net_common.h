@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_common.h
  * Purpose: Common Network Function Definitions
@@ -12,23 +12,7 @@
 #include "rl_net_lib.h"
 
 /* Compiler specific */
-#if   defined(__CC_ARM)
-  #define __WEAK                            __weak
-  #define __USED                            __attribute__((used))
-  #define __FORCEINLINE                     __forceinline
-  #define __NO_RETURN                       __attribute__((noreturn))
-  #define __FALLTHROUGH                     do{} while(0)
-  #define __COMPILER_BARRIER()              __memory_changed()
-  #if (__TARGET_ARCH_7_M || __TARGET_ARCH_7E_M)
-    #define __UNALIGNED_ACCESS
-    #define __UNALIGNED_UINT16_READ(a)      (*(const __packed uint16_t *)(a))
-    #define __UNALIGNED_UINT32_READ(a)      (*(const __packed uint32_t *)(a))
-    #define __UNALIGNED_UINT16_WRITE(a,v)   (*(__packed uint16_t *)(a)) = (v)
-    #define __UNALIGNED_UINT32_WRITE(a,v)   (*(__packed uint32_t *)(a)) = (v)
-  #else
-    #undef  __UNALIGNED_ACCESS
-  #endif
-#elif defined(__clang__) || defined(__GNUC__)
+#if defined(__clang__) || defined(__GNUC__)
   #define __WEAK                            __attribute__((weak))
   #define __USED                            __attribute__((used))
   #define __FORCEINLINE                     __inline __attribute__((always_inline))
@@ -42,6 +26,13 @@
     #define __UNALIGNED_UINT16_WRITE(a,v)   (((union __pack_t *)(a))->s) = (v)
     #define __UNALIGNED_UINT32_WRITE(a,v)   (((union __pack_t *)(a))->l) = (v)
   #endif
+#else
+  #define __WEAK
+  #define __USED
+  #define __FORCEINLINE
+  #define __NO_RETURN
+  #define __FALLTHROUGH
+  #define __COMPILER_BARRIER()
 #endif
 
 #define __ALIGNED_UINT16(x) (*(uint16_t *)(void *)(x))
@@ -123,7 +114,7 @@ extern uint8_t  net_xtouc (const char *sp);
 #define set_u32(p,v)        net_wr_u32((uint8_t *)(p),(uint32_t)(v))
 
 /* Unaligned access in network byte order */
-#if defined(__UNALIGNED_ACCESS) || defined(__ARM_FEATURE_UNALIGNED)
+#if defined(__ARM_FEATURE_UNALIGNED)
   static __FORCEINLINE uint16_t net_rd_u16 (const uint8_t *addr) {
     return (ntohs(__UNALIGNED_UINT16_READ(&addr[0])));
   }

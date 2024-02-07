@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_debug.h
  * Purpose: Network Library Debug Configuration
@@ -21,9 +21,7 @@
 #ifdef RTE_Network_Debug_STDIO
 /* Printf style debug */
 
-#if   defined(__CC_ARM)
-  #pragma diag_suppress 111
-#elif defined(__clang__)
+#if defined(__clang__)
   #pragma clang diagnostic ignored "-Wformat-nonliteral"
 #endif
 

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_addr.h
  * Purpose: Address Handling Definitions
@@ -45,7 +45,7 @@ extern bool net_addr6_is_onlink (const uint8_t *ip6_addr, const NET_LOCALM6 *lm6
 extern void net_addr6_to_mac (const uint8_t *ip6_addr, uint8_t *mac_addr);
 extern void net_addr6_map_4to6 (const uint8_t *ip4_addr, uint8_t *ip6_addr);
 #endif
-#if defined(__UNALIGNED_ACCESS) || defined(__ARM_FEATURE_UNALIGNED)
+#if defined(__ARM_FEATURE_UNALIGNED)
   static __FORCEINLINE void net_addr4_copy (uint8_t *dst, const uint8_t *src) {
     __UNALIGNED_UINT32_WRITE(&dst[0], __UNALIGNED_UINT32_READ(&src[0]));
   }

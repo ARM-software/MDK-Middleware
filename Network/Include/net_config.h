@@ -1,14 +1,12 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_config.h
  * Purpose: Network Library Configuration
  *----------------------------------------------------------------------------*/
 
-#if   defined(__CC_ARM)
-  #pragma O3
-#elif defined(__clang__)
+#if defined(__clang__)
   #pragma clang diagnostic ignored "-Wundef"
   #pragma clang diagnostic ignored "-Wpadded"
   #pragma clang diagnostic ignored "-Wmissing-noreturn"

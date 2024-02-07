@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_addr.c
  * Purpose: Address Handling
@@ -685,7 +685,7 @@ void net_addr6_map_4to6 (const uint8_t *ip4_addr, uint8_t *ip6_addr) {
 }
 #endif /* Network_IPv6 */
 
-#if defined(__UNALIGNED_ACCESS) || defined(__ARM_FEATURE_UNALIGNED)
+#if defined(__ARM_FEATURE_UNALIGNED)
  #ifdef Network_IPv6
 /**
   \brief       Copy IPv6 addresses.
@@ -796,7 +796,7 @@ void net_mac_copy (uint8_t *dst, const uint8_t *src) {
   dst[4] = src[4];
   dst[5] = src[5];
 }
-#endif /* __UNALIGNED_ACCESS */
+#endif /* __ARM_FEATURE_UNALIGNED */
 
 /**
   \brief       Check if IP address is unspecified address.

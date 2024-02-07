@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_version.c
  * Purpose: Network Component Version
@@ -9,8 +9,8 @@
 #include "rl_net_lib.h"
 #include "net_version.h"
 
-#define MAJOR       7
-#define MINOR       19
+#define MAJOR       8
+#define MINOR       0
 #define BUILD       0
 
 /* Version create macros */

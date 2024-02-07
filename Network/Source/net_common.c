@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_common.c
  * Purpose: Common Network Functions
@@ -569,7 +569,7 @@ static uint32_t crc32_8bit (uint32_t crc32, uint8_t val) {
   return (crc32);
 }
 
-#if !defined(__UNALIGNED_ACCESS) && !defined(__ARM_FEATURE_UNALIGNED)
+#if !defined(__ARM_FEATURE_UNALIGNED)
 /**
   \brief       Read 32-bit variable from network byte-order.
   \param[in]   addr  pointer to a variable.
