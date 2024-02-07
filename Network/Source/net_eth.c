@@ -343,7 +343,7 @@ static void eth_iface_uninit (NET_ETH_CFG *h) {
   \param[in]   arg  ethernet interface handle.
   \return      none.
 */
-__NO_RETURN void netETH_Thread (void const *arg) {
+__NO_RETURN void netETH_Thread (void *arg) {
   NET_ETH_CFG *h = (NET_ETH_CFG *)arg;
 
   while (1) {

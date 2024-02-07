@@ -10,7 +10,6 @@
   #pragma clang diagnostic ignored "-Wundef"
   #pragma clang diagnostic ignored "-Wpadded"
   #pragma clang diagnostic ignored "-Wmissing-noreturn"
-  #pragma clang diagnostic ignored "-Wcast-function-type-strict"
 #endif
 
 #include "RTE_Components.h"
@@ -88,9 +87,7 @@ static NET_WIFI_CFG wifi1_ll_config;
 static NET_PPP_CFG  ppp0_ll_config;
 static NET_SLIP_CFG slip0_ll_config;
 
-#if   defined(RTE_CMSIS_RTOS)
-  #include "net_rtos.h"
-#elif defined(RTE_CMSIS_RTOS2)
+#if defined(RTE_CMSIS_RTOS2)
   #include "net_rtos2.h"
 #else
   #error "::CMSIS:RTOS selection invalid"

@@ -1,10 +1,9 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2022 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    TLS_mbed.h
  * Purpose: TLS Interface definitions
- * Rev.:    V7.18.0
  *----------------------------------------------------------------------------*/
 
 #include <string.h>

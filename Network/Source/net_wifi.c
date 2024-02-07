@@ -258,7 +258,7 @@ static void wifi_iface_uninit (NET_WIFI_CFG *h) {
   \param[in]   arg  wifi interface handle.
   \return      none.
 */
-__NO_RETURN void netWiFi_Thread (void const *arg) {
+__NO_RETURN void netWiFi_Thread (void *arg) {
   NET_WIFI_CFG *h = (NET_WIFI_CFG *)arg;
 
   ctrl->th.osDelay = 25;

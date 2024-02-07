@@ -861,12 +861,12 @@ extern const uint32_t NetSecurity_EmailServerCA_Len;
 /// \brief Network Component core thread.
 /// \param[in]     arg           dummy parameter.
 /// \return        None.
-extern void netCore_Thread (void const *arg);
+extern void netCore_Thread (void *arg);
 
 /// \brief Network core tick timer callback.
 /// \param[in]     arg           dummy parameter.
 /// \return        None.
-extern void net_sys_tick (void const *arg);
+extern void net_sys_tick (void *arg);
 
 /// \brief Signal Network Component error.
 /// \param[in]     error         system error code.
@@ -1001,7 +1001,7 @@ extern void net_mem_free (NET_FRAME *mem_ptr);
 /// \brief Ethernet interface thread.
 /// \param[in]     arg           dummy parameter.
 /// \return        None.
-extern void netETH_Thread (void const *arg);
+extern void netETH_Thread (void *arg);
 
 /// \brief Initialize ethernet interface.
 /// \return        None.
@@ -1172,7 +1172,7 @@ extern void net_dhcp6_client_run (void);
 /// \brief WiFi interface thread.
 /// \param[in]     arg           dummy parameter.
 /// \return        None.
-extern void netWiFi_Thread (void const *arg);
+extern void netWiFi_Thread (void *arg);
 
 /// \brief Initialize WiFi interface.
 /// \return        None.
@@ -1230,7 +1230,7 @@ extern netStatus net_wifi_set_option (uint32_t if_num, netIF_Option option, cons
 /// \brief PPP interface thread.
 /// \param[in]     arg           dummy parameter.
 /// \return        None.
-extern void netPPP_Thread (void const *arg);
+extern void netPPP_Thread (void *arg);
 
 /// \brief Initialize PPP interface.
 /// \return        None.
@@ -1272,7 +1272,7 @@ extern netStatus net_ppp_set_option (netIF_Option option, const uint8_t *buf, ui
 /// \brief SLIP interface thread.
 /// \param[in]     arg           dummy parameter.
 /// \return        None.
-extern void netSLIP_Thread (void const *arg);
+extern void netSLIP_Thread (void *arg);
 
 /// \brief Initialize SLIP interface.
 /// \return        None.

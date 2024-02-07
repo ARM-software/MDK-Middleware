@@ -100,7 +100,7 @@ void net_slip_iface_uninit (void) {
   \param[in]   arg  slip interface handle.
   \return      none.
 */
-__NO_RETURN void netSLIP_Thread (void const *arg) {
+__NO_RETURN void netSLIP_Thread (void *arg) {
   NET_SLIP_CFG *h = (NET_SLIP_CFG *)arg;
 
   ctrl->th.osDelay = h->ComCfg->MaxDelay;

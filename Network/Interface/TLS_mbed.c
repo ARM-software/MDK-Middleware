@@ -1,10 +1,9 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2022 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    TLS_mbed.c
  * Purpose: TLS Interface for mbedTLS
- * Rev.:    V7.18.0
  *----------------------------------------------------------------------------*/
 
 #include <string.h>
@@ -62,7 +61,7 @@ static mbedtls_x509_crt   cacert;
 static mbedtls_ssl_context ssl[TLS_NUM_SESS];
 
 /* Local Functions */
-static void netTLS_Thread (void const *arg) __attribute__((noreturn));
+static void netTLS_Thread (void *arg) __attribute__((noreturn));
 static int32_t tls_init (void);
 static void    tls_uninit (void);
 static void    tls_run (void);
@@ -77,15 +76,7 @@ static void queue_release (TLS_INFO *tls_s);
 static void free_tx_buf (TLS_INFO *tls_s);
 
 /* RTOS resources */
-#if defined(RTE_CMSIS_RTOS)
-  #include "cmsis_os.h"
-  extern const osThreadDef_t os_thread_def_netTLS_Thread;
-  osThreadDef(netTLS_Thread, TLS_THREAD_PRIORITY, 1, TLS_THREAD_STACK_SIZE);
-  #define OS_THREAD_NEW(func)   osThreadCreate (osThread(func), NULL)
-  #define OS_THREAD_DELETE(id)  osThreadTerminate (id)
-  #define OS_FLAG_WAIT(flag)    osSignalWait (flag, osWaitForever)
-  #define OS_FLAG_SET(flag)     osSignalSet (ctrl.thread_id, flag)
-#elif defined(RTE_CMSIS_RTOS2)
+#if defined(RTE_CMSIS_RTOS2)
   #include "cmsis_os2.h"
   #define OS_THREAD_NEW(func)   osThreadNew ((osThreadFunc_t)&func, NULL, &tls_thread)
   #define OS_THREAD_DELETE(id)  osThreadTerminate (id)
@@ -316,7 +307,7 @@ void netTLS_Write (uint8_t tls_id, const uint8_t *buf, uint32_t len) {
   \param[in]   arg  dummy parameter.
   \return      none.
 */
-static void netTLS_Thread (void const *arg) {
+static void netTLS_Thread (void *arg) {
   int32_t ret;
 
   (void)arg;

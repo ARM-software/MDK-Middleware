@@ -105,7 +105,7 @@ void net_ppp_iface_uninit (void) {
   \param[in]   arg  PPP interface handle.
   \return      none.
 */
-__NO_RETURN void netPPP_Thread (void const *arg) {
+__NO_RETURN void netPPP_Thread (void *arg) {
   NET_PPP_CFG *h = (NET_PPP_CFG *)arg;
 
   ctrl->th.osDelay = h->ComCfg->MaxDelay;

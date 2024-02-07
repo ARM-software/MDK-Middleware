@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_rtos2.h
  * Purpose: Network CMSIS-RTOS2 abstraction layer
@@ -279,7 +279,7 @@ void netos_init (void) {
 
 /* Create network core thread */
 NETOS_ID netos_thread_create (void) {
-  return (osThreadNew ((osThreadFunc_t)&netCore_Thread, NULL, &net_thread_attr));
+  return (osThreadNew (&netCore_Thread, NULL, &net_thread_attr));
 }
 
 /* Delete network thread */
@@ -299,7 +299,7 @@ void netos_thread_pass (void) {
 
 /* Create periodic tick timer */
 NETOS_ID netos_timer_create (void) {
-  return (osTimerNew ((osTimerFunc_t)&net_sys_tick, osTimerPeriodic, NULL, &net_timer_attr));
+  return (osTimerNew (&net_sys_tick, osTimerPeriodic, NULL, &net_timer_attr));
 }
 
 /* Delete periodic tick timer */
@@ -362,37 +362,37 @@ NETOS_ID netif_create (uint32_t if_id, NETOS_ID *semaphore) {
 #if (ETH0_ENABLE)
     case NET_IF_CLASS_ETH:
       *semaphore = osSemaphoreNew (1, 1, &eth0_lock_attr);
-      return (osThreadNew ((osThreadFunc_t)&netETH_Thread,
+      return (osThreadNew (&netETH_Thread,
                            (void *)(uint32_t)&eth0_ll_config, &eth0_thread_attr));
 #endif
 #if (ETH1_ENABLE)
     case NET_IF_CLASS_ETH+1:
       *semaphore = osSemaphoreNew (1, 1, &eth1_lock_attr);
-      return (osThreadNew ((osThreadFunc_t)&netETH_Thread,
+      return (osThreadNew (&netETH_Thread,
                            (void *)(uint32_t)&eth1_ll_config, &eth1_thread_attr));
 #endif
 #if (WIFI0_ENABLE)
     case NET_IF_CLASS_WIFI:
       *semaphore = osSemaphoreNew (1, 1, &wifi0_lock_attr);
-      return (osThreadNew ((osThreadFunc_t)&netWiFi_Thread,
+      return (osThreadNew (&netWiFi_Thread,
                            (void *)(uint32_t)&wifi0_ll_config, &wifi0_thread_attr));
 #endif
 #if (WIFI1_ENABLE)
     case NET_IF_CLASS_WIFI+1:
       *semaphore = osSemaphoreNew (1, 1, &wifi1_lock_attr);
-      return (osThreadNew ((osThreadFunc_t)&netWiFi_Thread,
+      return (osThreadNew (&netWiFi_Thread,
                            (void *)(uint32_t)&wifi1_ll_config, &wifi1_thread_attr));
 #endif
 #if (PPP_ENABLE)
     case NET_IF_CLASS_PPP:
       *semaphore = osSemaphoreNew (1, 1, &ppp0_lock_attr);
-      return (osThreadNew ((osThreadFunc_t)&netPPP_Thread,
+      return (osThreadNew (&netPPP_Thread,
                            (void *)(uint32_t)&ppp0_ll_config, &ppp0_thread_attr));
 #endif
 #if (SLIP_ENABLE)
     case NET_IF_CLASS_SLIP:
       *semaphore = osSemaphoreNew (1, 1, &slip0_lock_attr);
-      return (osThreadNew ((osThreadFunc_t)&netSLIP_Thread,
+      return (osThreadNew (&netSLIP_Thread,
                            (void *)(uint32_t)&slip0_ll_config, &slip0_thread_attr));
 #endif
   }
