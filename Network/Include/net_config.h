@@ -2378,14 +2378,14 @@ netStatus netSNTPc_GetTime (const NET_ADDR *addr, netSNTPc_cb_t cb_func) {
 
 #if (HTTP_SERVER_ENABLE && defined(RTE_Network_Web_Server_RO))
 /* Empty interface functions for Compact Web server */
-__weak void *netHTTPs_fopen (const char *fname) {
+__WEAK void *netHTTPs_fopen (const char *fname) {
   (void)fname; return (NULL); }
-__weak void netHTTPs_fclose (void *file) {
+__WEAK void netHTTPs_fclose (void *file) {
   (void)file; }
-__weak uint32_t netHTTPs_fread (void *file, uint8_t *buf, uint32_t len) {
+__WEAK uint32_t netHTTPs_fread (void *file, uint8_t *buf, uint32_t len) {
   (void)file; (void)buf; (void)len; return (0); }
-__weak char *netHTTPs_fgets (void *file, char *buf, uint32_t size) {
+__WEAK char *netHTTPs_fgets (void *file, char *buf, uint32_t size) {
   (void)file; (void)buf; (void)size; return (NULL); }
-__weak void netHTTPs_fstat (const char *fname, uint32_t *fsize, uint32_t *ftime) {
+__WEAK void netHTTPs_fstat (const char *fname, uint32_t *fsize, uint32_t *ftime) {
   (void)fname; (void)fsize; (void)ftime; }
 #endif

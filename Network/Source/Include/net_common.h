@@ -13,52 +13,29 @@
 
 /* Compiler specific */
 #if defined(__clang__) || defined(__GNUC__)
-  #define __WEAK                            __attribute__((weak))
-  #define __USED                            __attribute__((used))
-  #define __FORCEINLINE                     __inline __attribute__((always_inline))
-  #define __NO_RETURN                       __attribute__((noreturn))
   #define __FALLTHROUGH                     __attribute__((__fallthrough__))
-  #define __COMPILER_BARRIER()              __asm volatile("":::"memory")
-  #ifdef __ARM_FEATURE_UNALIGNED
-    union __pack_t { uint16_t s; uint32_t l; } __attribute__((packed));
-    #define __UNALIGNED_UINT16_READ(a)      (((const union __pack_t *)(a))->s)
-    #define __UNALIGNED_UINT32_READ(a)      (((const union __pack_t *)(a))->l)
-    #define __UNALIGNED_UINT16_WRITE(a,v)   (((union __pack_t *)(a))->s) = (v)
-    #define __UNALIGNED_UINT32_WRITE(a,v)   (((union __pack_t *)(a))->l) = (v)
-  #endif
 #else
-  #define __WEAK
-  #define __USED
-  #define __FORCEINLINE
-  #define __NO_RETURN
   #define __FALLTHROUGH
-  #define __COMPILER_BARRIER()
 #endif
 
 #define __ALIGNED_UINT16(x) (*(uint16_t *)(void *)(x))
 #define __ALIGNED_UINT32(x) (*(uint32_t *)(void *)(x))
 #define __ALIGNED_UINT64(x) (*(uint64_t *)(void *)(x))
 
-#define ALIGN_CAST(t)       (t)(void *)
-#define CONST_CAST(t)       (t)(uint32_t)
+#define __ALIGN_CAST(t)     (t)(void *)
+#define __CONST_CAST(t)     (t)(uint32_t)
 
 /* Definitions */
-#if defined(__BIG_ENDIAN)
-  /* ARM Compiler 4/5 */
-  #define U32_LE(v)         (uint32_t)(__rev(v))
-  #define U16_LE(v)         (uint16_t)(__rev(v) >> 16)
-#elif defined (__ARM_BIG_ENDIAN)
-  /* ARM Compiler 6 */
-  #define U32_LE(v)         __builtin_bswap32(v)
-  #define U16_LE(v)         __builtin_bswap16(v)
+#if defined (__ARM_BIG_ENDIAN)
+  #define U32_LE(v)         (uint32_t)__REV(v)
+  #define U16_LE(v)         (uint16_t)__REV16(v)
 #else
   #define U32_LE(v)         (uint32_t)(v)
   #define U16_LE(v)         (uint16_t)(v)
 #endif
 
-/* Preprocessor macros for compile-time constants only */
-/* (so there is no little-endian overhead at runtime)  */
-#if defined(__BIG_ENDIAN) || defined(__ARM_BIG_ENDIAN)
+/* Preprocessor macros only for precompiled constants */
+#if defined(__ARM_BIG_ENDIAN)
   #define HTONL(v)          (uint32_t)(v)
   #define HTONS(v)          (uint16_t)(v)
 #else
@@ -115,23 +92,23 @@ extern uint8_t  net_xtouc (const char *sp);
 
 /* Unaligned access in network byte order */
 #if defined(__ARM_FEATURE_UNALIGNED)
-  static __FORCEINLINE uint16_t net_rd_u16 (const uint8_t *addr) {
+  __STATIC_FORCEINLINE uint16_t net_rd_u16 (const uint8_t *addr) {
     return (ntohs(__UNALIGNED_UINT16_READ(&addr[0])));
   }
-  static __FORCEINLINE void net_wr_u16 (uint8_t *addr, uint16_t val) {
+  __STATIC_FORCEINLINE void net_wr_u16 (uint8_t *addr, uint16_t val) {
     __UNALIGNED_UINT16_WRITE(&addr[0], htons(val));
   }
-  static __FORCEINLINE uint32_t net_rd_u32 (const uint8_t *addr) {
+  __STATIC_FORCEINLINE uint32_t net_rd_u32 (const uint8_t *addr) {
     return (ntohl(__UNALIGNED_UINT32_READ(&addr[0])));
   }
-  static __FORCEINLINE void net_wr_u32 (uint8_t *addr, uint32_t val) {
+  __STATIC_FORCEINLINE void net_wr_u32 (uint8_t *addr, uint32_t val) {
     __UNALIGNED_UINT32_WRITE(&addr[0], htonl(val));
   }
 #else
-  static __FORCEINLINE uint16_t net_rd_u16 (const uint8_t *addr) {
+  __STATIC_FORCEINLINE uint16_t net_rd_u16 (const uint8_t *addr) {
     return ((uint16_t)(addr[0] << 8) | addr[1]);
   }
-  static __FORCEINLINE void net_wr_u16 (uint8_t *addr, uint16_t val) {
+  __STATIC_FORCEINLINE void net_wr_u16 (uint8_t *addr, uint16_t val) {
     addr[0] = (val >> 8) & 0xFF;
     addr[1] = (val)      & 0xFF;
   }

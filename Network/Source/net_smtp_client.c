@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_smtp_client.c
  * Purpose: Mail Transfer Client advanced blocking mode
@@ -156,7 +156,7 @@ netStatus netSMTPc_SendMail (const NET_SMTP_MAIL *mail, const NET_SMTP_MTA *mta)
   /* Check if attachment file still open */
   /* Could happen on SMTP client timeout */
   if (smtp2->Attach && smtp2->From) {
-    fs_io->fclose (CONST_CAST(void *)smtp2->From);
+    fs_io->fclose (__CONST_CAST(void *)smtp2->From);
   }
 
   /* Set return code */
@@ -440,7 +440,7 @@ static uint32_t smtp_mail_attach (char *buf, uint32_t buf_len) {
   else {
     for (rlen = 0; (len + 140) < buf_len; ) {
       /* MIME line size limit is 76 characters + CRLF */
-      rlen = fs_io->fread (CONST_CAST(void *)smtp2->From, (uint8_t *)buf+len+80, 57);
+      rlen = fs_io->fread (__CONST_CAST(void *)smtp2->From, (uint8_t *)buf+len+80, 57);
       len += net_base64_encode (buf+len, buf+len+80, rlen);
       buf[len]   = '\r';
       buf[len+1] = '\n';
@@ -456,7 +456,7 @@ static uint32_t smtp_mail_attach (char *buf, uint32_t buf_len) {
     }
     /* Done with the attachment, close this file */
     smtp2->Attach = false;
-    fs_io->fclose (CONST_CAST(void *)smtp2->From);
+    fs_io->fclose (__CONST_CAST(void *)smtp2->From);
   }
   if (++smtp->SVar < smtp2->NumFiles) {
     /* More attachments to add */

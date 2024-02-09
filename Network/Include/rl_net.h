@@ -12,24 +12,20 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include "cmsis_compiler.h"
 #include "RTE_Components.h"
 
 #ifdef __cplusplus
 extern "C"  {
 #endif
 
-#if defined(__clang__) || defined(__GNUC__)
-  #define __weak    __attribute__((weak))
-#endif
-
 /// Network to host byte order conversion.
-#if defined(__BIG_ENDIAN) || defined(__ARM_BIG_ENDIAN)
+#if defined(__ARM_BIG_ENDIAN)
   #define ntohl(v)              (uint32_t)(v)
   #define ntohs(v)              (uint16_t)(v)
 #else
-  /* ARM Compiler 6 */
-  #define ntohl(v)              __builtin_bswap32((uint32_t)(v))
-  #define ntohs(v)              __builtin_bswap16((uint16_t)(v))
+  #define ntohl(v)              (uint32_t)__REV(v)
+  #define ntohs(v)              (uint16_t)__REV16(v)
 #endif
 
 /// Host to network byte order conversion.

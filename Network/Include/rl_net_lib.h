@@ -11,6 +11,7 @@
 
 #include "rl_net.h"
 #include "rl_net_rte.h"
+#include "cmsis_compiler.h"
 
 #ifdef __clang__
   #pragma clang diagnostic ignored "-Wpadded"

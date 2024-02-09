@@ -463,8 +463,8 @@ const uint8_t *net_addr4_get_subcast (const NET_LOCALM *lm4) {
   uint32_t ip_lm,net_mask;
 
   /* Should work for LE and BE systems */
-  ip_lm    = *CONST_CAST(uint32_t *)lm4->IpAddr;
-  net_mask = *CONST_CAST(uint32_t *)lm4->NetMask;
+  ip_lm    = *__CONST_CAST(uint32_t *)lm4->IpAddr;
+  net_mask = *__CONST_CAST(uint32_t *)lm4->NetMask;
   buf[0] = (ip_lm & net_mask) | ~net_mask;
   return ((uint8_t *)buf);
 }
@@ -481,8 +481,8 @@ bool net_addr4_is_subcast (const uint8_t *ip4_addr, const NET_LOCALM *lm4) {
   uint32_t ip,ip_lm,net_mask;
 
   /* Should work for LE and BE systems */
-  ip_lm    = *CONST_CAST(uint32_t *)lm4->IpAddr;
-  net_mask = *CONST_CAST(uint32_t *)lm4->NetMask;
+  ip_lm    = *__CONST_CAST(uint32_t *)lm4->IpAddr;
+  net_mask = *__CONST_CAST(uint32_t *)lm4->NetMask;
   /* ip4_addr may not be aligned */
   memcpy (&ip, ip4_addr, NET_ADDR_IP4_LEN);
 
@@ -637,7 +637,7 @@ bool net_addr6_is_4to6 (const uint8_t *ip6_addr) {
                - false = not on-link address.
 */
 bool net_addr6_is_onlink (const uint8_t *ip6_addr, const NET_LOCALM6 *lm6) {
-  const uint32_t *ip2 = CONST_CAST(uint32_t *)lm6->IpAddr;
+  const uint32_t *ip2 = __CONST_CAST(uint32_t *)lm6->IpAddr;
   uint32_t preflen = lm6->PrefixLen - 1;
   uint32_t mask;
 

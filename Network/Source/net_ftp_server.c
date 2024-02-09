@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ftp_server.c
  * Purpose: File Transfer Server
@@ -436,7 +436,7 @@ static uint32_t ftp_listener (int32_t socket, netTCP_Event event, const NET_ADDR
       }
 
       /* Make a null-terminated string, strip off CR-LF */
-      (CONST_CAST(char *)buf)[len-2] = 0;
+      (__CONST_CAST(char *)buf)[len-2] = 0;
       DEBUGF (FTP," Command %s\n",buf);
       EvrNetFTPs_ShowCommand (buf, len-2);
       ftp_parse_cmd ((const char *)buf);
@@ -557,7 +557,7 @@ not_logd: DEBUGF (FTP," Not logged in, command ignored\n");
           }
           if (cmd.sel == FTP_CMD_CWD) {
             /* Change the working directory */
-            name = get_fname (CONST_CAST(char *)&buf[4]);
+            name = get_fname (__CONST_CAST(char *)&buf[4]);
             DEBUGF (FTP," Change directory to \"%s\"\n",name);
             DEBUGF (FTP," Path: %s\n",ftp_s->Path);
             EvrNetFTPs_ChangeDirectory (name, strlen(name));
@@ -584,7 +584,7 @@ not_logd: DEBUGF (FTP," Not logged in, command ignored\n");
           }
           if (cmd.sel == FTP_CMD_MKD) {
             /* Create a directory */
-            name = get_fname (CONST_CAST(char *)&buf[4]);
+            name = get_fname (__CONST_CAST(char *)&buf[4]);
             DEBUGF (FTP," Make directory \"%s\"\n",name);
             EvrNetFTPs_MakeDirectory (name, strlen(name));
             /* Make an absolute path */
@@ -603,7 +603,7 @@ denied:       DEBUGF (FTP," Access denied\n");
           }
           if (cmd.sel == FTP_CMD_RMD) {
             /* Remove a directory */
-            name = get_fname (CONST_CAST(char *)&buf[4]);
+            name = get_fname (__CONST_CAST(char *)&buf[4]);
             DEBUGF (FTP," Remove directory \"%s\"\n",name);
             EvrNetFTPs_RemoveDirectory (name, strlen(name));
             ftp_s->Name = make_path (ftp_s, name);
@@ -675,7 +675,7 @@ denied:       DEBUGF (FTP," Access denied\n");
           }
           if (cmd.sel == FTP_CMD_SIZE) {
             /* Get the size of a file */
-            name = get_fname (CONST_CAST(char *)&buf[5]);
+            name = get_fname (__CONST_CAST(char *)&buf[5]);
             DEBUGF (FTP," Get size of file \"%s\"\n",name);
             EvrNetFTPs_GetFileSize (name, strlen(name));
             ftp_s->State = FTP_STATE_FSIZE;
@@ -683,7 +683,7 @@ denied:       DEBUGF (FTP," Access denied\n");
           }
           if (cmd.sel == FTP_CMD_MDTM) {
             /* Get last-modified time of a file */
-            name = get_fname (CONST_CAST(char *)&buf[5]);
+            name = get_fname (__CONST_CAST(char *)&buf[5]);
             DEBUGF (FTP," Get lm-time of file \"%s\"\n",name);
             EvrNetFTPs_GetFileLastModifiedTime (name, strlen(name));
             ftp_s->State = FTP_STATE_FTIME;
@@ -718,7 +718,7 @@ list:       /* Check access rights for external user accounts */
           }
           if (cmd.sel == FTP_CMD_RETR) {
             /* Retrieve a file */
-            name = get_fname (CONST_CAST(char *)&buf[5]);
+            name = get_fname (__CONST_CAST(char *)&buf[5]);
             DEBUGF (FTP," Read file \"%s\"\n",name);
             EvrNetFTPs_ReadFile (name, strlen(name));
             ftp_s->Name = make_path (ftp_s, name);
@@ -740,7 +740,7 @@ list:       /* Check access rights for external user accounts */
           if ((cmd.sel == FTP_CMD_STOR) ||
               (cmd.sel == FTP_CMD_APPE)) {
             /* Store or Append a file (with create) */
-            name = get_fname (CONST_CAST(char *)&buf[5]);
+            name = get_fname (__CONST_CAST(char *)&buf[5]);
 #ifdef __DBG_ENABLED
             if (cmd.sel == FTP_CMD_STOR) {
               DEBUGF (FTP, " Write file \"%s\"\n", name);
@@ -773,7 +773,7 @@ dopen:      ftp_s->Resp  = (ftp_s->Flags & FTP_FLAG_PASSIVE) ? FTP_RESP_DACCEPT 
           }
           if (cmd.sel == FTP_CMD_DELE) {
             /* Delete a file */
-            name = get_fname (CONST_CAST(char *)&buf[5]);
+            name = get_fname (__CONST_CAST(char *)&buf[5]);
             DEBUGF (FTP," Delete file \"%s\"\n",name);
             EvrNetFTPs_DeleteFile (name, strlen(name));
             ftp_s->Name = make_path (ftp_s, name);
@@ -799,7 +799,7 @@ dopen:      ftp_s->Resp  = (ftp_s->Flags & FTP_FLAG_PASSIVE) ? FTP_RESP_DACCEPT 
 
           if (cmd.sel == FTP_CMD_RNFR) {
             /* Rename a file/folder From 'name' */
-            name = get_fname (CONST_CAST(char *)&buf[5]);
+            name = get_fname (__CONST_CAST(char *)&buf[5]);
             DEBUGF (FTP," Rename file from \"%s\"\n",name);
             EvrNetFTPs_RenameFileFrom (name, strlen(name));
             free_name (ftp_s);
@@ -815,7 +815,7 @@ dopen:      ftp_s->Resp  = (ftp_s->Flags & FTP_FLAG_PASSIVE) ? FTP_RESP_DACCEPT 
 
           if (cmd.sel == FTP_CMD_RNTO) {
             /* Rename a file/folder to 'name' */
-            name = no_path (CONST_CAST(char *)&buf[5]);
+            name = no_path (__CONST_CAST(char *)&buf[5]);
             DEBUGF (FTP," Rename file to \"%s\"\n",name);
             EvrNetFTPs_RenameFileTo (name, strlen(name));
             if (ftp_s->Name == NULL) {

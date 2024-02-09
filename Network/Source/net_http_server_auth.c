@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_http_server_auth.c
  * Purpose: Web Server Authentication
@@ -311,7 +311,7 @@ static bool http_auth_digest_parse (void *session, char *buf) {
   }
 
   /* Add null-termination to username */
-  (CONST_CAST(char *)auth->username.sp)[auth->username.len] = 0;
+  (__CONST_CAST(char *)auth->username.sp)[auth->username.len] = 0;
   DEBUGF (HTTP," Username-Digest: %s\n",auth->username.sp);
   EvrNetHTTPs_ViewUserCredentials (auth->username.sp, (uint32_t)auth->username.len);
 

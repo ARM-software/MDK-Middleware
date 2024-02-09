@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_smtp_client_core.c
  * Purpose: Mail Transfer Client core
@@ -303,11 +303,11 @@ static uint32_t smtp_listener (int32_t socket, netTCP_Event event, const NET_ADD
           /* Method AUTH LOGIN */
           if (smtp->AuthMode == SMTP_AUTH_LOGIN) {
 #ifdef DEBUG_STDIO
-            (CONST_CAST(char *)buf)[len-1] = 0;
+            (__CONST_CAST(char *)buf)[len-1] = 0;
             DEBUGF (SMTP," Prompt: %s\n",buf+4);
 #endif
             /* Decode base64 string to the same buffer */
-            net_base64_decode (CONST_CAST(char *)buf+4, (const char *)buf+4, len-4);
+            net_base64_decode (__CONST_CAST(char *)buf+4, (const char *)buf+4, len-4);
             if (net_strcmp ((const char *)buf+4, "Username:")) {
               smtp_transit (SMTP_STATE_USER);
               return (true);
@@ -325,7 +325,7 @@ static uint32_t smtp_listener (int32_t socket, netTCP_Event event, const NET_ADD
           /* Store decoded challenge */
           smtp->CramLen = net_base64_decode (smtp->CramBuf, (const char *)buf+4, len-4) & 0xFF;
 #ifdef DEBUG_STDIO
-          (CONST_CAST(char *)buf)[len-1] = 0;
+          (__CONST_CAST(char *)buf)[len-1] = 0;
           DEBUGF (SMTP," Challenge: %s\n",buf+4);
 #endif
           smtp_transit (SMTP_STATE_USER);
@@ -347,11 +347,11 @@ static uint32_t smtp_listener (int32_t socket, netTCP_Event event, const NET_ADD
             return (true);
           }
 #ifdef DEBUG_STDIO
-          (CONST_CAST(char *)buf)[len-1] = 0;
+          (__CONST_CAST(char *)buf)[len-1] = 0;
           DEBUGF (SMTP," Prompt: %s\n",buf+4);
 #endif
           /* Decode base64 string to the same buffer */
-          net_base64_decode (CONST_CAST(char *)buf+4, (const char *)buf+4, len-4);
+          net_base64_decode (__CONST_CAST(char *)buf+4, (const char *)buf+4, len-4);
           if (net_strcmp ((const char *)buf+4, "Password:")) {
             smtp->Flags |= SMTP_FLAG_PASSW;
             smtp_transit (SMTP_STATE_USER);
@@ -410,7 +410,7 @@ static uint32_t smtp_listener (int32_t socket, netTCP_Event event, const NET_ADD
           return (true);
       }
 #ifdef __DBG_ENABLED
-      (CONST_CAST(char *)buf)[len-1] = 0;
+      (__CONST_CAST(char *)buf)[len-1] = 0;
       ERRORF (SMTP,"Wrong response: %s\n",buf);
       EvrNetSMTP_WrongResponse (buf, len);
 #endif

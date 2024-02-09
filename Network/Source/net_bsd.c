@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_bsd.c
  * Purpose: Berkeley Socket API
@@ -1145,7 +1145,7 @@ closed:/* A socket has been closed */
       nr = (uint32_t)len;
     }
     memcpy (buf, &netbuf->data[netbuf->index], nr);
-    addr_net_to_bsd (ALIGN_CAST(__ADDR *)netbuf->data, bsd_s->Family, from, fromlen);
+    addr_net_to_bsd (__ALIGN_CAST(__ADDR *)netbuf->data, bsd_s->Family, from, fromlen);
 
     if (!(flags & MSG_PEEK)) {
       /* Release the buffer. */
@@ -1300,7 +1300,7 @@ int32_t recvmsg (int32_t sock, MSGHDR *msg, int32_t flags) {
   netbuf = bsd_s->buf_list;
 
   /* Copy the source address first */
-  addr_net_to_bsd (ALIGN_CAST(__ADDR *)netbuf->data, bsd_s->Family,
+  addr_net_to_bsd (__ALIGN_CAST(__ADDR *)netbuf->data, bsd_s->Family,
                    msg->msg_name, (int32_t *)&msg->msg_namelen);
 
   msg->msg_flags = 0;
@@ -2654,7 +2654,7 @@ static uint32_t bsd_cb_udp (int32_t socket, const NET_ADDR *addr,
   DEBUGF (BSD,"Que_add %d bytes, Socket %d\n",len,bsd_s->Id);
   EvrNetBSD_CbfuncUdpQueueAdd (bsd_s->Id, len);
   /* Copy the addresses before starting the data */
-  net_addr_copy (ALIGN_CAST(__ADDR *)netbuf->data, (const __ADDR *)addr);
+  net_addr_copy (__ALIGN_CAST(__ADDR *)netbuf->data, (const __ADDR *)addr);
   if (addr->addr_type == NET_ADDR_IP4) {
     if (bsd_s->Flags & BSD_FLAG_DESTIP4) {
       net_addr4_copy (&netbuf->data[sizeof(NET_ADDR4)],(__ADDR_X(addr))->dst_addr);

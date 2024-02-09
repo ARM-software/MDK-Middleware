@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ftp_client.c
  * Purpose: File Transfer Client
@@ -503,7 +503,7 @@ noaccess:   if (is_not_found ((const char *)buf, (int32_t)len)) {
         EvrNetFTPc_CommandErrorResponse ();
       }
       else {
-        (CONST_CAST(char *)buf)[len-2] = 0;
+        (__CONST_CAST(char *)buf)[len-2] = 0;
         ERRORF (FTPC,"Wrong response: %s\n",buf);
         EvrNetFTPc_WrongResponse (buf, len-2);
       }
@@ -595,7 +595,7 @@ static uint32_t ftpc_data_cb (int32_t socket, netTCP_Event event, const NET_ADDR
             break;
           }
           /* Directory listing received, accepts also early data */
-          netFTPc_Process (netFTPc_RequestList, CONST_CAST(char *)buf, len);
+          netFTPc_Process (netFTPc_RequestList, __CONST_CAST(char *)buf, len);
           net_tcp_reset_tout (ftpc_s->Socket);
           ftpc_s->Timer = ftpc->DefTout;
           break;

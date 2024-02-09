@@ -46,20 +46,20 @@ extern void net_addr6_to_mac (const uint8_t *ip6_addr, uint8_t *mac_addr);
 extern void net_addr6_map_4to6 (const uint8_t *ip4_addr, uint8_t *ip6_addr);
 #endif
 #if defined(__ARM_FEATURE_UNALIGNED)
-  static __FORCEINLINE void net_addr4_copy (uint8_t *dst, const uint8_t *src) {
+  __STATIC_FORCEINLINE void net_addr4_copy (uint8_t *dst, const uint8_t *src) {
     __UNALIGNED_UINT32_WRITE(&dst[0], __UNALIGNED_UINT32_READ(&src[0]));
   }
-  static __FORCEINLINE void net_mac_copy (uint8_t *dst, const uint8_t *src) {
+  __STATIC_FORCEINLINE void net_mac_copy (uint8_t *dst, const uint8_t *src) {
     __UNALIGNED_UINT32_WRITE(&dst[0], __UNALIGNED_UINT32_READ(&src[0]));
     __UNALIGNED_UINT16_WRITE(&dst[4], __UNALIGNED_UINT16_READ(&src[4]));
   }
-  static __FORCEINLINE bool net_addr4_comp (const uint8_t *ip1, const uint8_t *ip2) {
+  __STATIC_FORCEINLINE bool net_addr4_comp (const uint8_t *ip1, const uint8_t *ip2) {
     if (__UNALIGNED_UINT32_READ(&ip1[0]) == __UNALIGNED_UINT32_READ(&ip2[0])) {
       return (true);
     }
     return (false);
   }
-  static __FORCEINLINE bool net_mac_comp (const uint8_t *mac1, const uint8_t *mac2) {
+  __STATIC_FORCEINLINE bool net_mac_comp (const uint8_t *mac1, const uint8_t *mac2) {
     if (__UNALIGNED_UINT32_READ(&mac1[0]) == __UNALIGNED_UINT32_READ(&mac2[0]) &&
         __UNALIGNED_UINT16_READ(&mac1[4]) == __UNALIGNED_UINT16_READ(&mac2[4])) {
       return (true);

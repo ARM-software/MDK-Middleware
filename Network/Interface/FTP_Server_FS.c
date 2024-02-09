@@ -1,12 +1,11 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network:Service
- * Copyright (c) 2004-2022 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    FTP_Server_FS.c
  * Purpose: FTP Server File System Interface
- * Rev.:    V7.2.0
  *----------------------------------------------------------------------------*/
-//! [code_FTP_Server_FS]
+
 #include <stdio.h>
 #include <string.h>
 #include "rl_net.h"
@@ -27,7 +26,7 @@ static fsFileInfo info;
 #endif
 
 // Open a file for reading or writing on FTP server.
-__weak void *netFTPs_fopen (const char *fname, const char *mode) {
+__WEAK void *netFTPs_fopen (const char *fname, const char *mode) {
   FILE *f = fopen (fname, mode);
 #if (NET_FTP_SERVER_VBUF_SIZE > 512)
   if (f != NULL) {
@@ -38,22 +37,22 @@ __weak void *netFTPs_fopen (const char *fname, const char *mode) {
 }
 
 // Close a file previously open on FTP server.
-__weak void netFTPs_fclose (void *file) {
+__WEAK void netFTPs_fclose (void *file) {
   fclose (file);
 }
 
 // Read block of data from a file on FTP server.
-__weak uint32_t netFTPs_fread (void *file, uint8_t *buf, uint32_t len) {
+__WEAK uint32_t netFTPs_fread (void *file, uint8_t *buf, uint32_t len) {
   return (fread (buf, 1, len, file));
 }
 
 // Write block of data to a file on FTP server.
-__weak uint32_t netFTPs_fwrite (void *file, const uint8_t *buf, uint32_t len) {
+__WEAK uint32_t netFTPs_fwrite (void *file, const uint8_t *buf, uint32_t len) {
   return (fwrite (buf, 1, len, file));
 }
 
 // Delete a file on FTP server.
-__weak bool netFTPs_fdelete (const char *fname) {
+__WEAK bool netFTPs_fdelete (const char *fname) {
   if (FDELETE (fname) == fsOK) {
     return (true);
   }
@@ -61,7 +60,7 @@ __weak bool netFTPs_fdelete (const char *fname) {
 }
 
 // Rename a file or directory on FTP server.
-__weak bool netFTPs_frename (const char *fname, const char *newname) {
+__WEAK bool netFTPs_frename (const char *fname, const char *newname) {
   if (frename (fname, newname) == fsOK) {
     return (true);
   }
@@ -69,7 +68,7 @@ __weak bool netFTPs_frename (const char *fname, const char *newname) {
 }
 
 // Make a new directory on FTP server.
-__weak bool netFTPs_mkdir (const char *path) {
+__WEAK bool netFTPs_mkdir (const char *path) {
   if (fmkdir (path) == fsOK) {
     return (true);
   }
@@ -77,7 +76,7 @@ __weak bool netFTPs_mkdir (const char *path) {
 }
 
 // Remove an empty directory on FTP server.
-__weak bool netFTPs_rmdir (const char *path) {
+__WEAK bool netFTPs_rmdir (const char *path) {
   if (frmdir (path, NULL) == fsOK) {
     return (true);
   }
@@ -85,7 +84,7 @@ __weak bool netFTPs_rmdir (const char *path) {
 }
 
 // Verify that the directory path exists on FTP server.
-__weak bool netFTPs_chdir (const char *path) {
+__WEAK bool netFTPs_chdir (const char *path) {
   if (fchdir (path) == fsOK) {
     return (true);
   }
@@ -93,7 +92,7 @@ __weak bool netFTPs_chdir (const char *path) {
 }
 
 // Search the file system directory for matching files.
-__weak int32_t netFTPs_ffind (const char *mask, char *fname,
+__WEAK int32_t netFTPs_ffind (const char *mask, char *fname,
                               uint32_t *fsize, NET_FS_TIME *ftime, bool first) {
   if (first) {
     /* First call, initialize the info. */
@@ -122,4 +121,3 @@ __weak int32_t netFTPs_ffind (const char *mask, char *fname,
   return (0);
 }
 #endif
-//! [code_FTP_Server_FS]

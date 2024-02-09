@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_udp.c
  * Purpose: User Datagram Protocol
@@ -526,7 +526,7 @@ retf:
     EvrNetUDP_SendSizeTruncated (socket, len);
   }
 
-  udp_hdr = ALIGN_CAST(NET_UDP_HEADER *)&frame->data[IP6_DATA_OFFS];
+  udp_hdr = __ALIGN_CAST(NET_UDP_HEADER *)&frame->data[IP6_DATA_OFFS];
 
   /* Put UDP header into frame */
   udp_hdr->SrcPort = htons(udp_s->LocPort);
@@ -676,7 +676,7 @@ void net_udp_process (NET_IF_CFG *net_if, NET_FRAME *frame, uint8_t ip_ver) {
   int32_t i;
 
   DEBUGF (UDP,"*** Process_frame ***\n");
-  udp_hdr = ALIGN_CAST(NET_UDP_HEADER *)&frame->data[frame->index];
+  udp_hdr = __ALIGN_CAST(NET_UDP_HEADER *)&frame->data[frame->index];
 
   dlen = ntohs(udp_hdr->Len);
   /* Check the frame length:                  */

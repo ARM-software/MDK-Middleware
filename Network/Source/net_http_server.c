@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_http_server.c
  * Purpose: Web Server
@@ -1080,11 +1080,11 @@ static uint32_t http_listener (int32_t socket, netTCP_Event event, const NET_ADD
 
         if (http_s->Method == HTTP_METHOD_HEAD) {
           /* Process HEAD request method */
-          hdr = http_proc_uri (http_s, CONST_CAST(char *)buf, NULL);
+          hdr = http_proc_uri (http_s, __CONST_CAST(char *)buf, NULL);
           if (hdr == NULL) {
             return (false);
           }
-          http_parse_header (http_s, CONST_CAST(char *)hdr, (const char *)buf);
+          http_parse_header (http_s, __CONST_CAST(char *)hdr, (const char *)buf);
           if (http_s->State == HTTP_STATE_UNAUTH) {
             /* Authentication failed */
             return (true);
@@ -1097,11 +1097,11 @@ static uint32_t http_listener (int32_t socket, netTCP_Event event, const NET_ADD
         }
         if (http_s->Method == HTTP_METHOD_GET) {
           /* Process GET request method */
-          hdr = http_proc_uri (http_s, CONST_CAST(char *)buf, &bp);
+          hdr = http_proc_uri (http_s, __CONST_CAST(char *)buf, &bp);
           if (hdr == NULL) {
             return (false);
           }
-          http_parse_header (http_s, CONST_CAST(char *)hdr, (const char *)buf);
+          http_parse_header (http_s, __CONST_CAST(char *)hdr, (const char *)buf);
           if (http_s->State == HTTP_STATE_UNAUTH) {
             /* Authentication failed */
             return (true);
@@ -1117,11 +1117,11 @@ static uint32_t http_listener (int32_t socket, netTCP_Event event, const NET_ADD
         }
         if (http_s->Method == HTTP_METHOD_POST) {
           /* Process POST request method */
-          hdr = http_proc_uri (http_s, CONST_CAST(char *)buf, &bp);
+          hdr = http_proc_uri (http_s, __CONST_CAST(char *)buf, &bp);
           if (hdr == NULL) {
             return (false);
           }
-          http_parse_header (http_s, CONST_CAST(char *)hdr, (const char *)buf);
+          http_parse_header (http_s, __CONST_CAST(char *)hdr, (const char *)buf);
           if (http_s->State == HTTP_STATE_UNAUTH) {
             /* Authentication failed */
             return (true);
@@ -1197,7 +1197,7 @@ cgif:     if (http_s->Flags & HTTP_FLAG_CGI) {
       }
       if (http_s->State == HTTP_STATE_UPLOAD) {
         /* File Upload in progress */
-        bp = CONST_CAST(char *)buf;
+        bp = __CONST_CAST(char *)buf;
 multi:  if (http_proc_multipart (http_s, bp) == false) {
           /* Multipart processing in progress */
           return (true);
@@ -1610,11 +1610,11 @@ open_again:
       if (((http_s->Flags & HTTP_FLAG_CGI) == 0) &&
           (http_s->FType == HTTP_TYPE_CGI || http_s->FType == HTTP_TYPE_CGX)) {
         http_s->Flags |= HTTP_FLAG_CGI;
-        http_s->sFile  = CONST_CAST(uint8_t *)start;
+        http_s->sFile  = __CONST_CAST(uint8_t *)start;
       }
       else {
         /* Open a data file or included file from cgi/cgx script */
-        http_s->dFile = CONST_CAST(uint8_t *)start;
+        http_s->dFile = __CONST_CAST(uint8_t *)start;
         http_s->DLen  = size;
         DEBUGF (HTTP," Open file size : %u bytes\n",http_s->DLen);
         EvrNetHTTPs_ViewFileStatus (http_s->DLen, imageLastModified);
@@ -1639,7 +1639,7 @@ open_again:
         goto open_again;
       }
       /* Check for resource file redirection */
-      http_s->pUser = CONST_CAST(char *)(netCGI_Redirect (name));
+      http_s->pUser = __CONST_CAST(char *)(netCGI_Redirect (name));
 #ifdef __DBG_ENABLED
       if (http_s->pUser != NULL) {
         DEBUGF (HTTP," Redirection URL: %s\n",http_s->pUser);
@@ -1710,7 +1710,7 @@ static void http_set_ftype (NET_HTTP_INFO *http_s, const char *name) {
     type = netCGI_ContentType (ext);
     if (type != NULL) {
       /* Pointer to user Content-type */
-      http_s->pUser = CONST_CAST(char *)type;
+      http_s->pUser = __CONST_CAST(char *)type;
       http_s->FType = HTTP_TYPE_USER;
       return;
     }
@@ -1862,7 +1862,7 @@ static void http_parse_header (NET_HTTP_INFO *http_s, char *hdr, const char *uri
 
   /* Check bit-mask enabled header options */
   sp = NULL;
-  for (fp = hdr; fp && opt; fp = CONST_CAST(char *)(get_next_field (fp, cgi.end))) {
+  for (fp = hdr; fp && opt; fp = __CONST_CAST(char *)(get_next_field (fp, cgi.end))) {
     if ((opt & 0x01U) && net_strcasecmp (fp, "Authorization: ")) {
       opt &= ~0x01U; fp += 15;
       if (!(auth_io && auth_io->parse_line (http_s, fp))) {
@@ -2247,7 +2247,7 @@ static bool http_proc_multipart (NET_HTTP_INFO *http_s, const char *buf) {
             i = net_strnchr (fp, '\"', 128);
             if (i > 0) {
               /* Here we violate (const char *) convention */
-              (CONST_CAST(char *)fp)[i] = 0;
+              (__CONST_CAST(char *)fp)[i] = 0;
               /* Send null-terminated filename to the user */
               DEBUGF (HTTP," Multipart POST : %d bytes\n",http_s->CGIvar);
               DEBUGF (HTTP," Upload filename: %s\n",fp);

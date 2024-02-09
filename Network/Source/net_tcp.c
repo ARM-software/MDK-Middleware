@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_tcp.c
  * Purpose: Transmission Control Protocol
@@ -1321,7 +1321,7 @@ void net_tcp_process (NET_IF_CFG *net_if, NET_FRAME *frame, uint8_t ip_ver) {
 
   DEBUGF (TCP,"*** Process_frame ***\n");
   /* Calculate TCP layer data length and start index */
-  tcp_hdr = ALIGN_CAST(NET_TCP_HEADER *)&frame->data[frame->index];
+  tcp_hdr = __ALIGN_CAST(NET_TCP_HEADER *)&frame->data[frame->index];
 
   hlen = (tcp_hdr->HLen >> 2) & ~0x03;
   if (hlen < TCP_HEADER_LEN || hlen > frame->length) {
@@ -2018,7 +2018,7 @@ static bool tcp_write (NET_IF_CFG *net_if, NET_FRAME *frame,
   NET_TCP_HEADER *tcp_hdr;
 
   /* There is reserved a space for protocol headers */
-  tcp_hdr = ALIGN_CAST(NET_TCP_HEADER *)&frame->data[IP6_DATA_OFFS];
+  tcp_hdr = __ALIGN_CAST(NET_TCP_HEADER *)&frame->data[IP6_DATA_OFFS];
 
   /* Construct TCP header in network byte order */
   tcp_hdr->SrcPort  = htons(TCP_WI(frame)->sport);

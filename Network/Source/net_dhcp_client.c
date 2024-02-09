@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_dhcp_client.c
  * Purpose: Dynamic Host Configuration Client
@@ -1152,12 +1152,12 @@ static uint32_t proc_opt_req (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t inde
       /* Read Bootfile Name and provide it to  */
       /* the user as a null-terminated string. */
       tmp = buf[index + buf[index+1] + 2];
-      (CONST_CAST(uint8_t *)buf)[index + buf[index+1] + 2] = 0;
+      (__CONST_CAST(uint8_t *)buf)[index + buf[index+1] + 2] = 0;
       DEBUGF (DHCP," Boot fname: %s\n",&buf[index+2]);
       EvrNetDHCP_ViewBootfileName (&buf[index+2], buf[index+1]+1);
       netDHCP_Notify (h->If->Id,
                       NET_DHCP_OPTION_BOOTFILE_NAME, &buf[index+2], buf[index+1]);
-      (CONST_CAST(uint8_t *)buf)[index + buf[index+1] + 2] = tmp & 0xFF;
+      (__CONST_CAST(uint8_t *)buf)[index + buf[index+1] + 2] = tmp & 0xFF;
       break;
 
     case DHCP_OPT_NTP_SERVER:
