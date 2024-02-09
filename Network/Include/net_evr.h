@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_evr.h
  * Purpose: Network definitions for Event Recorder
@@ -51,6 +51,7 @@ typedef struct evr_addr {
 #define EvtNetICMP6         0xCD        ///< ICMPv6 Control
 #define EvtNetDHCP6         0xCE        ///< Dynamic Host Configuration Client for IPv6
 #define EvtNetNDP           0xCF        ///< Neighbor Discovery for IPv6
+#define EvtNetMLD           0xDE        ///< Multicast Listener Discovery for IPv6
 
 #define EvtNetUDP           0xD0        ///< Socket UDP
 #define EvtNetTCP           0xD1        ///< Socket TCP
@@ -68,7 +69,7 @@ typedef struct evr_addr {
 #define EvtNetSNTP          0xDC        ///< Simple Network Time Client
 
 #define EvtNetStart         0xC0        ///< First Network component number
-#define EvtNetEnd           0xDD        ///< Last Network component number
+#define EvtNetEnd           0xDE        ///< Last Network component number
 #endif
 
 
@@ -4328,6 +4329,7 @@ typedef struct evr_addr {
 #define EvtNetIGMP_StartModeIGMPv1          EventID (EventLevelOp,    EvtNetIGMP, 15)
 #define EvtNetIGMP_MaxTimeForReport         EventID (EventLevelOp,    EvtNetIGMP, 16)
 #define EvtNetIGMP_GroupReportsScheduled    EventID (EventLevelOp,    EvtNetIGMP, 17)
+#define EvtNetIGMP_NoReportScheduled        EventID (EventLevelOp,    EvtNetIGMP, 23) // End
 #define EvtNetIGMP_ReportReceived           EventID (EventLevelOp,    EvtNetIGMP, 18)
 #define EvtNetIGMP_OwnReportCanceled        EventID (EventLevelOp,    EvtNetIGMP, 19)
 #define EvtNetIGMP_StartModeIGMPv2          EventID (EventLevelOp,    EvtNetIGMP, 20)
@@ -4578,6 +4580,18 @@ typedef struct evr_addr {
   }
 #else
   #define EvrNetIGMP_GroupReportsScheduled(if_id, n_reports)
+#endif
+
+/**
+  \brief  Event on IGMP no report scheduled as no active group (Op)
+  \param  if_id         network interface identifier
+*/
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetIGMP_NoReportScheduled(uint16_t if_id) {
+    EventRecord2 (EvtNetIGMP_NoReportScheduled, if_id, 0);
+  }
+#else
+  #define EvrNetIGMP_NoReportScheduled(if_id)
 #endif
 
 /**
@@ -7050,16 +7064,16 @@ typedef struct evr_addr {
 #define EvtNetDHCP6_FrameTooShort           EventID (EventLevelError, EvtNetDHCP6, 16)
 #define EvtNetDHCP6_WrongTransactionId      EventID (EventLevelError, EvtNetDHCP6, 17)
 #define EvtNetDHCP6_MessageTypeUnknown      EventID (EventLevelError, EvtNetDHCP6, 18)
-#define EvtNetDHCP6_ShowMessage             EventID (EventLevelOp,    EvtNetDHCP6, 19)
+#define EvtNetDHCP6_ViewMessage             EventID (EventLevelOp,    EvtNetDHCP6, 19)
 #define EvtNetDHCP6_InvalidMessageType      EventID (EventLevelOp,    EvtNetDHCP6, 20)
 #define EvtNetDHCP6_WrongClientId           EventID (EventLevelOp,    EvtNetDHCP6, 21)
 #define EvtNetDHCP6_ServerNotChosen         EventID (EventLevelOp,    EvtNetDHCP6, 22)
 #define EvtNetDHCP6_StatusCode              EventID (EventLevelOp,    EvtNetDHCP6, 23)
 #define EvtNetDHCP6_WrongServerId           EventID (EventLevelOp,    EvtNetDHCP6, 24)
-#define EvtNetDHCP6_ShowDnsServers          EventID (EventLevelOp,    EvtNetDHCP6, 25)
+#define EvtNetDHCP6_ViewDnsServers          EventID (EventLevelOp,    EvtNetDHCP6, 25)
 #define EvtNetDHCP6_MissingServerId         EventID (EventLevelOp,    EvtNetDHCP6, 26)
 #define EvtNetDHCP6_WrongIaid               EventID (EventLevelOp,    EvtNetDHCP6, 27)
-#define EvtNetDHCP6_ShowIanaOffer           EventID (EventLevelOp,    EvtNetDHCP6, 28)
+#define EvtNetDHCP6_ViewIanaOffer           EventID (EventLevelOp,    EvtNetDHCP6, 28)
 #define EvtNetDHCP6_OfferTimerCheckFailed   EventID (EventLevelError, EvtNetDHCP6, 29)
 #define EvtNetDHCP6_UninitClient            EventID (EventLevelOp,    EvtNetDHCP6, 30)
 #endif
@@ -7329,12 +7343,12 @@ typedef struct evr_addr {
   \remark The size of transaction identifier (XID) is 3 bytes.
  */
 #ifdef DEBUG_EVR
-  __STATIC_INLINE void EvrNetDHCP6_ShowMessage(uint16_t if_id, uint8_t msg_type, uint32_t xid) {
+  __STATIC_INLINE void EvrNetDHCP6_ViewMessage(uint16_t if_id, uint8_t msg_type, uint32_t xid) {
     uint32_t val1 = ((uint32_t)msg_type << 16) | if_id;
-    EventRecord2 (EvtNetDHCP6_ShowMessage, val1, xid);
+    EventRecord2 (EvtNetDHCP6_ViewMessage, val1, xid);
   }
 #else
-  #define EvrNetDHCP6_ShowMessage(if_id, msg_type, xid)
+  #define EvrNetDHCP6_ViewMessage(if_id, msg_type, xid)
 #endif
 
 /**
@@ -7415,13 +7429,13 @@ typedef struct evr_addr {
   \remark Displays primary and secondary DNS server address.
  */
 #ifdef DEBUG_EVR
-  __STATIC_INLINE void EvrNetDHCP6_ShowDnsServers(uint16_t if_id, const uint8_t *dns_list) {
+  __STATIC_INLINE void EvrNetDHCP6_ViewDnsServers(uint16_t if_id, const uint8_t *dns_list) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], dns_list, 32);
-    EventRecordData (EvtNetDHCP6_ShowDnsServers, &evr_buf, 36);
+    EventRecordData (EvtNetDHCP6_ViewDnsServers, &evr_buf, 36);
   }
 #else
-  #define EvrNetDHCP6_ShowDnsServers(if_id, dns_list)
+  #define EvrNetDHCP6_ViewDnsServers(if_id, dns_list)
 #endif
 
 /**
@@ -7463,11 +7477,11 @@ typedef struct evr_addr {
   \remark IANA: Identity Association for non-temporary Address
  */
 #ifdef DEBUG_EVR
-  __STATIC_INLINE void EvrNetDHCP6_ShowIanaOffer(const void *iana_offer) {
-    EventRecordData (EvtNetDHCP6_ShowIanaOffer, iana_offer, 32);
+  __STATIC_INLINE void EvrNetDHCP6_ViewIanaOffer(const void *iana_offer) {
+    EventRecordData (EvtNetDHCP6_ViewIanaOffer, iana_offer, 32);
   }
 #else
-  #define EvrNetDHCP6_ShowIanaOffer(iana_offer)
+  #define EvrNetDHCP6_ViewIanaOffer(iana_offer)
 #endif
 
 /**
@@ -7512,9 +7526,9 @@ typedef struct evr_addr {
 #define EvtNetNDP_ProbeResponse             EventID (EventLevelOp,    EvtNetNDP, 12)
 #define EvtNetNDP_WrongDestinationAddress   EventID (EventLevelOp,    EvtNetNDP, 13)
 #define EvtNetNDP_SendReply                 EventID (EventLevelOp,    EvtNetNDP, 14)
-#define EvtNetNDP_ShowFlags                 EventID (EventLevelOp,    EvtNetNDP, 15)
+#define EvtNetNDP_ViewFlags                 EventID (EventLevelOp,    EvtNetNDP, 15)
 #define EvtNetNDP_SendRequest               EventID (EventLevelOp,    EvtNetNDP, 16)
-#define EvtNetNDP_ShowTargetAddress         EventID (EventLevelOp,    EvtNetNDP, 17)
+#define EvtNetNDP_ViewTargetAddress         EventID (EventLevelOp,    EvtNetNDP, 17)
 #define EvtNetNDP_OptionTargetMacAddress    EventID (EventLevelOp,    EvtNetNDP, 18)
 #define EvtNetNDP_CacheEntryUpdate          EventID (EventLevelOp,    EvtNetNDP, 19)
 #define EvtNetNDP_WrongResponse             EventID (EventLevelError, EvtNetNDP, 20)
@@ -7786,11 +7800,11 @@ typedef struct evr_addr {
   \param  flags         message flags
  */
 #ifdef DEBUG_EVR
-  __STATIC_INLINE void EvrNetNDP_ShowFlags(uint16_t if_id, uint32_t flags) {
-    EventRecord2 (EvtNetNDP_ShowFlags, if_id, flags);
+  __STATIC_INLINE void EvrNetNDP_ViewFlags(uint16_t if_id, uint32_t flags) {
+    EventRecord2 (EvtNetNDP_ViewFlags, if_id, flags);
   }
 #else
-  #define EvrNetNDP_ShowFlags(if_id, flags)
+  #define EvrNetNDP_ViewFlags(if_id, flags)
 #endif
 
 /**
@@ -7815,13 +7829,13 @@ typedef struct evr_addr {
   \param  targ_addr     pointer to target address
  */
 #ifdef DEBUG_EVR
-  __STATIC_INLINE void EvrNetNDP_ShowTargetAddress(uint16_t if_id, const uint8_t *targ_addr) {
+  __STATIC_INLINE void EvrNetNDP_ViewTargetAddress(uint16_t if_id, const uint8_t *targ_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], targ_addr, 16);
-    EventRecordData (EvtNetNDP_ShowTargetAddress, &evr_buf, 20);
+    EventRecordData (EvtNetNDP_ViewTargetAddress, &evr_buf, 20);
   }
 #else
-  #define EvrNetNDP_ShowTargetAddress(if_id, targ_addr)
+  #define EvrNetNDP_ViewTargetAddress(if_id, targ_addr)
 #endif
 
 /**
@@ -8383,6 +8397,311 @@ typedef struct evr_addr {
   }
 #else
   #define EvrNetNDP_UninitCache(if_id)
+#endif
+
+
+// NetMLD event identifiers ----------------------------------------------------
+#ifdef DEBUG_EVR
+#define EvtNetMLD_InitNode                  EventID (EventLevelOp,    EvtNetMLD,  0)
+#define EvtNetMLD_Join                      EventID (EventLevelAPI,   EvtNetMLD,  1)
+#define EvtNetMLD_AlreadyInGroup            EventID (EventLevelOp,    EvtNetMLD,  2)
+#define EvtNetMLD_NoFreeEntries             EventID (EventLevelError, EvtNetMLD,  3)
+#define EvtNetMLD_SendReport                EventID (EventLevelOp,    EvtNetMLD,  4)
+#define EvtNetMLD_Leave                     EventID (EventLevelAPI,   EvtNetMLD,  5)
+#define EvtNetMLD_NotInGroup                EventID (EventLevelError, EvtNetMLD,  6)
+#define EvtNetMLD_SendLeave                 EventID (EventLevelOp,    EvtNetMLD,  7)
+#define EvtNetMLD_FrameTooShort             EventID (EventLevelError, EvtNetMLD,  8)
+#define EvtNetMLD_AddressSpecificQuery      EventID (EventLevelOp,    EvtNetMLD,  9)
+#define EvtNetMLD_DestAddressWrong          EventID (EventLevelError, EvtNetMLD, 10)
+#define EvtNetMLD_DelayedReportScheduled    EventID (EventLevelOp,    EvtNetMLD, 11)
+#define EvtNetMLD_GeneralQuery              EventID (EventLevelOp,    EvtNetMLD, 12)
+#define EvtNetMLD_MaxTimeForReport          EventID (EventLevelOp,    EvtNetMLD, 13)
+#define EvtNetMLD_GroupReportsScheduled     EventID (EventLevelOp,    EvtNetMLD, 14)
+#define EvtNetMLD_NoReportScheduled         EventID (EventLevelOp,    EvtNetMLD, 15)
+#define EvtNetMLD_ReportReceived            EventID (EventLevelOp,    EvtNetMLD, 16)
+#define EvtNetMLD_OwnReportCanceled         EventID (EventLevelOp,    EvtNetMLD, 17)
+#define EvtNetMLD_SendDelayedReport         EventID (EventLevelOp,    EvtNetMLD, 18)
+#define EvtNetMLD_UninitNode                EventID (EventLevelOp,    EvtNetMLD, 19)
+#endif
+
+/**
+  \brief  Event on MLD node initialize (Op)
+  \param  if_id         network interface identifier
+  \param  num_entries   number of entries available in membership table
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_InitNode(uint16_t if_id, uint32_t num_entries) {
+    EventRecord2 (EvtNetMLD_InitNode, if_id, num_entries);
+  }
+#else
+  #define EvrNetMLD_InitNode(if_id, num_entries)
+#endif
+
+/**
+  \brief  Event on MLD join group membership (API)
+  \param  if_id         network interface identifier
+  \param  ip6_addr      pointer to IPv6 address of a group
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_Join(uint16_t if_id, const uint8_t *ip6_addr) {
+    evr_buf.u32[0] = if_id;
+    memcpy (&evr_buf.u32[1], ip6_addr, 16);
+    EventRecordData (EvtNetMLD_Join, &evr_buf, 20);
+  }
+#else
+  #define EvrNetMLD_Join(if_id, ip6_addr)
+#endif
+
+/**
+  \brief  Event on MLD join already a member (Op)
+  \param  if_id         network interface identifier
+  \param  group_id      group membership identifier
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_AlreadyInGroup(uint16_t if_id, uint8_t group_id) {
+    EventRecord2 (EvtNetMLD_AlreadyInGroup, if_id, group_id);
+  }
+#else
+  #define EvrNetMLD_AlreadyInGroup(if_id, group_id)
+#endif
+
+/**
+  \brief  Event on MLD join no free entries available (Error)
+  \param  if_id         network interface identifier
+  \param  num_used      number of used membership table entries
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_NoFreeEntries(uint16_t if_id, uint8_t num_used) {
+    EventRecord2 (EvtNetMLD_NoFreeEntries, if_id, num_used);
+  }
+#else
+  #define EvrNetMLD_NoFreeEntries(if_id, num_used)
+#endif
+
+/**
+  \brief  Event on MLD send report message (Op)
+  \param  if_id         network interface identifier
+  \param  ip6_addr      pointer to IPv6 address of a group
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_SendReport(uint16_t if_id, const uint8_t *ip6_addr) {
+    evr_buf.u32[0] = if_id;
+    memcpy (&evr_buf.u32[1], ip6_addr, 16);
+    EventRecordData (EvtNetMLD_SendReport, &evr_buf, 20);
+  }
+#else
+  #define EvrNetMLD_SendReport(if_id, ip6_addr)
+#endif
+
+/**
+  \brief  Event on MLD leave group membership (API)
+  \param  if_id         network interface identifier
+  \param  ip6_addr      pointer to IPv6 address of a group
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_Leave(uint16_t if_id, const uint8_t *ip6_addr) {
+    evr_buf.u32[0] = if_id;
+    memcpy (&evr_buf.u32[1], ip6_addr, 16);
+    EventRecordData (EvtNetMLD_Leave, &evr_buf, 20);
+  }
+#else
+  #define EvrNetMLD_Leave(if_id, ip6_addr)
+#endif
+
+/**
+  \brief  Event on MLD leave not a member (Error)
+  \param  if_id         network interface identifier
+  \param  ip6_addr      pointer to IPv6 address of a group
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_NotInGroup(uint16_t if_id, const uint8_t *ip6_addr) {
+    evr_buf.u32[0] = if_id;
+    memcpy (&evr_buf.u32[1], ip6_addr, 16);
+    EventRecordData (EvtNetMLD_NotInGroup, &evr_buf, 20);
+  }
+#else
+  #define EvrNetMLD_NotInGroup(if_id, ip6_addr)
+#endif
+
+/**
+  \brief  Event on MLD send leave message (Op)
+  \param  if_id         network interface identifier
+  \param  ip6_addr      pointer to IPv6 address of a group
+*/
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_SendLeave(uint16_t if_id, const uint8_t *ip6_addr) {
+    evr_buf.u32[0] = if_id;
+    memcpy (&evr_buf.u32[1], ip6_addr, 16);
+    EventRecordData (EvtNetMLD_SendLeave, &evr_buf, 20);
+  }
+#else
+  #define EvrNetMLD_SendLeave(if_id, ip6_addr)
+#endif
+
+/**
+  \brief  Event on MLD receive frame is too short (Error)
+  \param  if_id         network interface identifier
+  \param  length        frame length in bytes
+  \param  min_length    minimum length of the frame
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_FrameTooShort(uint16_t if_id, uint32_t length, uint32_t min_length) {
+    uint32_t val2 = (min_length << 16) | length;
+    EventRecord2 (EvtNetMLD_FrameTooShort, if_id, val2);
+  }
+#else
+  #define EvrNetMLD_FrameTooShort(if_id, length, min_length)
+#endif
+
+/**
+  \brief  Event on MLD address specific query (Op)
+  \param  if_id         network interface identifier
+  \param  ip6_addr      pointer to IPv6 address
+*/
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_AddressSpecificQuery(uint16_t if_id, const uint8_t *ip6_addr) {
+    evr_buf.u32[0] = if_id;
+    memcpy (&evr_buf.u32[1], ip6_addr, 16);
+    EventRecordData (EvtNetMLD_AddressSpecificQuery, &evr_buf, 20);
+  }
+#else
+  #define EvrNetMLD_AddressSpecificQuery(if_id, ip6_addr)
+#endif
+
+/**
+  \brief  Event on MLD destination address wrong (Error)
+  \param  if_id         network interface identifier
+  \param  ip6_addr      pointer to IPv6 address
+*/
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_DestAddressWrong(uint16_t if_id, const uint8_t *ip6_addr) {
+    evr_buf.u32[0] = if_id;
+    memcpy (&evr_buf.u32[1], ip6_addr, 16);
+    EventRecordData (EvtNetMLD_DestAddressWrong, &evr_buf, 20);
+  }
+#else
+  #define EvrNetMLD_DestAddressWrong(if_id, ip6_addr)
+#endif
+
+/**
+  \brief  Event on MLD report message delayed (Op)
+  \param  if_id         network interface identifier
+  \param  max_time      maximum delay time in ms
+*/
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_DelayedReportScheduled(uint16_t if_id, uint16_t max_time) {
+    EventRecord2 (EvtNetMLD_DelayedReportScheduled, if_id, max_time);
+  }
+#else
+  #define EvrNetMLD_DelayedReportScheduled(if_id, max_time)
+#endif
+
+/**
+  \brief  Event on MLD general query (Op)
+  \param  if_id         network interface identifier
+  \param  ip6_addr      pointer to IPv6 address
+*/
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_GeneralQuery(uint16_t if_id, const uint8_t *ip6_addr) {
+    evr_buf.u32[0] = if_id;
+    memcpy (&evr_buf.u32[1], ip6_addr, 16);
+    EventRecordData (EvtNetMLD_GeneralQuery, &evr_buf, 20);
+  }
+#else
+  #define EvrNetMLD_GeneralQuery(if_id, ip6_addr)
+#endif
+
+/**
+  \brief  Event on MLD maximum time for report messages (Op)
+  \param  if_id         network interface identifier
+  \param  max_time      maximum delay time in ms
+*/
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_MaxTimeForReport(uint16_t if_id, uint16_t max_time) {
+    EventRecord2 (EvtNetMLD_MaxTimeForReport, if_id, max_time);
+  }
+#else
+  #define EvrNetMLD_MaxTimeForReport(if_id, max_time)
+#endif
+
+/**
+  \brief  Event on MLD scheduled reports for all active groups (Op)
+  \param  if_id         network interface identifier
+  \param  n_reports     number of scheduled reports
+*/
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_GroupReportsScheduled(uint16_t if_id, uint32_t n_reports) {
+    EventRecord2 (EvtNetMLD_GroupReportsScheduled, if_id, n_reports);
+  }
+#else
+  #define EvrNetMLD_GroupReportsScheduled(if_id, n_reports)
+#endif
+
+/**
+  \brief  Event on MLD no report scheduled as no active group (Op)
+  \param  if_id         network interface identifier
+*/
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_NoReportScheduled(uint16_t if_id) {
+    EventRecord2 (EvtNetMLD_NoReportScheduled, if_id, 0);
+  }
+#else
+  #define EvrNetMLD_NoReportScheduled(if_id)
+#endif
+
+/**
+  \brief  Event on MLD received report message (Op)
+  \param  if_id         network interface identifier
+  \param  ip6_addr      pointer to IPv6 address
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_ReportReceived(uint16_t if_id, const uint8_t *ip6_addr) {
+    evr_buf.u32[0] = if_id;
+    memcpy (&evr_buf.u32[1], ip6_addr, 16);
+    EventRecordData (EvtNetMLD_ReportReceived, &evr_buf, 20);
+  }
+#else
+  #define EvrNetMLD_ReportReceived(if_id, ip6_addr)
+#endif
+
+/**
+  \brief  Event on own report canceled (Op)
+  \param  if_id         network interface identifier
+  \param  group_id      group membership identifier
+*/
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_OwnReportCanceled(uint16_t if_id, uint8_t group_id) {
+    EventRecord2 (EvtNetMLD_OwnReportCanceled, if_id, group_id);
+  }
+#else
+  #define EvrNetMLD_OwnReportCanceled(if_id, group_id)
+#endif
+
+/**
+  \brief  Event on MLD send delayed report message (Op)
+  \param  if_id         network interface identifier
+  \param  ip6_addr      pointer to IPv4 address of a group
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_SendDelayedReport(uint16_t if_id, const uint8_t *ip6_addr) {
+    evr_buf.u32[0] = if_id;
+    memcpy (&evr_buf.u32[1], ip6_addr, 16);
+    EventRecordData (EvtNetMLD_SendDelayedReport, &evr_buf, 20);
+  }
+#else
+  #define EvrNetMLD_SendDelayedReport(if_id, ip6_addr)
+#endif
+
+/**
+  \brief  Event on MLD node de-initialize (Op)
+  \param  if_id         network interface identifier
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetMLD_UninitNode(uint16_t if_id) {
+    EventRecord2 (EvtNetMLD_UninitNode, if_id, 0);
+  }
+#else
+  #define EvrNetMLD_UninitNode(if_id)
 #endif
 
 

@@ -164,17 +164,6 @@ static NET_SLIP_CFG slip0_ll_config;
 #endif
 
 /* Check interfaces and protocols */
-#ifndef RTE_Network_IPv6
-  #undef ETH0_IP6_ENABLE
-  #undef ETH0_DHCP6_ENABLE
-  #undef ETH1_IP6_ENABLE
-  #undef ETH1_DHCP6_ENABLE
-  #undef WIFI0_IP6_ENABLE
-  #undef WIFI0_DHCP6_ENABLE
-  #undef WIFI1_IP6_ENABLE
-  #undef WIFI1_DHCP6_ENABLE
-#endif
-
 #if (!ETH0_IP4_ENABLE)
   #undef ETH0_IP4_FRAG_ENABLE
   #undef ETH0_IGMP_ENABLE
@@ -200,20 +189,30 @@ static NET_SLIP_CFG slip0_ll_config;
   #undef WIFI1_DHCP_ENABLE
 #endif
 
+#ifndef RTE_Network_IPv6
+  #undef ETH0_IP6_ENABLE
+  #undef ETH1_IP6_ENABLE
+  #undef WIFI0_IP6_ENABLE
+  #undef WIFI1_IP6_ENABLE
+#endif
 #if (!ETH0_IP6_ENABLE)
   #undef ETH0_IP6_FRAG_ENABLE
+  #undef ETH0_MLD_ENABLE
   #undef ETH0_DHCP6_ENABLE
 #endif
 #if (!ETH1_IP6_ENABLE)
   #undef ETH1_IP6_FRAG_ENABLE
+  #undef ETH1_MLD_ENABLE
   #undef ETH1_DHCP6_ENABLE
 #endif
 #if (!WIFI0_IP6_ENABLE)
   #undef WIFI0_IP6_FRAG_ENABLE
+  #undef WIFI0_MLD_ENABLE
   #undef WIFI0_DHCP6_ENABLE
 #endif
 #if (!WIFI1_IP6_ENABLE)
   #undef WIFI1_IP6_FRAG_ENABLE
+  #undef WIFI1_MLD_ENABLE
   #undef WIFI1_DHCP6_ENABLE
 #endif
 
@@ -244,6 +243,9 @@ static NET_SLIP_CFG slip0_ll_config;
 
 #define __NDP_ENA   (ETH0_IP6_ENABLE   + ETH1_IP6_ENABLE   + \
                      WIFI0_IP6_ENABLE  + WIFI1_IP6_ENABLE)
+
+#define __MLD_ENA   (ETH0_MLD_ENABLE   + ETH1_MLD_ENABLE   + \
+                     WIFI0_MLD_ENABLE  + WIFI1_MLD_ENABLE)
 
 #define __DHCP6_ENA (ETH0_DHCP6_ENABLE + ETH1_DHCP6_ENABLE + \
                      WIFI0_DHCP6_ENABLE+ WIFI1_DHCP6_ENABLE)
@@ -477,7 +479,10 @@ NET_SYS_CFG net_sys_config = {
     &net_eth0_igmp_control,
     &net_eth0_if_config,
     eth0_igmp_table,
-    ETH0_IGMP_TAB_SIZE
+    ETH0_IGMP_TAB_SIZE,
+    net_igmp_process,
+    net_igmp_is_member,
+    net_igmp_collect_mcast
   };
  #endif
 
@@ -534,7 +539,8 @@ NET_SYS_CFG net_sys_config = {
     ETH0_NDP_TAB_SIZE,
     ETH0_NDP_CACHE_TOUT,
     ETH0_NDP_MAX_RETRY,
-    ETH0_NDP_RESEND_TOUT * NET_TICK_RATE
+    ETH0_NDP_RESEND_TOUT * NET_TICK_RATE,
+    net_ndp_process
   };
 
   /* ETH0: ICMPv6 configuration */
@@ -548,6 +554,21 @@ NET_SYS_CFG net_sys_config = {
     0
   #endif
   };
+
+  /* ETH0: MLD configuration */
+ #if (ETH0_MLD_ENABLE)
+  extern struct net_mld_ctrl net_eth0_mld_control;
+  static NET_MLD_INFO eth0_mld_table[ETH0_MLD_TAB_SIZE];
+  static NET_MLD_CFG  eth0_mld_config = {
+    &net_eth0_mld_control,
+    &net_eth0_if_config,
+    eth0_mld_table,
+    ETH0_MLD_TAB_SIZE,
+    net_mld_process,
+    net_mld_listening,
+    net_mld_collect_mcast
+  };
+ #endif
 
   /* ETH0: DHCPv6 configuration */
  #if (ETH0_DHCP6_ENABLE)
@@ -577,11 +598,17 @@ NET_SYS_CFG net_sys_config = {
   #endif
     &eth0_ndp_config,
     &eth0_icmp6_config,
-  #if (ETH0_DHCP6_ENABLE)
-    &eth0_dhcp6_config
+  #if (ETH0_MLD_ENABLE)
+    &eth0_mld_config,
   #else
-    NULL
+    NULL,
   #endif
+  #if (ETH0_DHCP6_ENABLE)
+    &eth0_dhcp6_config,
+  #else
+    NULL,
+  #endif
+    net_ip6_collect_mcast
   };
 #endif
 
@@ -608,7 +635,6 @@ NET_SYS_CFG net_sys_config = {
     NULL, NULL,
    #endif
     net_eth_send_frame,
-    net_eth_config_mcast,
     net_eth_output
   };
 
@@ -672,7 +698,10 @@ NET_SYS_CFG net_sys_config = {
     &net_eth1_igmp_control,
     &net_eth1_if_config,
     eth1_igmp_table,
-    ETH1_IGMP_TAB_SIZE
+    ETH1_IGMP_TAB_SIZE,
+    net_igmp_process,
+    net_igmp_is_member,
+    net_igmp_collect_mcast
   };
  #endif
 
@@ -725,7 +754,8 @@ NET_SYS_CFG net_sys_config = {
     ETH1_NDP_TAB_SIZE,
     ETH1_NDP_CACHE_TOUT,
     ETH1_NDP_MAX_RETRY,
-    ETH1_NDP_RESEND_TOUT * NET_TICK_RATE
+    ETH1_NDP_RESEND_TOUT * NET_TICK_RATE,
+    net_ndp_process
   };
 
   /* ETH1: ICMPv6 configuration */
@@ -739,6 +769,21 @@ NET_SYS_CFG net_sys_config = {
     0
   #endif
   };
+
+  /* ETH1: MLD configuration */
+ #if (ETH1_MLD_ENABLE)
+  extern struct net_mld_ctrl net_eth1_mld_control;
+  static NET_MLD_INFO eth1_mld_table[ETH1_MLD_TAB_SIZE];
+  static NET_MLD_CFG  eth1_mld_config = {
+    &net_eth1_mld_control,
+    &net_eth1_if_config,
+    eth1_mld_table,
+    ETH1_MLD_TAB_SIZE,
+    net_mld_process,
+    net_mld_listening,
+    net_mld_collect_mcast
+  };
+ #endif
 
   /* ETH1: DHCPv6 configuration */
  #if (ETH1_DHCP6_ENABLE)
@@ -768,11 +813,17 @@ NET_SYS_CFG net_sys_config = {
   #endif
     &eth1_ndp_config,
     &eth1_icmp6_config,
-  #if (ETH1_DHCP6_ENABLE)
-    &eth1_dhcp6_config
+  #if (ETH1_MLD_ENABLE)
+    &eth1_mld_config,
   #else
-    NULL
+    NULL,
   #endif
+  #if (ETH1_DHCP6_ENABLE)
+    &eth1_dhcp6_config,
+  #else
+    NULL,
+  #endif
+    net_ip6_collect_mcast
   };
 #endif
 
@@ -799,7 +850,6 @@ NET_SYS_CFG net_sys_config = {
     NULL, NULL,
    #endif
     net_eth_send_frame,
-    net_eth_config_mcast,
     net_eth_output
   };
 
@@ -859,7 +909,10 @@ NET_SYS_CFG net_sys_config = {
     &net_wifi0_igmp_control,
     &net_wifi0_if_config,
     wifi0_igmp_table,
-    WIFI0_IGMP_TAB_SIZE
+    WIFI0_IGMP_TAB_SIZE,
+    net_igmp_process,
+    net_igmp_is_member,
+    NULL
   };
  #endif
 
@@ -912,7 +965,8 @@ NET_SYS_CFG net_sys_config = {
     WIFI0_NDP_TAB_SIZE,
     WIFI0_NDP_CACHE_TOUT,
     WIFI0_NDP_MAX_RETRY,
-    WIFI0_NDP_RESEND_TOUT * NET_TICK_RATE
+    WIFI0_NDP_RESEND_TOUT * NET_TICK_RATE,
+    net_ndp_process
   };
 
   /* WIFI0: ICMPv6 configuration */
@@ -926,6 +980,21 @@ NET_SYS_CFG net_sys_config = {
     0
   #endif
   };
+
+  /* WIFI0: MLD configuration */
+ #if (WIFI0_MLD_ENABLE)
+  extern struct net_mld_ctrl net_wifi0_mld_control;
+  static NET_MLD_INFO wifi0_mld_table[WIFI0_MLD_TAB_SIZE];
+  static NET_MLD_CFG  wifi0_mld_config = {
+    &net_wifi0_mld_control,
+    &net_wifi0_if_config,
+    wifi0_mld_table,
+    WIFI0_MLD_TAB_SIZE,
+    net_mld_process,
+    net_mld_listening,
+    NULL
+  };
+ #endif
 
   /* WIFI0: DHCPv6 configuration */
  #if (WIFI0_DHCP6_ENABLE)
@@ -955,11 +1024,17 @@ NET_SYS_CFG net_sys_config = {
   #endif
     &wifi0_ndp_config,
     &wifi0_icmp6_config,
-  #if (WIFI0_DHCP6_ENABLE)
-    &wifi0_dhcp6_config
+  #if (WIFI0_MLD_ENABLE)
+    &wifi0_mld_config,
   #else
-    NULL
+    NULL,
   #endif
+  #if (WIFI0_DHCP6_ENABLE)
+    &wifi0_dhcp6_config,
+  #else
+    NULL,
+  #endif
+    net_ip6_collect_mcast
   };
 #endif
 
@@ -986,7 +1061,6 @@ NET_SYS_CFG net_sys_config = {
     NULL, NULL,
    #endif
     net_wifi_send_frame,
-    NULL,
     net_wifi_output
   };
 
@@ -1044,7 +1118,10 @@ NET_SYS_CFG net_sys_config = {
     &net_wifi1_igmp_control,
     &net_wifi1_if_config,
     wifi1_igmp_table,
-    WIFI1_IGMP_TAB_SIZE
+    WIFI1_IGMP_TAB_SIZE,
+    net_igmp_process,
+    net_igmp_is_member,
+    NULL
   };
  #endif
 
@@ -1097,7 +1174,8 @@ NET_SYS_CFG net_sys_config = {
     WIFI1_NDP_TAB_SIZE,
     WIFI1_NDP_CACHE_TOUT,
     WIFI1_NDP_MAX_RETRY,
-    WIFI1_NDP_RESEND_TOUT * NET_TICK_RATE
+    WIFI1_NDP_RESEND_TOUT * NET_TICK_RATE,
+    net_ndp_process
   };
 
   /* WIFI1: ICMPv6 configuration */
@@ -1111,6 +1189,21 @@ NET_SYS_CFG net_sys_config = {
     0
   #endif
   };
+
+  /* WIFI1: MLD configuration */
+ #if (WIFI1_MLD_ENABLE)
+  extern struct net_mld_ctrl net_wifi1_mld_control;
+  static NET_MLD_INFO wifi1_mld_table[WIFI1_MLD_TAB_SIZE];
+  static NET_MLD_CFG  wifi1_mld_config = {
+    &net_wifi1_mld_control,
+    &net_wifi1_if_config,
+    wifi1_mld_table,
+    WIFI1_MLD_TAB_SIZE,
+    net_mld_process,
+    net_mld_listening,
+    NULL
+  };
+ #endif
 
   /* WIFI1: DHCPv6 configuration */
  #if (WIFI1_DHCP6_ENABLE)
@@ -1140,11 +1233,17 @@ NET_SYS_CFG net_sys_config = {
   #endif
     &wifi1_ndp_config,
     &wifi1_icmp6_config,
-  #if (WIFI1_DHCP6_ENABLE)
-    &wifi1_dhcp6_config
+  #if (WIFI1_MLD_ENABLE)
+    &wifi1_mld_config,
   #else
-    NULL
+    NULL,
   #endif
+  #if (WIFI1_DHCP6_ENABLE)
+    &wifi1_dhcp6_config,
+  #else
+    NULL,
+  #endif
+    net_ip6_collect_mcast
   };
 #endif
 
@@ -1171,7 +1270,6 @@ NET_SYS_CFG net_sys_config = {
     NULL, NULL,
    #endif
     net_wifi_send_frame,
-    NULL,
     net_wifi_output
   };
 
@@ -1238,7 +1336,6 @@ NET_SYS_CFG net_sys_config = {
     NULL,
     NULL,
     net_ppp_send_frame,
-    NULL,
     NULL
   };
 
@@ -1343,7 +1440,6 @@ NET_SYS_CFG net_sys_config = {
     NULL,
     NULL,
     net_slip_send_frame,
-    NULL,
     NULL
   };
 
@@ -1644,6 +1740,25 @@ NET_ICMP_CFG *const net_icmp_list[] = {
   #endif
   NULL
 };
+#endif
+
+/* List of MLD instances */
+#if (__MLD_ENA) || defined(RTE_Network_Source)
+  NET_MLD_CFG *const net_mld_list[] = {
+  #if (ETH0_MLD_ENABLE)
+    &eth0_mld_config,
+  #endif
+  #if (ETH1_MLD_ENABLE)
+    &eth1_mld_config,
+  #endif
+  #if (WIFI0_MLD_ENABLE)
+    &wifi0_mld_config,
+  #endif
+  #if (WIFI1_MLD_ENABLE)
+    &wifi1_mld_config,
+  #endif
+    NULL
+  };
 #endif
 
 #if (__DHCP6_ENA) || defined(RTE_Network_Source)
@@ -1997,6 +2112,9 @@ static const net_sys_fn_t sys_fn_init[] = {
 #if (__IGMP_ENA)
   net_igmp_host_init,
 #endif
+#if (__MLD_ENA)
+  net_mld_node_init,
+#endif
 #if (UDP_ENABLE)
   net_udp_socket_init,
 #endif
@@ -2087,6 +2205,9 @@ static const net_sys_fn_t sys_fn_run[] = {
 #if (__IGMP_ENA)
   net_igmp_host_run,
 #endif
+#if (__MLD_ENA)
+  net_mld_node_run,
+#endif
 #if (UDP_ENABLE)
   /* No function */
 #endif
@@ -2175,6 +2296,9 @@ const net_sys_fn_t net_sys_fn_uninit[] = {
   net_ping_client_uninit,
 #if (__IGMP_ENA)
   net_igmp_host_uninit,
+#endif
+#if (__MLD_ENA)
+  net_mld_node_uninit,
 #endif
 #if (UDP_ENABLE)
   net_udp_socket_uninit,
@@ -2284,33 +2408,17 @@ NETIF_SETOPT_FUNC netif_setopt_func = {
 
 /* Executable image size optimization */
 #if !(__ETH_ENA)
-/* Empty functions when Ethernet Interface is disabled */
+/* Empty function when Ethernet Interface disabled */
 netStatus netETH_SendRaw (uint32_t if_num, const uint8_t *buf, uint32_t len) {
   (void)if_num; (void)buf; (void)len; return (netError); }
-const uint8_t *net_eth_get_addr (const __ADDR *addr) {
-  (void)addr; return (NULL); }
-#endif
-#if !(__ETH_ENA || __WIFI_ENA)
-#ifdef RTE_Network_IPv6
-void net_ndp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
-  (void)net_if; (void)frame; }
-#endif
 #endif
 
 #if !(__IGMP_ENA)
-/* Empty functions when IP Multicasting is not enabled */
+/* Empty functions when IPv4 Multicasting not enabled */
 netStatus netIGMP_Join (uint32_t if_id, const uint8_t *ip4_addr) {
   (void)if_id; (void)ip4_addr; return (netError); }
 netStatus netIGMP_Leave (uint32_t if_id, const uint8_t *ip4_addr) {
   (void)if_id; (void)ip4_addr; return (netError); }
-bool net_igmp_is_member (NET_IF_CFG *net_if, const uint8_t *ip4_addr) {
-  (void)net_if; (void)ip4_addr; return (false); }
-#if (__ETH_ENA)
-uint32_t net_igmp_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf) {
-  (void)net_if; (void)buf; return (0); }
-#endif
-void net_igmp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
-  (void)net_if; (void)frame; }
 #endif
 
 #if !(__DHCP_ENA)
@@ -2332,14 +2440,20 @@ netStatus netNBNS_ClearCache (uint32_t if_id) {
   (void)if_id; return (netError); }
 #endif
 
-#if !(__DHCP6_ENA)
+#if (defined(RTE_Network_IPv6) && !(__MLD_ENA))
+/* Empty functions when IPv6 Multicasting not enabled */
+netStatus netMLD_Join (uint32_t if_id, const uint8_t *ip6_addr) {
+  (void)if_id; (void)ip6_addr; return (netError); }
+netStatus netMLD_Leave (uint32_t if_id, const uint8_t *ip6_addr) {
+  (void)if_id; (void)ip6_addr; return (netError); }
+#endif
+
+#if (defined(RTE_Network_IPv6) && !(__DHCP6_ENA))
 /* Empty functions when DHCPv6 not enabled */
-#ifdef RTE_Network_IPv6
 netStatus netDHCP6_Enable (uint32_t if_id, netDHCP6_Mode mode) {
   (void)if_id; (void)mode; return (netError); }
 netStatus netDHCP6_Disable (uint32_t if_id) {
   (void)if_id; return (netError); }
-#endif
 #endif
 
 #if !(__IP4_FRAG_ENA)
@@ -2350,7 +2464,7 @@ NET_FRAME *net_ip4_frag_get (NET_FRAME *frame, uint16_t mtu) {
   (void)mtu; return (frame); }
 #endif
 
-#if !(__IP6_FRAG_ENA) && defined(RTE_Network_IPv6)
+#if (defined(RTE_Network_IPv6) && !(__IP6_FRAG_ENA))
 /* Empty functions when IPv6 fragmentation not enabled */
 NET_FRAME *net_ip6_frag_add (NET_FRAME *frame) {
   return (frame); }

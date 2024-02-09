@@ -1,13 +1,13 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_icmp6.c
  * Purpose: Internet Control Message Protocol Version 6
  *----------------------------------------------------------------------------*/
 
-#include "rl_net_lib.h"
 #include <string.h>
+#include "rl_net_lib.h"
 #include "net_sys.h"
 #include "net_common.h"
 #include "net_mem.h"
@@ -17,6 +17,7 @@
 #include "net_icmp6.h"
 #include "net_ping.h"
 #include "net_ndp.h"
+#include "net_mld.h"
 #include "net_dbg.h"
 
 /* Global variables */
@@ -30,7 +31,7 @@ NET_ICMP6_CTRL net_wifi1_icmp6_control;
 
 /* Local Functions */
 #ifdef DEBUG_STDIO
- static void debug_info (const NET_FRAME *frm);
+ static void debug_inf2 (const NET_ICMP_HEADER *icmp_hdr, int32_t len);
 #endif
 
 /**
@@ -75,14 +76,19 @@ netStatus netICMP6_SetNoEcho (uint32_t if_id, bool no_echo) {
                - false = error.
 */
 bool net_icmp6_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
+  NET_ICMP_HEADER *icmp_hdr;
   NET_FRAME *txfrm;
 
   DEBUGF (ICMP6,"*** Process_frame %s ***\n",net_if->Name);
+  icmp_hdr = __ALIGN_CAST(NET_ICMP_HEADER *)&frame->data[frame->index];
+
+  /* Check the frame length */
   if (frame->length < ICMP_HEADER_LEN) {
     ERRORF (ICMP6,"Process %s, Frame too short\n",net_if->Name);
     EvrNetICMP6_FrameTooShort (net_if->Id, frame->length, ICMP_HEADER_LEN);
     return (false);
   }
+
   /* Check checksum for received frame */
   if (!(sys->RxOffload & SYS_OFFL_ICMP6_RX) &&
        net_ip6_chksum (IP6_FRAME(frame)->SrcAddr, IP6_FRAME(frame)->DstAddr,
@@ -91,16 +97,17 @@ bool net_icmp6_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
     EvrNetICMP6_ChecksumFailed (net_if->Id, frame->length);
     return (false);
   }
-  DEBUG_INFO (frame);
-  EvrNetICMP6_ReceiveFrame (net_if->Id, frame->length);
-  EvrNetICMP6_ShowFrameHeader (ICMP6_FRAME(frame));
 
-  switch (ICMP6_FRAME(frame)->Type) {
+  DEBUG_INF2 (icmp_hdr, frame->length);
+  EvrNetICMP6_ReceiveFrame (net_if->Id, frame->length);
+  EvrNetICMP6_ShowFrameHeader (icmp_hdr);
+
+  switch (icmp_hdr->Type) {
     case ICMP6_ECHO_REQ:
       /* Echo Request from remote host */
-      if (ICMP6_FRAME(frame)->Code != 0) {
+      if (icmp_hdr->Code != 0) {
         ERRORF (ICMP6,"Process %s, Wrong EchoReq code\n",net_if->Name);
-        EvrNetICMP6_EchoRequestWrongCode (net_if->Id, ICMP6_FRAME(frame)->Code, 0);
+        EvrNetICMP6_EchoRequestWrongCode (net_if->Id, icmp_hdr->Code, 0);
         return (false);
       }
       DEBUGF (ICMP6," EchoReq received\n");
@@ -121,7 +128,7 @@ bool net_icmp6_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
 
       /* Now copy the received ICMP6 frame data */
       memcpy (&ICMP6_FRAME(txfrm)->Data[0],
-              &ICMP6_FRAME(frame)->Data[0], frame->length - ICMP_HEADER_LEN);
+              &icmp_hdr->Data[0], frame->length - ICMP_HEADER_LEN);
 
       /* Response goes to the same network interface */
       if (!(sys->RxOffload & SYS_OFFL_ICMP6_TX)) {
@@ -134,7 +141,7 @@ bool net_icmp6_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
       DEBUGF (ICMP6,"Send_EchoReply\n");
       /* Reply with the same frame data size */
       txfrm->length = frame->length;
-      DEBUG_INFO (txfrm);
+      DEBUG_INF2 (ICMP6_FRAME(txfrm), txfrm->length);
       EvrNetICMP6_SendEchoReply (net_if->Id);
       EvrNetICMP6_ShowFrameHeader (ICMP6_FRAME(txfrm));
       net_ip6_send_frame (net_if, txfrm,
@@ -152,23 +159,23 @@ bool net_icmp6_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
         EvrNetICMP6_EchoReplyWrongState (net_if->Id);
         return (false);
       }
-      if (ICMP6_FRAME(frame)->Code != 0) {
+      if (icmp_hdr->Code != 0) {
         ERRORF (ICMP6,"Process %s, EchoReply wrong code\n",net_if->Name);
-        EvrNetICMP6_EchoReplyWrongCode (net_if->Id, ICMP6_FRAME(frame)->Code, 0);
+        EvrNetICMP6_EchoReplyWrongCode (net_if->Id, icmp_hdr->Code, 0);
         return (false);
       }
       if (!net_addr6_comp (IP6_FRAME(frame)->SrcAddr, ping->Host.addr)) {
-        ERRORF (ICMP6,"Process %s, EchoRely wrong host IP\n",net_if->Name);
+        ERRORF (ICMP6,"Process %s, EchoReply wrong host IP\n",net_if->Name);
         EvrNetICMP6_EchoReplyWrongIpAddress (net_if->Id, IP6_FRAME(frame)->SrcAddr);
         return (false);
       }
-      if (ntohs(ECHO6_FRAME(frame)->Id) != ping->Id) {
+      if (ntohs(ECHO6_HDR(icmp_hdr)->Id) != ping->Id) {
         ERRORF (ICMP6,"Process %s, EchoRely Wrong Id\n",net_if->Name);
-        EvrNetICMP6_EchoReplyWrongId (net_if->Id, ntohs(ECHO6_FRAME(frame)->Id), ping->Id);
+        EvrNetICMP6_EchoReplyWrongId (net_if->Id, ntohs(ECHO6_HDR(icmp_hdr)->Id), ping->Id);
         return (false);
       }
       if ((frame->length != ICMP_HEADER_LEN + 22) ||
-          memcmp (ECHO6_FRAME(frame)->Data, net_ping_payload, 18) != 0) {
+          memcmp (ECHO6_HDR(icmp_hdr)->Data, net_ping_payload, 18) != 0) {
         ERRORF (ICMP6,"Process %s, Wrong EchoReply payload\n",net_if->Name);
         EvrNetICMP6_EchoReplyWrongPayload (net_if->Id);
         return (false);
@@ -181,7 +188,7 @@ bool net_icmp6_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
       /* Router Solicitation message */
       /* Hosts must silently discard RS messages [RFC4861 page 38] */
       DEBUGF (ICMP6," Message discarded\n");
-      EvrNetICMP6_MessageDiscarded (net_if->Id, ICMP6_FRAME(frame)->Type);
+      EvrNetICMP6_MessageDiscarded (net_if->Id, icmp_hdr->Type);
       break;
 
     case ICMP6_ROUTER_ADVER:
@@ -190,8 +197,7 @@ bool net_icmp6_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
       /* Neighbor Solicitation message */
     case ICMP6_NEIGHB_ADVER:
       /* Neighbor Advertisement message */
-      if (net_if->output_lan == NULL) {
-        /* Silently ignore for non-LAN interfaces */
+      if (net_if->Id == NET_IF_CLASS_LOOP) {
         break;
       }
       if (IP6_FRAME(frame)->HopLim < 255) {
@@ -199,17 +205,43 @@ bool net_icmp6_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
         EvrNetICMP6_WrongHopLimit (net_if->Id, IP6_FRAME(frame)->HopLim, 255);
         return (false);
       }
-      if (ICMP6_FRAME(frame)->Code != 0) {
+      if (icmp_hdr->Code != 0) {
         ERRORF (ICMP6,"Discover %s, Wrong code\n",net_if->Name);
-        EvrNetICMP6_WrongCode (net_if->Id, ICMP6_FRAME(frame)->Code, 0);
+        EvrNetICMP6_WrongCode (net_if->Id, icmp_hdr->Code, 0);
         return (false);
       }
-      net_ndp_process (net_if, frame);
+      net_if->Ip6Cfg->NdpCfg->process (net_if, frame);
+      break;
+
+    case ICMP6_MCAST_QUERY:
+      /* Multicast listener query */
+    case ICMP6_MCAST_REPORT:
+      /* Multicast listener report */
+    case ICMP6_MCAST_DONE:
+      /* Multicast Listener Done */
+      if (net_if->Id == NET_IF_CLASS_LOOP) {
+        break;
+      }
+      if (!net_if->Ip6Cfg->MldCfg) {
+        /* Silently ignore if MLD not enabled */
+        break;
+      }
+      if (IP6_FRAME(frame)->HopLim != 1) {
+        ERRORF (ICMP6,"Multicast %s, Wrong HopLimit\n",net_if->Name);
+        EvrNetICMP6_WrongHopLimit (net_if->Id, IP6_FRAME(frame)->HopLim, 1);
+        return (false);
+      }
+      if (icmp_hdr->Code != 0) {
+        ERRORF (ICMP6,"Multicast %s, Wrong code\n",net_if->Name);
+        EvrNetICMP6_WrongCode (net_if->Id, icmp_hdr->Code, 0);
+        return (false);
+      }
+      net_if->Ip6Cfg->MldCfg->process (net_if, frame);
       break;
 
     default:
-      DEBUGF (ICMP6," Message not recognized\n");
-      EvrNetICMP6_MessageTypeUnknown (net_if->Id, ICMP6_FRAME(frame)->Type);
+      DEBUGF (ICMP6," Message type unknown\n");
+      EvrNetICMP6_MessageTypeUnknown (net_if->Id, icmp_hdr->Type);
       return (false);
   }
   return (true);
@@ -228,25 +260,35 @@ bool net_icmp6_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
 */
 bool net_icmp6_send (NET_IF_CFG *net_if, NET_FRAME *frame,
        const uint8_t *src_addr, const uint8_t *dst_addr, uint8_t type) {
+  NET_ICMP_HEADER *icmp_hdr;
+  uint8_t hop_limit;
 
   DEBUGF (ICMP6,"Send_frame %s\n",net_if->Name);
   EvrNetICMP6_SendFrame (net_if->Id, frame->length);
+
   /* Construct ICMP6 header */
-  ICMP6_FRAME(frame)->Type   = type;
-  ICMP6_FRAME(frame)->Code   = 0;
-  ICMP6_FRAME(frame)->Chksum = 0;
+  if ((type == ICMP6_MCAST_REPORT) || (type == ICMP6_MCAST_DONE)) {
+    icmp_hdr  = __ALIGN_CAST(NET_ICMP_HEADER *)&frame->data[frame->index];
+    hop_limit = 1;
+  }
+  else {
+    icmp_hdr  = __ALIGN_CAST(NET_ICMP_HEADER *)&frame->data[IP6_DATA_OFFS];
+    hop_limit = 255;
+  }
   if (type == ICMP6_NEIGHB_SOL) {
     dst_addr = net_addr6_get_solicited (dst_addr);
   }
+  icmp_hdr->Type   = type;
+  icmp_hdr->Code   = 0;
+  icmp_hdr->Chksum = 0;
   if (!net_ip6_tx_offl_hl (net_if, SYS_OFFL_ICMP6_TX)) {
-    ICMP6_FRAME(frame)->Chksum =
-      htons(net_ip6_chksum (src_addr, dst_addr,
-                            ICMP6_FRAME(frame), IP6_PROT_ICMP, frame->length));
+    icmp_hdr->Chksum = htons(net_ip6_chksum (src_addr, dst_addr, icmp_hdr,
+                                             IP6_PROT_ICMP, frame->length));
   }
-  DEBUG_INFO (frame);
-  EvrNetICMP6_ShowFrameHeader (ICMP6_FRAME(frame));
-  return (net_ip6_send_frame (net_if,
-                              frame, src_addr, dst_addr, IP6_PROT_ICMP, 0, 255));
+  DEBUG_INF2 (icmp_hdr, frame->length);
+  EvrNetICMP6_ShowFrameHeader (icmp_hdr);
+  return (net_ip6_send_frame (net_if, frame, src_addr, dst_addr,
+                              IP6_PROT_ICMP, 0, hop_limit));
 }
 
 /**
@@ -275,10 +317,11 @@ bool net_icmp6_send_echo (NET_IF_CFG *net_if) {
 #ifdef DEBUG_STDIO
 /**
   \brief       Debug print ICMP6 frame information.
-  \param[in]   frm  network frame.
+  \param[in]   icmp_hdr  ICMP frame header.
+  \param[in]   len       frame payload length.
   \return      none.
 */
-static void debug_info (const NET_FRAME *frm) {
+static void debug_inf2 (const NET_ICMP_HEADER *icmp_hdr, int32_t len) {
   static const char *const t_asc[] = {
     "Echo-Request",
     "Echo-Reply",
@@ -309,23 +352,22 @@ static void debug_info (const NET_FRAME *frm) {
 
   /* Print user friendly ICMPv6 types */
   for (i = 0; i < sizeof (t_bin); i++) {
-    if (t_bin[i] == ICMP6_FRAME(frm)->Type) {
+    if (t_bin[i] == icmp_hdr->Type) {
       DEBUGF (ICMP6," Type %s\n",t_asc[i]);
       goto d;
     }
   }
-  DEBUGF (ICMP6," Type (%d)\n",ICMP6_FRAME(frm)->Type);
-d:DEBUGF (ICMP6," Code=%d, Cks=0x%04X\n",ICMP6_FRAME(frm)->Code,
-                                         ntohs(ICMP6_FRAME(frm)->Chksum));
+  DEBUGF (ICMP6," Type (%d)\n",icmp_hdr->Type);
+d:DEBUGF (ICMP6," Code=%d, Cks=0x%04X\n",icmp_hdr->Code,ntohs(icmp_hdr->Chksum));
 
   /* Print type specific information */
-  switch (ICMP6_FRAME(frm)->Type) {
+  switch (icmp_hdr->Type) {
     case ICMP6_ECHO_REQ:
     case ICMP6_ECHO_REPLY:
       DEBUGF (ICMP6," EchoId=0x%04X, Seq=0x%04X\n",
-                                         ntohs(ECHO6_FRAME(frm)->Id),
-                                         ntohs(ECHO6_FRAME(frm)->Seq));
-      DEBUGF (ICMP6," Size %d bytes\n",frm->length-8);
+                                         ntohs(ECHO6_HDR(icmp_hdr)->Id),
+                                         ntohs(ECHO6_HDR(icmp_hdr)->Seq));
+      DEBUGF (ICMP6," Size %d bytes\n",len-8);
       break;
   }
 }

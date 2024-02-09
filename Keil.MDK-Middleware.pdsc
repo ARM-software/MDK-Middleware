@@ -13,6 +13,7 @@
       - removed support for legacy Arm Compiler 5
       - removed support for CMSIS-RTOS version 1
       - removed legacy API interface version 6
+      - added IPv6 Multicasting with MLD, Multicast Listener Discovery Protocol
     </release>
     <release version="7.17.0" date="2024-01-17">
       Network Component Version 7.19.0
@@ -762,7 +763,7 @@
           <file category="other"   name="Network/Network.scvd"/>
           <file category="header"  name="Network/Include/rl_net.h"/>
           <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
-          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.1.0"/>
+          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.2.0"/>
           <file category="include" name="Network/Source/Include/"/>
           <!-- Core -->
           <file category="source"  name="Network/Source/net_ip4.c"/>
@@ -798,7 +799,7 @@
           <file category="other"   name="Network/Network.scvd"/>
           <file category="header"  name="Network/Include/rl_net.h"/>
           <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
-          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.1.0"/>
+          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.2.0"/>
           <file category="include" name="Network/Source/Include/"/>
           <!-- Core -->
           <file category="source"  name="Network/Source/net_ip4.c"/>
@@ -864,7 +865,7 @@
           <file category="other"   name="Network/Network.scvd"/>
           <file category="header"  name="Network/Include/rl_net.h"/>
           <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
-          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.1.0"/>
+          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.2.0"/>
           <file category="include" name="Network/Source/Include/"/>
           <!-- Core -->
           <file category="source"  name="Network/Source/net_ip4.c"/>
@@ -896,7 +897,7 @@
           <file category="header"  name="Network/Include/rl_net.h"/>
           <file category="other"   name="Network/Network.scvd"/>
           <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
-          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.1.0"/>
+          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.2.0"/>
           <file category="include" name="Network/Source/Include/"/>
           <!-- Core -->
           <file category="source"  name="Network/Source/net_ip4.c"/>
@@ -923,7 +924,7 @@
         </RTE_Components_h>
         <files>
           <file category="doc" name="Documentation/Network/html/group__net_e_t_h___func.html"/>
-          <file category="header" name="Network/Config/Net_Config_ETH.h" attr="config" version="7.4.0"/>
+          <file category="header" name="Network/Config/Net_Config_ETH.h" attr="config" version="7.5.0"/>
           <!-- Library source files -->
           <file category="source" name="Network/Source/net_eth.c"/>
           <file category="source" name="Network/Source/net_arp.c"/>
@@ -931,6 +932,7 @@
           <file category="source" name="Network/Source/net_dhcp_client.c"  condition="Network UDP"/>
           <file category="source" name="Network/Source/net_nbns_client.c"  condition="Network UDP"/>
           <file category="source" name="Network/Source/net_ndp.c"          condition="Network IPv6"/>
+          <file category="source" name="Network/Source/net_mld.c"          condition="Network IPv6"/>
           <file category="source" name="Network/Source/net_dhcp6_client.c" condition="Network UDP/IPv6"/>
         </files>
       </component>
@@ -942,7 +944,7 @@
         </RTE_Components_h>
         <files>
           <file category="doc" name="Documentation/Network/html/group__net_wi_fi___func.html"/>
-          <file category="header" name="Network/Config/Net_Config_WiFi.h" attr="config" version="7.2.0"/>
+          <file category="header" name="Network/Config/Net_Config_WiFi.h" attr="config" version="7.3.0"/>
           <!-- Library source files -->
           <file category="source" name="Network/Source/net_wifi.c"/>
           <file category="source" name="Network/Source/net_arp.c"/>
@@ -950,6 +952,7 @@
           <file category="source" name="Network/Source/net_dhcp_client.c"  condition="Network UDP"/>
           <file category="source" name="Network/Source/net_nbns_client.c"  condition="Network UDP"/>
           <file category="source" name="Network/Source/net_ndp.c"          condition="Network IPv6"/>
+          <file category="source" name="Network/Source/net_mld.c"          condition="Network IPv6"/>
           <file category="source" name="Network/Source/net_dhcp6_client.c" condition="Network UDP/IPv6"/>
         </files>
       </component>

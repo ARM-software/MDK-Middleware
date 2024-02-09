@@ -81,8 +81,8 @@ Currently two Ethernet interfaces and two WiFi interfaces are supported, so \em 
 \brief Common functions for all Interfaces.
 \details
 In the Network Component, the Common interface API is responsible for various Application/Internet/Link layer protocols
-such as \ref ethernet_arp "ARP", \ref ethernet_ndp "NDP", \ref ethernet_igmp "IGMP", and \ref ethernet_dhcp "DHCP". In the
-Network Component v7, these protocols are supported for IPv4 and IPv6 connections (where applicable).
+such as \ref ethernet_arp "ARP", \ref ethernet_ndp "NDP", \ref ethernet_igmp "IGMP", \ref ethernet_mld "MLD" and
+\ref ethernet_dhcp "DHCP". In the Network Component, these protocols are supported for IPv4 and IPv6 connections (where applicable).
 */
 
 /**
@@ -129,8 +129,8 @@ by the ethernet driver.
 \brief Functions of the Ethernet Interface.
 \details
 In the Network Component, the Ethernet interface API is responsible for various Application/Internet/Link layer protocols
-such as \ref ethernet_arp "ARP", \ref ethernet_ndp "NDP", \ref ethernet_igmp "IGMP", and \ref ethernet_dhcp "DHCP". In the
-Network Component v7, these protocols are supported for IPv4 and IPv6 connections (where applicable).
+such as \ref ethernet_arp "ARP", \ref ethernet_ndp "NDP", \ref ethernet_igmp "IGMP", \ref ethernet_mld "MLD" and
+\ref ethernet_dhcp "DHCP". In the Network Component, these protocols are supported for IPv4 and IPv6 connections (where applicable).
 
 To get or set Ethernet options, use the generic \ref netIF_GetOption and \ref netIF_SetOption. The available options are as
 follows:
@@ -197,14 +197,23 @@ To verify that the IPv6 address is not used in local area network, use \ref netN
 Internet Group Management Protocol (IGMP, IPv4 only)
 ----------------------------------------------------
 
-The
-<a href="https://en.wikipedia.org/wiki/Internet_Group_Management_Protocol" target="_blank">Internet Group Management Protocol (IGMP)</a>
-is used to do IP Multicasting. This means that an IP datagram is sent to a "host group". A multicast datagram is delivered to
-all the members of its destination host group. IGMPv1 and IGMPv2 protocol specification are supported in the Network
-Component. It is available for IPv4 only.
+The <a href="https://en.wikipedia.org/wiki/Internet_Group_Management_Protocol" target="_blank">Internet Group Management Protocol
+(IGMP)</a> is used to operate IP Multicasting. This means that an IP datagram is sent to a "host group". A multicast datagram
+is delivered to all members of its target host group. The IGMPv1 and IGMPv2 protocol specification is supported by the Network
+Component. It is only available for IPv4.
 
-To add a host to a certain host group, use \ref netIGMP_Join. To leave a host group, \ref netIGMP_Leave is used.
+To add a host to a specific host group, use \ref netIGMP_Join. To leave a host group, \ref netIGMP_Leave is used. 
 
+\anchor ethernet_mld
+Multicast Listener Discovery Protocol (MLD, IPv6 only)
+------------------------------------------------------
+
+The <a href="https://en.wikipedia.org/wiki/Multicast_Listener_Discovery" target="_blank">Multicast Listener Discovery (MLD)</a>
+is used to perform IPv6 Multicasting. This means that an IPv6 datagram is sent to a "multicast group". A multicast datagram is delivered
+to all members of its destination multicast listening nodes. The MLDv1 protocol specification is supported by the Network Component.
+It is only available for IPv6.
+
+To add a node to a specific multicast group, use \ref netMLD_Join. To leave a multicast group, \ref netMLD_Leave is used. 
 
 \anchor ethernet_dhcp
 Dynamic Host Configuration Protocol (DHCP, IPv4 only)
@@ -616,8 +625,8 @@ This documentation is separated as follows:
 \brief Functions of the WiFi interface.
 \details
 In the Network Component, the WiFi interface is, similar to an Ethernet interface, responsible for various Application/Internet/Link
-layer protocols such as \ref ethernet_arp "ARP", \ref ethernet_ndp "NDP", \ref ethernet_igmp "IGMP", and \ref ethernet_dhcp "DHCP".
-In the Network Component v7, these protocols are supported for IPv4 and IPv6 connections (where applicable).
+layer protocols such as \ref ethernet_arp "ARP", \ref ethernet_ndp "NDP", \ref ethernet_igmp "IGMP", \ref ethernet_mld "MLD" and
+\ref ethernet_dhcp "DHCP". In the Network Component, these protocols are supported for IPv4 and IPv6 connections (where applicable).
 */
 
 /**

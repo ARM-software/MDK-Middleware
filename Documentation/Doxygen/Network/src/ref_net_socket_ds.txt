@@ -136,7 +136,7 @@ dotted decimal notation. For example, the address 192.168.0.100 is converted to 
  
 <b>Code Example</b>
 \code
-void ServerDS_Thread (void *arg) {
+void Server_Thread (void *arg) {
   SOCKADDR_IN6 addr;
   int32_t sock, sd, res, on;
   char dbuf[4];

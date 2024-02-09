@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_igmp.h
  * Purpose: Internet Group Management Definitions
@@ -18,7 +18,7 @@
 
 /* IGMP Group States */
 #define IGMP_STATE_NON      0           // Non-Member - free Entry
-#define IGMP_STATE_DELAY    1           // Delaying Member wait for Query/Report
+#define IGMP_STATE_DELAYING 1           // Delaying Member wait for Query/Report
 #define IGMP_STATE_IDLE     2           // Idle Member of a group
 
 /* IGMP Group Flags */

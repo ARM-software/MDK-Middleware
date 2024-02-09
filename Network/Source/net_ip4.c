@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ip4.c
  * Purpose: Internet Protocol Version 4
@@ -137,8 +137,12 @@ bool net_ip4_chk_frame (NET_IF_CFG *net_if, NET_FRAME *frame) {
   /* Check ethernet multicast address */
   if ((IP4_FRAME(frame)->DstAddr[0] & 0xF0) == 0xE0) {
     /* Multicast address (224.0.0.0 - 239.255.255.255) */
-    if (!net_igmp_is_member (net_if, IP4_FRAME(frame)->DstAddr)) {
-      /* Not a member of any group */
+    if (!net_if->Ip4Cfg->IgmpCfg) {
+      /* IGMP not enabled on this interface */
+      goto wrong_dst;
+    }
+    if (!net_if->Ip4Cfg->IgmpCfg->is_member (net_if, IP4_FRAME(frame)->DstAddr)) {
+      /* Not member of any host group */
       goto wrong_dst;
     }
     switch (IP4_FRAME(frame)->Prot) {

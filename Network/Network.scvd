@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <component_viewer schemaVersion="0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
-  <component name="Network" shortname="NET" version="7.19.0"/>    <!-- name and version of the component  -->
+  <component name="Network" shortname="NET" version="8.0.0"/>    <!-- name and version of the component  -->
 
   <typedefs>
     <!-- Network Library variant -->
@@ -281,6 +281,7 @@
         <enum name="ARP"             value="0x0806"    info="Address Resolution Protocol"/>
         <enum name="IP4"             value="0x0800"    info="Internet Protocol version 4"/>
         <enum name="IP6"             value="0x86dd"    info="Internet Protocol version 6"/>
+        <enum name="RRCP"            value="0x8899"    info="Realtek Remote Control Protocol"/>
         <enum name="EAPoL"           value="0x888e"    info="Extensible Authentication Protocol over LAN"/>
       </member>
     </typedef>
@@ -556,6 +557,7 @@
       <member name="Flow"          type="uint16_t"   offset="2"   info="Flow Label low bits"/>
       <member name="Len"           type="uint16_t"   offset="4"   info="Payload Length"/>
       <member name="NextHdr"       type="uint8_t"    offset="6"   info="Next header">
+        <enum name="HOP-BY-HOP"      value="0"         info="IPv6 hop-by-hop option"/>
         <enum name="TCP"             value="6"         info="TCP over IPv6"/>
         <enum name="UDP"             value="17"        info="UDP over IPv6"/>
         <enum name="FRAG"            value="44"        info="Fragmentation for IPv6"/>
@@ -569,6 +571,7 @@
     <!-- IPv6 Protocol type (next header) -->
     <typedef name="IP6_Proto" size="1" info="IPv6 protocol type">
       <member name="id"            type="uint8_t"    offset="0">
+        <enum name="HOP-BY-HOP"      value="0"         info="IPv6 hop-by-hop option"/>
         <enum name="TCP"             value="6"         info="TCP over IPv6"/>
         <enum name="UDP"             value="17"        info="UDP over IPv6"/>
         <enum name="FRAG"            value="44"        info="Fragmentation for IPv6"/>
@@ -1412,6 +1415,7 @@
         <component name="ICMP6 Control"          brief="Net_ICMP6"  no="0xCD" prefix="EvrNetICMP6_" info="Network - IPv6 - Internet Control Message"/>
         <component name="DHCP6 Client"           brief="Net_DHCP6"  no="0xCE" prefix="EvrNetDHCP6_" info="Network - IPv6 - Dynamic Host Configuration Client"/>
         <component name="NDP Neighbor Discovery" brief="Net_NDP"    no="0xCF" prefix="EvrNetNDP_"   info="Network - IPv6 - Neighbor Discovery"/>
+        <component name="MLD Multicast Discovery" brief="Net_MLD"   no="0xDE" prefix="EvrNetMLD_"   info="Network - IPv6 - Multicast Listener Discovery"/>
       </group>
 
       <group name="Socket Events">
@@ -1778,6 +1782,7 @@
     <event id="15 + 0xC800" level="Op"     property="StartModeIGMPv1"           value="netif=%E[val1, NetIf:id]" info="Start IGMPv1 mode"/>
     <event id="16 + 0xC800" level="Op"     property="MaxTimeForReport"          value="netif=%E[val1, NetIf:id], max_time=%d[val2*100]ms" info="IGMPv2 maximum time for report messages"/>
     <event id="17 + 0xC800" level="Op"     property="GroupReportsScheduled"     value="netif=%E[val1, NetIf:id], num=%d[val2]" info="Number of group reports scheduled"/>
+    <event id="23 + 0xC800" level="Op"     property="NoReportScheduled"         value="netif=%E[val1, NetIf:id]" info="No report scheduled as no active group"/>
     <event id="18 + 0xC800" level="Op"     property="ReportReceived"            value="netif=%E[val1, NetIf:id], addr=%I[val2]" info="Report message for a group received"/>
     <event id="19 + 0xC800" level="Op"     property="OwnReportCanceled"         value="netif=%E[val1, NetIf:id], id=%d[val2]" info="Own report canceled, membership already reported"/>
     <event id="20 + 0xC800" level="Op"     property="StartModeIGMPv2"           value="netif=%E[val1, NetIf:id]" info="Start IGMPv2 mode"/>
@@ -1931,7 +1936,7 @@
 
     <!-- NetICMP6: ICMPv6 Control events -->
     <event id=" 0 + 0xCD00" level="Op"     property="ReceiveFrame"              value="netif=%E[val1, NetIf:id], len=%d[val2]" info="ICMPv6 frame received"/>
-    <event id="25 + 0xCD00" level="Op"     property="ShowFrameHeader"           value="type=%E[val1, ICMP6_Header:Type], code=%d[val1, ICMP6_Header:Code], cksum=%x[val1, ICMP6_Header:Chksum]" info="Display ICMPv6 frame header content"/>
+    <event id="25 + 0xCD00" level="Detail" property="ShowFrameHeader"           value="type=%E[val1, ICMP6_Header:Type], code=%d[val1, ICMP6_Header:Code], cksum=%x[val1, ICMP6_Header:Chksum]" info="Display ICMPv6 frame header content"/>
     <event id=" 1 + 0xCD00" level="Error"  property="FrameTooShort"             value="netif=%E[val1, NetIf:id], len=%d[val2, NetVal:low] (min=%d[val2, NetVal:high])" info="Discard, frame length too short"/>
     <event id=" 2 + 0xCD00" level="Error"  property="ChecksumFailed"            value="netif=%E[val1, NetIf:id], len=%d[val2]" info="Frame error, checksum check failed"/>
     <event id=" 3 + 0xCD00" level="Error"  property="EchoRequestWrongCode"      value="netif=%E[val1, NetIf:id], code=%d[val2, NetVal:low] (valid=%d[val2, NetVal:high])" info="Wrong code in echo request received"/>
@@ -1979,16 +1984,16 @@
     <event id="16 + 0xCE00" level="Error"  property="FrameTooShort"             value="netif=%E[val1, NetIf:id], len=%d[val2, NetVal:low] (min=%d[val2, NetVal:high])" info="Discard, frame length too short"/>
     <event id="17 + 0xCE00" level="Error"  property="WrongTransactionId"        value="netif=%E[val1, NetIf:id], xid=%x[val2] (valid=%x[val3])" info="Wrong Transaction Identifier received"/>
     <event id="18 + 0xCE00" level="Error"  property="MessageTypeUnknown"        value="netif=%E[val1, NetIf:id], type=%d[val2]" info="Unknown message type received"/>
-    <event id="19 + 0xCE00" level="Op"     property="ShowMessage"               value="netif=%E[val1, NetIf:id], type=%E[val1>>16, DHCP6_Type:id], xid=%x[val2]" info="Display message type and transaction identifier"/>
+    <event id="19 + 0xCE00" level="Op"     property="ViewMessage"               value="netif=%E[val1, NetIf:id], type=%E[val1>>16, DHCP6_Type:id], xid=%x[val2]" info="Display message type and transaction identifier"/>
     <event id="20 + 0xCE00" level="Op"     property="InvalidMessageType"        value="netif=%E[val1, NetIf:id], type=%E[val2, DHCP6_Type:id] (valid=%E[val2>>16, DHCP6_Type:id])" info="Invalid message type received"/>
     <event id="21 + 0xCE00" level="Op"     property="WrongClientId"             value="netif=%E[val1, NetIf:id], type=%E[val2, DHCP6_Type:id]" info="Wrong client identifier received"/>
     <event id="22 + 0xCE00" level="Op"     property="ServerNotChosen"           value="netif=%E[val1, NetIf:id], type=%E[val2, DHCP6_Type:id]" info="Server not chosen"/>
     <event id="23 + 0xCE00" level="Op"     property="StatusCode"                value="netif=%E[val1, NetIf:id], status=%E[val2, DHCP6_Status:id]" info="Status code option received"/>
     <event id="24 + 0xCE00" level="Op"     property="WrongServerId"             value="netif=%E[val1, NetIf:id], type=%E[val2, DHCP6_Type:id]" info="Wrong server identifier received"/>
-    <event id="25 + 0xCE00" level="Op"     property="ShowDnsServers"            value="netif=%E[val1, NetIf:id], pri=%J[val1, DHCP6_DNS:PriDNS], sec=%J[val1, DHCP6_DNS:SecDNS]" info="Display primary and secondary DNS server addresses"/>
+    <event id="25 + 0xCE00" level="Op"     property="ViewDnsServers"            value="netif=%E[val1, NetIf:id], pri=%J[val1, DHCP6_DNS:PriDNS], sec=%J[val1, DHCP6_DNS:SecDNS]" info="Display primary and secondary DNS server addresses"/>
     <event id="26 + 0xCE00" level="Op"     property="MissingServerId"           value="netif=%E[val1, NetIf:id], type=%E[val2, DHCP6_Type:id]" info="No server identifier option in received frame"/>
     <event id="27 + 0xCE00" level="Op"     property="WrongIaid"                 value="netif=%E[val1, NetIf:id], iaid=%x[val2] (valid=%x[val3])" info="Wrong identity association identifier received"/>
-    <event id="28 + 0xCE00" level="Op"     property="ShowIanaOffer"             value="addr=%J[val1, DHCP6_IANA:Addr], valid=%d[val1, DHCP6_IANA:ValidTime]s, prefrd=%d[val1, DHCP6_IANA:PrefTime]s, t1=%d[val1, DHCP6_IANA:T1]s, t2=%d[val1, DHCP6_IANA:T2]s" info="Display offered address and timers"/>
+    <event id="28 + 0xCE00" level="Op"     property="ViewIanaOffer"             value="addr=%J[val1, DHCP6_IANA:Addr], valid=%d[val1, DHCP6_IANA:ValidTime]s, prefrd=%d[val1, DHCP6_IANA:PrefTime]s, t1=%d[val1, DHCP6_IANA:T1]s, t2=%d[val1, DHCP6_IANA:T2]s" info="Display offered address and timers"/>
     <event id="29 + 0xCE00" level="Error"  property="OfferTimerCheckFailed"     value="netif=%E[val1, NetIf:id]" info="Offered address timer check failed"/>
     <event id="30 + 0xCE00" level="Op"     property="UnInitClient"              value="netif=%E[val1, NetIf:id]" info="De-initialize DHCPv6 client"/>
 
@@ -2008,9 +2013,9 @@
     <event id="12 + 0xCF00" level="Op"     property="ProbeResponse"             value="netif=%E[val1, NetIf:id]" info="Neighbor probe response received"/>
     <event id="13 + 0xCF00" level="Op"     property="WrongDestinationAddress"   value="netif=%E[val1, NetIf:id], dst_addr=%J[val2]" info="Wrong destination address received"/>
     <event id="14 + 0xCF00" level="Op"     property="SendReply"                 value="netif=%E[val1, NetIf:id], targ_addr=%J[val2]" info="Send advertisement reply to solicitation message"/>
-    <event id="15 + 0xCF00" level="Op"     property="ShowFlags"                 value="netif=%E[val1, NetIf:id], flags=%x[val2]" info="Display advertisement message flags"/>
+    <event id="15 + 0xCF00" level="Op"     property="ViewFlags"                 value="netif=%E[val1, NetIf:id], flags=%x[val2]" info="Display advertisement message flags"/>
     <event id="16 + 0xCF00" level="Op"     property="SendRequest"               value="netif=%E[val1, NetIf:id], type=%E[val2, ICMP6_Type:id]" info="Send neighbor or router solicitation message"/>
-    <event id="17 + 0xCF00" level="Op"     property="ShowTargetAddress"         value="netif=%E[val1, NetIf:id], targ_addr=%J[val2]" info="Display target IPv6 address"/>
+    <event id="17 + 0xCF00" level="Op"     property="ViewTargetAddress"         value="netif=%E[val1, NetIf:id], targ_addr=%J[val2]" info="Display target IPv6 address"/>
     <event id="18 + 0xCF00" level="Op"     property="OptionTargetMacAddress"    value="netif=%E[val1, NetIf:id], addr=%M[val1, NetVal:w1]" info="NDP option target link-layer address"/>
     <event id="19 + 0xCF00" level="Op"     property="CacheEntryUpdate"          value="netif=%E[val1, NetIf:id], entry=%d[val2]" info="NDP Cache entry update"/>
     <event id="20 + 0xCF00" level="Error"  property="WrongResponse"             value="netif=%E[val1, NetIf:id], type=%E[val2, ICMP6_Type:id]" info="Wrong response received"/>
@@ -2049,6 +2054,28 @@
     <event id="50 + 0xCF00" level="Op"     property="ResolveEntry"              value="netif=%E[val1, NetIf:id], entry=%d[val2]" info="Resolve entry on timeout, resend NDP solicitation request"/>
     <event id="51 + 0xCF00" level="Op"     property="RefreshEntry"              value="netif=%E[val1, NetIf:id], entry=%d[val2]" info="Refresh entry on timeout"/>
     <event id="52 + 0xCF00" level="Op"     property="UnInitCache"               value="netif=%E[val1, NetIf:id]" info="De-initialize neighbor discovery and NDP cache"/>
+
+    <!-- NetMLD: MLD Multicast Listener Discovery events -->
+    <event id=" 0 + 0xDE00" level="Op"     property="InitNode"                  value="netif=%E[val1, NetIf:id], groups=%d[val2]" info="Initialize multicast listener node"/>
+    <event id=" 1 + 0xDE00" level="API"    property="Join"                      value="netif=%E[val1, NetIf:id], addr=%J[val2]" info="Join to a group membership requested"/>
+    <event id=" 2 + 0xDE00" level="Op"     property="AlreadyInGroup"            value="netif=%E[val1, NetIf:id], id=%d[val2]" info="Requested address is already in group"/>
+    <event id=" 3 + 0xDE00" level="Error"  property="NoFreeEntries"             value="netif=%E[val1, NetIf:id], used=%d[val2]" info="No free entries available in group table"/>
+    <event id=" 4 + 0xDE00" level="Op"     property="SendReport"                value="netif=%E[val1, NetIf:id], addr=%J[val2]" info="Send MLD report message"/>
+    <event id=" 5 + 0xDE00" level="API"    property="Leave"                     value="netif=%E[val1, NetIf:id], addr=%J[val2]" info="Leave a group membership requested"/>
+    <event id=" 6 + 0xDE00" level="Error"  property="NotInGroup"                value="netif=%E[val1, NetIf:id], addr=%J[val2]" info="Leave failed, requested address not in a group"/>
+    <event id=" 7 + 0xDE00" level="Op"     property="SendLeave"                 value="netif=%E[val1, NetIf:id], addr=%J[val2]" info="Send MLD leave message"/>
+    <event id=" 8 + 0xDE00" level="Error"  property="FrameTooShort"             value="netif=%E[val1, NetIf:id], len=%d[val2, NetVal:low] (min=%d[val2, NetVal:high])" info="Discard, frame length too short"/>
+    <event id=" 9 + 0xDE00" level="Op"     property="AddressSpecificQuery"      value="netif=%E[val1, NetIf:id], addr=%J[val2]" info="Address specific query received"/>
+    <event id="10 + 0xDE00" level="Error"  property="DestAddressWrong"          value="netif=%E[val1, NetIf:id], addr=%J[val2]" info="Wrong destination address received"/>
+    <event id="11 + 0xDE00" level="Op"     property="DelayedReportScheduled"    value="netif=%E[val1, NetIf:id], max_time=%d[val2]ms" info="Delayed report message scheduled"/>
+    <event id="12 + 0xDE00" level="Op"     property="GeneralQuery"              value="netif=%E[val1, NetIf:id], addr=%J[val2]" info="General query received"/>
+    <event id="13 + 0xDE00" level="Op"     property="MaxTimeForReport"          value="netif=%E[val1, NetIf:id], max_time=%d[val2]ms" info="Maximum delay for report messages"/>
+    <event id="14 + 0xDE00" level="Op"     property="GroupReportsScheduled"     value="netif=%E[val1, NetIf:id], num=%d[val2]" info="Number of group reports scheduled"/>
+    <event id="15 + 0xDE00" level="Op"     property="NoReportScheduled"         value="netif=%E[val1, NetIf:id]" info="No report scheduled as no active group"/>
+    <event id="16 + 0xDE00" level="Op"     property="ReportReceived"            value="netif=%E[val1, NetIf:id], addr=%J[val2]" info="Report message for a group received"/>
+    <event id="17 + 0xDE00" level="Op"     property="OwnReportCanceled"         value="netif=%E[val1, NetIf:id], id=%d[val2]" info="Own report canceled, membership already reported"/>
+    <event id="18 + 0xDE00" level="Op"     property="SendDelayedReport"         value="netif=%E[val1, NetIf:id], addr=%J[val2]" info="Send delayed MLD report message"/>
+    <event id="19 + 0xDE00" level="Op"     property="UnInitNode"                value="netif=%E[val1, NetIf:id]" info="De-initialize multicast listener node"/>
 
     <!-- NetUDP: UDP Socket events -->
     <event id=" 0 + 0xD000" level="Op"     property="InitSockets"               value="sockets=%d[val1]" info="Initialize UDP sockets"/>

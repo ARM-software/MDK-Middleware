@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network:Interface
- * Copyright (c) 2004-2021 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    Net_Config_WiFi_%Instance%.h
  * Purpose: Network Configuration for WiFi Interface
- * Rev.:    V7.2.0
+ * Rev.:    V7.3.0
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -218,6 +218,16 @@
 //       <i>Default: 2
 #define WIFI%Instance%_NDP_RESEND_TOUT    2
 //     </h>
+
+//     <e>Multicast Listener Discovery
+//     <i>Enable or disable Multicast Listener Discovery Protocol
+#define WIFI%Instance%_MLD_ENABLE         0
+
+//       <o>Membership Table size <2-50>
+//       <i>Number of Groups this node can join
+//       <i>Default: 5
+#define WIFI%Instance%_MLD_TAB_SIZE       5
+//     </e>
 
 //     <e>Dynamic Host Configuration
 //     <i>When this option is enabled, local IPv6 address is

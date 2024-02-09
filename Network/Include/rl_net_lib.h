@@ -45,23 +45,24 @@
 #define NET_IP6_CORE        11          ///< IPv6 core and localhost
 #define NET_ICMP6_CONTROL   12          ///< ICMP6 control service for IPv6
 #define NET_NDP_CACHE       13          ///< Ethernet Neighbor Discovery for IPv6
-#define NET_UDP_SOCKET      14          ///< UDP native socket
-#define NET_TCP_SOCKET      15          ///< TCP native socket
-#define NET_BSD_SOCKET      16          ///< BSD socket interface
-#define NET_NBNS_CLIENT     17          ///< NBNS client service for IPv4
-#define NET_DHCP_CLIENT     18          ///< DHCP client service for IPv4
-#define NET_DHCP6_CLIENT    19          ///< DHCP client service for IPv6
+#define NET_MLD_NODE        14          ///< Multicast Listener Discovery for IPv6
+#define NET_UDP_SOCKET      15          ///< UDP native socket
+#define NET_TCP_SOCKET      16          ///< TCP native socket
+#define NET_BSD_SOCKET      17          ///< BSD socket interface
+#define NET_NBNS_CLIENT     18          ///< NBNS client service for IPv4
+#define NET_DHCP_CLIENT     19          ///< DHCP client service for IPv4
+#define NET_DHCP6_CLIENT    20          ///< DHCP client service for IPv6
 
-#define NET_DNS_CLIENT      20          ///< DNS client service
-#define NET_SNMP_AGENT      21          ///< SNMP agent module
-#define NET_HTTP_SERVER     22          ///< HTTP server service
-#define NET_FTP_SERVER      23          ///< FTP server service
-#define NET_FTP_CLIENT      24          ///< FTP client service
-#define NET_TELNET_SERVER   25          ///< Telnet server service
-#define NET_TFTP_SERVER     26          ///< TFTP server service
-#define NET_TFTP_CLIENT     27          ///< TFTP client service
-#define NET_SMTP_CLIENT     28          ///< SMTP client service
-#define NET_SNTP_CLIENT     29          ///< SNTP client service
+#define NET_DNS_CLIENT      21          ///< DNS client service
+#define NET_SNMP_AGENT      22          ///< SNMP agent module
+#define NET_HTTP_SERVER     23          ///< HTTP server service
+#define NET_FTP_SERVER      24          ///< FTP server service
+#define NET_FTP_CLIENT      25          ///< FTP client service
+#define NET_TELNET_SERVER   26          ///< Telnet server service
+#define NET_TFTP_SERVER     27          ///< TFTP server service
+#define NET_TFTP_CLIENT     28          ///< TFTP client service
+#define NET_SMTP_CLIENT     29          ///< SMTP client service
+#define NET_SNTP_CLIENT     30          ///< SNTP client service
 #endif /* RTE_Network_Debug_STDIO */
 
 /// Telnet definitions
@@ -169,8 +170,8 @@ typedef struct net_arp_info {
 /// IGMP Group info
 typedef struct net_igmp_info {
   uint8_t  State;                       ///< Group membership state
-  uint8_t  Tout;                        ///< Timeout timer for reports
   uint8_t  Flags;                       ///< State flags
+  uint8_t  Tout;                        ///< Timeout timer for reports
   uint8_t  Id;                          ///< Entry identification number
   uint8_t  IpAddr[NET_ADDR_IP4_LEN];    ///< Group IPv4 address
 } NET_IGMP_INFO;
@@ -194,6 +195,15 @@ typedef struct net_ndp_info {
   uint8_t  Id;                          ///< Entry identification number
   NET_FRAME *tx_list;                   ///< Frames waiting to resolve MAC address
 } NET_NDP_INFO;
+
+/// MLD Listener info
+typedef struct net_mld_info {
+  uint8_t  State;                       ///< Listener membership state
+  uint8_t  Flags;                       ///< State flags
+  uint16_t Tout;                        ///< Timeout timer for reports
+  uint8_t  IpAddr[NET_ADDR_IP6_LEN];    ///< Listener IPv6 address
+  uint8_t  Id;                          ///< Entry identification number
+} NET_MLD_INFO;
 
 /// IP Fragmentation session info
 typedef struct net_ip_frag_info {
@@ -432,6 +442,12 @@ typedef struct net_igmp_cfg {
   const struct net_if_cfg *If;          ///< Link to general interface descriptor
   NET_IGMP_INFO *Table;                 ///< Group table array
   uint16_t TabSize;                     ///< Group table size
+  void (*process)(                      ///< Process IGMP message function
+    const struct net_if_cfg*,NET_FRAME*);
+  bool (*is_member)(                    ///< Check if host member of a group
+    const struct net_if_cfg*,const uint8_t*);
+  uint32_t (*collect_mcast)(            ///< Collect multicast MAC addresses
+    const struct net_if_cfg*,uint8_t*);
 } const NET_IGMP_CFG;
 
 /// DHCP Client Configuration info
@@ -475,6 +491,8 @@ typedef struct net_ndp_cfg {
   uint8_t   TimeOut;                    ///< Cache expiration time in seconds
   uint8_t   MaxRetry;                   ///< Number of retries to resolve MAC address
   uint8_t   Resend;                     ///< Resend timeout in seconds
+  void (*process)(                      ///< Process NDP message function
+    const struct net_if_cfg*,NET_FRAME*);
 } const NET_NDP_CFG;
 
 /// ICMP6 Configuration info
@@ -483,6 +501,20 @@ typedef struct net_icmp6_cfg {
   const struct net_if_cfg *If;          ///< Link to general interface descriptor
   bool     NoEcho;                      ///< Disable ping/echo response
 } const NET_ICMP6_CFG;
+
+/// MLD Configuration info
+typedef struct net_mld_cfg {
+  struct net_mld_ctrl     *Ctrl;        ///< Instance control block
+  const struct net_if_cfg *If;          ///< Link to general interface descriptor
+  NET_MLD_INFO *Table;                  ///< Listener table array
+  uint16_t TabSize;                     ///< Listener table size
+  void (*process)(                      ///< Process MLD message function
+    const struct net_if_cfg*,NET_FRAME*);
+  bool (*listening)(                    ///< Check if node is listening
+    const struct net_if_cfg*,const uint8_t*);
+  uint32_t (*collect_mcast)(            ///< Collect multicast MAC addresses
+    const struct net_if_cfg*,uint8_t*);
+} const NET_MLD_CFG;
 
 /// DHCP6 Client Configuration info
 typedef struct net_dhcp6_cfg {
@@ -504,13 +536,17 @@ typedef struct net_ip6_cfg {
   uint16_t      Mtu;                    ///< Maximum transmission unit
   NET_NDP_CFG   *NdpCfg;                ///< Neighbor discovery configuration
   NET_ICMP6_CFG *Icmp6Cfg;              ///< ICMPv6 configuration
+  NET_MLD_CFG   *MldCfg;                ///< Multicast listener discovery configuration
   NET_DHCP6_CFG *Dhcp6Cfg;              ///< DHCPv6 configuration
+  uint32_t (*collect_mcast)(            ///< Collect multicast MAC addresses
+    const struct net_if_cfg*,uint8_t*);
 } const NET_IP6_CFG;
 
 /// Interface status info
 typedef struct net_if_state {
   bool     LinkUp;                      ///< Link up or WiFi connected
   bool     MacNew;                      ///< Mac address changed
+  bool     ConfigMcast;                 ///< Configure multicast Mac address filtering
   uint16_t Offload;                     ///< Checksum offload flags
 } NET_IF_STATE;
 
@@ -526,7 +562,6 @@ typedef struct net_if_cfg {
   NET_IP6_CFG *Ip6Cfg;                  ///< IPv6 configuration
   bool (*send_frame)(uint32_t,          ///< Send frame function
                      NET_FRAME*,uint8_t);
-  void (*config_mcast)(uint32_t);       ///< Config Multicast MAC filter for LAN
   bool (*output_lan)(uint32_t,          ///< Low level output for LAN (Eth, WiFi)
                      NET_FRAME*);
 } const NET_IF_CFG;
@@ -808,6 +843,7 @@ extern NET_IGMP_CFG  *const net_igmp_list[];
 extern NET_DHCP_CFG  *const net_dhcp_list[];
 extern NET_ICMP6_CFG *const net_icmp6_list[];
 extern NET_NDP_CFG   *const net_ndp_list[];
+extern NET_MLD_CFG   *const net_mld_list[];
 extern NET_DHCP6_CFG *const net_dhcp6_list[];
 
 extern NET_IP_FRAG_CFG  net_ip4_frag_config;
@@ -1020,11 +1056,6 @@ extern void net_eth_iface_run (void);
 ///              - false       = Failed to send a frame.
 extern bool net_eth_send_frame (uint32_t if_num, NET_FRAME *frame, uint8_t ip_ver);
 
-/// \brief Configure ethernet multicast address filtering.
-/// \param[in]     if_num        Interface number.
-/// \return        None.
-extern void net_eth_config_mcast (uint32_t if_num);
-
 /// \brief Protected output of ethernet frame.
 /// \param[in]     if_num        Interface number.
 /// \param[in]     frame         network frame.
@@ -1103,11 +1134,43 @@ extern void net_igmp_process (NET_IF_CFG *net_if, NET_FRAME *frame);
 ///              - false       = Local host is not member.
 extern bool net_igmp_is_member (NET_IF_CFG *net_if, const uint8_t *ip4_addr);
 
-/// \brief Collect IP addresses of active IGMP groups.
+/// \brief Collect multicast MAC addresses of active IGMP groups.
 /// \param[in]     net_if        network interface descriptor.
-/// \param[out]    buf           buffer to copy group IP addresses to.
-/// \return        Number of IPs copied.
+/// \param[out]    buf           buffer to copy MAC addresses to.
+/// \return        Number of MAC addresses copied.
 extern uint32_t net_igmp_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf);
+
+/// \brief Initialize MLD nodes.
+/// \return        None.
+extern void net_mld_node_init (void);
+
+/// \brief De-initialize MLD nodes.
+/// \return        None.
+extern void net_mld_node_uninit (void);
+
+/// \brief Run MLD node main function.
+/// \return        None.
+extern void net_mld_node_run (void);
+
+/// \brief Process MLD message frame.
+/// \param[in]     net_if        network interface descriptor.
+/// \param[in]     frame         received MLD message frame.
+/// \return        None.
+extern void net_mld_process (NET_IF_CFG *net_if, NET_FRAME *frame);
+
+/// \brief Check if local node is listening on this address.
+/// \param[in]     net_if        network interface descriptor.
+/// \param[in]     ip6_addr      multicast IPv6 address to be checked.
+/// \return
+///              - true        = Local node is listening.
+///              - false       = Local node is not listening.
+extern bool net_mld_listening (NET_IF_CFG *net_if, const uint8_t *ip4_addr);
+
+/// \brief Collect multicast MAC addresses of listening nodes.
+/// \param[in]     net_if        network interface descriptor.
+/// \param[out]    buf           buffer to copy MAC addresses to.
+/// \return        Number of MAC addresses copied.
+extern uint32_t net_mld_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf);
 
 /// \brief Initialize NDP cache.
 /// \return        None.
@@ -1382,6 +1445,12 @@ extern NET_FRAME *net_ip6_frag_add (NET_FRAME *frame);
 /// \param[in]     mtu           maximum transmission unit.
 /// \return        pointer to generated frame fragment.
 extern NET_FRAME *net_ip6_frag_get (NET_FRAME *frame, uint16_t mtu);
+
+/// \brief Collect multicast MAC addresses of IPv6 core.
+/// \param[in]     net_if        network interface descriptor.
+/// \param[out]    buf           buffer to copy MAC addresses to.
+/// \return        Number of MAC addresses copied.
+extern uint32_t net_ip6_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf);
 
 /// \brief Initialize Ping client.
 /// \return        None.

@@ -123,7 +123,7 @@ A <a href="https://en.wikipedia.org/wiki/Request_for_Comments" target="_blank">R
 from the <a href="https://www.ietf.org/" target="_blank">Internet Engineering Task Force (IETF)</a> and the
 <a href="https://www.internetsociety.org/" target="_blank">Internet Society</a>, the main technical development and
 standards-setting bodies for the Internet. RFCs are official documents of Internet specifications, communications protocols,
-procedures, and events. The following RFCs are currently implemented in the Network Component v7:
+procedures, and events. The following RFCs are currently implemented in the Network Component:
 |RFC | Title |
 |----|:------|
 |<a href="https://tools.ietf.org/html/rfc768" target="_blank">RFC768</a> | User Datagram Protocol (UDP)

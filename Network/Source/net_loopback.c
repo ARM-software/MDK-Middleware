@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_loopback.c
  * Purpose: Loopback Interface
@@ -38,7 +38,6 @@ NET_IF_CFG net_loop_if_config = {
   NULL,
   NULL,
   net_loop_send_frame,
-  NULL,
   NULL
 };
 
@@ -189,7 +188,7 @@ void net_loop_iface_run (void) {
         break;
       }
       /* Check IP6 Protocol type */
-      switch (IP6_FRAME(frame)->NextHdr) {
+      switch (IP6_PROT(frame)) {
         case IP6_PROT_ICMP:
           net_icmp6_process (h->If, frame);
           break;

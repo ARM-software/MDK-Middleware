@@ -313,6 +313,7 @@ The network component uses the following event IDs:
 | Net_ICMP6   | 0xCD     |
 | Net_DHCP6   | 0xCE     |
 | Net_NDP     | 0xCF     |
+| Net_MLD     | 0xDE     |
 | Net_UDP     | 0xD0     |
 | Net_TCP     | 0xD1     |
 | Net_BSD     | 0xD2     |

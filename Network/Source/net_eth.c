@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_eth.c
  * Purpose: Ethernet Interface
@@ -63,6 +63,7 @@ static void eth_iface_init (NET_ETH_CFG *h);
 static void eth_iface_uninit (NET_ETH_CFG *h);
 static uint32_t eth_opt_len (NET_ETH_CFG *h, netIF_Option option);
 static uint16_t eth_mtu_limit (uint16_t mtu, uint8_t ip_ver);
+static void eth_config_mcast (uint32_t if_num);
 static void eth_receive (NET_ETH_CFG *h);
 static void eth_check_link (NET_ETH_CFG *h);
 static void eth_iface_run (NET_ETH_CFG *h);
@@ -199,10 +200,16 @@ static void eth_iface_init (NET_ETH_CFG *h) {
 #endif
 
   /* Max. number of multicast addresses */
-  ctrl->n_mcast = N_MCAST6;
+  ctrl->n_mcast = 0;
   if (h->If->Ip4Cfg && h->If->Ip4Cfg->IgmpCfg) {
     ctrl->n_mcast += h->If->Ip4Cfg->IgmpCfg->TabSize + 1;
   }
+#ifdef Network_IPv6
+  ctrl->n_mcast += N_MCAST6;
+  if (h->If->Ip6Cfg && h->If->Ip6Cfg->MldCfg) {
+    ctrl->n_mcast += h->If->Ip6Cfg->MldCfg->TabSize;
+  }
+#endif
 
   /* Seed for pseudo-random generator based on MAC address */
   sys->RndState = net_crc_buf (h->MacAddr, NET_ADDR_ETH_LEN, sys->RndState);
@@ -603,7 +610,7 @@ netStatus net_eth_set_option (uint32_t if_num, netIF_Option option,
       DEBUGF (ETH," IP6_Addr=%s\n",net_addr6_ntoa(buf));
       EvrNetETH_SetIp6Address (h->IfNum, buf);
       net_addr6_copy (LocM6.IpAddr, buf);
-      net_eth_config_mcast (h->IfNum);
+      eth_config_mcast (h->IfNum);
       return (netOK);
 
     case netIF_OptionIP6_DefaultGateway:
@@ -747,11 +754,11 @@ const uint8_t *net_eth_get_addr (const __ADDR *addr) {
 }
 
 /**
-  \brief       Configure ethernet multicast address filtering.
+  \brief       Configure hardware multicast address filtering.
   \param[in]   if_num  interface number.
   \return      none.
 */
-void net_eth_config_mcast (uint32_t if_num) {
+static void eth_config_mcast (uint32_t if_num) {
   NET_ETH_CFG *h = eth_if_map (if_num);
   uint8_t *buf;
   uint32_t n;
@@ -760,19 +767,23 @@ void net_eth_config_mcast (uint32_t if_num) {
     return;
   }
 
-  /* Provide buffer big enough */
-  buf = (uint8_t *)net_mem_alloc (ctrl->n_mcast * NET_ADDR_ETH_LEN);
+  /* Provide buffer big enough (add one more for safety) */
+  buf = (uint8_t *)net_mem_alloc ((ctrl->n_mcast + 1) * NET_ADDR_ETH_LEN);
   n   = 0;
 
-  /* Collect IPv4 multicasts */
+  /* Collect IPv4 multicast MAC addresses */
   if (h->If->Ip4Cfg) {
-    n += net_igmp_collect_mcast (h->If, buf);
-    /* When igmp disabled n=0 */
+    if (h->If->Ip4Cfg->IgmpCfg) {
+      n += h->If->Ip4Cfg->IgmpCfg->collect_mcast (h->If, &buf[0]);
+    }
   }
 #ifdef Network_IPv6
-  /* Collect IPv6 multicasts */
+  /* Collect IPv6 multicast MAC addresses */
   if (h->If->Ip6Cfg) {
-    n += net_ip6_collect_mcast (h->If, &buf[n * NET_ADDR_ETH_LEN]);
+    n += h->If->Ip6Cfg->collect_mcast (h->If, &buf[n * NET_ADDR_ETH_LEN]);
+    if (h->If->Ip6Cfg->MldCfg) {
+      n += h->If->Ip6Cfg->MldCfg->collect_mcast (h->If, &buf[n * NET_ADDR_ETH_LEN]);
+    }
   }
 #endif
   if (n != 0) {
@@ -827,7 +838,7 @@ static void eth_receive (NET_ETH_CFG *h) {
       drv_mac->ReadFrame (NULL, 0);
       continue;
     }
-    /* Valid frame, read it and release it */ 
+    /* Valid frame, read it and release it */
     drv_mac->ReadFrame (&frame->data[0], size);
     ctrl->rx_q[ctrl->q_head & (ETH_QSIZE-1)] = frame;
     ctrl->RxCount += size;
@@ -1171,13 +1182,18 @@ static void eth_iface_run (NET_ETH_CFG *h) {
   if (sys->Flags & SYS_FLAG_SEC2) {
     /* Sync timings for ETH thread */
     ctrl->th.SecTick = true;
+    if (h->If->State->ConfigMcast) {
+      /* Multicast addresses changed */
+      h->If->State->ConfigMcast = false;
+      eth_config_mcast (h->IfNum);
+    }      
   }
   else if (ctrl->th.ChangeSt) {
     if (ctrl->th.LinkState == ARM_ETH_LINK_UP) {
       DEBUGF (ETH,"Link %d up\n",h->IfNum);
       DEBUG_INFO (ctrl->th.LinkInfo);
       EvrNetETH_LinkUpStatus (h->IfNum, ctrl->th.LinkInfo);
-      net_eth_config_mcast (h->IfNum);
+      eth_config_mcast (h->IfNum);
       netETH_Notify (h->IfNum, netETH_LinkUp, ctrl->th.LinkInfo);
       if (h->If->Ip4Cfg && !h->If->Ip4Cfg->DhcpCfg) {
         /* Send Gratuitous ARP here if DHCP is disabled */
@@ -1274,7 +1290,11 @@ static void eth_iface_run (NET_ETH_CFG *h) {
           break;
 
         case IP4_PROT_IGMP:
-          net_igmp_process (h->If, frame);
+          if (!h->If->Ip4Cfg->IgmpCfg) {
+            /* Silently ignore if IGMP not enabled */
+            break;
+          }
+          h->If->Ip4Cfg->IgmpCfg->process (h->If, frame);
           break;
 
         case IP4_PROT_UDP:
@@ -1314,7 +1334,7 @@ static void eth_iface_run (NET_ETH_CFG *h) {
         return;
       }
       /* Now check IPv6 frame protocol type */
-      switch (IP6_FRAME(frame)->NextHdr) {
+      switch (IP6_PROT(frame)) {
         case IP6_PROT_ICMP:
           net_icmp6_process (h->If, frame);
           break;
@@ -1445,11 +1465,11 @@ static void debug_info (uint32_t link_info) {
       break;
     case ARM_ETH_SPEED_100M:
       sp = "100M";
-      break;  
+      break;
     default:
       sp = "1G";
       break;
-  } 
+  }
   switch (link_info >> 2) {
     case ARM_ETH_DUPLEX_HALF:
       dp = "Half";
@@ -1457,7 +1477,7 @@ static void debug_info (uint32_t link_info) {
     default:
       dp = "Full";
       break;
-  }  
+  }
   DEBUGF (ETH," %s, %s duplex\n",sp,dp);
 }
 /**

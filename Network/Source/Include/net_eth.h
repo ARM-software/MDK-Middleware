@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_eth.h
  * Purpose: Ethernet Interface Definitions
@@ -73,7 +73,6 @@ extern void  net_eth_iface_init (void);
 extern void  net_eth_iface_uninit (void);
 extern void  net_eth_callback (uint32_t event, NET_ETH_CTRL *ctx);
 extern const uint8_t *net_eth_get_addr (const __ADDR *addr);
-extern void  net_eth_config_mcast (uint32_t if_num);
 extern bool  net_eth_send_frame (uint32_t if_num, NET_FRAME *frame, uint8_t ip_ver);
 extern bool  net_eth_output (uint32_t if_num, NET_FRAME *frame);
 extern void  net_eth_iface_run (void);

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_dbg.h
  * Purpose: Debug Variant Definitions
@@ -67,6 +67,7 @@
   #define IP6               NET_IP6_CORE
   #define ICMP6             NET_ICMP6_CONTROL
   #define NDP               NET_NDP_CACHE
+  #define MLD               NET_MLD_NODE
 
   #define UDP               NET_UDP_SOCKET
   #define TCP               NET_TCP_SOCKET

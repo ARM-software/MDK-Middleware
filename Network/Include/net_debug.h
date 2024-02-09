@@ -18,6 +18,10 @@
   #define DBG_WIFI      0
 #endif
 
+#ifndef DBG_MLD6
+  #define DBG_MLD6      0
+#endif
+
 #ifdef RTE_Network_Debug_STDIO
 /* Printf style debug */
 
@@ -86,6 +90,9 @@ void net_dbg_info (int32_t proc, const char *fmt, ...) {
   #endif
   #if (DBG_ICMP6 > 1)
     case NET_ICMP6_CONTROL: break;
+  #endif
+  #if (DBG_MLD6 > 1)
+    case NET_MLD_NODE:      break;
   #endif
   #if (DBG_DHCP6 > 1)
     case NET_DHCP6_CLIENT:  break;
@@ -205,6 +212,9 @@ void net_dbg_error (int32_t proc, const char *fmt, ...) {
   #if (DBG_ICMP6 > 0)
     case NET_ICMP6_CONTROL: break;
   #endif
+  #if (DBG_MLD6 > 0)
+    case NET_MLD_NODE:      break;
+  #endif
   #if (DBG_DHCP6 > 0)
     case NET_DHCP6_CLIENT:  break;
   #endif
@@ -270,7 +280,6 @@ void net_dbg_error (int32_t proc, const char *fmt, ...) {
 
 #ifdef RTE_Network_Debug
 /* Event Recorder debug */
-#define DEBUG_EVR
 #include "net_evr.h"
 
 #define __FILTER(dbg)   (dbg == 1) ? EventRecordError : EventRecordAll
@@ -299,6 +308,7 @@ void net_evr_init (void) {
 #if (DBG_CORE6_EN)
   EVR_ENABLE_FILTER(DBG_IP6,  EvtNetIP6,  EvtNetIP6);
   EVR_ENABLE_FILTER(DBG_ICMP6,EvtNetICMP6,EvtNetICMP6);
+  EVR_ENABLE_FILTER(DBG_MLD6, EvtNetMLD,  EvtNetMLD);
   EVR_ENABLE_FILTER(DBG_DHCP6,EvtNetDHCP6,EvtNetDHCP6);
   EVR_ENABLE_FILTER(DBG_NDP6, EvtNetNDP,  EvtNetNDP);
 #endif
@@ -320,4 +330,4 @@ void net_evr_init (void) {
   EVR_ENABLE_FILTER(DBG_SNTP_CLIENT,  EvtNetSNTP, EvtNetSNTP);
 #endif
 }
-#endif
+#endif /* RTE_Network_Debug */

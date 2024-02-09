@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ip6.c
  * Purpose: Internet Protocol Version 6
@@ -14,6 +14,7 @@
 #include "net_addr.h"
 #include "net_loopback.h"
 #include "net_icmp6.h"
+#include "net_mld.h"
 #include "net_ip6.h"
 #include "net_udp.h"
 #include "net_tcp.h"
@@ -40,7 +41,6 @@ static NET_IP6_CTRL ip6_control;
 
 /* Local Functions */
 static uint16_t ip6_get_mtu (NET_IF_CFG *net_if);
-static bool     ip6_is_mcast (NET_IF_CFG *net_if, const uint8_t *ip6_addr);
 #ifdef DEBUG_STDIO
  static void debug_info (const NET_IP6_HEADER *ip6_hdr);
 #endif
@@ -107,6 +107,7 @@ bool net_ip6_chk_frame (NET_IF_CFG *net_if, NET_FRAME *frame) {
       break;
     case NET_IF_CLASS_ETH:
     case NET_IF_CLASS_WIFI:
+      /* Check if destination IP address is valid */
       if (net_addr6_is_solicited (IP6_FRAME(frame)->DstAddr, net_if->localm6)) {
         /* Solicited-node multicast address */
         break;
@@ -130,7 +131,28 @@ bool net_ip6_chk_frame (NET_IF_CFG *net_if, NET_FRAME *frame) {
         /* All-nodes multicast address */
         break;
       }
-      /* It is not for us */
+      if (IP6_FRAME(frame)->DstAddr[0] == 0xFF) {
+        /* Multicast address (FF00::/8) */
+        if (!net_if->Ip6Cfg->MldCfg) {
+          /* MLD not enabled on this interface */
+          goto wrong_dst;
+        }
+        if (!net_if->Ip6Cfg->MldCfg->listening (net_if, IP6_FRAME(frame)->DstAddr)) {
+          /* Not listening on this address */
+          goto wrong_dst;
+        }
+        /* Only ICMP6 and UDP accepted */
+        switch (IP6_PROT(frame)) {
+          case IP6_PROT_ICMP:
+          case IP6_PROT_UDP:
+          case IP6_PROT_FRAG:
+            goto dst_valid;
+        }
+        ERRORF (IP6,"Process %s, Wrong mcast protocol\n",net_if->Name);
+        EvrNetIP6_WrongMulticastProtocol (net_if->Id, IP6_PROT(frame));
+        return (false);
+      }
+wrong_dst:
       DEBUGF (IP6," Discarded, Wrong DstAddr\n");
       EvrNetIP6_WrongDestinationAddress (net_if->Id, IP6_FRAME(frame)->DstAddr);
       return (false);
@@ -140,20 +162,7 @@ bool net_ip6_chk_frame (NET_IF_CFG *net_if, NET_FRAME *frame) {
       return (false);
   }
 
-  /* Check if this is an ethernet IPv6 multicast frame */
-  if (ip6_is_mcast (net_if, IP6_FRAME(frame)->DstAddr)) {
-    /* Accept only UDP multicast frames */
-    switch (IP6_FRAME(frame)->NextHdr) {
-      case IP6_PROT_UDP:
-      case IP6_PROT_FRAG:
-        break;
-      default:
-        ERRORF (IP6,"Process %s, Wrong mcast protocol\n",net_if->Name);
-        EvrNetIP6_WrongMulticastProtocol (net_if->Id, IP6_FRAME(frame)->NextHdr);
-        return (false);
-    }
-  }
-
+dst_valid:
   /* Check if this packet is an IPv6 fragment */
   if ((IP6_FRAME(frame)->NextHdr == IP6_PROT_FRAG) && (ip6_get_mtu(net_if) == 0)) {
     /* Fragmented packets are disabled for this interface */
@@ -163,6 +172,12 @@ bool net_ip6_chk_frame (NET_IF_CFG *net_if, NET_FRAME *frame) {
   }
 
   /* Calculate IPv6 payload start and length */
+  if (IP6_FRAME(frame)->NextHdr == IP6_PROT_HOP_BY_HOP) {
+    /* Skip Hop-by-hop option header */
+    frame->index  = IP6_DATA_OFFS + 8;
+    frame->length = ip_len - 8;
+    return (true);
+  }
   frame->index  = IP6_DATA_OFFS;
   frame->length = ip_len;
   return (true);
@@ -202,7 +217,7 @@ NET_FRAME *net_ip6_reass_frame (NET_FRAME *frame) {
                the upper layer payload data, before calling this function.
   \note        'TxNetif' must be selected.
 */
-bool net_ip6_send_frame (NET_IF_CFG *net_if, NET_FRAME *frame, 
+bool net_ip6_send_frame (NET_IF_CFG *net_if, NET_FRAME *frame,
                          const uint8_t *src_addr, const uint8_t *dst_addr,
                          uint8_t prot, uint8_t t_class, uint8_t hop_limit) {
   uint16_t mtu;
@@ -212,6 +227,20 @@ bool net_ip6_send_frame (NET_IF_CFG *net_if, NET_FRAME *frame,
   /* Check IP protocol type */
   switch (prot) {
     case IP6_PROT_ICMP:
+      if (frame->index == IP6_DATA_OFFS + 8) {
+        /* Add IPv6 Router Alert option */
+        frame->data[IP6_DATA_OFFS+0] = IP6_PROT_ICMP;
+        frame->data[IP6_DATA_OFFS+1] = 0;
+        frame->data[IP6_DATA_OFFS+2] = 0x05;
+        frame->data[IP6_DATA_OFFS+3] = 2;
+        frame->data[IP6_DATA_OFFS+4] = 0;
+        frame->data[IP6_DATA_OFFS+5] = 0;
+        frame->data[IP6_DATA_OFFS+6] = 0x01;
+        frame->data[IP6_DATA_OFFS+7] = 0;
+        frame->length += 8;
+        prot = IP6_PROT_HOP_BY_HOP;
+      }
+      break;
     case IP6_PROT_UDP:
     case IP6_PROT_TCP:
       break;
@@ -240,7 +269,7 @@ bool net_ip6_send_frame (NET_IF_CFG *net_if, NET_FRAME *frame,
     hop_limit = net_if->localm6->HopLimit;
   }
 
-  /* Construct the IP header */
+  /* Construct the IPv6 header */
   IP6_FRAME(frame)->VerClass  = IP6_DEF_VERCLASS | (t_class >> 4);
   IP6_FRAME(frame)->ClassFlow = (t_class << 4) & 0xFF;
   IP6_FRAME(frame)->Flow      = 0;
@@ -264,7 +293,7 @@ bool net_ip6_send_frame (NET_IF_CFG *net_if, NET_FRAME *frame,
     txfrm->length += (PHY_HEADER_LEN + IP6_HEADER_LEN);
     if (!net_if->send_frame (net_if->Id & 0xFF, txfrm, IP_VER6)) {
       /* Failed to send, release buffer and return */
-      if (txfrm != frame) net_ip4_frag_get (NULL, 0);
+      if (txfrm != frame) net_ip6_frag_get (NULL, 0);
       return (false);
     }
     if (txfrm == frame) {
@@ -383,11 +412,13 @@ bool net_ip6_tx_offl_hl (NET_IF_CFG *net_if, uint16_t flag) {
 }
 
 /**
-  \brief       Collect multicast MAC addresses for address filtering.
+  \brief       Collect IPv6 core multicast MAC addresses.
   \param[in]   net_if  network interface descriptor.
   \param[out]  buf     buffer to write multicast MAC array to.
-  \return      number of MAC addresses written.
-  \note        Return value is at least 2.
+  \return      number of MAC addresses written (max 3).
+  \note        This function collects core multicast MAC addresses and writes
+               them to an array in the buffer. The collection is then used to
+               set up ethernet hardware MAC address filtering.
 */
 uint32_t net_ip6_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf) {
   NET_LOCALM6 *lm = net_if->localm6;
@@ -411,6 +442,7 @@ uint32_t net_ip6_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf) {
   /* Solicited-node Global IPv6 address */
   net_addr6_to_mac (net_addr6_get_solicited (lm->IpAddr),
                     &buf[n * NET_ADDR_ETH_LEN]);
+  /* Check if this MAC already exists */
   for (j = 0; j < n; j++) {
     if (net_mac_comp (&buf[j * NET_ADDR_ETH_LEN], &buf[n * NET_ADDR_ETH_LEN])) {
       /* This MAC address already exists */
@@ -456,23 +488,6 @@ NET_IF_CFG *net_ip6_find_route (NET_IF_CFG *net_if, const uint8_t *dst_addr) {
   }
   /* Address is external */
   return (ip6->DefNetIf);
-}
-
-/**
-  \brief       Check if IP address is multicast address.
-  \param[in]   net_if    network interface descriptor.
-  \param[in]   ip6_addr  IPv6 address.
-  \return      address status:
-               - true  = is IPv6 multicast,
-               - false = not multicast.
-*/
-static bool ip6_is_mcast (NET_IF_CFG *net_if, const uint8_t *ip6_addr) {
-  if (net_if->output_lan == NULL) {
-    return (false);
-  }
-  // Todo: Add MLD support
-  (void)ip6_addr;
-  return (false);
 }
 
 /**

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ndp.c
  * Purpose: Neighbor Discovery for IPv6
@@ -318,7 +318,7 @@ static void ndp_send_reply (NET_NDP_CFG *h,
   flags = (ip_addr) ? 0x60000000 : 0x20000000;
   set_u32 (&ICMP6_FRAME(frame)->Data[0], flags);
   DEBUGF (NDP," Flags=0x%08X\n",flags);
-  EvrNetNDP_ShowFlags (h->If->Id, flags);
+  EvrNetNDP_ViewFlags (h->If->Id, flags);
 
   /* Target IPv6 address is our's */
   net_addr6_copy (&ICMP6_FRAME(frame)->Data[4], targ_addr);
@@ -366,7 +366,7 @@ static void ndp_send_request (NET_NDP_CFG *h,
   if ((type == ICMP6_NEIGHB_SOL) || (type == ICMP6_NBR_SOL_DAD)) {
     net_addr6_copy (&ICMP6_FRAME(frame)->Data[4], ip_addr);
     DEBUGF (NDP," TargAddr [%s]\n",net_addr6_ntoa(ip_addr));
-    EvrNetNDP_ShowTargetAddress (h->If->Id, ip_addr);
+    EvrNetNDP_ViewTargetAddress (h->If->Id, ip_addr);
     idx = 20;
   }
 
@@ -1291,15 +1291,13 @@ static void ndp_slaac_run (NET_NDP_CFG *h) {
         break;
       }
       if (h->If->State->MacNew) {
-        h->If->State->MacNew = false;
+        /* Multicast addresses changed */
+        h->If->State->MacNew      = false;
+        h->If->State->ConfigMcast = true;
         /* Update link-local address, MAC has changed */
         net_addr6_make_eui64 (LocM6.LLAddr, NULL, h->If->MacAddr);
         DEBUGF (NDP,"Make %s, LLAddr [%s]\n",h->If->Name, net_addr6_ntoa(LocM6.LLAddr));
         EvrNetNDP_MakeLinkLocalAddress (h->If->Id, LocM6.LLAddr);
-        /* Optionally update multicast hw-filtering */
-        if (h->If->config_mcast) {
-          h->If->config_mcast (h->If->Id & 0xFF);
-        }
         /* Auto-address is unusable, need to reconfigure */
         net_addr6_copy (LocM6.TempAddr, net_addr_unspec);
         slaac->AutoTout = 0;

@@ -304,6 +304,8 @@ The following list provides a brief overview of all Network Component functions.
  - \ref netNDP_Probe &mdash; \copybrief netNDP_Probe
  - \ref netNDP_ProbeX &mdash; \copybrief netNDP_ProbeX
  - \ref netNDP_ClearCache &mdash; \copybrief netNDP_ClearCache
+ - \ref netMLD_Join &mdash; \copybrief netMLD_Join
+ - \ref netMLD_Leave &mdash; \copybrief netMLD_Leave
  - \ref netDHCP6_Disable &mdash; \copybrief netDHCP6_Disable
  - \ref netDHCP6_Enable &mdash; \copybrief netDHCP6_Enable
  - \ref netICMP6_SetNoEcho &mdash; \copybrief netICMP6_SetNoEcho

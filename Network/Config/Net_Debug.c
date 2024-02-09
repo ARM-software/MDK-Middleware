@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    Net_Debug.c
  * Purpose: Network Debug Configuration
- * Rev.:    V7.1.0
+ * Rev.:    V7.2.0
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -82,6 +82,10 @@
 //   <o>ICMP6 Control  <0=>Off <1=>Errors only <2=>Full debug
 //   <i>Configure Internet Control Message ver.6 debugging
 #define DBG_ICMP6               1
+
+//   <o>MLD Multicast Listener Discovery  <0=>Off <1=>Errors only <2=>Full debug
+//   <i>Configure debugging of Multicast Group Management
+#define DBG_MLD6                1
 
 //   <o>DHCP6 Client  <0=>Off <1=>Errors only <2=>Full debug
 //   <i>Configure Dynamic Host Configuration ver.6 Client debugging

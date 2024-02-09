@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_wifi.c
  * Purpose: WiFi Interface
@@ -917,7 +917,7 @@ static void wifi_receive (NET_WIFI_CFG *h) {
       drv_wifi->EthReadFrame (WIFI_IF_STA, NULL, 0);
       continue;
     }
-    /* Valid frame, read it and release it */ 
+    /* Valid frame, read it and release it */
     drv_wifi->EthReadFrame (WIFI_IF_STA, &frame->data[0], size);
     ctrl->rx_q[ctrl->q_head & (WIFI_QSIZE-1)] = frame;
     ctrl->RxCount += size;
@@ -1273,7 +1273,11 @@ static void wifi_iface_run (NET_WIFI_CFG *h) {
           break;
 
         case IP4_PROT_IGMP:
-          net_igmp_process (h->If, frame);
+          if (!h->If->Ip4Cfg->IgmpCfg) {
+            /* Silently ignore if IGMP not enabled */
+            break;
+          }
+          h->If->Ip4Cfg->IgmpCfg->process (h->If, frame);
           break;
 
         case IP4_PROT_UDP:
@@ -1313,7 +1317,7 @@ static void wifi_iface_run (NET_WIFI_CFG *h) {
         return;
       }
       /* Now check IPv6 frame protocol type */
-      switch (IP6_FRAME(frame)->NextHdr) {
+      switch (IP6_PROT(frame)) {
         case IP6_PROT_ICMP:
           net_icmp6_process (h->If, frame);
           break;

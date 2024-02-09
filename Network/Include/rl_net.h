@@ -1456,6 +1456,18 @@ extern netStatus netIGMP_Join (uint32_t if_id, const uint8_t *ip4_addr);
 /// \return      status code that indicates the execution status of the function.
 extern netStatus netIGMP_Leave (uint32_t if_id, const uint8_t *ip4_addr);
 
+/// \brief Join this node to a multicast group specified with IP address. [\ref thread-safe]
+/// \param[in]     if_id         Interface identification (class and number).
+/// \param[in]     ip6_addr      multicast IPv6 address.
+/// \return      status code that indicates the execution status of the function.
+extern netStatus netMLD_Join (uint32_t if_id, const uint8_t *ip6_addr);
+
+/// \brief Leave a multicast group specified with IP address. [\ref thread-safe]
+/// \param[in]     if_id         Interface identification (class and number).
+/// \param[in]     ip6_addr      multicast IPv6 address.
+/// \return      status code that indicates the execution status of the function.
+extern netStatus netMLD_Leave (uint32_t if_id, const uint8_t *ip6_addr);
+
 /// \brief Resolve IP address of a host from a NetBIOS hostname. [\ref thread-safe]
 /// \param[in]     if_id         Interface identification (class and number).
 /// \param[in]     name          NetBIOS hostname, a null-terminated string.

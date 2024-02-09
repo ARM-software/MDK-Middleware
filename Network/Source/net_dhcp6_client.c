@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_dhcp6_client.c
  * Purpose: Dynamic Host Configuration Client for IPv6
@@ -662,7 +662,7 @@ static uint32_t dhcp6_listener (int32_t socket, const NET_ADDR *addr,
     return (false);
   }
   DEBUGF (DHCP6," MsgType DHCP_%s\n",msg_ascii(buf[0]));
-  EvrNetDHCP6_ShowMessage (h->If->Id, buf[0], xid);
+  EvrNetDHCP6_ViewMessage (h->If->Id, buf[0], xid);
 
   /* Process received message, depends on state we're in */
   switch (ctrl->State) {
@@ -778,7 +778,7 @@ opt:  ctrl->Flags &= ~(DHCP6_FLAG_OPT_VALID | DHCP6_FLAG_STATUS_FAIL);
             net_addr6_copy (LocM6.SecDNS, tlen < 32 ? net_addr_unspec : &buf[index+20]);
             DEBUGF (DHCP6," PriDNS [%s]\n",net_addr6_ntoa(LocM6.PriDNS));
             DEBUGF (DHCP6," SecDNS [%s]\n",net_addr6_ntoa(LocM6.SecDNS));
-            EvrNetDHCP6_ShowDnsServers (h->If->Id, LocM6.PriDNS);
+            EvrNetDHCP6_ViewDnsServers (h->If->Id, LocM6.PriDNS);
             break;
           case DHCP6_OPT_STATUS_CODE:
             /* Status code option */
@@ -801,14 +801,12 @@ opt:  ctrl->Flags &= ~(DHCP6_FLAG_OPT_VALID | DHCP6_FLAG_STATUS_FAIL);
       net_addr6_copy (LocM6.IpAddr, ctrl->IA.Addr);
       netDHCP6_Notify (h->If->Id,
                        NET_DHCP6_OPTION_IP_ADDRESS, LocM6.IpAddr, NET_ADDR_IP6_LEN);
-      /* Optionally update multicast hw-filtering */
-      if (h->If->config_mcast) {
-        h->If->config_mcast (h->If->Id & 0xFF);
-      }
       ctrl->State = DHCP6_STATE_BOUND;
       ctrl->timer = ctrl->IA.T1;
       DEBUGF (DHCP6," Next State-BOUND\n");
       EvrNetDHCP6_NextState (h->If->Id, DHCP6_STATE_BOUND);
+      /* Multicast addresses changed */
+      h->If->State->ConfigMcast = true;
       break;
 
     case DHCP6_STATE_RENEW:
@@ -879,7 +877,7 @@ opt:  ctrl->Flags &= ~(DHCP6_FLAG_OPT_VALID | DHCP6_FLAG_STATUS_FAIL);
             net_addr6_copy (LocM6.SecDNS, tlen < 32 ? net_addr_unspec : &buf[index+20]);
             DEBUGF (DHCP6," PriDNS [%s]\n",net_addr6_ntoa(LocM6.PriDNS));
             DEBUGF (DHCP6," SecDNS [%s]\n",net_addr6_ntoa(LocM6.SecDNS));
-            EvrNetDHCP6_ShowDnsServers (h->If->Id, LocM6.PriDNS);
+            EvrNetDHCP6_ViewDnsServers (h->If->Id, LocM6.PriDNS);
             /* Done, we got a DNS server address */
             ctrl->Flags |= DHCP6_FLAG_OPT_VALID;
             break;
@@ -1065,7 +1063,7 @@ static void proc_opt_ia_na (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len) 
       DEBUGF (DHCP6," + Lifetime Valid=%d, Prefrd=%d\n",
                         ctrl->IA.PrefTime,ctrl->IA.ValidTime);
       DEBUGF (DHCP6," + Timeout T1=%d, T2=%d\n",ctrl->IA.T1,ctrl->IA.T2);
-      EvrNetDHCP6_ShowIanaOffer (&ctrl->IA);
+      EvrNetDHCP6_ViewIanaOffer (&ctrl->IA);
 
       /* Check Address timers:                   */
       /* 1. Valid lifetime >= Preferred lifetime */

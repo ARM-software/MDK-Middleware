@@ -3276,68 +3276,42 @@ Possible \ref netStatus return values:
 - \em netError: No free entries in IGMP table.
 
 \note
-- This function can only be used with IPv4. Currently, no similar functionality is provided for IPv6.
+- This function can only be used with IPv4. For IPv6, the function \ref netMLD_Join must be used.
 - Only the Ethernet and WiFi interfaces use the \b netIGMP_Join function. There is no IGMP protocol for the PPP or SLIP interface.
 
 \b Code \b Example
 \code
-void Server_Thread (void *arg) {
+void Multicast_receive (void) {
   SOCKADDR_IN addr;
-  SOCKADDR_IN recaddr;
+  int32_t sock, res;
+  uint8_t ip4_addr[NET_ADDR_IP4_LEN];
+  char dbuf[100];
  
-  int32_t sock, sd, res, addrlen;
-  int32_t type = (int32_t)arg;
-  char dbuf[10];
- 
-  const uint8_t ip4_addr[NET_ADDR_IP4_LEN] = { 238, 0, 100, 1 };
-  char ip_ascii[16];
- 
-  if (netIGMP_Join (NET_IF_CLASS_ETH | 0, ip4_addr) == netOK) {
-    netIP_ntoa (NET_ADDR_IP4, ip4_addr, ip_ascii, sizeof(ip_ascii));
-    printf ("This Host is a member of group: %s\n", ip_ascii);
-  }
-  else {
-    printf ("Failed to join a host group.\n");
-  }
- 
+  // Join to the multicast group 225.1.2.3
+  inet_pton (AF_INET, "225.1.2.3", ip4_addr);
+  netIGMP_Join (NET_IF_CLASS_ETH | 0, ip4_addr);
+
+  // Create socket 
+  sock = socket (AF_INET, SOCK_DGRAM, 0);
+
+  // Bind socket
+  addr.sin_family      = AF_INET;
+  addr.sin_addr.s_addr = INADDR_ANY;
+  addr.sin_port        = htons (5555);
+  bind (sock, (SOCKADDR *)&addr, sizeof(addr));
+
   while (1) {
-    // Setup network parameters 
-    memset (&addr, 0, sizeof(addr));
- 
-    // Accept only IPv4 connections 
-    addr.sin_family = AF_INET;
- 
-    addr.sin_port   = htons(SOCK_PORT);
- 
-    // Create socket 
-    sock = socket (addr.sin_family, type, 0);
- 
-    // Bind address and port to socket 
-    uint8_t mcast_ip1[NET_ADDR_IP4_LEN] = {239, 128, 0, 1};
-    addr.sin_addr.s_b1 = mcast_ip1[0];
-    addr.sin_addr.s_b2 = mcast_ip1[1];
-    addr.sin_addr.s_b3 = mcast_ip1[2];
-    addr.sin_addr.s_b4 = mcast_ip1[3];
- 
-    bind (sock, (SOCKADDR *)&addr, sizeof(addr));
- 
-    listen (sock, 1);
-    sd = accept (sock, NULL, NULL);
-    closesocket (sock);
-    sock = sd;
- 
-    while (1) {
-      res = recv (sock, dbuf, sizeof (dbuf), 0);
-      if (res <= 0) {
-        break;
-      }
-      if (dbuf[0] == BLINKLED) {
-        LED_SetOut (dbuf[1]);
-      }
+    res = recv (sock, dbuf, sizeof (dbuf), 0);
+    if (res <= 0) {
+      break;
     }
- 
-    closesocket (sock);
+    // Process data in dbuf
   }
+
+  closesocket (sock);
+
+  // Leave the multicast group
+  netIGMP_Leave (NET_IF_CLASS_ETH | 0, ip4_addr);
 }
 \endcode
 */
@@ -3359,7 +3333,7 @@ Possible \ref netStatus return values:
 - \em netError: Not member of requested host group.
 
 \note
-- This function can only be used with IPv4. Currently, no similar functionality is provided for IPv6.
+- This function can only be used with IPv4. For IPv6, the function \ref netMLD_Leave must be used.
 - Only the Ethernet and WiFi interfaces use the \b netIGMP_Leave function. There is no IGMP protocol for the PPP or SLIP interface.
 
 \b Code \b Example
@@ -3755,6 +3729,99 @@ Possible \ref netStatus return values:
 \code
 if (netNDP_ClearCache (NET_IF_CLASS_ETH | 0) == netOK) {
   // All entries flushed from NDP cache for ETH0 interface 
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn netStatus netMLD_Join (uint32_t if_id, const uint8_t *ip6_addr)
+\details
+The function \b netMLD_Join requests that a node becomes a member of the multicast group identified by \a ip6_addr.
+
+The argument \a if_id is the \ref interface_id "Interface Identification number" of the node.
+
+The argument \a ip6_addr refers to the address of the group. Before datagrams destined for a specific group can be
+received, an upper-layer protocol must request the IPv6 module to join this group.
+
+Possible \ref netStatus return values:
+- \em netOK: Joining the group successful.
+- \em netInvalidParameter: Invalid parameter provided.
+- \em netError: No free entries in MLD table.
+
+\note
+- This function can only be used with IPv6. For IPv4, the function \ref netIGMP_Join must be used.
+- Only the Ethernet and WiFi interfaces use the \b netMLD_Join function. There is no MLD protocol for the PPP or SLIP interface.
+
+\b Code \b Example
+\code
+void Multicast_receive (void) {
+  SOCKADDR_IN6 addr;
+  int32_t sock, res, on;
+  uint8_t ip6_addr[NET_ADDR_IP6_LEN];
+  char dbuf[100];
+ 
+  // Join to the multicast group ff02::1:2:3
+  inet_pton (AF_INET6, "ff02::1:2:3", ip6_addr);
+  netMLD_Join (NET_IF_CLASS_ETH | 0, ip6_addr);
+
+  // Create socket 
+  sock = socket (AF_INET6, SOCK_DGRAM, 0);
+
+  // Bind socket
+  addr.sin6_family   = AF_INET6;
+  addr.sin6_port     = htons(5555);
+  addr.sin6_addr     = in6addr_any;
+  addr.sin6_flowinfo = 0;
+  bind (sock, (SOCKADDR *)&addr, sizeof(addr));
+
+  while (1) {
+    res = recv (sock, dbuf, sizeof (dbuf), 0);
+    if (res <= 0) {
+      break;
+    }
+    // Process data in dbuf
+  }
+
+  closesocket (sock);
+
+  // Leave the multicast group
+  netMLD_Leave (NET_IF_CLASS_ETH | 0, ip6_addr);
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn netStatus netMLD_Leave (uint32_t if_id, const uint8_t *ip6_addr)
+\details
+The function \b netMLD_Leave requests a node to give up its membership in a multicast group.
+
+The argument \a if_id is the \ref interface_id "Interface Identification number" of the node.
+
+The argument \a ip6_addr refers to the multicast group. After the upper-layer has requested to leave the multicast group,
+datagrams intended for a specific group can no longer be received, but are silently discarded by the IPv6-layer.
+
+Possible \ref netStatus return values:
+- \em netOK: Leaving the group successful.
+- \em netInvalidParameter: Invalid parameter provided.
+- \em netError: Not member of requested host group.
+
+\note
+- This function can only be used with IPv6. For IPv4, the function \ref netIGMP_Leave must be used.
+- Only the Ethernet and WiFi interfaces use the \b netMLD_Leave function. There is no MLD protocol for the PPP or SLIP interface.
+
+\b Code \b Example
+\code
+const char ip6_ascii[] = "ff02::16";
+uint8_t ip6_mcast[NET_ADDR_IP6_LEN];
+ 
+netIP_aton (ip6_ascii, NET_ADDR_IP6, ip6_mcast);
+if (netMLD_Leave (NET_IF_CLASS_ETH | 0, ip6_mcast) == netOK) {
+  printf ("This node has left the multicast group: %s\n", ip6_ascii);
+}
+else {
+  printf ("Failed to leave a group, this node is not a member.\n");
 }
 \endcode
 */

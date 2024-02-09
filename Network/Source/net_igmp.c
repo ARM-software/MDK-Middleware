@@ -35,12 +35,13 @@ static void igmp_send_report (NET_IGMP_CFG *h, const uint8_t *ip_addr);
 static void igmp_send_leave (NET_IGMP_CFG *h, const uint8_t *ip_addr);
 static NET_IGMP_INFO *igmp_map_group (NET_IGMP_CFG *h, const uint8_t *ip_addr);
 static NET_IGMP_INFO *igmp_alloc_group (NET_IGMP_CFG *h, const uint8_t *ip_addr);
+static bool igmp_is_group_valid (const uint8_t *ip4_addr);
 #ifdef DEBUG_STDIO
  static void debug_inf2 (const char *msg, const uint8_t *ip_addr);
 #endif
 
 /**
-  \brief       Initialize IGMP managers.
+  \brief       Initialize IGMP hosts.
   \return      none.
 */
 void net_igmp_host_init (void) {
@@ -62,7 +63,7 @@ void net_igmp_host_init (void) {
 }
 
 /**
-  \brief       De-initialize IGMP manager.
+  \brief       De-initialize IGMP hosts.
   \return      none.
 */
 void net_igmp_host_uninit (void) {
@@ -90,7 +91,12 @@ __WEAK netStatus netIGMP_Join (uint32_t if_id, const uint8_t *ip4_addr) {
 
   START_LOCK (netStatus);
 
-  if (!(net_if && net_if->Ip4Cfg && net_if->Ip4Cfg->IgmpCfg) || (ip4_addr == NULL)) {
+  /* Check interface */
+  if (!(net_if && net_if->Ip4Cfg && net_if->Ip4Cfg->IgmpCfg)) {
+    RETURN (netInvalidParameter);
+  }
+  /* Check group IP address */
+  if (!igmp_is_group_valid (ip4_addr)) {
     RETURN (netInvalidParameter);
   }
   h = net_if->Ip4Cfg->IgmpCfg;
@@ -113,15 +119,13 @@ __WEAK netStatus netIGMP_Join (uint32_t if_id, const uint8_t *ip4_addr) {
   DEBUGF (IGMP," Sending report\n");
   EvrNetIGMP_SendReport (h->If->Id, igmp_t->IpAddr);
   igmp_send_report (h, igmp_t->IpAddr);
-  igmp_t->State = IGMP_STATE_DELAY;
+  igmp_t->State = IGMP_STATE_DELAYING;
   igmp_t->Flags = IGMP_FLAG_LAST;
   /* Our IGMP tick interval is 200 ms */
   igmp_t->Tout  = net_rand_max (IGMP_UNSOL_TOUT) >> 1;
 
-  /* Optionally update multicast hw-filtering */
-  if (h->If->config_mcast) {
-    h->If->config_mcast (h->If->Id & 0xFF);
-  }
+  /* Multicast addresses changed */
+  h->If->State->ConfigMcast = true;
   RETURN (netOK);
 
   END_LOCK;
@@ -140,7 +144,12 @@ __WEAK netStatus netIGMP_Leave (uint32_t if_id, const uint8_t *ip4_addr) {
 
   START_LOCK (netStatus);
 
-  if (!(net_if && net_if->Ip4Cfg && net_if->Ip4Cfg->IgmpCfg) || (ip4_addr == NULL)) {
+  /* Check interface */
+  if (!(net_if && net_if->Ip4Cfg && net_if->Ip4Cfg->IgmpCfg)) {
+    RETURN (netInvalidParameter);
+  }
+  /* Check group IP address */
+  if (!igmp_is_group_valid (ip4_addr)) {
     RETURN (netInvalidParameter);
   }
   h = net_if->Ip4Cfg->IgmpCfg;
@@ -163,10 +172,8 @@ __WEAK netStatus netIGMP_Leave (uint32_t if_id, const uint8_t *ip4_addr) {
   igmp_t->Tout  = 0;
   igmp_t->Flags = 0;
 
-  /* Optionally update multicast hw-filtering */
-  if (h->If->config_mcast) {
-    h->If->config_mcast (h->If->Id & 0xFF);
-  }
+  /* Multicast addresses changed */
+  h->If->State->ConfigMcast = true;
   RETURN (netOK);
 
   END_LOCK;
@@ -180,11 +187,15 @@ __WEAK netStatus netIGMP_Leave (uint32_t if_id, const uint8_t *ip4_addr) {
                - true  = local host is member of a group,
                - false = local host is not member.
 */
-__WEAK bool net_igmp_is_member (NET_IF_CFG *net_if, const uint8_t *ip4_addr) {
+bool net_igmp_is_member (NET_IF_CFG *net_if, const uint8_t *ip4_addr) {
   NET_IGMP_CFG  *h = net_if->Ip4Cfg->IgmpCfg;
   NET_IGMP_INFO *igmp_t;
 
-  /* Check if All Hosts Group */
+  /* Check if IGMP enabled */
+  if (h == NULL) {
+    return (false);
+  }
+  /* Check if All Hosts group */
   if (net_addr4_comp (ip4_addr, IP_AllHosts)) {
     return (true);
   }
@@ -196,18 +207,23 @@ __WEAK bool net_igmp_is_member (NET_IF_CFG *net_if, const uint8_t *ip4_addr) {
 }
 
 /**
-  \brief       Collect multicast MAC addresses for address filtering.
+  \brief       Collect multicast MAC addresses of active IGMP groups.
   \param[in]   net_if  network interface descriptor.
   \param[out]  buf     buffer to write multicast MAC array to.
   \return      number of MAC addresses written.
-  \note        This function collects active multicast MAC addresses
-               and writes them to an array in the buffer. The collection is
-               then used to setup the hardware multicast address filtering.
+  \note        This function collects active multicast MAC addresses and writes
+               them to an array in the buffer. The collection is then used to
+               set up ethernet hardware MAC address filtering.
 */
-__WEAK uint32_t net_igmp_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf) {
+uint32_t net_igmp_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf) {
   NET_IGMP_CFG  *h = net_if->Ip4Cfg->IgmpCfg;
   NET_IGMP_INFO *igmp_t;
   uint32_t i,j,n;
+
+  /* Check if IGMP enabled */
+  if (h == NULL) {
+    return (0);
+  }
 
   net_addr4_to_mac (IP_AllHosts, &buf[0]);
   n = 1;
@@ -239,11 +255,16 @@ __WEAK uint32_t net_igmp_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf) {
   \param[in]   frame   network frame.
   \return      none.
 */
-__WEAK void net_igmp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
+void net_igmp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
   NET_IGMP_CFG  *h = net_if->Ip4Cfg->IgmpCfg;
   NET_IGMP_INFO *igmp_t;
   NET_IGMP_HEADER *igmp_frm;
   uint32_t i,n,max_time;
+
+  /* Check if IGMP enabled */
+  if (h == NULL) {
+    return;
+  }
 
   DEBUGF (IGMP,"*** Process_frame %s ***\n",h->If->Name);
   if (frame->length < IGMP_HEADER_LEN) {
@@ -284,7 +305,7 @@ __WEAK void net_igmp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
         DEBUGF (IGMP," Max. Time : %d\n",igmp_frm->MaxTime);
         DEBUGF (IGMP," Delayed report scheduled\n");
         EvrNetIGMP_DelayedReportScheduled (h->If->Id, igmp_frm->MaxTime);
-        igmp_t->State = IGMP_STATE_DELAY;
+        igmp_t->State = IGMP_STATE_DELAYING;
         /* Our IGMP tick interval is 200 ms */
         igmp_t->Tout  = net_rand_max (igmp_frm->MaxTime) >> 1;
         break;
@@ -319,7 +340,7 @@ __WEAK void net_igmp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
       /* Generate reports for all active groups */
       for (i = 0, igmp_t = &h->Table[0]; i < h->TabSize; igmp_t++, i++) {
         switch (igmp_t->State) {
-          case IGMP_STATE_DELAY:
+          case IGMP_STATE_DELAYING:
             if (igmp_t->Tout > max_time) {
               /* Reset timer for IGMPv2 */
               igmp_t->Tout = net_rand_max (max_time) & 0xFF;
@@ -328,15 +349,19 @@ __WEAK void net_igmp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
             break;
           case IGMP_STATE_IDLE:
             /* A report will be sent delayed from net_igmp_host_run() */
-            igmp_t->State = IGMP_STATE_DELAY;
+            igmp_t->State = IGMP_STATE_DELAYING;
             igmp_t->Tout  = net_rand_max (max_time) & 0xFF;
             n++;
             break;
         }
       }
-      DEBUGF (IGMP," Scheduled %d group reports\n",n);
-      EvrNetIGMP_GroupReportsScheduled (h->If->Id, n);
-      (void)n;
+      if (n != 0) {
+        DEBUGF (IGMP," Scheduled %d group reports\n",n);
+        EvrNetIGMP_GroupReportsScheduled (h->If->Id, n);
+        break;
+      }
+      DEBUGF (IGMP," No report scheduled\n");
+      EvrNetIGMP_NoReportScheduled (h->If->Id);
       break;
     case IGMP_REPORT_V1:
       /* IGMPv1 Membership Report message */
@@ -348,7 +373,7 @@ __WEAK void net_igmp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
       if (igmp_t == NULL) {
         break;
       }
-      if (igmp_t->State == IGMP_STATE_DELAY) {
+      if (igmp_t->State == IGMP_STATE_DELAYING) {
         /* A router is informed about this group, cancel Report */
         DEBUGF (IGMP," Own report canceled\n");
         EvrNetIGMP_OwnReportCanceled (h->If->Id, igmp_t->Id);
@@ -404,7 +429,7 @@ static void igmp_host_run (NET_IGMP_CFG *h) {
   /* Polling Interval is 200 ms */
   for (i = 0; i < h->TabSize; i++) {
     igmp_t = &h->Table[i];
-    if (igmp_t->State != IGMP_STATE_DELAY) {
+    if (igmp_t->State != IGMP_STATE_DELAYING) {
       continue;
     }
     if (igmp_t->Tout != 0) {
@@ -484,10 +509,10 @@ static void igmp_send_leave (NET_IGMP_CFG *h, const uint8_t *ip_addr) {
 }
 
 /**
-  \brief       Map group IP address to IGMP Table entry.
+  \brief       Map group IP address to IGMP table entry.
   \param[in]   h        IGMP instance handle.
   \param[in]   ip_addr  group IP address.
-  \return      pointer to IGMP table entry.
+  \return      pointer to IGMP table entry or NULL if not found.
 */
 static NET_IGMP_INFO *igmp_map_group (NET_IGMP_CFG *h, const uint8_t *ip_addr) {
   NET_IGMP_INFO *igmp_t;
@@ -507,7 +532,7 @@ static NET_IGMP_INFO *igmp_map_group (NET_IGMP_CFG *h, const uint8_t *ip_addr) {
   \brief       Allocate a free entry in IGMP table.
   \param[in]   h        IGMP instance handle.
   \param[in]   ip_addr  group IP address.
-  \return      pointer to IGMP table entry.
+  \return      pointer to IGMP table entry or NULL if failed.
 */
 static NET_IGMP_INFO *igmp_alloc_group (NET_IGMP_CFG *h, const uint8_t *ip_addr) {
   NET_IGMP_INFO *igmp_t;
@@ -521,6 +546,28 @@ static NET_IGMP_INFO *igmp_alloc_group (NET_IGMP_CFG *h, const uint8_t *ip_addr)
     }
   }
   return (NULL);
+}
+
+/**
+  \brief       Check if multicast IP address is valid.
+  \param[in]   ip4_addr  group IP address.
+  \return      status:
+               - true  = address is valid,
+               - false = not valid.
+*/
+static bool igmp_is_group_valid (const uint8_t *ip4_addr) {
+  if (ip4_addr == NULL) {
+    return (false);
+  }
+  if ((ip4_addr[0] & 0xF0) != 0xE0) {
+    /* Not multicast address */
+    return (false);
+  }
+  if (net_addr4_comp (ip4_addr, IP_AllHosts)   ||
+      net_addr4_comp (ip4_addr, IP_AllRouters)) {
+    return (false);
+  }
+  return (true);
 }
 
 #ifdef DEBUG_STDIO

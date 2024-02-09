@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ip6.h
  * Purpose: Internet Protocol Version 6 Definitions
@@ -19,10 +19,11 @@
 #define IP6_DEF_VERCLASS    0x60        // Default IPv6 Version and Class
 
 /* Protocol over IPv6 */
-#define IP6_PROT_ICMP       58          // ICMP over IPv6
-#define IP6_PROT_UDP        17          // UDP over IPv6
+#define IP6_PROT_HOP_BY_HOP 0           // IPv6 Hop-by-hop option
 #define IP6_PROT_TCP        6           // TCP over IPv6
+#define IP6_PROT_UDP        17          // UDP over IPv6
 #define IP6_PROT_FRAG       44          // Fragment header for IPv6
+#define IP6_PROT_ICMP       58          // ICMP over IPv6
 
 /* Network IPv6 Address definition */
 #define IP6_ADDR(name,w0,w1,w2,w3,w4,w5,w6,w7)                          \
@@ -52,7 +53,16 @@ typedef struct net_ip6_header {
   uint8_t  DstAddr[NET_ADDR_IP6_LEN];   // Destination IP address
 } NET_IP6_HEADER;
 
+/* IPv6 Hop-by-hop option header format */
+typedef struct net_ip6_opt {
+  uint8_t  NextHdr;
+  uint8_t  Len;
+  uint8_t  Data[];
+} NET_IP6_OPT;
+
 #define IP6_FRAME(frame)    ((NET_IP6_HEADER *)(uint32_t)&(frame)->data[PHY_HEADER_LEN])
+#define IP6_PROT(frame)     ((IP6_FRAME(frame)->NextHdr != IP6_PROT_HOP_BY_HOP)  ? \
+                             IP6_FRAME(frame)->NextHdr : frame->data[IP6_DATA_OFFS])
 
 /* Variables */
 extern NET_LOCALM6 *const net_localm6[];
