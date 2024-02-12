@@ -732,28 +732,6 @@ static uint16_t eth_mtu_limit (uint16_t mtu, uint8_t ip_ver) {
 }
 
 /**
-  \brief       Find MAC address in arp or neighbor cache.
-  \param[in]   addr  IP address to search for.
-  \return      pointer to MAC address.
-  \note        Legacy function, supports only ETH0.
-*/
-const uint8_t *net_eth_get_addr (const __ADDR *addr) {
-  NET_ETH_CFG *h = eth_if_map (0);
-
-  if (h == NULL) {
-    return (NULL);
-  }
-  if (addr->addr_type == NET_ADDR_IP4) {
-    return (net_arp_find_mac (h->If, addr->addr));
-  }
-#ifdef Network_IPv6
-  return (net_ndp_find_mac (h->If, addr->addr));
-#else
-  return (NULL);
-#endif
-}
-
-/**
   \brief       Configure hardware multicast address filtering.
   \param[in]   if_num  interface number.
   \return      none.

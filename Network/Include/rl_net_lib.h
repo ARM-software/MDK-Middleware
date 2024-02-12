@@ -11,7 +11,6 @@
 
 #include "rl_net.h"
 #include "rl_net_rte.h"
-#include "cmsis_compiler.h"
 
 #ifdef __clang__
   #pragma clang diagnostic ignored "-Wpadded"
@@ -1069,11 +1068,6 @@ extern bool net_eth_output (uint32_t if_num, NET_FRAME *frame);
 /// \param[in]     ctx           interface context (eth0, eth1).
 /// \return        None.
 extern void net_eth_callback (uint32_t event, struct net_eth_ctrl *ctx);
-
-/// \brief Get MAC address for the given IP address (legacy).
-/// \param[in]     addr        structure containing IP address of a host.
-/// \return        Pointer to the MAC address in Neighbor cache.
-extern const uint8_t *net_eth_get_addr (const __ADDR *addr);
 
 /// \brief Get current value of Ethernet Interface option.
 /// \param[in]     if_num        Interface number.

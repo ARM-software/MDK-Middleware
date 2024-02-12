@@ -13,7 +13,7 @@
 
 /* Compiler specific */
 #if defined(__clang__) || defined(__GNUC__)
-  #define __FALLTHROUGH                     __attribute__((__fallthrough__))
+  #define __FALLTHROUGH     __attribute__((__fallthrough__))
 #else
   #define __FALLTHROUGH
 #endif
