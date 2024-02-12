@@ -830,27 +830,27 @@ The structure is sufficiently large to store \ref SOCKADDR_IN or SOCKADDR_IN6 ad
 The Error Codes section lists all the return errors that the BSD functions will return. Error codes are negative numbers.
 This makes it easy to check errors, when the return code is less than 0. 
 
-|Error Code             |Description                         |Legacy Error Code         |
-|-----------------------|------------------------------------|--------------------------|
-|\ref BSD_ERROR         |Unspecified error                   |\ref BSD_ERROR            |
-|\ref BSD_ESOCK         |Invalid socket descriptor           |\ref BSD_ERROR_SOCKET     |
-|\ref BSD_EINVAL        |Invalid parameter                   |\ref BSD_ERROR_PARAMETER  |
-|\ref BSD_ENOTSUP       |Operation or feature not supported  |None                      |
-|\ref BSD_ENOMEM        |Not enough memory                   |\ref BSD_ERROR_NOMEMORY   |
-|\ref BSD_ELOCKED       |Socket locked by another thread     |\ref BSD_ERROR_LOCKED     |
-|\ref BSD_EWOULDBLOCK   |Operation would block               |\ref BSD_ERROR_WOULDBLOCK |
-|\ref BSD_ETIMEDOUT     |Operation timed out                 |\ref BSD_ERROR_TIMEOUT    |
-|\ref BSD_EINPROGRESS   |Operation in progress               |\ref BSD_ERROR_INPROGRESS |
-|\ref BSD_ENOTCONN      |Socket not connected                |\ref BSD_ERROR_CLOSED     |
-|\ref BSD_EISCONN       |Socket is connected                 |None                      |
-|\ref BSD_ECONNREFUSED  |Connection rejected by the peer     |None                      |
-|\ref BSD_ECONNRESET    |Connection reset by the peer        |None                      |
-|\ref BSD_ECONNABORTED  |Connection aborted locally          |None                      |
-|\ref BSD_EALREADY      |Connection already in progress      |None                      |
-|\ref BSD_EADDRINUSE    |Address already in use              |None                      |
-|\ref BSD_EDESTADDRREQ  |Destination address required        |None                      |
-|\ref BSD_EHOSTNOTFOUND |Host not found                      |\ref BSD_ERROR_NONAME     |
-|\ref BSD_EMSGSIZE      |Message too large                   |None                      |
+|Error Code             |Description                         |
+|-----------------------|------------------------------------|
+|\ref BSD_ERROR         |Unspecified error                   |
+|\ref BSD_ESOCK         |Invalid socket descriptor           |
+|\ref BSD_EINVAL        |Invalid parameter                   |
+|\ref BSD_ENOTSUP       |Operation or feature not supported  |
+|\ref BSD_ENOMEM        |Not enough memory                   |
+|\ref BSD_ELOCKED       |Socket locked by another thread     |
+|\ref BSD_EWOULDBLOCK   |Operation would block               |
+|\ref BSD_ETIMEDOUT     |Operation timed out                 |
+|\ref BSD_EINPROGRESS   |Operation in progress               |
+|\ref BSD_ENOTCONN      |Socket not connected                |
+|\ref BSD_EISCONN       |Socket is connected                 |
+|\ref BSD_ECONNREFUSED  |Connection rejected by the peer     |
+|\ref BSD_ECONNRESET    |Connection reset by the peer        |
+|\ref BSD_ECONNABORTED  |Connection aborted locally          |
+|\ref BSD_EALREADY      |Connection already in progress      |
+|\ref BSD_EADDRINUSE    |Address already in use              |
+|\ref BSD_EDESTADDRREQ  |Destination address required        |
+|\ref BSD_EHOSTNOTFOUND |Host not found                      |
+|\ref BSD_EMSGSIZE      |Message too large                   |
 
 \def BSD_ERROR
 \def BSD_ESOCK

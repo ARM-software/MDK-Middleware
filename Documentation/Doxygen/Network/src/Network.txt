@@ -384,7 +384,7 @@ This user's guide contains the following chapters:
         - updated HTTP, FTP, Telnet and TFTP Server start/stop control functions to blocking mode
           (function is completed after the server is running/has stopped)
         - corrected problem of FTP Server not working with USB Host file system
-        - corrected BSD receive functions to return \ref BSD_ERROR_CLOSED, if the connection
+        - corrected BSD receive functions to return BSD_ERROR_CLOSED, if the connection
           is unexpectedly closed in blocking mode
         - corrected serial communication problem on high-speed devices using PPP or SLIP interface
         - added osThreadYield in Network core main loop (cooperative multithreading)

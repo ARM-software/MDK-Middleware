@@ -221,18 +221,6 @@ typedef uint32_t (*netTCP_cb_t)(int32_t socket, netTCP_Event event, const NET_AD
 #define BSD_EHOSTNOTFOUND       (-10)   ///< Host not found
 #define BSD_EMSGSIZE            (-19)   ///< Message too large
 
-/// BSD Socket legacy Error codes.
-#define BSD_SUCCESS             0       ///< Success
-#define BSD_ERROR_SOCKET        BSD_ESOCK
-#define BSD_ERROR_PARAMETER     BSD_EINVAL
-#define BSD_ERROR_WOULDBLOCK    BSD_EWOULDBLOCK
-#define BSD_ERROR_NOMEMORY      BSD_ENOMEM
-#define BSD_ERROR_CLOSED        BSD_ENOTCONN
-#define BSD_ERROR_LOCKED        BSD_ELOCKED
-#define BSD_ERROR_TIMEOUT       BSD_ETIMEDOUT
-#define BSD_ERROR_INPROGRESS    BSD_EINPROGRESS
-#define BSD_ERROR_NONAME        BSD_EHOSTNOTFOUND
-
 //  ==== BSD Socket structures ====
 
 /// Generic Socket Address structure.
