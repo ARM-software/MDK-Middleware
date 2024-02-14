@@ -559,10 +559,10 @@ typedef struct net_if_cfg {
   NET_IP4_CFG *Ip4Cfg;                  ///< IPv4 configuration
   NET_LOCALM6 *localm6;                 ///< Local machine info IPv6
   NET_IP6_CFG *Ip6Cfg;                  ///< IPv6 configuration
-  bool (*send_frame)(uint32_t,          ///< Send frame function
-                     NET_FRAME*,uint8_t);
-  bool (*output_lan)(uint32_t,          ///< Low level output for LAN (Eth, WiFi)
-                     NET_FRAME*);
+  bool (*send_frame)(                   ///< Send frame function
+    uint32_t,NET_FRAME*,uint8_t);
+  bool (*output_lan)(                   ///< Low level output for LAN (Eth, WiFi)
+    uint32_t,NET_FRAME*);
 } const NET_IF_CFG;
 
 /// Ethernet Interface descriptor
@@ -601,9 +601,9 @@ typedef struct net_com_cfg {
   uint8_t     FlowCtrl;                 ///< Flow control
   uint8_t     MaxDelay;                 ///< Max. thread polling delay in ms
   uint8_t     RecTout;                  ///< Frame receive timeout in ticks
-  void (*cb_event)  (uint32_t);         ///< USART driver event callback
-  void (*cb_request)(const char*,       ///< Modem driver request callback
-                     const char*,uint32_t,uint32_t);
+  void (*cb_event)(uint32_t);           ///< USART driver event callback
+  void (*cb_request)(                   ///< Modem driver request callback
+    const char*,const char*,uint32_t,uint32_t);
 } const NET_COM_CFG;
 
 /// PPP Interface descriptor
@@ -631,7 +631,8 @@ typedef struct net_ppp_auth {
   void (*init)   (NET_PPP_CFG*);        ///< Initialize authentication
   void (*uninit) (NET_PPP_CFG*);        ///< De-initialize authentication
   void (*run)    (NET_PPP_CFG*);        ///< Run authentication
-  void (*process)(NET_PPP_CFG*,NET_FRAME*);///< Process authentication frame
+  void (*process)(                      ///< Process authentication frame
+    NET_PPP_CFG*,NET_FRAME*);
 } const NET_PPP_AUTH;
 
 /// SLIP Interface descriptor
@@ -689,28 +690,35 @@ typedef struct net_dns_cfg {
 
 /// mbedTLS interface functions
 typedef struct net_tls_if {
-  uint8_t  (*get_context)(int32_t,netTCP_cb_t);  ///< Allocate secure TLS context
-  void     (*connect)    (uint8_t,const char *); ///< Connect to remote endpoint
-  void     (*listen)     (uint8_t);              ///< Listen for incomming connections
-  uint8_t *(*get_buf)    (uint32_t);             ///< Get memory for send buffer
-  void     (*write)      (uint8_t,const uint8_t*,uint32_t);///< Write data to TLS session
-  void     (*close)      (uint8_t,uint8_t);      ///< Close TLS session
+  uint8_t (*get_context)(               ///< Allocate secure TLS context
+    int32_t,netTCP_cb_t);
+  void     (*connect)(                  ///< Connect to remote endpoint
+    uint8_t,const char *);
+  void     (*listen)(uint8_t);          ///< Listen for incomming connections
+  uint8_t *(*get_buf)(uint32_t);        ///< Get memory for send buffer
+  void     (*write)(                    ///< Write data to TLS session
+    uint8_t,const uint8_t*,uint32_t);
+  void     (*close)(uint8_t,uint8_t);   ///< Close TLS session
 } const NET_TLS_IF;
 
 /// SMTP Client Attachment functions
 typedef struct {
-  uint32_t (*mail_attach)  (char*,uint32_t);     ///< Compose attachment
-  uint32_t (*mime_header)  (char*,const void*);  ///< Add MIME multipart header
-  const char*(*parse_fname)(const char*,void*);  ///< Parse attachment file name(s)
+  uint32_t (*mail_attach)(              ///< Compose attachment
+    char*,uint32_t);
+  uint32_t (*mime_header)(              ///< Add MIME multipart header
+    char*,const void*);
+  const char*(*parse_fname)(            ///< Parse attachment file name(s)
+    const char*,void*);
 } const NET_SMTP_ATTACH;
 
 /// SMTP Client Configuration info
 typedef struct net_smtp_cfg {
   uint8_t   DefTout;                    ///< Default inactivity timeout
   struct {                              ///< File System interface functions
-    void    *(*fopen) (const char*);             ///< Open file for reading
-    uint32_t (*fread) (void*,uint8_t*,uint32_t); ///< Read file data
-    void     (*fclose)(void*);                   ///< Close file
+    void    *(*fopen)(const char*);     ///< Open file for reading
+    uint32_t (*fread)(                  ///< Read file data
+      void*,uint8_t*,uint32_t);
+    void     (*fclose)(void*);          ///< Close file
   } fs_if;
   NET_SMTP_ATTACH *attach_if;           ///< Attachment support interface
   NET_TLS_IF      *tls_if;              ///< mbedTLS interface functions
@@ -791,8 +799,8 @@ typedef struct {
   void    (*run)       (void);          ///< Run HTTP authentication
   int32_t (*add_line)  (void*,char*);   ///< Add authentication header line
   bool    (*parse_line)(void*,char*);   ///< Parse authentication header line
-  void    (*calc_hash) (const char*,    ///< Calculate Digest hash HA1 value
-                        const char*,uint8_t*);
+  void    (*calc_hash) (                ///< Calculate Digest hash HA1 value
+    const char*,const char*,uint8_t*);
 } const NET_HTTP_AUTH;
 
 /// HTTP Server Configuration info
@@ -886,6 +894,13 @@ extern const uint8_t  NetSecurity_ServerKey[];
 extern const uint32_t NetSecurity_ServerKey_Len;
 extern const uint8_t  NetSecurity_EmailServerCA[];
 extern const uint32_t NetSecurity_EmailServerCA_Len;
+
+/// Network Security Credentials override functions
+extern const uint8_t *netTLS_GetServerCA      (size_t *len);
+extern const uint8_t *netTLS_GetServerCert    (size_t *len);
+extern const uint8_t *netTLS_GetServerKey     (size_t *len);
+extern const uint8_t *netTLS_GetEmailServerCA (size_t *len);
+extern void netTLS_ReleaseMemory (const uint8_t *buf);
 
 //  ==== Network system ====
 

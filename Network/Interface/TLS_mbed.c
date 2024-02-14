@@ -61,7 +61,7 @@ static mbedtls_x509_crt   cacert;
 static mbedtls_ssl_context ssl[TLS_NUM_SESS];
 
 /* Local Functions */
-static void netTLS_Thread (void *arg) __attribute__((noreturn));
+__NO_RETURN static void netTLS_Thread (void *arg);
 static int32_t tls_init (void);
 static void    tls_uninit (void);
 static void    tls_run (void);
@@ -78,10 +78,6 @@ static void free_tx_buf (TLS_INFO *tls_s);
 /* RTOS resources */
 #if defined(RTE_CMSIS_RTOS2)
   #include "cmsis_os2.h"
-  #define OS_THREAD_NEW(func)   osThreadNew ((osThreadFunc_t)&func, NULL, &tls_thread)
-  #define OS_THREAD_DELETE(id)  osThreadTerminate (id)
-  #define OS_FLAG_WAIT(flag)    osThreadFlagsWait (flag, osFlagsWaitAny, osWaitForever)
-  #define OS_FLAG_SET(flag)     osThreadFlagsSet (ctrl.thread_id, flag)
   #ifdef RTE_CMSIS_RTOS2_RTX5
     #include "rtx_os.h"
     static osRtxThread_t        tls_thread_cb
@@ -133,7 +129,7 @@ static void out_debug (void *ctx, int level, const char *file,
 void netTLS_InterfaceInit (void) {
   memset (&tls_scb, 0, sizeof (tls_scb));
   memset (&ctrl, 0, sizeof (ctrl));
-  ctrl.thread_id = OS_THREAD_NEW (netTLS_Thread);
+  ctrl.thread_id = osThreadNew (&netTLS_Thread, NULL, &tls_thread);
 }
 
 /**
@@ -141,7 +137,7 @@ void netTLS_InterfaceInit (void) {
   \return      none.
 */
 void netTLS_InterfaceUninit (void) {
-  OS_THREAD_DELETE (ctrl.thread_id);
+  osThreadTerminate (ctrl.thread_id);
   tls_uninit ();
   memset (&tls_scb, 0, sizeof (tls_scb));
   memset (&ctrl, 0, sizeof (ctrl));
@@ -307,7 +303,7 @@ void netTLS_Write (uint8_t tls_id, const uint8_t *buf, uint32_t len) {
   \param[in]   arg  dummy parameter.
   \return      none.
 */
-static void netTLS_Thread (void *arg) {
+__NO_RETURN static void netTLS_Thread (void *arg) {
   int32_t ret;
 
   (void)arg;
@@ -326,7 +322,7 @@ static void netTLS_Thread (void *arg) {
     ctrl.init_done = true;
   }
   while (1) {
-    OS_FLAG_WAIT (0x0001);
+    osThreadFlagsWait (0x0001, osFlagsWaitAny, osWaitForever);
     do {
       ctrl.running = true;
       tls_run ();
@@ -345,7 +341,7 @@ static void thread_wakeup (void) {
     ctrl.busy = true;
     return;
   }
-  OS_FLAG_SET (0x0001);
+  osThreadFlagsSet (ctrl.thread_id, 0x0001);
 }
 
 /**
@@ -354,6 +350,8 @@ static void thread_wakeup (void) {
 */
 static int32_t tls_init (void) {
   const char *pers;
+  const uint8_t *buf;
+  size_t buf_len;
   int32_t ret;
 
   /* Central random generator */
@@ -388,25 +386,49 @@ static int32_t tls_init (void) {
 
   /* 1. Load the certificates and private key */
 #ifdef __TLS_SERVER
-  ret = mbedtls_x509_crt_parse (&srvcert, NetSecurity_ServerCert,
-                                          NetSecurity_ServerCert_Len);
+  buf = netTLS_GetServerCert (&buf_len);
+  if (buf == NULL) {
+    ret = mbedtls_x509_crt_parse (&srvcert, NetSecurity_ServerCert,
+                                            NetSecurity_ServerCert_Len);
+  }
+  else {
+    ret = mbedtls_x509_crt_parse (&srvcert, buf, buf_len);
+    netTLS_ReleaseMemory (buf);
+  }
   if (ret != 0) {
     /* Server certificate parse failed */
     return (ret);
   }
 
-  ret = mbedtls_x509_crt_parse (&srvcert, NetSecurity_ServerCA,
-                                          NetSecurity_ServerCA_Len);
+  buf = netTLS_GetServerCA (&buf_len);
+  if (buf == NULL) {
+    ret = mbedtls_x509_crt_parse (&srvcert, NetSecurity_ServerCA,
+                                            NetSecurity_ServerCA_Len);
+  }
+  else {
+    ret = mbedtls_x509_crt_parse (&srvcert, buf, buf_len);
+    netTLS_ReleaseMemory (buf);
+  }
   if (ret != 0) {
     /* Server CA certificate(s) parse failed */
     return (ret);
   }
 
-  ret = mbedtls_pk_parse_key (&pkey_srv,  NetSecurity_ServerKey,
-                                          NetSecurity_ServerKey_Len,
-                                          NULL, 0,
-                                          mbedtls_ctr_drbg_random,
-                                          &ctr_drbg);
+  buf = netTLS_GetServerKey (&buf_len);
+  if (buf == NULL) {
+    ret = mbedtls_pk_parse_key (&pkey_srv,  NetSecurity_ServerKey,
+                                            NetSecurity_ServerKey_Len,
+                                            NULL, 0,
+                                            mbedtls_ctr_drbg_random,
+                                            &ctr_drbg);
+  }
+  else {
+    ret = mbedtls_pk_parse_key (&pkey_srv,  buf, buf_len,
+                                            NULL, 0,
+                                            mbedtls_ctr_drbg_random,
+                                            &ctr_drbg);
+    netTLS_ReleaseMemory (buf);
+  }
   if (ret != 0) {
     /* Server key parse failed */
     return (ret);
@@ -415,8 +437,15 @@ static int32_t tls_init (void) {
 
 #ifdef __TLS_CLIENT_CA
   /* No user verification for the client mode */
-  ret = mbedtls_x509_crt_parse (&cacert,  NetSecurity_EmailServerCA,
-                                          NetSecurity_EmailServerCA_Len);
+  buf = netTLS_GetEmailServerCA (&buf_len);
+  if (buf == NULL) {
+    ret = mbedtls_x509_crt_parse (&cacert,  NetSecurity_EmailServerCA,
+                                            NetSecurity_EmailServerCA_Len);
+  }
+  else {
+    ret = mbedtls_x509_crt_parse (&cacert,  buf, buf_len);
+    netTLS_ReleaseMemory (buf);
+  }
   if (ret != 0) {
     /* Trusted CA certificate parse failed */
     return (ret);
@@ -889,4 +918,52 @@ static void free_tx_buf (TLS_INFO *tls_s) {
     net_mem_free ((NET_FRAME *)tls_s->t_buf);
     tls_s->t_buf = NULL;
   }
+}
+
+/* Library default functions for updating credentials */
+/* Implement the function that you need as non-weak.  */
+
+/**
+  \brief       Get Server CA certificate.
+  \param[out]  len  returned certificate length.
+  \return      pointer to certificate content.
+*/
+__WEAK const uint8_t *netTLS_GetServerCA (size_t *len) {
+  (void)len; return (NULL);
+}
+
+/**
+  \brief       Get Server certificate.
+  \param[out]  len  returned certificate length.
+  \return      pointer to certificate content.
+*/
+__WEAK const uint8_t *netTLS_GetServerCert (size_t *len) {
+  (void)len; return (NULL);
+}
+
+/**
+  \brief       Get Server key.
+  \param[out]  len  returned key length.
+  \return      pointer to key content.
+*/
+__WEAK const uint8_t *netTLS_GetServerKey (size_t *len) {
+  (void)len; return (NULL);
+}
+
+/**
+  \brief       Get Email Server CA certificate.
+  \param[out]  len  returned certificate length.
+  \return      pointer to certificate content.
+*/
+__WEAK const uint8_t *netTLS_GetEmailServerCA (size_t *len) {
+  (void)len; return (NULL);
+}
+
+/**
+  \brief       Release memory if allocated in netTLS_Get function.
+  \param[in]   buf  memory to release.
+  \return      none.
+*/
+__WEAK void netTLS_ReleaseMemory (const uint8_t *buf) {
+  (void)buf;
 }

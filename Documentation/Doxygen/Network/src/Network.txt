@@ -109,6 +109,7 @@ This user's guide contains the following chapters:
         - removed support for legacy Arm Compiler 5
         - removed support for CMSIS-RTOS version 1
         - removed legacy API interface version 6
+        - added option for updating mbedTLS certificates at runtime
         - added IPv6 Multicasting with MLD, Multicast Listener Discovery Protocol
       </td>
     </tr>
