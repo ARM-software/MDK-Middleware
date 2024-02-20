@@ -420,28 +420,8 @@
   </requirements>
 
   <conditions>
-    <condition id="Cortex-M Device">
-      <description>Cortex-M processor based device: Cortex-M0/M0+/M1/M3/M4/M7/M23/M33/M35P/M55/M85, ARMV8MBL/ML, Star-MC1, SC000/300</description>
-      <accept Dcore="Cortex-M0"/>
-      <accept Dcore="Cortex-M0+"/>
-      <accept Dcore="Cortex-M1"/>
-      <accept Dcore="Cortex-M3"/>
-      <accept Dcore="Cortex-M4"/>
-      <accept Dcore="Cortex-M7"/>
-      <accept Dcore="Cortex-M23"/>
-      <accept Dcore="Cortex-M33"/>
-      <accept Dcore="Cortex-M35P"/>
-      <accept Dcore="Cortex-M55"/>
-      <accept Dcore="Cortex-M85"/>
-      <accept Dcore="ARMV8MBL"/>
-      <accept Dcore="ARMV8MML"/>
-      <accept Dcore="Star-MC1"/>
-      <accept Dcore="SC000"/>
-      <accept Dcore="SC300"/>
-    </condition>
     <condition id="CMSIS Core">
-      <description>CMSIS Core for Cortex-M</description>
-      <require condition="Cortex-M Device"/>
+      <description>CMSIS Core</description>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
     <condition id="CMSIS RTOS">
