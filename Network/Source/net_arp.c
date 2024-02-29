@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_arp.c
  * Purpose: Address Resolution for Ethernet
@@ -630,7 +630,7 @@ NET_ARP_INFO *net_arp_cache_find (NET_IF_CFG *net_if, const uint8_t *ip4_addr) {
 */
 netStatus netARP_CacheIP (uint32_t if_id,
                           const uint8_t *ip4_addr, netARP_CacheType type) {
-  NET_IF_CFG   *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG   *net_if = net_if_map_lan (if_id);
   NET_ARP_CFG  *h;
   NET_ARP_INFO *arp_t;
   uint8_t ctype = (type == netARP_CacheFixedIP) ? ARP_TYPE_FIXED_IP : ARP_TYPE_TEMP_IP;
@@ -679,7 +679,7 @@ netStatus netARP_CacheIP (uint32_t if_id,
   \return      status code as defined with netStatus.
 */
 netStatus netARP_CacheMAC (uint32_t if_id, const uint8_t *mac_addr) {
-  NET_IF_CFG   *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG   *net_if = net_if_map_lan (if_id);
   NET_ARP_CFG  *h;
   NET_ARP_INFO *arp_t;
   uint32_t i;
@@ -752,7 +752,7 @@ netStatus netARP_CacheMAC (uint32_t if_id, const uint8_t *mac_addr) {
 */
 netStatus netARP_GetIP (uint32_t if_id,
                         const uint8_t *mac_addr, uint8_t *ip4_addr) {
-  NET_IF_CFG   *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG   *net_if = net_if_map_lan (if_id);
   NET_ARP_CFG  *h;
   const uint8_t *sp;
 
@@ -792,7 +792,7 @@ netStatus netARP_GetIP (uint32_t if_id,
 */
 netStatus netARP_GetMAC (uint32_t if_id,
                          const uint8_t *ip4_addr, uint8_t *mac_addr) {
-  NET_IF_CFG   *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG   *net_if = net_if_map_lan (if_id);
   NET_ARP_CFG  *h;
   const uint8_t *sp;
 
@@ -832,7 +832,7 @@ netStatus netARP_GetMAC (uint32_t if_id,
 */
 netStatus netARP_Probe (uint32_t if_id,
                         const uint8_t *ip4_addr, netARP_cb_t cb_func) {
-  NET_IF_CFG  *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG  *net_if = net_if_map_lan (if_id);
   NET_ARP_CFG *h;
 
   START_LOCK (netStatus);
@@ -855,7 +855,7 @@ netStatus netARP_Probe (uint32_t if_id,
   \return      status code as defined with netStatus.
 */
 netStatus netARP_ProbeX (uint32_t if_id, const uint8_t *ip4_addr) {
-  NET_IF_CFG *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG *net_if = net_if_map_lan (if_id);
   NET_ARP_CFG *h;
 
   START_LOCK (netStatus);
@@ -897,7 +897,7 @@ netStatus netARP_ProbeX (uint32_t if_id, const uint8_t *ip4_addr) {
   \return      status code as defined with netStatus.
 */
 netStatus netARP_ClearCache (uint32_t if_id) {
-  NET_IF_CFG *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG *net_if = net_if_map_lan (if_id);
   NET_ARP_CFG *h;
   NET_ARP_INFO *arp_t;
   uint32_t i,cnt;

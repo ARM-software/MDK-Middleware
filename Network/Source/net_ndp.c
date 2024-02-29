@@ -904,7 +904,7 @@ NET_NDP_INFO *net_ndp_cache_find (NET_IF_CFG *net_if, const uint8_t *ip6_addr) {
   \note        If IP address not cached, send Neigbor Discovery.
 */
 netStatus netNDP_CacheIP (uint32_t if_id, const uint8_t *ip6_addr) {
-  NET_IF_CFG  *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG  *net_if = net_if_map_lan (if_id);
   NET_NDP_CFG *h;
   NET_NDP_INFO *ndp_t;
 
@@ -950,7 +950,7 @@ netStatus netNDP_CacheIP (uint32_t if_id, const uint8_t *ip6_addr) {
                This function is not yet implemented!
 */
 netStatus net_ndp_cache_mac (uint32_t if_id, const uint8_t *mac_addr) {
-  NET_IF_CFG  *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG  *net_if = net_if_map_lan (if_id);
   NET_NDP_CFG *h;
   NET_NDP_INFO *ndp_t;
   uint32_t i;
@@ -1002,7 +1002,7 @@ netStatus net_ndp_cache_mac (uint32_t if_id, const uint8_t *mac_addr) {
   \return      status code as defined with netStatus.
 */
 netStatus netNDP_GetIP (uint32_t if_id, const uint8_t *mac_addr, uint8_t *ip6_addr) {
-  NET_IF_CFG  *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG  *net_if = net_if_map_lan (if_id);
   NET_NDP_CFG *h;
   const uint8_t *sp;
 
@@ -1041,7 +1041,7 @@ netStatus netNDP_GetIP (uint32_t if_id, const uint8_t *mac_addr, uint8_t *ip6_ad
   \return      status code as defined with netStatus.
 */
 netStatus netNDP_GetMAC (uint32_t if_id, const uint8_t *ip6_addr, uint8_t *mac_addr) {
-  NET_IF_CFG  *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG  *net_if = net_if_map_lan (if_id);
   NET_NDP_CFG *h;
   const uint8_t *sp;
 
@@ -1080,7 +1080,7 @@ netStatus netNDP_GetMAC (uint32_t if_id, const uint8_t *ip6_addr, uint8_t *mac_a
   \return      status code as defined with netStatus.
 */
 netStatus netNDP_Probe (uint32_t if_id, const uint8_t *ip6_addr, netNDP_cb_t cb_func) {
-  NET_IF_CFG  *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG  *net_if = net_if_map_lan (if_id);
   NET_NDP_CFG *h;
 
   START_LOCK (netStatus);
@@ -1103,7 +1103,7 @@ netStatus netNDP_Probe (uint32_t if_id, const uint8_t *ip6_addr, netNDP_cb_t cb_
   \return      status code as defined with netStatus.
 */
 netStatus netNDP_ProbeX (uint32_t if_id, const uint8_t *ip6_addr) {
-  NET_IF_CFG *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG *net_if = net_if_map_lan (if_id);
   NET_NDP_CFG *h;
 
   START_LOCK (netStatus);
@@ -1145,7 +1145,7 @@ netStatus netNDP_ProbeX (uint32_t if_id, const uint8_t *ip6_addr) {
   \return      status code as defined with netStatus.
 */
 netStatus netNDP_ClearCache (uint32_t if_id) {
-  NET_IF_CFG *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG *net_if = net_if_map_lan (if_id);
   NET_NDP_CFG *h;
   NET_NDP_INFO *ndp_t;
   uint32_t i,cnt;

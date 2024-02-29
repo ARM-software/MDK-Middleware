@@ -120,7 +120,7 @@ void net_dhcp6_client_uninit (void) {
   \return      status code as defined with netStatus.
 */
 __WEAK netStatus netDHCP6_Enable (uint32_t if_id, netDHCP6_Mode mode) {
-  NET_IF_CFG *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG *net_if = net_if_map_lan (if_id);
   NET_DHCP6_CFG *h;
 
   START_LOCK (netStatus);
@@ -152,7 +152,7 @@ __WEAK netStatus netDHCP6_Enable (uint32_t if_id, netDHCP6_Mode mode) {
   \return      status code as defined with netStatus.
 */
 __WEAK netStatus netDHCP6_Disable (uint32_t if_id) {
-  NET_IF_CFG *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG *net_if = net_if_map_lan (if_id);
   NET_DHCP6_CFG *h;
 
   START_LOCK (netStatus);

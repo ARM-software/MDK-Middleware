@@ -112,7 +112,7 @@ void net_dhcp_client_uninit (void) {
   \return      status code as defined with netStatus.
 */
 __WEAK netStatus netDHCP_Enable (uint32_t if_id) {
-  NET_IF_CFG *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG *net_if = net_if_map_lan (if_id);
   NET_DHCP_CFG *h;
 
   START_LOCK (netStatus);
@@ -140,7 +140,7 @@ __WEAK netStatus netDHCP_Enable (uint32_t if_id) {
   \return      status code as defined with netStatus.
 */
 __WEAK netStatus netDHCP_Disable (uint32_t if_id) {
-  NET_IF_CFG *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG *net_if = net_if_map_lan (if_id);
   NET_DHCP_CFG *h;
 
   START_LOCK (netStatus);
@@ -169,7 +169,7 @@ __WEAK netStatus netDHCP_Disable (uint32_t if_id) {
 */
 __WEAK netStatus netDHCP_SetOption (uint32_t if_id, uint8_t option,
                                              const uint8_t *val, uint32_t len) {
-  NET_IF_CFG *net_if = net_if_map_lan (if_id ? if_id : NET_IF_CLASS_ETH);
+  NET_IF_CFG *net_if = net_if_map_lan (if_id);
   NET_DHCP_CFG *h;
   static NET_DHCP_CLID clid_buf;
 
