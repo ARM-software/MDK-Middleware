@@ -82,17 +82,17 @@ var arrurl = [];
  
  arrurl.push( new urlKey( "Component-Viewer-About",         "https://arm-software.github.io/CMSIS-View/latest/cmp_viewer.html#about_cmp_viewerr",              "Component Viewer"));
 
- arrurl.push( new urlKey( "USB-Resource-Req",               "../../USB/html/usb_resource_requirements.html",                     "USB Resource Requirements"));
- arrurl.push( new urlKey( "USBD-MSC-Ex",                    "../../USB/html/dev_msc_tutorial.html",                              "USB Device Mass Storage Example"));
- arrurl.push( new urlKey( "USBH-MSC-Ex",                    "../../USB/html/host_msc_tutorial.html",                             "USB Host Mass Storage Example"));
- arrurl.push( new urlKey( "FTP-Server-Ex",                  "../../Network/html/_f_t_p__server__example.html",                   "FTP Server Example"));
- arrurl.push( new urlKey( "GEN-MDK-Pro",                    "../../General/html/index.html",                                     "MDK-Professional Middleware"));
- arrurl.push( new urlKey( "MW-General",                     "../../General/html/index.html",                                     "MDK-Middleware"));
- arrurl.push( new urlKey( "MW-FileSystem",                  "../../FileSystem/html/index.html",                                  "File System Component"));
+ arrurl.push( new urlKey( "USB-Resource-Req",               "../../html/USB/usb_resource_requirements.html",                     "USB Resource Requirements"));
+ arrurl.push( new urlKey( "USBD-MSC-Ex",                    "../../html/USB/dev_msc_tutorial.html",                              "USB Device Mass Storage Example"));
+ arrurl.push( new urlKey( "USBH-MSC-Ex",                    "../../html/USB/host_msc_tutorial.html",                             "USB Host Mass Storage Example"));
+ arrurl.push( new urlKey( "FTP-Server-Ex",                  "../../html/Network/FTP_Server_Example.html",                        "FTP Server Example"));
+ arrurl.push( new urlKey( "GEN-MDK-Pro",                    "../../html/General/index.html",                                     "MDK-Professional Middleware"));
+ arrurl.push( new urlKey( "MW-General",                     "../../html/General/index.html",                                     "MDK-Middleware"));
+ arrurl.push( new urlKey( "MW-FileSystem",                  "../../html/FileSystem/index.html",                                  "File System Component"));
  arrurl.push( new urlKey( "MW-Graphics",                    "https://www.keil.com/pack/doc/mw/Graphics/html/index.html",         "Graphics Component"));
- arrurl.push( new urlKey( "MW-Network",                     "../../Network/html/index.html",                                     "Network Component"));
- arrurl.push( new urlKey( "MW-USB",                         "../../USB/html/index.html",                                         "USB Component"));
- arrurl.push( new urlKey( "MW-Board",                       "../../Board/html/index.html",                                       "Board Support Component"));
+ arrurl.push( new urlKey( "MW-Network",                     "../../html/Network/index.html",                                     "Network Component"));
+ arrurl.push( new urlKey( "MW-USB",                         "../../html/USB/index.html",                                         "USB Component"));
+ arrurl.push( new urlKey( "MW-Board",                       "../../html/Board/index.html",                                       "Board Support Component"));
 
  arrurl.push( new urlKey( "STM32Cube",                      "https://www.st.com/en/development-tools/stm32cubemx.html",          "STMicroelectronic's STM32CubeMX"));
  arrurl.push( new urlKey( "DAVE",                           "https://softwaretools.infineon.com/tools/com.ifx.tb.tool.daveide",  "Infineon's DAVE"));
@@ -144,7 +144,7 @@ function link_ext2(key, txt)  {
   for ( var i=0; i < arr_length; i++ ) {
     if (arrurl[i].key == key)  {                        // find link in array
        document.write(arrurl[i].ext2 + txt + '</a>');   // show your text and open link in another browser window
-       return;											
+       return;
     }
   }
   key_is_missing(key);

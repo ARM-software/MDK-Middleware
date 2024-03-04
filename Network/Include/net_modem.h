@@ -84,7 +84,6 @@ typedef enum _MODEM_EVENT {
   \brief       Notify the Modem Driver of completion event.
   \param[in]   event        Notification event \ref MODEM_EVENT.
   \param[in]   response     Actual modem response, a null-terminated string.
-  \return      None.
 */
 
 /**
@@ -94,7 +93,6 @@ typedef enum _MODEM_EVENT {
   \param[in]   response     Expected response from modem, or "#" for any response.
   \param[in]   timeout      Response timeout in milliseconds.
   \param[in]   retries      Number of retries.
-  \return      None.
   \note        Any response "#" disables internal processing and delivers modem responses in \ref Modem_Notify.
 */
 

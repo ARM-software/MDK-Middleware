@@ -191,13 +191,11 @@ extern long int ftell(FILE * stream);
 
 /// \brief Move file stream's in-file pointer to beginning of file.
 /// \param  stream File pointer specifying the data stream.
-/// \return no vlaue.
 extern void rewind(FILE * stream);
 
 
 /// \brief Clear end-of-file and error indicators.
 /// \param  stream File pointer specifying the data stream.
-/// \return no value.
 extern void clearerr(FILE * stream);
 
 /// \brief Report whether end of stream has been reached.

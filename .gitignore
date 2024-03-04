@@ -1,3 +1,11 @@
-# list files that shall be ignored by git
+# List files that shall be ignored by git
+
+# Documentation build files
+/Documentation/html/
+/Documentation/Doxygen/**/*.dxy
+/Documentation/Doxygen/USB/src/template/
+/Documentation/Doxygen/linkchecker-out.csv
+
+# Pack build files
 /build/
 /output/

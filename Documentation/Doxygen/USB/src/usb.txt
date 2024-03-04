@@ -857,7 +857,7 @@ The USB Device component uses the following event IDs:
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page USB_Host USB Host (MDK-Professional only)
+\page USB_Host USB Host
 
 This chapter describes the software structure of the USB Host Component and explains its use for creating a USB Host
 application. This software component is available to users of MDK-Professional only.

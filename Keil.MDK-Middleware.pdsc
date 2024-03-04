@@ -701,7 +701,7 @@
     <!-- Network (MDK) -->
     <bundle Cbundle="MDK" Cclass="Network" Cversion="8.0.0">
       <description>IPv4/IPv6 Networking using Ethernet or Serial protocols</description>
-      <doc>Documentation/Network/html/index.html</doc>
+      <doc>Documentation/html/Network/index.html</doc>
       <component Cgroup="CORE" Cvariant="IPv4/IPv6 Release" isDefaultVariant="true" condition="CMSIS Core with RTOS">
         <description>IPv4/IPv6 Networking Core for Cortex-M (Release)</description>
         <RTE_Components_h>
@@ -911,7 +911,7 @@
           #define RTE_Network_Interface_ETH_%Instance%     /* Network Interface ETH %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_e_t_h___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netETH__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_ETH.h" attr="config" version="7.5.0"/>
           <!-- Library source files -->
           <file category="source" name="Network/Source/net_eth.c"/>
@@ -931,7 +931,7 @@
           #define RTE_Network_Interface_WiFi_%Instance%    /* Network Interface WiFi %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_wi_fi___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netWiFi__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_WiFi.h" attr="config" version="7.3.0"/>
           <!-- Library source files -->
           <file category="source" name="Network/Source/net_wifi.c"/>
@@ -951,7 +951,7 @@
           #define RTE_Network_Interface_PPP       /* Network Interface PPP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_p_p_p___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netPPP__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_PPP.h" attr="config" version="7.2.0"/>
           <file category="source" name="Network/Driver/Modem_Standard.c"/>
           <!-- Library source files -->
@@ -971,7 +971,7 @@
           #define RTE_Network_Interface_PPP       /* Network Interface PPP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_p_p_p___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netPPP__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_PPP.h" attr="config" version="7.2.0"/>
           <file category="source" name="Network/Driver/Modem_Null.c"/>
           <!-- Library source files -->
@@ -991,7 +991,7 @@
           #define RTE_Network_Interface_PPP       /* Network Interface PPP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_p_p_p___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netPPP__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_PPP.h" attr="config" version="7.2.0"/>
           <!-- Library source files -->
           <file category="source" name="Network/Source/net_ppp.c"/>
@@ -1010,7 +1010,7 @@
           #define RTE_Network_Interface_SLIP      /* Network Interface SLIP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_s_l_i_p___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netSLIP__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_SLIP.h" attr="config" version="7.2.0"/>
           <file category="source" name="Network/Driver/Modem_Standard.c"/>
           <!-- Library source files -->
@@ -1026,7 +1026,7 @@
           #define RTE_Network_Interface_SLIP      /* Network Interface SLIP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_s_l_i_p___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netSLIP__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_SLIP.h" attr="config" version="7.2.0"/>
           <file category="source" name="Network/Driver/Modem_Null.c"/>
           <!-- Library source files -->
@@ -1042,7 +1042,7 @@
           #define RTE_Network_Interface_SLIP      /* Network Interface SLIP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_s_l_i_p___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netSLIP__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_SLIP.h" attr="config" version="7.2.0"/>
           <!-- Library source files -->
           <file category="source" name="Network/Source/net_slip.c"/>
@@ -1057,7 +1057,7 @@
           #define RTE_Network_Socket_UDP          /* Network Socket UDP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_u_d_p___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netUDP__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_UDP.h" attr="config" version="5.1.0"/>
           <file category="source" name="Network/Template/UDP_Socket.c" attr="template" select="UDP Socket"/>
           <!-- Library source files -->
@@ -1071,7 +1071,7 @@
           #define RTE_Network_Socket_TCP          /* Network Socket TCP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_t_c_p___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netTCP__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_TCP.h" attr="config" version="7.1.1"/>
           <file category="source" name="Network/Template/TCP_Socket_Server.c" attr="template" select="TCP Socket Server"/>
           <file category="source" name="Network/Template/TCP_Socket_Client.c" attr="template" select="TCP Socket Client"/>
@@ -1086,7 +1086,7 @@
           #define RTE_Network_Socket_BSD          /* Network Socket BSD */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_b_s_d___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netBSD__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_BSD.h" attr="config" version="5.0.0"/>
           <!-- Library source files -->
           <file category="source" name="Network/Source/net_bsd.c"/>
@@ -1100,7 +1100,7 @@
           #define RTE_Network_Web_Server_RO       /* Network Web Server with Read-only Web Resources */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_h_t_t_p___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netHTTP__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
           <file category="source" name="Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
           <file category="source" name="Network/Template/HTTP_Server_Access.c" attr="template" select="HTTP Server Access"/>
@@ -1121,7 +1121,7 @@
           #define RTE_Network_Web_Server_RO_TLS   /* Network Web Server with Read-only Web Resources and TLS */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_h_t_t_p___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netHTTP__Func.html"/>
           <file category="other"  name="Network/Tool/Net_Security.bat" attr="copy"/>
           <file category="source" name="Network/Config/Net_Security.c" attr="config" version="7.2.0"/>
           <file category="header" name="Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
@@ -1144,7 +1144,7 @@
           #define RTE_Network_Web_Server_FS       /* Network Web Server with Web Resources on File System */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_h_t_t_p___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netHTTP__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
           <file category="source" name="Network/Interface/HTTP_Server_FS.c"/>
           <file category="source" name="Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
@@ -1166,7 +1166,7 @@
           #define RTE_Network_Web_Server_FS_TLS   /* Network Web Server with Web Resources on File System and TLS */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_h_t_t_p___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netHTTP__Func.html"/>
           <file category="other"  name="Network/Tool/Net_Security.bat" attr="copy"/>
           <file category="source" name="Network/Config/Net_Security.c" attr="config" version="7.2.0"/>
           <file category="header" name="Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
@@ -1190,7 +1190,7 @@
           #define RTE_Network_Telnet_Server       /* Network Telnet Server */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_t_e_l_n_e_t___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netTELNET__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_Telnet_Server.h" attr="config" version="7.0.1"/>
           <file category="source" name="Network/Template/Telnet_Server_UIF.c" attr="template" select="Telnet Server"/>
           <file category="source" name="Network/Template/Telnet_Server_Access.c" attr="template" select="Telnet Server Access"/>
@@ -1206,7 +1206,7 @@
           #define RTE_Network_TFTP_Server         /* Network TFTP Server */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_t_f_t_ps___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netTFTPc__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_TFTP_Server.h" attr="config" version="7.0.0"/>
           <file category="source" name="Network/Interface/TFTP_Server_FS.c"/>
           <file category="source" name="Network/Template/TFTP_Server_Access.c" attr="template" select="TFTP Server Access"/>
@@ -1221,7 +1221,7 @@
           #define RTE_Network_TFTP_Client         /* Network TFTP Client */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_t_f_t_pc___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netTFTPc__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_TFTP_Client.h" attr="config" version="5.0.0"/>
           <file category="source" name="Network/Interface/TFTP_Client_FS.c"/>
           <file category="source" name="Network/Template/TFTP_Client_UIF.c" attr="template" select="TFTP Client"/>
@@ -1236,7 +1236,7 @@
           #define RTE_Network_FTP_Server          /* Network FTP Server */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_f_t_ps___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netFTPs__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_FTP_Server.h" attr="config" version="7.0.0"/>
           <file category="source" name="Network/Interface/FTP_Server_FS.c"/>
           <file category="source" name="Network/Template/FTP_Server_Event.c" attr="template" select="FTP Server Notification Events"/>
@@ -1253,7 +1253,7 @@
           #define RTE_Network_FTP_Client          /* Network FTP Client */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_f_t_pc___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netFTPc__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_FTP_Client.h" attr="config" version="5.0.0"/>
           <file category="source" name="Network/Interface/FTP_Client_FS.c"/>
           <file category="source" name="Network/Template/FTP_Client_UIF.c" attr="template" select="FTP Client"/>
@@ -1268,7 +1268,7 @@
           #define RTE_Network_DNS_Client          /* Network DNS Client */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_d_n_sc___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netDNSc__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_DNS_Client.h" attr="config" version="5.0.0"/>
           <file category="source" name="Network/Template/DNS_Client.c" attr="template" select="DNS Client"/>
           <!-- Library source files -->
@@ -1282,7 +1282,7 @@
           #define RTE_Network_SMTP_Client         /* Network SMTP Client */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_s_m_t_pc___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netSMTPc__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_SMTP_Client.h" attr="config" version="5.1.0"/>
           <file category="source" name="Network/Interface/SMTP_Client_FS.c"/>
           <file category="source" name="Network/Template/SMTP_Client_UIF.c" attr="template" select="SMTP Client"/>
@@ -1300,7 +1300,7 @@
           #define RTE_Network_SMTP_Client_TLS     /* Network SMTP Client and TLS */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_s_m_t_pc___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netSMTPc__Func.html"/>
           <file category="source" name="Network/Config/Net_Security.c" attr="config" version="7.2.0"/>
           <file category="header" name="Network/Config/Net_Config_SMTP_Client.h" attr="config" version="5.1.0"/>
           <file category="source" name="Network/Interface/SMTP_Client_FS.c"/>
@@ -1319,7 +1319,7 @@
           #define RTE_Network_SNMP_Agent          /* Network SNMP Agent */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_s_n_m_p___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netSNMP__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_SNMP_Agent.h" attr="config" version="7.0.0"/>
           <file category="source" name="Network/Template/SNMP_Agent_MIB.c" attr="template" select="SNMP Agent"/>
           <!-- Library source files -->
@@ -1333,7 +1333,7 @@
           #define RTE_Network_SNTP_Client         /* Network SNTP Client */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/Network/html/group__net_s_n_t_pc___func.html"/>
+          <file category="doc" name="Documentation/html/Network/group__netSNTPc__Func.html"/>
           <file category="header" name="Network/Config/Net_Config_SNTP_Client.h" attr="config" version="7.0.0"/>
           <!-- Library source files -->
           <file category="source" name="Network/Source/net_sntp_client.c"  condition="Network DNS"/>
@@ -1345,7 +1345,7 @@
     <!-- File System (MDK) -->
     <bundle Cbundle="MDK" Cclass="File System" Cversion="8.0.0">
       <description>File Access on various storage devices</description>
-      <doc>Documentation/FileSystem/html/index.html</doc>
+      <doc>Documentation/html/FileSystem/index.html</doc>
       <component Cgroup="CORE" Cvariant="LFN" isDefaultVariant="true" condition="CMSIS Core with RTOS and File System I/O">
         <description>File System with Long Filename support for Cortex-M (Release)</description>
         <RTE_Components_h>
@@ -1455,7 +1455,7 @@
           #define RTE_FileSystem_Drive_RAM_%Instance%      /* File System RAM Drive %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/FileSystem/html/fs_create_app.html#ram_usage"/>
+          <file category="doc" name="Documentation/html/FileSystem/fs_create_app.html#ram_usage"/>
           <file category="header" name="FileSystem/Config/FS_Config_RAM.h" attr="config" version="6.2.0"/>
           <!-- Library source files -->
           <file category="source" name="FileSystem/Source/fs_ram_drv.c"/>
@@ -1468,7 +1468,7 @@
           #define RTE_FileSystem_Drive_NOR_%Instance%      /* File System NOR Flash Drive %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/FileSystem/html/fs_create_app.html#nor_usage"/>
+          <file category="doc" name="Documentation/html/FileSystem/fs_create_app.html#nor_usage"/>
           <file category="header" name="FileSystem/Config/FS_Config_NOR.h" attr="config" version="6.2.0"/>
           <!-- Library source files -->
           <file category="source" name="FileSystem/Source/fs_nor_media.c"/>
@@ -1481,7 +1481,7 @@
           #define RTE_FileSystem_Drive_NAND_%Instance%     /* File System NAND Flash Drive %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/FileSystem/html/fs_create_app.html#nand_usage"/>
+          <file category="doc" name="Documentation/html/FileSystem/fs_create_app.html#nand_usage"/>
           <file category="header" name="FileSystem/Config/FS_Config_NAND.h" attr="config" version="6.3.0"/>
           <!-- Library source files -->
           <file category="source" name="FileSystem/Source/fs_nand_media.c"/>
@@ -1495,7 +1495,7 @@
           #define RTE_FileSystem_Drive_MC_%Instance%       /* File System Memory Card Drive %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/FileSystem/html/fs_create_app.html#mc_usage"/>
+          <file category="doc" name="Documentation/html/FileSystem/fs_create_app.html#mc_usage"/>
           <file category="header" name="FileSystem/Config/FS_Config_MC.h" attr="config" version="6.2.0"/>
           <!-- Library source files -->
           <file category="source" name="FileSystem/Source/fs_mc_mci.c"/>
@@ -1509,7 +1509,7 @@
           #define RTE_FileSystem_Drive_USB_%Instance%      /* File System USB Drive %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/FileSystem/html/fs_create_app.html#usb_usage"/>
+          <file category="doc" name="Documentation/html/FileSystem/fs_create_app.html#usb_usage"/>
           <file category="header" name="FileSystem/Config/FS_Config_USB.h" attr="config" version="6.2.0"/>
         </files>
       </component>
@@ -1518,7 +1518,7 @@
     <!-- USB (MDK) -->
     <bundle Cbundle="MDK" Cclass="USB" Cversion="6.17.0">
       <description>USB Communication with various device classes</description>
-      <doc>Documentation/USB/html/index.html</doc>
+      <doc>Documentation/html/USB/index.html</doc>
       <component Cgroup="CORE" Cvariant="Release" isDefaultVariant="true" condition="CMSIS Core with RTOS">
         <description>USB Core for Cortex-M (Release)</description>
         <RTE_Components_h>
@@ -1557,7 +1557,7 @@
           #define RTE_USB_Host_%Instance%                  /* USB Host %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/USB/html/_u_s_b__host.html"/>
+          <file category="doc"    name="Documentation/html/USB/USB_Host.html"/>
           <file category="source" name="USB/Config/USBH_Config.c" attr="config" version="5.3.0"/>
           <!-- Library source files -->
           <file category="source" name="USB/Source/usbh_lib_core.c"/>
@@ -1574,7 +1574,7 @@
           #define RTE_USB_Host_HID                /* USB Host HID */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/USB/html/_h_i_d.html"/>
+          <file category="doc"    name="Documentation/html/USB/HID.html"/>
           <file category="header" name="USB/Config/USBH_Config_HID.h" attr="config" version="5.1.0"/>
           <!-- Library source files -->
           <file category="source" name="USB/Source/usbh_lib_hid.c"/>
@@ -1588,7 +1588,7 @@
           #define RTE_USB_Host_MSC                /* USB Host MSC */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/USB/html/_m_s_c.html"/>
+          <file category="doc"    name="Documentation/html/USB/MSC.html"/>
           <file category="header" name="USB/Config/USBH_Config_MSC.h" attr="config"   version="5.0.0"/>
           <file category="source" name="USB/Template/USBH_MSC.c"      attr="template" select="USB Host Mass Storage Access"/>
           <file category="source" name="USB/Template/USBH_MSC.h"      attr="template" select="USB Host Mass Storage Access"/>
@@ -1603,7 +1603,7 @@
           #define RTE_USB_Host_CDC                /* USB Host CDC */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/USB/html/_c_d_c.html"/>
+          <file category="doc"    name="Documentation/html/USB/CDC.html"/>
           <file category="header" name="USB/Config/USBH_Config_CDC.h" attr="config" version="5.0.0"/>
           <!-- Library source files -->
           <file category="source" name="USB/Source/usbh_lib_cdc.c"/>
@@ -1616,7 +1616,7 @@
           #define RTE_USB_Host_CustomClass        /* USB Host Custom Class */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/USB/html/_custom_class.html"/>
+          <file category="doc"    name="Documentation/html/USB/CustomClass.html"/>
           <file category="header" name="USB/Config/USBH_Config_CustomClass.h" attr="config"   version="5.0.0"/>
           <file category="source" name="USB/Template/USBH_User_CustomClass.c" attr="template" select="USB Host Generic Custom Class"/>
           <file category="source" name="USB/Template/USBH_PL2303.c"           attr="template" select="USB Host Prolific PL2303"/>
@@ -1629,7 +1629,7 @@
           #define RTE_USB_Device_%Instance%                /* USB Device %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/USB/html/_u_s_b__device.html"/>
+          <file category="doc"    name="Documentation/html/USB/USB_Device.html"/>
           <file category="source" name="USB/Config/USBD_Config.c"               attr="config"   version="5.3.0"/>
           <file category="source" name="USB/Template/USBD_User_Device.c"        attr="template" select="USB Device"/>
           <file category="source" name="USB/Template/USBD_User_Device_SerNum.c" attr="template" select="USB Device Serial Number"/>
@@ -1646,7 +1646,7 @@
           #define RTE_USB_Device_HID_%Instance%            /* USB Device HID instance %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/USB/html/_h_i_d.html"/>
+          <file category="doc"    name="Documentation/html/USB/HID.html"/>
           <file category="header" name="USB/Config/USBD_Config_HID.h"       attr="config"   version="5.1.0"/>
           <file category="source" name="USB/Template/USBD_User_HID.c"       attr="template" select="USB Device HID (Human Interface Device)"/>
           <file category="source" name="USB/Template/USBD_User_HID_Mouse.c" attr="template" select="USB Device HID Mouse"/>
@@ -1662,7 +1662,7 @@
           #define RTE_USB_Device_MSC_%Instance%            /* USB Device MSC instance %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/USB/html/_m_s_c.html"/>
+          <file category="doc"    name="Documentation/html/USB/MSC.html"/>
           <file category="header" name="USB/Config/USBD_Config_MSC.h"     attr="config"   version="5.2.0"/>
           <file category="source" name="USB/Template/USBD_User_MSC.c"     attr="template" select="USB Device MSC (Mass Storage Class)"/>
           <file category="source" name="USB/Template/USBD_User_MSC_LUN.c" attr="template" select="USB Device MSC multiple Logical Units (Mass Storage Class)"/>
@@ -1680,7 +1680,7 @@
           #define RTE_USB_Device_CDC_%Instance%            /* USB Device CDC instance %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/USB/html/_c_d_c.html"/>
+          <file category="doc"    name="Documentation/html/USB/CDC.html"/>
           <file category="header" name="USB/Config/USBD_Config_CDC.h"                attr="config"   version="5.3.0"/>
           <file category="source" name="USB/Template/USBD_User_CDC_ACM.c"            attr="template" select="USB Device CDC ACM (Abstract Control Model)"/>
           <file category="source" name="USB/Template/USBD_User_CDC_ACM_RNDIS_ETH.c"  attr="template" select="USB Device CDC ACM RNDIS and Ethernet Bridge"/>
@@ -1700,7 +1700,7 @@
           #define RTE_USB_Device_ADC_%Instance%            /* USB Device ADC instance %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/USB/html/_a_d_c.html"/>
+          <file category="doc"    name="Documentation/html/USB/ADC.html"/>
           <file category="header" name="USB/Config/USBD_Config_ADC.h"       attr="config"   version="5.3.0"/>
           <file category="source" name="USB/Template/USBD_User_ADC_Audio.c" attr="template" select="USB Device ADC (Audio Interface)"/>
           <!-- Library source files -->
@@ -1715,7 +1715,7 @@
           #define RTE_USB_Device_CustomClass_%Instance%    /* USB Device Custom Class instance %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/USB/html/_custom_class.html"/>
+          <file category="doc"    name="Documentation/html/USB/CustomClass.html"/>
           <file category="header" name="USB/Config/USBD_Config_CustomClass.h" attr="config"   version="5.3.0"/>
           <file category="source" name="USB/Template/USBD_User_CustomClass.c" attr="template" select="USB Device Custom Class"/>
           <!-- Library source files -->

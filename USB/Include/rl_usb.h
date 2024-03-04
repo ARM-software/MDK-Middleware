@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    rl_usb.h
  * Purpose: USB User API
@@ -27,20 +27,17 @@ extern "C"  {
 #include "usb_ms.h"
 
 
-///  ==== USB Constants and Defines ====
+//  ==== USB Constants and Defines ====
 
 /// Status code values returned by USB library functions.
 typedef enum {
   usbOK                       =    0U,  ///< Function completed with no error
-
   usbTimeout,                           ///< Function completed; time-out occurred
   usbInvalidParameter,                  ///< Invalid Parameter error: a mandatory parameter was missing or specified an incorrect object
-
   usbThreadError              = 0x10U,  ///< CMSIS-RTOS Thread creation/termination failed
   usbTimerError,                        ///< CMSIS-RTOS Timer creation/deletion failed
   usbSemaphoreError,                    ///< CMSIS-RTOS Semaphore creation failed
   usbMutexError,                        ///< CMSIS-RTOS Mutex creation failed
-
   usbControllerError          = 0x20U,  ///< Controller does not exist
   usbDeviceError,                       ///< Device does not exist
   usbDriverError,                       ///< Driver function produced error
@@ -53,10 +50,8 @@ typedef enum {
   usbClassErrorMSC,                     ///< Mass Storage Device (MSC) error (no device or device produced error)
   usbClassErrorCustom,                  ///< Custom device Class (Class) error (no device or device produced error)
   usbUnsupportedClass,                  ///< Unsupported Class
-
   usbTransferStall            = 0x40U,  ///< Transfer handshake was stall
   usbTransferError,                     ///< Transfer error or transfer aborted
-
   usbUnknownError             = 0xFFU   ///< Unspecified USB error
 } usbStatus;
 
@@ -219,49 +214,39 @@ extern usbStatus USBD_SetSerialNumber (uint8_t device, const char *string);
 // generic prefix USBD_Devicen is USBD_Device0 for Device instance 0.
 
 /// \brief Callback function called during \ref USBD_Initialize to initialize the USB Device
-/// \return                             none.
 void USBD_Devicen_Initialize (void);
  
 /// \brief Callback function called during \ref USBD_Uninitialize to de-initialize the USB Device
-/// \return                             none.
 void USBD_Devicen_Uninitialize (void);
  
 /// \brief Callback function called when VBUS level changes
 /// \param[in]     level                current VBUS level :
 ///                                       - value true :  VBUS level is high
 ///                                       - value false : VBUS level is low
-/// \return                             none.
 void USBD_Devicen_VbusChanged (bool level);
  
 /// \brief Callback function called upon USB Bus Reset signaling
-/// \return                             none.
 void USBD_Devicen_Reset (void);
  
 /// \brief Callback function called when USB Bus speed has changed to high-speed
-/// \return                             none.
 void USBD_Devicen_HighSpeedActivated (void);
 
 /// \brief Callback function called when USB Bus goes into suspend mode (no bus activity for 3 ms)
-/// \return                             none.
 void USBD_Devicen_Suspended (void);
 
 /// \brief Callback function called when USB Bus activity has resumed
-/// \return                             none.
 void USBD_Devicen_Resumed (void);
 
 /// \brief Callback function called when Device configuration has changed
 /// \param[in]     val                  current configuration value :
 ///                                       - value 0 :   not configured
 ///                                       - value > 0 : active configuration
-/// \return                             none.
 void USBD_Devicen_ConfigurationChanged (uint8_t val);
 
 /// \brief Callback function called when Set Feature for Remote Wakeup was requested over Control Endpoint 0
-/// \return                             none.
 void USBD_Devicen_EnableRemoteWakeup (void);
 
 /// \brief Callback function called when Clear Feature for Remote Wakeup was requested over Control Endpoint 0
-/// \return                             none.
 void USBD_Devicen_DisableRemoteWakeup (void);
  
 /// \brief Callback function called when Device received SETUP PACKET on Control Endpoint 0
@@ -276,7 +261,6 @@ usbdRequestStatus USBD_Devicen_Endpoint0_SetupPacketReceived (const USB_SETUP_PA
 
 /// \brief Callback function called when SETUP PACKET was processed by USB library
 /// \param[in]     setup_packet         pointer to processed setup packet.
-/// \return                             none.
 void USBD_Devicen_Endpoint0_SetupPacketProcessed (const USB_SETUP_PACKET *setup_packet);
 
 /// \brief Callback function called when Device received OUT DATA on Control Endpoint 0
@@ -307,19 +291,15 @@ usbdRequestStatus USBD_Devicen_Endpoint0_InDataSent (uint32_t len);
 // generic prefix USBD_ADCn is USBD_ADC0 for ADC class instance 0.
 
 /// \brief Callback function called during \ref USBD_Initialize to initialize the USB ADC class instance
-/// \return                             none.
 void USBD_ADCn_Initialize (void);
 
 /// \brief Callback function called during \ref USBD_Uninitialize to de-initialize the USB ADC class instance
-/// \return                             none.
 void USBD_ADCn_Uninitialize (void);
 
 /// \brief Callback function called when play started
-/// \return                             none.
 void USBD_ADCn_PlayStart (void);
 
 /// \brief Callback function called when play stopped
-/// \return                             none.
 void USBD_ADCn_PlayStop (void);
 
 /// \brief Callback function called when speaker mute setting changed
@@ -330,7 +310,6 @@ void USBD_ADCn_PlayStop (void);
 /// \param[in]     on                   current mute setting :
 ///                                       - value false : mute off
 ///                                       - value true :  mute on
-/// \return                             none.
 void USBD_ADCn_SetSpeakerMute (uint8_t ch, bool on);
 
 /// \brief Callback function called when speaker volume setting changed
@@ -339,15 +318,12 @@ void USBD_ADCn_SetSpeakerMute (uint8_t ch, bool on);
 ///                                       - value 1 : left speaker (in stereo mode)
 ///                                       - value 2 : right speaker (in stereo mode)
 /// \param[in]     vol                  current volume setting.
-/// \return                             none.
 void USBD_ADCn_SetSpeakerVolume (uint8_t ch, uint16_t vol);
 
 /// \brief Callback function called when recording started
-/// \return                             none.
 void USBD_ADCn_RecordStart (void);
 
 /// \brief Callback function called when recording stopped
-/// \return                             none.
 void USBD_ADCn_RecordStop (void);
 
 /// \brief Callback function called when microphone mute setting changed
@@ -358,7 +334,6 @@ void USBD_ADCn_RecordStop (void);
 /// \param[in]     on                   current mute setting
 ///                                       - value false : mute off
 ///                                       - value true :  mute on
-/// \return                             none.
 void USBD_ADCn_SetMicrophoneMute (uint8_t ch, bool on);
 
 /// \brief Callback function called when microphone volume setting changed
@@ -367,11 +342,9 @@ void USBD_ADCn_SetMicrophoneMute (uint8_t ch, bool on);
 ///                                       - value 1 : left microphone (in stereo mode)
 ///                                       - value 2 : right microphone (in stereo mode)
 /// \param[in]     vol                  current volume setting.
-/// \return                             none.
 void USBD_ADCn_SetMicrophoneVolume (uint8_t ch, uint16_t vol);
 
 /// \brief Callback function called when data in USB buffer for speaker samples reaches half-full from empty
-/// \return                             none.
 void USBD_ADCn_ReceivedSamples (void);
 
 #endif // __DOXYGEN
@@ -443,15 +416,12 @@ extern int32_t USBD_ADC_WriteSamples (uint8_t instance, const void *buf, int32_t
 // generic prefix USBD_CDCn is USBD_CDC0 for CDC class instance 0.
 
 /// \brief Callback function called during \ref USBD_Initialize to initialize the USB CDC class instance (ACM)
-/// \return                             none.
 void USBD_CDCn_ACM_Initialize (void);
 
 /// \brief Callback function called during \ref USBD_Uninitialize to de-initialize the USB CDC class instance (ACM)
-/// \return                             none.
 void USBD_CDCn_ACM_Uninitialize (void);
 
 /// \brief Callback function called upon USB Bus Reset signaling
-/// \return                             none.
 void USBD_CDCn_ACM_Reset (void);
 
 /// \brief Callback function called upon reception of request send encapsulated command sent by the USB Host.
@@ -496,31 +466,24 @@ bool USBD_CDCn_ACM_SetControlLineState (uint16_t state);
 
 /// \brief Callback function called when new data was received
 /// \param[in]     len                  number of bytes available to read.
-/// \return                             none.
 void USBD_CDCn_ACM_DataReceived (uint32_t len);
 
 /// \brief Callback function called when all data was sent
-/// \return                             none.
 void USBD_CDCn_ACM_DataSent (void);
 
 /// \brief Callback function called during USBD_Initialize to initialize the USB CDC class instance (NCM)
-/// \return                             none.
 void USBD_CDCn_NCM_Initialize (void);
 
 /// \brief Callback function called during USBD_Uninitialize to de-initialize the USB CDC class instance (NCM)
-/// \return                             none.
 void USBD_CDCn_NCM_Uninitialize (void);
 
 /// \brief Callback function called upon USB Bus Reset signaling
-/// \return                             none.
 void USBD_CDCn_NCM_Reset (void);
 
 /// \brief Callback function called when USB Host changes data interface from alternate 0 to alternate 1 (activates data interface)
-/// \return                             none.
 void USBD_CDCn_NCM_Start (void);
 
 /// \brief Callback function called when USB Host changes data interface from alternate 1 to alternate 0 (de-activates data interface)
-/// \return                             none.
 void USBD_CDCn_NCM_Stop (void);
 
 /// \brief Callback function called upon USB Host request to set the Ethernet device multicast filters
@@ -645,11 +608,9 @@ bool USBD_CDCn_NCM_GetCrcMode (uint16_t *crc_mode);
 bool USBD_CDCn_NCM_SetCrcMode (uint16_t crc_mode);
 
 /// \brief Callback function called when NTB was successfully sent
-/// \return                             none.
 void USBD_CDCn_NCM_NTB_IN_Sent (void);
 
 /// \brief Callback function called when NTB was successfully received
-/// \return                             none.
 void USBD_CDCn_NCM_NTB_OUT_Received (void);
 
 #endif // __DOXYGEN
@@ -839,11 +800,9 @@ extern int32_t USBD_CDC_NCM_Notify_ConnectionSpeedChange (uint8_t instance, uint
 // generic prefix USBD_HIDn is USBD_HID0 for HID class instance 0.
 
 /// \brief Callback function called during \ref USBD_Initialize to initialize the USB HID class instance
-/// \return                             none.
 void USBD_HIDn_Initialize (void);
 
 /// \brief Callback function called during \ref USBD_Uninitialize to de-initialize the USB HID class instance
-/// \return                             none.
 void USBD_HIDn_Uninitialize (void);
 
 /// \brief Callback function called to prepare HID Report data to send
@@ -895,11 +854,9 @@ extern usbStatus USBD_HID_GetReportTrigger (uint8_t instance, uint8_t rid, const
 // generic prefix USBD_MSCn is USBD_MSC0 for MSC class instance 0.
 
 /// \brief Callback function called during \ref USBD_Initialize to initialize all Logical Units of the USB MSC class instance
-/// \return                             none.
 void USBD_MSCn_Initialize (void);
 
 /// \brief Callback function called during \ref USBD_Uninitialize to de-initialize all Logical Units of the USB MSC class instance
-/// \return                             none.
 void USBD_MSCn_Uninitialize (void);
 
 /// \brief Callback function called to get cache information
@@ -1003,29 +960,24 @@ uint32_t USBD_MSCn_LUN_CheckMedia (uint8_t lun);
 // generic prefix USBD_CustomClassn is USBD_CustomClass0 for Custom class instance 0.
 
 /// \brief Callback function called during \ref USBD_Initialize to initialize the USB Custom class instance
-/// \return                             none.
 void USBD_CustomClassn_Initialize (void);
 
 /// \brief Callback function called during \ref USBD_Uninitialize to de-initialize the USB Custom class instance
-/// \return                             none.
 void USBD_CustomClassn_Uninitialize (void);
 
 /// \brief Callback function called upon USB Bus Reset signaling
-/// \return                             none.
 void USBD_CustomClassn_Reset (void);
 
 /// \brief Callback function called when Endpoint Start was requested (by activating interface or configuration)
 /// \param[in]     ep_addr              endpoint address :
 ///                                       - ep_addr.0..3 : address
 ///                                       - ep_addr.7 :    direction
-/// \return                             none.
 void USBD_CustomClassn_EndpointStart (uint8_t ep_addr);
 
 /// \brief Callback function called when Endpoint Stop was requested (by de-activating interface or activating configuration 0)
 /// \param[in]     ep_addr              endpoint address :
 ///                                       - ep_addr.0..3 : address
 ///                                       - ep_addr.7 :    direction
-/// \return                             none.
 void USBD_CustomClassn_EndpointStop (uint8_t ep_addr);
 
 /// \brief Callback function called when a SETUP PACKET was received on Control Endpoint 0
@@ -1040,7 +992,6 @@ usbdRequestStatus USBD_CustomClassn_Endpoint0_SetupPacketReceived (const USB_SET
 
 /// \brief Callback function called when a SETUP PACKET was processed by USB library
 /// \param[in]     setup_packet         pointer to processed setup packet.
-/// \return                             none.
 void USBD_CustomClassn_Endpoint0_SetupPacketProcessed (const USB_SETUP_PACKET *setup_packet);
 
 /// \brief Callback function called when OUT DATA was received on Control Endpoint 0
@@ -1065,7 +1016,6 @@ usbdRequestStatus USBD_CustomClassn_Endpoint0_InDataSent (uint32_t len);
 /// \param[in]     event                event on Endpoint :
 ///                                       - ARM_USBD_EVENT_OUT = data OUT received
 ///                                       - ARM_USBD_EVENT_IN  = data IN  sent
-/// \return                             none.
 void USBD_CustomClassn_Endpoint1_Event  (uint32_t event);
 void USBD_CustomClassn_Endpoint2_Event  (uint32_t event);
 void USBD_CustomClassn_Endpoint3_Event  (uint32_t event);
@@ -1250,12 +1200,10 @@ extern void USBH_Notify (uint8_t ctrl, uint8_t port, uint8_t device, USBH_NOTIFY
 
 /// \brief Callback function called when Mass Storage Device was enumerated and is ready
 /// \param[in]     instance             instance of MSC Device.
-/// \return                             none.
 extern void USBH_MSC_Initialize (uint8_t instance);
 
 /// \brief Callback function called when Mass Storage Device was disconnected
 /// \param[in]     instance             instance of MSC Device.
-/// \return                             none.
 extern void USBH_MSC_Uninitialize (uint8_t instance);
 
 /// \brief Get Device instance of Mass Storage Device
@@ -1301,12 +1249,10 @@ extern usbStatus USBH_MSC_ReadCapacity (uint8_t instance, uint32_t *block_count,
 
 /// \brief Callback function called when Human Interface Device was enumerated and is ready
 /// \param[in]     instance             instance of HID Device.
-/// \return                             none.
 extern void USBH_HID_Initialize (uint8_t instance);
 
 /// \brief Callback function called when Human Interface Device was disconnected
 /// \param[in]     instance             instance of HID Device.
-/// \return                             none.
 extern void USBH_HID_Uninitialize (uint8_t instance);
 
 /// \brief Get Device instance of Human Interface Device
@@ -1356,13 +1302,11 @@ extern usbStatus USBH_HID_GetMouseState (uint8_t instance, usbHID_MouseState *st
 /// \param[in]     instance             instance index.
 /// \param[in]     ptr_hid_report_desc  pointer to HID report descriptor.
 /// \param[in]     len                  length of HID report descriptor.
-/// \return                             none.
 extern void USBH_HID_ParseReportDescriptor (uint8_t instance, const uint8_t *ptr_hid_report_desc, uint32_t len);
 
 /// \brief Callback function called when data is received from the Human Interface Device
 /// \param[in]     instance             instance index.
 /// \param[in]     len                  length of received data.
-/// \return                             none.
 extern void USBH_HID_DataReceived (uint8_t instance, uint32_t len);
 
 
@@ -1373,12 +1317,10 @@ extern void USBH_HID_DataReceived (uint8_t instance, uint32_t len);
 
 /// \brief Callback function called when Communication Device Class device was enumerated and is ready
 /// \param[in]     instance             instance of CDC Device.
-/// \return                             none.
 extern void USBH_CDC_ACM_Initialize (uint8_t instance);
 
 /// \brief Callback function called when Communication Device Class device was disconnected
 /// \param[in]     instance             instance of CDC Device.
-/// \return                             none.
 extern void USBH_CDC_ACM_Uninitialize (uint8_t instance);
 
 /// \brief Get Device instance of Communication Device Class device
@@ -1458,7 +1400,6 @@ extern usbStatus USBH_CDC_ACM_SetControlLineState (uint8_t instance, uint16_t st
 ///                                       - bit 2 : bBreak
 ///                                       - bit 1 : bTxCarrier (DSR line state)
 ///                                       - bit 0 : bRxCarrier (DCD line state)
-/// \return                             none.
 extern void USBH_CDC_ACM_Notify (uint8_t instance, uint16_t status);
 
 /// \brief Send break on Communication Device Class device

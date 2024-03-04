@@ -1403,8 +1403,5 @@ The Status and Error Codes section lists all the return values that the File Sys
 
 /**
 \ingroup status_error_codes_fs
-*/
-
-/**
-\typedef fsStatus
+\typedef enum fsStatus
 */

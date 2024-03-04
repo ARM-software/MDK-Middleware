@@ -1510,14 +1510,12 @@ extern netStatus netDHCP6_Disable (uint32_t if_id);
 /// \param[in]     if_num        Ethernet interface number.
 /// \param[in]     event         Ethernet link state event as defined in \ref netETH_Event.
 /// \param[in]     val           pointer to the event value.
-/// \return        none.
 extern void      netETH_Notify (uint32_t if_num, netETH_Event event, uint32_t val);
 
 /// \brief Receive raw Ethernet data. [\ref user-provided]
 /// \param[in]     if_num        Ethernet interface number.
 /// \param[in]     buf           buffer containing the received data.
 /// \param[in]     len           length of received data in bytes.
-/// \return        none.
 extern void      netETH_ReceiveRaw (uint32_t if_num, const uint8_t *buf, uint32_t len);
 
 /// \brief Notify the user of DHCP event or extended DHCP option. [\ref user-provided]
@@ -1525,7 +1523,6 @@ extern void      netETH_ReceiveRaw (uint32_t if_num, const uint8_t *buf, uint32_
 /// \param[in]     option        DHCP option code.
 /// \param[in]     val           pointer to option value.
 /// \param[in]     len           length of option value in bytes.
-/// \return        none.
 extern void      netDHCP_Notify (uint32_t if_id, uint8_t option, const uint8_t *val, uint32_t len);
 
 /// \brief Notify the user of DHCPv6 event or extended DHCPv6 option. [\ref user-provided]
@@ -1533,7 +1530,6 @@ extern void      netDHCP_Notify (uint32_t if_id, uint8_t option, const uint8_t *
 /// \param[in]     option        DHCPv6 option code.
 /// \param[in]     val           pointer to option value.
 /// \param[in]     len           length of option value in bytes.
-/// \return        none.
 extern void      netDHCP6_Notify (uint32_t if_id, uint8_t option, const uint8_t *val, uint32_t len);
 
 //  ==== WiFi Interface User API ====
@@ -1780,7 +1776,6 @@ extern uint8_t   netFTPs_GetUserId (void);
 
 /// \brief Notify the user application about events in FTP server service. [\ref user-provided]
 /// \param[in]     event         FTP Server notification event as specified in \ref netFTPs_Event.
-/// \return        none.
 /// \note Network library calls this function to inform the user about events.
 extern void      netFTPs_Notify (netFTPs_Event event);
 
@@ -1798,7 +1793,6 @@ extern void     *netFTPs_fopen (const char *fname, const char *mode);
 
 /// \brief Close a file previously open on FTP server. [\ref interface]
 /// \param[in]     file          pointer to the file to close.
-/// \return        none.
 extern void      netFTPs_fclose (void *file);
 
 /// \brief Read block of data from a file on FTP server. [\ref interface]
@@ -1886,7 +1880,6 @@ extern uint32_t  netFTPc_Process (netFTPc_Request request, char *buf, uint32_t b
 
 /// \brief Notify the user application when FTP client operation ends. [\ref user-provided]
 /// \param[in]     event         FTP client notification event as specified in \ref netFTPc_Event.
-/// \return        none.
 /// \note Network library calls this function to inform the user about events.
 extern void      netFTPc_Notify (netFTPc_Event event);
 
@@ -1904,7 +1897,6 @@ extern void     *netFTPc_fopen (const char *fname, const char *mode);
 
 /// \brief Close local file previously open in FTP client. [\ref interface]
 /// \param[in]     file          pointer to the file to close.
-/// \return        none.
 extern void      netFTPc_fclose (void *file);
 
 /// \brief Read block of data from local file in FTP client. [\ref interface]
@@ -1979,7 +1971,6 @@ extern void     *netTFTPs_fopen (const char *fname, const char *mode);
 
 /// \brief Close a file previously open on the TFTP server. [\ref interface]
 /// \param[in]     file          pointer to the file to close.
-/// \return        none.
 extern void      netTFTPs_fclose (void *file);
 
 /// \brief Read block of data from a file on the TFTP server. [\ref interface]
@@ -2016,7 +2007,6 @@ extern netStatus netTFTPc_Get (const NET_ADDR *addr, const char *fname, const ch
 
 /// \brief Notify the user application when TFTP client operation ends. [\ref user-provided]
 /// \param[in]     event         TFTP client notification event as specified in \ref netTFTPc_Event.
-/// \return        none.
 /// \note Network library calls this function to inform the user about events.
 extern void      netTFTPc_Notify (netTFTPc_Event event);
 
@@ -2034,7 +2024,6 @@ extern void     *netTFTPc_fopen (const char *fname, const char *mode);
 
 /// \brief Close local file previously open in the TFTP client. [\ref interface]
 /// \param[in]     file          pointer to the file to close.
-/// \return        none.
 extern void      netTFTPc_fclose (void *file);
 
 /// \brief Read block of data from local file in the TFTP client. [\ref interface]
@@ -2300,7 +2289,6 @@ extern uint8_t   netHTTPs_CheckAccount (const char *username, const char *passwo
 /// \param[in]     user_id       user identification number.
 /// \param[out]    buf           buffer to store the secret word to.
 /// \param[in]     buf_len       length of buffer.
-/// \return        none.
 extern void      netHTTPs_GetUserSecret (uint8_t user_id, char *buf, uint32_t buf_len);
 
 /// \brief Check if remote user is allowed to access a file on HTTP server. [\ref user-provided]
@@ -2334,7 +2322,6 @@ extern void     *netHTTPs_fopen (const char *fname);
 
 /// \brief Close a file previously open on HTTP server. [\ref interface]
 /// \param[in]     file          pointer to the file to close.
-/// \return        none.
 extern void      netHTTPs_fclose (void *file);
 
 /// \brief Read block of data from a file on HTTP server. [\ref interface]
@@ -2357,14 +2344,12 @@ extern char     *netHTTPs_fgets (void *file, char *buf, uint32_t size);
 /// \param[in]     fname         name of the file.
 /// \param[out]    fsize         file size in bytes.
 /// \param[out]    ftime         created or last modified time.
-/// \return        none.
 extern void      netHTTPs_fstat (const char *fname, uint32_t *fsize, uint32_t *ftime);
 
 //  ==== HTTP Server CGI ====
 
 /// \brief Process query string received by GET or POST request. [\ref user-provided]
 /// \param[in]     qstr          pointer to the query string.
-/// \return        none.
 extern void      netCGI_ProcessQuery (const char *qstr);
 
 /// \brief Process data received by POST request. [\ref user-provided]
@@ -2377,7 +2362,6 @@ extern void      netCGI_ProcessQuery (const char *qstr);
 ///                              - 5 = the same as 4, but with more data to follow.
 /// \param[in]     data          pointer to POST data.
 /// \param[in]     len           length of POST data.
-/// \return        none.
 extern void      netCGI_ProcessData (uint8_t code, const char *data, uint32_t len);
 
 /// \brief Generate dynamic web data based on a CGI script. [\ref user-provided]
@@ -2440,7 +2424,6 @@ extern netStatus netCGI_SetCookie (const char *cookie);
 /// \param[in]     uri           resource identifier, a null-terminated string.
 /// \param[in]     header        http request header.
 /// \param[in]     header_len    length of http request header.
-/// \return        none.
 extern void netCGI_ProcessRequest (const char *method, const char *uri, const char *header, uint32_t header_len);
 
 /// \brief Process HTTP cookie. [\ref user-provided]
@@ -2448,7 +2431,6 @@ extern void netCGI_ProcessRequest (const char *method, const char *uri, const ch
 /// \param[in]     uri           resource identifier, a null-terminated string.
 /// \param[in]     cookie        http request cookie.
 /// \param[in]     cookie_len    length of http request cookie.
-/// \return        none.
 extern void netCGI_ProcessCookie (const char *method, const char *uri, const char *cookie, uint32_t cookie_len);
 
 //  ==== SMTP Client User API ====
@@ -2481,7 +2463,6 @@ extern uint32_t  netSMTPc_Process (netSMTPc_Request request, char *buf, uint32_t
 
 /// \brief Notify the user application when SMTP client operation ends. [\ref user-provided]
 /// \param[in]     event         SMTP client notification event as specified in \ref netSMTPc_Event.
-/// \return        none.
 /// \note Network library calls this function to inform the user about events.
 extern void      netSMTPc_Notify (netSMTPc_Event event);
 
@@ -2503,7 +2484,6 @@ extern void     *netSMTPc_fopen (const char *fname);
 
 /// \brief Close a file previously open in SMTP client. [\ref interface]
 /// \param[in]     file          pointer to the file to close.
-/// \return        none.
 extern void      netSMTPc_fclose (void *file);
 
 /// \brief Read block of data from a file in SMTP client. [\ref interface]

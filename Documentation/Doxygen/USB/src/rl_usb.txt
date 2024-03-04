@@ -8,7 +8,6 @@
 //  ==== USB Device Functions ====
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 
-
 /**
 \defgroup   usbd    USB Device 
 \brief      API Interface of the USB Device Component. 
@@ -371,9 +370,7 @@ __NO_RETURN void app_main (void *arg) {
 /**
 \fn void USBD_Devicen_Initialize (void)
 \details
-If available, the function \b USBD_Devicen_Initialize is called automatically upon initialization of the USB Device and needs
-no invocation in the user code. Modify this function for custom USB Device handling. This function can be modified in the
-user code template file \ref USBD_User_Device_UCT "USBD_User_Device_n.c".
+If available, the function \b USBD_Devicen_Initialize is called automatically upon initialization of the USB Device and needs no invocation in the user code. Modify this function for custom USB Device handling. This function can be modified in the user code template file \ref USBD_User_Device_UCT "USBD_User_Device_n.c".
 
 
 <b>Code Example</b>
@@ -386,7 +383,7 @@ int main (void)  {
   USBD_Connect (0);      // USB Device 0 Connect
   ..
 }
-\endcode  
+\endcode
 */
 
  
@@ -593,7 +590,6 @@ The argument \a len specifies the number of sent data bytes.
 
 This function can be modified in the user code template file <b> USBD_User_Device_<i>n</i>.c</b>.
 */
- 
 
 /**
 @}
@@ -870,7 +866,7 @@ Modify this function to the application needs.
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn  usbStatus USBD_ADC_SetSpeakerVolumeRange (uint8_t instance, uint8_t ch, uint16_t min, uint16_t max, uint16_t res, uint16_t cur);
+\fn usbStatus USBD_ADC_SetSpeakerVolumeRange (uint8_t instance, uint8_t ch, uint16_t min, uint16_t max, uint16_t res, uint16_t cur);
 The function \b USBD_ADC_SetSpeakerVolumeRange sets the range for the speaker volume control.
 
 The argument \a instance specifies the instance of the ADC class to be used.
@@ -894,7 +890,7 @@ USBD_ADC_SetSpeakerVolumeRange (0, 0, 0, 100, 1, 50);
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn  usbStatus USBD_ADC_SetMicrophoneVolumeRange (uint8_t instance, uint8_t ch, uint16_t min, uint16_t max, uint16_t res, uint16_t cur);
+\fn usbStatus USBD_ADC_SetMicrophoneVolumeRange (uint8_t instance, uint8_t ch, uint16_t min, uint16_t max, uint16_t res, uint16_t cur);
 The function \b USBD_ADC_SetMicrophoneVolumeRange sets the range for the microphone volume control.
 
 The argument \a instance specifies the instance of the ADC class to be used.
@@ -6850,23 +6846,17 @@ The argument \a len specifies the number of data bytes successfully transferred 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \defgroup status_error_codes_usb Status and Error Codes
-\brief    Status and Error Codes returned by USB functions. 
+\brief    Status and Error Codes returned by USB functions.
 \details
 The Status and Error Codes section lists all the return values that the USB Component functions will return.
 */
 
 /**
-\addtogroup status_error_codes_usb
-@{
+\ingroup status_error_codes_usb
+\typedef enum usbdRequestStatus
 */
 
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/// USB Device Custom Class API enumerated constants
-typedef enum {} usbdRequestStatus;
-
-/// Status code values returned by USB library functions
-typedef enum {} usbStatus;
-
 /**
-@}
+\ingroup status_error_codes_usb
+\typedef enum usbStatus
 */

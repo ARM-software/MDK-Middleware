@@ -65,8 +65,8 @@ Hardware Setup
 The setup of the Evaluation Board hardware is described in the \b Abstract.txt file.
 - Verify all jumper settings on the target hardware.
 - Use an USB cable to connect your development board to the Host PC and power up your board.
-- Wait for the driver installation on the PC to complete. First you will see "Installing device driver software" and after a
-  successful installation "USB Input Device":
+- Wait for the driver installation on the PC to complete. First you will see "Installing device driver software" and after a successful installation "USB Input Device":
+
 \image html "hid_install.png"
 
 PC Software
@@ -295,20 +295,14 @@ data. If you do not hear any sound coming from the on-board speaker, check your 
 \page dev_cc_tutorial Custom USB Device (WinUSB_Echo)
 
 Using the custom USB class, you can implement any USB device that is not covered by the other classes available in the
-MDK Middleware. An example is available for various development boards that is implementing a custom class to work with the
-Windows USB (WinUSB), a generic driver for USB devices for Microsoft Windows. The example demonstrates a WinUSB device that
-contains Bulk IN and Bulk OUT endpoints. All data that the device receives on the Bulk OUT endpoint is echoed back on the
-Bulk IN endpoint.
+MDK Middleware. An example is available for various development boards that is implementing a custom class to work with the Windows USB (WinUSB), a generic driver for USB devices for Microsoft Windows. The example demonstrates a WinUSB device that contains Bulk IN and Bulk OUT endpoints. All data that the device receives on the Bulk OUT endpoint is echoed back on the Bulk IN endpoint.
 
-The following picture shows an exemplary connection of the development board and the Windows USB host computer. Using the USB
-connection and WinUSB_Test.exe (available in "install_dir\ARM\PACK\Keil\MDK-Middleware\x.y.z\Utilities\WinUSB_Test\Release\"
-folder, where "install_dir" refers to the installation directory of Arm Keil MDK, usually "C:\Keil_v5" and x >= 7, y >= 5, 
-z >= 0), you can initiate Bulk/Interrupt/Control Transfers. For more information, refer to \ref winusb_app.
+The following picture shows an exemplary connection of the development board and the Windows USB host computer. Using the USB connection and WinUSB_Test.exe ("install_dir\ARM\PACK\Keil\Middleware\x.y.z\Utilities\WinUSB_Test" folder 
+(where "install_dir" refers to the installation directory of Arm Keil MDK, default "C:\Keil_v5") and x >= 7, y >= 5, z >= 0), you can initiate . For more information, refer to \ref winusb_app.
 
 \image html "cc_dev_example_setup.png" Hardware setup for WinUSB Custom Class example
 
-The \b Abstract.txt file contained in the \b Documentation group of the \b Project window gives you more information on the
-general setup.
+The \b Abstract.txt file contained in the \b Documentation group of the \b Project window gives you more information on the general setup.
 
 Build the "WinUSB_Echo" Project
 ===============================
@@ -342,19 +336,17 @@ Hardware Setup
 The setup of the evaluation board hardware is described in the \b Abstract.txt file.
 - Verify all jumper settings on the target hardware.
 - Use a USB cable to connect your development board to the host PC and power up your board.
-- If you connect the device to a PC running Windows 8 or later, the device driver will be installed automatically. On
-  Windows 7, you need to select a driver file that can be found in the project folder. For more information, refer to the
-  \b Abstract.txt file in the µVision project.
+- If you connect the device to a PC running Windows 8 or later, the device driver will be installed automatically. On Windows 7, you need to select a driver file that can be found in the project folder. For more information, refer to the \b Abstract.txt file in the µVision project.
 
 PC Software
 -----------
 
-The example can be tested on a Windows PC using the WinUSB_Test.exe utility provided with MDK Middleware. The program runs stand-alone
-without installation. Simply run "install_dir\ARM\PACK\Keil\MDK-Middleware\x.y.z\Utilities\WinUSB_Test\Release\WinUSB_Test.exe" application
+The example can be tested on a Windows PC using the WinUSB_Test.exe utility provided with MDK Middleware. The program runs stand-alone without installation. Simply run "install_dir\\ARM\PACK\Keil\MDK-Middleware\x.y.z\Utilities\WinUSB_Test\Release\WinUSB_Test.exe" application
 (where x >= 7, y >= 5, z >= 0):
-    
+
 \image html "WinUSB_Test_application.png"
-\n
+
+
 \b Device \b Selection
 
 | Configuration Option | Selection |
@@ -363,6 +355,7 @@ without installation. Simply run "install_dir\ARM\PACK\Keil\MDK-Middleware\x.y.z
 | Device               | Select the device that you have attached to the PC (VID should be C251). |
 
 \b Control \b Transfer
+
 
 | Configuration Option | Selection |
 |----------------------|-----------|
