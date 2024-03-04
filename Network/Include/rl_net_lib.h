@@ -422,9 +422,9 @@ typedef struct net_arp_cfg {
   const struct net_if_cfg *If;          ///< Link to general interface descriptor
   NET_ARP_INFO *Table;                  ///< Cache table array
   uint8_t  TabSize;                     ///< Cache table size
-  uint8_t  TimeOut;                     ///< Cache expiration time in seconds
+  uint8_t  CacheTout;                   ///< Cache expiration time in seconds
   uint8_t  MaxRetry;                    ///< Number of retries to resolve MAC address
-  uint8_t  Resend;                      ///< Resend timeout in seconds
+  uint8_t  ResendTout;                  ///< Resend timeout in seconds
   bool     Notify;                      ///< Notify on IP address changes
 } const NET_ARP_CFG;
 
@@ -463,7 +463,7 @@ typedef struct net_dhcp_cfg {
 typedef struct net_nbns_cfg {
   NET_NBNS_INFO *Table;                 ///< Cache table array
   uint8_t  TabSize;                     ///< Cache table size
-  uint16_t TimeOut;                     ///< Cache expiration time in seconds
+  uint16_t CacheTout;                   ///< Cache expiration time in seconds
 } const NET_NBNS_CFG;
 
 /// IP4 Configuration info
@@ -487,9 +487,9 @@ typedef struct net_ndp_cfg {
   const struct net_if_cfg *If;          ///< Link to general interface descriptor
   NET_NDP_INFO *Table;                  ///< Neighbor cache table
   uint8_t   TabSize;                    ///< Cache table size
-  uint8_t   TimeOut;                    ///< Cache expiration time in seconds
+  uint8_t   CacheTout;                  ///< Cache expiration time in seconds
   uint8_t   MaxRetry;                   ///< Number of retries to resolve MAC address
-  uint8_t   Resend;                     ///< Resend timeout in seconds
+  uint8_t   ResendTout;                 ///< Resend timeout in seconds
   void (*process)(                      ///< Process NDP message function
     const struct net_if_cfg*,NET_FRAME*);
 } const NET_NDP_CFG;
@@ -690,7 +690,7 @@ typedef struct net_dns_cfg {
 
 /// mbedTLS interface functions
 typedef struct net_tls_if {
-  uint8_t (*get_context)(               ///< Allocate secure TLS context
+  uint8_t  (*get_context)(              ///< Allocate secure TLS context
     int32_t,netTCP_cb_t);
   void     (*connect)(                  ///< Connect to remote endpoint
     uint8_t,const char *);

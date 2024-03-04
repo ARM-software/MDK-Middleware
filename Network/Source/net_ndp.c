@@ -238,7 +238,7 @@ void net_ndp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
             DEBUGF (NDP," Option-SrcAddr (%s)\n",net_mac_ntoa(&opt[2]));
             EvrNetNDP_OptionSourceMacAddress (h->If->Id, &opt[2]);
             if (ndp_cache_add (h, IP6_FRAME(frame)->SrcAddr,
-                                  &opt[2], h->TimeOut, NDP_FLAG_HOST)) {
+                                  &opt[2], h->CacheTout, NDP_FLAG_HOST)) {
               /* Source address is link-local address (MAC) */
               ndp_send_reply (h, IP6_FRAME(frame)->SrcAddr,
                                  &ICMP6_FRAME(frame)->Data[4]);
@@ -434,7 +434,7 @@ static void ndp_proc_response (NET_NDP_CFG *h,
         if (ndp_t->Flags & NDP_FLAG_HOST_INUSE) {
           ndp_t->Flags &= ~NDP_FLAG_HOST_INUSE;
         }
-        ndp_t->Tout    = h->TimeOut;
+        ndp_t->Tout    = h->CacheTout;
         ndp_t->Retries = h->MaxRetry;
         ndp_t->State   = NDP_STATE_RESOLVED;
         return;
@@ -471,7 +471,7 @@ static NET_NDP_INFO *ndp_cache_alloc (NET_NDP_CFG *h) {
   /* Cache is full, find the oldest stable entry */
   /* The oldest entry will expire first          */
   i1 = i2 = 0;
-  t1 = t2 = h->TimeOut;
+  t1 = t2 = h->CacheTout;
   for (i = 1, ndp_t = &h->Table[0]; i <= h->TabSize; ndp_t++, i++) {
     if ((ndp_t->State != NDP_STATE_RESOLVED) || (ndp_t->Flags & NDP_FLAG_ROUTER)) {
       continue;
@@ -810,7 +810,7 @@ void net_ndp_cache_refresh (NET_IF_CFG *net_if,
       DEBUGF (NDP,"Cache %s, Entry %d refreshed\n",h->If->Name,ndp_t->Id);
       DEBUG_INF2 (D_IP, ip6_addr);
       EvrNetNDP_CacheEntryRefreshed (h->If->Id, ndp_t->Id, ip6_addr);
-      ndp_t->Tout  = h->TimeOut;
+      ndp_t->Tout  = h->CacheTout;
       ndp_t->State = NDP_STATE_RESOLVED;
       return;
     }
@@ -1464,7 +1464,7 @@ bool net_ndp_enqueue (NET_IF_CFG *net_if, NET_NDP_INFO *ndp_t, NET_FRAME *frame)
     EvrNetNDP_ResolveEntry (h->If->Id, ndp_t->Id);
     ndp_t->State   = NDP_STATE_PENDING;
     ndp_t->Retries = h->MaxRetry;
-    ndp_t->Tout    = h->Resend;
+    ndp_t->Tout    = h->ResendTout;
     ndp_send_request (h, ICMP6_NEIGHB_SOL, ndp_t->IpAddr);
   }
   return (true);
@@ -1533,7 +1533,7 @@ static void ndp_cache_run (NET_NDP_CFG *h) {
           DEBUGF (NDP,"Cache %s, Entry %d resend\n",h->If->Name,ctrl->entry);
           EvrNetNDP_ResolveEntry (h->If->Id, ctrl->entry);
           ndp_t->Retries--;
-request:  ndp_t->Tout = h->Resend;
+request:  ndp_t->Tout = h->ResendTout;
           ndp_send_request (h, ICMP6_NEIGHB_SOL, ndp_t->IpAddr);
           return;
         }
@@ -1571,7 +1571,7 @@ request:  ndp_t->Tout = h->Resend;
           EvrNetNDP_RefreshEntry (h->If->Id, ctrl->entry);
           ndp_t->State   = NDP_STATE_REFRESH;
           ndp_t->Retries = h->MaxRetry;
-          ndp_t->Tout    = h->Resend;
+          ndp_t->Tout    = h->ResendTout;
           ndp_send_request (h, ICMP6_NEIGHB_SOL, ndp_t->IpAddr);
           return;
         }

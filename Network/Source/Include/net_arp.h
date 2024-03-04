@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_arp.h
  * Purpose: Address Resolution for Ethernet Definitions
@@ -31,9 +31,9 @@
 #define ARP_STATE_REFRESH   4           // Entry is being refreshed
 
 /* ARP Cache Types */
-#define ARP_TYPE_FIXED_IP   0           // Fixed IP is always refreshed on timeout
-#define ARP_TYPE_TEMP_IP    1           // Temp IP is removed from cache on timeout
-#define ARP_TYPE_INUSE_IP   2           // Inuse IP is refreshed once, then removed
+#define ARP_TYPE_FIXED_IP   0           // Always refreshed on timeout
+#define ARP_TYPE_TEMP_IP    1           // Removed from cache on timeout
+#define ARP_TYPE_INUSE_IP   2           // Refreshed once, then removed
 
 /* ARP Control Flags */
 #define ARP_FLAG_PROBE_BUSY 0x01        // Probe busy waiting for response
@@ -89,8 +89,7 @@ extern void net_arp_cache_add (NET_IF_CFG *net_if,
                                const uint8_t *ip4_addr, const uint8_t *mac_addr);
 extern void net_arp_cache_early (NET_IF_CFG *net_if,
                                const uint8_t *ip4_addr, const uint8_t *mac_addr);
-extern NET_ARP_INFO  *net_arp_cache_find (NET_IF_CFG *net_if, const uint8_t *ip4_addr);
-extern const uint8_t *net_arp_find_mac (NET_IF_CFG *net_if, const uint8_t *ip4_addr);
+extern NET_ARP_INFO *net_arp_cache_find (NET_IF_CFG *net_if, const uint8_t *ip4_addr);
 extern bool net_arp_enqueue (NET_IF_CFG *net_if, NET_ARP_INFO *arp_t, NET_FRAME *frame);
 extern void net_arp_cache_run (void);
 extern void net_arp_probe (NET_IF_CFG *net_if, uint8_t *ip4_addr);

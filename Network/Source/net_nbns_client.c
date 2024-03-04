@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_nbns_client.c
  * Purpose: NetBIOS Name Service Client
@@ -234,7 +234,7 @@ static bool nbns_process_response (const uint8_t *buf, uint32_t len) {
     }
     if (nbns->Flags & NBNS_FLAG_VALID) {
       uint32_t ttl = get_u32 (&buf[50]);
-      if (ttl > nbnsc->TimeOut) ttl = nbnsc->TimeOut;
+      if (ttl > nbnsc->CacheTout) ttl = nbnsc->CacheTout;
       /* Do not cache the IP address when TTL=0 */
       if (ttl != 0) {
         nbns_t = nbns_cache_alloc ();

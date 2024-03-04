@@ -34,10 +34,11 @@ static void  arp_send_request (NET_ARP_CFG *h, const uint8_t *dst_mac,
 static NET_ARP_INFO  *arp_cache_alloc (NET_ARP_CFG *h);
 static netStatus arp_probe_start (NET_ARP_CFG *h,
                                   const uint8_t *ip4_addr, netARP_cb_t cb_func);
+static const uint8_t *arp_find_mac (NET_IF_CFG *net_if, const uint8_t *ip4_addr);
 static const uint8_t *arp_find_ip (NET_ARP_CFG *h, const uint8_t *mac_addr);
 static void  arp_probe_run (NET_ARP_CFG *h);
 static void  arp_cache_run (NET_ARP_CFG *h);
-static bool  arp_is_cacheable (NET_ARP_CFG *h, const uint8_t *ip_addr);
+static bool  arp_is_cacheable (NET_ARP_CFG *h, const uint8_t *ip4_addr);
 static bool  arp_sender_valid (NET_ARP_CFG *h, NET_ARP_HEADER *arp_r);
 static void  arp_que_send (NET_ARP_CFG *h, NET_ARP_INFO *arp_t);
 static void  arp_que_free (NET_ARP_INFO *arp_t);
@@ -145,7 +146,7 @@ void net_arp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
             DEBUGF (ARP," Cache, Entry %d update\n",arp_t->Id);
             EvrNetARP_CacheEntryUpdate (h->If->Id, arp_t->Id);
             net_addr4_copy (arp_t->IpAddr, ARP_FRAME(frame)->SendIpAddr);
-            arp_t->Tout    = h->TimeOut;
+            arp_t->Tout    = h->CacheTout;
             arp_t->Retries = h->MaxRetry;
             arp_t->State   = ARP_STATE_RESOLVED;
             return;
@@ -302,7 +303,7 @@ update:
         /* Inuse entry refreshed only once after use */
         arp_t->Type = ARP_TYPE_TEMP_IP;
       }
-      arp_t->Tout    = h->TimeOut;
+      arp_t->Tout    = h->CacheTout;
       arp_t->Retries = h->MaxRetry;
       arp_t->State   = ARP_STATE_RESOLVED;
       return;
@@ -410,7 +411,7 @@ static NET_ARP_INFO *arp_cache_alloc (NET_ARP_CFG *h) {
   /* Cache is full, find the oldest temp entry */
   /* The oldest entry will expire first        */
   i2 = 0;
-  t2 = h->TimeOut;
+  t2 = h->CacheTout;
   for (i = 1, arp_t = &h->Table[0]; i <= h->TabSize; arp_t++, i++) {
     if ((arp_t->State == ARP_STATE_RESOLVED) &&
         (arp_t->Type  == ARP_TYPE_TEMP_IP)) {
@@ -502,7 +503,7 @@ void net_arp_cache_add (NET_IF_CFG *net_if,
 refresh:
   net_mac_copy (arp_t->MacAddr, mac_addr);
 refresh_gw:
-  arp_t->Tout    = h->TimeOut;
+  arp_t->Tout    = h->CacheTout;
   arp_t->Retries = h->MaxRetry;
   arp_t->State   = ARP_STATE_RESOLVED;
 }
@@ -550,7 +551,7 @@ void net_arp_cache_early (NET_IF_CFG *net_if,
     net_addr4_copy (arp_t->IpAddr, ip4_addr);
     net_mac_copy (arp_t->MacAddr, mac_addr);
     arp_t->Type    = ARP_TYPE_TEMP_IP;
-    arp_t->Tout    = h->Resend;
+    arp_t->Tout    = h->ResendTout;
     arp_t->Retries = h->MaxRetry;
     /* Start ARP refreshing */
     arp_t->State   = ARP_STATE_REFRESH;
@@ -698,7 +699,8 @@ netStatus netARP_CacheMAC (uint32_t if_id, const uint8_t *mac_addr) {
   EvrNetARP_CacheMac (h->If->Id, mac_addr);
 
   if (net_mac_comp (mac_addr, net_addr_unspec) ||
-      net_mac_comp (mac_addr, net_addr_bcast)) {
+      net_mac_comp (mac_addr, net_addr_bcast)  ||
+      (get_u32 (mac_addr) >> 8) == 0x01005E) {
     /* Invalid MAC address */
     ERRORF (ARP,"CacheMAC %s, Invalid MAC\n",h->If->Name);
     EvrNetARP_CacheMacInvalidParameter (h->If->Id);
@@ -798,7 +800,7 @@ netStatus netARP_GetMAC (uint32_t if_id,
 
   START_LOCK (netStatus);
 
-  if (!(net_if && net_if->Ip4Cfg) || (mac_addr == NULL) || (ip4_addr == NULL)) {
+  if (!(net_if && net_if->Ip4Cfg) || (ip4_addr == NULL) || (mac_addr == NULL)) {
     ERRORF (ARP,"GetMAC, Invalid parameter\n");
     EvrNetARP_GetMacInvalidParameter (if_id & 0xFFFF);
     RETURN (netInvalidParameter);
@@ -807,7 +809,7 @@ netStatus netARP_GetMAC (uint32_t if_id,
 
   DEBUGF (ARP,"GetMAC %s\n",h->If->Name);
   DEBUG_INF2 (D_IP, ip4_addr);
-  sp = net_arp_find_mac (h->If, ip4_addr);
+  sp = arp_find_mac (h->If, ip4_addr);
   if (sp == NULL) {
     DEBUGF (ARP," Not found\n");
     EvrNetARP_GetMacEntryNotFound (h->If->Id, ip4_addr);
@@ -985,7 +987,7 @@ static netStatus arp_probe_start (NET_ARP_CFG *h,
   \param[in]   ip4_addr  requested IP address.
   \return      pointer to resolved MAC address.
 */
-const uint8_t *net_arp_find_mac (NET_IF_CFG *net_if, const uint8_t *ip4_addr) {
+static const uint8_t *arp_find_mac (NET_IF_CFG *net_if, const uint8_t *ip4_addr) {
   NET_ARP_CFG  *h = net_if->Ip4Cfg->ArpCfg;
   NET_ARP_INFO *arp_t;
   uint32_t i;
@@ -995,7 +997,7 @@ const uint8_t *net_arp_find_mac (NET_IF_CFG *net_if, const uint8_t *ip4_addr) {
       continue;
     }
     if (net_addr4_comp (arp_t->IpAddr, ip4_addr)) {
-      /* MAC address found in cache */
+      /* Requested IP found, return MAC address */
       return (arp_t->MacAddr);
     }
   }
@@ -1101,7 +1103,7 @@ bool net_arp_enqueue (NET_IF_CFG *net_if, NET_ARP_INFO *arp_t, NET_FRAME *frame)
     EvrNetARP_ResolveEntry (h->If->Id, arp_t->Id);
     arp_t->State   = ARP_STATE_PENDING;
     arp_t->Retries = h->MaxRetry;
-    arp_t->Tout    = h->Resend;
+    arp_t->Tout    = h->ResendTout;
     arp_send_request (h, NULL, arp_t->IpAddr, LocM.IpAddr);
   }
   return (true);
@@ -1171,7 +1173,7 @@ static void arp_cache_run (NET_ARP_CFG *h) {
           DEBUGF (ARP,"Cache %s, Entry %d resend\n",h->If->Name,ctrl->entry);
           EvrNetARP_ResolveEntry (h->If->Id, ctrl->entry);
           arp_t->Retries--;
-request:  arp_t->Tout = h->Resend;
+request:  arp_t->Tout = h->ResendTout;
           ip = get_u32 (arp_t->IpAddr);
           /* Type of request depends on IP value: */
           /*   ip != 0, send regular ARP request */
@@ -1216,7 +1218,7 @@ request:  arp_t->Tout = h->Resend;
           EvrNetARP_RefreshEntry (h->If->Id, ctrl->entry);
           arp_t->State   = ARP_STATE_REFRESH;
           arp_t->Retries = h->MaxRetry;
-          arp_t->Tout    = h->Resend;
+          arp_t->Tout    = h->ResendTout;
           arp_send_request (h, NULL, arp_t->IpAddr, LocM.IpAddr);
           return;
         }
@@ -1247,17 +1249,17 @@ static bool arp_sender_valid (NET_ARP_CFG *h, NET_ARP_HEADER *arp_r) {
   if (net_mac_comp (arp_r->SendHwAddr, net_addr_bcast)  ||
       net_mac_comp (arp_r->SendHwAddr, net_addr_unspec) ||
       (get_u32 (arp_r->SendHwAddr) >> 8) == 0x01005E) {
-    /* Broadcast address:   FF-FF-FF-FF-FF-FF */
-    /* Multicast address:   01-00-5E-xx-xx-xx */
-    /* Unspecified address: 00-00-00-00-00-00 */
+    /* Broadcast:   FF-FF-FF-FF-FF-FF */
+    /* Multicast:   01-00-5E-xx-xx-xx */
+    /* Unspecified: 00-00-00-00-00-00 */
     return (false);
   }
 
   /* Check IP address of the sender */
   if ( (arp_r->SendIpAddr[0] == 127) ||
       ((arp_r->SendIpAddr[0] & 0xF0) == 0xE0)) {
-    /* Localhost IP: 127.0.0.0 - 127.255.255.255 */
-    /* Multicast IP: 224.0.0.0 - 239.255.255.255 */
+    /* Localhost: 127.0.0.0 - 127.255.255.255 */
+    /* Multicast: 224.0.0.0 - 239.255.255.255 */
     return (false);
   }
   ip_tmp = get_u32 (arp_r->SendIpAddr);
@@ -1276,23 +1278,23 @@ static bool arp_sender_valid (NET_ARP_CFG *h, NET_ARP_HEADER *arp_r) {
 
 /**
   \brief       Check if IP address is cacheable.
-  \param[in]   h        ARP instance handle.
-  \param[in]   ip_addr  requested IP address.
+  \param[in]   h         ARP instance handle.
+  \param[in]   ip4_addr  requested IP address.
   \return      check status:
                - true  = address is cacheable,
                - false = not cacheable.
 */
-static bool arp_is_cacheable (NET_ARP_CFG *h, const uint8_t *ip_addr) {
+static bool arp_is_cacheable (NET_ARP_CFG *h, const uint8_t *ip4_addr) {
   uint32_t ip_tmp,ip_lm,net_mask;
 
-  if ((ip_addr[0] == 127) || ((ip_addr[0] & 0xF0) == 0xE0)) {
-    /* Localhost IP: 127.0.0.0 - 127.255.255.255 */
-    /* Multicast IP: 224.0.0.0 - 239.255.255.255 */
+  if ((ip4_addr[0] == 127) || ((ip4_addr[0] & 0xF0) == 0xE0)) {
+    /* Localhost: 127.0.0.0 - 127.255.255.255 */
+    /* Multicast: 224.0.0.0 - 239.255.255.255 */
     return (false);
   }
 
   /* 'ip_addr' may not be aligned */
-  ip_tmp   = get_u32 (ip_addr);
+  ip_tmp   = get_u32 (ip4_addr);
 
   if ((ip_tmp == 0) || (ip_tmp == 0xFFFFFFFF)) {
     /* Undefined (0.0.0.0) or Bcast (255.255.255.255) */
