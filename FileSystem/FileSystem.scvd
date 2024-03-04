@@ -782,7 +782,7 @@
     <event id="39 + 0x8100" level="Op"     property="ClearRootSectors"      value="drive=%t[val1], sector=%d[val2], count=%d[val3]" info="Clear root area sectors"/>
     <event id="40 + 0x8100" level="Op"     property="CreateFAT"             value="drive=%t[val1], sector=%d[val2], count=%d[val3]" info="Create File Allocation Table"/>
     <event id="41 + 0x8100" level="Op"     property="FormatProperties"      value="drive=%t[val1], type=%E[val2, FATType:id], clus_size=%d[val3] bytes, data_clus=%d[val4]" info="Volume formatting properties" />
-    <event id="42 + 0x8100" level="Op"     property="FileOpen"              value="h=%d[val1], path=%x[val2], openmode=%x[val3]" val3="uint8_t" info="Open file"/>
+    <event id="42 + 0x8100" level="Op"     property="FileOpen"              value="h=%d[val1], path=%x[val2], openmode=%x[val3]" val3="uint16_t" info="Open file"/>
     <event id="43 + 0x8100" level="Error"  property="PathInvalidChar"       value="ch=%x[val1]" />
     <event id="44 + 0x8100" level="Error"  property="PathIsTooLong"         value="max_len=%d[val1]" />
     <event id="45 + 0x8100" level="Error"  property="PathIsDirNotFile"      value="drive=%t[val1]" info="Specified path is a directory" />
