@@ -1389,6 +1389,13 @@ extern netStatus netARP_Probe (uint32_t if_id, const uint8_t *ip4_addr, netARP_c
 /// \return      status code that indicates the execution status of the function.
 extern netStatus netARP_ProbeX (uint32_t if_id, const uint8_t *ip4_addr);
 
+/// \brief Add the host as a static entry in the local ARP cache table. [\ref thread-safe]
+/// \param[in]     if_id         Interface identification (class and number).
+/// \param[in]     ip4_addr      IPv4 address of the host.
+/// \param[in]     mac_addr      MAC address of the host.
+/// \return      status code that indicates the execution status of the function.
+extern netStatus netARP_AddCache (uint32_t if_id, const uint8_t *ip4_addr, const uint8_t *mac_addr);
+
 /// \brief Flush or clear the local ARP cache. [\ref thread-safe]
 /// \param[in]     if_id         Interface identification (class and number).
 /// \return      status code that indicates the execution status of the function.

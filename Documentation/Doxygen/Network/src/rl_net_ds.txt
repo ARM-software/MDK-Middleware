@@ -3235,6 +3235,41 @@ else {
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
+\fn netStatus netARP_AddCache (uint32_t if_id, const uint8_t *ip4_addr, const uint8_t *mac_addr)
+\details
+The function \b netARP_AddCache adds the IP and MAC address of the host as a static entry to the ARP cache. This is useful
+if the host does not respond to ARP requests, but the IP and MAC address of this host are known. You can use this function
+to manually add this host to the ARP cache.
+
+The argument \a if_id is the \ref interface_id "Interface Identification number" for which a host is to be included in
+the ARP cache table.
+
+The argument \a ip4_addr points to a buffer containing four octets of the dotted decimal IPv4 address of the host to be added.
+
+The argument \a mac_addr points to a buffer containing the six octets of the MAC address of the host to be added.
+
+Possible \ref netStatus return values:
+- \em netOK: Operation completed successfully.
+- \em netInvalidParameter: Invalid parameter provided.
+- \em netError: No entries can be assigned in the ARP cache table.
+
+\note
+- This function can only be used with IPv4. For IPv6 similar functionality is not provided.
+- Only the Ethernet and WiFi interfaces use the \b netARP_AddCache function. There is no ARP protocol for the PPP or SLIP interface.
+- If necessary, use \ref netARP_ClearCache to clear the ARP cache and the static cache entries.
+
+\b Code \b Example
+\code
+const uint8_t ip4_addr[NET_ADDR_IP4_LEN] = { 192, 168, 0, 100 };
+const uint8_t mac_addr[NET_ADDR_ETH_LEN] = { 0x1e, 0x30, 0x6c, 0xa2, 0x45, 0x5e };
+
+if (netARP_AddCache (NET_IF_CLASS_ETH | 0, ip4_addr, mac_addr) == netOK) {
+  // Static entry successfully added to the ARP cache for the ETH0 interface 
+}
+\endcode
+*/
+
+/**
 \fn netStatus netARP_ClearCache (uint32_t if_id)
 \details
 The function \b netARP_ClearCache flushes all resolved MAC addresses from the local ARP cache. You can use this function

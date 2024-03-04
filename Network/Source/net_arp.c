@@ -894,6 +894,79 @@ netStatus netARP_ProbeX (uint32_t if_id, const uint8_t *ip4_addr) {
 }
 
 /**
+  \brief       Add static entry to the ARP cache.
+  \param[in]   if_id     interface identifier.
+  \param[in]   ip4_addr  host IP address.
+  \param[in]   mac_addr  host MAC address.
+  \return      status code as defined with netStatus.
+*/
+netStatus netARP_AddCache (uint32_t if_id,
+                           const uint8_t *ip4_addr, const uint8_t *mac_addr) {
+  NET_IF_CFG *net_if = net_if_map_lan (if_id);
+  NET_ARP_CFG *h;
+  NET_ARP_INFO *arp_t;
+  uint32_t i;
+
+  START_LOCK (netStatus);
+
+  if (!(net_if && net_if->Ip4Cfg) || (ip4_addr == NULL) || (mac_addr == NULL)) {
+    ERRORF (ARP,"AddCache, Invalid parameter\n");
+    EvrNetARP_AddCacheInvalidParam (if_id & 0xFFFF);
+    RETURN (netInvalidParameter);
+  }
+  h = net_if->Ip4Cfg->ArpCfg;
+
+  DEBUGF (ARP,"AddCache %s\n",h->If->Name);
+  DEBUG_INF2 (D_IP, ip4_addr);
+  DEBUG_INF2 (D_MAC, mac_addr);
+  EvrNetARP_AddCache (h->If->Id, ip4_addr, mac_addr);
+
+  if (!arp_is_cacheable (h, ip4_addr)) {
+    /* Invalid IP address, non-cacheable */
+    ERRORF (ARP,"AddCache %s, Invalid IP\n",h->If->Name);
+    EvrNetARP_AddCacheInvalidIpAddress (h->If->Id);
+    RETURN (netInvalidParameter);
+  }
+
+  if (net_mac_comp (mac_addr, net_addr_unspec) ||
+      net_mac_comp (mac_addr, net_addr_bcast)  ||
+      (get_u32 (mac_addr) >> 8) == 0x01005E) {
+    /* Invalid MAC address */
+    ERRORF (ARP,"AddCache %s, Invalid MAC\n",h->If->Name);
+    EvrNetARP_AddCacheInvalidMacAddress (h->If->Id);
+    RETURN (netInvalidParameter);
+  }
+
+  /* Check if this IP address already cached */
+  for (i = 0, arp_t = &h->Table[0]; i < h->TabSize; arp_t++, i++) {
+    if (arp_t->State == ARP_STATE_FREE) {
+      continue;
+    }
+    if (net_addr4_comp (arp_t->IpAddr, ip4_addr)) {
+      goto set;
+    }
+  }
+
+  /* IP not cached */
+  arp_t = arp_cache_alloc (h);
+  if (arp_t != NULL) {
+    DEBUGF (ARP," Entry %d added\n",arp_t->Id);
+    EvrNetARP_CacheEntryAdded (h->If->Id, arp_t->Id);
+    net_addr4_copy (arp_t->IpAddr, ip4_addr);
+set:arp_que_free (arp_t);
+    net_mac_copy (arp_t->MacAddr, mac_addr);
+    arp_t->State = ARP_STATE_RESOLVED;
+    arp_t->Type  = ARP_TYPE_STATIC_IP;
+    arp_t->Tout  = h->CacheTout;
+    RETURN (netOK);
+  }
+
+  RETURN (netError);
+
+  END_LOCK;
+}
+
+/**
   \brief       Clear the ARP cache.
   \param[in]   if_id  interface identifier.
   \return      status code as defined with netStatus.
@@ -1198,6 +1271,15 @@ request:  arp_t->Tout = h->ResendTout;
           break;
         }
         /* This Entry has timed out */
+        if (arp_t->Type == ARP_TYPE_STATIC_IP) {
+          if (!net_ip4_is_onlink (h->If, arp_t->IpAddr)) {
+            /* Not onlink anymore, delete it */
+            arp_t->State = ARP_STATE_FREE;
+            break;
+          }
+          arp_t->Tout = h->CacheTout;
+          break;
+        }
         if ((arp_t->Type != ARP_TYPE_FIXED_IP)  &&
             (net_addr4_comp (arp_t->IpAddr, LocM.DefGW))) {
           /* Classify network gateway as a fixed IP */

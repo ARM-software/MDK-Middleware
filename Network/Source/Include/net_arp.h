@@ -34,6 +34,7 @@
 #define ARP_TYPE_FIXED_IP   0           // Always refreshed on timeout
 #define ARP_TYPE_TEMP_IP    1           // Removed from cache on timeout
 #define ARP_TYPE_INUSE_IP   2           // Refreshed once, then removed
+#define ARP_TYPE_STATIC_IP  3           // Cached forever, no refresh
 
 /* ARP Control Flags */
 #define ARP_FLAG_PROBE_BUSY 0x01        // Probe busy waiting for response

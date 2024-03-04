@@ -4978,6 +4978,48 @@ test procedure, since no host responded. The tested IP address is considered to 
 */
 
 /**
+\fn __STATIC_INLINE void EvrNetARP_AddCache(uint16_t if_id, const uint8_t *ip4_addr, const uint8_t *mac_addr)
+\details
+The event \b AddCache is created when the function \ref netARP_AddCache is executed.
+This function adds a static entry to the ARP cache.
+
+\b Value in the Event Recorder shows:
+  - \b netif: network interface identifier.
+  - \b ip:    IP address of the host to be added to the cache.
+  - \b mac:   MAC address of the host to be added to the cache.
+*/
+
+/**
+\fn __STATIC_INLINE void EvrNetARP_AddCacheInvalidParam(uint16_t if_id)
+\details
+The event \b AddCacheInvalidParam is created when the function \ref netARP_AddCache
+is executed and the function input parameter is invalid.
+
+\b Value in the Event Recorder shows:
+  - \b netif: network interface identifier.
+*/
+
+/**
+\fn __STATIC_INLINE void EvrNetARP_AddCacheInvalidIpAddress(uint16_t if_id)
+\details
+The event \b AddCacheInvalidIpAddress is created when the function \ref netARP_AddCache
+is executed and the IP address parameter of the function is invalid.
+
+\b Value in the Event Recorder shows:
+  - \b netif: network interface identifier.
+*/
+
+/**
+\fn __STATIC_INLINE void EvrNetARP_AddCacheInvalidMacAddress(uint16_t if_id)
+\details
+The event \b AddCacheInvalidMacAddress is created when the function \ref netARP_AddCache
+is executed and the MAC address parameter of the function is invalid.
+
+\b Value in the Event Recorder shows:
+  - \b netif: network interface identifier.
+*/
+
+/**
 \fn __STATIC_INLINE void EvrNetARP_ClearCache(uint16_t if_id, uint32_t deleted, uint32_t available)
 \details
 The event \b ClearCache is created when the function \ref netARP_ClearCache is executed.

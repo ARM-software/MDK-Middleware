@@ -289,6 +289,7 @@ The following list provides a brief overview of all Network Component functions.
  - \ref netARP_GetMAC &mdash; \copybrief netARP_GetMAC
  - \ref netARP_Probe &mdash; \copybrief netARP_Probe
  - \ref netARP_ProbeX &mdash; \copybrief netARP_ProbeX
+ - \ref netARP_AddCache &mdash; \copybrief netARP_AddCache
  - \ref netARP_ClearCache &mdash; \copybrief netARP_ClearCache
  - \ref netDHCP_Disable &mdash; \copybrief netDHCP_Disable
  - \ref netDHCP_Enable &mdash; \copybrief netDHCP_Enable

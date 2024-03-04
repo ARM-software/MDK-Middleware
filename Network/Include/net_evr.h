@@ -5725,9 +5725,13 @@ typedef struct evr_addr {
 #define EvtNetARP_ProbeBusy                 EventID (EventLevelError, EvtNetARP, 38)
 #define EvtNetARP_ProbeRetransmit           EventID (EventLevelOp,    EvtNetARP, 39)
 #define EvtNetARP_ProbeTimeout              EventID (EventLevelOp,    EvtNetARP, 40)
+#define EvtNetARP_AddCache                  EventID (EventLevelAPI,   EvtNetARP, 49)
+#define EvtNetARP_AddCacheInvalidParam      EventID (EventLevelError, EvtNetARP, 50)
+#define EvtNetARP_AddCacheInvalidIpAddress  EventID (EventLevelError, EvtNetARP, 51)
+#define EvtNetARP_AddCacheInvalidMacAddress EventID (EventLevelError, EvtNetARP, 52) // End
 #define EvtNetARP_ClearCache                EventID (EventLevelAPI,   EvtNetARP, 46)
 #define EvtNetARP_ClearCacheInvalidParam    EventID (EventLevelError, EvtNetARP, 47)
-#define EvtNetARP_ClearCacheClientBusy      EventID (EventLevelError, EvtNetARP, 48) // End
+#define EvtNetARP_ClearCacheClientBusy      EventID (EventLevelError, EvtNetARP, 48)
 #define EvtNetARP_CacheEntryTimeout         EventID (EventLevelOp,    EvtNetARP, 41)
 #define EvtNetARP_EntryReleased             EventID (EventLevelOp,    EvtNetARP, 42)
 #define EvtNetARP_ResolveEntry              EventID (EventLevelOp,    EvtNetARP, 43)
@@ -6314,6 +6318,59 @@ typedef struct evr_addr {
   }
 #else
   #define EvrNetARP_ProbeTimeout(if_id, ip4_addr)
+#endif
+
+/**
+  \brief  Event on ARP add static host address to ARP cache (API)
+  \param  if_id         network interface identifier
+  \param  ip4_addr      pointer to IP address of the host
+  \param  mac_addr      pointer to MAC address of the host
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetARP_AddCache(uint16_t if_id, const uint8_t *ip4_addr, const uint8_t *mac_addr) {
+    evr_buf.u32[0] = if_id;
+    memcpy (&evr_buf.u8[4], ip4_addr, 4);
+    memcpy (&evr_buf.u8[8], mac_addr, 6);
+    EventRecordData (EvtNetARP_AddCache, &evr_buf, 14);
+  }
+#else
+  #define EvrNetARP_AddCache(if_id, ip4_addr, mac_addr)
+#endif
+
+/**
+  \brief  Event on netARP_AddCache invalid parameter (Error)
+  \param  if_id         network interface identifier
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetARP_AddCacheInvalidParam(uint16_t if_id) {
+    EventRecord2 (EvtNetARP_AddCacheInvalidParam, if_id, 0);
+  }
+#else
+  #define EvrNetARP_AddCacheInvalidParam(if_id)
+#endif
+
+/**
+  \brief  Event on netARP_AddCache invalid IP address error (Error)
+  \param  if_id         network interface identifier
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetARP_AddCacheInvalidIpAddress(uint16_t if_id) {
+    EventRecord2 (EvtNetARP_AddCacheInvalidIpAddress, if_id, 0);
+  }
+#else
+  #define EvrNetARP_AddCacheInvalidIpAddress(if_id)
+#endif
+
+/**
+  \brief  Event on netARP_AddCache invalid MAC address error (Error)
+  \param  if_id         network interface identifier
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetARP_AddCacheInvalidMacAddress(uint16_t if_id) {
+    EventRecord2 (EvtNetARP_AddCacheInvalidMacAddress, if_id, 0);
+  }
+#else
+  #define EvrNetARP_AddCacheInvalidMacAddress(if_id)
 #endif
 
 /**

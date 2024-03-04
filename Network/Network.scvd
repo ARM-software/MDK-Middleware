@@ -1908,6 +1908,10 @@
     <event id="38 + 0xCB00" level="Error"  property="ProbeBusy"                 value="netif=%E[val1, NetIf:id]" info="Probe failed, process busy"/>
     <event id="39 + 0xCB00" level="Op"     property="ProbeRetransmit"           value="netif=%E[val1, NetIf:id], ip=%I[val2]" info="Retransmit ARP-probe request"/>
     <event id="40 + 0xCB00" level="Op"     property="ProbeTimeout"              value="netif=%E[val1, NetIf:id], ip=%I[val2]" info="Probe timeout expired, no response"/>
+    <event id="49 + 0xCB00" level="API"    property="AddCache"                  value="netif=%E[val1, NetIf:id], ip=%I[val1, ARP_Cache:IpAddr], mac=%M[val1, ARP_Cache:MacAddr]" info="Add static IP and MAC address in ARP cache"/>
+    <event id="50 + 0xCB00" level="Error"  property="AddCacheInvalidParam"      value="netif=%E[val1, NetIf:id]" info="Invalid parameter provided for the function"/>
+    <event id="51 + 0xCB00" level="Error"  property="AddCacheInvalidIpAddress"  value="netif=%E[val1, NetIf:id]" info="Invalid IP address parameter provided for the function"/>
+    <event id="52 + 0xCB00" level="Error"  property="AddCacheInvalidMacAddress" value="netif=%E[val1, NetIf:id]" info="Invalid MAC address parameter provided for the function"/>
     <event id="46 + 0xCB00" level="API"    property="ClearCache"                value="netif=%E[val1, NetIf:id], deleted=%d[val2, NetVal:low] (max=%d[val2, NetVal:high])" info="Clear ARP cache requested"/>
     <event id="47 + 0xCB00" level="Error"  property="ClearCacheInvalidParam"    value="netif=%E[val1, NetIf:id]" info="Invalid parameter provided for the function"/>
     <event id="48 + 0xCB00" level="Error"  property="ClearCacheClientBusy"      value="netif=%E[val1, NetIf:id]" info="Clear ARP cache request failed, ARP client busy"/>
