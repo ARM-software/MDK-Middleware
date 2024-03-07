@@ -205,6 +205,11 @@ bypass_err:
     EvrNetWiFi_ThreadCreateFailed (h->IfNum);
     net_sys_error (NET_ERROR_CONFIG);
   }
+  if (ctrl->semaphore == NULL) {
+    ERRORF (WIFI,"Init %d, Semaphore create failed\n",h->IfNum);
+    EvrNetWiFi_SemaphoreCreateFailed (h->IfNum);
+    net_sys_error (NET_ERROR_CONFIG);
+  }
 }
 
 /**

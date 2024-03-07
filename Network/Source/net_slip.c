@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_slip.c
  * Purpose: IP over Serial Line Interface
@@ -69,6 +69,11 @@ void net_slip_iface_init (void) {
   if (ctrl->thread == NULL) {
     ERRORF (SLIP,"Init, Thread create failed\n");
     EvrNetSLIP_ThreadCreateFailed (); 
+    net_sys_error (NET_ERROR_CONFIG);
+  }
+  if (ctrl->semaphore == NULL) {
+    ERRORF (SLIP,"Init, Semaphore create failed\n");
+    EvrNetSLIP_SemaphoreCreateFailed (); 
     net_sys_error (NET_ERROR_CONFIG);
   }
 }

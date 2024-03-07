@@ -357,6 +357,16 @@ to create the ethernet interface thread.
 */
 
 /**
+\fn __STATIC_INLINE void EvrNetETH_SemaphoreCreateFailed(uint8_t if_num)
+\details
+The event \b SemaphoreCreateFailed is generated, if the function \ref netInitialize could
+not create the semaphore for the ethernet interface.
+
+\b Value in the Event Recorder shows:
+  - \b if_num: ethernet interface number.
+*/
+
+/**
 \fn __STATIC_INLINE void EvrNetETH_GetOptionInvalidParameter(uint8_t if_num)
 \details
 The event \b GetOptionInvalidParameter is created, when invalid input parameter is provided
@@ -948,6 +958,16 @@ to create the WiFi interface thread.
 */
 
 /**
+\fn __STATIC_INLINE void EvrNetWiFi_SemaphoreCreateFailed(uint8_t if_num)
+\details
+The event \b SemaphoreCreateFailed is generated, if the function \ref netInitialize could
+not create the semaphore for the WiFi interface.
+
+\b Value in the Event Recorder shows:
+  - \b if_num: WiFi interface number.
+*/
+
+/**
 \fn __STATIC_INLINE void EvrNetWiFi_GetOptionInvalidParameter(uint8_t if_num)
 \details
 The event \b GetOptionInvalidParameter is created, when invalid input parameter is
@@ -1527,7 +1547,17 @@ The event \b ThreadCreateFailed is generated, if the function \ref netInitialize
 to create the PPP interface thread.
 
 \b Value in the Event Recorder shows:
-  - \b thread: netPPP_Thread.
+  - \b netif: PPP interface name.
+*/
+
+/**
+\fn __STATIC_INLINE void EvrNetPPP_SemaphoreCreateFailed(void)
+\details
+The event \b SemaphoreCreateFailed is generated, if the function \ref netInitialize could
+not create the semaphore for the PPP interface.
+
+\b Value in the Event Recorder shows:
+  - \b netif: PPP interface name.
 */
 
 /**
@@ -2649,7 +2679,17 @@ The event \b ThreadCreateFailed is generated, if the function \ref netInitialize
 to create the SLIP interface thread.
 
 \b Value in the Event Recorder shows:
-  - \b thread: netSLIP_Thread.
+  - \b netif: SLIP interface name.
+*/
+
+/**
+\fn __STATIC_INLINE void EvrNetSLIP_SemaphoreCreateFailed(void)
+\details
+The event \b SemaphoreCreateFailed is generated, if the function \ref netInitialize could
+not create the semaphore for the SLIP interface.
+
+\b Value in the Event Recorder shows:
+  - \b netif: SLIP interface name.
 */
 
 /**

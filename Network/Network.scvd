@@ -1471,6 +1471,7 @@
     <event id=" 4 + 0xC200" level="Error"  property="Ip4ConfigError"            value="if_num=%d[val1]" info="IPv4 configuration error"/>
     <event id=" 5 + 0xC200" level="Error"  property="Ip6ConfigError"            value="if_num=%d[val1]" info="IPv6 configuration error"/>
     <event id=" 6 + 0xC200" level="Error"  property="ThreadCreateFailed"        value="if_num=%d[val1]" info="Failed to create ethernet interface thread"/>
+    <event id="48 + 0xC200" level="Error"  property="SemaphoreCreateFailed"     value="if_num=%d[val1]" info="Failed to create ethernet interface semaphore"/>
     <event id=" 7 + 0xC200" level="Error"  property="GetOptionInvalidParameter" value="if_num=%d[val1]" info="Invalid parameter provided for the function"/>
     <event id=" 8 + 0xC200" level="Error"  property="SetOptionInvalidParameter" value="if_num=%d[val1]" info="Invalid parameter provided for the function"/>
     <event id=" 9 + 0xC200" level="Op"     property="SetMacAddress"             value="if_num=%d[val1, NetVal:w0], mac=%M[val1, NetVal:w1]" info="Set interface MAC address"/>
@@ -1522,6 +1523,7 @@
     <event id=" 7 + 0xDD00" level="Error"  property="Ip4ConfigError"            value="if_num=%d[val1]" info="IPv4 configuration error"/>
     <event id=" 8 + 0xDD00" level="Error"  property="Ip6ConfigError"            value="if_num=%d[val1]" info="IPv6 configuration error"/>
     <event id=" 9 + 0xDD00" level="Error"  property="ThreadCreateFailed"        value="if_num=%d[val1]" info="Failed to create WiFi interface thread"/>
+    <event id="59 + 0xDD00" level="Error"  property="SemaphoreCreateFailed"     value="if_num=%d[val1]" info="Failed to create WiFi interface semaphore"/>
     <event id="10 + 0xDD00" level="Error"  property="GetOptionInvalidParameter" value="if_num=%d[val1]" info="Invalid parameter provided for the function"/>
     <event id="11 + 0xDD00" level="Error"  property="SetOptionInvalidParameter" value="if_num=%d[val1]" info="Invalid parameter provided for the function"/>
     <event id="12 + 0xDD00" level="Op"     property="SetMacAddress"             value="if_num=%d[val1, NetVal:w0], mac=%M[val1, NetVal:w1]" info="Set interface MAC address"/>
@@ -1574,7 +1576,8 @@
 
     <!-- NetPPP: PPP Interface events -->
     <event id=" 0 + 0xC300" level="Op"     property="InitInterface"             value="ppp" info="Initialize PPP interface"/>
-    <event id=" 1 + 0xC300" level="Error"  property="ThreadCreateFailed"        value="netPPP_Thread" info="Failed to create PPP interface thread"/>
+    <event id=" 1 + 0xC300" level="Error"  property="ThreadCreateFailed"        value="netif=PPP" info="Failed to create PPP interface thread"/>
+    <event id="105+ 0xC300" level="Error"  property="SemaphoreCreateFailed"     value="netif=PPP" info="Failed to create PPP interface semaphore"/>
     <event id=" 2 + 0xC300" level="Error"  property="GetOptionInvalidParameter" value="error" info="Invalid parameter provided for the function"/>
     <event id=" 3 + 0xC300" level="Error"  property="SetOptionInvalidParameter" value="error" info="Invalid parameter provided for the function"/>
     <event id=" 4 + 0xC300" level="Op"     property="SetIp4Address"             value="ip=%I[val1]" info="Set interface IPv4 address"/>
@@ -1686,7 +1689,8 @@
     <!-- NetSLIP: SLIP Interface events -->
     <event id=" 0 + 0xC400" level="Op"     property="InitInterface"             value="slip" info="Initialize SLIP interface"/>
     <event id=" 1 + 0xC400" level="Error"  property="Ip4ConfigError"            value="ip4" info="IPv4 configuration error"/>
-    <event id=" 2 + 0xC400" level="Error"  property="ThreadCreateFailed"        value="netSLIP_Thread" info="Failed to create SLIP interface thread"/>
+    <event id=" 2 + 0xC400" level="Error"  property="ThreadCreateFailed"        value="netif=SLIP" info="Failed to create SLIP interface thread"/>
+    <event id="23 + 0xC400" level="Error"  property="SemaphoreCreateFailed"     value="netif=SLIP" info="Failed to create SLIP interface semaphore"/>
     <event id=" 3 + 0xC400" level="Error"  property="GetOptionInvalidParameter" value="error" info="Invalid parameter provided for the function"/>
     <event id=" 4 + 0xC400" level="Error"  property="SetOptionInvalidParameter" value="error" info="Invalid parameter provided for the function"/>
     <event id=" 5 + 0xC400" level="Op"     property="SetIp4Address"             value="ip=%I[val1]" info="Set interface IPv4 address"/>

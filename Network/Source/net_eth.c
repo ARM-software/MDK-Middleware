@@ -157,7 +157,6 @@ static void eth_iface_init (NET_ETH_CFG *h) {
     drv_phy->PowerControl (ARM_POWER_FULL);
     drv_phy->SetInterface (capab.media_interface);
     drv_phy->SetMode (ARM_ETH_PHY_AUTO_NEGOTIATE);
-    netETH_Notify (h->IfNum, netETH_LinkDown, 0);
   }
   else if (rc == ARM_DRIVER_ERROR_UNSUPPORTED) {
     ERRORF (ETH,"Init %d, PHY config error\n",h->IfNum);
@@ -292,6 +291,16 @@ static void eth_iface_init (NET_ETH_CFG *h) {
     ERRORF (ETH,"Init %d, Thread create failed\n",h->IfNum);
     EvrNetETH_ThreadCreateFailed (h->IfNum);
     net_sys_error (NET_ERROR_CONFIG);
+  }
+  if (ctrl->semaphore == NULL) {
+    ERRORF (ETH,"Init %d, Semaphore create failed\n",h->IfNum);
+    EvrNetETH_SemaphoreCreateFailed (h->IfNum);
+    net_sys_error (NET_ERROR_CONFIG);
+  }
+
+  /* Send a notification at the end of initialization */
+  if (ctrl->Flags & ETH_FLAG_PHY_OK) {
+    netETH_Notify (h->IfNum, netETH_LinkDown, 0);
   }
 }
 

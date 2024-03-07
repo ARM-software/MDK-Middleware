@@ -358,6 +358,7 @@ typedef struct evr_addr {
 #define EvtNetETH_Ip4ConfigError            EventID (EventLevelError, EvtNetETH,  4)
 #define EvtNetETH_Ip6ConfigError            EventID (EventLevelError, EvtNetETH,  5)
 #define EvtNetETH_ThreadCreateFailed        EventID (EventLevelError, EvtNetETH,  6)
+#define EvtNetETH_SemaphoreCreateFailed     EventID (EventLevelError, EvtNetETH, 48) // End
 #define EvtNetETH_GetOptionInvalidParameter EventID (EventLevelError, EvtNetETH,  7)
 #define EvtNetETH_SetOptionInvalidParameter EventID (EventLevelError, EvtNetETH,  8)
 #define EvtNetETH_SetMacAddress             EventID (EventLevelOp,    EvtNetETH,  9)
@@ -373,7 +374,7 @@ typedef struct evr_addr {
 #define EvtNetETH_SetIp6PrimaryDNS          EventID (EventLevelOp,    EvtNetETH, 19)
 #define EvtNetETH_SetIp6SecondaryDNS        EventID (EventLevelOp,    EvtNetETH, 20)
 #define EvtNetETH_SetIp6PrefixLength        EventID (EventLevelOp,    EvtNetETH, 21)
-#define EvtNetETH_SetIp6Mtu                 EventID (EventLevelOp,    EvtNetETH, 47) // End
+#define EvtNetETH_SetIp6Mtu                 EventID (EventLevelOp,    EvtNetETH, 47)
 #define EvtNetETH_SendFrame                 EventID (EventLevelOp,    EvtNetETH, 22)
 #define EvtNetETH_LinkDownError             EventID (EventLevelError, EvtNetETH, 23)
 #define EvtNetETH_SendDataTooLarge          EventID (EventLevelError, EvtNetETH, 24)
@@ -505,6 +506,18 @@ typedef struct evr_addr {
   }
 #else
   #define EvrNetETH_ThreadCreateFailed(if_num)
+#endif
+
+/**
+  \brief  Event on Ethernet semaphore create failed (Error)
+  \param  if_num        interface number
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetETH_SemaphoreCreateFailed(uint8_t if_num) {
+    EventRecord2 (EvtNetETH_SemaphoreCreateFailed, if_num, 0);
+  }
+#else
+  #define EvrNetETH_SemaphoreCreateFailed(if_num)
 #endif
 
 /**
@@ -1052,6 +1065,7 @@ typedef struct evr_addr {
 #define EvtNetWiFi_Ip4ConfigError            EventID (EventLevelError, EvtNetWiFi,  7)
 #define EvtNetWiFi_Ip6ConfigError            EventID (EventLevelError, EvtNetWiFi,  8)
 #define EvtNetWiFi_ThreadCreateFailed        EventID (EventLevelError, EvtNetWiFi,  9)
+#define EvtNetWiFi_SemaphoreCreateFailed     EventID (EventLevelError, EvtNetWiFi, 59) // End
 #define EvtNetWiFi_GetOptionInvalidParameter EventID (EventLevelError, EvtNetWiFi, 10)
 #define EvtNetWiFi_SetOptionInvalidParameter EventID (EventLevelError, EvtNetWiFi, 11)
 #define EvtNetWiFi_SetMacAddress             EventID (EventLevelOp,    EvtNetWiFi, 12)
@@ -1066,7 +1080,7 @@ typedef struct evr_addr {
 #define EvtNetWiFi_SetIp6PrimaryDNS          EventID (EventLevelOp,    EvtNetWiFi, 21)
 #define EvtNetWiFi_SetIp6SecondaryDNS        EventID (EventLevelOp,    EvtNetWiFi, 22)
 #define EvtNetWiFi_SetIp6PrefixLength        EventID (EventLevelOp,    EvtNetWiFi, 23)
-#define EvtNetWiFi_SetIp6Mtu                 EventID (EventLevelOp,    EvtNetWiFi, 58) // End
+#define EvtNetWiFi_SetIp6Mtu                 EventID (EventLevelOp,    EvtNetWiFi, 58)
 #define EvtNetWiFi_Scan                      EventID (EventLevelAPI,   EvtNetWiFi, 24)
 #define EvtNetWiFi_ScanWrongMode             EventID (EventLevelError, EvtNetWiFi, 25)
 #define EvtNetWiFi_ScanInvalidParameter      EventID (EventLevelError, EvtNetWiFi, 26)
@@ -1224,6 +1238,18 @@ typedef struct evr_addr {
   }
 #else
   #define EvrNetWiFi_ThreadCreateFailed(if_num)
+#endif
+
+/**
+  \brief  Event on WiFi semaphore create failed (Error)
+  \param  if_num        interface number
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetWiFi_SemaphoreCreateFailed(uint8_t if_num) {
+    EventRecord2 (EvtNetWiFi_SemaphoreCreateFailed, if_num, 0);
+  }
+#else
+  #define EvrNetWiFi_SemaphoreCreateFailed(if_num)
 #endif
 
 /**
@@ -1896,6 +1922,7 @@ typedef struct evr_addr {
 /* PPP-Core events */
 #define EvtNetPPP_InitInterface             EventID (EventLevelOp,    EvtNetPPP,  0)
 #define EvtNetPPP_ThreadCreateFailed        EventID (EventLevelError, EvtNetPPP,  1)
+#define EvtNetPPP_SemaphoreCreateFailed     EventID (EventLevelError, EvtNetPPP,105) // End
 #define EvtNetPPP_GetOptionInvalidParameter EventID (EventLevelError, EvtNetPPP,  2)
 #define EvtNetPPP_SetOptionInvalidParameter EventID (EventLevelError, EvtNetPPP,  3)
 #define EvtNetPPP_SetIp4Address             EventID (EventLevelOp,    EvtNetPPP,  4)
@@ -2028,6 +2055,17 @@ typedef struct evr_addr {
   }
 #else
   #define EvrNetPPP_ThreadCreateFailed()
+#endif
+
+/**
+  \brief  Event on PPP semaphore create failed (Error)
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetPPP_SemaphoreCreateFailed(void) {
+    EventRecord2 (EvtNetPPP_SemaphoreCreateFailed, 0, 0);
+  }
+#else
+  #define EvrNetPPP_SemaphoreCreateFailed()
 #endif
 
 /**
@@ -3318,6 +3356,7 @@ typedef struct evr_addr {
 #define EvtNetSLIP_InitInterface            EventID (EventLevelOp,    EvtNetSLIP,  0)
 #define EvtNetSLIP_Ip4ConfigError           EventID (EventLevelError, EvtNetSLIP,  1)
 #define EvtNetSLIP_ThreadCreateFailed       EventID (EventLevelError, EvtNetSLIP,  2)
+#define EvtNetSLIP_SemaphoreCreateFailed    EventID (EventLevelError, EvtNetSLIP, 23) // End
 #define EvtNetSLIP_GetOptionInvalidParameter EventID (EventLevelError,EvtNetSLIP,  3)
 #define EvtNetSLIP_SetOptionInvalidParameter EventID (EventLevelError,EvtNetSLIP,  4)
 #define EvtNetSLIP_SetIp4Address            EventID (EventLevelOp,    EvtNetSLIP,  5)
@@ -3371,6 +3410,17 @@ typedef struct evr_addr {
   }
 #else
   #define EvrNetSLIP_ThreadCreateFailed()
+#endif
+
+/**
+  \brief  Event on SLIP semaphore create failed (Error)
+ */
+#ifdef DEBUG_EVR
+  __STATIC_INLINE void EvrNetSLIP_SemaphoreCreateFailed(void) {
+    EventRecord2 (EvtNetSLIP_SemaphoreCreateFailed, 0, 0);
+  }
+#else
+  #define EvrNetSLIP_SemaphoreCreateFailed()
 #endif
 
 /**
