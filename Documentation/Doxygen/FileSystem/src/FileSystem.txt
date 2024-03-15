@@ -41,6 +41,12 @@ This user's guide contains the following chapters:
       <th>Description</th>
     </tr>
     <tr>
+      <td>V8.0.0</td>
+      <td>
+        - fixed allocation table write access (regression) when using FAT12
+      </td>
+    </tr>
+    <tr>
       <td>V6.16.6</td>
       <td>
         - using Event Recorder component from CMSIS-View pack (instead of deprecated ARM_Compiler pack)

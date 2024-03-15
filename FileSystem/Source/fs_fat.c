@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_fat.c
  * Purpose: FAT File System Implementation
@@ -1623,10 +1623,10 @@ static uint32_t alloc_table_write (uint32_t clus, uint32_t val, fsFAT_Volume *vo
       if (offs < 511) {
         temp = get_u16 (&vol->fat.buf[offs]);
         if (clus & 0x001) {
-          temp = (uint8_t)((temp & 0x000F) | (link << 4));
+          temp = (uint16_t)((temp & 0x000F) | (link << 4));
         }
         else {
-          temp = (uint8_t)((temp & 0xF000) | link);
+          temp = (uint16_t)((temp & 0xF000) | link);
         }
         set_u16 (&vol->fat.buf[offs], temp);
       }

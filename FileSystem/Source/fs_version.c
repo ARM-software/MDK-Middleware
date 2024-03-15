@@ -8,9 +8,9 @@
 #include "rl_fs_lib.h"
 
 /* FileSystem Version */
-#define MAJOR    6
-#define MINOR    16
-#define BUILD    6
+#define MAJOR    8
+#define MINOR    0
+#define BUILD    0
 
 /* BCD encoded version: 0xMMmmbbbb (MM:Major, mm:minor, bbbb:build) */
 const uint32_t fs_lib_version = ((MAJOR / 10)  << 28) | ((MAJOR % 10) << 24) | \
