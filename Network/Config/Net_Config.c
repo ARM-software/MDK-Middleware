@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    Net_Config.c
  * Purpose: Network Configuration
- * Rev.:    V7.2.0
+ * Rev.:    V7.2.1
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -32,8 +32,8 @@
 //   <h>OS Resource Settings
 //   <i>These settings are used to optimize usage of OS resources.
 //     <o>Core Thread Stack Size <512-65535:4>
-//     <i>Default: 1024 bytes
-#define NET_THREAD_STACK_SIZE   1024
+//     <i>Default: 2048 bytes
+#define NET_THREAD_STACK_SIZE   2048
 
 //        Core Thread Priority
 #define NET_THREAD_PRIORITY     osPriorityNormal

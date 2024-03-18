@@ -95,7 +95,7 @@ packets are allocated from this memory pool. Usually, the default value of 12000
 Many \ref netServices "Network Services" are started by the Network Core automatically. If you disable
 <b>Start System Service</b>, you need to enable/start them at runtime using the dedicated functions for that.
 
-To change the default OS resource settings for the Network Core, use <b>Core Thread Stack Size</b>. The default value is 1024 bytes.
+To change the default OS resource settings for the Network Core, use <b>Core Thread Stack Size</b>. The default value is 2048 bytes.
 The default Core Thread priority is <b>osPriorityNormal</b>. You can change this priority by changing the \b NET_THREAD_PRIORITY
 defined in this configuration file. This priority must be lower than the priorities of the network interface threads.
 

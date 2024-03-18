@@ -112,6 +112,7 @@ This user's guide contains the following chapters:
         - added function \ref netARP_AddCache to manually add an entry to the ARP cache table
         - added option for updating mbedTLS certificates at runtime
         - added IPv6 Multicasting with MLD, Multicast Listener Discovery Protocol
+        - increased default Core Thread stack size (from 1024 to 2048)
       </td>
     </tr>
     <tr>

@@ -711,7 +711,7 @@
         <files>
           <file category="other"   name="Network/Network.scvd"/>
           <file category="header"  name="Network/Include/rl_net.h"/>
-          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
+          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.1"/>
           <file category="include" name="Network/Source/Include/"/>
           <!-- Core -->
           <file category="source"  name="Network/Source/net_ip4.c"/>
@@ -746,7 +746,7 @@
         <files>
           <file category="other"   name="Network/Network.scvd"/>
           <file category="header"  name="Network/Include/rl_net.h"/>
-          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
+          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.1"/>
           <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.2.0"/>
           <file category="include" name="Network/Source/Include/"/>
           <!-- Core -->
@@ -782,7 +782,7 @@
         <files>
           <file category="other"   name="Network/Network.scvd"/>
           <file category="header"  name="Network/Include/rl_net.h"/>
-          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
+          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.1"/>
           <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.2.0"/>
           <file category="include" name="Network/Source/Include/"/>
           <!-- Core -->
@@ -817,7 +817,7 @@
         <files>
           <file category="other"   name="Network/Network.scvd"/>
           <file category="header"  name="Network/Include/rl_net.h"/>
-          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
+          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.1"/>
           <file category="include" name="Network/Source/Include/"/>
           <!-- Core -->
           <file category="source"  name="Network/Source/net_ip4.c"/>
@@ -848,7 +848,7 @@
         <files>
           <file category="other"   name="Network/Network.scvd"/>
           <file category="header"  name="Network/Include/rl_net.h"/>
-          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
+          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.1"/>
           <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.2.0"/>
           <file category="include" name="Network/Source/Include/"/>
           <!-- Core -->
@@ -880,7 +880,7 @@
         <files>
           <file category="header"  name="Network/Include/rl_net.h"/>
           <file category="other"   name="Network/Network.scvd"/>
-          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.0"/>
+          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.1"/>
           <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.2.0"/>
           <file category="include" name="Network/Source/Include/"/>
           <!-- Core -->

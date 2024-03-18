@@ -57,7 +57,7 @@ and the configuration file with <b>OS Resource Settings</b> for stack size adjus
 
 | Component                         | Thread Name     | Default Priority         | Default Stack Size | Configuration File
 | :---------------------------------| :---------------| :----------------------: | :----------------- | :-------------------
-| <b>\::Network:Core</b>            | netCore_Thread  | \c osPriorityNormal      | 1024 Bytes         | Net_Config.c
+| <b>\::Network:Core</b>            | netCore_Thread  | \c osPriorityNormal      | 2048 Bytes         | Net_Config.c
 | <b>\::Network:Interface:ETH</b>   | netETH0_Thread  | \c osPriorityAboveNormal | 512 Bytes          | Net_Config_ETH_0.h
 | <b>\::Network:Interface:WiFi</b>  | netWiFi0_Thread | \c osPriorityAboveNormal | 512 Bytes          | Net_Config_WiFi_0.h
 | <b>\::Network:Interface:PPP</b>   | netPPP_Thread   | \c osPriorityAboveNormal | 512 Bytes          | Net_Config_PPP.h
