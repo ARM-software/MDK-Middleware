@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_config.h
  * Purpose: File System Library Configuration
@@ -61,128 +61,35 @@
 
 /* ---------------------------------------------------------------------------*/
 /* Provide definitions for undefined drives */
-/* Ensure compatibility for config files with "Default Drive" setting */
 #ifndef NOR0_ENABLE
   #define NOR0_ENABLE   0
-#else
-  #ifdef NOR0_DEFAULT_DRIVE
-    #if  NOR0_DEFAULT_DRIVE
-      #define FS_INITIAL_CDRIVE   0
-    #endif
-  #endif
 #endif
 #ifndef NOR1_ENABLE
   #define NOR1_ENABLE   0
-#else
-  #ifdef NOR1_DEFAULT_DRIVE
-    #if  NOR1_DEFAULT_DRIVE
-      #define FS_INITIAL_CDRIVE   1
-    #endif
-  #endif
 #endif
 #ifndef MC0_ENABLE
   #define MC0_ENABLE    0
-#else
-  #ifdef MC0_DEFAULT_DRIVE
-    #if  MC0_DEFAULT_DRIVE
-      #define FS_INITIAL_CDRIVE   2
-    #endif
-  #endif
 #endif
 #ifndef MC1_ENABLE
   #define MC1_ENABLE    0
-#else
-  #ifdef MC1_DEFAULT_DRIVE
-    #if  MC1_DEFAULT_DRIVE
-      #define FS_INITIAL_CDRIVE   3
-    #endif
-  #endif
 #endif
 #ifndef NAND0_ENABLE
   #define NAND0_ENABLE  0
-#else
-  #ifdef NAND0_DEFAULT_DRIVE
-    #if  NAND0_DEFAULT_DRIVE
-      #define FS_INITIAL_CDRIVE   4
-    #endif
-  #endif
 #endif
 #ifndef NAND1_ENABLE
   #define NAND1_ENABLE  0
-#else
-  #ifdef NAND1_DEFAULT_DRIVE
-    #if  NAND1_DEFAULT_DRIVE
-      #define FS_INITIAL_CDRIVE   5
-    #endif
-  #endif
 #endif
 #ifndef RAM0_ENABLE
   #define RAM0_ENABLE   0
-#else
-  #ifdef RAM0_DEFAULT_DRIVE
-    #if  RAM0_DEFAULT_DRIVE
-      #define FS_INITIAL_CDRIVE   6
-    #endif
-  #endif
 #endif
 #ifndef RAM1_ENABLE
   #define RAM1_ENABLE   0
 #endif
 #ifndef USB0_ENABLE
   #define USB0_ENABLE   0
-#else
-  #ifdef USB0_DEFAULT_DRIVE
-    #if  USB0_DEFAULT_DRIVE
-      #define FS_INITIAL_CDRIVE   7
-    #endif
-  #endif
 #endif
 #ifndef USB1_ENABLE
   #define USB1_ENABLE   0
-#else
-  #ifdef USB1_DEFAULT_DRIVE
-    #if  USB1_DEFAULT_DRIVE
-      #define FS_INITIAL_CDRIVE   8
-    #endif
-  #endif
-#endif
-/* ---------------------------------------------------------------------------*/
-/* Ensure compatibility for config files with "NUM_FILES" config option */
-#ifndef FAT_MAX_OPEN_FILES
-  #define FAT_MAX_OPEN_FILES NUM_FILES
-#endif
-#ifndef EFS_MAX_OPEN_FILES
-  #define EFS_MAX_OPEN_FILES NUM_FILES
-#endif
-/* ---------------------------------------------------------------------------*/
-/* Ensure compatibility for config files with "FAT Name Cache Size" setting */
-#ifdef FAT_NAME_CACHE_SIZE
-  #if (FAT_NAME_CACHE_SIZE > 0)
-    #define MC0_NAME_CACHE_SIZE     FAT_NAME_CACHE_SIZE
-    #define MC1_NAME_CACHE_SIZE     FAT_NAME_CACHE_SIZE
-    #define NAND0_NAME_CACHE_SIZE   FAT_NAME_CACHE_SIZE
-    #define NAND1_NAME_CACHE_SIZE   FAT_NAME_CACHE_SIZE
-    #define USB0_NAME_CACHE_SIZE    FAT_NAME_CACHE_SIZE
-    #define USB1_NAME_CACHE_SIZE    FAT_NAME_CACHE_SIZE
-  #endif
-#endif
-/* ---------------------------------------------------------------------------*/
-/* Ensure compatibility for config files with "Default Drive" setting */
-#ifndef FS_INITIAL_CDRIVE
-  #define __DEF  ((NOR0_DEFAULT_DRIVE  & NOR0_ENABLE)  +  \
-                  (NOR1_DEFAULT_DRIVE  & NOR1_ENABLE)  +  \
-                  (RAM0_DEFAULT_DRIVE  & RAM0_ENABLE)  +  \
-                  (MC0_DEFAULT_DRIVE   & MC0_ENABLE)   +  \
-                  (MC1_DEFAULT_DRIVE   & MC1_ENABLE)   +  \
-                  (USB0_DEFAULT_DRIVE  & USB0_ENABLE)  +  \
-                  (USB1_DEFAULT_DRIVE  & USB1_ENABLE)  +  \
-                  (NAND0_DEFAULT_DRIVE & NAND0_ENABLE) +  \
-                  (NAND1_DEFAULT_DRIVE & NAND1_ENABLE))
-  #if (__DEF == 0)
-    #error "Default ::File System:Drive not specified"
-  #elif (__DEF > 1)
-    #error "Multiple default ::File System:Drive: enabled"
-  #endif
 #endif
 /* ---------------------------------------------------------------------------*/
 /* Verify correct current drive configuration */
