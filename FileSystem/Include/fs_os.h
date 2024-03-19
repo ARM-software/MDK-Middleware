@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_os.h
  * Purpose: File System RTOS Support
@@ -15,26 +15,12 @@
 /* Include CMSIS RTOS API */
 #if !defined (RTE_CMSIS_RTOS) && defined (RTE_CMSIS_RTOS2)
   #include "cmsis_os2.h"
-#elif defined (RTE_CMSIS_RTOS)
-  #include "cmsis_os.h"
+#else
+  #error "FileSystem requires CMSIS-RTOS2."
 #endif
 
-#if defined (RTE_CMSIS_RTOS2) && defined (RTE_CMSIS_RTOS2_RTX5)
+#if defined (RTE_CMSIS_RTOS2_RTX5)
   #include "rtx_os.h"
-#endif
-
-/* Drive mutexes */
-#if defined(RTE_CMSIS_RTOS)
-extern const osMutexDef_t os_mutex_def_fs_nor0_mtx_def;
-extern const osMutexDef_t os_mutex_def_fs_nor1_mtx_def;
-extern const osMutexDef_t os_mutex_def_fs_mc0_mtx_def;
-extern const osMutexDef_t os_mutex_def_fs_mc1_mtx_def;
-extern const osMutexDef_t os_mutex_def_fs_nand0_mtx_def;
-extern const osMutexDef_t os_mutex_def_fs_nand1_mtx_def;
-extern const osMutexDef_t os_mutex_def_fs_ram0_mtx_def;
-extern const osMutexDef_t os_mutex_def_fs_ram1_mtx_def;
-extern const osMutexDef_t os_mutex_def_fs_usb0_mtx_def;
-extern const osMutexDef_t os_mutex_def_fs_usb1_mtx_def;
 #endif
 
 /*----------------------------------------------------------------------------
@@ -42,29 +28,19 @@ extern const osMutexDef_t os_mutex_def_fs_usb1_mtx_def;
  *---------------------------------------------------------------------------*/
 #if (NOR0_ENABLE)
 
-#if !defined (RTE_CMSIS_RTOS) && defined (RTE_CMSIS_RTOS2)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t  fs_nor0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t  fs_nor0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nor0_mtx_cb, sizeof(osRtxMutex_t) };
-
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t  fs_nor0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_nor0_mtx &fs_nor0_mtx_at
+#if defined (RTE_CMSIS_RTOS2_RTX5)
+/* CMSIS RTOS2 RTX5 */
+static osRtxMutex_t  fs_nor0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+static
+const osMutexAttr_t  fs_nor0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nor0_mtx_cb, sizeof(osRtxMutex_t) };
 
 #else
-  /* CMSIS RTOS */
-  #if (osCMSIS < 0x20000U)
-  static
-  #endif
-  osMutexDef                 (fs_nor0_mtx_def);
-  #define fs_nor0_mtx osMutex(fs_nor0_mtx_def)
+/* CMSIS RTOS2 (dynamic memory allocation) */
+static
+const osMutexAttr_t  fs_nor0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
 #endif
+
+#define fs_nor0_mtx &fs_nor0_mtx_at
 
 #endif /* NOR0_ENABLE */
 
@@ -74,29 +50,19 @@ extern const osMutexDef_t os_mutex_def_fs_usb1_mtx_def;
  *---------------------------------------------------------------------------*/
 #if (NOR1_ENABLE)
 
-#if !defined (RTE_CMSIS_RTOS) && defined (RTE_CMSIS_RTOS2)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t  fs_nor1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t  fs_nor1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nor1_mtx_cb, sizeof(osRtxMutex_t) };
-
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t  fs_nor1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_nor1_mtx &fs_nor1_mtx_at
+#if defined (RTE_CMSIS_RTOS2_RTX5)
+/* CMSIS RTOS2 RTX5 */
+static osRtxMutex_t  fs_nor1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+static
+const osMutexAttr_t  fs_nor1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nor1_mtx_cb, sizeof(osRtxMutex_t) };
 
 #else
-  /* CMSIS RTOS */
-  #if (osCMSIS < 0x20000U)
-  static
-  #endif
-  osMutexDef                 (fs_nor1_mtx_def);
-  #define fs_nor1_mtx osMutex(fs_nor1_mtx_def)
+/* CMSIS RTOS2 (dynamic memory allocation) */
+static
+const osMutexAttr_t  fs_nor1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
 #endif
+
+#define fs_nor1_mtx &fs_nor1_mtx_at
 
 #endif /* NOR1_ENABLE */
 
@@ -106,29 +72,19 @@ extern const osMutexDef_t os_mutex_def_fs_usb1_mtx_def;
  *---------------------------------------------------------------------------*/
 #if (MC0_ENABLE)
 
-#if !defined (RTE_CMSIS_RTOS) && defined (RTE_CMSIS_RTOS2)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t fs_mc0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t fs_mc0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_mc0_mtx_cb, sizeof(osRtxMutex_t) };
-
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t fs_mc0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_mc0_mtx &fs_mc0_mtx_at
+#if defined (RTE_CMSIS_RTOS2_RTX5)
+/* CMSIS RTOS2 RTX5 */
+static osRtxMutex_t fs_mc0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+static
+const osMutexAttr_t fs_mc0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_mc0_mtx_cb, sizeof(osRtxMutex_t) };
 
 #else
-  /* CMSIS RTOS */
-  #if (osCMSIS < 0x20000U)
-  static
-  #endif
-  osMutexDef                (fs_mc0_mtx_def);
-  #define fs_mc0_mtx osMutex(fs_mc0_mtx_def)
+/* CMSIS RTOS2 (dynamic memory allocation) */
+static
+const osMutexAttr_t fs_mc0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
 #endif
+
+#define fs_mc0_mtx &fs_mc0_mtx_at
 
 #endif /* MC0_ENABLE */
 
@@ -138,29 +94,19 @@ extern const osMutexDef_t os_mutex_def_fs_usb1_mtx_def;
  *---------------------------------------------------------------------------*/
 #if (MC1_ENABLE)
 
-#if !defined (RTE_CMSIS_RTOS) && defined (RTE_CMSIS_RTOS2)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t fs_mc1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t fs_mc1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_mc1_mtx_cb, sizeof(osRtxMutex_t) };
-
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t fs_mc1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_mc1_mtx &fs_mc1_mtx_at
+#if defined (RTE_CMSIS_RTOS2_RTX5)
+/* CMSIS RTOS2 RTX5 */
+static osRtxMutex_t fs_mc1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+static
+const osMutexAttr_t fs_mc1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_mc1_mtx_cb, sizeof(osRtxMutex_t) };
 
 #else
-  /* CMSIS RTOS */
-  #if (osCMSIS < 0x20000U)
-  static
-  #endif
-  osMutexDef                (fs_mc1_mtx_def);
-  #define fs_mc1_mtx osMutex(fs_mc1_mtx_def)
-  #endif
+/* CMSIS RTOS2 (dynamic memory allocation) */
+static
+const osMutexAttr_t fs_mc1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
+#endif
+
+#define fs_mc1_mtx &fs_mc1_mtx_at
 
 #endif /* MC1_ENABLE */
 
@@ -170,29 +116,19 @@ extern const osMutexDef_t os_mutex_def_fs_usb1_mtx_def;
  *---------------------------------------------------------------------------*/
 #if (NAND0_ENABLE)
 
-#if !defined (RTE_CMSIS_RTOS) && defined (RTE_CMSIS_RTOS2)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t   fs_nand0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t   fs_nand0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nand0_mtx_cb, sizeof(osRtxMutex_t) };
-
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t   fs_nand0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_nand0_mtx &fs_nand0_mtx_at
+#if defined (RTE_CMSIS_RTOS2_RTX5)
+/* CMSIS RTOS2 RTX5 */
+static osRtxMutex_t   fs_nand0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+static
+const osMutexAttr_t   fs_nand0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nand0_mtx_cb, sizeof(osRtxMutex_t) };
 
 #else
-  /* CMSIS RTOS */
-  #if (osCMSIS < 0x20000U)
-  static
-  #endif
-  osMutexDef                  (fs_nand0_mtx_def);
-  #define fs_nand0_mtx osMutex(fs_nand0_mtx_def)
+/* CMSIS RTOS2 (dynamic memory allocation) */
+static
+const osMutexAttr_t   fs_nand0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
 #endif
+
+#define fs_nand0_mtx &fs_nand0_mtx_at
 
 #endif /* NAND0_ENABLE */
 
@@ -202,29 +138,19 @@ extern const osMutexDef_t os_mutex_def_fs_usb1_mtx_def;
  *---------------------------------------------------------------------------*/
 #if (NAND1_ENABLE)
 
-#if !defined (RTE_CMSIS_RTOS) && defined (RTE_CMSIS_RTOS2)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t   fs_nand1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t   fs_nand1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nand1_mtx_cb, sizeof(osRtxMutex_t) };
-
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t   fs_nand1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_nand1_mtx &fs_nand1_mtx_at
+#if defined (RTE_CMSIS_RTOS2_RTX5)
+/* CMSIS RTOS2 RTX5 */
+static osRtxMutex_t   fs_nand1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+static
+const osMutexAttr_t   fs_nand1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nand1_mtx_cb, sizeof(osRtxMutex_t) };
 
 #else
-  /* CMSIS RTOS */
-  #if (osCMSIS < 0x20000U)
-  static
-  #endif
-  osMutexDef                  (fs_nand1_mtx_def);
-  #define fs_nand1_mtx osMutex(fs_nand1_mtx_def)
+/* CMSIS RTOS2 (dynamic memory allocation) */
+static
+const osMutexAttr_t   fs_nand1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
 #endif
+
+#define fs_nand1_mtx &fs_nand1_mtx_at
 
 #endif /* NAND1_ENABLE */
 
@@ -234,29 +160,19 @@ extern const osMutexDef_t os_mutex_def_fs_usb1_mtx_def;
  *---------------------------------------------------------------------------*/
 #if (RAM0_ENABLE)
 
-#if !defined (RTE_CMSIS_RTOS) && defined (RTE_CMSIS_RTOS2)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t  fs_ram0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t  fs_ram0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_ram0_mtx_cb, sizeof(osRtxMutex_t) };
-
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t  fs_ram0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_ram0_mtx &fs_ram0_mtx_at
+#if defined (RTE_CMSIS_RTOS2_RTX5)
+/* CMSIS RTOS2 RTX5 */
+static osRtxMutex_t  fs_ram0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+static
+const osMutexAttr_t  fs_ram0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_ram0_mtx_cb, sizeof(osRtxMutex_t) };
 
 #else
-  /* CMSIS RTOS */
-  #if (osCMSIS < 0x20000U)
-  static
-  #endif
-  osMutexDef                 (fs_ram0_mtx_def);
-  #define fs_ram0_mtx osMutex(fs_ram0_mtx_def)
+/* CMSIS RTOS2 (dynamic memory allocation) */
+static
+const osMutexAttr_t  fs_ram0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
 #endif
+
+#define fs_ram0_mtx &fs_ram0_mtx_at
 
 #endif /* RAM0_ENABLE */
 
@@ -266,29 +182,19 @@ extern const osMutexDef_t os_mutex_def_fs_usb1_mtx_def;
  *---------------------------------------------------------------------------*/
 #if (RAM1_ENABLE)
 
-#if !defined (RTE_CMSIS_RTOS) && defined (RTE_CMSIS_RTOS2)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t  fs_ram1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t  fs_ram1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_ram1_mtx_cb, sizeof(osRtxMutex_t) };
-
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t  fs_ram1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_ram1_mtx &fs_ram1_mtx_at
+#if defined (RTE_CMSIS_RTOS2_RTX5)
+/* CMSIS RTOS2 RTX5 */
+static osRtxMutex_t  fs_ram1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+static
+const osMutexAttr_t  fs_ram1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_ram1_mtx_cb, sizeof(osRtxMutex_t) };
 
 #else
-  /* CMSIS RTOS */
-  #if (osCMSIS < 0x20000U)
-  static
-  #endif
-  osMutexDef                 (fs_ram1_mtx_def);
-  #define fs_ram1_mtx osMutex(fs_ram1_mtx_def)
+/* CMSIS RTOS2 (dynamic memory allocation) */
+static
+const osMutexAttr_t  fs_ram1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
 #endif
+
+#define fs_ram1_mtx &fs_ram1_mtx_at
 
 #endif /* RAM1_ENABLE */
 
@@ -298,29 +204,19 @@ extern const osMutexDef_t os_mutex_def_fs_usb1_mtx_def;
  *---------------------------------------------------------------------------*/
 #if (USB0_ENABLE)
 
-#if !defined (RTE_CMSIS_RTOS) && defined (RTE_CMSIS_RTOS2)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t  fs_usb0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t  fs_usb0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_usb0_mtx_cb, sizeof(osRtxMutex_t) };
-
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t  fs_usb0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_usb0_mtx &fs_usb0_mtx_at
+#if defined (RTE_CMSIS_RTOS2_RTX5)
+/* CMSIS RTOS2 RTX5 */
+static osRtxMutex_t  fs_usb0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+static
+const osMutexAttr_t  fs_usb0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_usb0_mtx_cb, sizeof(osRtxMutex_t) };
 
 #else
-  /* CMSIS RTOS */
-  #if (osCMSIS < 0x20000U)
-  static
-  #endif
-  osMutexDef                 (fs_usb0_mtx_def);
-  #define fs_usb0_mtx osMutex(fs_usb0_mtx_def)
+/* CMSIS RTOS2 (dynamic memory allocation) */
+static
+const osMutexAttr_t  fs_usb0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
 #endif
+
+#define fs_usb0_mtx &fs_usb0_mtx_at
 
 #endif /* USB0_ENABLE */
 
@@ -330,29 +226,19 @@ extern const osMutexDef_t os_mutex_def_fs_usb1_mtx_def;
  *---------------------------------------------------------------------------*/
 #if (USB1_ENABLE)
 
-#if !defined (RTE_CMSIS_RTOS) && defined (RTE_CMSIS_RTOS2)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t  fs_usb1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t  fs_usb1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_usb1_mtx_cb, sizeof(osRtxMutex_t) };
-
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t  fs_usb1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_usb1_mtx &fs_usb1_mtx_at
+#if defined (RTE_CMSIS_RTOS2_RTX5)
+/* CMSIS RTOS2 RTX5 */
+static osRtxMutex_t  fs_usb1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+static
+const osMutexAttr_t  fs_usb1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_usb1_mtx_cb, sizeof(osRtxMutex_t) };
 
 #else
-  /* CMSIS RTOS */
-  #if (osCMSIS < 0x20000U)
-  static
-  #endif
-  osMutexDef                 (fs_usb1_mtx_def);
-  #define fs_usb1_mtx osMutex(fs_usb1_mtx_def)
+/* CMSIS RTOS2 (dynamic memory allocation) */
+static
+const osMutexAttr_t  fs_usb1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
 #endif
+
+#define fs_usb1_mtx &fs_usb1_mtx_at
 
 #endif /* USB1_ENABLE */
 
@@ -364,26 +250,17 @@ extern const osMutexDef_t os_mutex_def_fs_usb1_mtx_def;
   Create and initialize a mutex object
 */
 FS_MUTEX fs_mutex_new (const void *arg) {
-#if defined (RTE_CMSIS_RTOS2) && !defined (RTE_CMSIS_RTOS)
   return ((FS_MUTEX)osMutexNew (arg));
-#else
-  return ((FS_MUTEX)osMutexCreate (arg));
-#endif
 }
 /*
   Acquire a mutex.
 */
 uint32_t fs_mutex_acquire (FS_MUTEX mutex) {
   uint32_t status = 0U;
-#if defined (RTE_CMSIS_RTOS2) && !defined (RTE_CMSIS_RTOS)
+
   if (osMutexAcquire ((osMutexId_t)mutex, osWaitForever) != osOK) {
     status = 1U;
   }
-#else
-  if (osMutexWait (mutex, osWaitForever) != osOK) {
-    status = 1U;
-  }
-#endif
   return (status);
 }
 /*
@@ -391,15 +268,10 @@ uint32_t fs_mutex_acquire (FS_MUTEX mutex) {
 */
 uint32_t fs_mutex_release (FS_MUTEX mutex) {
   uint32_t status = 0U;
-#if defined (RTE_CMSIS_RTOS2) && !defined (RTE_CMSIS_RTOS)
+
   if (osMutexRelease ((osMutexId_t)mutex) != osOK) {
     status = 1U;
   }
-#else
-  if (osMutexRelease (mutex) != osOK) {
-    status = 1U;
-  }
-#endif
   return (status);
 }
 /*
@@ -407,26 +279,17 @@ uint32_t fs_mutex_release (FS_MUTEX mutex) {
 */
 uint32_t fs_mutex_delete (FS_MUTEX mutex) {
   uint32_t status = 0U;
-#if defined (RTE_CMSIS_RTOS2) && !defined (RTE_CMSIS_RTOS)
+
   if (osMutexDelete ((osMutexId_t)mutex) != osOK) {
     status = 1U;
   }
-#else
-  if (osMutexDelete (mutex) != osOK) {
-    status = 1U;
-  }
-#endif
   return (status);
 }
 /*
   Get the RTOS kernel tick frequency
 */
 uint32_t fs_get_rtos_tick_freq (void) {
-#if defined (RTE_CMSIS_RTOS2) && !defined (RTE_CMSIS_RTOS)
   return osKernelGetTickFreq();
-#else
-  return (1000U);
-#endif
 }
 /*
   Number of RTOS ticks in a millisecond
@@ -436,30 +299,18 @@ uint32_t fs_ms_rtos_tick;
   Wait for Timeout
 */
 uint32_t fs_set_rtos_delay (uint32_t millisec) {
-#if defined (RTE_CMSIS_RTOS2) && !defined (RTE_CMSIS_RTOS)
   osDelay (millisec * fs_ms_rtos_tick);
-#else
-  osDelay (millisec);
-#endif
   return (0);
 }
 /*
   Get the RTOS kernel system timer count.
 */
 uint32_t fs_get_sys_tick (void) {
-#if defined (RTE_CMSIS_RTOS2) && !defined (RTE_CMSIS_RTOS)
   return (osKernelGetSysTimerCount());
-#else
-  return (osKernelSysTick());
-#endif
 }
 /*
   Convert a microseconds value to a RTOS kernel system timer value.
 */
 uint32_t fs_get_sys_tick_us (uint32_t microsec) {
-#if defined (RTE_CMSIS_RTOS2) && !defined (RTE_CMSIS_RTOS)
   return ((uint32_t)(((uint64_t)microsec * osKernelGetSysTimerFreq()) / 1000000U));
-#else
-  return ((uint32_t)(osKernelSysTickMicroSec (microsec)));
-#endif
 }
