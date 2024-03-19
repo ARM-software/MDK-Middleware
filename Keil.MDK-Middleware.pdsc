@@ -1355,7 +1355,7 @@
         <files>
           <file category="other"   name="FileSystem/FileSystem.scvd"/>
           <file category="header"  name="FileSystem/Include/rl_fs.h"/>
-          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.4.0"/>
+          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.5.0"/>
           <file category="include" name="FileSystem/Source/Include/"/>
           <file category="source"  name="FileSystem/Source/fs_common.c"/>
           <file category="source"  name="FileSystem/Source/fs_efs.c"/>
@@ -1380,7 +1380,7 @@
         <files>
           <file category="other"   name="FileSystem/FileSystem.scvd"/>
           <file category="header"  name="FileSystem/Include/rl_fs.h"/>
-          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.4.0"/>
+          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.5.0"/>
           <file category="source"  name="FileSystem/Config/FS_Debug.c"  attr="config" version="1.0.0"/>
           <file category="include" name="FileSystem/Source/Include/"/>
           <file category="source"  name="FileSystem/Source/fs_common.c"/>
@@ -1406,7 +1406,7 @@
         <files>
           <file category="other"   name="FileSystem/FileSystem.scvd"/>
           <file category="header"  name="FileSystem/Include/rl_fs.h"/>
-          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.4.0"/>
+          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.5.0"/>
           <file category="include" name="FileSystem/Source/Include/"/>
           <file category="source"  name="FileSystem/Source/fs_common.c"/>
           <file category="source"  name="FileSystem/Source/fs_efs.c"/>
@@ -1431,7 +1431,7 @@
         <files>
           <file category="other"   name="FileSystem/FileSystem.scvd"/>
           <file category="header"  name="FileSystem/Include/rl_fs.h"/>
-          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.4.0"/>
+          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.5.0"/>
           <file category="source"  name="FileSystem/Config/FS_Debug.c"  attr="config" version="1.0.0"/>
           <file category="include" name="FileSystem/Source/Include/"/>
           <file category="source"  name="FileSystem/Source/fs_common.c"/>

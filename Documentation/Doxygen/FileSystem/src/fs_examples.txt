@@ -118,18 +118,11 @@ Set the drive characteristics in the \b FS_Config_NAND_n.h file:
 
 \section fs_Device_Configuration File System Configuration
 
-The File System configuration file \b FS_Config.c contains settings for the amount of files that can be open at the same time
-and the initial current drive which needs to be set according to the \ref fs_drives "drives" that have been selected:
+The File System configuration file \b FS_Config.c contains settings for the amount of files that can be open at the same time:
 
 \image html fs_config_c.png "File System Configuration File"
 
-If the \b Initial \b Current \b Drive is not configured correctly, the project will not build. The File System
-Component will flag this with an error message:
-\verbatim
-C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.0.0\FileSystem\Include\fs_config.h(178): error: #35:
-#error directive: "Initial Current ::File System:Drive is not enabled"
-#error "Initial Current ::File System:Drive is not enabled"
-\endverbatim
+Maximum number of simultaneously opened files can be set separately for FAT File System and for Embedded File System (EFS).
 
 
 \section fs_Driver_Configuration Hardware Configuration

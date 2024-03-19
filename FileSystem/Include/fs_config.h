@@ -92,9 +92,18 @@
   #define USB1_ENABLE   0
 #endif
 /* ---------------------------------------------------------------------------*/
-/* Verify correct current drive configuration */
-#if ((FS_INITIAL_CDRIVE < 0) || (FS_INITIAL_CDRIVE > 9))
-  #error "Initial Current Drive configuration invalid"
+#ifndef FS_INITIAL_CDRIVE
+/* Initial Current Drive <0=>F0: <1=>F1:
+                         <2=>M0: <3=>M1:
+                         <4=>N0: <5=>N1:
+                         <6=>R0: <9=>R1:
+                         <7=>U0: <8=>U1: */
+  #define FS_INITIAL_CDRIVE   -1
+#else
+  /* Verify correct current drive configuration */
+  #if ((FS_INITIAL_CDRIVE < 0) || (FS_INITIAL_CDRIVE > 9))
+    #error "Initial Current Drive configuration invalid"
+  #endif
 #endif
 /* ---------------------------------------------------------------------------*/
 /* Initial Current Drive configuration */

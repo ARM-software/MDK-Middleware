@@ -94,9 +94,15 @@ Current Drive
 The <b>Current Drive</b> defines the drive used when the filename itself does not specify the drive
 or when functions that expect a drive are called with an empty ("") string.
 
-An <b>Initial Current Drive</b> is defined in the \b FS_Config.c configuration file and is used at startup to set the
-\ref cur_sys_drive "Current Drive". The \ref cur_sys_drive "Current Drive" can be changed during run-time using the function
-\ref fchdrive.
+If there is only one drive enabled in the system then it automatically becomes the "Current Drive". Alternatively,
+when there are multiple drives enabled, the one with the drive letter that is first in alphabetical order is
+set as the "Current Drive".
+The \ref cur_sys_drive "Current Drive" can be changed during run-time using the function \ref fchdrive.
+
+\note
+  - Define FS_INITIAL_CDRIVE can be used to define initial current drive at build time.
+  - Set FS_INITIAL_CDRIVE to one of the following values: 0(F0), 1(F1), 2(M0), 3(M1), 4(N0), 5(N1), 6(R0), 9(R1), 7(U0), 8(U1)
+
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/

@@ -60,10 +60,13 @@ static void fs_component_init (void) {
       fs_efs_fh[i].flags = 0;
     }
 
-    /* Set initial current drive as current drive */
+    /* Set current drive */
+    fs_set_cdrive (0);
     for (dev = &fs_DevPool[0], i = 0; i < fs_ndrv; i++, dev++) {
       if (dev->attr & FS_CUR) {
+        /* Initial current drive was already defined */
         fs_set_cdrive ((int32_t)i);
+        break;
       }
     }
     cfg_done = 1U;
