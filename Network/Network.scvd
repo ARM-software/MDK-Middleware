@@ -2231,7 +2231,7 @@
     <event id="94 + 0xD100" level="Op"     property="SimultCloseNextState"      value="socket=%d[val1], next=%E[val2, TCP_State:id]" info="FIN flag received in simultaneous close, change state to next state"/>
     <event id="95 + 0xD100" level="Op"     property="AckNextState"              value="socket=%d[val1], next=%E[val2, TCP_State:id]" info="ACK flag received, change state to next state"/>
     <event id="96 + 0xD100" level="Op"     property="FinNextState"              value="socket=%d[val1], next=%E[val2, TCP_State:id]" info="FIN flag received, change state to next state"/>
-    <event id="97 + 0xD100" level="Error"  property="PshAckInHalfOpen"          value="socket=%d[val1]" info="PSH+ACK flags received in half open state FIN_WAIT_2"/>
+    <event id="97 + 0xD100" level="Op"     property="PshAckInHalfClosed"        value="socket=%d[val1]" info="PSH+ACK flags received in half closed state FIN_WAIT_2"/>
     <event id="98 + 0xD100" level="Op"     property="RepeatedFin"               value="socket=%d[val1]" info="Repeated FIN flag received"/>
     <event id="99 + 0xD100" level="Op"     property="LastAckNextState"          value="socket=%d[val1], next=%E[val2, TCP_State:id]" info="Last ACK flag received, change state to next state"/>
     <event id="100+ 0xD100" level="Error"  property="RstReceived"               value="socket=%d[val1]" info="RST flag received"/>

@@ -245,17 +245,17 @@ uint8_t *netTLS_GetBuffer (uint32_t size) {
 /**
   \brief       Close TLS session request.
   \param[in]   tls_id     TLS session id.
-  \param[in]   sock_mode  socket close mode: 1=normal, 0=abort.
+  \param[in]   close_mode socket close mode: 1=normal, 0=abort.
   \return      none.
 */
-void netTLS_Close (uint8_t tls_id, uint8_t sock_mode) {
+void netTLS_Close (uint8_t tls_id, uint8_t close_mode) {
   TLS_INFO *tls_s;
 
   if ((tls_id == 0) || (tls_id > TLS_NUM_SESS)) {
     return;
   }
   tls_s = &tls_scb[tls_id-1];
-  tls_s->CloseRq = (sock_mode) ? TLS_CLOSE_NORMAL : TLS_CLOSE_ABORT;
+  tls_s->CloseRq = (close_mode) ? TLS_CLOSE_NORMAL : TLS_CLOSE_ABORT;
   thread_wakeup ();
 }
 
@@ -761,6 +761,10 @@ static uint32_t cb_tls (int32_t socket, netTCP_Event event, const NET_ADDR *addr
       break;
 
     case netTCP_EventData:
+      if (tls_s->State <= TLS_STATE_IDLE) {
+        /* Ignore the data if SSL state not active */
+        break;
+      }
       /* Data has been received, store the data to receive */
       /* queue and let mbedTLS process it.                 */
       netbuf = __BUFFER(net_mem_alloc (QUEUE_HEADER_LEN + len));

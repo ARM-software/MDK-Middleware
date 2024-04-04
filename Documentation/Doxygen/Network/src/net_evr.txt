@@ -8529,12 +8529,11 @@ with the FIN flag set while closing. The socket state changes to the next state.
 */
 
 /**
-\fn __STATIC_INLINE void EvrNetTCP_PshAckInHalfOpen(int32_t socket)
+\fn __STATIC_INLINE void EvrNetTCP_PshAckInHalfClosed(int32_t socket)
 \details
-The event \b PshAckInHalfOpen is created when the socket receives the TCP frame
-with the PSH and ACK flags set during closing. The remote peer is still open.
-The socket sends a reset frame to the remote unit. The socket is then closed in
-client mode, or listening is reactivated in server mode.
+The event \b PshAckInHalfClosed is created when the socket receives the TCP frame
+with the PSH and ACK flags set on closing. The remote peer is still open. The socket
+is in a half-closed state. The received data is delivered to the application.
 
 \b Value in the Event Recorder shows:
   - \b socket: TCP socket handle for connection.

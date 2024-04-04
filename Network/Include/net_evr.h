@@ -9504,7 +9504,7 @@ typedef struct evr_addr {
 #define EvtNetTCP_SimultCloseNextState      EventID (EventLevelOp,    EvtNetTCP, 94)
 #define EvtNetTCP_AckNextState              EventID (EventLevelOp,    EvtNetTCP, 95)
 #define EvtNetTCP_FinNextState              EventID (EventLevelOp,    EvtNetTCP, 96)
-#define EvtNetTCP_PshAckInHalfOpen          EventID (EventLevelError, EvtNetTCP, 97)
+#define EvtNetTCP_PshAckInHalfClosed        EventID (EventLevelOp,    EvtNetTCP, 97)
 #define EvtNetTCP_RepeatedFin               EventID (EventLevelOp,    EvtNetTCP, 98)
 #define EvtNetTCP_LastAckNextState          EventID (EventLevelOp,    EvtNetTCP, 99)
 #define EvtNetTCP_RstReceived               EventID (EventLevelError, EvtNetTCP,100)
@@ -10755,15 +10755,15 @@ typedef struct evr_addr {
 #endif
 
 /**
-  \brief  Event on TCP PSH+ACK-flags received in half open state FIN_WAIT_2 (Error)
+  \brief  Event on TCP PSH+ACK-flags received in half closed state FIN_WAIT_2 (Op)
   \param  socket        socket handle
  */
 #ifdef DEBUG_EVR
-  __STATIC_INLINE void EvrNetTCP_PshAckInHalfOpen(int32_t socket) {
-    EventRecord2 (EvtNetTCP_PshAckInHalfOpen, (uint32_t)socket, 0);
+  __STATIC_INLINE void EvrNetTCP_PshAckInHalfClosed(int32_t socket) {
+    EventRecord2 (EvtNetTCP_PshAckInHalfClosed, (uint32_t)socket, 0);
   }
 #else
-  #define EvrNetTCP_PshAckInHalfOpen(socket)
+  #define EvrNetTCP_PshAckInHalfClosed(socket)
 #endif
 
 /**

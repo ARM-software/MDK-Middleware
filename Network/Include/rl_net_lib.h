@@ -1733,9 +1733,9 @@ extern void netTLS_Write (uint8_t tls_id, const uint8_t *buf, uint32_t len);
 
 /// \brief Stop TLS communication and close socket.
 /// \param[in]     tls_id        TLS context id.
-/// \param[in]     sock_mode     socket close mode: 1=normal, 0=abort.
+/// \param[in]     close_mode    socket close mode: 1=normal, 0=abort.
 /// \return        None.
-extern void netTLS_Close (uint8_t tls_id, uint8_t sock_mode);
+extern void netTLS_Close (uint8_t tls_id, uint8_t close_mode);
 
 //  ==== Network address conversion ====
 

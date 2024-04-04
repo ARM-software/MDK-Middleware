@@ -1531,7 +1531,7 @@ void net_tcp_process (NET_IF_CFG *net_if, NET_FRAME *frame, uint8_t ip_ver) {
           /* netTCP_EventACK event, before delivering the data.     */
           if (tcp_s->Flags & TCP_IFLAG_DACK) {
             tcp_s->Flags &= ~TCP_IFLAG_DACK;
-            DEBUGF (TCP," Callback EventACK\n",tcp_s->Id);
+            DEBUGF (TCP," Callback EventACK\n");
             EvrNetTCP_CallbackEventAck (tcp_s->Id);
             tcp_s->cb_func (tcp_s->Id, netTCP_EventACK, (NET_ADDR *)&tcp_s->Peer, NULL, 0);
           }
@@ -1886,13 +1886,31 @@ state_finw1:
           EvrNetTCP_WrongAckNumber (tcp_s->Id);
           return;
         }
-        /* Reject data in half open mode */
-        ERRORF (TCP,"Socket %d, PSH+ACK received\n",tcp_s->Id);
-        EvrNetTCP_PshAckInHalfOpen (tcp_s->Id);
-        tcp_s->RecNext = seqnr + dlen;
-        tcp_send_ctrl (tcp_s, TCP_FLAG_RST | TCP_FLAG_ACK);
-        tcp_transit (tcp_s, (tcp_s->Type & TCP_TYPE_SERVER) ? netTCP_StateLISTEN :
-                                                              netTCP_StateCLOSED);
+        if (tcp_s->RecNext != seqnr) {
+          if (tcp_s->RecNext == (seqnr + dlen)) {
+            /* This is a retransmitted segment, maybe our ACK was lost */
+            DEBUGF (TCP," Retransmitted segment received\n");
+            EvrNetTCP_RetransmittedSegment (tcp_s->Id);
+          }
+          else {
+            /* Out of range sequence number received */
+            ERRORF (TCP,"Socket %d, Out of range segment received\n",tcp_s->Id);
+            EvrNetTCP_OutOfRangeSegment (tcp_s->Id);
+          }
+          tcp_send_ctrl (tcp_s, TCP_FLAG_ACK);
+          return;
+        }
+        DEBUGF (TCP," Received PSH+ACK, socket half-closed\n");
+        EvrNetTCP_PshAckInHalfClosed (tcp_s->Id);
+        if (dlen) {
+          /* Data frame, notify the application */
+          tcp_s->Flags |=  TCP_IFLAG_CBACK;
+          tcp_s->cb_func (tcp_s->Id, netTCP_EventData, (NET_ADDR *)&tcp_s->Peer,
+                                     &frame->data[frame->index], dlen);
+          tcp_s->Flags &= ~TCP_IFLAG_CBACK;
+          tcp_s->RecNext += dlen;
+        }
+        tcp_send_ctrl (tcp_s, TCP_FLAG_ACK);
         return;
       }
       break;
