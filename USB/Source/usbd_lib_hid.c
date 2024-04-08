@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2021 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_hid.c
  * Purpose: USB Device - Human Interface Device (HID) module
@@ -754,3 +754,7 @@ void USBD_HID0_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)0U
 void USBD_HID1_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)1U); }
 void USBD_HID2_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)2U); }
 void USBD_HID3_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)3U); }
+void USBD_HID4_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)4U); }
+void USBD_HID5_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)5U); }
+void USBD_HID6_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)6U); }
+void USBD_HID7_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)7U); }
