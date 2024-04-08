@@ -1572,6 +1572,22 @@
         <var  name="usbd1_hid3_en" type="uint8_t" value="0"/>
         <var  name="usbd2_hid3_en" type="uint8_t" value="0"/>
         <var  name="usbd3_hid3_en" type="uint8_t" value="0"/>
+        <var  name="usbd0_hid4_en" type="uint8_t" value="0"/>
+        <var  name="usbd1_hid4_en" type="uint8_t" value="0"/>
+        <var  name="usbd2_hid4_en" type="uint8_t" value="0"/>
+        <var  name="usbd3_hid4_en" type="uint8_t" value="0"/>
+        <var  name="usbd0_hid5_en" type="uint8_t" value="0"/>
+        <var  name="usbd1_hid5_en" type="uint8_t" value="0"/>
+        <var  name="usbd2_hid5_en" type="uint8_t" value="0"/>
+        <var  name="usbd3_hid5_en" type="uint8_t" value="0"/>
+        <var  name="usbd0_hid6_en" type="uint8_t" value="0"/>
+        <var  name="usbd1_hid6_en" type="uint8_t" value="0"/>
+        <var  name="usbd2_hid6_en" type="uint8_t" value="0"/>
+        <var  name="usbd3_hid6_en" type="uint8_t" value="0"/>
+        <var  name="usbd0_hid7_en" type="uint8_t" value="0"/>
+        <var  name="usbd1_hid7_en" type="uint8_t" value="0"/>
+        <var  name="usbd2_hid7_en" type="uint8_t" value="0"/>
+        <var  name="usbd3_hid7_en" type="uint8_t" value="0"/>
 
         <!-- Prepare for display all variables by reading and calculating -->
         <read cond="usbd_hid_en" name="usbd_hid_num_hw" type="uint8_t" symbol="usbd_hid_num" const="1"/>
@@ -1601,6 +1617,30 @@
           usbd1_hid3_en = (usbd_hid[3].dev_num == 1) ? 1 : 0;
           usbd2_hid3_en = (usbd_hid[3].dev_num == 2) ? 1 : 0;
           usbd3_hid3_en = (usbd_hid[3].dev_num == 3) ? 1 : 0;
+        </calc>
+        <calc cond="(usbd_hid_num&gt;4)">
+          usbd0_hid4_en = (usbd_hid[4].dev_num == 0) ? 1 : 0;
+          usbd1_hid4_en = (usbd_hid[4].dev_num == 1) ? 1 : 0;
+          usbd2_hid4_en = (usbd_hid[4].dev_num == 2) ? 1 : 0;
+          usbd3_hid4_en = (usbd_hid[4].dev_num == 3) ? 1 : 0;
+        </calc>
+        <calc cond="(usbd_hid_num&gt;5)">
+          usbd0_hid5_en = (usbd_hid[5].dev_num == 0) ? 1 : 0;
+          usbd1_hid5_en = (usbd_hid[5].dev_num == 1) ? 1 : 0;
+          usbd2_hid5_en = (usbd_hid[5].dev_num == 2) ? 1 : 0;
+          usbd3_hid5_en = (usbd_hid[5].dev_num == 3) ? 1 : 0;
+        </calc>
+        <calc cond="(usbd_hid_num&gt;6)">
+          usbd0_hid6_en = (usbd_hid[6].dev_num == 0) ? 1 : 0;
+          usbd1_hid6_en = (usbd_hid[6].dev_num == 1) ? 1 : 0;
+          usbd2_hid6_en = (usbd_hid[6].dev_num == 2) ? 1 : 0;
+          usbd3_hid6_en = (usbd_hid[6].dev_num == 3) ? 1 : 0;
+        </calc>
+        <calc cond="(usbd_hid_num&gt;7)">
+          usbd0_hid7_en = (usbd_hid[7].dev_num == 0) ? 1 : 0;
+          usbd1_hid7_en = (usbd_hid[7].dev_num == 1) ? 1 : 0;
+          usbd2_hid7_en = (usbd_hid[7].dev_num == 2) ? 1 : 0;
+          usbd3_hid7_en = (usbd_hid[7].dev_num == 3) ? 1 : 0;
         </calc>
       <!-- USB Device Human Interface Device (HID) end -->
 
@@ -1992,6 +2032,10 @@
           <item cond="(usbd0_hid1_en)" property="Human Interface Device 1" value="In reports %d[usbd_hid[1].in_report_num], Out reports %d[usbd_hid[1].out_report_num], EP INT IN: %d[usbd_hid[1].ep_int_in], EP INT OUT: %E[usbd_hid[1].ep_int_out]"/>
           <item cond="(usbd0_hid2_en)" property="Human Interface Device 2" value="In reports %d[usbd_hid[2].in_report_num], Out reports %d[usbd_hid[2].out_report_num], EP INT IN: %d[usbd_hid[2].ep_int_in], EP INT OUT: %E[usbd_hid[2].ep_int_out]"/>
           <item cond="(usbd0_hid3_en)" property="Human Interface Device 3" value="In reports %d[usbd_hid[3].in_report_num], Out reports %d[usbd_hid[3].out_report_num], EP INT IN: %d[usbd_hid[3].ep_int_in], EP INT OUT: %E[usbd_hid[3].ep_int_out]"/>
+          <item cond="(usbd0_hid4_en)" property="Human Interface Device 4" value="In reports %d[usbd_hid[4].in_report_num], Out reports %d[usbd_hid[4].out_report_num], EP INT IN: %d[usbd_hid[4].ep_int_in], EP INT OUT: %E[usbd_hid[4].ep_int_out]"/>
+          <item cond="(usbd0_hid5_en)" property="Human Interface Device 5" value="In reports %d[usbd_hid[5].in_report_num], Out reports %d[usbd_hid[5].out_report_num], EP INT IN: %d[usbd_hid[5].ep_int_in], EP INT OUT: %E[usbd_hid[5].ep_int_out]"/>
+          <item cond="(usbd0_hid6_en)" property="Human Interface Device 6" value="In reports %d[usbd_hid[6].in_report_num], Out reports %d[usbd_hid[6].out_report_num], EP INT IN: %d[usbd_hid[6].ep_int_in], EP INT OUT: %E[usbd_hid[6].ep_int_out]"/>
+          <item cond="(usbd0_hid7_en)" property="Human Interface Device 7" value="In reports %d[usbd_hid[7].in_report_num], Out reports %d[usbd_hid[7].out_report_num], EP INT IN: %d[usbd_hid[7].ep_int_in], EP INT OUT: %E[usbd_hid[7].ep_int_out]"/>
 
           <item cond="(usbd0_msc0_en)" property="Mass Storage Device 0" value="EP BULK IN: %d[usbd_msc[0].ep_bulk_in], EP BULK OUT: %E[usbd_msc[0].ep_bulk_out]">
             <item property="LUN0">
@@ -2227,6 +2271,10 @@
           <item cond="(usbd1_hid1_en)" property="Human Interface Device 1" value="In reports %d[usbd_hid[1].in_report_num], Out reports %d[usbd_hid[1].out_report_num], EP INT IN: %d[usbd_hid[1].ep_int_in], EP INT OUT: %E[usbd_hid[1].ep_int_out]"/>
           <item cond="(usbd1_hid2_en)" property="Human Interface Device 2" value="In reports %d[usbd_hid[2].in_report_num], Out reports %d[usbd_hid[2].out_report_num], EP INT IN: %d[usbd_hid[2].ep_int_in], EP INT OUT: %E[usbd_hid[2].ep_int_out]"/>
           <item cond="(usbd1_hid3_en)" property="Human Interface Device 3" value="In reports %d[usbd_hid[3].in_report_num], Out reports %d[usbd_hid[3].out_report_num], EP INT IN: %d[usbd_hid[3].ep_int_in], EP INT OUT: %E[usbd_hid[3].ep_int_out]"/>
+          <item cond="(usbd1_hid4_en)" property="Human Interface Device 4" value="In reports %d[usbd_hid[4].in_report_num], Out reports %d[usbd_hid[4].out_report_num], EP INT IN: %d[usbd_hid[4].ep_int_in], EP INT OUT: %E[usbd_hid[4].ep_int_out]"/>
+          <item cond="(usbd1_hid5_en)" property="Human Interface Device 5" value="In reports %d[usbd_hid[5].in_report_num], Out reports %d[usbd_hid[5].out_report_num], EP INT IN: %d[usbd_hid[5].ep_int_in], EP INT OUT: %E[usbd_hid[5].ep_int_out]"/>
+          <item cond="(usbd1_hid6_en)" property="Human Interface Device 6" value="In reports %d[usbd_hid[6].in_report_num], Out reports %d[usbd_hid[6].out_report_num], EP INT IN: %d[usbd_hid[6].ep_int_in], EP INT OUT: %E[usbd_hid[6].ep_int_out]"/>
+          <item cond="(usbd1_hid7_en)" property="Human Interface Device 7" value="In reports %d[usbd_hid[7].in_report_num], Out reports %d[usbd_hid[7].out_report_num], EP INT IN: %d[usbd_hid[7].ep_int_in], EP INT OUT: %E[usbd_hid[7].ep_int_out]"/>
 
           <item cond="(usbd1_msc0_en)" property="Mass Storage Device 0" value="EP BULK IN: %d[usbd_msc[0].ep_bulk_in], EP BULK OUT: %E[usbd_msc[0].ep_bulk_out]">
             <item property="LUN0">
@@ -2462,6 +2510,10 @@
           <item cond="(usbd2_hid1_en)" property="Human Interface Device 1" value="In reports %d[usbd_hid[1].in_report_num], Out reports %d[usbd_hid[1].out_report_num], EP INT IN: %d[usbd_hid[1].ep_int_in], EP INT OUT: %E[usbd_hid[1].ep_int_out]"/>
           <item cond="(usbd2_hid2_en)" property="Human Interface Device 2" value="In reports %d[usbd_hid[2].in_report_num], Out reports %d[usbd_hid[2].out_report_num], EP INT IN: %d[usbd_hid[2].ep_int_in], EP INT OUT: %E[usbd_hid[2].ep_int_out]"/>
           <item cond="(usbd2_hid3_en)" property="Human Interface Device 3" value="In reports %d[usbd_hid[3].in_report_num], Out reports %d[usbd_hid[3].out_report_num], EP INT IN: %d[usbd_hid[3].ep_int_in], EP INT OUT: %E[usbd_hid[3].ep_int_out]"/>
+          <item cond="(usbd2_hid4_en)" property="Human Interface Device 4" value="In reports %d[usbd_hid[4].in_report_num], Out reports %d[usbd_hid[4].out_report_num], EP INT IN: %d[usbd_hid[4].ep_int_in], EP INT OUT: %E[usbd_hid[4].ep_int_out]"/>
+          <item cond="(usbd2_hid5_en)" property="Human Interface Device 5" value="In reports %d[usbd_hid[5].in_report_num], Out reports %d[usbd_hid[5].out_report_num], EP INT IN: %d[usbd_hid[5].ep_int_in], EP INT OUT: %E[usbd_hid[5].ep_int_out]"/>
+          <item cond="(usbd2_hid6_en)" property="Human Interface Device 6" value="In reports %d[usbd_hid[6].in_report_num], Out reports %d[usbd_hid[6].out_report_num], EP INT IN: %d[usbd_hid[6].ep_int_in], EP INT OUT: %E[usbd_hid[6].ep_int_out]"/>
+          <item cond="(usbd2_hid7_en)" property="Human Interface Device 7" value="In reports %d[usbd_hid[7].in_report_num], Out reports %d[usbd_hid[7].out_report_num], EP INT IN: %d[usbd_hid[7].ep_int_in], EP INT OUT: %E[usbd_hid[7].ep_int_out]"/>
 
           <item cond="(usbd2_msc0_en)" property="Mass Storage Device 0" value="EP BULK IN: %d[usbd_msc[0].ep_bulk_in], EP BULK OUT: %E[usbd_msc[0].ep_bulk_out]">
             <item property="LUN0">
@@ -2697,6 +2749,10 @@
           <item cond="(usbd3_hid1_en)" property="Human Interface Device 1" value="In reports %d[usbd_hid[1].in_report_num], Out reports %d[usbd_hid[1].out_report_num], EP INT IN: %d[usbd_hid[1].ep_int_in], EP INT OUT: %E[usbd_hid[1].ep_int_out]"/>
           <item cond="(usbd3_hid2_en)" property="Human Interface Device 2" value="In reports %d[usbd_hid[2].in_report_num], Out reports %d[usbd_hid[2].out_report_num], EP INT IN: %d[usbd_hid[2].ep_int_in], EP INT OUT: %E[usbd_hid[2].ep_int_out]"/>
           <item cond="(usbd3_hid3_en)" property="Human Interface Device 3" value="In reports %d[usbd_hid[3].in_report_num], Out reports %d[usbd_hid[3].out_report_num], EP INT IN: %d[usbd_hid[3].ep_int_in], EP INT OUT: %E[usbd_hid[3].ep_int_out]"/>
+          <item cond="(usbd3_hid4_en)" property="Human Interface Device 4" value="In reports %d[usbd_hid[4].in_report_num], Out reports %d[usbd_hid[4].out_report_num], EP INT IN: %d[usbd_hid[4].ep_int_in], EP INT OUT: %E[usbd_hid[4].ep_int_out]"/>
+          <item cond="(usbd3_hid5_en)" property="Human Interface Device 5" value="In reports %d[usbd_hid[5].in_report_num], Out reports %d[usbd_hid[5].out_report_num], EP INT IN: %d[usbd_hid[5].ep_int_in], EP INT OUT: %E[usbd_hid[5].ep_int_out]"/>
+          <item cond="(usbd3_hid6_en)" property="Human Interface Device 6" value="In reports %d[usbd_hid[6].in_report_num], Out reports %d[usbd_hid[6].out_report_num], EP INT IN: %d[usbd_hid[6].ep_int_in], EP INT OUT: %E[usbd_hid[6].ep_int_out]"/>
+          <item cond="(usbd3_hid7_en)" property="Human Interface Device 7" value="In reports %d[usbd_hid[7].in_report_num], Out reports %d[usbd_hid[7].out_report_num], EP INT IN: %d[usbd_hid[7].ep_int_in], EP INT OUT: %E[usbd_hid[7].ep_int_out]"/>
 
           <item cond="(usbd3_msc0_en)" property="Mass Storage Device 0" value="EP BULK IN: %d[usbd_msc[0].ep_bulk_in], EP BULK OUT: %E[usbd_msc[0].ep_bulk_out]">
             <item property="LUN0">
