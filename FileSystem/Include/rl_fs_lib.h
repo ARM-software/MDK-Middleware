@@ -41,9 +41,7 @@
 
 
 /* Switch case statement fall through compiler attribute */
-#if defined(__CC_ARM)
-  #define __FALLTHROUGH  do{} while(0)
-#else
+#ifndef __FALLTHROUGH
   #define __FALLTHROUGH  __attribute__((fallthrough))
 #endif
 

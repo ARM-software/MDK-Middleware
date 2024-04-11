@@ -18,6 +18,7 @@
       - added option for updating mbedTLS certificates at runtime
       - added IPv6 Multicasting with MLD, Multicast Listener Discovery Protocol
       FileSystem Component Version 8.0.0
+      - removed support for legacy Arm Compiler 5
       - removed support for CMSIS-RTOS version 1
       - fixed allocation table write access (regression) when using FAT12
     </release>

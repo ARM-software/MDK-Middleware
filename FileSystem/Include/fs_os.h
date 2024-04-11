@@ -8,10 +8,6 @@
 
 #include "rl_fs_lib.h"
 
-#if defined(__CC_ARM)
-#pragma O3
-#endif
-
 /* Include CMSIS RTOS API */
 #if !defined (RTE_CMSIS_RTOS) && defined (RTE_CMSIS_RTOS2)
   #include "cmsis_os2.h"

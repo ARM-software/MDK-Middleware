@@ -49,10 +49,6 @@
 #include "rl_fs_lib.h"
 #include "cmsis_compiler.h"
 
-#if defined(__CC_ARM)
-#pragma O3
-#endif
-
 /* ---------------------------------------------------------------------------*/
 /* Reject MicroLib since it does not provide retargeting */
 #ifdef __MICROLIB
@@ -231,9 +227,7 @@
 /* Support for absolute placement of variables */
 #ifndef __MEMORY_AT
   /* Macro __MEMORY_AT is used to place ZI data at specific address. */
-  #if defined(__CC_ARM)
-    #define __MEMORY_AT__(x) __attribute__((section(".ARM.__AT_"#x)))
-  #elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6060100)
+  #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6060100)
     #define __MEMORY_AT__(x) __attribute__((section(".bss.ARM.__at_"#x)))
   #else
     /* Define __MEMORY_AT to create sections used by the linker script */
