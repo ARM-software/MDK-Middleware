@@ -45,6 +45,7 @@ This user's guide contains the following chapters:
       <td>
         - removed support for legacy Arm Compiler 5
         - removed support for CMSIS-RTOS version 1
+        - removed support for legacy fdelete function
         - fixed allocation table write access (regression) when using FAT12
       </td>
     </tr>

@@ -143,15 +143,6 @@ The event \b funmount is generated when the function \ref funmount is called.
 */
 
 /**
-\fn __STATIC_INLINE void EvrFsCore_fdelete_l (const char *path)
-\details
-The event \b fdelete_l is generated when the legacy function \ref fdelete is called.
-
-\b Value in the Event Recorder shows:
-  - \b path : hex value specifying the memory location of the drive specification string.
-*/
-
-/**
 \fn __STATIC_INLINE void EvrFsCore_fdelete (const char *path, const char *options)
 \details
 The event \b fdelete is generated when the function \ref fdelete is called.

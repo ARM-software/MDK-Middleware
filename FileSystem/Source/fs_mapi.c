@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_mapi.c
  * Purpose: File Maintenance API Functions
@@ -379,45 +379,6 @@ fsStatus ffind (const char *pattern, fsFileInfo *info) {
 
 
 /**
-  \brief Delete a file or directory with given path name.
-  \param[in]  path                     a string specifying the file or directory to be deleted.
-  \return     execution status \ref fsStatus
-*/
-fsStatus _fdelete_legacy (const char *path) {
-  FS_DEV *dev;
-  int32_t id;
-
-  START_LOCK (fsStatus);
-
-  EvrFsCore_fdelete_l (path);
-
-  id = fs_drive_id (path, &path);
-  if (id < 0) {
-    /* Nonexistent drive or invalid input */
-    RETURN ((fsStatus)-id);
-  }
-  dev = &fs_DevPool[id];
-
-  if (dev->attr & FS_FAT) {
-    /* Lock FAT volume */
-    VOLUME_LOCK ((fsFAT_Volume *)dev->dcb);
-
-    /* Delete a file on FAT volume */
-    RETURN (fat_delete_l (path, (fsFAT_Volume *)dev->dcb));
-  }
-  else {
-    /* Lock EFS volume */
-    VOLUME_LOCK ((fsEFS_Volume *)dev->dcb);
-
-    /* Deleta a file on EFS volume */
-    RETURN (efs_delete (path, (fsEFS_Volume *)dev->dcb));
-  }
-
-  END_LOCK;
-}
-
-
-/**
   \brief Delete one or more files.
   \details The function \b fdelete deletes one or more files. If path
            argument points to the existing file it is removed. If path argument
@@ -435,7 +396,7 @@ fsStatus _fdelete_legacy (const char *path) {
   \param[in]  path                     a string specifying the file to be deleted.
   \return     execution status \ref fsStatus
 */
-fsStatus _fdelete (const char *path, const char *options) {
+fsStatus fdelete (const char *path, const char *options) {
   FS_DEV *dev;
   int32_t id;
 

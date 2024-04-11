@@ -708,7 +708,7 @@
     <event id=" 8 + 0x8000" level="API"    property="funinit"               value="drive=%x[val1]" info="Uninitialize drive"/>
     <event id=" 9 + 0x8000" level="API"    property="fmount"                value="drive=%x[val1]" info="Mount drive"/>
     <event id="10 + 0x8000" level="API"    property="funmount"              value="drive=%x[val1]" info="Unmount drive"/>
-    <event id="11 + 0x8000" level="API"    property="fdelete"               value="path=%x[val1]" info="Delete a file"/>
+    <!-- <event id="11 + 0x8000" level="API"    property=""                      value="" info=""/> -->
     <event id="12 + 0x8000" level="API"    property="fdelete"               value="path=%x[val1], options=%x[val2]" info="Delete one or more files"/>
     <event id="13 + 0x8000" level="API"    property="ffind"                 value="pattern=%x[val1], info=%x[val2]" info="Find a file or directory"/>
     <event id="14 + 0x8000" level="API"    property="frename"               value="path=%x[val1], newname=%x[val2]" info="Rename a file or directory"/>

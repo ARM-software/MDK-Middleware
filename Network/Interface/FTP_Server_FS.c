@@ -15,12 +15,6 @@
 
 static fsFileInfo info;
 
-#ifdef MW_FILESYSTEM_FDELETE_LEGACY
-  #define FDELETE(fn)   fdelete(fn)
-#else
-  #define FDELETE(fn)   fdelete(fn,NULL)
-#endif
-
 #ifndef NET_FTP_SERVER_VBUF_SIZE
   #define NET_FTP_SERVER_VBUF_SIZE 0
 #endif
@@ -53,7 +47,7 @@ __WEAK uint32_t netFTPs_fwrite (void *file, const uint8_t *buf, uint32_t len) {
 
 // Delete a file on FTP server.
 __WEAK bool netFTPs_fdelete (const char *fname) {
-  if (FDELETE (fname) == fsOK) {
+  if (fdelete (fname, NULL) == fsOK) {
     return (true);
   }
   return (false);

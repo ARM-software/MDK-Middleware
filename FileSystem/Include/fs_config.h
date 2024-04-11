@@ -1680,28 +1680,6 @@ void fs_config (const char *drive) {
 }
 
 
-/*-----------------------------------------------------------------------------
- *  Legacy support
- *
- *  fdelete(): to use the old function API and behavior, please
- *             define MW_FILESYSTEM_FDELETE_LEGACY in the project settings.
- *----------------------------------------------------------------------------*/
-#ifdef MW_FILESYSTEM_FDELETE_LEGACY
-extern fsStatus _fdelete_legacy (const char *path);
-
-/* Use old fdelete() function */
-fsStatus fdelete (const char *path) {
-  return (_fdelete_legacy (path));
-}
-#else
-extern fsStatus _fdelete (const char *path, const char *options);
-
-/* Use new fdelete() function */
-fsStatus fdelete (const char *path, const char *options) {
-  return (_fdelete (path, options));
-}
-#endif
-
 #if defined(__ARMCC_VERSION)
 #if (__ARMCC_VERSION >= 6010050)
   #pragma clang diagnostic ignored "-Wdollar-in-identifier-extension"

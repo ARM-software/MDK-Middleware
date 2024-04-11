@@ -49,7 +49,7 @@
 #define EvtFsCore_funinit               EvtFsCoreId(EventLevelAPI,     8)
 #define EvtFsCore_fmount                EvtFsCoreId(EventLevelAPI,     9)
 #define EvtFsCore_funmount              EvtFsCoreId(EventLevelAPI,    10)
-#define EvtFsCore_fdelete_l             EvtFsCoreId(EventLevelAPI,    11)
+//#define EvtFsCore_                      EvtFsCoreId(EventLevel,       11)
 #define EvtFsCore_fdelete               EvtFsCoreId(EventLevelAPI,    12)
 #define EvtFsCore_ffind                 EvtFsCoreId(EventLevelAPI,    13)
 #define EvtFsCore_frename               EvtFsCoreId(EventLevelAPI,    14)
@@ -616,18 +616,6 @@
   }
 #else
   #define EvrFsCore_funmount(drive)
-#endif
-
-/**
-  \brief  Event on file delete (API)
-  \param[in]  path      a string specifying the file or directory.
- */
-#ifdef EvtFsCore_fdelete_l
-  __STATIC_INLINE void EvrFsCore_fdelete_l (const char *path) {
-    EventRecord2 (EvtFsCore_fdelete_l, (uint32_t)path, 0);
-  }
-#else
-  #define EvrFsCore_fdelete_l(path)
 #endif
 
 /**

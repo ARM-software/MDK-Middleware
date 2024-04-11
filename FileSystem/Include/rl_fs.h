@@ -209,12 +209,7 @@ extern uint32_t fversion (void);
 /// \param[in]  path                     a string specifying the file or directory.
 /// \param[in]  options                  a string specifying function options.
 /// \return     execution status \ref fsStatus
-#ifdef MW_FILESYSTEM_FDELETE_LEGACY
-extern fsStatus fdelete (const char *path);
-#else
 extern fsStatus fdelete (const char *path, const char *options);
-#endif
-
 
 /// \brief Find a file or directory matching search pattern.
 /// \param[in]  pattern                  string specifying the pattern.
