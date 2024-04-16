@@ -11,7 +11,6 @@
  
 // \brief Notify the user application when TFTP client operation ends.
 // \param[in]     event         TFTP client notification event.
-// \return        none.
 void netTFTPc_Notify (netTFTPc_Event event) {
   switch (event) {
     case netTFTPc_EventSuccess:

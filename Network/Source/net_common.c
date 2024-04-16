@@ -589,7 +589,6 @@ uint32_t net_rd_u32 (const uint8_t *addr) {
   \brief       Write 32-bit variable to network byte-order.
   \param[in]   addr  pointer to a variable.
   \param[in]   val   value to write.
-  \return      none.
 */
 void net_wr_u32 (uint8_t *addr, uint32_t val) {
   addr[0] = (val >> 24) & 0xFF;

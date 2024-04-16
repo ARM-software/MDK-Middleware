@@ -242,7 +242,6 @@ static bool smtp_accept_authentication (const NET_ADDR *addr) {
 /**
   \brief       User event callback notification.
   \param[in]   event  notification event.
-  \return      none.
 */
 static void smtp_notify (netSMTPc_Event event) {
   (void)event;
@@ -945,7 +944,6 @@ static uint32_t add_boundary (char *buf) {
 /**
   \brief       Compute 16-byte random MD5 hash.
   \param[out]  hash_buf  pointer to output buffer.
-  \return      none.
 */
 static void compute_hash (uint8_t *hash_buf) {
   NET_MD5_CTX *ctx;

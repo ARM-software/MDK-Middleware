@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ppp_ipcp.c
  * Purpose: PPP Internet Protocol Control
@@ -40,7 +40,6 @@ static void ipcp_configure (NET_PPP_CFG *h);
 /**
   \brief       Initialize IPCP protocol for PPP.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 void net_ipcp_init (NET_PPP_CFG *h) {
   DEBUGF (PPP,"IPCP_Init\n");
@@ -63,7 +62,6 @@ void net_ipcp_init (NET_PPP_CFG *h) {
 /**
   \brief       De-initialize IPCP protocol for PPP.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 void net_ipcp_uninit (NET_PPP_CFG *h) {
   DEBUGF (PPP,"IPCP_Uninit\n");
@@ -77,7 +75,6 @@ void net_ipcp_uninit (NET_PPP_CFG *h) {
 /**
   \brief       Determine IPv4 address for remote peer.
   \param[in]   h  PPP interface handle.
-  \return      none.
   \note        Dynamic host configuration for PPP!
 */
 static void ipcp_set_rem_ip (NET_PPP_CFG *h) {
@@ -102,7 +99,6 @@ static void ipcp_set_rem_ip (NET_PPP_CFG *h) {
 /**
   \brief       Send IPCP configuration request.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 static void ipcp_conf_rq (NET_PPP_CFG *h) {
   NET_FRAME *txfrm;
@@ -156,7 +152,6 @@ static void ipcp_conf_rq (NET_PPP_CFG *h) {
 /**
   \brief       Start IPCP configuration for PPP client mode.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 static void ipcp_configure (NET_PPP_CFG *h) {
   if (ctrl->Flags & PPP_FLAG_NETWORK) {
@@ -175,7 +170,6 @@ static void ipcp_configure (NET_PPP_CFG *h) {
   \brief       Send IPCP frame.
   \param[in]   h      PPP interface handle.
   \param[in]   frame  network frame.
-  \return      none.
 */
 static void ipcp_send (NET_PPP_CFG *h, NET_FRAME *frame) {
   DEBUGF (PPP,"Sending IPCP frame\n");
@@ -189,7 +183,6 @@ static void ipcp_send (NET_PPP_CFG *h, NET_FRAME *frame) {
   \brief       Process received IPCP frame.
   \param[in]   h      PPP interface handle.
   \param[in]   frame  network frame.
-  \return      none.
 */
 void net_ipcp_process (NET_PPP_CFG *h, NET_FRAME *frame) {
   NET_FRAME *txfrm;
@@ -460,7 +453,6 @@ err:        ERRORF (PPP,"IPCP_Process, Opt (0x%02X) not requested\n",
 /**
   \brief       Run IPCP protocol main function.
   \param[in]   h  PPP interface handle.
-  \return      none.
   \note        Function is called on every system tick.
 */
 void net_ipcp_run (NET_PPP_CFG *h) {
@@ -497,7 +489,6 @@ void net_ipcp_run (NET_PPP_CFG *h) {
 /**
   \brief       Debug print IPCP header information.
   \param[in]   frm  network frame.
-  \return      none.
 */
 static void debug_info (const NET_FRAME *frm) {
   static const char p_asc[][9] = {
@@ -535,7 +526,6 @@ d:DEBUGF (PPP," Length %d bytes\n",ntohs(IPCP_FRAME(frm)->Len));
   \brief       Debug print IPCP address information.
   \param[in]   msg       explanation message to print.
   \param[in]   ip4_addr  IPv4 address.
-  \return      none.
 */
 static void debug_inf2 (const char *msg, const uint8_t *ip4_addr) {
   DEBUGF (PPP," %-7s %s\n",msg,net_addr4_ntoa(ip4_addr));

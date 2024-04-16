@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_snmp_agent.c
  * Purpose: Simple Network Management Agent
@@ -54,7 +54,6 @@ static bool mib_write (const uint8_t *buf, NET_SNMP_TLV *tlv, int32_t id);
 
 /**
   \brief       Initialize SNMP agent.
-  \return      none.
 */
 void net_snmp_agent_init (void) {
   int32_t sock;
@@ -82,7 +81,6 @@ void net_snmp_agent_init (void) {
 
 /**
   \brief       De-initialize SNMP agent.
-  \return      none.
 */
 void net_snmp_agent_uninit (void) {
   DEBUGF (SNMP,"Uninit Agent\n");
@@ -346,7 +344,6 @@ invalid_param:
 
 /**
   \brief       Run SNMP agent main function.
-  \return      none.
 */
 void net_snmp_agent_run (void) {
   if (sys->Flags & SYS_FLAG_TICK) {
@@ -747,7 +744,6 @@ static int32_t ilen (int32_t val) {
   \param[out]  buf  output buffer.
   \param[in]   tlv  pointer to TLV state.
   \param[in]   id   object index in MIB data table.
-  \return      none.
 */
 static void mib_add_object (uint8_t *buf, NET_SNMP_TLV *tlv, int32_t id) {
   NET_SNMP_MIB_INFO *mib;
@@ -840,7 +836,6 @@ static void mib_add_object (uint8_t *buf, NET_SNMP_TLV *tlv, int32_t id) {
   \brief       Add framing Type and Length in SNMP message.
   \param[out]  buf  output buffer.
   \param[in]   tlv  pointer to TLV state.
-  \return      none.
 */
 static void bind_tlv (uint8_t *buf, NET_SNMP_TLV *tlv) {
   int32_t idx;
@@ -871,7 +866,6 @@ static void bind_tlv (uint8_t *buf, NET_SNMP_TLV *tlv) {
   \param[out]  buf  output buffer.
   \param[in]   tlv  pointer to TLV state.
   \param[in]   val  integer value.
-  \return      none.
 */
 static void bind_val (uint8_t *buf, NET_SNMP_TLV *tlv, uint32_t val) {
   int32_t len;
@@ -1002,7 +996,6 @@ static bool mib_write (const uint8_t *buf, NET_SNMP_TLV *tlv, int32_t id) {
 /**
   \brief       Debug print object ID.
   \param[in]   oid  pointer to object ID structure.
-  \return      none.
 */
 static void debug_info (const uint8_t *oid) {
   char *buf;
@@ -1017,7 +1010,6 @@ static void debug_info (const uint8_t *oid) {
   \brief       Debug print object value.
   \param[in]   mib_type  MIB object type.
   \param[in]   oid       pointer to object ID structure.
-  \return      none.
 */
 static void debug_inf2 (uint8_t mib_type, const uint8_t *oid) {
   const char *ty;
@@ -1047,7 +1039,6 @@ static void debug_inf2 (uint8_t mib_type, const uint8_t *oid) {
   \param[out]  buf       output buffer.
   \param[in]   mib_type  MIB object type.
   \param[in]   oid       pointer to object ID structure.
-  \return      none.
 */
 static void obj_ascii (char *buf, uint8_t mib_type, const uint8_t *oid) {
   int32_t len;
@@ -1100,7 +1091,6 @@ static void obj_ascii (char *buf, uint8_t mib_type, const uint8_t *oid) {
 /**
   \brief       Record object ID in event recorder.
   \param[in]   oid  pointer to object id.
-  \return      none.
 */
 static void record_oid (const uint8_t *oid) {
   char *buf;
@@ -1116,7 +1106,6 @@ static void record_oid (const uint8_t *oid) {
   \brief       Record object value.
   \param[in]   mib_type  MIB object type.
   \param[in]   oid       pointer to object id.
-  \return      none.
 */
 static void record_val (uint8_t mib_type, const uint8_t *oid) {
   uint32_t len;

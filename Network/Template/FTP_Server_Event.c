@@ -11,7 +11,6 @@
  
 // \brief Notify the user application about events in FTP server service.
 // \param[in]     event         FTP Server notification event.
-// \return        none.
 void netFTPs_Notify (netFTPs_Event event) {
 
   switch (event) {

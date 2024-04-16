@@ -63,7 +63,6 @@ static void ndp_que_free (NET_NDP_INFO *ndp_t);
 
 /**
   \brief       Initialize NDP cache.
-  \return      none.
 */
 void net_ndp_cache_init (void) {
   NET_NDP_INFO *ndp_t;
@@ -86,7 +85,6 @@ void net_ndp_cache_init (void) {
 
 /**
   \brief       De-initialize NDP cache.
-  \return      none.
 */
 void net_ndp_cache_uninit (void) {
   NET_NDP_CFG *const *p;
@@ -106,7 +104,6 @@ void net_ndp_cache_uninit (void) {
   \brief       Process Neighbor Discovery message.
   \param[in]   net_if  network interface descriptor.
   \param[in]   frame   network frame.
-  \return      none.
 */
 void net_ndp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
   NET_NDP_CFG *h = net_if->Ip6Cfg->NdpCfg;
@@ -301,7 +298,6 @@ void net_ndp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
   \param[in]   h          NDP instance handle.
   \param[in]   ip_addr    destination IPv6 address or NULL for all nodes.
   \param[in]   targ_addr  target IPv6 address.
-  \return      none.
 */
 static void ndp_send_reply (NET_NDP_CFG *h,
                             const uint8_t *ip_addr, const uint8_t *targ_addr) {
@@ -340,7 +336,6 @@ static void ndp_send_reply (NET_NDP_CFG *h,
   \param[in]   h        NDP instance handle.
   \param[in]   type     request type.
   \param[in]   ip_addr  target IP address.
-  \return      none.
   \note        Request message contains fields:
                - RS:               LL_option
                - NS:      Target + LL_option
@@ -395,7 +390,6 @@ static void ndp_send_request (NET_NDP_CFG *h,
   \param[in]   h       NDP instance handle.
   \param[in]   icmp_r  ICMP response frame.
   \param[in]   len     length of the frame.
-  \return      none.
 */
 static void ndp_proc_response (NET_NDP_CFG *h,
                                NET_ICMP_HEADER *icmp_r, uint32_t len) {
@@ -526,7 +520,6 @@ static const uint8_t *ndp_next_opt (const uint8_t *buf, const uint8_t *end) {
   \brief       Add a router to default router list.
   \param[in]   h      NDP instance handle.
   \param[in]   ndp_t  pointer to router cache entry.
-  \return      none.
 */
 static void ndp_router_add (NET_NDP_CFG *h, NET_NDP_INFO *ndp_t) {
   if (ctrl->DefRouter == NULL) {
@@ -544,7 +537,6 @@ static void ndp_router_add (NET_NDP_CFG *h, NET_NDP_INFO *ndp_t) {
   \brief       Remove a router from default router list.
   \param[in]   h      NDP instance handle.
   \param[in]   ndp_t  pointer to router cache entry.
-  \return      none.
 */
 static void ndp_router_remove (NET_NDP_CFG *h, NET_NDP_INFO *ndp_t) {
   if (ndp_t == ctrl->AltRouter) {
@@ -565,7 +557,6 @@ static void ndp_router_remove (NET_NDP_CFG *h, NET_NDP_INFO *ndp_t) {
   \param[in]   h         NDP instance handle.
   \param[in]   prefix    pointer to NDP prefix information.
   \param[in]   lt_valid  valid lifetime in seconds.
-  \return      none.
 */
 static void ndp_prefix_add (NET_NDP_CFG *h,
                             const uint8_t *prefix, uint32_t lt_valid) {
@@ -759,7 +750,6 @@ refresh:
   \param[in]   h        NDP instance handle.
   \param[in]   ip_addr  neighbor IP address.
   \param[in]   type     entry type (host/router).
-  \return      none.
 */
 static void ndp_cache_delete (NET_NDP_CFG *h, const uint8_t *ip_addr, uint8_t type) {
   NET_NDP_INFO *ndp_t;
@@ -790,7 +780,6 @@ static void ndp_cache_delete (NET_NDP_CFG *h, const uint8_t *ip_addr, uint8_t ty
   \param[in]   net_if    network interface descriptor.
   \param[in]   ip6_addr  neighbor IP address.
   \param[in]   mac_addr  neighbor MAC address.
-  \return      none.
 */
 void net_ndp_cache_refresh (NET_IF_CFG *net_if,
                             const uint8_t *ip6_addr, const uint8_t *mac_addr) {
@@ -1276,7 +1265,6 @@ static const uint8_t *ndp_find_ip (NET_NDP_CFG *h, const uint8_t *mac_addr) {
 /**
   \brief       Run address autoconfiguration service.
   \param[in]   h  NDP instance handle.
-  \return      none.
   \note        Executed on sys-tick (every 100ms).
 */
 static void ndp_slaac_run (NET_NDP_CFG *h) {
@@ -1390,7 +1378,6 @@ static void ndp_slaac_run (NET_NDP_CFG *h) {
 /**
   \brief       Run NDP Probe service.
   \param[in]   h  NDP instance handle.
-  \return      none.
   \note        Executed on sys-tick (every 100ms).
 */
 static void ndp_probe_run (NET_NDP_CFG *h) {
@@ -1472,7 +1459,6 @@ bool net_ndp_enqueue (NET_IF_CFG *net_if, NET_NDP_INFO *ndp_t, NET_FRAME *frame)
 
 /**
   \brief       Run main process of Neighbor cache.
-  \return      none.
 */
 void net_ndp_cache_run (void) {
   NET_NDP_CFG *const *p;
@@ -1485,7 +1471,6 @@ void net_ndp_cache_run (void) {
 /**
   \brief       Run main process of Neighbor cache.
   \param[in]   h  NDP instance handle.
-  \return      none.
   \description Remove expired temporary and update fixed IP entries.
 */
 static void ndp_cache_run (NET_NDP_CFG *h) {
@@ -1591,7 +1576,6 @@ rel:    DEBUGF (NDP," Entry released\n");
   \brief       Send all enqueued frames.
   \param[in]   h      NDP instance handle.
   \param[in]   ndp_t  pointer to a cache entry control block.
-  \return      none.
 */
 static void ndp_que_send (NET_NDP_CFG *h, NET_NDP_INFO *ndp_t) {
   NET_FRAME *frame, *next;
@@ -1611,7 +1595,6 @@ static void ndp_que_send (NET_NDP_CFG *h, NET_NDP_INFO *ndp_t) {
 /**
   \brief       Release all enqueued frames from memory.
   \param[in]   ndp_t  pointer to a cache entry control block.
-  \return      none.
 */
 static void ndp_que_free (NET_NDP_INFO *ndp_t) {
   NET_FRAME *frame, *next;
@@ -1629,7 +1612,6 @@ static void ndp_que_free (NET_NDP_INFO *ndp_t) {
   \brief       Debug print IPv6 or MAC address.
   \param[in]   type  address type.
   \param[in]   addr  IPv6 or MAC address.
-  \return      none.
 */
 static void debug_inf2 (uint32_t type, const uint8_t *addr) {
 

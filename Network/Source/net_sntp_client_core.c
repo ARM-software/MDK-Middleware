@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_sntp_client.c
  * Purpose: Simple Network Time Protocol Client
@@ -45,7 +45,6 @@ netStatus netSNTPc_SetMode (netSNTPc_Mode mode) {
 
 /**
   \brief       Initialize SNTP client.
-  \return      none.
 */
 void net_sntp_client_init (void) {
   int32_t sock;
@@ -70,7 +69,6 @@ void net_sntp_client_init (void) {
 
 /**
   \brief       De-initialize SNTP client.
-  \return      none.
 */
 void net_sntp_client_uninit (void) {
   DEBUGF (SNTP,"Uninit Client\n");
@@ -228,7 +226,6 @@ static netStatus sntp_set_mode (netSNTPc_Mode mode) {
 
 /**
   \brief       Run SNTP client main function.
-  \return      none.
 */
 void net_sntp_client_run (void) {
   if (sntp->State != SNTP_STATE_BUSY) {
@@ -371,7 +368,6 @@ static netStatus sntp_send_message (void) {
 
 /**
   \brief       Stop SNTP client in unicast mode.
-  \return      none.
 */
 static void sntp_stop (void) {
   net_udp_close (sntp->Socket);
@@ -384,7 +380,6 @@ static void sntp_stop (void) {
 /**
   \brief       Debug print IP address of NTP server.
   \param[in]   addr  structure containing IP address and port.
-  \return      none.
 */
 static void debug_info (const __ADDR *addr) {
   DEBUGF (SNTP," Server [%s]\n",net_addr_ntoa(addr));

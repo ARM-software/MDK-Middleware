@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network:Service
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    Modem_Standard.c
  * Purpose: Modem Driver for Standard modem (HAYES compatible)
@@ -157,7 +157,6 @@ static bool IsOnline (void) {
   \brief       Notify the Modem Driver of completion event.
   \param[in]   event        notification event \ref MODEM_EVENT
   \param[in]   response     response string received from the modem
-  \return      None.
 */
 static void Notify (MODEM_EVENT event, const char *response) {
   (void)response;

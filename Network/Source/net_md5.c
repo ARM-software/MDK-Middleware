@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_md5.c
  * Purpose: MD5 Message-Digest Algorithm
@@ -26,7 +26,6 @@ static void md5_transform (NET_MD5_CTX *md5);
 /**
   \brief       Initialize MD5 context, load magic constants.
   \param[in]   md5  pointer to MD5 context.
-  \return      none.
 */
 void net_md5_init (NET_MD5_CTX *md5) {
   md5->length   = 0;
@@ -41,7 +40,6 @@ void net_md5_init (NET_MD5_CTX *md5) {
   \param[in]   md5    pointer to MD5 context.
   \param[in]   inbuf  input data buffer.
   \param[in]   inlen  length of the data.
-  \return      none.
   \note        MD5 is calculated on block of 64-bytes.
 */
 void net_md5_update (NET_MD5_CTX *md5, const char *inbuf, int32_t inlen) {
@@ -75,7 +73,6 @@ void net_md5_update (NET_MD5_CTX *md5, const char *inbuf, int32_t inlen) {
   \brief       Terminate MD5 calculation and return result.
   \param[in]   md5     pointer to MD5 context.
   \param[out]  digest  output MD5 digest buffer.
-  \return      none.
   \note        Pad to 64-byte boundary with bit pattern 1 0 0 0...
                (bit MSB first).
 */
@@ -106,7 +103,6 @@ void net_md5_final (NET_MD5_CTX *md5, uint8_t *digest) {
 /**
   \brief       Transform MD5-state based on input buf.
   \param[in]   md5    pointer to MD5 context.
-  \return      none.
 */
 static void md5_transform (NET_MD5_CTX *md5) {
   static const uint32_t T[64] = {

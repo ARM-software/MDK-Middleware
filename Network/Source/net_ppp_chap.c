@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ppp_chap.c
  * Purpose: PPP Challenge-Handshake Authentication
@@ -40,7 +40,6 @@ static void chap_send (NET_PPP_CFG *h, NET_FRAME *frame);
 /**
   \brief       Initialize CHAP protocol for PPP.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 static void chap_init (NET_PPP_CFG *h) {
   DEBUGF (PPP,"CHAP_Init\n");
@@ -51,7 +50,6 @@ static void chap_init (NET_PPP_CFG *h) {
 /**
   \brief       De-initialize CHAP protocol for PPP.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 static void chap_uninit (NET_PPP_CFG *h) {
   DEBUGF (PPP,"CHAP_Uninit\n");
@@ -62,7 +60,6 @@ static void chap_uninit (NET_PPP_CFG *h) {
 /**
   \brief       Send Authenticate Challenge request in server mode.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 static void chap_auth_rq (NET_PPP_CFG *h) {
   NET_FRAME *txfrm;
@@ -99,7 +96,6 @@ static void chap_auth_rq (NET_PPP_CFG *h) {
   \brief       Send CHAP frame.
   \param[in]   h      PPP interface handle.
   \param[in]   frame  network frame.
-  \return      none.
 */
 static void chap_send (NET_PPP_CFG *h, NET_FRAME *frame) {
   DEBUGF (PPP,"Sending CHAP frame\n");
@@ -113,7 +109,6 @@ static void chap_send (NET_PPP_CFG *h, NET_FRAME *frame) {
   \brief       Process received CHAP frame.
   \param[in]   h      PPP interface handle.
   \param[in]   frame  network frame.
-  \return      none.
 */
 static void chap_process (NET_PPP_CFG *h, NET_FRAME *frame) {
   NET_FRAME *txfrm;
@@ -244,7 +239,6 @@ fail:   ERRORF (PPP,"CHAP_Process, Login failed\n");
 /**
   \brief       Run CHAP protocol main function.
   \param[in]   h  PPP interface handle.
-  \return      none.
   \note        Function is called on every system tick.
 */
 static void chap_run (NET_PPP_CFG *h) {
@@ -277,7 +271,6 @@ static void chap_run (NET_PPP_CFG *h) {
 /**
   \brief       Debug print CHAP header information.
   \param[in]   frm  network frame.
-  \return      none.
 */
 static void debug_info (const NET_FRAME *frm) {
   static const char p_asc[][10] = {

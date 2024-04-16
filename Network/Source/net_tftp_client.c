@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_tftp_client.c
  * Purpose: Trivial File Transfer Protocol Client
@@ -36,7 +36,6 @@ static const uint8_t *get_next_opt (const uint8_t *buf, const uint8_t *end);
 
 /**
   \brief       Initialize TFTP client.
-  \return      none.
 */
 void net_tftp_client_init (void) {
   int32_t sock;
@@ -57,7 +56,6 @@ void net_tftp_client_init (void) {
 
 /**
   \brief       De-initialize TFTP client.
-  \return      none.
 */
 void net_tftp_client_uninit (void) {
   DEBUGF (TFTPC,"Uninit Client\n");
@@ -207,7 +205,6 @@ netStatus netTFTPc_Get (const NET_ADDR *addr,
 
 /**
   \brief       Run TFTP client main function.
-  \return      none.
 */
 void net_tftp_client_run (void) {
   uint8_t *sendbuf;
@@ -488,7 +485,6 @@ err_bl: tftpc_send_err (TFTPC_ERR_NOTDEF, "Invalid block");
   \brief       Send TFTP read or write request.
   \param[in]   opcode  request opcode.
   \param[in]   fname   pointer to file name.
-  \return      none.
 */
 static void tftpc_send_req (uint16_t opcode, const char *fname) {
   uint8_t *sendbuf;
@@ -515,7 +511,6 @@ static void tftpc_send_req (uint16_t opcode, const char *fname) {
 
 /**
   \brief       Send TFTP ack frame.
-  \return      none.
 */
 static void tftpc_send_ack (void) {
   uint8_t *sendbuf;
@@ -532,7 +527,6 @@ static void tftpc_send_ack (void) {
   \brief       Send TFTP error frame.
   \param[in]   erron  error number.
   \param[in]   errm   error message text.
-  \return      none.
 */
 static void tftpc_send_err (uint8_t errno, const char *errm) {
   uint8_t *sendbuf;
@@ -552,7 +546,6 @@ static void tftpc_send_err (uint8_t errno, const char *errm) {
   \brief       Send TFTP frame.
   \param[in]   buf  frame data buffer.
   \param[in]   len  length of the data.
-  \return      none.
 */
 static void tftpc_send (uint8_t *buf, uint32_t len) {
   net_udp_keep_buf (tftpc_s->Socket, buf);
@@ -567,7 +560,6 @@ static void tftpc_send (uint8_t *buf, uint32_t len) {
   \brief       Register a retransmission frame.
   \param[in]   buf  buffer containing the data.
   \param[in]   len  length of data.
-  \return      none.
 */
 static void tftpc_set_retransmit (uint8_t *buf, uint32_t len) {
   if (tftpc_s->Buf != NULL) {
@@ -581,7 +573,6 @@ static void tftpc_set_retransmit (uint8_t *buf, uint32_t len) {
 /**
   \brief       Stop TFTP client.
   \param[in]   evt  stop notification event.
-  \return      none.
 */
 static void tftpc_stop (netTFTPc_Event evt) {
   tftpc_s->cb_event   = evt;
@@ -648,7 +639,6 @@ static const uint8_t *get_next_opt (const uint8_t *buf, const uint8_t *end) {
 /**
   \brief       Debug print IP address and port.
   \param[in]   addr  structure containing IP address and port.
-  \return      none.
 */
 static void debug_info (const __ADDR *addr) {
   DEBUGF (TFTPC," Server [%s], port %d\n",net_addr_ntoa(addr),addr->port);

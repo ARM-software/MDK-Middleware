@@ -34,7 +34,6 @@ static uint32_t base16_decode (char *dp, const char *b16);
 
 /**
   \brief       Initialize NBNS clients.
-  \return      none.
 */
 void net_nbns_client_init (void) {
   int32_t sock;
@@ -70,7 +69,6 @@ void net_nbns_client_init (void) {
 
 /**
   \brief       De-initialize NBNS client.
-  \return      none.
 */
 void net_nbns_client_uninit (void) {
 #ifdef __DBG_ENABLED
@@ -394,7 +392,6 @@ __WEAK netStatus netNBNS_ClearCache (uint32_t if_id) {
 
 /**
   \brief       Run NBNS client main function.
-  \return      none.
 */
 void net_nbns_client_run (void) {
   if (nbns->run) nbns->run ();
@@ -402,7 +399,6 @@ void net_nbns_client_run (void) {
 
 /**
   \brief       Run NBNS cache and retransmissions.
-  \return      none.
 */
 static void nbns_client_run (void) {
   NET_NBNS_INFO *nbns_t;
@@ -530,7 +526,6 @@ static NET_NBNS_INFO *nbns_cache_alloc (void) {
   \brief       Base16 encode the null-terminated string.
   \param[out]  b16  destination base16 encoded string.
   \param[in]   sp   source ascii string.
-  \return      none.
 */
 static void base16_encode (char *b16, const char *sp) {
   uint32_t i;

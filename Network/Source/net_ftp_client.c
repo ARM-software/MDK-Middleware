@@ -42,7 +42,6 @@ static bool is_not_found (const char *buf, int32_t len);
 
 /**
   \brief       Initialize FTP client.
-  \return      none.
 */
 void net_ftp_client_init (void) {
   int32_t sock;
@@ -69,7 +68,6 @@ void net_ftp_client_init (void) {
 
 /**
   \brief       De-initialize FTP client.
-  \return      none.
 */
 void net_ftp_client_uninit (void) {
   DEBUGF (FTPC,"Uninit Client\n");
@@ -609,7 +607,6 @@ static uint32_t ftpc_data_cb (int32_t socket, netTCP_Event event, const NET_ADDR
 
 /**
   \brief       Run FTP client main function.
-  \return      none.
 */
 void net_ftp_client_run (void) {
   uint8_t *sendbuf;
@@ -996,7 +993,6 @@ static uint16_t ftpc_scan_dport (const char *buf) {
 
 /**
   \brief       Close local file if opened.
-  \return      none.
 */
 static void ftpc_close_file (void) {
   if (ftpc_s->File != NULL) {
@@ -1010,7 +1006,6 @@ static void ftpc_close_file (void) {
 /**
   \brief       Change state of FTP client to a new state.
   \param[in]   state  new client state.
-  \return      none.
   \note        This function refreshes also Timeout timer.
 */
 static void ftpc_transit (uint8_t state) {
@@ -1022,7 +1017,6 @@ static void ftpc_transit (uint8_t state) {
 /**
   \brief       Stop FTP client.
   \param[in]   event  user notification event.
-  \return      none.
 */
 static void ftpc_stop (netFTPc_Event event) {
   switch (ftpc_s->State) {
@@ -1120,7 +1114,6 @@ static uint8_t get_resp (const char *buf) {
   \brief       Convert path info to unix style path.
   \param[in,out] path  path name.
   \param[in]   len     length of a path name.
-  \return      none.
 */
 static void unix_path (char *path, int32_t len) {
   int32_t i;

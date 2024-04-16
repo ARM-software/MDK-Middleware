@@ -44,7 +44,6 @@ static void smtp_send_buf (uint8_t *buf, uint32_t len);
 
 /**
   \brief       Initialize SMTP client.
-  \return      none.
 */
 void net_smtp_client_init (void) {
   int32_t sock;
@@ -73,7 +72,6 @@ void net_smtp_client_init (void) {
 
 /**
   \brief       De-initialize SMTP client.
-  \return      none.
 */
 void net_smtp_client_uninit (void) {
   DEBUGF (SMTP,"Uninit Client\n");
@@ -91,7 +89,6 @@ void net_smtp_client_uninit (void) {
 /**
   \brief       Start SMTP client to send an email.
   \param[in]   use_tls  use secure TLS mode.
-  \return      none.
 */
 void net_smtp_client_start (uint16_t use_tls) {
 
@@ -422,7 +419,6 @@ static uint32_t smtp_listener (int32_t socket, netTCP_Event event, const NET_ADD
 
 /**
   \brief       Run SMTP client main function.
-  \return      none.
 */
 void net_smtp_client_run (void) {
   uint8_t *sendbuf;
@@ -665,7 +661,6 @@ cr_send:
 /**
   \brief       Change state of SMTP client to a new state.
   \param[in]   state  new client state.
-  \return      none.
   \note        This function refreshes also Timeout timer.
 */
 static void smtp_transit (uint8_t state) {
@@ -676,7 +671,6 @@ static void smtp_transit (uint8_t state) {
 /**
   \brief       Stop SMTP client.
   \param[in]   event  user notification event.
-  \return      none.
 */
 static void smtp_stop (netSMTPc_Event event) {
   switch (smtp->State) {
@@ -831,7 +825,6 @@ static uint8_t get_auth_mode (const char *buf, const char *end) {
   \param[in]   len     length of the data.
   \param[in]   passw   authentication password null-terminated.
   \param[out]  digest  output MD5 digest buffer.
-  \return      none.
   \note        Implemented according to RFC2104, page 3.
 */
 static void hmac_md5 (const char *buf, uint32_t len, const char *passw, uint8_t *digest) {
@@ -872,7 +865,6 @@ static void hmac_md5 (const char *buf, uint32_t len, const char *passw, uint8_t 
 
 /**
   \brief       Release allocated challenge message buffer.
-  \return      none.
 */
 static void free_cram_buf (void) {
   if (smtp->CramBuf) {
@@ -915,7 +907,6 @@ static uint8_t *smtp_get_buf (uint32_t size) {
   \brief       Send data to remote server.
   \param[in]   buf  buffer containing the data.
   \param[in]   len  length of data in bytes.
-  \return      none.
 */
 static void smtp_send_buf (uint8_t *buf, uint32_t len) {
   if (smtp->Secure) {
@@ -969,7 +960,6 @@ static const char *evt_ascii (netSMTPc_Event cb_evt) {
 /**
   \brief       Debug print IP address and port.
   \param[in]   addr  structure containing IP address and port.
-  \return      none.
 */
 static void debug_info (const __ADDR *addr) {
   DEBUGF (SMTP," Server [%s], port %d\n",net_addr_ntoa(addr),addr->port);

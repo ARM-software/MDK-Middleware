@@ -36,7 +36,6 @@ static bool mld_is_addr_valid (const uint8_t *ip6_addr);
 
 /**
   \brief       Initialize MLD nodes.
-  \return      none.
 */
 void net_mld_node_init (void) {
   NET_MLD_INFO *mld_t;
@@ -56,7 +55,6 @@ void net_mld_node_init (void) {
 
 /**
   \brief       De-initialize MLD nodes.
-  \return      none.
 */
 void net_mld_node_uninit (void) {
   NET_MLD_CFG *const *p;
@@ -239,7 +237,6 @@ uint32_t net_mld_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf) {
   \brief       Process received MLD message.
   \param[in]   net_if  network interface descriptor.
   \param[in]   frame   network frame.
-  \return      none.
 */
 void net_mld_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
   NET_MLD_CFG  *h = net_if->Ip6Cfg->MldCfg;
@@ -360,7 +357,6 @@ void net_mld_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
 
 /**
   \brief       Run MLD node main process.
-  \return      none.
 */
 void net_mld_node_run (void) {
   NET_MLD_CFG *const *p;
@@ -373,7 +369,6 @@ void net_mld_node_run (void) {
 /**
   \brief       Run MLD node main process.
   \param[in]   h  MLD instance handle.
-  \return      none.
 */
 static void mld_node_run (NET_MLD_CFG *h) {
   NET_MLD_INFO *mld_t;
@@ -409,7 +404,6 @@ static void mld_node_run (NET_MLD_CFG *h) {
   \param[in]   h         MLD instance handle.
   \param[in]   type      message type.
   \param[in]   ip6_addr  listening address.
-  \return      none.
 */
 static void mld_send_message (NET_MLD_CFG *h,
                               uint8_t type, const uint8_t *ip6_addr) {

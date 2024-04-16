@@ -42,7 +42,6 @@ static bool igmp_is_group_valid (const uint8_t *ip4_addr);
 
 /**
   \brief       Initialize IGMP hosts.
-  \return      none.
 */
 void net_igmp_host_init (void) {
   NET_IGMP_INFO *igmp_t;
@@ -64,7 +63,6 @@ void net_igmp_host_init (void) {
 
 /**
   \brief       De-initialize IGMP hosts.
-  \return      none.
 */
 void net_igmp_host_uninit (void) {
   NET_IGMP_CFG *const *p;
@@ -253,7 +251,6 @@ uint32_t net_igmp_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf) {
   \brief       Process received IGMP message.
   \param[in]   net_if  network interface descriptor.
   \param[in]   frame   network frame.
-  \return      none.
 */
 void net_igmp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
   NET_IGMP_CFG  *h = net_if->Ip4Cfg->IgmpCfg;
@@ -390,7 +387,6 @@ void net_igmp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
 
 /**
   \brief       Run main process of IGMP manager.
-  \return      none.
 */
 void net_igmp_host_run (void) {
   NET_IGMP_CFG *const *p;
@@ -403,7 +399,6 @@ void net_igmp_host_run (void) {
 /**
   \brief       Run main process of IGMP manager.
   \param[in]   h  IGMP instance handle.
-  \return      none.
 */
 static void igmp_host_run (NET_IGMP_CFG *h) {
   NET_IGMP_INFO *igmp_t;
@@ -451,7 +446,6 @@ static void igmp_host_run (NET_IGMP_CFG *h) {
   \brief       Construct IGMP Report message and sent it.
   \param[in]   h        IGMP instance handle.
   \param[in]   ip_addr  group IP address.
-  \return      none.
 */
 static void igmp_send_report (NET_IGMP_CFG *h, const uint8_t *ip_addr) {
   NET_FRAME *frame;
@@ -486,7 +480,6 @@ static void igmp_send_report (NET_IGMP_CFG *h, const uint8_t *ip_addr) {
   \brief       Construct IGMPv2 Leave message and sent it.
   \param[in]   h        IGMP instance handle.
   \param[in]   ip_addr  group IP address.
-  \return      none.
   \note        This is for IGMP v2 only!
 */
 static void igmp_send_leave (NET_IGMP_CFG *h, const uint8_t *ip_addr) {
@@ -575,7 +568,6 @@ static bool igmp_is_group_valid (const uint8_t *ip4_addr) {
   \brief       Debug print IGMP address information.
   \param[in]   msg      Info message to print.
   \param[in]   ip_addr  IP address to print.
-  \return      none.
 */
 static void debug_inf2 (const char *msg, const uint8_t *ip_addr) {
   DEBUGF (IGMP,"%s\n",msg);

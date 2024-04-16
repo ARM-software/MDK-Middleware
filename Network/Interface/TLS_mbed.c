@@ -106,7 +106,6 @@ static void free_tx_buf (TLS_INFO *tls_s);
 
 /**
   \brief       mbedTLS debug output.
-  \return      none.
 */
 #if defined(MBEDTLS_DEBUG_C)
 static void out_debug (void *ctx, int level, const char *file,
@@ -124,7 +123,6 @@ static void out_debug (void *ctx, int level, const char *file,
 
 /**
   \brief       Initialize TLS interface.
-  \return      none.
 */
 void netTLS_InterfaceInit (void) {
   memset (&tls_scb, 0, sizeof (tls_scb));
@@ -134,7 +132,6 @@ void netTLS_InterfaceInit (void) {
 
 /**
   \brief       De-initialize TLS interface.
-  \return      none.
 */
 void netTLS_InterfaceUninit (void) {
   osThreadTerminate (ctrl.thread_id);
@@ -174,7 +171,6 @@ uint8_t netTLS_GetContext (int32_t socket, netTCP_cb_t cb_func) {
   \brief       Establish encrypted TLS connection to remote endpoint.
   \param[in]   tls_id    TLS session id.
   \param[in]   srv_name  hostname of the server.
-  \return      none.
 */
 void netTLS_Connect (uint8_t tls_id, const char *srv_name) {
 #ifdef __TLS_CLIENT
@@ -202,7 +198,6 @@ void netTLS_Connect (uint8_t tls_id, const char *srv_name) {
 /**
   \brief       Start TLS server listening for encrypted connection.
   \param[in]   tls_id    TLS session id.
-  \return      none.
 */
 void netTLS_Listen (uint8_t tls_id) {
 #ifdef __TLS_SERVER
@@ -246,7 +241,6 @@ uint8_t *netTLS_GetBuffer (uint32_t size) {
   \brief       Close TLS session request.
   \param[in]   tls_id     TLS session id.
   \param[in]   close_mode socket close mode: 1=normal, 0=abort.
-  \return      none.
 */
 void netTLS_Close (uint8_t tls_id, uint8_t close_mode) {
   TLS_INFO *tls_s;
@@ -264,7 +258,6 @@ void netTLS_Close (uint8_t tls_id, uint8_t close_mode) {
   \param[in]   tls_id  TLS session id.
   \param[in]   buf     pointer to data buffer.
   \param[in]   len     length of data (in bytes).
-  \return      none.
 */
 void netTLS_Write (uint8_t tls_id, const uint8_t *buf, uint32_t len) {
   TLS_INFO *tls_s;
@@ -301,7 +294,6 @@ void netTLS_Write (uint8_t tls_id, const uint8_t *buf, uint32_t len) {
 /**
   \brief       TLS helper thread.
   \param[in]   arg  dummy parameter.
-  \return      none.
 */
 __NO_RETURN static void netTLS_Thread (void *arg) {
   int32_t ret;
@@ -333,7 +325,6 @@ __NO_RETURN static void netTLS_Thread (void *arg) {
 
 /**
   \brief       Wake-up TLS helper thread.
-  \return      none.
 */
 static void thread_wakeup (void) {
   if (ctrl.running) {
@@ -513,7 +504,6 @@ static int32_t tls_init (void) {
 
 /**
   \brief       De-initialize TLS session layer.
-  \return      none.
 */
 static void tls_uninit (void) {
   TLS_INFO *tls_s;
@@ -550,7 +540,6 @@ static void tls_uninit (void) {
 
 /**
   \brief       Run TLS service.
-  \return      none.
   \note        Generates native TCP callbacks for the service.
 */
 static void tls_run (void) {
@@ -875,7 +864,6 @@ static int32_t bio_send (void *ctx, const uint8_t *buf, uint32_t len) {
   \brief       Add data buffer to socket receive queue tail.
   \param[in]   tls_s   TLS session descriptor.
   \param[in]   netbuf  pointer to netbuf containing the data.
-  \return      none.
 */
 static void queue_add_buf (TLS_INFO *tls_s, NET_BUFFER *netbuf) {
   NET_BUFFER *next_buf;
@@ -899,7 +887,6 @@ static void queue_add_buf (TLS_INFO *tls_s, NET_BUFFER *netbuf) {
 /**
   \brief       Release chained RX data buffers.
   \param[in]   tls_s  TLS session descriptor.
-  \return      none.
 */
 static void queue_release (TLS_INFO *tls_s) {
   NET_BUFFER *netbuf, *next_buf;
@@ -915,7 +902,6 @@ static void queue_release (TLS_INFO *tls_s) {
 /**
   \brief       Release TX data buffer.
   \param[in]   tls_s  TLS session descriptor.
-  \return      none.
 */
 static void free_tx_buf (TLS_INFO *tls_s) {
   if (tls_s->t_buf) {
@@ -966,7 +952,6 @@ __WEAK const uint8_t *netTLS_GetEmailServerCA (size_t *len) {
 /**
   \brief       Release memory if allocated in netTLS_Get function.
   \param[in]   buf  memory to release.
-  \return      none.
 */
 __WEAK void netTLS_ReleaseMemory (const uint8_t *buf) {
   (void)buf;

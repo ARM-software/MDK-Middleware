@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ppp_pap.c
  * Purpose: PPP Password Authentication
@@ -39,7 +39,6 @@ static void pap_send (NET_PPP_CFG *h, NET_FRAME *frame);
 /**
   \brief       Initialize PAP protocol for PPP.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 static void pap_init (NET_PPP_CFG *h) {
   DEBUGF (PPP,"PAP_Init\n");
@@ -50,7 +49,6 @@ static void pap_init (NET_PPP_CFG *h) {
 /**
   \brief       De-initialize PAP protocol for PPP.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 static void pap_uninit (NET_PPP_CFG *h) {
   DEBUGF (PPP,"PAP_Uninit\n");
@@ -83,7 +81,6 @@ static bool str_compare (const char *user_s, const char *prot_s) {
 /**
   \brief       Send PAP authenticate request in client mode.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 static void pap_auth_rq (NET_PPP_CFG *h) {
   NET_FRAME *txfrm;
@@ -116,7 +113,6 @@ static void pap_auth_rq (NET_PPP_CFG *h) {
   \brief       Send PAP frame.
   \param[in]   h      PPP interface handle.
   \param[in]   frame  network frame.
-  \return      none.
 */
 static void pap_send (NET_PPP_CFG *h, NET_FRAME *frame) {
   DEBUGF (PPP,"Sending PAP frame\n");
@@ -130,7 +126,6 @@ static void pap_send (NET_PPP_CFG *h, NET_FRAME *frame) {
   \brief       Process received PAP frame.
   \param[in]   h      PPP interface handle.
   \param[in]   frame  network frame.
-  \return      none.
 */
 static void pap_process (NET_PPP_CFG *h, NET_FRAME *frame) {
   NET_FRAME *txfrm;
@@ -203,7 +198,6 @@ static void pap_process (NET_PPP_CFG *h, NET_FRAME *frame) {
 /**
   \brief       Run PAP protocol main function.
   \param[in]   h  PPP interface handle.
-  \return      none.
   \note        Function is called on every system tick.
 */
 static void pap_run (NET_PPP_CFG *h) {
@@ -237,7 +231,6 @@ static void pap_run (NET_PPP_CFG *h) {
 /**
   \brief       Debug print PAP header information.
   \param[in]   frm  network frame.
-  \return      none.
 */
 static void debug_info (const NET_FRAME *frm) {
   static const char p_asc[][9] = {

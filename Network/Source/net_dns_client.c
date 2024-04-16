@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_dns_client.c
  * Purpose: Domain Name Resolver Client
@@ -66,7 +66,6 @@ netStatus netDNSc_ClearCache (void) {
 
 /**
   \brief       Initialize DNS client.
-  \return      none.
 */
 void net_dns_client_init (void) {
   int32_t sock;
@@ -97,7 +96,6 @@ void net_dns_client_init (void) {
 
 /**
   \brief       De-initialize DNS client.
-  \return      none.
 */
 void net_dns_client_uninit (void) {
   DEBUGF (DNS,"Uninit Cache\n");
@@ -155,7 +153,6 @@ netStatus net_dns_client_resolve (const char *name,
   \brief       User event callback notification.
   \param[in]   event  notification event.
   \param[in]   addr   resolved IP address on success or NULL.
-  \return      none.
 */
 static void dns_notify (netDNSc_Event event, const NET_ADDR *addr) {
   (void)addr;
@@ -180,7 +177,6 @@ static void dns_notify (netDNSc_Event event, const NET_ADDR *addr) {
 
 /**
   \brief       Run DNS client main function.
-  \return      none.
 */
 void net_dns_client_run (void) {
   NET_DNS_INFO *dns_t;
@@ -711,7 +707,6 @@ static netStatus dns_send_message (void) {
 /**
   \brief       Make a QNAME for DNS request.
   \param[in]   name  pointer to host name.
-  \return      none.
 */
 static void dns_make_qname (const char *name) {
   int32_t i,idx;
@@ -786,7 +781,6 @@ static NET_DNS_INFO *dns_cache_alloc (void) {
   \brief       Stop DNS resolver client.
   \param[in]   event  user notification event.
   \param[in]   addr   resolved IP address.
-  \return      none.
 */
 static void dns_client_stop (netDNSc_Event event, const __ADDR *addr) {
   dns->cb_func (event, (const NET_ADDR *)addr);
@@ -938,7 +932,6 @@ static const char *type_ascii (uint16_t rr_type) {
 /**
   \brief       Debug print DNS header information.
   \param[in]   dns_hdr  DNS frame header.
-  \return      none.
 */
 static void debug_info (const NET_DNS_HEADER *dns_hdr) {
   DEBUGF (DNS," TID=0x%04X, Flags=0x%04X\n",ntohs(dns_hdr->ID),
@@ -953,7 +946,6 @@ static void debug_info (const NET_DNS_HEADER *dns_hdr) {
   \brief       Debug print IP address information.
   \param[in]   msg   explanation message to print.
   \param[in]   addr  IPv4 or IPv6 address.
-  \return      none.
 */
 static void debug_inf2 (const char *msg, const __ADDR *addr) {
   DEBUGF (DNS," %s [%s]\n",msg,net_addr_ntoa(addr));

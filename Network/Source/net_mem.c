@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_mem.c
  * Purpose: Dynamic Memory Management
@@ -23,7 +23,6 @@ static void mem_unlock (void);
 
 /**
   \brief       Initialize dynamic memory pool.
-  \return      none.
 */
 void net_mem_init (void) {
   NET_MEMP *init_ptr;
@@ -63,7 +62,6 @@ void net_mem_init (void) {
 
 /**
   \brief       De-initialize dynamic memory pool.
-  \return      none.
 */
 void net_mem_uninit (void) {
   DEBUGF (MEM,"Uninit MemPool\n");
@@ -153,7 +151,6 @@ NET_FRAME *net_mem_alloc (uint32_t byte_size) {
   \brief       Shrink allocated memory block.
   \param[in]   mem_ptr   pointer to allocated memory.
   \param[in]   new_size  size of utilized memory.
-  \return      none.
   \note        This function is used, when full size memory block
                is allocated, but only small part utilized.
 */
@@ -184,7 +181,6 @@ void net_mem_shrink (NET_FRAME *mem_ptr, uint32_t new_size) {
 /**
   \brief       Release allocated memory.
   \param[in]   mem_ptr  pointer to the allocated memory.
-  \return      none.
 */
 void net_mem_free (NET_FRAME *mem_ptr) {
   NET_MEMP *prev_ptr, *search_ptr, *return_ptr, *limit_ptr;
@@ -258,7 +254,6 @@ bool net_mem_avail (int32_t level) {
 
 /**
   \brief       Acquire memory protection mutex.
-  \return      none.
 */
 static void mem_lock (void) {
   netos_lock (mem->mutex);
@@ -266,7 +261,6 @@ static void mem_lock (void) {
 
 /**
   \brief       Release memory protection mutex.
-  \return      none.
 */
 static void mem_unlock (void) {
   netos_unlock (mem->mutex);

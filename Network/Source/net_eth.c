@@ -79,7 +79,6 @@ static void eth_unlock (NET_ETH_CFG *h);
 
 /**
   \brief       Initialize ETH network interfaces.
-  \return      none.
 */
 void net_eth_iface_init (void) {
   NET_ETH_CFG *const *p;
@@ -92,7 +91,6 @@ void net_eth_iface_init (void) {
 /**
   \brief       Initialize an ethernet interface.
   \param[in]   h  ethernet interface handle.
-  \return      none.
 */
 static void eth_iface_init (NET_ETH_CFG *h) {
   ARM_ETH_MAC_CAPABILITIES capab;
@@ -306,7 +304,6 @@ static void eth_iface_init (NET_ETH_CFG *h) {
 
 /**
   \brief       De-initialize ETH network interface.
-  \return      none.
 */
 void net_eth_iface_uninit (void) {
   NET_ETH_CFG *const *p;
@@ -319,7 +316,6 @@ void net_eth_iface_uninit (void) {
 /**
   \brief       De-initialize ethernet network interface.
   \param[in]   h  ethernet interface handle.
-  \return      none.
 */
 static void eth_iface_uninit (NET_ETH_CFG *h) {
 
@@ -357,7 +353,6 @@ static void eth_iface_uninit (NET_ETH_CFG *h) {
 /**
   \brief       Ethernet interface thread.
   \param[in]   arg  ethernet interface handle.
-  \return      none.
 */
 __NO_RETURN void netETH_Thread (void *arg) {
   NET_ETH_CFG *h = (NET_ETH_CFG *)arg;
@@ -399,7 +394,6 @@ __NO_RETURN void netETH_Thread (void *arg) {
   \brief       Event notification on ethernet receive.
   \param[in]   event  receive event.
   \param[in]   ctx    interface context.
-  \return      none.
   \note        This function is called from eth interrupt.
 */
 void net_eth_callback (uint32_t event, NET_ETH_CTRL *ctx) {
@@ -743,7 +737,6 @@ static uint16_t eth_mtu_limit (uint16_t mtu, uint8_t ip_ver) {
 /**
   \brief       Configure hardware multicast address filtering.
   \param[in]   if_num  interface number.
-  \return      none.
 */
 static void eth_config_mcast (uint32_t if_num) {
   NET_ETH_CFG *h = eth_if_map (if_num);
@@ -784,7 +777,6 @@ static void eth_config_mcast (uint32_t if_num) {
 /**
   \brief       Receive ethernet frame.
   \param[in]   h  ethernet interface handle.
-  \return      none.
   \details     Called from ETH thread!
 */
 static void eth_receive (NET_ETH_CFG *h) {
@@ -843,7 +835,6 @@ static void eth_receive (NET_ETH_CFG *h) {
 /**
   \brief       Check ethernet link state.
   \param[in]   h  ethernet interface handle.
-  \return      none.
   \details     Called from ETH thread!
 */
 static void eth_check_link (NET_ETH_CFG *h) {
@@ -1148,7 +1139,6 @@ bool net_eth_output (uint32_t if_num, NET_FRAME *frame) {
 
 /**
   \brief       Run main process for ethernet interface.
-  \return      none.
 */
 void net_eth_iface_run (void) {
   NET_ETH_CFG *const *p;
@@ -1161,7 +1151,6 @@ void net_eth_iface_run (void) {
 /**
   \brief       Run main process for ethernet interface.
   \param[in]   h  ethernet interface handle.
-  \return      none.
 */
 static void eth_iface_run (NET_ETH_CFG *h) {
   NET_FRAME *frame;
@@ -1422,7 +1411,6 @@ static NET_ETH_CFG *eth_if_map (uint32_t if_num) {
 /**
   \brief       Lock ethernet interface.
   \param[in]   h  ethernet interface handle.
-  \return      none.
 */
 static void eth_lock (NET_ETH_CFG *h) {
   netif_lock (ctrl->semaphore);
@@ -1431,7 +1419,6 @@ static void eth_lock (NET_ETH_CFG *h) {
 /**
   \brief       Unlock ethernet interface.
   \param[in]   h  ethernet interface handle.
-  \return      none.
 */
 static void eth_unlock (NET_ETH_CFG *h) {
   netif_unlock (ctrl->semaphore);
@@ -1441,7 +1428,6 @@ static void eth_unlock (NET_ETH_CFG *h) {
 /**
   \brief       Debug print Link information.
   \param[in]   link_info  link speed and duplex mode.
-  \return      none.
 */
 static void debug_info (uint32_t link_info) {
   char *sp, *dp;
@@ -1471,7 +1457,6 @@ static void debug_info (uint32_t link_info) {
   \brief       Debug print ethernet header information.
   \param[in]   eth_header  ethernet frame header.
   \param[in]   len         length of frame in bytes.
-  \return      none.
 */
 static void debug_inf2 (const void *eth_header, uint32_t len) {
   const NET_ETH_HEADER *eth_hdr = (const NET_ETH_HEADER *)eth_header;

@@ -127,7 +127,6 @@ uint32_t netTCP_GetTimer (int32_t socket) {
 
 /**
   \brief       Initialize TCP sockets.
-  \return      none.
 */
 void net_tcp_socket_init (void) {
   DEBUGF (TCP,"Init %d Sockets\n",tcp->NumSocks);
@@ -140,7 +139,6 @@ void net_tcp_socket_init (void) {
 
 /**
   \brief       De-initialize TCP sockets.
-  \return      none.
 */
 void net_tcp_socket_uninit (void) {
   DEBUGF (TCP,"Uninit Sockets\n");
@@ -792,7 +790,6 @@ bool net_tcp_check_send (int32_t socket) {
   \param[in]   socket   socket handle.
   \param[in]   type     socket type bit-mask.
   \param[in]   ip_opt   IP options.
-  \return      none.
 */
 void net_tcp_ctrl_opt (int32_t socket, uint8_t type, uint32_t ip_opt) {
   NET_TCP_INFO *tcp_s;
@@ -813,7 +810,6 @@ void net_tcp_ctrl_opt (int32_t socket, uint8_t type, uint32_t ip_opt) {
   \brief       Set or change socket callback function.
   \param[in]   socket   socket handle.
   \param[in]   cb_func  event listening callback function.
-  \return      none.
 */
 void net_tcp_set_cb (int32_t socket, netTCP_cb_t cb_func) {
   NET_TCP_INFO *tcp_s;
@@ -830,7 +826,6 @@ void net_tcp_set_cb (int32_t socket, netTCP_cb_t cb_func) {
 /**
   \brief       Reset keep-alive timer for the socket.
   \param[in]   socket  socket handle.
-  \return      none.
 */
 void net_tcp_reset_tout (int32_t socket) {
   NET_TCP_INFO *tcp_s;
@@ -1041,7 +1036,6 @@ uint16_t net_tcp_alloc_port (void) {
 
 /**
   \brief       Periodically poll TCP sockets for timeouts.
-  \return      none.
 */
 void net_tcp_socket_run (void) {
   static uint8_t socket = 0;
@@ -1311,7 +1305,6 @@ no_retries:
   \param[in]   net_if  network interface descriptor.
   \param[in]   frame   network frame.
   \param[in]   ip_ver  IP version.
-  \return      none.
 */
 void net_tcp_process (NET_IF_CFG *net_if, NET_FRAME *frame, uint8_t ip_ver) {
   NET_TCP_INFO *tcp_s;
@@ -2115,7 +2108,6 @@ static bool tcp_write (NET_IF_CFG *net_if, NET_FRAME *frame,
   \param[in]   tcp_s  socket descriptor.
   \param[in]   frame  network frame.
   \param[in]   len    data length.
-  \return      none.
   \note        If len is or-ed with 0x80000000, then seqnr is already
                in place for a resend.
 */
@@ -2158,7 +2150,6 @@ static void tcp_send_data (NET_TCP_INFO *tcp_s, NET_FRAME *frame, uint32_t len) 
   \brief       Send control frame and update send sequence.
   \param[in]   tcp_s  socket descriptor.
   \param[in]   flags  TCP flags.
-  \return      none.
   \note        Control frame contains no data.
 */
 static void tcp_send_ctrl (NET_TCP_INFO *tcp_s, uint8_t flags) {
@@ -2211,7 +2202,6 @@ static void tcp_send_ctrl (NET_TCP_INFO *tcp_s, uint8_t flags) {
   \param[in]   frame    network frame.
   \param[in]   tcp_hdr  pointer to TCP header.
   \param[in]   ip_ver   IP version.
-  \return      none.
   \note        Control frame contains no data.
 */
 static void tcp_send_reset (NET_IF_CFG *net_if, NET_FRAME *frame,
@@ -2266,7 +2256,6 @@ static void tcp_send_reset (NET_IF_CFG *net_if, NET_FRAME *frame,
   \brief       Parse TCP header options.
   \param[in]   tcp_s    socket descriptor.
   \param[in]   tcp_hdr  pointer to TCP header.
-  \return      none.
   \note        Check for MSS option and update MaxSegSize for socket.
 */
 static void tcp_parse_opt (NET_TCP_INFO *tcp_s, NET_TCP_HEADER *tcp_hdr) {
@@ -2326,7 +2315,6 @@ static void tcp_parse_opt (NET_TCP_INFO *tcp_s, NET_TCP_HEADER *tcp_hdr) {
 /**
   \brief       Initialize congestion control variables.
   \param[in]   tcp_s  socket descriptor.
-  \return      none.
 */
 static void tcp_set_cwnd (NET_TCP_INFO *tcp_s) {
   if (tcp_s->SsThresh == 0) {
@@ -2352,7 +2340,6 @@ static void tcp_set_cwnd (NET_TCP_INFO *tcp_s) {
 /**
   \brief       Process duplicate data acks.
   \param[in]   tcp_s  socket descriptor.
-  \return      none.
   \note        Processing algorithm:
                a) dupacks <  3: do nothing
                b) dupacks == 3: start fast retransmit
@@ -2411,7 +2398,6 @@ static void tcp_proc_dupack (NET_TCP_INFO *tcp_s) {
   \brief       Process data ack number, check if it is valid.
   \param[in]   tcp_s  socket descriptor.
   \param[in]   acknr  acknowledge sequence number.
-  \return      none.
 */
 static void tcp_proc_acknr (NET_TCP_INFO *tcp_s, uint32_t acknr) {
   NET_FRAME *frame,*next;
@@ -2511,7 +2497,6 @@ static void tcp_proc_acknr (NET_TCP_INFO *tcp_s, uint32_t acknr) {
 /**
   \brief       Initialize the frame queue for retransmitting.
   \param[in]   tcp_s  socket descriptor.
-  \return      none.
 */
 static void tcp_que_init (NET_TCP_INFO *tcp_s) {
   NET_FRAME *frame;
@@ -2546,7 +2531,6 @@ static uint32_t tcp_que_una (NET_TCP_INFO *tcp_s) {
 /**
   \brief       Retransmit frame from the queue.
   \param[in]   tcp_s  socket descriptor.
-  \return      none.
   \note        Search for the frame to resend (with delta == 0).
 */
 static void tcp_que_resend (NET_TCP_INFO *tcp_s) {
@@ -2615,7 +2599,6 @@ static void tcp_que_resend (NET_TCP_INFO *tcp_s) {
   \param[in]   tcp_s  socket descriptor.
   \param[in]   frame  network frame.
   \param[in]   dlen   TCP data length.
-  \return      none.
   \note        It is important to add the frame to outgoing queue after
                calling tcp_send_data() function. This is required because
                ethernet header and TCP_QUE() variables overlap. Ethernet
@@ -2650,7 +2633,6 @@ static void tcp_que_add (NET_TCP_INFO *tcp_s, NET_FRAME *frame, uint32_t dlen) {
 /**
   \brief       Release all retransmission buffers.
   \param[in]   tcp_s  socket descriptor.
-  \return      none.
 */
 static void tcp_que_free (NET_TCP_INFO *tcp_s) {
   NET_FRAME *frame, *next;
@@ -2750,7 +2732,6 @@ static NET_TCP_INFO *tcp_map_socket (NET_IF_CFG *net_if, NET_FRAME *frame,
   \brief       Change state of TCP socket to a new state.
   \param[in]   tcp_s  socket descriptor.
   \param[in]   state  new TCP state as defined with netTCP_State.
-  \return      none.
   \note        This function refreshes also Retransmit and
                Keep-alive timers.
 */
@@ -2808,7 +2789,6 @@ rtim: tcp_s->RetryTimer = tcp->RetryTout;
 
 /**
   \brief       Update TCP socket timers.
-  \return      none.
 */
 static void tcp_upd_timers (void) {
   NET_TCP_INFO *tcp_s;
@@ -2872,7 +2852,6 @@ const char *net_tcp_ntoa (netTCP_State state) {
 /**
   \brief       Debug print Round Trip Timeout information.
   \param[in]   tcp_s  socket descriptor.
-  \return      none.
 */
 static void debug_info (const NET_TCP_INFO *tcp_s) {
   int32_t rto;
@@ -2886,7 +2865,6 @@ static void debug_info (const NET_TCP_INFO *tcp_s) {
   \brief       Debug print TCP header information.
   \param[in]   tcp_hdr  TCP frame header.
   \param[in]   len      frame payload length.
-  \return      none.
 */
 static void debug_inf2 (const NET_TCP_HEADER *tcp_hdr, int32_t len) {
   static const char flg[][4] = {

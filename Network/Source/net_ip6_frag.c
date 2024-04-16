@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ip6_frag.c
  * Purpose: IPv6 Fragmentation and Reassembly
@@ -28,7 +28,6 @@ static void que_free_list (NET_IP_FRAG_INFO *frag_s);
 
 /**
   \brief       Initialize IPv6 reassembly.
-  \return      none.
 */
 void net_ip6_frag_init (void) {
   /* Clear IP6 reassembly control table */
@@ -38,7 +37,6 @@ void net_ip6_frag_init (void) {
 
 /**
   \brief       De-initialize IPv6 reassembly.
-  \return      none.
 */
 void net_ip6_frag_uninit (void) {
   memset (frag6c->Scb, 0, sizeof (*frag6c->Scb) * frag6c->NumSess);
@@ -252,7 +250,6 @@ __WEAK NET_FRAME *net_ip6_frag_get (NET_FRAME *frame, uint16_t mtu) {
 
 /**
   \brief       Run IPv6 reassembly main function.
-  \return      none.
 */
 void net_ip6_frag_run (void) {
   NET_IP_FRAG_INFO *frag_s;
@@ -321,7 +318,6 @@ static NET_IP_FRAG_INFO *frag_map_session (NET_FRAME *frame) {
 /**
   \brief       Release all reassembly buffers.
   \param[in]   frag_s  reassembly session descriptor.
-  \return      none.
 */
 static void que_free_list (NET_IP_FRAG_INFO *frag_s) {
   NET_FRAME *frame, *next;

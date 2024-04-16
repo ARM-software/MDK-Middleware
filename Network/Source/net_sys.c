@@ -136,7 +136,6 @@ netStatus netUninitialize (void) {
 /**
   \brief       Network Core thread.
   \param[in]   arg  dummy parameter.
-  \return      none.
   \note        Workaround for MW-USB 6.7.0 or older is implemented.
   -------------------------------------------------------------------------------
   The workaround is required for the applications that use network file system
@@ -182,7 +181,6 @@ __NO_RETURN void netCore_Thread (void *arg) {
 
 /**
   \brief       Process timer tick event.
-  \return      none.
 */
 static void sys_proc_tick (void) {
   if (sys->Tick) {
@@ -216,7 +214,6 @@ static void sys_proc_tick (void) {
 /**
   \brief       System tick timer callback function.
   \param[in]   arg  dummy parameter.
-  \return      none.
 */
 void net_sys_tick (void *arg) {
   (void)arg;
@@ -457,7 +454,6 @@ NET_IF_CFG *net_if_map_all (uint32_t if_id) {
 /**
   \brief       Suspend running user thread.
   \param[out]  thread  pointer to where to store thread id.
-  \return      none.
 */
 void net_sys_suspend (NETOS_ID *thread) {
   *thread = netos_thread_id ();
@@ -472,7 +468,6 @@ void net_sys_suspend (NETOS_ID *thread) {
 /**
   \brief       Resume suspended user thread in blocking mode.
   \param[in]   thread  pointer to a suspended thread id.
-  \return      none.
 */
 void net_sys_resume (NETOS_ID *thread) {
   if (*thread) {
@@ -485,7 +480,6 @@ void net_sys_resume (NETOS_ID *thread) {
 /**
   \brief       Suspend running user thread.
   \param[out]  ms   timeout to wait for flag (in ms).
-  \return      none.
 */
 void net_sys_wait (uint32_t ms) {
   net_sys_unlock ();
@@ -495,7 +489,6 @@ void net_sys_wait (uint32_t ms) {
 
 /**
   \brief       Lock network core functions.
-  \return      none.
 */
 void net_sys_lock (void) {
   netos_lock (os_id.mutex);
@@ -503,7 +496,6 @@ void net_sys_lock (void) {
 
 /**
   \brief       Unlock network core functions.
-  \return      none.
 */
 void net_sys_unlock (void) {
   netos_unlock (os_id.mutex);
@@ -511,7 +503,6 @@ void net_sys_unlock (void) {
 
 /**
   \brief       Wake-up network thread.
-  \return      none.
 */
 void net_sys_wakeup (void) {
   if (sys->Flags & SYS_FLAG_RUNNING) {

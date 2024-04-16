@@ -906,31 +906,25 @@ extern void netTLS_ReleaseMemory (const uint8_t *buf);
 
 /// \brief Network Component core thread.
 /// \param[in]     arg           dummy parameter.
-/// \return        None.
 extern void netCore_Thread (void *arg);
 
 /// \brief Network core tick timer callback.
 /// \param[in]     arg           dummy parameter.
-/// \return        None.
 extern void net_sys_tick (void *arg);
 
 /// \brief Signal Network Component error.
 /// \param[in]     error         system error code.
-/// \return        None.
 extern void net_sys_error (NET_ERROR error);
 
 /// \brief Acquire Network core protection mutex.
-/// \return        None.
 extern void net_sys_lock   (void);
 
 /// \brief Release Network core protection mutex.
-/// \return        None.
 extern void net_sys_unlock (void);
 
 //  ==== OS abstraction layer ====
 
 /// \brief Initialize OS abstraction layer.
-/// \return        None.
 extern void netos_init (void);
 
 /// \brief Create network core thread.
@@ -939,7 +933,6 @@ extern NETOS_ID netos_thread_create (void);
 
 /// \brief Delete network core thread.
 /// \param[in]     thread        thread identifier.
-/// \return        None.
 extern void netos_thread_delete (NETOS_ID thread);
 
 /// \brief Get running thread identifier.
@@ -947,7 +940,6 @@ extern void netos_thread_delete (NETOS_ID thread);
 extern NETOS_ID netos_thread_id (void);
 
 /// \brief Pass control to next ready thread.
-/// \return        None.
 extern void netos_thread_pass (void);
 
 /// \brief Create network periodic tick timer.
@@ -956,13 +948,11 @@ extern NETOS_ID netos_timer_create (void);
 
 /// \brief Delete network periodic tick timer.
 /// \param[in]     timer         timer identifier.
-/// \return        None.
 extern void netos_timer_delete (NETOS_ID timer);
 
 /// \brief Start network periodic tick timer.
 /// \param[in]     timer         timer identifier.
 /// \param[in]     interval_ms   tick interval in millisec.
-/// \return        None.
 extern void netos_timer_start (NETOS_ID timer, uint32_t interval_ms);
 
 /// \brief Create network protection mutex.
@@ -972,40 +962,33 @@ extern NETOS_ID netos_mutex_create (uint8_t sys_id);
 
 /// \brief Delete network protection mutex.
 /// \param[in]     mutex         mutex identifier.
-/// \return        None.
 extern void netos_mutex_delete (NETOS_ID mutex);
 
 /// \brief Lock network protection mutex.
 /// \param[in]     mutex         mutex identifier.
-/// \return        None.
 extern void netos_lock (NETOS_ID mutex);
 
 /// \brief Unlock network protection mutex.
 /// \param[in]     mutex         mutex identifier.
-/// \return        None.
 extern void netos_unlock (NETOS_ID mutex);
 
 /// \brief Delay network thread execution.
 /// \param[in]     ms            millisec to delay.
-/// \return        None.
 extern void netos_delay (uint32_t ms);
 
 /// \brief Suspend thread until event flag is set.
 /// \param[in]     flag          event flag to wait for.
 /// \param[in]     ms            millisec to delay.
-/// \return        None.
 extern void netos_flag_wait (uint32_t flag, uint32_t ms);
 
 /// \brief Set thread event flag.
 /// \param[in]     thread        thread identifier.
 /// \param[in]     flag          event flag to wait for.
-/// \return        None.
 extern void netos_flag_set (NETOS_ID thread, uint32_t flag);
 
 /// \brief Clear thread event flag.
 /// \param[in]     thread        thread identifier.
 /// \param[in]     flag          event flag to wait for.
-/// \return        None.
 extern void netos_flag_clear (NETOS_ID thread, uint32_t flag);
 
 /// \brief Create network interface thread and protection semaphore.
@@ -1017,17 +1000,14 @@ extern NETOS_ID netif_create (uint32_t if_id, NETOS_ID *semaphore);
 /// \brief Delete network interface thread and protection semaphore.
 /// \param[in]     thread        thread identifier.
 /// \param[in]     semaphore     semaphore identifier.
-/// \return        None.
 extern void netif_delete (NETOS_ID thread, NETOS_ID semaphore);
 
 /// \brief Lock network interface protection semaphore.
 /// \param[in]     semaphore     semaphore identifier.
-/// \return        None.
 extern void netif_lock (NETOS_ID semaphore);
 
 /// \brief Unlock network interface protection semaphore.
 /// \param[in]     semaphore     semaphore identifier.
-/// \return        None.
 extern void netif_unlock (NETOS_ID semaphore);
 
 //  ==== Memory management ====
@@ -1039,26 +1019,21 @@ extern NET_FRAME *net_mem_alloc (uint32_t byte_size);
 
 /// \brief Release allocated memory.
 /// \param[in]     mem_ptr       pointer to the allocated memory.
-/// \return        None.
 extern void net_mem_free (NET_FRAME *mem_ptr);
 
 //  ==== Ethernet interface ====
 
 /// \brief Ethernet interface thread.
 /// \param[in]     arg           dummy parameter.
-/// \return        None.
 extern void netETH_Thread (void *arg);
 
 /// \brief Initialize ethernet interface.
-/// \return        None.
 extern void net_eth_iface_init (void);
 
 /// \brief De-initialize ethernet interface.
-/// \return        None.
 extern void net_eth_iface_uninit (void);
 
 /// \brief Run ethernet interface main function.
-/// \return None.
 extern void net_eth_iface_run (void);
 
 /// \brief Construct ethernet header for the frame and send it.
@@ -1081,7 +1056,6 @@ extern bool net_eth_output (uint32_t if_num, NET_FRAME *frame);
 /// \brief Send event notification from eth driver.
 /// \param[in]     event         receive event.
 /// \param[in]     ctx           interface context (eth0, eth1).
-/// \return        None.
 extern void net_eth_callback (uint32_t event, struct net_eth_ctrl *ctx);
 
 /// \brief Get current value of Ethernet Interface option.
@@ -1101,38 +1075,30 @@ extern netStatus net_eth_get_option (uint32_t if_num, netIF_Option option, uint8
 extern netStatus net_eth_set_option (uint32_t if_num, netIF_Option option, const uint8_t *buf, uint32_t buf_len);
 
 /// \brief Initialize ARP cache.
-/// \return        None.
 extern void net_arp_cache_init (void);
 
 /// \brief De-initialize ARP cache.
-/// \return        None.
 extern void net_arp_cache_uninit (void);
 
 /// \brief Run ARP cache main function.
-/// \return None.
 extern void net_arp_cache_run (void);
 
 /// \brief Send a notification of local IP address change (gratuitous ARP).
 /// \param[in]     net_if        network interface descriptor.
-/// \return        None.
 extern void net_arp_notify (NET_IF_CFG *net_if);
 
 /// \brief Initialize IGMP group management.
-/// \return        None.
 extern void net_igmp_host_init (void);
 
 /// \brief De-initialize IGMP group management.
-/// \return        None.
 extern void net_igmp_host_uninit (void);
 
 /// \brief Run IGMP group management main function.
-/// \return        None.
 extern void net_igmp_host_run (void);
 
 /// \brief Process IGMP group management frame.
 /// \param[in]     net_if        network interface descriptor.
 /// \param[in]     frame         received IGMP group management frame.
-/// \return        None.
 extern void net_igmp_process (NET_IF_CFG *net_if, NET_FRAME *frame);
 
 /// \brief Check if local host is a member of provided group.
@@ -1150,21 +1116,17 @@ extern bool net_igmp_is_member (NET_IF_CFG *net_if, const uint8_t *ip4_addr);
 extern uint32_t net_igmp_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf);
 
 /// \brief Initialize MLD nodes.
-/// \return        None.
 extern void net_mld_node_init (void);
 
 /// \brief De-initialize MLD nodes.
-/// \return        None.
 extern void net_mld_node_uninit (void);
 
 /// \brief Run MLD node main function.
-/// \return        None.
 extern void net_mld_node_run (void);
 
 /// \brief Process MLD message frame.
 /// \param[in]     net_if        network interface descriptor.
 /// \param[in]     frame         received MLD message frame.
-/// \return        None.
 extern void net_mld_process (NET_IF_CFG *net_if, NET_FRAME *frame);
 
 /// \brief Check if local node is listening on this address.
@@ -1182,76 +1144,59 @@ extern bool net_mld_listening (NET_IF_CFG *net_if, const uint8_t *ip4_addr);
 extern uint32_t net_mld_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf);
 
 /// \brief Initialize NDP cache.
-/// \return        None.
 extern void net_ndp_cache_init (void);
 
 /// \brief De-initialize NDP cache.
-/// \return        None.
 extern void net_ndp_cache_uninit (void);
 
 /// \brief Run NDP cache main function.
-/// \return None.
 extern void net_ndp_cache_run (void);
 
 /// \brief Process Neighbor Discovery frame.
 /// \param[in]     net_if        network interface descriptor.
 /// \param[in]     frame         received ND frame.
-/// \return        None.
 extern void net_ndp_process (NET_IF_CFG *net_if, NET_FRAME *frame);
 
 /// \brief Initialize NBNS client.
-/// \return        None.
 extern void net_nbns_client_init (void);
 
 /// \brief De-initialize NBNS client.
-/// \return        None.
 extern void net_nbns_client_uninit (void);
 
 /// \brief Run NBNS client main function.
-/// \return        None.
 extern void net_nbns_client_run (void);
 
 /// \brief Initialize DHCP client.
-/// \return        None.
 extern void net_dhcp_client_init (void);
 
 /// \brief De-initialize DHCP client.
-/// \return        None.
 extern void net_dhcp_client_uninit (void);
 
 /// \brief Run DHCP client main function.
-/// \return        None.
 extern void net_dhcp_client_run (void);
 
 /// \brief Initialize DHCP6 client.
-/// \return        None.
 extern void net_dhcp6_client_init (void);
 
 /// \brief De-initialize DHCP6 client.
-/// \return        None.
 extern void net_dhcp6_client_uninit (void);
 
 /// \brief Run DHCP6 client main function.
-/// \return        None.
 extern void net_dhcp6_client_run (void);
 
 //  ==== WiFi interface ====
 
 /// \brief WiFi interface thread.
 /// \param[in]     arg           dummy parameter.
-/// \return        None.
 extern void netWiFi_Thread (void *arg);
 
 /// \brief Initialize WiFi interface.
-/// \return        None.
 extern void net_wifi_iface_init (void);
 
 /// \brief De-initialize WiFi interface.
-/// \return        None.
 extern void net_wifi_iface_uninit (void);
 
 /// \brief Run WiFi interface main function.
-/// \return None.
 extern void net_wifi_iface_run (void);
 
 /// \brief Construct ethernet header for the frame and send it.
@@ -1274,7 +1219,6 @@ extern bool net_wifi_output (uint32_t if_num, NET_FRAME *frame);
 /// \brief Send event notification from wifi driver.
 /// \param[in]     event         receive event.
 /// \param[in]     ctx           interface context (wifi0, wifi1).
-/// \return        None.
 extern void net_wifi_callback (uint32_t event, struct net_wifi_ctrl *ctx);
 
 /// \brief Get current value of WiFi Interface option.
@@ -1297,19 +1241,15 @@ extern netStatus net_wifi_set_option (uint32_t if_num, netIF_Option option, cons
 
 /// \brief PPP interface thread.
 /// \param[in]     arg           dummy parameter.
-/// \return        None.
 extern void netPPP_Thread (void *arg);
 
 /// \brief Initialize PPP interface.
-/// \return        None.
 extern void net_ppp_iface_init (void);
 
 /// \brief De-initialize PPP interface.
-/// \return        None.
 extern void net_ppp_iface_uninit (void);
 
 /// \brief Run PPP interface main function.
-/// \return        None.
 extern void net_ppp_iface_run (void);
 
 /// \brief Construct PPP header for the frame and send it.
@@ -1339,19 +1279,15 @@ extern netStatus net_ppp_set_option (netIF_Option option, const uint8_t *buf, ui
 
 /// \brief SLIP interface thread.
 /// \param[in]     arg           dummy parameter.
-/// \return        None.
 extern void netSLIP_Thread (void *arg);
 
 /// \brief Initialize SLIP interface.
-/// \return        None.
 extern void net_slip_iface_init (void);
 
 /// \brief De-initialize SLIP interface.
-/// \return        None.
 extern void net_slip_iface_uninit (void);
 
 /// \brief Run SLIP interface main function.
-/// \return        None.
 extern void net_slip_iface_run (void);
 
 /// \brief Send a SLIP frame.
@@ -1382,7 +1318,6 @@ extern netStatus net_slip_set_option (netIF_Option option, const uint8_t *buf, u
 /// \brief Send event notification from the USART driver.
 /// \param[in]     event         receive USART event.
 /// \param[in]     ctx           serial device context (ppp, slip).
-/// \return        None.
 extern void net_com_callback (uint32_t event, struct net_com_ctrl *ctx);
 
 /// \brief Request callback from the modem driver.
@@ -1391,34 +1326,27 @@ extern void net_com_callback (uint32_t event, struct net_com_ctrl *ctx);
 /// \param[in]     timeout       response timeout.
 /// \param[in]     retries       number of retries on failure.
 /// \param[in]     ctx           modem device context.
-/// \return        None.
 extern void net_modem_callback (const char *cmd, const char *response, uint32_t timeout,
                                 uint32_t retries, struct net_modem_ctrl *ctx);
 
 //  ==== Network core ====
 
 /// \brief Initialize loopback interface.
-/// \return        None.
 extern void net_loop_iface_init (void);
 
 /// \brief De-initialize loopback interface.
-/// \return        None.
 extern void net_loop_iface_uninit (void);
 
 /// \brief Run loopback interface main function.
-/// \return        None.
 extern void net_loop_iface_run (void);
 
 /// \brief Initialize IPv4 fragmentation and reassembly.
-/// \return        None.
 extern void net_ip4_frag_init (void);
 
 /// \brief De-initialize IPv4 fragmentation and reassembly.
-/// \return        None.
 extern void net_ip4_frag_uninit (void);
 
 /// \brief Run IPv4 reassembly main function.
-/// \return        None.
 extern void net_ip4_frag_run (void);
 
 /// \brief Reassemble incoming IPv4 fragment.
@@ -1433,15 +1361,12 @@ extern NET_FRAME *net_ip4_frag_add (NET_FRAME *frame);
 extern NET_FRAME *net_ip4_frag_get (NET_FRAME *frame, uint16_t mtu);
 
 /// \brief Initialize IPv6 fragmentation and reassembly.
-/// \return        None.
 extern void net_ip6_frag_init (void);
 
 /// \brief De-initialize IPv6 fragmentation and reassembly.
-/// \return        None.
 extern void net_ip6_frag_uninit (void);
 
 /// \brief Run IPv6 reassembly main function.
-/// \return        None.
 extern void net_ip6_frag_run (void);
 
 /// \brief Reassemble incoming IPv6 fragment.
@@ -1462,55 +1387,44 @@ extern NET_FRAME *net_ip6_frag_get (NET_FRAME *frame, uint16_t mtu);
 extern uint32_t net_ip6_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf);
 
 /// \brief Initialize Ping client.
-/// \return        None.
 extern void net_ping_client_init (void);
 
 /// \brief De-initialize Ping client.
-/// \return        None.
 extern void net_ping_client_uninit (void);
 
 /// \brief Run Ping client main function.
-/// \return        None.
 extern void net_ping_client_run (void);
 
 /// \brief Initialize UDP sockets.
-/// \return        None.
 extern void net_udp_socket_init (void);
 
 /// \brief De-initialize UDP sockets.
-/// \return        None.
 extern void net_udp_socket_uninit (void);
 
 /// \brief Process UDP frame.
 /// \param[in]     net_if        network interface descriptor.
 /// \param[in]     frame         received UDP frame.
 /// \param[in]     ip_ver        received IP version.
-/// \return        None.
 extern void net_udp_process (NET_IF_CFG *net_if, NET_FRAME *frame, uint8_t ip_ver);
 
 /// \brief Initialize TCP sockets.
-/// \return        None.
 extern void net_tcp_socket_init (void);
 
 /// \brief De-initialize TCP sockets.
-/// \return        None.
 extern void net_tcp_socket_uninit (void);
 
 /// \brief Run TCP socket main function.
-/// \return        None.
 extern void net_tcp_socket_run (void);
 
 /// \brief Process TCP frame.
 /// \param[in]     net_if        network interface descriptor.
 /// \param[in]     frame         received TCP frame.
 /// \param[in]     ip_ver        received IP version.
-/// \return        None.
 extern void net_tcp_process (NET_IF_CFG *net_if, NET_FRAME *frame, uint8_t ip_ver);
 
 /// \brief Set or change TCP socket callback function.
 /// \param[in]     socket        socket handle.
 /// \param[in]     cb_func       event listening callback function.
-/// \return        None.
 extern void net_tcp_set_cb (int32_t socket, netTCP_cb_t cb_func);
 
 /// \brief Retrieve TCP socket remote peer address.
@@ -1524,161 +1438,126 @@ extern NET_ADDR *net_tcp_get_peer_ptr (int32_t socket);
 extern const char *net_tcp_ntoa (netTCP_State state);
 
 /// \brief Initialize DNS client.
-/// \return        None.
 extern void net_dns_client_init (void);
 
 /// \brief De-initialize DNS client.
-/// \return        None.
 extern void net_dns_client_uninit (void);
 
 /// \brief Run DNS client main function.
-/// \return        None.
 extern void net_dns_client_run (void);
 
 /// \brief Initialize BSD sockets.
-/// \return        None.
 extern void net_bsd_socket_init (void);
 
 /// \brief De-initialize BSD sockets.
-/// \return        None.
 extern void net_bsd_socket_uninit (void);
 
 /// \brief Run BSD socket main function.
-/// \return        None.
 extern void net_bsd_socket_run (void);
 
 /// \brief Initialize BSD host resolver.
-/// \return        None.
 extern void net_bsd_host_init (void);
 
 /// \brief De-initialize BSD host resolver.
-/// \return        None.
 extern void net_bsd_host_uninit (void);
 
 //  ==== FTP server service ====
 
 /// \brief Initialize FTP server.
-/// \return        None.
 extern void net_ftp_server_init (void);
 
 /// \brief De-initialize FTP server.
-/// \return        None.
 extern void net_ftp_server_uninit (void);
 
 /// \brief Run FTP server main function.
-/// \return        None.
 extern void net_ftp_server_run (void);
 
 //  ==== FTP client application ====
 
 /// \brief Initialize FTP client.
-/// \return        None.
 extern void net_ftp_client_init (void);
 
 /// \brief De-initialize FTP client.
-/// \return        None.
 extern void net_ftp_client_uninit (void);
 
 /// \brief Run FTP client main function.
-/// \return        None.
 extern void net_ftp_client_run (void);
 
 //  ==== TFTP server service ====
 
 /// \brief Initialize TFTP server.
-/// \return        None.
 extern void net_tftp_server_init (void);
 
 /// \brief De-initialize TFTP server.
-/// \return        None.
 extern void net_tftp_server_uninit (void);
 
 /// \brief Run TFTP server main function.
-/// \return        None.
 extern void net_tftp_server_run (void);
 
 //  ==== TFTP client application ====
 
 /// \brief Initialize TFTP client.
-/// \return        None.
 extern void net_tftp_client_init (void);
 
 /// \brief De-initialize TFTP client.
-/// \return        None.
 extern void net_tftp_client_uninit (void);
 
 /// \brief Run TFTP client main function.
-/// \return        None.
 extern void net_tftp_client_run (void);
 
 //  ==== SMTP client application ====
 
 /// \brief Initialize SMTP client.
-/// \return        None.
 extern void net_smtp_client_init (void);
 
 /// \brief De-initialize SMTP client.
-/// \return        None.
 extern void net_smtp_client_uninit (void);
 
 /// \brief Run SMTP client main function.
-/// \return        None.
 extern void net_smtp_client_run (void);
 
 //  ==== SNMP agent application ====
 
 /// \brief Initialize SNMP agent.
-/// \return        None.
 extern void net_snmp_agent_init (void);
 
 /// \brief De-initialize SNMP agent.
-/// \return        None.
 extern void net_snmp_agent_uninit (void);
 
 /// \brief Run SNMP agent main function.
-/// \return        None.
 extern void net_snmp_agent_run (void);
 
 //  ==== SNTP client application ====
 
 /// \brief Initialize SNTP client.
-/// \return        None.
 extern void net_sntp_client_init (void);
 
 /// \brief De-initialize SNTP client.
-/// \return        None.
 extern void net_sntp_client_uninit (void);
 
 /// \brief Run SNTP client main function.
-/// \return        None.
 extern void net_sntp_client_run (void);
 
 //  ==== Telnet server service ====
 
 /// \brief Initialize Telnet server.
-/// \return        None.
 extern void net_telnet_server_init (void);
 
 /// \brief De-initialize Telnet server.
-/// \return        None.
 extern void net_telnet_server_uninit (void);
 
 /// \brief Run Telnet server main function.
-/// \return        None.
 extern void net_telnet_server_run (void);
 
 //  ==== HTTP server service ====
 
 /// \brief Initialize HTTP server.
-/// \return        None.
 extern void net_http_server_init (void);
 
 /// \brief De-initialize HTTP server.
-/// \return        None.
 extern void net_http_server_uninit (void);
 
 /// \brief Run HTTP server main function.
-/// \return        None.
 extern void net_http_server_run (void);
 
 /// \brief Convert generic time to internal HTTP time format.
@@ -1695,11 +1574,9 @@ extern uint32_t net_http_time (uint8_t hr, uint8_t min, uint8_t sec,
 //  ==== TLS interface ====
 
 /// \brief Initialize TLS interface.
-/// \return        None.
 extern void netTLS_InterfaceInit (void);
 
 /// \brief De-initialize TLS interface.
-/// \return        None.
 extern void netTLS_InterfaceUninit (void);
 
 /// \brief Allocate secure TLS context.
@@ -1711,12 +1588,10 @@ extern uint8_t netTLS_GetContext (int32_t socket, netTCP_cb_t cb_func);
 /// \brief Establish encrypted TLS connection to remote endpoint.
 /// \param[in]     tls_id        TLS session id.
 /// \param[in]     srv_name      hostname of the server.
-/// \return        None.
 extern void netTLS_Connect (uint8_t tls_id, const char *srv_name);
 
 /// \brief Start TLS server listening for encrypted connection.
 /// \param[in]     tls_id        TLS session id.
-/// \return        None.
 extern void netTLS_Listen (uint8_t tls_id);
 
 /// \brief Allocate memory for TLS send buffer.
@@ -1728,13 +1603,11 @@ extern uint8_t *netTLS_GetBuffer (uint32_t size);
 ///  \param[in]    tls_id        TLS context id.
 ///  \param[in]    buf           pointer to data buffer.
 ///  \param[in]    len           length of data (in bytes).
-///  \return       None.
 extern void netTLS_Write (uint8_t tls_id, const uint8_t *buf, uint32_t len);
 
 /// \brief Stop TLS communication and close socket.
 /// \param[in]     tls_id        TLS context id.
 /// \param[in]     close_mode    socket close mode: 1=normal, 0=abort.
-/// \return        None.
 extern void netTLS_Close (uint8_t tls_id, uint8_t close_mode);
 
 //  ==== Network address conversion ====
@@ -1742,7 +1615,6 @@ extern void netTLS_Close (uint8_t tls_id, uint8_t close_mode);
 /// \brief Copy IP address and port.
 /// \param[out]    dst_addr      destination IPv4 or IPv6 address.
 /// \param[in]     src_addr      source IPv4 or IPv6 address.
-/// \return        None.
 extern void net_addr_copy (__ADDR *dst_addr, const __ADDR *src_addr);
 
 /// \brief Convert IPv4 address from binary to string.
@@ -1766,19 +1638,16 @@ extern const char *net_mac_ntoa (const uint8_t *mac_addr);
 //  ==== Network debug ====
 
 /// \brief Initialize STDIO debug interface.
-/// \return        None.
 extern void net_debug_init (void);
 
 /// \brief Debug print information message.
 /// \param[in]     proc          network process id.
 /// \param[in]     fmt           printf format string.
-/// \return        None.
 extern void net_dbg_info (int32_t proc, const char *fmt, ...);
 
 /// \brief Debug print error message.
 /// \param[in]     proc          network process id.
 /// \param[in]     fmt           printf format string.
-/// \return        None.
 extern void net_dbg_error (int32_t proc, const char *fmt, ...);
 
 /// \brief Convert process id into a string.
@@ -1791,7 +1660,6 @@ extern const char *net_dbg_proc (int32_t proc);
 extern const char *net_dbg_time (void);
 
 /// \brief Initialize Event Recorder debug interface.
-/// \return        None.
 extern void net_evr_init (void);
 
 #ifdef __cplusplus

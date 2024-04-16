@@ -61,7 +61,6 @@ static uint16_t get_tout (uint32_t prev_tout, uint32_t max_tout, bool first);
 
 /**
   \brief       Initialize DHCPv6 client.
-  \return      none.
 */
 void net_dhcp6_client_init (void) {
   NET_DHCP6_CFG *const *p;
@@ -101,7 +100,6 @@ void net_dhcp6_client_init (void) {
 
 /**
   \brief       De-initialize DHCPv6 client.
-  \return      none.
 */
 void net_dhcp6_client_uninit (void) {
   NET_DHCP6_CFG *const *p;
@@ -175,7 +173,6 @@ __WEAK netStatus netDHCP6_Disable (uint32_t if_id) {
   \brief       Start DHCPv6 client service.
   \param[in]   h     DHCPv6 instance handle.
   \param[in]   mode  DHCPv6 operation mode.
-  \return      none.
 */
 static void dhcp6_client_start (NET_DHCP6_CFG *h, netDHCP6_Mode mode) {
   DEBUGF (DHCP6,"Start_service %s, State%s\n",h->If->Name,
@@ -196,7 +193,6 @@ static void dhcp6_client_start (NET_DHCP6_CFG *h, netDHCP6_Mode mode) {
 /**
   \brief       Stop DHCPv6 client service.
   \param[in]   h  DHCPv6 instance handle.
-  \return      none.
 */
 static void dhcp6_client_stop (NET_DHCP6_CFG *h) {
   DEBUGF (DHCP6,"Stop_service %s\n",h->If->Name);
@@ -217,7 +213,6 @@ static void dhcp6_client_stop (NET_DHCP6_CFG *h) {
 
 /**
   \brief       Run DHCPv6 client service.
-  \return      none.
 */
 void net_dhcp6_client_run (void) {
   NET_DHCP6_CFG *const *p;
@@ -230,7 +225,6 @@ void net_dhcp6_client_run (void) {
 /**
   \brief       Run DHCPv6 client service.
   \param[in]   h  DHCPv6 instance handle.
-  \return      none.
 */
 static void dhcp6_client_run (NET_DHCP6_CFG *h) {
   if (ctrl->State == DHCP6_STATE_DISABLED) {
@@ -482,7 +476,6 @@ link_down:
   \brief       Create a DHCPv6 message and send it to server.
   \param[in]   h         DHCPv6 instance handle.
   \param[in]   msg_type  DHCPv6 message type to create.
-  \return      none.
 */
 static void dhcp6_send_message (NET_DHCP6_CFG *h, uint8_t msg_type) {
   uint8_t *sendbuf;
@@ -1025,7 +1018,6 @@ static bool check_client_id (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len)
   \param[in]   h    DHCPv6 instance handle.
   \param[in]   buf  buffer containing the option.
   \param[in]   len  length of option.
-  \return      none.
 */
 static void proc_opt_ia_na (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len) {
   uint32_t index;
@@ -1179,7 +1171,6 @@ static const char *stat_ascii (uint16_t status) {
   \brief       Debug print DUID value in hex notation.
   \param[in]   val  DUID array to print;
   \param[in]   len  length of DUID array.
-  \return      none.
 */
 static void debug_inf2 (const uint8_t *val, uint32_t len) {
   static char dbg_buf[32];

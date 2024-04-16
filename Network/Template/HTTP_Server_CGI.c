@@ -13,7 +13,6 @@
  
 // \brief Process query string received by GET request.
 // \param[in]     qstr          pointer to the query string.
-// \return        none.
 void netCGI_ProcessQuery (const char *qstr) {
   char var[40];
  
@@ -46,7 +45,6 @@ void netCGI_ProcessQuery (const char *qstr) {
 //                              - 5 = the same as 4, but with more data to follow.
 // \param[in]     data          pointer to POST data.
 // \param[in]     len           length of POST data.
-// \return        none.
 void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
   char var[40];
  

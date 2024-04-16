@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_tftp_server.c
  * Purpose: Trivial File Transfer Protocol Server
@@ -49,7 +49,6 @@ static void tftp_set_retransmit (NET_TFTP_INFO *tftp_s, uint8_t *buf, uint32_t l
 
 /**
   \brief       Initialize TFTP server.
-  \return      none.
 */
 void net_tftp_server_init (void) {
   NET_TFTP_INFO *tftp_s;
@@ -110,7 +109,6 @@ void net_tftp_server_init (void) {
 
 /**
   \brief       De-initialize TFTP server.
-  \return      none.
 */
 void net_tftp_server_uninit (void) {
   NET_TFTP_INFO *tftp_s;
@@ -242,7 +240,6 @@ netStatus netTFTPs_SetRootPath (const char *path) {
 
 /**
   \brief       Main TFTP server scheduler.
-  \return      none.
 */
 void net_tftp_server_run (void) {
   if (run_service) {
@@ -252,7 +249,6 @@ void net_tftp_server_run (void) {
 
 /**
   \brief       Start TFTP server service.
-  \return      none.
 */
 static void tftp_server_start (void) {
   DEBUGF (TFTP,"Start service, port %d\n",tftp_port_num);
@@ -264,7 +260,6 @@ static void tftp_server_start (void) {
 
 /**
   \brief       Stop TFTP server service.
-  \return      none.
 */
 static void tftp_server_stop (void) {
   NET_TFTP_INFO *tftp_s;
@@ -283,7 +278,6 @@ static void tftp_server_stop (void) {
 
 /**
   \brief       Run TFTP server service.
-  \return      none.
 */
 static void tftp_server_run (void) {
   static uint8_t session = 0;
@@ -565,7 +559,6 @@ data:
   \param[in]   tftp_s  session descriptor.
   \param[in]   buf     buffer containing data or options.
   \param[in]   len     length of data or options.
-  \return      none.
 */
 static bool tftp_process (NET_TFTP_INFO *tftp_s, const uint8_t *buf, uint32_t len) {
   uint16_t opcode;
@@ -607,7 +600,6 @@ static bool tftp_process (NET_TFTP_INFO *tftp_s, const uint8_t *buf, uint32_t le
   \param[in]   tftp_s  session descriptor.
   \param[in]   buf     buffer containing data.
   \param[in]   len     length of data.
-  \return      none.
 */
 static void tftp_proc_data (NET_TFTP_INFO *tftp_s, const uint8_t *buf, uint32_t len) {
   uint16_t blocknr;
@@ -668,7 +660,6 @@ err:tftp_abort_session (tftp_s, TFTP_ERR_NOTDEF, "Invalid block");
   \param[in]   tftp_s  session descriptor.
   \param[in]   buf     buffer containing options.
   \param[in]   len     length of options.
-  \return      none.
   \note        Function is called from control socket and data socket handler.
 */
 static void tftp_proc_ack (NET_TFTP_INFO *tftp_s, const uint8_t *buf, uint32_t len) {
@@ -727,7 +718,6 @@ err:tftp_abort_session (tftp_s, TFTP_ERR_NOTDEF, "Wrong ack");
   \param[in]   tftp_s  session descriptor.
   \param[in]   buf     buffer containing the options.
   \param[in]   len     length of options.
-  \return      none.
 */
 static void tftp_proc_opt (NET_TFTP_INFO *tftp_s, const uint8_t *buf, uint32_t len) {
   const uint8_t *np,*end = buf + len;
@@ -787,7 +777,6 @@ static const uint8_t *get_next_opt (const uint8_t *buf, const uint8_t *end) {
 /**
   \brief       Send option acknowledge.
   \param[in]   tftp_s  session descriptor.
-  \return      none.
 */
 static void tftp_ack_opt (NET_TFTP_INFO *tftp_s) {
   uint8_t *sendbuf;
@@ -805,7 +794,6 @@ static void tftp_ack_opt (NET_TFTP_INFO *tftp_s) {
 /**
   \brief       Send data block acknowledge.
   \param[in]   tftp_s  session descriptor.
-  \return      none.
 */
 static void tftp_ack_block (NET_TFTP_INFO *tftp_s) {
   uint8_t *sendbuf;
@@ -823,7 +811,6 @@ static void tftp_ack_block (NET_TFTP_INFO *tftp_s) {
   \param[in]   tftp_s  session descriptor.
   \param[in]   erron   error number.
   \param[in]   errm    error message text.
-  \return      none.
 */
 static void tftp_abort_session (NET_TFTP_INFO *tftp_s, uint8_t errno, const char *errm) {
   uint8_t *sendbuf;
@@ -854,7 +841,6 @@ static void tftp_abort_session (NET_TFTP_INFO *tftp_s, uint8_t errno, const char
 /**
   \brief       Kill active TFTP session.
   \param[in]   tftp_s  session descriptor.
-  \return      none.
 */
 static void tftp_kill_session (NET_TFTP_INFO *tftp_s) {
   DEBUGF (TFTP,"Session %d close\n",tftp_s->Id);
@@ -870,7 +856,6 @@ static void tftp_kill_session (NET_TFTP_INFO *tftp_s) {
 /**
   \brief       Close a file if opened in session.
   \param[in]   tftp_s  session descriptor.
-  \return      none.
 */
 static void tftp_close_file (NET_TFTP_INFO *tftp_s) {
   if (tftp_s->File != NULL) {
@@ -883,7 +868,6 @@ static void tftp_close_file (NET_TFTP_INFO *tftp_s) {
 /**
   \brief       Release a retransmit buffer if allocated.
   \param[in]   tftp_s  session descriptor.
-  \return      none.
 */
 static void tftp_free_buf (NET_TFTP_INFO *tftp_s) {
   if (tftp_s->Buf != NULL) {
@@ -941,7 +925,6 @@ static NET_TFTP_INFO *tftp_open_session (const __ADDR *addr) {
   \param[in]   tftp_s  session descriptor.
   \param[in]   buf     buffer containing the data.
   \param[in]   len     length of data.
-  \return      none.
 */
 static void tftp_set_retransmit (NET_TFTP_INFO *tftp_s, uint8_t *buf, uint32_t len) {
   if (tftp_s->Buf != NULL) {
@@ -956,7 +939,6 @@ static void tftp_set_retransmit (NET_TFTP_INFO *tftp_s, uint8_t *buf, uint32_t l
 /**
   \brief       Debug print user friendly Opcode.
   \param[in]   opcode  TFTP operation code.
-  \return      none.
 */
 static void debug_info (uint16_t opcode) {
   static const char p_asc[][5] = {

@@ -41,7 +41,6 @@ static char    *get_next_token (char *buf);
 
 /**
   \brief       Initialize HTTP authentication.
-  \return      none.
 */
 static void http_auth_init (void) {
   http->user      = httpc->User;
@@ -53,7 +52,6 @@ static void http_auth_init (void) {
 
 /**
   \brief       Empty function.
-  \return      none.
 */
 static void http_auth_dummy (void) {
 }
@@ -132,7 +130,6 @@ NET_HTTP_AUTH net_http_auth_basic_func = {
 
 /**
   \brief       Initialize Digest authentication.
-  \return      none.
 */
 static void http_auth_digest_init (void) {
   NET_HTTP_NONCE *p;
@@ -148,7 +145,6 @@ static void http_auth_digest_init (void) {
 
 /**
   \brief       De-initialize Digest authentication.
-  \return      none.
 */
 static void http_auth_digest_uninit (void) {
   /* Clear nonce cache table */
@@ -437,7 +433,6 @@ exit:
   \param[in]   user   pointer to username.
   \param[in]   passw  pointer to password.
   \param[out]  hash   buffer to store MD5 hash value to.
-  \return      none.
 */
 static void http_auth_digest_hash (const char *user,
                                    const char *passw, uint8_t *hash) {

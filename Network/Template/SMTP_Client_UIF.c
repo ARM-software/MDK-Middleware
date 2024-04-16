@@ -72,7 +72,6 @@ uint32_t netSMTPc_Process (netSMTPc_Request request, char *buf, uint32_t buf_len
  
 // \brief Notify the user application when SMTP client operation ends.
 // \param[in]     event         SMTP client notification event.
-// \return        none.
 void netSMTPc_Notify (netSMTPc_Event event) {
   switch (event) {
     case netSMTPc_EventSuccess:

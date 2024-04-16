@@ -36,7 +36,6 @@ NET_ICMP6_CTRL net_wifi1_icmp6_control;
 
 /**
   \brief       Initialize ICMP6 protocol.
-  \return      none.
 */
 void net_icmp6_init (void) {
   NET_ICMP6_CFG *const *p;
@@ -319,7 +318,6 @@ bool net_icmp6_send_echo (NET_IF_CFG *net_if) {
   \brief       Debug print ICMP6 frame information.
   \param[in]   icmp_hdr  ICMP frame header.
   \param[in]   len       frame payload length.
-  \return      none.
 */
 static void debug_inf2 (const NET_ICMP_HEADER *icmp_hdr, int32_t len) {
   static const char *const t_asc[] = {

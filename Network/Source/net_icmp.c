@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_icmp.c
  * Purpose: Internet Control Message Protocol
@@ -35,7 +35,6 @@ NET_ICMP_CTRL net_slip0_icmp_control;
 
 /**
   \brief       Initialize ICMP protocol.
-  \return      none.
 */
 void net_icmp_init (void) {
   NET_ICMP_CFG *const *p;
@@ -218,7 +217,6 @@ bool net_icmp_send_echo (NET_IF_CFG *net_if) {
 /**
   \brief       Debug print ICMP frame information.
   \param[in]   frm  network frame.
-  \return      none.
 */
 static void debug_info (const NET_FRAME *frm) {
   static const char *const t_asc[] = {

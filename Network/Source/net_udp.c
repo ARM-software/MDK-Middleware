@@ -75,7 +75,6 @@ uint16_t netUDP_GetLocalPort (int32_t socket) {
 
 /**
   \brief       Initialize UDP sockets.
-  \return      none.
 */
 void net_udp_socket_init (void) {
   DEBUGF (UDP,"Init %d Sockets\n",udp->NumSocks);
@@ -87,7 +86,6 @@ void net_udp_socket_init (void) {
 
 /**
   \brief       De-initialize UDP sockets.
-  \return      none.
 */
 void net_udp_socket_uninit (void) {
   DEBUGF (UDP,"Uninit Sockets\n");
@@ -398,7 +396,6 @@ uint8_t *net_udp_get_buf (uint32_t size) {
 /**
   \brief       Release udp frame buffer.
   \param[in]   buf  frame buffer.
-  \return      none.
   \note        When not auto-released in net_udp_send().
 */
 void net_udp_free_buf (uint8_t *buf) {
@@ -645,7 +642,6 @@ bool net_udp_keep_buf (int32_t socket, uint8_t *buf) {
 /**
   \brief       Enable reception of link-layer addressed frames.
   \param[in]   socket  socket handle.
-  \return      none.
   \details     Used for DHCP client.
 */
 void net_udp_enable_lla (int32_t socket) {
@@ -663,7 +659,6 @@ void net_udp_enable_lla (int32_t socket) {
   \param[in]   net_if  network interface descriptor.
   \param[in]   frame   network frame.
   \param[in]   ip_ver  IP version.
-  \return      none.
   \details     In order to keep the user API unchanged, we use a hack
                to provide a destination IP in the callback function.
 */
@@ -826,7 +821,6 @@ static bool udp_port_in_use (uint16_t port) {
 /**
   \brief       Debug print UDP header information.
   \param[in]   udp_hdr  UDP frame header.
-  \return      none.
 */
 static void debug_info (const NET_UDP_HEADER *udp_hdr) {
 

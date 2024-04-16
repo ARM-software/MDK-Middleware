@@ -41,7 +41,6 @@ static uint16_t ip4_get_chksum (NET_IP4_HEADER *ip4_hdr);
 
 /**
   \brief       Initialize IPv4.
-  \return      none.
 */
 void net_ip4_init (void) {
   /* Clear control and set default interface */
@@ -53,7 +52,6 @@ void net_ip4_init (void) {
 
 /**
   \brief       De-initialize IPv4.
-  \return      none.
 */
 void net_ip4_uninit (void) {
   DEBUGF (IP4,"Uninit Core\n");
@@ -603,7 +601,6 @@ uint16_t net_ip4_chksum (const uint8_t *src_addr, const uint8_t *dst_addr,
 /**
   \brief       Debug print IPv4 header information.
   \param[in]   ip4_hdr  IPv4 frame header.
-  \return      none.
 */
 static void debug_info (const NET_IP4_HEADER *ip4_hdr) {
   static const char p_asc[][5] = {

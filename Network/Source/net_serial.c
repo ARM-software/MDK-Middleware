@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_serial.c
  * Purpose: Serial Driver Interface
@@ -25,7 +25,6 @@ NET_COM_CTRL net_slip0_com_control;
 /**
   \brief       Initialize serial driver interface.
   \param[in]   com  serial device handle.
-  \return      none.
 */
 void net_com_init (NET_COM_CFG *com) {
   uint32_t flow_ctrl;
@@ -61,7 +60,6 @@ void net_com_init (NET_COM_CFG *com) {
 /**
   \brief       De-initialize serial driver interface.
   \param[in]   com  serial device handle.
-  \return      none.
 */
 void net_com_uninit (NET_COM_CFG *com) {
   /* De-initialize USART */
@@ -74,7 +72,6 @@ void net_com_uninit (NET_COM_CFG *com) {
   \brief       Send notification on serial driver event.
   \param[in]   event  driver event mask.
   \param[in]   ctx    serial device context.
-  \return      none.
   \note        This function is called from serial interrupt.
 */
 void net_com_callback (uint32_t event, NET_COM_CTRL *ctx) {
@@ -113,7 +110,6 @@ bool net_com_send_char (NET_COM_CFG *com, int32_t ch) {
 /**
   \brief       Flush serial output buffer.
   \param[in]   com  serial device handle.
-  \return      none.
 */
 void net_com_flush_buf (NET_COM_CFG *com) {
   if (ctrl->Tidx && ctrl->Tidx < sizeof(ctrl->tbuf)) {

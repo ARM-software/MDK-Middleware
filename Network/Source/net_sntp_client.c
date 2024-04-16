@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_sntp_client.c
  * Purpose: Simple Network Time Protocol Client
@@ -102,7 +102,6 @@ netStatus netSNTPc_GetTimeX (const char *server, uint32_t *sec, uint32_t *frac) 
   \brief       User event callback notification.
   \param[in]   sec   seconds since Jan 1, 1970
   \param[in]   frac  fractional part of seconds.
-  \return      none.
 */
 static void sntp_notify (uint32_t sec, uint32_t frac) {
   sntp->ts.sec  = sec;

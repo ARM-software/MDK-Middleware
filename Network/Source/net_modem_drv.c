@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_modem_drv.c
  * Purpose: Modem Driver Interface
@@ -28,7 +28,6 @@ static void modem_send_cmd (NET_COM_CFG *com, const char *cmd);
 /**
   \brief       Initialize modem device interface.
   \param[in]   com  serial device handle.
-  \return      none.
 */
 void net_modem_init (NET_COM_CFG *com) {
   const char *init_str = NULL;
@@ -48,7 +47,6 @@ void net_modem_init (NET_COM_CFG *com) {
 /**
   \brief       De-initialize modem device interface.
   \param[in]   com  serial device handle.
-  \return      none.
 */
 void net_modem_uninit (NET_COM_CFG *com) {
   drv_modem->Uninitialize ();
@@ -113,7 +111,6 @@ bool net_modem_online (NET_COM_CFG *com) {
   \brief       Send command string to modem.
   \param[in]   com  serial device handle.
   \param[in]   cmd  command string.
-  \return      none.
 */
 static void modem_send_cmd (NET_COM_CFG *com, const char *cmd) {
   while (*cmd) {
@@ -131,7 +128,6 @@ static void modem_send_cmd (NET_COM_CFG *com, const char *cmd) {
   \param[in]   timeout   response timeout.
   \param[in]   retries   number of retries on failure.
   \param[in]   ctx       modem device context.
-  \return      none.
 */
 void net_modem_callback (const char *cmd, const char *response,
                          uint32_t timeout, uint32_t retries, NET_MODEM_CTRL *ctx) {
@@ -227,7 +223,6 @@ ex: if (ch < ' ') {
 /**
   \brief       Run modem device main process.
   \param[in]   com  serial device handle.
-  \return      none.
 */
 void net_modem_run (NET_COM_CFG *com) {
   if (ctrl->Delay == 0) {

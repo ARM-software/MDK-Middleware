@@ -58,7 +58,6 @@ static NET_LOOP_CFG loop_ll_config = {
 
 /**
   \brief       Initialize loopback network interface.
-  \return      none.
 */
 void net_loop_iface_init (void) {
   NET_LOOP_CFG *h = &loop_ll_config;
@@ -78,7 +77,6 @@ void net_loop_iface_init (void) {
 
 /**
   \brief       De-initialize loopback network interface.
-  \return      none.
 */
 void net_loop_iface_uninit (void) {
   NET_LOOP_CFG *h = &loop_ll_config;
@@ -137,7 +135,6 @@ bool net_loop_send_frame (uint32_t if_num, NET_FRAME *frame, uint8_t ip_ver) {
 
 /**
   \brief       Run main process for loopback interface.
-  \return      none.
 */
 void net_loop_iface_run (void) {
   NET_LOOP_CFG *h = &loop_ll_config;
@@ -213,7 +210,6 @@ void net_loop_iface_run (void) {
 /**
   \brief       Debug print loopback information.
   \param[in]   frm  loopback network frame.
-  \return      none.
 */
 static void debug_info (const NET_FRAME *frm) {
   DEBUGF (LOOP," Proto %s, %d bytes\n",

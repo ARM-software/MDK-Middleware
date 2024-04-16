@@ -441,7 +441,6 @@ const char *netMAC_ntoa (const uint8_t *mac_addr, char *string_buf, uint32_t buf
   \brief       Map IPv4 multicast address to MAC address.
   \param[in]   ip4_addr  IPv4 address.
   \param[out]  mac_addr  MAC address.
-  \return      none.
 */
 void net_addr4_to_mac (const uint8_t *ip4_addr, uint8_t *mac_addr) {
   mac_addr[0] = 0x01;
@@ -555,7 +554,6 @@ bool net_addr6_is_solicited (const uint8_t *ip6_addr, const NET_LOCALM6 *lm6) {
   \param[in]   suffix    address suffix, or MAC address.
   \param[in]   eui64     suffix type: true = EUI-64,
                                     false= plain binary.
-  \return      none.
   \note        Link-local address:     "FE80::(EUI-64)" or
                                        "FE80::[suffix]"
                Unicast global address: "[prefix]:(EUI-64)" or
@@ -674,7 +672,6 @@ bool net_addr6_is_onlink (const uint8_t *ip6_addr, const NET_LOCALM6 *lm6) {
   \brief       Create IPv4-mapped IPv6 address.
   \param[out]  ip4_addr  input IPv4 address.
   \param[in]   ip6_addr  mapped IPv6 address.
-  \return      none.
   \note        IPv4 mapped address is "::FFFF:[ip4_addr]"
 */
 void net_addr6_map_4to6 (const uint8_t *ip4_addr, uint8_t *ip6_addr) {
@@ -691,7 +688,6 @@ void net_addr6_map_4to6 (const uint8_t *ip4_addr, uint8_t *ip6_addr) {
   \brief       Copy IPv6 addresses.
   \param[out]  dst_addr  destination address.
   \param[in]   src_addr  source address.
-  \return      none.
 */
 void net_addr6_copy (uint8_t *dst_addr, const uint8_t *src_addr) {
   __UNALIGNED_UINT32_WRITE (&dst_addr[0], __UNALIGNED_UINT32_READ(&src_addr[0]));
@@ -740,7 +736,6 @@ bool net_addr6_is_unspec (const uint8_t *ip6_addr) {
   \brief       Map IPv6 multicast address to MAC address.
   \param[in]   ip6_addr  IPv6 address.
   \param[out]  mac_addr  MAC address.
-  \return      none.
 */
 void net_addr6_to_mac (const uint8_t *ip6_addr, uint8_t *mac_addr) {
   __UNALIGNED_UINT16_WRITE (&mac_addr[0], 0x3333);
@@ -753,7 +748,6 @@ void net_addr6_to_mac (const uint8_t *ip6_addr, uint8_t *mac_addr) {
   \brief       Map IPv6 multicast address to MAC address.
   \param[in]   ip6_addr  IPv6 address.
   \param[out]  mac_addr  MAC address.
-  \return      none.
 */
 void net_addr6_to_mac (const uint8_t *ip6_addr, uint8_t *mac_addr) {
   mac_addr[0] = 0x33;
@@ -786,7 +780,6 @@ bool net_mac_comp (const uint8_t *mac1, const uint8_t *mac2) {
   \brief       Copy MAC address.
   \param[out]  dst  destination address.
   \param[in]   src  source address.
-  \return      none.
 */
 void net_mac_copy (uint8_t *dst, const uint8_t *src) {
   dst[0] = src[0];
@@ -828,7 +821,6 @@ bool net_addr_is_unspec (const __ADDR *addr) {
   \brief       Copy IP address and port.
   \param[out]  dst_addr  destination IPv4 or IPv6 address.
   \param[in]   src_addr  source IPv4 or IPv6 address.
-  \return      none.
 */
 void net_addr_copy (__ADDR *dst_addr, const __ADDR *src_addr) {
   switch (src_addr->addr_type) {
@@ -911,7 +903,6 @@ const uint8_t *net_addr_get_local (NET_IF_CFG *net_if, const __ADDR *dst) {
   \brief       Get loopback address for a localhost.
   \param[in]   addr_type  network address type.
   \param[out]  addr       Loopback IPv4 or IPv6 address.
-  \return      none.
 */
 void net_addr_get_lhost (int16_t addr_type, __ADDR *addr) {
   switch (addr_type) {

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_telnet_server.c
  * Purpose: Telnet Server
@@ -35,7 +35,6 @@ static uint32_t get_hist (NET_TELNET_INFO *teln_s, uint32_t key);
 
 /**
   \brief       Initialize Telnet server.
-  \return      none.
 */
 void net_telnet_server_init (void) {
   NET_TELNET_INFO *teln_s;
@@ -95,7 +94,6 @@ void net_telnet_server_init (void) {
 
 /**
   \brief       De-initialize Telnet server.
-  \return      none.
 */
 void net_telnet_server_uninit (void) {
   DEBUGF (TELNET,"Uninit Server\n");
@@ -370,7 +368,6 @@ netStatus netTELNETs_RequestMessage (int32_t session) {
 
 /**
   \brief       Main Telnet server scheduler.
-  \return      none.
 */
 void net_telnet_server_run (void) {
   if (teln->run_service) {
@@ -380,7 +377,6 @@ void net_telnet_server_run (void) {
 
 /**
   \brief       Start Telnet server service.
-  \return      none.
 */
 static void telnet_server_start (void) {
   NET_TELNET_INFO *teln_s;
@@ -407,7 +403,6 @@ static void telnet_server_start (void) {
 
 /**
   \brief       Stop Telnet server service.
-  \return      none.
 */
 static void telnet_server_stop (void) {
   NET_TELNET_INFO *teln_s;
@@ -426,7 +421,6 @@ static void telnet_server_stop (void) {
 
 /**
   \brief       Run Telnet server service.
-  \return      none.
 */
 static void telnet_server_run (void) {
   static uint8_t session = 0;
@@ -948,7 +942,6 @@ static uint32_t telnet_listener (int32_t socket, netTCP_Event event, const NET_A
   \param[in]   teln_s  session descriptor.
   \param[in]   buf     buffer containing telnet data.
   \param[in]   len     length of the data.
-  \return      none.
 */
 static void telnet_parse_cmd (NET_TELNET_INFO *teln_s, const uint8_t *buf, int32_t len) {
   uint32_t ch;
@@ -1181,7 +1174,6 @@ static uint16_t proc_data (NET_TELNET_INFO *teln_s) {
 /**
   \brief       Store a command to history buffer.
   \param[in]   teln_s  session descriptor.
-  \return      none.
 */
 static void store_hist (NET_TELNET_INFO *teln_s) {
   /* Was this command from the history buffer? */
@@ -1254,7 +1246,6 @@ static uint32_t get_hist (NET_TELNET_INFO *teln_s, uint32_t key) {
 /**
   \brief       Kill active Telnet session.
   \param[in]   teln_s  session descriptor.
-  \return      none.
 */
 static void telnet_kill_session (NET_TELNET_INFO *teln_s) {
   teln_s->State  = TELN_STATE_IDLE;

@@ -51,7 +51,6 @@ static void assign_auto_ip (NET_DHCP_CFG *h);
 
 /**
   \brief       Initialize DHCP clients.
-  \return      none.
 */
 void net_dhcp_client_init (void) {
   NET_DHCP_CFG *const *p;
@@ -94,7 +93,6 @@ void net_dhcp_client_init (void) {
 
 /**
   \brief       De-initialize DHCP client.
-  \return      none.
 */
 void net_dhcp_client_uninit (void) {
   NET_DHCP_CFG *const *p;
@@ -210,7 +208,6 @@ __WEAK netStatus netDHCP_SetOption (uint32_t if_id, uint8_t option,
 /**
   \brief       Start DHCP client service.
   \param[in]   h  DHCP instance handle.
-  \return      none.
 */
 static void dhcp_client_start (NET_DHCP_CFG *h) {
   DEBUGF (DHCP,"Start_client %s\n",h->If->Name);
@@ -231,7 +228,6 @@ static void dhcp_client_start (NET_DHCP_CFG *h) {
 /**
   \brief       Stop DHCP client service.
   \param[in]   h  DHCP instance handle.
-  \return      none.
 */
 static void dhcp_client_stop (NET_DHCP_CFG *h) {
   DEBUGF (DHCP,"Stop_client %s\n",h->If->Name);
@@ -253,7 +249,6 @@ static void dhcp_client_stop (NET_DHCP_CFG *h) {
 
 /**
   \brief       Run DHCP client service.
-  \return      none.
 */
 void net_dhcp_client_run (void) {
   NET_DHCP_CFG *const *p;
@@ -266,7 +261,6 @@ void net_dhcp_client_run (void) {
 /**
   \brief       Run DHCP client service.
   \param[in]   h  DHCP instance handle.
-  \return      none.
 */
 static void dhcp_client_run (NET_DHCP_CFG *h) {
   switch (ctrl->State) {
@@ -519,7 +513,6 @@ static void dhcp_client_run (NET_DHCP_CFG *h) {
   \brief       Create a DHCP message and send it to server.
   \param[in]   h         DHCP instance handle.
   \param[in]   msg_type  DHCP message type to create.
-  \return      none.
 */
 static void dhcp_send_message (NET_DHCP_CFG *h, uint8_t msg_type) {
   uint8_t *sendbuf;
@@ -1247,7 +1240,6 @@ static uint32_t proc_opt_renew (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t in
 /**
   \brief       Assign Auto-IP address.
   \param[in]   h  DHCP instance handle.
-  \return      none.
   \note        Address range 169.254.1.0 - 169.254.254.255
 */
 static void assign_auto_ip (NET_DHCP_CFG *h) {
@@ -1269,7 +1261,6 @@ static void assign_auto_ip (NET_DHCP_CFG *h) {
 /**
   \brief       Debug print NTP Server list option.
   \param[in]   opt  pointer to option list.
-  \return      none.
 */
 static void debug_info (const uint8_t *opt) {
   int32_t i,max = opt[1] >> 2;
@@ -1284,7 +1275,6 @@ static void debug_info (const uint8_t *opt) {
   \brief       Debug print DHCP address information.
   \param[in]   msg       explanation message to print.
   \param[in]   ip4_addr  IPv4 address.
-  \return      none.
 */
 static void debug_inf2 (const char *msg, const uint8_t *ip4_addr) {
   DEBUGF (DHCP," %-10s: %s\n",msg,net_addr4_ntoa(ip4_addr));

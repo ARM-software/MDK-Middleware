@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_bsd_host.c
  * Purpose: Berkeley Hostname Resolver
@@ -23,7 +23,6 @@ static NET_BSD_HOST  host_res;
 
 /**
   \brief       Initialize BSD host resolver.
-  \return      none.
 */
 void net_bsd_host_init (void) {
   DEBUGF (BSD,"Init Host-Resolver\n");
@@ -33,7 +32,6 @@ void net_bsd_host_init (void) {
 
 /**
   \brief       De-initialize BSD host resolver.
-  \return      none.
 */
 void net_bsd_host_uninit (void) {
   DEBUGF (BSD,"Uninit Host-Resolver\n");

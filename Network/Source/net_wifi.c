@@ -58,7 +58,6 @@ static void wifi_unlock (NET_WIFI_CFG *h);
 
 /**
   \brief       Initialize WiFi network interfaces.
-  \return      none.
 */
 void net_wifi_iface_init (void) {
   NET_WIFI_CFG *const *p;
@@ -71,7 +70,6 @@ void net_wifi_iface_init (void) {
 /**
   \brief       Initialize a WiFi interface.
   \param[in]   h  wifi interface handle.
-  \return      none.
 */
 static void wifi_iface_init (NET_WIFI_CFG *h) {
   ARM_WIFI_CAPABILITIES capab;
@@ -214,7 +212,6 @@ bypass_err:
 
 /**
   \brief       De-initialize WiFi network interface.
-  \return      none.
 */
 void net_wifi_iface_uninit (void) {
   NET_WIFI_CFG *const *p;
@@ -227,7 +224,6 @@ void net_wifi_iface_uninit (void) {
 /**
   \brief       De-initialize WiFi network interface.
   \param[in]   h  wifi interface handle.
-  \return      none.
 */
 static void wifi_iface_uninit (NET_WIFI_CFG *h) {
 
@@ -261,7 +257,6 @@ static void wifi_iface_uninit (NET_WIFI_CFG *h) {
 /**
   \brief       WiFi interface thread.
   \param[in]   arg  wifi interface handle.
-  \return      none.
 */
 __NO_RETURN void netWiFi_Thread (void *arg) {
   NET_WIFI_CFG *h = (NET_WIFI_CFG *)arg;
@@ -289,7 +284,6 @@ __NO_RETURN void netWiFi_Thread (void *arg) {
   \brief       Event notification on wifi receive.
   \param[in]   event  receive event.
   \param[in]   ctx    interface context.
-  \return      none.
   \note        This function is called from wifi1 thread.
 */
 void net_wifi_callback (uint32_t event, NET_WIFI_CTRL *ctx) {
@@ -896,7 +890,6 @@ static uint32_t opt_check (netWiFi_Option opt, uint32_t len) {
 /**
   \brief       Receive WiFi frame.
   \param[in]   h  wifi interface handle.
-  \return      none.
   \details     Called from WiFi thread!
 */
 static void wifi_receive (NET_WIFI_CFG *h) {
@@ -940,7 +933,6 @@ static void wifi_receive (NET_WIFI_CFG *h) {
 /**
   \brief       Transmit frame from tx-queue.
   \param[in]   h  wifi interface handle.
-  \return      none.
   \details     Called from WiFi thread!
 */
 static void wifi_transmit (NET_WIFI_CFG *h) {
@@ -978,7 +970,6 @@ static void wifi_transmit (NET_WIFI_CFG *h) {
 /**
   \brief       Check WiFi link state.
   \param[in]   h  wifi interface handle.
-  \return      none.
   \details     Called from WiFi thread!
 */
 static void wifi_check_link (NET_WIFI_CFG *h) {
@@ -1180,7 +1171,6 @@ bool net_wifi_output (uint32_t if_num, NET_FRAME *frame) {
 
 /**
   \brief       Run main process for WiFi interface.
-  \return      none.
 */
 void net_wifi_iface_run (void) {
   NET_WIFI_CFG *const *p;
@@ -1193,7 +1183,6 @@ void net_wifi_iface_run (void) {
 /**
   \brief       Run main process for WiFi interface.
   \param[in]   h  wifi interface handle.
-  \return      none.
 */
 static void wifi_iface_run (NET_WIFI_CFG *h) {
   NET_FRAME *frame;
@@ -1367,7 +1356,6 @@ static NET_WIFI_CFG *wifi_if_map (uint32_t if_num) {
 /**
   \brief       Lock WiFi interface.
   \param[in]   h  wifi interface handle.
-  \return      none.
 */
 static void wifi_lock (NET_WIFI_CFG *h) {
   netif_lock (ctrl->semaphore);
@@ -1376,7 +1364,6 @@ static void wifi_lock (NET_WIFI_CFG *h) {
 /**
   \brief       Unlock WiFi interface.
   \param[in]   h  wifi interface handle.
-  \return      none.
 */
 static void wifi_unlock (NET_WIFI_CFG *h) {
   netif_unlock (ctrl->semaphore);
@@ -1424,7 +1411,6 @@ static const char *opt_ascii (uint32_t opt) {
 /**
   \brief       Debug print ethernet header information.
   \param[in]   frame  network frame.
-  \return      none.
 */
 static void debug_info (NET_FRAME *frame) {
   static const char p_asc[][4] = {

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ppp_lcp.c
  * Purpose: PPP Link Control
@@ -36,7 +36,6 @@ static void lcp_configure (NET_PPP_CFG *h);
 /**
   \brief       Initialize LCP protocol for PPP.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 void net_lcp_init (NET_PPP_CFG *h) {
   DEBUGF (PPP,"LCP_Init\n");
@@ -55,7 +54,6 @@ void net_lcp_init (NET_PPP_CFG *h) {
 /**
   \brief       De-initialize LCP protocol for PPP.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 void net_lcp_uninit (NET_PPP_CFG *h) {
   DEBUGF (PPP,"LCP_Uninit\n");
@@ -66,7 +64,6 @@ void net_lcp_uninit (NET_PPP_CFG *h) {
 /**
   \brief       Send LCP configuration request.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 static void lcp_conf_rq (NET_PPP_CFG *h) {
   NET_FRAME *txfrm;
@@ -184,7 +181,6 @@ rchap:  PPP_FRAME(txfrm)->Data[ti]   = LCP_OPT_AUTHP;
 /**
   \brief       Construct and send LCP echo request.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 static void lcp_echo_rq (NET_PPP_CFG *h) {
   NET_FRAME *txfrm;
@@ -205,7 +201,6 @@ static void lcp_echo_rq (NET_PPP_CFG *h) {
 /**
   \brief       Construct and send LCP terminate request.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 static void lcp_term_rq (NET_PPP_CFG *h) {
   NET_FRAME *txfrm;
@@ -225,7 +220,6 @@ static void lcp_term_rq (NET_PPP_CFG *h) {
   \brief       Send LCP frame.
   \param[in]   h      PPP interface handle.
   \param[in]   frame  network frame.
-  \return      none.
 */
 static void lcp_send (NET_PPP_CFG *h, NET_FRAME *frame) {
   DEBUGF (PPP,"Sending LCP frame\n");
@@ -238,7 +232,6 @@ static void lcp_send (NET_PPP_CFG *h, NET_FRAME *frame) {
 /**
   \brief       Start LCP configuration negotiation for PPP client mode.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 static void lcp_configure (NET_PPP_CFG *h) {
   if (lcp_ctl->Flags & LCP_FLAG_SHUTDN) {
@@ -285,7 +278,6 @@ static void lcp_configure (NET_PPP_CFG *h) {
 /**
   \brief       Send LCP terminate request, terminate PPP.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 void net_lcp_terminate (NET_PPP_CFG *h) {
   if (lcp_ctl->Flags & LCP_FLAG_SHUTDN) {
@@ -300,7 +292,6 @@ void net_lcp_terminate (NET_PPP_CFG *h) {
 /**
   \brief       Send echo request to check remote peer.
   \param[in]   h  PPP interface handle.
-  \return      none.
 */
 void net_lcp_echo (NET_PPP_CFG *h) {
   if (!(ctrl->Flags & PPP_FLAG_NETWORK)) {
@@ -316,7 +307,6 @@ void net_lcp_echo (NET_PPP_CFG *h) {
   \brief       Process received LCP frame.
   \param[in]   h      PPP interface handle.
   \param[in]   frame  network frame.
-  \return      none.
 */
 void net_lcp_process (NET_PPP_CFG *h, NET_FRAME *frame) {
   NET_FRAME *txfrm;
@@ -822,7 +812,6 @@ opt_rej:      ti = LCP_HEADER_LEN;
 /**
   \brief       Run LCP protocol main function.
   \param[in]   h  PPP interface handle.
-  \return      none.
   \note        Function is called on every system tick.
 */
 void net_lcp_run (NET_PPP_CFG *h) {
@@ -869,7 +858,6 @@ void net_lcp_run (NET_PPP_CFG *h) {
 /**
   \brief       Debug print LCP character map information.
   \param[in]   ch_map  character map bit-mask.
-  \return      none.
 */
 static void debug_info (uint32_t ch_map) {
   DEBUGF (PPP," Opt ACC-Map=0x%04X-%04X\n",(uint16_t)(ch_map>>16),(uint16_t)ch_map);
@@ -879,7 +867,6 @@ static void debug_info (uint32_t ch_map) {
   \brief       Debug print LCP header information.
   \param[in]   frm     network frame.
   \param[in]   dummmy  unused parameter.
-  \return      none.
 */
 static void debug_inf2 (const NET_FRAME *frm, int32_t dummy) {
   static const char p_asc[][9] = {

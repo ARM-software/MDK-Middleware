@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ping.c
  * Purpose: Ping Client
@@ -108,7 +108,6 @@ start:
 /**
   \brief       User event callback notification.
   \param[in]   event  ping event.
-  \return      none.
 */
 static void ping_notify (netPing_Event event) {
   ping->xRetv = (event == netPing_EventSuccess) ? netOK : netTimeout;

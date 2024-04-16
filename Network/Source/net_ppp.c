@@ -49,7 +49,6 @@ static void ppp_unlock (NET_PPP_CFG *h);
 
 /**
   \brief       Initialize PPP network interface.
-  \return      none.
 */
 void net_ppp_iface_init (void) {
   NET_PPP_CFG *h = net_ppp_list[0];
@@ -82,7 +81,6 @@ void net_ppp_iface_init (void) {
 
 /**
   \brief       De-initialize PPP network interface.
-  \return      none.
 */
 void net_ppp_iface_uninit (void) {
   NET_PPP_CFG *h = net_ppp_list[0];
@@ -108,7 +106,6 @@ void net_ppp_iface_uninit (void) {
 /**
   \brief       PPP interface thread.
   \param[in]   arg  PPP interface handle.
-  \return      none.
 */
 __NO_RETURN void netPPP_Thread (void *arg) {
   NET_PPP_CFG *h = (NET_PPP_CFG *)arg;
@@ -395,7 +392,6 @@ static bool ppp_process (NET_FRAME *frame) {
 /**
   \brief       Receive ppp frame.
   \param[in]   h  PPP interface handle.
-  \return      none.
   \note        Called from PPP thread!
   \details     This function decodes byte stuffing and packet framing.
                HDLC open flag starts receive timeout timer.
@@ -488,7 +484,6 @@ store:  if (ctrl->th.Frame->index < (PPP_FRM_OFFS + PPP_FRM_SZ)) {
 /**
   \brief       Transmit frame from tx-queue.
   \param[in]   h  PPP interface handle.
-  \return      none.
   \note        Called from PPP thread!
   \details     This function performs packet framing and byte stuffing.
 */
@@ -689,7 +684,6 @@ pf:   PPP_FRAME(txframe)->Adr  = 0xFF;
   \brief       Reject unsupported PPP protocol.
   \param[in]   ppp_if  PPP interface handle.
   \param[in]   frame   received network frame.
-  \return      none.
 */
 static void ppp_prot_reject (NET_PPP_CFG *h, NET_FRAME *frame) {
   NET_FRAME *txfrm;
@@ -713,7 +707,6 @@ static void ppp_prot_reject (NET_PPP_CFG *h, NET_FRAME *frame) {
   \param[in]   ppp_if  PPP interface handle.
   \param[in]   frame   received network frame.
   \param[in]   prot    PPP protocol type.
-  \return      none.
   \note        Format of both protocol headers is the same.
 */
 void net_ppp_cp_code_reject (NET_PPP_CFG *h, NET_FRAME *frame, uint16_t prot) {
@@ -841,7 +834,6 @@ netStatus netPPP_Close (void) {
   \brief       Initialize PPP protocols.
   \param[in]   h         PPP interface handle.
   \param[in]   shutdown  start delayed modem shutdown.
-  \return      none.
 */
 void net_ppp_proto_init (NET_PPP_CFG *h, bool shutdown) {
   if (shutdown) {
@@ -870,7 +862,6 @@ bool netPPP_LinkUp (void) {
 
 /**
   \brief       Run main process for PPP interface.
-  \return      none.
 */
 void net_ppp_iface_run (void) {
   NET_PPP_CFG *h = net_ppp_list[0];
@@ -985,7 +976,6 @@ rej:     ppp_prot_reject (h, frame);
   \brief       Add frame to queue tail.
   \param[in]   list   queue list head.
   \param[in]   frame  frame to add.
-  \return      none.
 */
 static void que_add_tail (NET_FRAME **list, NET_FRAME *frame) {
   NET_FRAME *next;
@@ -1019,7 +1009,6 @@ static NET_FRAME *que_get_first (NET_FRAME **list) {
 /**
   \brief       Lock ppp interface.
   \param[in]   ppp_if  PPP interface handle.
-  \return      none.
 */
 static void ppp_lock (NET_PPP_CFG *h) {
   netif_lock (ctrl->semaphore);
@@ -1028,7 +1017,6 @@ static void ppp_lock (NET_PPP_CFG *h) {
 /**
   \brief       Unlock ppp interface.
   \param[in]   ppp_if  PPP interface handle.
-  \return      none.
 */
 static void ppp_unlock (NET_PPP_CFG *h) {
   netif_unlock (ctrl->semaphore);
@@ -1038,7 +1026,6 @@ static void ppp_unlock (NET_PPP_CFG *h) {
 /**
   \brief       Debug print user friendly PPP protocol.
   \param[in]   prot  protocol type for PPP.
-  \return      none.
 */
 static void debug_info (uint16_t prot) {
   static const char p_asc[][5] = {
@@ -1071,7 +1058,6 @@ static void debug_info (uint16_t prot) {
   \brief       Debug print PPP dialing information.
   \param[in]   msg  explanation message to print.
   \param[in]   val  pointer to dialing number.
-  \return      none.
 */
 static void debug_inf2 (const char *msg, const char *val) {
   if (val != NULL) {

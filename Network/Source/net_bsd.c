@@ -64,7 +64,6 @@ static void bsd_evt_send (NET_BSD_INFO *bsd_s, uint8_t evt);
 
 /**
   \brief       Initialize BSD socket API.
-  \return      none.
 */
 void net_bsd_socket_init (void) {
   DEBUGF (BSD,"Init %d Sockets\n",bsd->NumSocks);
@@ -76,7 +75,6 @@ void net_bsd_socket_init (void) {
 
 /**
   \brief       De-initialize BSD socket API.
-  \return      none.
 */
 void net_bsd_socket_uninit (void) {
   NET_BSD_INFO *bsd_s;
@@ -1588,7 +1586,6 @@ static int32_t bsd_evt_subscribe (NETOS_ID thread, int32_t n_max, fd_set *const 
   \brief       Cancel subscribtion to resume events.
   \param[in]   thread   current running thread.
   \param[in]   n_max    range of sockets to cancel subscribtion.
-  \return      none.
 */
 static void bsd_evt_unsubscribe (NETOS_ID thread, int32_t n_max) {
   NET_BSD_INFO *bsd_s;
@@ -2323,7 +2320,6 @@ inv_arg:/* Invalid argument provided */
 
 /**
   \brief       Periodically check sockets for timeouts.
-  \return      none.
 */
 void net_bsd_socket_run (void) {
   NET_BSD_INFO *bsd_s;
@@ -2714,7 +2710,6 @@ static NET_BSD_INFO *list_get_first (NET_BSD_INFO *srv_s) {
 /**
   \brief       Add pending socket to the accept queue.
   \param[in]   bsd_s  pointer to a socket control block.
-  \return      none.
   \note        Sorting order is based on indexes, not pointers!
 */
 static void list_add_tail (NET_BSD_INFO *bsd_s) {
@@ -2733,7 +2728,6 @@ static void list_add_tail (NET_BSD_INFO *bsd_s) {
   \brief       Add data buffer to a socket queue tail.
   \param[in]   bsd_s   pointer to a socket control block.
   \param[in]   netbuf  pointer to netbuf containing the data.
-  \return      none.
 */
 static void que_add_buf (NET_BSD_INFO *bsd_s, NET_BUFFER *netbuf) {
   NET_BUFFER *next_buf;
@@ -2757,7 +2751,6 @@ static void que_add_buf (NET_BSD_INFO *bsd_s, NET_BUFFER *netbuf) {
 /**
   \brief       Release chained netbuf data buffers.
   \param[in]   bsd_s  pointer to a socket control block.
-  \return      none.
 */
 static void que_free_list (NET_BSD_INFO *bsd_s) {
   NET_BUFFER *netbuf, *next_buf;
@@ -2779,7 +2772,6 @@ static void que_free_list (NET_BSD_INFO *bsd_s) {
 /**
   \brief       Kill active BSD socket.
   \param[in]   bsd_s  pointer to a socket control block.
-  \return      none.
 */
 static void bsd_kill_socket (NET_BSD_INFO *bsd_s) {
   /* Close and release native TCP/UDP sockets */
@@ -2814,7 +2806,6 @@ static void bsd_kill_socket (NET_BSD_INFO *bsd_s) {
 /**
   \brief       Open native UDP socket for communication.
   \param[in]   bsd_s  pointer to a socket control block.
-  \return      none.
 */
 static void bsd_open_udp (NET_BSD_INFO *bsd_s) {
   if (bsd_s->Flags & BSD_FLAG_OPEN) {
@@ -2965,7 +2956,6 @@ static bool is_port_inuse (NET_BSD_INFO *bsd_s, uint16_t port) {
   \brief       Copy and convert socket address to network address.
   \param[in]   addr      source socket address.
   \param[out]  net_addr  destination network address.
-  \return      none.
 */
 static void addr_bsd_to_net (const SOCKADDR *addr, __ADDR *net_addr) {
   /* IP address should be in net byte order */
@@ -3011,7 +3001,6 @@ static uint16_t addr_get_port (const SOCKADDR *addr) {
 /**
   \brief       Set native TCP socket attributes.
   \param[in]   bsd_s  pointer to a socket control block.
-  \return      none.
 */
 static void set_sock_type (NET_BSD_INFO *bsd_s) {
   uint32_t ip_opt;
@@ -3059,7 +3048,6 @@ static uint8_t bsd_evt_wait (NET_BSD_INFO *bsd_s, uint8_t evt, uint16_t tout) {
   \brief       Send BSD event and resume suspended thread(s).
   \param[in]   bsd_s  pointer to a socket control block.
   \param[in]   evt    generated event(s).
-  \return      none.
 */
 static void bsd_evt_send (NET_BSD_INFO *bsd_s, uint8_t evt) {
   if (bsd_s->Event & evt) {
@@ -3105,7 +3093,6 @@ static const char *evt_ascii (netTCP_Event evt) {
 /**
   \brief       Debug print IP address and port.
   \param[in]   addr  structure containing IP address and port.
-  \return      none.
 */
 static void debug_info (const __ADDR *addr) {
   DEBUGF (BSD," Address [%s], port %d\n",net_addr_ntoa(addr),addr->port);

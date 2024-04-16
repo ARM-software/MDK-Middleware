@@ -84,7 +84,6 @@ uint32_t netFTPc_Process (netFTPc_Request request, char *buf, uint32_t buf_len) 
  
 // \brief Notify the user application when FTP client operation ends.
 // \param[in]     event         FTP client notification event.
-// \return        none.
 void netFTPc_Notify (netFTPc_Event event) {
   switch (event) {
     case netFTPc_EventSuccess:

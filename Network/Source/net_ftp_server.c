@@ -46,7 +46,6 @@ static bool is_ffind_busy (void);
 
 /**
   \brief       Initialize FTP server.
-  \return      none.
 */
 void net_ftp_server_init (void) {
   NET_FTP_INFO *ftp_s;
@@ -114,7 +113,6 @@ void net_ftp_server_init (void) {
 
 /**
   \brief       De-initialize FTP server.
-  \return      none.
 */
 void net_ftp_server_uninit (void) {
   NET_FTP_INFO *ftp_s;
@@ -958,7 +956,6 @@ static uint32_t ftp_data_cb (int32_t socket, netTCP_Event event, const NET_ADDR 
 
 /**
   \brief       Main FTP server scheduler.
-  \return      none.
 */
 void net_ftp_server_run (void) {
   if (ftp->run_service) {
@@ -968,7 +965,6 @@ void net_ftp_server_run (void) {
 
 /**
   \brief       Start FTP server service.
-  \return      none.
 */
 static void ftp_server_start (void) {
   NET_FTP_INFO *ftp_s;
@@ -996,7 +992,6 @@ static void ftp_server_start (void) {
 
 /**
   \brief       Stop FTP server service.
-  \return      none.
 */
 static void ftp_server_stop (void) {
   NET_FTP_INFO *ftp_s;
@@ -1018,7 +1013,6 @@ static void ftp_server_stop (void) {
 
 /**
   \brief       Run FTP server service.
-  \return      none.
 */
 static void ftp_server_run (void) {
   static uint8_t session = 0;
@@ -1496,7 +1490,6 @@ static void ftp_server_run (void) {
 /**
   \brief       Parse received command and extract command index.
   \param[in]   name  buffer containing command name.
-  \return      none.
   \note        Command index is returned in 'cmd.sel' variable.
 */
 static void ftp_parse_cmd (const char *name) {
@@ -1568,7 +1561,6 @@ static netStatus ftp_dopen_req (NET_FTP_INFO *ftp_s) {
 /**
   \brief       Kill active FTP server session.
   \param[in]   ftp_s  session descriptor.
-  \return      none.
 */
 static void ftp_kill_session (NET_FTP_INFO *ftp_s) {
   ftp_s->Resp  = FTP_RESP_DONE;
@@ -1645,7 +1637,6 @@ static uint16_t ftp_scan_dport (const char *buf, uint8_t type) {
   \brief       Make an absolute path for file access.
   \param[in]   ftp_s  session descriptor.
   \param[in]   name   file name.
-  \return      none.
 */
 static char *make_path (NET_FTP_INFO *ftp_s, const char *name) {
   char *path,ch;
@@ -1683,7 +1674,6 @@ static char *make_path (NET_FTP_INFO *ftp_s, const char *name) {
   \brief       Store path name for the session.
   \param[in]   ftp_s  session descriptor.
   \param[in]   path   pointer to path name.
-  \return      none.
 */
 static void store_path (NET_FTP_INFO *ftp_s, const char *path) {
   uint8_t ch;
@@ -1716,7 +1706,6 @@ static void store_path (NET_FTP_INFO *ftp_s, const char *path) {
 /**
   \brief       Remove last subfolder from path chain.
   \param[in]   ftp_s  session descriptor.
-  \return      none.
 */
 static void path_dir_up (NET_FTP_INFO *ftp_s) {
   int32_t i;
@@ -1734,7 +1723,6 @@ static void path_dir_up (NET_FTP_INFO *ftp_s) {
 /**
   \brief       Release path memory block if allocated.
   \param[in]   ftp_s  session descriptor.
-  \return      none.
 */
 static void free_name (NET_FTP_INFO *ftp_s) {
   if (ftp_s->Name != NULL) {
@@ -1746,7 +1734,6 @@ static void free_name (NET_FTP_INFO *ftp_s) {
 /**
   \brief       Close local file if opened.
   \param[in]   ftp_s  session descriptor.
-  \return      none.
 */
 static void close_file (NET_FTP_INFO *ftp_s) {
   if (ftp_s->File != NULL) {
@@ -1759,7 +1746,6 @@ static void close_file (NET_FTP_INFO *ftp_s) {
   \brief       Set path mask for ffind() folder listing.
   \param[in]   ftp_s  session descriptor.
   \param[in]   set    set mode flag (true= set, false= revert).
-  \return      none.
 */
 static void set_mask (NET_FTP_INFO *ftp_s, bool set) {
   char *p   = ftp_s->Path;

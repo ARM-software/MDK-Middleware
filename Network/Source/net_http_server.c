@@ -74,7 +74,6 @@ static bool is_cookie_valid (const char *cookie);
 
 /**
   \brief       Initialize HTTP server.
-  \return      none.
 */
 void net_http_server_init (void) {
   NET_HTTP_INFO *http_s;
@@ -134,7 +133,6 @@ void net_http_server_init (void) {
 
 /**
   \brief       De-initialize HTTP server.
-  \return      none.
 */
 void net_http_server_uninit (void) {
   NET_HTTP_INFO *http_s;
@@ -402,7 +400,6 @@ netStatus netHTTPs_LoginOnOff (bool enable) {
 
 /**
   \brief       Main HTTP server scheduler.
-  \return      none.
 */
 void net_http_server_run (void) {
   if (http->run_service) {
@@ -413,7 +410,6 @@ void net_http_server_run (void) {
 
 /**
   \brief       Start HTTP server service.
-  \return      none.
 */
 static void http_server_start (void) {
   NET_HTTP_INFO *http_s;
@@ -436,7 +432,6 @@ static void http_server_start (void) {
 
 /**
   \brief       Stop HTTP server service.
-  \return      none.
 */
 static void http_server_stop (void) {
   NET_HTTP_INFO *http_s;
@@ -456,7 +451,6 @@ static void http_server_stop (void) {
 
 /**
   \brief       Run HTTP server service.
-  \return      none.
 */
 static void http_server_run (void) {
   static uint8_t session = 0;
@@ -1213,7 +1207,6 @@ multi:  if (http_proc_multipart (http_s, bp) == false) {
 /**
   \brief       Kill active HTTP server session.
   \param[in]   http_s  session descriptor.
-  \return      none.
 */
 static void http_kill_session (NET_HTTP_INFO *http_s) {
   http_s->State = HTTP_STATE_IDLE;
@@ -1539,7 +1532,6 @@ static int32_t add_server_id (char *buf) {
   \brief       Open requested file for reading.
   \param[in]   http_s  session descriptor.
   \param[out]  name    pointer to file name.
-  \return      none.
 */
 static void http_open_file (NET_HTTP_INFO *http_s, const char *name) {
   void *file;
@@ -1655,7 +1647,6 @@ open_again:
   \brief       Determine file type for the requested resource.
   \param[in]   http_s  session descriptor.
   \param[in]   name    pointer to file name, null-terminated.
-  \return      none.
 */
 static void http_set_ftype (NET_HTTP_INFO *http_s, const char *name) {
   static const NET_HTTP_FTYPE ftype[24] = {
@@ -1839,7 +1830,6 @@ end_uri:
   \param[in]   http_s  session descriptor.
   \param[in]   hdr     pointer to http headers.
   \param[in]   uri     pointer to preprocessed http uri.
-  \return      none.
   \note        'cgi.end' must be set before calling this function!
 */
 static void http_parse_header (NET_HTTP_INFO *http_s, char *hdr, const char *uri) {
@@ -2427,7 +2417,6 @@ static int32_t http_strcpy (char *dp, const char *sp, int32_t max_len) {
 /**
   \brief       Fix filename for the server.
   \param[in]   fname  pointer to filename.
-  \return      none.
 */
 static void fix_fname (char *fname) {
   /* Remove trailing spaces and CRLF, null-terminate */
@@ -2442,7 +2431,6 @@ static void fix_fname (char *fname) {
 /**
   \brief       Read next script line and skip comments.
   \param[in]   http_s  session descriptor.
-  \return      none.
 */
 static void read_script_line (NET_HTTP_INFO *http_s) {
   uint32_t i;
@@ -2541,7 +2529,6 @@ static bool is_cookie_valid (const char *cookie) {
   \brief       Debug print received cookie.
   \param[in]   cookie  pointer to cookie.
   \param[in]   len     length of the cookie.
-  \return      none.
 */
 static void debug_inf2 (const char *cookie, uint32_t len) {
   char *buf;

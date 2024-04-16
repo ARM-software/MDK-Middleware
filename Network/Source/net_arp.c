@@ -52,7 +52,6 @@ static void  arp_que_free (NET_ARP_INFO *arp_t);
 
 /**
   \brief       Initialize ARP cache.
-  \return      none.
 */
 void net_arp_cache_init (void) {
   NET_ARP_INFO *arp_t;
@@ -72,7 +71,6 @@ void net_arp_cache_init (void) {
 
 /**
   \brief       De-initialize ARP cache.
-  \return      none.
 */
 void net_arp_cache_uninit (void) {
   NET_ARP_CFG *const *p;
@@ -92,7 +90,6 @@ void net_arp_cache_uninit (void) {
   \brief       Process received ARP message.
   \param[in]   net_if  network interface descriptor.
   \param[in]   frame   network frame.
-  \return      none.
 */
 void net_arp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
   NET_ARP_CFG  *h = net_if->Ip4Cfg->ArpCfg;
@@ -235,7 +232,6 @@ wrong_mac:
   \param[in]   h       ARP instance handle.
   \param[in]   arp_r   received ARP request.
   \param[in]   opcode  reply opcode.
-  \return      none.
 */
 static void arp_send_reply (NET_ARP_CFG *h, NET_ARP_HEADER *arp_r, uint16_t opcode) {
   NET_FRAME *frame;
@@ -269,7 +265,6 @@ static void arp_send_reply (NET_ARP_CFG *h, NET_ARP_HEADER *arp_r, uint16_t opco
   \brief       Process received response to our ARP/InARP request.
   \param[in]   h      ARP instance handle.
   \param[in]   arp_r  received ARP response.
-  \return      none.
 */
 static void arp_proc_response (NET_ARP_CFG *h, NET_ARP_HEADER *arp_r) {
   NET_ARP_INFO *arp_t;
@@ -319,7 +314,6 @@ update:
   \param[in]   dst_mac  destination MAC address.
   \param[in]   dst_ip   destination IP address.
   \param[in]   src_ip   source IP address.
-  \return      none.
   \note        Parameters define type of message:
                - ARP request     (NULL, rem_ip, loc_ip)
                - ARP probe       (NULL, probe_ip, NULL)
@@ -364,7 +358,6 @@ static void arp_send_request (NET_ARP_CFG *h, const uint8_t *dst_mac,
   \brief       Send ARP probe for duplicate IP address detection.
   \param[in]   net_if    network interface descriptor.
   \param[in]   ip4_addr  requested IP address.
-  \return      none.
 */
 void net_arp_probe (NET_IF_CFG *net_if, uint8_t *ip4_addr) {
   NET_ARP_CFG *h = net_if->Ip4Cfg->ArpCfg;
@@ -376,7 +369,6 @@ void net_arp_probe (NET_IF_CFG *net_if, uint8_t *ip4_addr) {
 /**
   \brief       Send gratuitous ARP on IP address change.
   \param[in]   net_if  network interface descriptor.
-  \return      none.
 */
 void net_arp_notify (NET_IF_CFG *net_if) {
   NET_ARP_CFG *h = net_if->Ip4Cfg->ArpCfg;
@@ -436,7 +428,6 @@ static NET_ARP_INFO *arp_cache_alloc (NET_ARP_CFG *h) {
   \param[in]   net_if    network interface descriptor.
   \param[in]   ip4_addr  host IP address.
   \param[in]   mac_addr  host MAC address.
-  \return      none.
 */
 void net_arp_cache_add (NET_IF_CFG *net_if,
                         const uint8_t *ip4_addr, const uint8_t *mac_addr) {
@@ -513,7 +504,6 @@ refresh_gw:
   \param[in]   net_if    network interface descriptor.
   \param[in]   ip4_addr  host IP address.
   \param[in]   mac_addr  host MAC address.
-  \return      none.
   \note        Improves networking performance on Ethernet interface.
 */
 void net_arp_cache_early (NET_IF_CFG *net_if,
@@ -1102,7 +1092,6 @@ static const uint8_t *arp_find_ip (NET_ARP_CFG *h, const uint8_t *mac_addr) {
 /**
   \brief       Run ARP Probe service.
   \param[in]   h  ARP instance handle.
-  \return      none.
   \note        Executed on sys-tick (every 100ms).
 */
 static void arp_probe_run (NET_ARP_CFG *h) {
@@ -1184,7 +1173,6 @@ bool net_arp_enqueue (NET_IF_CFG *net_if, NET_ARP_INFO *arp_t, NET_FRAME *frame)
 
 /**
   \brief       Run main process of ARP cache.
-  \return      none.
 */
 void net_arp_cache_run (void) {
   NET_ARP_CFG *const *p;
@@ -1197,7 +1185,6 @@ void net_arp_cache_run (void) {
 /**
   \brief       Run main process of ARP cache.
   \param[in]   h  ARP instance handle.
-  \return      none.
   \note        Expired temporary cache entries are removed,
                expired fixed IP entries are refreshed.
 */
@@ -1402,7 +1389,6 @@ static bool arp_is_cacheable (NET_ARP_CFG *h, const uint8_t *ip4_addr) {
   \brief       Send all enqueued frames.
   \param[in]   h      ARP instance handle.
   \param[in]   arp_t  pointer to a cache entry control block.
-  \return      none.
 */
 static void arp_que_send (NET_ARP_CFG *h, NET_ARP_INFO *arp_t) {
   NET_FRAME *frame, *next;
@@ -1422,7 +1408,6 @@ static void arp_que_send (NET_ARP_CFG *h, NET_ARP_INFO *arp_t) {
 /**
   \brief       Release all enqueued frames from memory.
   \param[in]   arp_t  pointer to a cache entry control block.
-  \return      none.
 */
 static void arp_que_free (NET_ARP_INFO *arp_t) {
   NET_FRAME *frame, *next;
@@ -1456,7 +1441,6 @@ static const char *type_ascii (uint8_t type) {
 /**
   \brief       Debug print ARP header information.
   \param[in]   arp_hdr  ARP frame header.
-  \return      none.
 */
 static void debug_info (const NET_ARP_HEADER *arp_hdr) {
   static const char *const p_asc[] = {
@@ -1497,7 +1481,6 @@ d:DEBUGF (ARP," SendIp  %s\n",net_addr4_ntoa(arp_hdr->SendIpAddr));
   \brief       Debug print MAC or IP address.
   \param[in]   type  type of address.
   \param[in]   addr  address to print.
-  \return      none.
 */
 static void debug_inf2 (uint32_t type, const uint8_t *addr) {
 

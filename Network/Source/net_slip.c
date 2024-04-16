@@ -40,7 +40,6 @@ static void slip_unlock (NET_SLIP_CFG *h);
 
 /**
   \brief       Initialize SLIP network interface.
-  \return      none.
 */
 void net_slip_iface_init (void) {
   NET_SLIP_CFG *h = net_slip_list[0];
@@ -80,7 +79,6 @@ void net_slip_iface_init (void) {
 
 /**
   \brief       De-initialize SLIP network interface.
-  \return      none.
 */
 void net_slip_iface_uninit (void) {
   NET_SLIP_CFG *h = net_slip_list[0];
@@ -103,7 +101,6 @@ void net_slip_iface_uninit (void) {
 /**
   \brief       SLIP interface thread.
   \param[in]   arg  slip interface handle.
-  \return      none.
 */
 __NO_RETURN void netSLIP_Thread (void *arg) {
   NET_SLIP_CFG *h = (NET_SLIP_CFG *)arg;
@@ -371,7 +368,6 @@ bool netSLIP_LinkUp (void) {
 /**
   \brief       Receive slip frame.
   \param[in]   h  slip interface handle.
-  \return      none.
   \note        Called from SLIP thread!
   \details     This function decodes byte stuffing and packet framing.
                SYNC flag starts receive timeout timer.
@@ -465,7 +461,6 @@ store:  if (ctrl->th.Frame->index < (SLIP_FRM_OFFS + SLIP_MTU)) {
 /**
   \brief       Transmit frame from tx-queue.
   \param[in]   h  slip interface handle.
-  \return      none.
   \note        Called from SLIP thread!
   \details     This function performs packet framing and byte stuffing.
 */
@@ -607,7 +602,6 @@ bool net_slip_send_frame (uint32_t if_num, NET_FRAME *frame, uint8_t ip_ver) {
 
 /**
   \brief       Run main process for SLIP interface.
-  \return      none.
 */
 void net_slip_iface_run (void) {
   NET_SLIP_CFG *h = net_slip_list[0];
@@ -671,7 +665,6 @@ void net_slip_iface_run (void) {
   \brief       Add frame to queue tail.
   \param[in]   list   queue list head.
   \param[in]   frame  frame to add.
-  \return      none.
 */
 static void que_add_tail (NET_FRAME **list, NET_FRAME *frame) {
   NET_FRAME *next;
@@ -705,7 +698,6 @@ static NET_FRAME *que_get_first (NET_FRAME **list) {
 /**
   \brief       Lock slip interface.
   \param[in]   h  slip interface handle.
-  \return      none.
 */
 static void slip_lock (NET_SLIP_CFG *h) {
   netif_lock (ctrl->semaphore);
@@ -714,7 +706,6 @@ static void slip_lock (NET_SLIP_CFG *h) {
 /**
   \brief       Unlock slip interface.
   \param[in]   h  slip interface handle.
-  \return      none.
 */
 static void slip_unlock (NET_SLIP_CFG *h) {
   netif_unlock (ctrl->semaphore);

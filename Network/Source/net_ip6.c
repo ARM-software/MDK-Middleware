@@ -47,7 +47,6 @@ static uint16_t ip6_get_mtu (NET_IF_CFG *net_if);
 
 /**
   \brief       Initialize IPv6.
-  \return      none.
 */
 void net_ip6_init (void) {
   /* Clear control and set default interface */
@@ -59,7 +58,6 @@ void net_ip6_init (void) {
 
 /**
   \brief       De-initialize IPv6.
-  \return      none.
 */
 void net_ip6_uninit (void) {
   DEBUGF (IP6,"Uninit Core\n");
@@ -522,7 +520,6 @@ uint16_t net_ip6_chksum (const uint8_t *src_addr, const uint8_t *dst_addr,
 /**
   \brief       Debug print IPv6 header information.
   \param[in]   ip6_hdr  IPv6 frame header.
-  \return      none.
 */
 static void debug_info (const NET_IP6_HEADER *ip6_hdr) {
   static const char p_asc[][5] = {

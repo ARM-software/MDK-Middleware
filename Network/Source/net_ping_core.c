@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ping.c
  * Purpose: Ping Client core
@@ -37,7 +37,6 @@ netStatus netPing_Echo (const NET_ADDR *addr, netPing_cb_t cb_func) {
 
 /**
   \brief       Initialize ping client.
-  \return      none.
 */
 void net_ping_client_init (void) {
   DEBUGF (ICMP,"Init Client\n");
@@ -48,7 +47,6 @@ void net_ping_client_init (void) {
 
 /**
   \brief       De-initialize ping client.
-  \return      none.
 */
 void net_ping_client_uninit (void) {
   DEBUGF (ICMP,"Uninit Client\n");
@@ -134,7 +132,6 @@ err_ip4:
 
 /**
   \brief       Run main process for ping client.
-  \return      none.
 */
 void net_ping_client_run (void) {
 
@@ -181,7 +178,6 @@ void net_ping_client_run (void) {
 
 /**
   \brief       Send Echo request.
-  \return      none.
 */
 static bool ping_send_req (void) {
 
