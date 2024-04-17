@@ -1,0 +1,28 @@
+solution:
+  created-for: CMSIS-Toolbox@2.0.0
+
+  cdefault:
+
+  target-types:
+    # - type: <target_name>
+    #   board: <board_name>
+    #   variables:
+    #     - Board-Layer: <board_layer>.clayer.yml
+
+  build-types:
+    - type: Debug
+      debug: on
+      optimize: none
+    - type: Release
+      debug: off
+      optimize: balanced
+
+  projects:
+    - project: BSD_Client/BSD_Client.cproject.yml
+    - project: BSD_Server/BSD_Server.cproject.yml
+    - project: FTP_Server/FTP_Server.cproject.yml
+    - project: HTTP_Server/HTTP_Server.cproject.yml
+    - project: HTTP_Upload/HTTP_Upload.cproject.yml
+    - project: SMTP_Client/SMTP_Client.cproject.yml
+    - project: SNMP_Agent/SNMP_Agent.cproject.yml
+    - project: Telnet_Server/Telnet_Server.cproject.yml

@@ -30,6 +30,7 @@ DEFAULT_ARGS=(-c "v")
 #
 PACK_DIRS="
   Documentation
+  Examples
   FileSystem
   Network
   USB
