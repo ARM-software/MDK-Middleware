@@ -639,7 +639,7 @@ The configuration file <b>USBD_Config_<i>n</i>.c</b> contains the following sett
     - <b>Vendor Code</b> specifies the vendor code used to retrieve associated feature descriptors.
 - <b>Control Transfer Buffer Size</b> specifies the maximum size of control transfer.
 - Use the <b>OS Resources Settings</b> to optimize the usage of OS resources.
-  - The default <b>Core Thread Stack Size </b> is \a 512 bytes.
+  - The default <b>Core Thread Stack Size </b> is \a 1024 bytes.
   - The default Core Thread priority is <b>osPriorityAboveNormal</b>.
     This priority can be changed by changing USBD<i>n</i>_CORE_THREAD_PRIORITY define in this configuration file.
     This priority needs to be high enough so that USB Stack can react to USB events in a timely manner.
@@ -4875,7 +4875,7 @@ The USB Host configuration file <b>USBH_Config_<i>n</i>.c</b> contains the follo
       Also, specify the <b>Memory Pool Address</b> if the memory pool needs to be relocated.
     - For \b OHCI and \b EHCI you need to specify the memory-mapped host controller registers base address.
 - <b>OS Resources Settings</b> are used to optimize usage of OS resources.
-  - The default <b>Core Thread Stack Size</b> is \a 1024 bytes.
+  - The default <b>Core Thread Stack Size</b> is \a 2048 bytes.
   - The default Core Thread priority is <b>osPriorityAboveNormal</b>.
     This priority can be changed by changing USBH<i>n</i>_CORE_THREAD_PRIORITY define in this configuration file.
     This priority needs to be high enough so that USB Stack can react to USB events in a timely manner.

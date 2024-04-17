@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USBH_Config_%Instance%.c
  * Purpose: USB Host Configuration
- * Rev.:    V5.3.0
+ * Rev.:    V5.3.1
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -112,7 +112,7 @@
 //   <h>OS Resources Settings
 //   <i>These settings are used to optimize usage of OS resources.
 //     <o>Core Thread Stack Size <64-65536>
-#define USBH%Instance%_CORE_THREAD_STACK_SIZE    1024
+#define USBH%Instance%_CORE_THREAD_STACK_SIZE    2048
 
 //        Core Thread Priority
 #define USBH%Instance%_CORE_THREAD_PRIORITY      osPriorityAboveNormal
