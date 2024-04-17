@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host:CDC
- * Copyright (c) 2013-2020 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2013-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USART_CDC_ACM.c
  * Purpose: CMSIS USART driver for USB Host with USB CDC ACM (VirtualCOM)
- * Rev.:    V1.10
+ * Rev.:    V1.11
  *----------------------------------------------------------------------------*/
 /* -----------------------------------------------------------------------------
  * Driver:       Driver_USARTn..Driver_USARTm
@@ -21,6 +21,8 @@
  * -------------------------------------------------------------------------- */
 
 /* History:
+ *  Version 1.11
+ *    - Removed support for CMSIS-RTOS version 1
  *  Version 1.10
  *    - Corrected compiler warnings
  *  Version 1.9
@@ -52,6 +54,10 @@
 #include "rl_usb.h"
 
 #include "Driver_USART.h"
+
+#ifndef  USB_CMSIS_RTOS2
+#error   This driver requires CMSIS-RTOS2!
+#else
 
 /************************** Constant and Macro Definitions ********************/
 
@@ -135,13 +141,8 @@ static USART_CDC_t usart_cdc       [USART_CDC_DRV_INSTANCE_NUM];
 
 /************************** Global Function Prototypes ************************/
 
-#ifdef USB_CMSIS_RTOS2
 static void USART_CDC_Send_Thread    (void *arg);
 static void USART_CDC_Receive_Thread (void *arg);
-#else
-       void USART_CDC_Send_Thread    (void const *arg);
-       void USART_CDC_Receive_Thread (void const *arg);
-#endif
 
 /************************** Internal Function Prototypes **********************/
 
@@ -166,14 +167,7 @@ static bool CheckInstance (uint8_t instance) {
 
 /// \brief User thread for handling data send (to Bulk Out endpoint)
 /// \param[in]     arg                  index of CDC instance.
-#ifdef USB_CMSIS_RTOS2
 static void USART_CDC_Send_Thread (void *arg) {
-#else
-       void USART_CDC_Send_Thread (void const *arg) {
-#endif
-#ifndef USB_CMSIS_RTOS2
-  osEvent      evt;
-#endif
   USART_CDC_t *ptr_usart_cdc;
   uint32_t     flags;
   uint8_t      instance;
@@ -183,19 +177,10 @@ static void USART_CDC_Send_Thread (void *arg) {
   ptr_usart_cdc = &usart_cdc[instance];
 
   for (;;) {
-#ifdef USB_CMSIS_RTOS2
     flags = osThreadFlagsWait (3U, osFlagsWaitAny, osWaitForever);
     if ((flags & 0x80000000U) != 0U) {
       flags = USBH_THREAD_TERMINATE_FLAG;
     }
-#else
-    evt   = osSignalWait(0U, osWaitForever);
-    if (evt.status == osEventSignal) {
-      flags = evt.value.v;
-    } else {
-      flags = USBH_THREAD_TERMINATE_FLAG;
-    }
-#endif
     if ((flags & USBH_THREAD_TERMINATE_FLAG) != 0U) {
       // If flag is thread termination or if error during get flag
       break;
@@ -216,7 +201,6 @@ static void USART_CDC_Send_Thread (void *arg) {
   ptr_usart_cdc->send_thread_id = NULL;
   (void)osThreadTerminate (osThreadGetId());
 }
-#ifdef USB_CMSIS_RTOS2
 #ifdef USB_CMSIS_RTOS2_RTX5
 static osRtxThread_t  usart_cdc_send_thread_cb_mem   [USART_CDC_DRV_INSTANCE_NUM]                                               __SECTION(.bss.os.thread.cb);
 static uint64_t       usart_cdc_send_thread_stack_mem[USART_CDC_DRV_INSTANCE_NUM][(USART_CDC_SEND_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
@@ -232,21 +216,10 @@ static osThreadAttr_t usart_cdc_send_thread_attr = {
   0U,
   0U
 };
-#else
-extern const osThreadDef_t os_thread_def_USART_CDC_Send_Thread;
-osThreadDef(USART_CDC_Send_Thread, USART_CDC_SEND_THREAD_PRIORITY, USART_CDC_DRV_INSTANCE_NUM, USART_CDC_SEND_THREAD_STACK_SIZE);
-#endif
 
 /// \brief User thread for handling data reception (from Bulk In endpoint)
 /// \param[in]     arg                  index of CDC instance.
-#ifdef USB_CMSIS_RTOS2
 static void USART_CDC_Receive_Thread (void *arg) {
-#else
-       void USART_CDC_Receive_Thread (void const *arg) {
-#endif
-#ifndef USB_CMSIS_RTOS2
-  osEvent      evt;
-#endif
   USART_CDC_t *ptr_usart_cdc;
   uint32_t     flags, buf_len, cpy_len;
   uint8_t      instance;
@@ -259,19 +232,10 @@ static void USART_CDC_Receive_Thread (void *arg) {
   exit = 0U;
 
   for (;;) {
-#ifdef USB_CMSIS_RTOS2
     flags = osThreadFlagsWait (3U, osFlagsWaitAny, osWaitForever);
     if ((flags & 0x80000000U) != 0U) {
       flags = USBH_THREAD_TERMINATE_FLAG;
     }
-#else
-    evt   = osSignalWait(0U, osWaitForever);
-    if (evt.status == osEventSignal) {
-      flags = evt.value.v;
-    } else {
-      flags = USBH_THREAD_TERMINATE_FLAG;
-    }
-#endif
     if ((flags & USBH_THREAD_TERMINATE_FLAG) != 0U) {
       // If flag is thread termination or if error during get flag
       break;
@@ -339,7 +303,6 @@ static void USART_CDC_Receive_Thread (void *arg) {
   ptr_usart_cdc->receive_thread_id = NULL;
   (void)osThreadTerminate (osThreadGetId());
 }
-#ifdef USB_CMSIS_RTOS2
 #ifdef USB_CMSIS_RTOS2_RTX5
 static osRtxThread_t  usart_cdc_receive_thread_cb_mem   [USART_CDC_DRV_INSTANCE_NUM]                                                  __SECTION(.bss.os.thread.cb);
 static uint64_t       usart_cdc_receive_thread_stack_mem[USART_CDC_DRV_INSTANCE_NUM][(USART_CDC_RECEIVE_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
@@ -355,10 +318,6 @@ static osThreadAttr_t usart_cdc_receive_thread_attr = {
   0U,
   0U
 };
-#else
-extern const osThreadDef_t os_thread_def_USART_CDC_Receive_Thread;
-osThreadDef(USART_CDC_Receive_Thread, USART_CDC_RECEIVE_THREAD_PRIORITY, USART_CDC_DRV_INSTANCE_NUM, USART_CDC_RECEIVE_THREAD_STACK_SIZE);
-#endif
 
 /***-------------- USBH CDC Specific Functions -----------------------------***/
 
@@ -536,16 +495,12 @@ static int32_t ARM_USARTx_Send (uint8_t instance, const void *data, uint32_t num
 
   // Start send thread if it is not already running
   if (ptr_usart_cdc->send_thread_id == NULL) {
-#ifdef USB_CMSIS_RTOS2
 #ifdef USB_CMSIS_RTOS2_RTX5
     usart_cdc_send_thread_attr.cb_mem    = &usart_cdc_send_thread_cb_mem   [instance];
     usart_cdc_send_thread_attr.cb_size   = sizeof(osRtxThread_t);
     usart_cdc_send_thread_attr.stack_mem = &usart_cdc_send_thread_stack_mem[instance][0];
 #endif
     ptr_usart_cdc->send_thread_id = osThreadNew (USART_CDC_Send_Thread, (void *)((uint32_t)instance), &usart_cdc_send_thread_attr);
-#else
-    ptr_usart_cdc->send_thread_id = osThreadCreate (osThread(USART_CDC_Send_Thread), (void *)((uint32_t)instance));
-#endif
     if (ptr_usart_cdc->send_thread_id == NULL) {
       ptr_usart_cdc->send_busy = false;
       return ARM_DRIVER_ERROR;
@@ -553,11 +508,7 @@ static int32_t ARM_USARTx_Send (uint8_t instance, const void *data, uint32_t num
   }
 
   // Here USB send thread is active, send event to USB send thread
-#ifdef USB_CMSIS_RTOS2
   (void)osThreadFlagsSet((osThreadId_t)((uint32_t)ptr_usart_cdc->send_thread_id), USBH_THREAD_EVENT_FLAG);
-#else
-  (void)osSignalSet     ((osThreadId)  ((uint32_t)ptr_usart_cdc->send_thread_id), USBH_THREAD_EVENT_FLAG);
-#endif
 
   return ARM_DRIVER_OK;
 }
@@ -606,16 +557,12 @@ static int32_t ARM_USARTx_Receive (uint8_t instance, void *data, uint32_t num) {
 
   // Start reception thread if it is not already running
   if (ptr_usart_cdc->receive_thread_id == NULL) {
-#ifdef USB_CMSIS_RTOS2
 #ifdef USB_CMSIS_RTOS2_RTX5
     usart_cdc_receive_thread_attr.cb_mem    = &usart_cdc_receive_thread_cb_mem   [instance];
     usart_cdc_receive_thread_attr.cb_size   = sizeof(osRtxThread_t);
     usart_cdc_receive_thread_attr.stack_mem = &usart_cdc_receive_thread_stack_mem[instance][0];
 #endif
     ptr_usart_cdc->receive_thread_id = osThreadNew (USART_CDC_Receive_Thread, (void *)((uint32_t)instance), &usart_cdc_receive_thread_attr);
-#else
-    ptr_usart_cdc->receive_thread_id = osThreadCreate (osThread(USART_CDC_Receive_Thread), (void *)((uint32_t)instance));
-#endif
     if (ptr_usart_cdc->receive_thread_id == NULL) {
       ptr_usart_cdc->receive_busy = false;
       return ARM_DRIVER_ERROR;
@@ -623,11 +570,7 @@ static int32_t ARM_USARTx_Receive (uint8_t instance, void *data, uint32_t num) {
   }
 
   // Here USB receive thread is active, send event to USB receive thread
-#ifdef USB_CMSIS_RTOS2
   (void)osThreadFlagsSet((osThreadId_t)((uint32_t)ptr_usart_cdc->receive_thread_id), USBH_THREAD_EVENT_FLAG);
-#else
-  (void)osSignalSet     ((osThreadId)  ((uint32_t)ptr_usart_cdc->receive_thread_id), USBH_THREAD_EVENT_FLAG);
-#endif
 
   return ARM_DRIVER_OK;
 }
@@ -764,22 +707,14 @@ static int32_t ARM_USARTx_Control (uint8_t instance, uint32_t control, uint32_t 
 
     case ARM_USART_ABORT_SEND:                  // Abort send
       if (ptr_usart_cdc->send_thread_id != NULL) {
-#ifdef USB_CMSIS_RTOS2
         (void)osThreadFlagsSet((osThreadId_t)((uint32_t)ptr_usart_cdc->send_thread_id), USBH_THREAD_TERMINATE_FLAG);
-#else
-        (void)osSignalSet     ((osThreadId)  ((uint32_t)ptr_usart_cdc->send_thread_id), USBH_THREAD_TERMINATE_FLAG);
-#endif
       }
       while (ptr_usart_cdc->send_thread_id != NULL) { (void)osDelay(10U); }
       return ARM_DRIVER_OK;
 
     case ARM_USART_ABORT_RECEIVE:               // Abort receive
       if (ptr_usart_cdc->receive_thread_id != NULL) {
-#ifdef USB_CMSIS_RTOS2
         (void)osThreadFlagsSet((osThreadId_t)((uint32_t)ptr_usart_cdc->receive_thread_id), USBH_THREAD_TERMINATE_FLAG);
-#else
-        (void)osSignalSet     ((osThreadId)  ((uint32_t)ptr_usart_cdc->receive_thread_id), USBH_THREAD_TERMINATE_FLAG);
-#endif
       }
       while (ptr_usart_cdc->receive_thread_id != NULL) { (void)osDelay(10U); }
       return ARM_DRIVER_OK;
@@ -1092,3 +1027,5 @@ ARM_DRIVER_USART USART_CDC_DRV(USART_CDC_DRV3_NUM) = {
     ARM_USART3_GetModemStatus
 };
 #endif
+
+#endif // USB_CMSIS_RTOS2

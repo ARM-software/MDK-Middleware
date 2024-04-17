@@ -1,11 +1,11 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device:CDC
- * Copyright (c) 2004-2020 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USBD_User_CDC_ACM_UART_%Instance%.c
  * Purpose: USB Device Communication Device Class (CDC)
  *          Abstract Control Model (ACM) USB <-> UART Bridge User module
- * Rev.:    V1.0.8
+ * Rev.:    V1.0.9
  *----------------------------------------------------------------------------*/
 /**
  * \addtogroup usbd_cdcFunctions
@@ -60,6 +60,10 @@
 #include "rl_usb.h"
  
 #include "Driver_USART.h"
+
+#ifndef  USB_CMSIS_RTOS2
+#error   This user template requires CMSIS-RTOS2!
+#else
  
 // UART Configuration ----------------------------------------------------------
  
@@ -72,11 +76,6 @@
 #define  UART_Driver_(n)       _UART_Driver_(n)
 extern   ARM_DRIVER_USART       UART_Driver_(UART_PORT);
 #define  ptrUART              (&UART_Driver_(UART_PORT))
- 
-// External functions
-#ifdef   USB_CMSIS_RTOS
-extern   void                   CDC%Instance%_ACM_UART_to_USB_Thread (void const *arg);
-#endif
  
 // Local Variables
 static            uint8_t       uart_rx_buf[UART_BUFFER_SIZE];
@@ -113,11 +112,7 @@ static void UART_Callback (uint32_t event) {
  
 // Thread: Sends data received on UART to USB
 // \param[in]     arg           not used.
-#ifdef USB_CMSIS_RTOS2
 __NO_RETURN static void CDC%Instance%_ACM_UART_to_USB_Thread (void *arg) {
-#else
-__NO_RETURN        void CDC%Instance%_ACM_UART_to_USB_Thread (void const *arg) {
-#endif
   int32_t cnt, cnt_to_wrap;
  
   (void)(arg);
@@ -147,7 +142,6 @@ __NO_RETURN        void CDC%Instance%_ACM_UART_to_USB_Thread (void const *arg) {
     (void)osDelay(10U);
   }
 }
-#ifdef USB_CMSIS_RTOS2
 #ifdef USB_CMSIS_RTOS2_RTX5
 static osRtxThread_t        cdc%Instance%_acm_uart_to_usb_thread_cb_mem               __SECTION(.bss.os.thread.cb);
 static uint64_t             cdc%Instance%_acm_uart_to_usb_thread_stack_mem[512U / 8U] __SECTION(.bss.os.thread.stack);
@@ -169,10 +163,6 @@ static const osThreadAttr_t cdc%Instance%_acm_uart_to_usb_thread_attr = {
   0U,
   0U
 };
-#else
-extern const osThreadDef_t os_thread_def_CDC%Instance%_ACM_UART_to_USB_Thread;
-osThreadDef (CDC%Instance%_ACM_UART_to_USB_Thread, osPriorityNormal, 1U, 0U);
-#endif
  
  
 // CDC ACM Callbacks -----------------------------------------------------------
@@ -198,11 +188,7 @@ void USBD_CDC%Instance%_ACM_Initialize (void) {
   (void)ptrUART->Initialize   (UART_Callback);
   (void)ptrUART->PowerControl (ARM_POWER_FULL);
  
-#ifdef USB_CMSIS_RTOS2
   cdc_acm_bridge_tid = osThreadNew (CDC%Instance%_ACM_UART_to_USB_Thread, NULL, &cdc%Instance%_acm_uart_to_usb_thread_attr);
-#else
-  cdc_acm_bridge_tid = osThreadCreate (osThread (CDC%Instance%_ACM_UART_to_USB_Thread), NULL);
-#endif
 }
  
  
@@ -337,3 +323,5 @@ bool USBD_CDC%Instance%_ACM_SetControlLineState (uint16_t state) {
 }
  
 //! [code_USBD_User_CDC_ACM]
+
+#endif // USB_CMSIS_RTOS2

@@ -1,13 +1,13 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device:CDC
- * Copyright (c) 2018-2020 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2018-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USBD_User_CDC_ACM_RNDIS_ETH_%Instance%.c
  * Purpose: USB Device Communication Device Class (CDC)
  *          Abstract Control Model (ACM)
  *          Remote Network Driver Interface Specification (RNDIS)
  *          User Module for an USB CDC ACM RNDIS Ethernet Bridge
- * Rev.:    V1.0.4
+ * Rev.:    V1.0.5
  *----------------------------------------------------------------------------*/
 /**
  * \addtogroup usbd_cdcFunctions
@@ -36,6 +36,10 @@
 #include "Driver_ETH_MAC.h"
 #include "Driver_ETH_PHY.h"
 #include "USBD_Config_CDC_%Instance%.h"
+ 
+#ifndef  USB_CMSIS_RTOS2
+#error   This user template requires CMSIS-RTOS2!
+#else
  
  
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -107,7 +111,6 @@ static uint32_t           packet_in [(USBD_CDC%Instance%_ACM_SEND_BUF_SIZE   +3)
 static uint32_t           packet_out[(USBD_CDC%Instance%_ACM_RECEIVE_BUF_SIZE+3)/4];
  
 // Threads
-#ifdef USB_CMSIS_RTOS2
 static void ThreadConnection (void *arg);
 static void ThreadDataIN     (void *arg);
 static void ThreadDataOUT    (void *arg);
@@ -174,18 +177,6 @@ static const osThreadAttr_t thread_attr_data_out = {
   0U,
   0U
 };
-#else
-static void ThreadConnection (void const *arg);
-static void ThreadDataIN     (void const *arg);
-static void ThreadDataOUT    (void const *arg);
- 
-extern const osThreadDef_t os_thread_def_ThreadConnection;
-osThreadDef(ThreadConnection, osPriorityNormal, 1, NULL);
-extern const osThreadDef_t os_thread_def_ThreadDataIN;
-osThreadDef(ThreadDataIN,  osPriorityNormal, 1, NULL);
-extern const osThreadDef_t os_thread_def_ThreadDataOUT;
-osThreadDef(ThreadDataOUT, osPriorityNormal, 1, NULL);
-#endif
  
 static void *thread_id_Connection;
 static void *thread_id_DataIN;
@@ -285,22 +276,12 @@ static bool ENET_Initialize (void) {
   if (EthPhy->SetMode(ARM_ETH_PHY_AUTO_NEGOTIATE)             != ARM_DRIVER_OK) { return false; }
  
   // Create Threads
-#ifdef USB_CMSIS_RTOS2
   thread_id_Connection = osThreadNew(ThreadConnection, NULL, &thread_attr_connection);
   thread_id_DataIN     = osThreadNew(ThreadDataIN,     NULL, &thread_attr_data_in);
   thread_id_DataOUT    = osThreadNew(ThreadDataOUT,    NULL, &thread_attr_data_out);
-#else
-  thread_id_Connection = osThreadCreate(osThread(ThreadConnection), NULL);
-  thread_id_DataIN     = osThreadCreate(osThread(ThreadDataIN),     NULL);
-  thread_id_DataOUT    = osThreadCreate(osThread(ThreadDataOUT),    NULL);
-#endif
  
   // Set initial signal to Connection thread to check for current connection
-#ifdef USB_CMSIS_RTOS2
   (void)osThreadFlagsSet(thread_id_Connection, 1U);
-#else
-  (void)osSignalSet(thread_id_Connection, 1U);
-#endif
  
   return true;
 }
@@ -659,13 +640,8 @@ bool USBD_CDC%Instance%_ACM_SendEncapsulatedCommand (const uint8_t *buf, uint16_
       ResetVars();
  
       // Set flags to message processing threads
-#ifdef USB_CMSIS_RTOS2
       (void)osThreadFlagsSet(thread_id_DataIN,  1U);
       (void)osThreadFlagsSet(thread_id_DataOUT, 1U);
-#else
-      (void)osSignalSet(thread_id_DataIN,  1U);
-      (void)osSignalSet(thread_id_DataOUT, 1U);
-#endif
  
       // Prepare response
       ptr_reset_cmplt = (REMOTE_NDIS_RESET_CMPLT_t *)((void *)get_encapsulated_response_buf);
@@ -758,11 +734,7 @@ void USBD_CDC%Instance%_ACM_DataReceived (uint32_t len) {
  
   (void)len;
  
-#ifdef USB_CMSIS_RTOS2
   (void)osThreadFlagsSet(thread_id_DataOUT, 1U);
-#else
-  (void)osSignalSet(thread_id_DataOUT, 1U);
-#endif
 }
  
  
@@ -774,11 +746,7 @@ static void EthMac_Notify (uint32_t event) {
  
   switch (event) {
     case ARM_ETH_MAC_EVENT_RX_FRAME:
-#ifdef USB_CMSIS_RTOS2
       (void)osThreadFlagsSet(thread_id_DataIN, 1U);
-#else
-      (void)osSignalSet(thread_id_DataIN, 1U);
-#endif
       break;
     default:
       break;
@@ -787,22 +755,14 @@ static void EthMac_Notify (uint32_t event) {
  
  
 // Thread handling ETH Connection
-#ifdef USB_CMSIS_RTOS2
 __NO_RETURN static void ThreadConnection (void *arg) {
-#else
-__NO_RETURN static void ThreadConnection (void const *arg) {
-#endif
   ARM_ETH_LINK_STATE link_state_local;
   uint32_t           speed_local;
  
   (void)(arg);
  
   for (;;) {
-#ifdef USB_CMSIS_RTOS2
     (void)osThreadFlagsWait(1U, osFlagsWaitAll, 500U);
-#else
-    (void)osSignalWait(1U, 500U);
-#endif
     link_state_local = EthPhy->GetLinkState();
     if (link_state_local == ARM_ETH_LINK_UP) {
       link_info = EthPhy->GetLinkInfo();
@@ -844,11 +804,7 @@ __NO_RETURN static void ThreadConnection (void const *arg) {
  
  
 // Thread handling Data IN (ETH -> USB)
-#ifdef USB_CMSIS_RTOS2
 __NO_RETURN static void ThreadDataIN (void *arg) {
-#else
-__NO_RETURN static void ThreadDataIN (void const *arg) {
-#endif
   REMOTE_NDIS_PACKET_MSG_t *ptr_packet_msg;
   uint32_t                  eth_rx_size;
    int32_t                  usb_cdc_acm_status;
@@ -857,11 +813,7 @@ __NO_RETURN static void ThreadDataIN (void const *arg) {
  
   ptr_packet_msg = (REMOTE_NDIS_PACKET_MSG_t *)((void *)packet_in);
   for (;;) {
-#ifdef USB_CMSIS_RTOS2
     (void)osThreadFlagsWait(1U, osFlagsWaitAll, osWaitForever);
-#else
-    (void)osSignalWait(1U, osWaitForever);
-#endif
     for (;;) {
       eth_rx_size = EthMac->GetRxFrameSize();
       if (eth_rx_size == 0) {           // No new data available on the Ethernet
@@ -900,11 +852,7 @@ __NO_RETURN static void ThreadDataIN (void const *arg) {
  
  
 // Thread handling Data OUT (USB -> ETH)
-#ifdef USB_CMSIS_RTOS2
 __NO_RETURN static void ThreadDataOUT (void *arg) {
-#else
-__NO_RETURN static void ThreadDataOUT (void const *arg) {
-#endif
   REMOTE_NDIS_PACKET_MSG_t *ptr_packet_msg;
   uint32_t                  eth_tx_size;
    int32_t                  usb_cdc_acm_status, eth_mac_status;
@@ -915,11 +863,7 @@ __NO_RETURN static void ThreadDataOUT (void const *arg) {
  
   ptr_packet_msg = (REMOTE_NDIS_PACKET_MSG_t *)((void *)packet_out);
   for (;;) {
-#ifdef USB_CMSIS_RTOS2
     (void)osThreadFlagsWait(1U, osFlagsWaitAll, osWaitForever);
-#else
-    (void)osSignalWait(1U, osWaitForever);
-#endif
     for (;;) {
       usb_cdc_acm_status = USBD_CDC_ACM_ReadData (%Instance%, (uint8_t *)ptr_packet_msg, USBD_CDC0_ACM_RECEIVE_BUF_SIZE);
       if (usb_cdc_acm_status == 0) {    // No new data available on the USB
@@ -943,3 +887,5 @@ __NO_RETURN static void ThreadDataOUT (void const *arg) {
     }
   }
 }
+
+#endif // USB_CMSIS_RTOS2 

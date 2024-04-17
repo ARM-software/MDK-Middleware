@@ -52,6 +52,12 @@ The <a class="el" href="https://www.usb.org/developers" target="_blank">USB-IF D
       <th>Description</th>
     </tr>
     <tr>
+      <td>V8.0.0</td>
+      <td>
+        - removed support for CMSIS-RTOS version 1
+      </td>
+    </tr>
+    <tr>
       <td>V6.17.0</td>
       <td>
         - USB Device/Host: using Event Recorder component from CMSIS-View pack (instead of deprecated ARM_Compiler pack)

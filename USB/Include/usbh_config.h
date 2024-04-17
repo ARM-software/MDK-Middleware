@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_config.h
  * Purpose: USB Host (USBH) - Configuration
@@ -167,12 +167,10 @@
  *      USB Host OS abstraction
  *----------------------------------------------------------------------------*/
 
-#if   defined(USB_CMSIS_RTOS2)
+#ifdef USB_CMSIS_RTOS2
   #include "usbh_cmsis_rtos2.c"
-#elif defined(USB_CMSIS_RTOS)
-  #include "usbh_cmsis_rtos1.c"
 #else
-  #error USB Host component requires CMSIS RTOS!
+  #error USB Host component requires CMSIS-RTOS2!
 #endif
 
 

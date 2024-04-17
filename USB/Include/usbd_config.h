@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_config.h
  * Purpose: USB Device (USBD) - Configuration
@@ -3389,12 +3389,10 @@ extern usbd_msc_t * const usbd_msc_ptr[USBD_MSC_NUM];
  *      USB Device OS abstraction
  *----------------------------------------------------------------------------*/
 
-#if   defined(USB_CMSIS_RTOS2)
+#ifdef USB_CMSIS_RTOS2
   #include "usbd_cmsis_rtos2.c"
-#elif defined(USB_CMSIS_RTOS)
-  #include "usbd_cmsis_rtos1.c"
 #else
-  #error USB Device component requires CMSIS RTOS!
+  #error USB Device component requires CMSIS-RTOS2!
 #endif
 
 

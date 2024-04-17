@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Common
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usb_lib_ver.c
  * Purpose: USB Common Device/Host - Version module
@@ -10,8 +10,8 @@
 
 #include "cmsis_compiler.h"
 
-#define USB_LIB_VERSION_MAJOR           6
-#define USB_LIB_VERSION_MINOR           17
+#define USB_LIB_VERSION_MAJOR           8
+#define USB_LIB_VERSION_MINOR           0
 #define USB_LIB_VERSION_REVISION        0
 
 #define USB_LIB_VER_SECTION__(x,y,z)    __attribute__((section("__MW_USB_LIB_VERSION_"#x"."#y"."#z)))

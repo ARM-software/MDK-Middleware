@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2021 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_config_hc_$x.c
  * Purpose: USB Host (USBH) - Host Controller $x Data Definitions
@@ -196,7 +196,4 @@ const  osThreadAttr_t usbh$x_core_thread_attr = {
   0U,
   0U
 };
-#else
-extern const osThreadDef_t os_thread_def_USBH$x_Core_Thread;
-osThreadDef(USBH$x_Core_Thread, USBH$x_CORE_THREAD_PRIORITY, 1U, USBH$x_CORE_THREAD_STACK_SIZE);
 #endif

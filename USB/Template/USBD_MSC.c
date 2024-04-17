@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device:MSC
- * Copyright (c) 2004-2020 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USBD_MSC_%Instance%.c
  * Purpose: Functions for media ownership control between USB and File System
- * Rev.:    V6.3.6
+ * Rev.:    V6.3.7
  *----------------------------------------------------------------------------*/
 /*
  * USBD_MSC_%Instance%.c is a code template for the application specific functionality of
@@ -25,6 +25,10 @@
  
 #include "USBD_MSC_%Instance%.h"                 // Media ownership control for USB Device
 #include "USBD_Config_MSC_%Instance%.h"
+ 
+#ifndef  USB_CMSIS_RTOS2
+#error   This user template requires CMSIS-RTOS2!
+#else
  
 extern volatile uint8_t usbd_msc%Instance%_media_own;    // USB MSC%Instance% media ownership
  
@@ -71,3 +75,5 @@ int32_t USBD_MSC%Instance%_SetMediaOwnerFS (void) {
   return USBD_MSC%Instance%_OK;
 }
 //! [usbd_msc_setmediaownerfs]
+
+#endif // USB_CMSIS_RTOS2

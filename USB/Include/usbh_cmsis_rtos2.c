@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2020 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_cmsis_rtos2.c
  * Purpose: USB Host (USBH) - RTOS abstraction implemented on CMSIS-RTOS2
@@ -60,7 +60,7 @@ static const char *usbh_cdc_thread_name        [USBH_CDC_NUM] = {
   , "USBH_CDC3_IntIn_Thread"
 #endif
 };
-#if defined(USB_CMSIS_RTOS2_RTX5)
+#ifdef USB_CMSIS_RTOS2_RTX5
 static osRtxThread_t  usbh_cdc_thread_cb_mem   [USBH_CDC_NUM]                                                __SECTION(.bss.os.thread.cb);
 static uint64_t       usbh_cdc_thread_stack_mem[USBH_CDC_NUM][(USBH_CDC_INT_IN_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
 #endif
@@ -81,7 +81,7 @@ static const char *usbh_hid_thread_name        [USBH_HID_NUM] = {
   , "USBH_HID3_IntIn_Thread"
 #endif
 };
-#if defined(USB_CMSIS_RTOS2_RTX5)
+#ifdef USB_CMSIS_RTOS2_RTX5
 static osRtxThread_t  usbh_hid_thread_cb_mem   [USBH_HID_NUM]                                                __SECTION(.bss.os.thread.cb);
 static uint64_t       usbh_hid_thread_stack_mem[USBH_HID_NUM][(USBH_HID_INT_IN_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
 #endif

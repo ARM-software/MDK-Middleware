@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2013-2020 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2013-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USART_PL2303.c
  * Purpose: CMSIS USART driver for USB Host with Prolific USB-to-UART Adapter
- * Rev.:    V1.10
+ * Rev.:    V1.11
  *----------------------------------------------------------------------------*/
 /* -----------------------------------------------------------------------------
  * Driver:       Driver_USARTn
@@ -14,6 +14,8 @@
  * -------------------------------------------------------------------------- */
 
 /* History:
+ *  Version 1.11
+ *    - Removed support for CMSIS-RTOS version 1
  *  Version 1.10
  *    - Corrected compiler warnings
  *  Version 1.9
@@ -47,6 +49,10 @@
 #include "rl_usb.h"
 
 #include "Driver_USART.h"
+
+#ifndef  USB_CMSIS_RTOS2
+#error   This driver requires CMSIS-RTOS2!
+#else
 
 /************************** Constant and Macro Definitions ********************/
 
@@ -121,15 +127,9 @@ static          CDC_LINE_CODING usart_line_coding =  { 9600U, 0U, 0U , 8U };    
 
 /************************** Global Function Prototypes ************************/
 
-#ifdef USB_CMSIS_RTOS2
 static void USBH_PL2303_Send_Thread         (void *arg);
 static void USBH_PL2303_Receive_Thread      (void *arg);
 static void USBH_PL2303_Status_Thread       (void *arg);
-#else
-       void USBH_PL2303_Send_Thread         (void const *arg);
-       void USBH_PL2303_Receive_Thread      (void const *arg);
-       void USBH_PL2303_Status_Thread       (void const *arg);
-#endif
 
 uint32_t    USBH_PL2303_GetTxCount          (void);
 uint32_t    USBH_PL2303_GetRxCount          (void);
@@ -150,33 +150,17 @@ static void ARM_USART_Received              (void);
 
 /// \brief User thread for handling data send (to Bulk Out endpoint)
 /// \param[in]     arg                  unused.
-#ifdef USB_CMSIS_RTOS2
 static void USBH_PL2303_Send_Thread (void *arg) {
-#else
-       void USBH_PL2303_Send_Thread (void const *arg) {
-#endif
-#ifndef RTE_CMSIS_RTOS2
-  osEvent   evt;
-#endif
   uint32_t  flags;
   usbStatus status;
 
   (void)(arg);
 
   for (;;) {
-#ifdef USB_CMSIS_RTOS2
     flags = osThreadFlagsWait (3U, osFlagsWaitAny, osWaitForever);
     if ((flags & 0x80000000U) != 0U) {
       flags = USBH_THREAD_TERMINATE_FLAG;
     }
-#else
-    evt   = osSignalWait(0U, osWaitForever);
-    if (evt.status == osEventSignal) {
-      flags = evt.value.v;
-    } else {
-      flags = USBH_THREAD_TERMINATE_FLAG;
-    }
-#endif
     if ((flags & USBH_THREAD_TERMINATE_FLAG) != 0U) {
       // If flag is thread termination or if error during get flag
       break;
@@ -197,7 +181,6 @@ static void USBH_PL2303_Send_Thread (void *arg) {
   usbh_send_thread_id = NULL;
   (void)osThreadTerminate (osThreadGetId());
 }
-#ifdef USB_CMSIS_RTOS2
 #ifdef USB_CMSIS_RTOS2_RTX5
 static osRtxThread_t        usbh_pl2303_send_thread_cb_mem                                                    __SECTION(.bss.os.thread.cb);
 static uint64_t             usbh_pl2303_send_thread_stack_mem[(USBH_PL2303_SEND_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
@@ -219,21 +202,10 @@ static const osThreadAttr_t usbh_pl2303_send_thread_attr = {
   0U,
   0U
 };
-#else
-extern const osThreadDef_t os_thread_def_USBH_PL2303_Send_Thread;
-osThreadDef(USBH_PL2303_Send_Thread, USBH_PL2303_SEND_THREAD_PRIORITY, 1U, USBH_PL2303_SEND_THREAD_STACK_SIZE);
-#endif
 
 /// \brief User thread for handling data reception (from Bulk In endpoint)
 /// \param[in]     arg                  unused.
-#ifdef USB_CMSIS_RTOS2
 static void USBH_PL2303_Receive_Thread (void *arg) {
-#else
-       void USBH_PL2303_Receive_Thread (void const *arg) {
-#endif
-#ifndef RTE_CMSIS_RTOS2
-  osEvent   evt;
-#endif
   uint32_t  flags, buf_len, cpy_len;
   usbStatus status;
   uint8_t   exit;
@@ -243,19 +215,10 @@ static void USBH_PL2303_Receive_Thread (void *arg) {
   exit = 0U;
 
   for (;;) {
-#ifdef USB_CMSIS_RTOS2
     flags = osThreadFlagsWait (3U, osFlagsWaitAny, osWaitForever);
     if ((flags & 0x80000000U) != 0U) {
       flags = USBH_THREAD_TERMINATE_FLAG;
     }
-#else
-    evt   = osSignalWait(0U, osWaitForever);
-    if (evt.status == osEventSignal) {
-      flags = evt.value.v;
-    } else {
-      flags = USBH_THREAD_TERMINATE_FLAG;
-    }
-#endif
     if ((flags & USBH_THREAD_TERMINATE_FLAG) != 0U) {
       // If flag is thread termination or if error during get flag
       break;
@@ -323,7 +286,6 @@ static void USBH_PL2303_Receive_Thread (void *arg) {
   usbh_receive_thread_id = NULL;
   (void)osThreadTerminate (osThreadGetId());
 }
-#ifdef USB_CMSIS_RTOS2
 #ifdef USB_CMSIS_RTOS2_RTX5
 static osRtxThread_t        usbh_pl2303_receive_thread_cb_mem                                                       __SECTION(.bss.os.thread.cb);
 static uint64_t             usbh_pl2303_receive_thread_stack_mem[(USBH_PL2303_RECEIVE_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
@@ -345,19 +307,11 @@ static const osThreadAttr_t usbh_pl2303_receive_thread_attr = {
   0U,
   0U
 };
-#else
-extern const osThreadDef_t os_thread_def_USBH_PL2303_Receive_Thread;
-osThreadDef(USBH_PL2303_Receive_Thread, USBH_PL2303_RECEIVE_THREAD_PRIORITY, 1U, USBH_PL2303_RECEIVE_THREAD_STACK_SIZE);
-#endif
 
 /// \brief User thread for handling modem status and error feedback from PL2303
 ///        device (from Interrupt In endpoint)
 /// \param[in]     arg              unused.
-#ifdef USB_CMSIS_RTOS2
 static void USBH_PL2303_Status_Thread (void *arg) {
-#else
-       void USBH_PL2303_Status_Thread (void const *arg) {
-#endif
   usbStatus status;
   uint8_t   buf[10];
 
@@ -388,7 +342,6 @@ static void USBH_PL2303_Status_Thread (void *arg) {
     }
   }
 }
-#ifdef USB_CMSIS_RTOS2
 #ifdef USB_CMSIS_RTOS2_RTX5
 static osRtxThread_t        usbh_pl2303_status_thread_cb_mem                                                      __SECTION(.bss.os.thread.cb);
 static uint64_t             usbh_pl2303_status_thread_stack_mem[(USBH_PL2303_STATUS_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
@@ -410,10 +363,6 @@ static const osThreadAttr_t usbh_pl2303_status_thread_attr = {
   0U,
   0U
 };
-#else
-extern const osThreadDef_t os_thread_def_USBH_PL2303_Status_Thread;
-osThreadDef(USBH_PL2303_Status_Thread, USBH_PL2303_STATUS_THREAD_PRIORITY, 1U, USBH_PL2303_STATUS_THREAD_STACK_SIZE);
-#endif
 
 /***-------------- PL2303 Specific Functions -------------------------------***/
 
@@ -595,11 +544,7 @@ static int32_t ARM_USART_PowerControl (ARM_POWER_STATE state) {
       usbh_status_active = false;
 
       // Start Interrupt In Pipe handling thread
-#ifdef USB_CMSIS_RTOS2
       usbh_status_thread_id = osThreadNew (USBH_PL2303_Status_Thread, NULL, &usbh_pl2303_status_thread_attr);
-#else
-      usbh_status_thread_id = osThreadCreate (osThread(USBH_PL2303_Status_Thread), NULL);
-#endif
       if (usbh_status_thread_id == NULL) {
         return ARM_DRIVER_ERROR;
       }
@@ -634,11 +579,7 @@ static int32_t ARM_USART_Send (const void *data, uint32_t num) {
 
   // Start send thread if it is not already running
   if (usbh_send_thread_id == NULL) {
-#ifdef USB_CMSIS_RTOS2
     usbh_send_thread_id = osThreadNew (USBH_PL2303_Send_Thread, NULL, &usbh_pl2303_send_thread_attr);
-#else
-    usbh_send_thread_id = osThreadCreate (osThread(USBH_PL2303_Send_Thread), NULL);
-#endif
     if (usbh_send_thread_id == NULL) {
       usart_send_busy = false;
       return ARM_DRIVER_ERROR;
@@ -646,11 +587,7 @@ static int32_t ARM_USART_Send (const void *data, uint32_t num) {
   }
 
   // Here USB send thread is active, send event to USB send thread
-#ifdef USB_CMSIS_RTOS2
   (void)osThreadFlagsSet((osThreadId_t)((uint32_t)usbh_send_thread_id), USBH_THREAD_EVENT_FLAG);
-#else
-  (void)osSignalSet     ((osThreadId)  ((uint32_t)usbh_send_thread_id), USBH_THREAD_EVENT_FLAG);
-#endif
 
   return ARM_DRIVER_OK;
 }
@@ -686,11 +623,7 @@ static int32_t ARM_USART_Receive (void *data, uint32_t num) {
 
   // Start reception thread if it is not already running
   if (usbh_receive_thread_id == NULL) {
-#ifdef USB_CMSIS_RTOS2
     usbh_receive_thread_id = osThreadNew (USBH_PL2303_Receive_Thread, NULL, &usbh_pl2303_receive_thread_attr);
-#else
-    usbh_receive_thread_id = osThreadCreate (osThread(USBH_PL2303_Receive_Thread), NULL);
-#endif
     if (usbh_receive_thread_id == NULL) {
       usart_receive_busy = false;
       return ARM_DRIVER_ERROR;
@@ -698,11 +631,7 @@ static int32_t ARM_USART_Receive (void *data, uint32_t num) {
   }
 
   // Here USB receive thread is active, send event to USB receive thread
-#ifdef USB_CMSIS_RTOS2
   (void)osThreadFlagsSet((osThreadId_t)((uint32_t)usbh_receive_thread_id), USBH_THREAD_EVENT_FLAG);
-#else
-  (void)osSignalSet     ((osThreadId)  ((uint32_t)usbh_receive_thread_id), USBH_THREAD_EVENT_FLAG);
-#endif
 
   return ARM_DRIVER_OK;
 }
@@ -792,11 +721,7 @@ static int32_t ARM_USART_Control (uint32_t control, uint32_t arg) {
 
     case ARM_USART_ABORT_SEND:                  // Abort send
       if (usbh_send_thread_id != NULL) {
-#ifdef USB_CMSIS_RTOS2
         (void)osThreadFlagsSet((osThreadId_t)((uint32_t)usbh_send_thread_id), USBH_THREAD_TERMINATE_FLAG);
-#else
-        (void)osSignalSet     ((osThreadId)  ((uint32_t)usbh_send_thread_id), USBH_THREAD_TERMINATE_FLAG);
-#endif
         (void)USBH_PipeAbort  (USBH_CC_PipeHandle[PL2303_SEND_PIPE_INDEX]);
       }
       while (usbh_send_thread_id != NULL) { (void)osDelay(10U); }
@@ -804,11 +729,7 @@ static int32_t ARM_USART_Control (uint32_t control, uint32_t arg) {
 
     case ARM_USART_ABORT_RECEIVE:               // Abort receive
       if (usbh_receive_thread_id != NULL) {
-#ifdef USB_CMSIS_RTOS2
         (void)osThreadFlagsSet((osThreadId_t)((uint32_t)usbh_receive_thread_id), USBH_THREAD_TERMINATE_FLAG);
-#else
-        (void)osSignalSet     ((osThreadId)  ((uint32_t)usbh_receive_thread_id), USBH_THREAD_TERMINATE_FLAG);
-#endif
         (void)USBH_PipeAbort  (USBH_CC_PipeHandle[PL2303_RECEIVE_PIPE_INDEX]);
       }
       while (usbh_receive_thread_id != NULL) { (void)osDelay(10U); }
@@ -988,3 +909,5 @@ ARM_DRIVER_USART USART_PL2303_DRV(USART_PL2303_DRV_NUM) = {
     ARM_USART_SetModemControl,
     ARM_USART_GetModemStatus
 };
+
+#endif // USB_CMSIS_RTOS2

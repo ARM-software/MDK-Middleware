@@ -1,11 +1,11 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device:CDC
- * Copyright (c) 2004-2020 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USBD_User_CDC_NCM_ETH_%Instance%.c
  * Purpose: USB Device Communication Device Class (CDC)
  *          Network Control Model (NCM) User module for an USB Ethernet Bridge
- * Rev.:    V1.0.8
+ * Rev.:    V1.0.9
  *----------------------------------------------------------------------------*/
 /**
  * \addtogroup usbd_cdcFunctions
@@ -31,11 +31,19 @@
 #include "Driver_ETH_PHY.h"             // ::CMSIS Driver:Ethernet PHY
 #include "USBD_Config_CDC_%Instance%.h"
  
+#ifndef  USB_CMSIS_RTOS2
+#error   This user template requires CMSIS-RTOS2!
+#else
+ 
 #define ETH_MAC_NUM             0       /* ETH MAC Driver number */
 #define ETH_PHY_NUM             0       /* ETH PHY Driver number */
 #define USB_CDC_NUM             %Instance%       /* USB CDC Instance number */
  
 #define MAX_IN_DATAGRAMS        10
+
+#ifdef  USBD_CDC%Instance%_NCM_MAC_ADDRESS_RAW
+#define MAC_ADDR_RAW            1
+#endif
  
 extern ARM_DRIVER_ETH_MAC ARM_Driver_ETH_MAC_(ETH_MAC_NUM);
 extern ARM_DRIVER_ETH_PHY ARM_Driver_ETH_PHY_(ETH_PHY_NUM);
@@ -43,7 +51,11 @@ extern ARM_DRIVER_ETH_PHY ARM_Driver_ETH_PHY_(ETH_PHY_NUM);
 static ARM_DRIVER_ETH_MAC *EthMac = &ARM_Driver_ETH_MAC_(ETH_MAC_NUM);
 static ARM_DRIVER_ETH_PHY *EthPhy = &ARM_Driver_ETH_PHY_(ETH_PHY_NUM);
  
-static const wchar_t   *wsMacAddress = USBD_CDC%Instance%_NCM_MAC_ADDRESS;
+#ifdef MAC_ADDR_RAW
+static const char    *strMacAddress = USBD_CDC%Instance%_NCM_MAC_ADDRESS_RAW;
+#else
+static const wchar_t *strMacAddress = USBD_CDC%Instance%_NCM_MAC_ADDRESS;
+#endif
 static ARM_ETH_MAC_ADDR   MacAddress;
  
 static ARM_ETH_LINK_STATE LinkState;
@@ -78,7 +90,6 @@ static uint8_t  FrameOUT[USBD_CDC%Instance%_NCM_W_MAX_SEGMENT_SIZE];
  
 static void EthMac_Notify (uint32_t event);
  
-#ifdef USB_CMSIS_RTOS2
 static void Connection_Thread (void *arg);
 static void DataIN_Thread     (void *arg);
 static void DataOUT_Thread    (void *arg);
@@ -145,34 +156,29 @@ static const osThreadAttr_t data_out_thread_attr = {
   0U,
   0U
 };
-#else
-static void Connection_Thread (void const *arg);
-static void DataIN_Thread     (void const *arg);
-static void DataOUT_Thread    (void const *arg);
- 
-extern const osThreadDef_t os_thread_def_Connection_Thread;
-osThreadDef(Connection_Thread, osPriorityNormal, 1, NULL);
-extern const osThreadDef_t os_thread_def_DataIN_Thread;
-osThreadDef(DataIN_Thread,     osPriorityNormal, 1, NULL);
-extern const osThreadDef_t os_thread_def_DataOUT_Thread;
-osThreadDef(DataOUT_Thread,    osPriorityNormal, 1, NULL);
-#endif
  
 static void *Connection_ThreadId;
 static void *DataIN_ThreadId;
 static void *DataOUT_ThreadId;
  
  
-// MAC Address conversion from wide string
-// \param[in]   wstr    Pointer to wide string.
+#ifdef MAC_ADDR_RAW
+// MAC Address conversion from ASCII string
+// \param[in]   str     Pointer to ASCII string.
 // \param[out]  addr    Pointer to address.
-static void MAC_wstr_to_addr (const wchar_t *wstr, uint8_t *addr) {
+static void MAC_str_to_addr (const char    *str, uint8_t *addr) {
+#else
+// MAC Address conversion from wide string
+// \param[in]   str     Pointer to wide string.
+// \param[out]  addr    Pointer to address.
+static void MAC_str_to_addr (const wchar_t *str, uint8_t *addr) {
+#endif
   uint8_t  c;
   uint8_t  n;
   uint32_t i;
 
   for (i = 0U; i < 12U; i++) {
-    c = (uint8_t)wstr[i];
+    c = (uint8_t)str[i];
     if        ((c >= '0') && (c <= '9')) {
       n = c - '0';
     } else if ((c >= 'A') && (c <= 'F')) {
@@ -197,7 +203,7 @@ void USBD_CDC%Instance%_NCM_Initialize (void) {
   ARM_ETH_MAC_CAPABILITIES capabilities;
   int32_t                  status;
  
-  MAC_wstr_to_addr(wsMacAddress, (uint8_t *)&MacAddress);
+  MAC_str_to_addr(strMacAddress, (uint8_t *)&MacAddress);
  
   memset(&NCM_State, 0, sizeof(NCM_State));
   NCM_State.ntb_input_size = USBD_CDC%Instance%_NCM_DW_NTB_IN_MAX_SIZE;
@@ -239,15 +245,9 @@ void USBD_CDC%Instance%_NCM_Initialize (void) {
   if (status != ARM_DRIVER_OK) { return; }
  
   // Create Threads
-#ifdef USB_CMSIS_RTOS2
   Connection_ThreadId = osThreadNew(Connection_Thread, NULL, &connection_thread_attr);
   DataIN_ThreadId     = osThreadNew(DataIN_Thread,     NULL, &data_in_thread_attr);
   DataOUT_ThreadId    = osThreadNew(DataOUT_Thread,    NULL, &data_out_thread_attr);
-#else
-  Connection_ThreadId = osThreadCreate(osThread(Connection_Thread), NULL);
-  DataIN_ThreadId     = osThreadCreate(osThread(DataIN_Thread),     NULL);
-  DataOUT_ThreadId    = osThreadCreate(osThread(DataOUT_Thread),    NULL);
-#endif
 }
  
  
@@ -275,13 +275,8 @@ void USBD_CDC%Instance%_NCM_Reset (void) {
 // Called when USB Host changes data interface from alternate 0 to alternate 1 (activates data interface).
 void USBD_CDC%Instance%_NCM_Start (void) {
   // Add code for data interface activation
-#ifdef USB_CMSIS_RTOS2
   (void)osThreadFlagsSet(Connection_ThreadId, 1U);
   (void)osThreadFlagsSet(DataIN_ThreadId,     1U);
-#else
-  (void)osSignalSet(Connection_ThreadId, 1U);
-  (void)osSignalSet(DataIN_ThreadId,     1U);
-#endif
 }
  
  
@@ -291,9 +286,6 @@ void USBD_CDC%Instance%_NCM_Stop (void) {
   // Explained in ncm10.pdf document from www.usb.org in paragraph 7.2
  
   FrameIN_Size = 0U;
-#ifdef USB_CMSIS_RTOS
-  osSignalClear(DataIN_ThreadId, 1U);
-#endif
  
   memset(&NCM_State, 0, sizeof(NCM_State));
   NCM_State.ntb_input_size = USBD_CDC%Instance%_NCM_DW_NTB_IN_MAX_SIZE;
@@ -604,21 +596,13 @@ bool USBD_CDC%Instance%_NCM_SetCrcMode (uint16_t crc_mode) {
 // Called when NTB was successfully sent.
 void USBD_CDC%Instance%_NCM_NTB_IN_Sent (void) {
   // Add code for handling request
-#ifdef USB_CMSIS_RTOS2
   (void)osThreadFlagsSet(DataIN_ThreadId, 1U);
-#else
-  (void)osSignalSet(DataIN_ThreadId, 1U);
-#endif
 }
  
 // Called when NTB was successfully received.
 void USBD_CDC%Instance%_NCM_NTB_OUT_Received (void) {
   // Add code for handling request
-#ifdef USB_CMSIS_RTOS2
   (void)osThreadFlagsSet(DataOUT_ThreadId, 1U);
-#else
-  (void)osSignalSet(DataOUT_ThreadId, 1U);
-#endif
 }
  
 //! [code_USBD_User_CDC_NCM_ETH]
@@ -629,11 +613,7 @@ static void EthMac_Notify (uint32_t event) {
 
   switch (event) {
     case ARM_ETH_MAC_EVENT_RX_FRAME:
-#ifdef USB_CMSIS_RTOS2
       (void)osThreadFlagsSet(DataIN_ThreadId, 2U);
-#else
-      (void)osSignalSet(DataIN_ThreadId, 2U);
-#endif
       break;
     default:
       break;
@@ -642,15 +622,8 @@ static void EthMac_Notify (uint32_t event) {
 
 
 // Thread handling ETH Connection
-#ifdef USB_CMSIS_RTOS2
 __NO_RETURN static void Connection_Thread (void *arg) {
-#else
-__NO_RETURN static void Connection_Thread (void const *arg) {
-#endif
   ARM_ETH_LINK_STATE link_state;
-#ifdef USB_CMSIS_RTOS
-  osEvent            os_event;
-#endif
   uint32_t           event;
   uint32_t           speed;
   uint16_t           state;
@@ -659,16 +632,7 @@ __NO_RETURN static void Connection_Thread (void const *arg) {
   (void)(arg);
 
   for (;;) {
-#ifdef USB_CMSIS_RTOS2
     event = osThreadFlagsWait(1U, osFlagsWaitAll, 500U);
-#else
-    os_event = osSignalWait(1U, 500U);
-    if (os_event.status == osEventSignal) {
-      event = (uint32_t)os_event.value.signals;
-    } else {
-      event = 0x80000000U;
-    }
-#endif
     link_state = EthPhy->GetLinkState();
     if (link_state == ARM_ETH_LINK_UP) {
       LinkInfo = EthPhy->GetLinkInfo();
@@ -725,22 +689,14 @@ __NO_RETURN static void Connection_Thread (void const *arg) {
 }
 
 // Thread handling Data IN (ETH -> USB)
-#ifdef USB_CMSIS_RTOS2
 __NO_RETURN static void DataIN_Thread (void *arg) {
-#else
-__NO_RETURN static void DataIN_Thread (void const *arg) {
-#endif
   uint32_t size;
    int32_t status;
 
   (void)arg;
 
   for (;;) {
-#ifdef USB_CMSIS_RTOS2
     (void)osThreadFlagsWait(3U, osFlagsWaitAll, osWaitForever);
-#else
-    (void)osSignalWait(3U, osWaitForever);
-#endif
     do {
       status = USBD_CDC_NCM_NTB_IN_Initialize(USB_CDC_NUM);
       if (status != (int32_t)usbOK) { continue; }
@@ -777,22 +733,14 @@ __NO_RETURN static void DataIN_Thread (void const *arg) {
 }
 
 // Thread handling Data OUT (USB -> ETH)
-#ifdef USB_CMSIS_RTOS2
 __NO_RETURN static void DataOUT_Thread (void *arg) {
-#else
-__NO_RETURN static void DataOUT_Thread (void const *arg) {
-#endif
   uint32_t size;
   int32_t  len, status;
 
   (void)(arg);
 
   for (;;) {
-#ifdef USB_CMSIS_RTOS2
     (void)osThreadFlagsWait(1U, osFlagsWaitAll, osWaitForever);
-#else
-    (void)osSignalWait(1U, osWaitForever);
-#endif
     for (;;) {
       status = USBD_CDC_NCM_NTB_OUT_ProcessNDP(USB_CDC_NUM);
       if (status != (int32_t)usbOK) { break; }
@@ -817,3 +765,5 @@ __NO_RETURN static void DataOUT_Thread (void const *arg) {
     (void)USBD_CDC_NCM_NTB_OUT_Release(USB_CDC_NUM);
   }
 }
+
+#endif // USB_CMSIS_RTOS2

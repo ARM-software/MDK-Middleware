@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_config_dev_1.c
  * Purpose: USB Device 1 Data and Settings
@@ -66,9 +66,6 @@ const  osThreadAttr_t usbd1_core_thread_attr = {
   0U,
   0U
 };
-#else
-extern const osThreadDef_t os_thread_def_USBD1_Core_Thread;
-osThreadDef(USBD1_Core_Thread, USBD1_CORE_THREAD_PRIORITY, 1U, USBD1_CORE_THREAD_STACK_SIZE);
 #endif
 
 #endif

@@ -22,6 +22,8 @@
       - removed support for CMSIS-RTOS version 1
       - removed support for legacy fdelete function
       - fixed allocation table write access (regression) when using FAT12
+      USB Component Version 8.0.0
+      - removed support for CMSIS-RTOS version 1
     </release>
     <release version="7.17.0" date="2024-01-17">
       Network Component Version 7.19.0
@@ -1516,7 +1518,7 @@
     </bundle>
 
     <!-- USB (MDK) -->
-    <bundle Cbundle="MDK" Cclass="USB" Cversion="6.17.0">
+    <bundle Cbundle="MDK" Cclass="USB" Cversion="8.0.0">
       <description>USB Communication with various device classes</description>
       <doc>Documentation/html/USB/index.html</doc>
       <component Cgroup="CORE" Cvariant="Release" isDefaultVariant="true" condition="CMSIS Core with RTOS">
@@ -1748,7 +1750,7 @@
         <file category="source" name="USB/Driver/EMAC_CDC_ACM_RNDIS.c"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="USART" Csub="PL2303" Capiversion="2.1.0" Cversion="1.10.0" condition="USB Core and Host Instance and Host Driver and Custom Class">
+    <component Cclass="CMSIS Driver" Cgroup="USART" Csub="PL2303" Capiversion="2.1.0" Cversion="1.11.0" condition="USB Core and Host Instance and Host Driver and Custom Class">
       <!-- short component description -->
       <description>Prolific PL2303 USB to serial RS232 adapter (requires USB Host Prolific PL2303 Template)</description>
       <RTE_Components_h>
@@ -1759,7 +1761,7 @@
         <file category="source" name="USB/Driver/USART_PL2303.c"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="USART" Csub="CDC" Capiversion="2.1.0" Cversion="1.10.0" condition="USB Core and Host Instance and Host Driver and CDC">
+    <component Cclass="CMSIS Driver" Cgroup="USART" Csub="CDC" Capiversion="2.1.0" Cversion="1.11.0" condition="USB Core and Host Instance and Host Driver and CDC">
       <!-- short component description -->
       <description>Usb Host CDC ACM Compliant Device</description>
       <RTE_Components_h>
