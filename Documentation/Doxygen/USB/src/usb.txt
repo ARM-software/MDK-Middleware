@@ -54,6 +54,7 @@ The <a class="el" href="https://www.usb.org/developers" target="_blank">USB-IF D
     <tr>
       <td>V8.0.0</td>
       <td>
+        - removed support for legacy Arm Compiler 5
         - removed support for CMSIS-RTOS version 1
       </td>
     </tr>
