@@ -9,6 +9,7 @@
     <release version="8.0.0-dev">
       MDK bundle with source code replaces MDK-Pro and MDK-Plus bundles with pre-built libraries.
       Removed Board Support APIs.
+      Added requirement for C compiler version 11 (C11).
       Network Component Version 8.0.0
       - removed support for legacy Arm Compiler 5
       - removed support for CMSIS-RTOS version 1
@@ -427,6 +428,9 @@
       <package vendor="ARM"  name="CMSIS-Compiler" version="2.0.0-0"/>
       <package vendor="ARM"  name="CMSIS-View"     version="1.0.0-0"/>
     </packages>
+    <languages>
+      <language name="C" version="11"/>
+    </languages>
   </requirements>
 
   <conditions>
