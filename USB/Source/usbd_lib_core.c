@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_core.c
  * Purpose: USB Device - Core module
@@ -10,7 +10,7 @@
 
 #include <string.h>
 
-#include "usb_lib_rte.h"
+#include "usb_lib_debug.h"
 #include "usb_lib_ver.h"
 #include "usbd_lib_config_def.h"
 #include "usbd_lib_drv.h"

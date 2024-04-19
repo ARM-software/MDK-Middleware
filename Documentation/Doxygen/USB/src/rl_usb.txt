@@ -16,7 +16,7 @@
 Refer to \ref USB_Device for more information of the USB Device Component.
 
 \section usbd_dev_threads USB Device Threads and Function Calls
-Each <b>USB Device</b> instance has a separate configuration file <b>USBD_Config_<i>n</i>.c</b>
+Each <b>USB Device</b> instance has a separate configuration file <b>USBD_Config_<i>n</i>.h</b>
 whereby 
 - <b><i>class</i></b> is the short name of the device class (ADC, CDC, HID, MSC).
 - <b><i>n</i></b> refers to the instance number of the USB Device Class. 
@@ -97,7 +97,7 @@ uninitialize the device from the USB bus.
 
 Static and Run-Time Configuration
 ---------------------------------
-The USB Device Core is statically configured using the \ref usbd_coreFunctions_conf "USBD_Config_n.c" file. However,
+The USB Device Core is statically configured using the \ref usbd_coreFunctions_conf "USBD_Config_n.h" file. However,
 for mass-production it is often required to be able to configure some USB Device settings at run-time (for example the serial
 number which needs to be unique for every single device). To achieve this, the following device configuration functions are
 part of the \ref USBD_User_Device_UCT "USBD_User_Device_n.c" user code template. They enable user specific
@@ -184,7 +184,7 @@ Implementation
 
 To \ref Creation_Steps "create a USB Device":
   - Select required USB Device Class during the \ref RTE_Software_Component_Selection.
-  - Set the static USB Device parameters in the configuration file \ref usbd_coreFunctions_conf "USBD_Config_n.c".
+  - Set the static USB Device parameters in the configuration file \ref usbd_coreFunctions_conf "USBD_Config_n.h".
   - Implement the application and run-time specific behavior using \ref USBD_User_Device_UCT "USBD_User_Device_n.c".
 
 \anchor UCT_USBD_User_Device
@@ -193,7 +193,7 @@ To \ref Creation_Steps "create a USB Device":
 -# \ref USBD_User_Device_UCT "USBD_User_Device_n.c" contains all the callback functions that need to be implemented by the
    user.
 -# \ref USBD_User_Device_SerNum_UCT "USBD_User_Device_SerNum_n.c" is a code template that creates a custom serial number for
-   a USB Device. This serial number will override the one that is set in the \ref usbd_coreFunctions_conf "USBD_Config_n.c"
+   a USB Device. This serial number will override the one that is set in the \ref usbd_coreFunctions_conf "USBD_Config_n.h"
    file.
 
 \anchor USBD_User_Device_UCT
@@ -602,7 +602,7 @@ This function can be modified in the user code template file <b> USBD_User_Devic
 \ingroup usbd_coreFunctions
 \brief Configuration of the USB Device Core.
 \details
-The configuration file <b>USBD_Config_<i>n</i>.c</b> contains generic settings for the USB Device and parameters that are
+The configuration file <b>USBD_Config_<i>n</i>.h</b> contains generic settings for the USB Device and parameters that are
 necessary to create \ref USB_Descriptors . Some parts of the USB descriptors are configured in the respective device class
 configuration files (\ref usbd_adcFunctions_conf "USBD_Config_ADC.h", \ref usbd_cdcFunctions_acm_conf "USBD_Config_CDC.h",
 \ref usbd_classFunctions_conf "USBD_Config_CustomClass.h", \ref usbd_hidFunctions_conf "USBD_Config_HID.h" and
@@ -610,7 +610,7 @@ configuration files (\ref usbd_adcFunctions_conf "USBD_Config_ADC.h", \ref usbd_
 
 \image html "usbd_config_0_c.png" "USB Device Core Configuration File"
 
-The configuration file <b>USBD_Config_<i>n</i>.c</b> contains the following settings:
+The configuration file <b>USBD_Config_<i>n</i>.h</b> contains the following settings:
 - <b>Connect to hardware via Driver_USBD# </b> sets the \b CMSIS-Driver \b Number to be used (according to the selected USB
   controller). For single USB Device Controllers it will be '0'.
 - \b High-Speed may be selected if supported by the USB controller.
@@ -1629,11 +1629,11 @@ The USB Device CDC Class configuration file <b>USBD_Config_CDC_n.h</b> contains 
     compile-time error messages.
  - <b>Endpoint Settings</b>
   - <b>Full/Low-speed (High-speed disabled)</b>: These parameters apply when High-speed is disabled in
-    \ref usbd_coreFunctions_conf "USBD_Config_n.c":
+    \ref usbd_coreFunctions_conf "USBD_Config_n.h":
    - <b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange.
    - <b>Endpoint polling Interval (in ms)</b> specifies the frequency of requests initiated by USB Host for getting a
      notification.
-  - <b>High-speed</b>: These parameters apply when High-speed is enabled in \ref usbd_coreFunctions_conf "USBD_Config_n.c":
+  - <b>High-speed</b>: These parameters apply when High-speed is enabled in \ref usbd_coreFunctions_conf "USBD_Config_n.h":
    - <b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange.
    - <b>Endpoint polling Interval (in ms)</b> specifies the frequency of requests initiated by USB Host for getting a
      notification.
@@ -1645,10 +1645,10 @@ The USB Device CDC Class configuration file <b>USBD_Config_CDC_n.h</b> contains 
     compile-time error messages.
  - <b>Endpoint Settings</b>
   - <b>Full/Low-speed (High-speed disabled)</b>: These parameters apply when High-speed is disabled in
-    \ref usbd_coreFunctions_conf "USBD_Config_n.c":
+    \ref usbd_coreFunctions_conf "USBD_Config_n.h":
    - <b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange.
    - <b>Maximum NAK Rate</b> specifies the interval in which Bulk Endpoint can NAK.
-  - <b>High-speed</b>: These parameters apply when High-speed is enabled in \ref usbd_coreFunctions_conf "USBD_Config_n.c":
+  - <b>High-speed</b>: These parameters apply when High-speed is enabled in \ref usbd_coreFunctions_conf "USBD_Config_n.h":
    - <b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange.
    - <b>Maximum NAK Rate</b> specifies the interval in which Bulk Endpoint can NAK.
 - <b>Communication Class Settings</b>
@@ -2664,11 +2664,11 @@ The USB Device CDC Class configuration file <b>USBD_Config_CDC_n.h</b> contains 
     compile-time error messages.
  - <b>Endpoint Settings</b>
   - <b>Full/Low-speed (High-speed disabled)</b>: These parameters apply when High-speed is disabled in
-    \ref usbd_coreFunctions_conf "USBD_Config_n.c":
+    \ref usbd_coreFunctions_conf "USBD_Config_n.h":
    - <b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange.
    - <b>Endpoint polling Interval (in ms)</b> specifies the frequency of requests initiated by USB Host for getting a
      notification.
-  - <b>High-speed</b>: These parameters apply when High-speed is enabled in \ref usbd_coreFunctions_conf "USBD_Config_n.c":
+  - <b>High-speed</b>: These parameters apply when High-speed is enabled in \ref usbd_coreFunctions_conf "USBD_Config_n.h":
    - <b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange.
    - <b>Endpoint polling Interval (in ms)</b> specifies the frequency of requests initiated by USB Host for getting a
      notification.
@@ -2680,10 +2680,10 @@ The USB Device CDC Class configuration file <b>USBD_Config_CDC_n.h</b> contains 
     compile-time error messages.
  - <b>Endpoint Settings</b>
   - <b>Full/Low-speed (High-speed disabled)</b>: These parameters apply when High-speed is disabled in
-    \ref usbd_coreFunctions_conf "USBD_Config_n.c":
+    \ref usbd_coreFunctions_conf "USBD_Config_n.h":
    - <b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange.
    - <b>Maximum NAK Rate</b> specifies the interval in which Bulk Endpoint can NAK.
-  - <b>High-speed</b>: These parameters apply when High-speed is enabled in \ref usbd_coreFunctions_conf "USBD_Config_n.c":
+  - <b>High-speed</b>: These parameters apply when High-speed is enabled in \ref usbd_coreFunctions_conf "USBD_Config_n.h":
    - <b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange.
    - <b>Maximum NAK Rate</b> specifies the interval in which Bulk Endpoint can NAK.
 - <b>Communication Class Settings</b>
@@ -4856,7 +4856,7 @@ int main (void)  {
 \ingroup usbh_coreFunctions
 \brief Configuration of the USB Host Core in µVision.
 \details
-The configuration file <b>USBH_Config_<i>n</i>.c</b> contains generic settings for the USB Host. Support for certain USB
+The configuration file <b>USBH_Config_<i>n</i>.h</b> contains generic settings for the USB Host. Support for certain USB
 Classes is configured in the respective device class configuration files (\ref usbh_cdcacmFunctions_conf "USBH_Config_CDC.h",
 \ref usbh_customFunctions_conf "USBH_Config_CustomClass.h", \ref usbh_hidFunctions_conf "USBH_Config_HID.h" and
 \ref usbh_mscFunctions_conf "USBH_Config_MSC.h").
@@ -4864,7 +4864,7 @@ Classes is configured in the respective device class configuration files (\ref u
 
 \image html "usbh_config_0_c.png" "USB Host Configuration File"
 
-The USB Host configuration file <b>USBH_Config_<i>n</i>.c</b> contains the following settings:
+The USB Host configuration file <b>USBH_Config_<i>n</i>.h</b> contains the following settings:
 - <b>Connect to hardware via Driver_USBH# </b> specifies the hardware driver number to use in case the microcontroller device
   contains more than one USB Host interface. Default value of \a 0 is used for devices with a single interface.
   - <b>Controller Interface</b> selects the USB Host Controller Interface to be used. Refer to the technical reference manual

@@ -2,9 +2,9 @@
  * MDK Middleware - Component ::USB:Device
  * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    USBD_Config_%Instance%.c
+ * Name:    USBD_Config_%Instance%.h
  * Purpose: USB Device Configuration
- * Rev.:    V5.3.1
+ * Rev.:    V8.0.0
  *------------------------------------------------------------------------------
  * Use the following configuration settings in the Device Class configuration
  * files to assign a Device Class to this USB Device %Instance%.
@@ -122,6 +122,3 @@
 
 //   </h>
 // </h>
-
-
-#include "usbd_config.h"

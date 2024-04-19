@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_drv.c
  * Purpose: USB Device - Driver access module
@@ -8,7 +8,7 @@
 
 #include "usbd_lib_drv.h"
 
-#include "usb_lib_rte.h"
+#include "usb_lib_debug.h"
 #include "usbd_lib_config_def.h"
 #include "usbd_evr.h"
 

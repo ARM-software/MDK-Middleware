@@ -1,9 +1,9 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    usbd_config.h
- * Purpose: USB Device (USBD) - Configuration
+ * Name:    usbd_config.c
+ * Purpose: USB Devices (0..3) Configuration
  *----------------------------------------------------------------------------*/
 
 #include <stdint.h>
@@ -11,6 +11,22 @@
 #include <string.h>
 
 #include "RTE_Components.h"
+
+#ifdef    RTE_USB_Device_0
+#include "USBD_Config_0.h"
+#endif
+
+#ifdef    RTE_USB_Device_1
+#include "USBD_Config_1.h"
+#endif
+
+#ifdef    RTE_USB_Device_2
+#include "USBD_Config_2.h"
+#endif
+
+#ifdef    RTE_USB_Device_3
+#include "USBD_Config_3.h"
+#endif
 
 #if      (defined(RTE_USB_Device_CustomClass_0) && !defined(USBD_CUSTOM_CLASS0_DEV))
 #include "USBD_Config_CustomClass_0.h"
@@ -183,20 +199,6 @@
 /*------------------------------------------------------------------------------
  *      USB Device Global Macros
  *----------------------------------------------------------------------------*/
-
-#ifndef __NO_USB_LIB_C
-
-#ifdef  USBD3_PORT
-#define LAST_DEVICE_COMPILE             1
-#elif  (defined(USBD2_PORT) && !defined(RTE_USB_Device_3))
-#define LAST_DEVICE_COMPILE             1
-#elif  (defined(USBD1_PORT) && !defined(RTE_USB_Device_3) && !defined(RTE_USB_Device_2))
-#define LAST_DEVICE_COMPILE             1
-#elif  (defined(USBD0_PORT) && !defined(RTE_USB_Device_3) && !defined(RTE_USB_Device_2) && !defined(RTE_USB_Device_1))
-#define LAST_DEVICE_COMPILE             1
-#endif
-
-#ifdef  LAST_DEVICE_COMPILE
 
 #define USBD_EP_LAST_NUM                USBD0_EP_MAX
 #if    (USBD1_EP_MAX > USBD_EP_LAST_NUM)
@@ -809,8 +811,6 @@ extern usbd_dev_t * const usbd_dev_ptr[USBD_DEV_NUM];
 
 #endif
 
-#endif  /* LAST_DEVICE_COMPILE */
-
 
 /*------------------------------------------------------------------------------
  *      USB Device Custom Class 0..3 Configurations
@@ -838,8 +838,6 @@ extern usbd_dev_t * const usbd_dev_ptr[USBD_DEV_NUM];
 #endif
 
 #define USBD_CUSTOM_CLASS_NUM          (USBD_CUSTOM_CLASS0_NUM + USBD_CUSTOM_CLASS1_NUM + USBD_CUSTOM_CLASS2_NUM + USBD_CUSTOM_CLASS3_NUM)
-
-#ifdef  LAST_DEVICE_COMPILE
 
 #if    (USBD_CUSTOM_CLASS_NUM > 0)
 
@@ -2667,8 +2665,6 @@ extern usbd_cdc_t * const usbd_cdc_ptr[USBD_CDC_NUM];
 
 #endif
 
-#endif  /* LAST_DEVICE_COMPILE */
-
 
 /*------------------------------------------------------------------------------
  *      USB Device HID 0..7 Configurations
@@ -2725,8 +2721,6 @@ extern usbd_cdc_t * const usbd_cdc_ptr[USBD_CDC_NUM];
 #endif
 
 #define USBD_HID_NUM                   (USBD_HID0_NUM + USBD_HID1_NUM + USBD_HID2_NUM + USBD_HID3_NUM + USBD_HID4_NUM + USBD_HID5_NUM + USBD_HID6_NUM + USBD_HID7_NUM)
-
-#ifdef  LAST_DEVICE_COMPILE
 
 #if    (USBD_HID_NUM > 0)
 
@@ -6334,8 +6328,6 @@ void USBD_EndpointStop (uint8_t device, uint8_t ep_addr) {
 }
 #endif
 
-#endif  /* LAST_DEVICE_COMPILE */
-
 
 /*------------------------------------------------------------------------------
  *      USB Device Global Macros for Descriptors
@@ -6393,8 +6385,6 @@ void USBD_EndpointStop (uint8_t device, uint8_t ep_addr) {
 #endif
 #endif
 
-#ifdef  LAST_DEVICE_COMPILE
-
 extern  usbd_cc_desc_t usbd_cc0_desc;
 extern  usbd_cc_desc_t usbd_cc1_desc;
 extern  usbd_cc_desc_t usbd_cc2_desc;
@@ -6416,8 +6406,6 @@ usbd_cc_desc_t * const usbd_cc_desc_ptr[USBD_CUSTOM_CLASS_NUM] = {
      , &usbd_cc3_desc
 #endif
 };
-
-#endif  /* LAST_DEVICE_COMPILE */
 
 #endif
 
@@ -6500,8 +6488,6 @@ usbd_cc_desc_t * const usbd_cc_desc_ptr[USBD_CUSTOM_CLASS_NUM] = {
 #endif
 #endif
 
-#ifdef  LAST_DEVICE_COMPILE
-
 extern  usbd_hid_desc_t usbd_hid0_desc;
 extern  usbd_hid_desc_t usbd_hid1_desc;
 extern  usbd_hid_desc_t usbd_hid2_desc;
@@ -6539,8 +6525,6 @@ usbd_hid_desc_t * const usbd_hid_desc_ptr[USBD_HID_NUM] = {
      , &usbd_hid7_desc
 #endif
 };
-
-#endif  /* LAST_DEVICE_COMPILE */
 
 #endif
 
@@ -6585,8 +6569,6 @@ usbd_hid_desc_t * const usbd_hid_desc_ptr[USBD_HID_NUM] = {
  *      USB Device 0..3 Pointers to Descriptors
  *----------------------------------------------------------------------------*/
 
-#ifdef  LAST_DEVICE_COMPILE
-
 #if    (USBD_DEV_NUM > 0)
 
 extern usbd_desc_t usbd0_desc;
@@ -6612,7 +6594,3 @@ usbd_desc_t *usbd_desc_ptr [USBD_DEV_NUM]  = {
 };
 
 #endif
-
-#endif  /* LAST_DEVICE_COMPILE */
-
-#endif  /* __NO_USB_LIB_C */

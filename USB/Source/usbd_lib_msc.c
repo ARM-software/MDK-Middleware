@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2021 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_msc.c
  * Purpose: USB Device - Mass Storage device Class (MSC) module
@@ -11,7 +11,7 @@
 #include <string.h>
 
 #include "rl_usbd_lib.h"
-#include "usb_lib_rte.h"
+#include "usb_lib_debug.h"
 #include "usbd_lib_config_def.h"
 #include "usbd_lib_drv.h"
 #include "usbd_evr.h"

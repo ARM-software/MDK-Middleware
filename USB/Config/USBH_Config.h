@@ -2,9 +2,9 @@
  * MDK Middleware - Component ::USB:Host
  * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    USBH_Config_%Instance%.c
+ * Name:    USBH_Config_%Instance%.h
  * Purpose: USB Host Configuration
- * Rev.:    V5.3.1
+ * Rev.:    V8.0.0
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -119,6 +119,3 @@
 
 //   </h>
 // </h>
-
-
-#include "usbh_config.h"

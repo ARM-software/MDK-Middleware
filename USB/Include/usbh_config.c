@@ -1,9 +1,9 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    usbh_config.h
- * Purpose: USB Host (USBH) - Configuration
+ * Name:    usbh_config.c
+ * Purpose: USB Host (0..3) Configuration
  *----------------------------------------------------------------------------*/
 
 #include <stdint.h>
@@ -11,6 +11,22 @@
 #include <string.h>
 
 #include "RTE_Components.h"
+
+#ifdef    RTE_USB_Host_0
+#include "USBH_Config_0.h"
+#endif
+
+#ifdef    RTE_USB_Host_1
+#include "USBH_Config_1.h"
+#endif
+
+#ifdef    RTE_USB_Host_2
+#include "USBH_Config_2.h"
+#endif
+
+#ifdef    RTE_USB_Host_3
+#include "USBH_Config_3.h"
+#endif
 
 #if      (defined(RTE_USB_Host_MSC) && !defined(USBH_MSC_NUM))
 #include "USBH_Config_MSC.h"
@@ -101,19 +117,6 @@
 /*------------------------------------------------------------------------------
  *      USB Host Global Macros
  *----------------------------------------------------------------------------*/
-
-#ifdef  USBH3_HC_NUM
-#define LAST_DEVICE_COMPILE             1
-#elif  (defined(USBH2_HC_NUM) && !defined(RTE_USB_Host_3))
-#define LAST_DEVICE_COMPILE             1
-#elif  (defined(USBH1_HC_NUM) && !defined(RTE_USB_Host_3) && !defined(RTE_USB_Host_2))
-#define LAST_DEVICE_COMPILE             1
-#elif  (defined(USBH0_HC_NUM) && !defined(RTE_USB_Host_3) && !defined(RTE_USB_Host_2) && !defined(RTE_USB_Host_1))
-#define LAST_DEVICE_COMPILE             1
-#endif
-
-#ifdef  LAST_DEVICE_COMPILE
-
 
 #ifndef USBH_MSC_NUM
 #define USBH_MSC_NUM                    0
@@ -592,5 +595,4 @@ uint8_t   USBH_CustomClass_Configure    (uint8_t device, const USB_DEVICE_DESCRI
 usbStatus USBH_CustomClass_Unconfigure  (uint8_t instance) { (void)instance; return usbDeviceError; }
 usbStatus USBH_CustomClass_Initialize   (uint8_t instance) { (void)instance; return usbDeviceError; }
 usbStatus USBH_CustomClass_Uninitialize (uint8_t instance) { (void)instance; return usbDeviceError; }
-#endif
 #endif

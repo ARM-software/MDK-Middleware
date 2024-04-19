@@ -33,8 +33,8 @@ usb_adc.h       | internal                            | USB definitions for ADC 
 usb_cdc.h       | internal                            | USB definitions for CDC device class 
 usb_hid.h       | internal                            | USB definitions for HID device class 
 usb_msc.h       | internal                            | USB definitions for MSC device class 
-usbd_config.h   | USBD_Config_<i>n</i>.c              | Resource definitions for the USB Device component
-usbh_config.h   | USBH_Config_<i>n</i>.c              | Resource definitions for the USB Host component
+usbd_config.h   | internal                            | Resource definitions for the USB Device component
+usbh_config.h   | internal                            | Resource definitions for the USB Host component
 
 
 <b>Library Files</b>

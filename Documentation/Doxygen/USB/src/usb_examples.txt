@@ -228,7 +228,7 @@ Driver setup information file should be adapted in the following way:
       MI_02 entry describes second CDC instance)
  - <b>[Strings]</b> section should be changed as desired
 
-\note Vendor ID and Product ID are configured in the USBD_Config_n.c configuration file of the embedded application.
+\note Vendor ID and Product ID are configured in the USBD_Config_n.h configuration file of the embedded application.
 \note For producing digitally signed driver catalog file please refer to Microsoft Windows documentation.
 
 
@@ -444,7 +444,7 @@ Driver setup information file should be adapted in the following way:
    where two digit number after MI_ describes the starting interface of a custom class instance
  - <b>[Strings]</b> section should be changed as desired
 
-\note Vendor ID and Product ID are configured in the USBD_Config_n.c configuration file of the embedded application.
+\note Vendor ID and Product ID are configured in the USBD_Config_n.h configuration file of the embedded application.
 \note For producing digitally signed driver catalog file please refer to Microsoft Windows documentation.
 */
 
@@ -523,7 +523,7 @@ The setup of the Evaluation Board hardware is described in the \b Abstract.txt f
 
 \note 
 If devices do not install correctly then probably device is using same Vendor ID and Product ID as some device 
-that was previously already installed. There are two possible solutions: either change Product ID in USBD_Config_0.c file 
+that was previously already installed. There are two possible solutions: either change Product ID in USBD_Config_0.h file 
 or uninstall previously installed device that uses same Vendor ID and Product ID.
 
 PC Software
@@ -960,7 +960,7 @@ Before building the project, you need to edit these configuration files (in Conf
   - enable <b>USB OTG Full-speed</b> and under it:
     - enable <b>Device [Driver_USBD0]</b>
 
-- Under <b>USB</b>, double-click <b>USBD_Config_0.c</b> and under <b>USB Device 0:Device Settings</b> change:
+- Under <b>USB</b>, double-click <b>USBD_Config_0.h</b> and under <b>USB Device 0:Device Settings</b> change:
   - set <b>Product ID</b> to \b 0x3502
 
 - Under <b>USB</b>, double-click <b>USBD_Config_HID_0.h</b> and under <b>USB Device: Human Interface Device class (HID) 0:Human Interface Device Class Settings</b> change:
@@ -1391,7 +1391,7 @@ Before building the project, you need to edit these configuration files (in Conf
   - enable <b>USB OTG High-speed</b> and under it:
     - enable <b>Device [Driver_USBD1]</b>
 
-- Under <b>USB</b>, double-click <b>USBD_Config_0.c</b> and under <b>USB Device 0</b> change:
+- Under <b>USB</b>, double-click <b>USBD_Config_0.h</b> and under <b>USB Device 0</b> change:
   - set <b>Connect to hardware via Driver_USBD#</b> to \b 1
   - enable <b>High-speed</b>
   - under <b>Device Settings</b> change:
@@ -1530,7 +1530,7 @@ Driver setup information file should be adapted in the following way:
       MI_02 entry describes second RNDIS CDC instance)
  - <b>[Strings]</b> section should be changed as desired
 
-\note Vendor ID and Product ID are configured in the USBD_Config_n.c configuration file of the embedded application.
+\note Vendor ID and Product ID are configured in the USBD_Config_n.h configuration file of the embedded application.
 \note For producing digitally signed driver catalog file please refer to Microsoft Windows documentation.
 */
 
@@ -1560,7 +1560,7 @@ Create the "USB Web Server" project
   - Enable CMSIS Driver:Ethernet (API):RNDIS
   - Enable an appropriate CMSIS Driver:USB Device (API)
   - Set USB:Device = 1
-  - Enable USB:CORE (in the Release variant)
+  - Enable USB:CORE
   - Set USB:Device:CDC = 1
 - Enable the selected USB port in RTE_Device.h or using external tools (for example STM32CubeMX for STMicroelectronics
    devices)
@@ -1569,7 +1569,7 @@ Create the "USB Web Server" project
 - Add a user code template to your sources (right-click on Source group in Project window -> Add New Item to Group 'Source'
    -> User Code Template -> USB:USB Device:CDC: USB Device CDC ACM RNDIS Virtual Ethernet -> Add)
 - Disable DHCP in network settings (open Network:Net_Config_ETH_0.h and disable Dynamic Host Configuration) 
-- Open USB:USBD_Config_0.c and check/change settings:
+- Open USB:USBD_Config_0.h and check/change settings:
   - Set the correct hardware driver interface number
   - Enable high-speed operation (if available)
   - Device Settings:
@@ -1629,7 +1629,7 @@ Hardware Setup
 - After the device is recognized on the Windows PC:
  - If the high-speed port is used, the driver should install on Windows 7 and later automatically 
  - If not, please use the provided .inf file from the USB RNDIS example (for example for MCB4300 evaluation board), 
-   but change .inf file Product ID according to one set in USBD_Config_0.c file
+   but change .inf file Product ID according to one set in USBD_Config_0.h file
  - Set your computer's IP address to 192.168.0.101 to match the settings of the embedded device:
    - Go to Control Panel -> Network and Sharing Center -> Change Adapter Settings 
    - Right-click on Local Area Connection n (Remote NDIS56 based Device):
@@ -2220,7 +2220,7 @@ Before building the project, you need to edit these configuration files (in Conf
     - enable <b>Host [Driver_USBH0]</b>
     - disable <b>Host [Driver_USBH0]:Overcurrent Detection Pin</b>
 
-- Double-click <b>USB:USBH_Config_0.c</b> and under <b>USB Host 0:Controller Interface Settings</b> change:
+- Double-click <b>USB:USBH_Config_0.h</b> and under <b>USB Host 0:Controller Interface Settings</b> change:
   - set <b>Controller Interface</b> to \b Custom and under <b>Custom Host Controller Interface</b> change:
     - set <b>Maximum Pipes in system</b> to \b 4
 
@@ -2697,7 +2697,7 @@ Before building the project, you need to edit these configuration files (in Conf
     - enable <b>Host [Driver_USBH0]</b>
     - disable <b>Host [Driver_USBH0]:Overcurrent Detection Pin</b>
 
-- Double-click <b>USB:USBH_Config_0.c</b> and under <b>USB Host 0:Controller Interface Settings</b> change:
+- Double-click <b>USB:USBH_Config_0.h</b> and under <b>USB Host 0:Controller Interface Settings</b> change:
   - set <b>Controller Interface</b> to \b Custom and under <b>Custom Host Controller Interface</b> change:
     - set <b>Maximum Pipes in system</b> to \b 4
 

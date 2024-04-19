@@ -25,6 +25,8 @@
       - removed support for legacy fdelete function
       - fixed allocation table write access (regression) when using FAT12
       USB Component Version 8.0.0
+      - removed CORE component variants
+      - changed source config files to headers
       - removed support for legacy Arm Compiler 5
       - removed support for CMSIS-RTOS version 1
     </release>
@@ -1527,32 +1529,18 @@
     <bundle Cbundle="MDK" Cclass="USB" Cversion="8.0.0">
       <description>USB Communication with various device classes</description>
       <doc>Documentation/html/USB/index.html</doc>
-      <component Cgroup="CORE" Cvariant="Release" isDefaultVariant="true" condition="CMSIS Core with RTOS">
-        <description>USB Core for Cortex-M (Release)</description>
+      <component Cgroup="CORE" condition="CMSIS Core with RTOS and Event Recorder">
+        <description>USB Core for Cortex-M</description>
         <RTE_Components_h>
           <!-- the following content goes into file 'RTE_Components.h' -->
           #define RTE_USB_Core                    /* USB Core */
-          #define RTE_USB_Core_Release            /* USB Core Release Version */
         </RTE_Components_h>
         <files>
           <file category="other"   name="USB/USB.scvd"/>
           <file category="header"  name="USB/Include/rl_usb.h"/>
-          <!-- Library source files -->
-          <file category="include" name="USB/Source/Include/"/>
-          <file category="source"  name="USB/Source/usb_lib_ver.c"/>
-        </files>
-      </component>
-      <component Cgroup="CORE" Cvariant="Debug" condition="CMSIS Core with RTOS and Event Recorder">
-        <description>USB Core for Cortex-M (Debug)</description>
-        <RTE_Components_h>
-          <!-- the following content goes into file 'RTE_Components.h' -->
-          #define RTE_USB_Core                    /* USB Core */
-          #define RTE_USB_Core_Debug              /* USB Core Debug Version */
-        </RTE_Components_h>
-        <files>
-          <file category="other"   name="USB/USB.scvd"/>
-          <file category="header"  name="USB/Include/rl_usb.h"/>
-          <file category="source"  name="USB/Config/USB_Debug.c" attr="config" version="1.0.0"/>
+          <file category="header"  name="USB/Config/USB_Debug.h" attr="config" version="8.0.0"/>
+          <!-- Source files -->
+          <file category="source"  name="USB/Include/usb_debug.c"/>
           <!-- Library source files -->
           <file category="include" name="USB/Source/Include/"/>
           <file category="source"  name="USB/Source/usb_lib_ver.c"/>
@@ -1566,7 +1554,9 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/USB_Host.html"/>
-          <file category="source" name="USB/Config/USBH_Config.c" attr="config" version="5.3.1"/>
+          <file category="header" name="USB/Config/USBH_Config.h" attr="config" version="8.0.0"/>
+          <!-- Source files -->
+          <file category="source" name="USB/Include/usbh_config.c"/>
           <!-- Library source files -->
           <file category="source" name="USB/Source/usbh_lib_core.c"/>
           <file category="source" name="USB/Source/usbh_lib_mem.c"/>
@@ -1638,9 +1628,11 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/USB_Device.html"/>
-          <file category="source" name="USB/Config/USBD_Config.c"               attr="config"   version="5.3.1"/>
+          <file category="header" name="USB/Config/USBD_Config.h"               attr="config"   version="8.0.0"/>
           <file category="source" name="USB/Template/USBD_User_Device.c"        attr="template" select="USB Device"/>
           <file category="source" name="USB/Template/USBD_User_Device_SerNum.c" attr="template" select="USB Device Serial Number"/>
+          <!-- Source files -->
+          <file category="source" name="USB/Include/usbd_config.c"/>
           <!-- Library source files -->
           <file category="source" name="USB/Source/usbd_lib_core.c"/>
           <file category="source" name="USB/Source/usbd_lib_drv.c"/>
