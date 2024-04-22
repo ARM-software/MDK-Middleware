@@ -6,10 +6,7 @@
  * Purpose: USB Device $x Data and Settings
  *----------------------------------------------------------------------------*/
 
-#ifndef __NO_USB_LIB_C
-
 #include "usb_os.h"
-
 
 extern  ARM_DRIVER_USBD  USBDn_DRIVER(USBD$x_PORT);
 
@@ -66,6 +63,4 @@ const  osThreadAttr_t usbd$x_core_thread_attr = {
   0U,
   0U
 };
-#endif
-
 #endif

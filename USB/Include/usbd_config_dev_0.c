@@ -6,10 +6,7 @@
  * Purpose: USB Device 0 Data and Settings
  *----------------------------------------------------------------------------*/
 
-#ifndef __NO_USB_LIB_C
-
 #include "usb_os.h"
-
 
 extern  ARM_DRIVER_USBD  USBDn_DRIVER(USBD0_PORT);
 
@@ -66,6 +63,4 @@ const  osThreadAttr_t usbd0_core_thread_attr = {
   0U,
   0U
 };
-#endif
-
 #endif
