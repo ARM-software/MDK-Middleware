@@ -27,8 +27,7 @@ project:
     - component: Keil::CMSIS-Compiler:File Interface:MDK-MW File System
     - component: Keil::File System&MDK:CORE&LFN
     - component: Keil::File System&MDK:Drive:USB
-    - component: Keil::USB&MDK:CORE&Release
-    # - component: Keil::USB&MDK:CORE&Debug
+    - component: Keil::USB&MDK:CORE
     - component: Keil::USB&MDK:Host
     - component: Keil::USB&MDK:Host:MSC
 

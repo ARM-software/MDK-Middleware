@@ -2,9 +2,9 @@
  * MDK Middleware - Component ::USB:Host
  * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    USBH_Config_0.c
+ * Name:    USBH_Config_0.h
  * Purpose: USB Host Configuration
- * Rev.:    V5.3.1
+ * Rev.:    V8.0.0
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -12,7 +12,7 @@
 // <h>USB Host 0
 //   <o>Connect to hardware via Driver_USBH# <0-255>
 //   <i>Select driver control block for hardware interface.
-#define USBH0_HC_NUM                    0
+#define USBH0_HC_NUM                    2
 
 //   <h>Controller Interface Settings
 
@@ -21,7 +21,7 @@
 //       <0=> Custom <1=> OHCI <2=> EHCI
 //       <i>Custom Controller Interface is used for any non-standard USB Host
 //       <i>Controller.
-#define USBH0_HC_IF                     0
+#define USBH0_HC_IF                     2
 
 //     <h>Custom Host Controller Interface
 //       <o>Maximum Port Power Consumption<2-500:2>
@@ -81,7 +81,7 @@
 //     <h>Enhanced Host Controller Interface (EHCI)
 //       <o>Memory-mapped EHCI Host Controller registers base address
 //         <i>These settings apply for EHCI Controller Interface.
-#define USBH0_HC_EHCI_BASE_ADDRESS      0x40006100
+#define USBH0_HC_EHCI_BASE_ADDRESS      0x402E0300
 
 //       <o>Maximum Port Power Consumption<2-500:2>
 //         <i>Specifies the maximum power consumption per port (in mA)
@@ -119,6 +119,3 @@
 
 //   </h>
 // </h>
-
-
-#include "usbh_config.h"

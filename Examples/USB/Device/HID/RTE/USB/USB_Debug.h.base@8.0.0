@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    USB_Debug.c
+ * Name:    USB_Debug.h
  * Purpose: USB Host/Device Debug Configuration
- * Rev.:    V1.0.0
+ * Rev.:    V8.0.0
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -70,20 +70,3 @@
 //   <i>Configure USB Device Mass Storage Class event recording
 #define USBD_DEBUG_EVR_MSC              1
 // </e>
-
-//------------- <<< end of configuration section >>> ---------------------------
-
-
-#include "RTE_Components.h"
-
-#ifdef    RTE_USB_Core_Debug
-
-#ifdef    RTE_USB_Device_0
-#include "usbd_debug.h"
-#endif
-
-#ifdef    RTE_USB_Host_0
-#include "usbh_debug.h"
-#endif
-
-#endif // RTE_USB_Core_Debug
