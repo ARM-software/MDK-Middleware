@@ -35,7 +35,7 @@ static uint8_t get_resp (const char *buf);
 static void unix_path (char *path, int32_t len);
 static int32_t no_path (char *name, int32_t len);
 static bool is_not_found (const char *buf, int32_t len);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static const char *cmd_ascii (netFTP_Command cmd);
  static const char *evt_ascii (netFTPc_Event cb_evt);
 #endif
@@ -495,7 +495,7 @@ noaccess:   if (is_not_found ((const char *)buf, (int32_t)len)) {
           /* Stop the client */
           return (true);
       }
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
       if (ftpc_s->Resp == FTPC_RESP_CMDERR) {
         ERRORF (FTPC,"Command error response\n");
         EvrNetFTPc_CommandErrorResponse ();
@@ -909,7 +909,7 @@ get_mask: cblen = netFTPc_Process (netFTPc_RequestListMask, (char *)sendbuf+len,
       len     = net_strcpy ((char *)sendbuf, "QUIT");
 cr_send:
       len    += net_strcpy ((char *)sendbuf+len, "\r\n");
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
       DEBUGF (FTPC,"Sending: %s",sendbuf);
       EvrNetFTPc_SendCommand (sendbuf, (uint32_t)len-2);
 #endif
@@ -1174,7 +1174,7 @@ static bool is_not_found (const char *buf, int32_t len) {
   return (false);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Convert FTP command to ascii.
   \param[in]   cmd  FTP command id.

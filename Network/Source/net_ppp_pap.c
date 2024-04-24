@@ -32,7 +32,7 @@ static void pap_run (NET_PPP_CFG *h);
 static bool str_compare (const char *user_s, const char *prot_s);
 static void pap_auth_rq (NET_PPP_CFG *h);
 static void pap_send (NET_PPP_CFG *h, NET_FRAME *frame);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (const NET_FRAME *frm);
 #endif
 
@@ -227,7 +227,7 @@ static void pap_run (NET_PPP_CFG *h) {
   }
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print PAP header information.
   \param[in]   frm  network frame.

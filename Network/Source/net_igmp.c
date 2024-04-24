@@ -36,7 +36,7 @@ static void igmp_send_leave (NET_IGMP_CFG *h, const uint8_t *ip_addr);
 static NET_IGMP_INFO *igmp_map_group (NET_IGMP_CFG *h, const uint8_t *ip_addr);
 static NET_IGMP_INFO *igmp_alloc_group (NET_IGMP_CFG *h, const uint8_t *ip_addr);
 static bool igmp_is_group_valid (const uint8_t *ip4_addr);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_inf2 (const char *msg, const uint8_t *ip_addr);
 #endif
 
@@ -563,7 +563,7 @@ static bool igmp_is_group_valid (const uint8_t *ip4_addr) {
   return (true);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print IGMP address information.
   \param[in]   msg      Info message to print.

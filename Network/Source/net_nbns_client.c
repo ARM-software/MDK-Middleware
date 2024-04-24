@@ -38,7 +38,7 @@ static uint32_t base16_decode (char *dp, const char *b16);
 void net_nbns_client_init (void) {
   int32_t sock;
 
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
   NET_IF_CFG *const *p;
 
   for (p = &net_if_list_lan[0]; *p; p++) {
@@ -71,7 +71,7 @@ void net_nbns_client_init (void) {
   \brief       De-initialize NBNS client.
 */
 void net_nbns_client_uninit (void) {
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
   NET_IF_CFG *const *p;
 
   for (p = &net_if_list_lan[0]; *p; p++) {

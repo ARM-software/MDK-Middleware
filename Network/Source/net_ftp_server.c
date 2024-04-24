@@ -53,7 +53,7 @@ void net_ftp_server_init (void) {
 
   DEBUGF (FTP,"Init %d Sessions, Port %d\n",ftpc->NumSess, ftpc->PortNum);
   EvrNetFTPs_InitServer (ftpc->NumSess, ftpc->PortNum, ftpc->IdleTout);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
   if (ftpc->IdleTout) {
     DEBUGF (FTP," Idle timeout %d secs\n",ftpc->IdleTout);
   }
@@ -61,7 +61,7 @@ void net_ftp_server_init (void) {
     DEBUGF (FTP," Connection permanent\n");
   }
 #endif
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
   if (ftpc->Root) {
     DEBUGF (FTP," Root folder \"%s\"\n",ftpc->Root);
     EvrNetFTPs_ShowRootFolder (ftpc->Root, strlen(ftpc->Root));
@@ -739,7 +739,7 @@ list:       /* Check access rights for external user accounts */
               (cmd.sel == FTP_CMD_APPE)) {
             /* Store or Append a file (with create) */
             name = get_fname (__CONST_CAST(char *)&buf[5]);
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
             if (cmd.sel == FTP_CMD_STOR) {
               DEBUGF (FTP, " Write file \"%s\"\n", name);
               EvrNetFTPs_WriteFile (name, strlen(name));

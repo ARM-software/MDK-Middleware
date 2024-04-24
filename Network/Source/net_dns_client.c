@@ -38,7 +38,7 @@ static void dns_client_stop (netDNSc_Event event, const __ADDR *addr);
 static bool dns_get_server (void);
 static int32_t chk_label (const char *label);
 static uint16_t get_tout (uint32_t sec_tout);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static const char *type_ascii (uint16_t rr_type);
  static void debug_info (const NET_DNS_HEADER *dns_hdr);
  static void debug_inf2 (const char *msg, const __ADDR *addr);
@@ -903,7 +903,7 @@ static uint16_t get_tout (uint32_t sec_tout) {
   return (tout & 0xFFFF);
 }
  
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Convert Resource Record type to ascii.
   \param[in]   rr_type  Resource Record type.

@@ -29,7 +29,7 @@ NET_ICMP_CTRL net_slip0_icmp_control;
 #define ctrl       (h->Ctrl)
 
 /* Local Functions */
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (const NET_FRAME *frm);
 #endif
 
@@ -213,7 +213,7 @@ bool net_icmp_send_echo (NET_IF_CFG *net_if) {
   return (retv);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print ICMP frame information.
   \param[in]   frm  network frame.

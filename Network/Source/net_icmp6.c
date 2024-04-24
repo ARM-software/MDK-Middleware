@@ -6,8 +6,10 @@
  * Purpose: Internet Control Message Protocol Version 6
  *----------------------------------------------------------------------------*/
 
-#include <string.h>
 #include "rl_net_lib.h"
+
+#ifdef Network_IPv6
+#include <string.h>
 #include "net_sys.h"
 #include "net_common.h"
 #include "net_mem.h"
@@ -30,7 +32,7 @@ NET_ICMP6_CTRL net_wifi1_icmp6_control;
 #define ctrl       (h->Ctrl)
 
 /* Local Functions */
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_inf2 (const NET_ICMP_HEADER *icmp_hdr, int32_t len);
 #endif
 
@@ -313,7 +315,7 @@ bool net_icmp6_send_echo (NET_IF_CFG *net_if) {
   return (retv);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print ICMP6 frame information.
   \param[in]   icmp_hdr  ICMP frame header.
@@ -370,3 +372,4 @@ d:DEBUGF (ICMP6," Code=%d, Cks=0x%04X\n",icmp_hdr->Code,ntohs(icmp_hdr->Chksum))
   }
 }
 #endif
+#endif /* Network_IPv6 */

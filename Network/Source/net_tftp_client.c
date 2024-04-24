@@ -30,7 +30,7 @@ static void tftpc_set_retransmit (uint8_t *buf, uint32_t len);
 static void tftpc_stop (netTFTPc_Event evt);
 static bool tftpc_proc_opt (const uint8_t *buf, uint32_t len);
 static const uint8_t *get_next_opt (const uint8_t *buf, const uint8_t *end);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (const __ADDR *addr);
 #endif
 
@@ -635,7 +635,7 @@ static const uint8_t *get_next_opt (const uint8_t *buf, const uint8_t *end) {
   return (bp);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print IP address and port.
   \param[in]   addr  structure containing IP address and port.

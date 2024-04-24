@@ -12,6 +12,8 @@
       Added Middleware examples.
       Added requirement for C compiler version 11 (C11).
       Network Component Version 8.0.0
+      - removed CORE component variants
+      - changed source config files to headers
       - removed support for legacy Arm Compiler 5
       - removed support for CMSIS-RTOS version 1
       - removed legacy API interface version 6
@@ -450,18 +452,6 @@
       <require condition="CMSIS Core"/>
       <require condition="CMSIS RTOS"/>
     </condition>
-    <condition id="CMSIS Core with RTOS and Event Recorder">
-      <description>CMSIS Core with RTOS for Cortex-M and Event Recorder</description>
-      <require condition="CMSIS Core"/>
-      <require condition="CMSIS RTOS"/>
-      <require Cclass="CMSIS-View" Cgroup="Event Recorder"/>
-    </condition>
-    <condition id="CMSIS Core with RTOS and STDOUT">
-      <description>CMSIS Core with RTOS for Cortex-M and STDOUT</description>
-      <require condition="CMSIS Core"/>
-      <require condition="CMSIS RTOS"/>
-      <require Cclass="CMSIS-Compiler" Cgroup="STDOUT"/>
-    </condition>
     <condition id="CMSIS Core with RTOS and File System I/O">
       <description>CMSIS Core with RTOS for Cortex-M and File System I/O</description>
       <require condition="CMSIS Core"/>
@@ -626,15 +616,6 @@
       <require Cclass="CMSIS Driver" Cgroup="USART" Capiversion="2.1.0"/>
       <deny Cclass="Network" Cgroup="Interface" Csub="PPP"/>
     </condition>
-    <condition id="Network IPv6">
-      <description>Network Core with IPv6</description>
-      <accept Cclass="Network" Cgroup="CORE" Cvariant="IPv4/IPv6*"/>
-    </condition>
-    <condition id="Network UDP/IPv6">
-      <description>Network UDP and IPv6</description>
-      <require condition="Network UDP"/>
-      <require condition="Network IPv6"/>
-    </condition>
     <condition id="Network DNS">
       <description>DNS Client resolver</description>
       <require Cclass="Network" Cgroup="Service" Csub="DNS Client"/>
@@ -712,20 +693,17 @@
     <bundle Cbundle="MDK" Cclass="Network" Cversion="8.0.0">
       <description>IPv4/IPv6 Networking using Ethernet or Serial protocols</description>
       <doc>Documentation/html/Network/index.html</doc>
-      <component Cgroup="CORE" Cvariant="IPv4/IPv6 Release" isDefaultVariant="true" condition="CMSIS Core with RTOS">
-        <description>IPv4/IPv6 Networking Core for Cortex-M (Release)</description>
+      <component Cgroup="CORE" condition="CMSIS Core with RTOS">
+        <description>IPv4/IPv6 Networking Core for Cortex-M</description>
         <RTE_Components_h>
           <!-- the following content goes into file 'RTE_Components.h' -->
           #define RTE_Network_Core                /* Network Core */
-          #define RTE_Network_IPv4                /* Network IPv4 Stack */
-          #define RTE_Network_IPv6                /* Network IPv6 Stack */
-          #define RTE_Network_Release             /* Network Release Version */
-          #define RTE_Network_Source              /* Network Source Variant */
         </RTE_Components_h>
         <files>
           <file category="other"   name="Network/Network.scvd"/>
           <file category="header"  name="Network/Include/rl_net.h"/>
-          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.1"/>
+          <file category="header"  name="Network/Config/Net_Config.h" attr="config" version="8.0.0"/>
+          <file category="header"  name="Network/Config/Net_Debug.h"  attr="config" version="8.0.0"/>
           <file category="include" name="Network/Source/Include/"/>
           <!-- Core -->
           <file category="source"  name="Network/Source/net_ip4.c"/>
@@ -737,173 +715,8 @@
           <file category="source"  name="Network/Source/net_ping.c"   condition="Network DNS"/>
           <file category="source"  name="Network/Source/net_ping_core.c"/>
           <file category="source"  name="Network/Source/net_loopback.c"/>
-          <!-- System -->
-          <file category="source"  name="Network/Source/net_sys.c"/>
-          <file category="source"  name="Network/Source/net_mem.c"/>
-          <file category="source"  name="Network/Source/net_common.c"/>
-          <file category="source"  name="Network/Source/net_addr.c"/>
-          <file category="source"  name="Network/Source/net_md5.c"/>
-          <file category="source"  name="Network/Source/net_base64.c"/>
-          <file category="source"  name="Network/Source/net_version.c"/>
-        </files>
-      </component>
-      <component Cgroup="CORE" Cvariant="IPv4/IPv6 Debug" condition="CMSIS Core with RTOS and Event Recorder">
-        <description>IPv4/IPv6 Networking Core for Cortex-M (Debug)</description>
-        <RTE_Components_h>
-          <!-- the following content goes into file 'RTE_Components.h' -->
-          #define RTE_Network_Core                /* Network Core */
-          #define RTE_Network_IPv4                /* Network IPv4 Stack */
-          #define RTE_Network_IPv6                /* Network IPv6 Stack */
-          #define RTE_Network_Debug               /* Network Debug Version */
-          #define RTE_Network_Source              /* Network Source Variant */
-        </RTE_Components_h>
-        <files>
-          <file category="other"   name="Network/Network.scvd"/>
-          <file category="header"  name="Network/Include/rl_net.h"/>
-          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.1"/>
-          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.2.0"/>
-          <file category="include" name="Network/Source/Include/"/>
-          <!-- Core -->
-          <file category="source"  name="Network/Source/net_ip4.c"/>
-          <file category="source"  name="Network/Source/net_ip4_frag.c"/>
-          <file category="source"  name="Network/Source/net_icmp.c"/>
-          <file category="source"  name="Network/Source/net_ip6.c"/>
-          <file category="source"  name="Network/Source/net_ip6_frag.c"/>
-          <file category="source"  name="Network/Source/net_icmp6.c"/>
-          <file category="source"  name="Network/Source/net_ping.c"   condition="Network DNS"/>
-          <file category="source"  name="Network/Source/net_ping_core.c"/>
-          <file category="source"  name="Network/Source/net_loopback.c"/>
-          <!-- System -->
-          <file category="source"  name="Network/Source/net_sys.c"/>
-          <file category="source"  name="Network/Source/net_mem.c"/>
-          <file category="source"  name="Network/Source/net_common.c"/>
-          <file category="source"  name="Network/Source/net_addr.c"/>
-          <file category="source"  name="Network/Source/net_md5.c"/>
-          <file category="source"  name="Network/Source/net_base64.c"/>
-          <file category="source"  name="Network/Source/net_version.c"/>
-        </files>
-      </component>
-      <component Cgroup="CORE" Cvariant="IPv4/IPv6 Debug STDIO" condition="CMSIS Core with RTOS and STDOUT">
-        <description>IPv4/IPv6 Networking Core for Cortex-M (Debug STDIO)</description>
-        <RTE_Components_h>
-          <!-- the following content goes into file 'RTE_Components.h' -->
-          #define RTE_Network_Core                /* Network Core */
-          #define RTE_Network_IPv4                /* Network IPv4 Stack */
-          #define RTE_Network_IPv6                /* Network IPv6 Stack */
-          #define RTE_Network_Debug_STDIO         /* Network Debug STDIO Version */
-          #define RTE_Network_Source              /* Network Source Variant */
-        </RTE_Components_h>
-        <files>
-          <file category="other"   name="Network/Network.scvd"/>
-          <file category="header"  name="Network/Include/rl_net.h"/>
-          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.1"/>
-          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.2.0"/>
-          <file category="include" name="Network/Source/Include/"/>
-          <!-- Core -->
-          <file category="source"  name="Network/Source/net_ip4.c"/>
-          <file category="source"  name="Network/Source/net_ip4_frag.c"/>
-          <file category="source"  name="Network/Source/net_icmp.c"/>
-          <file category="source"  name="Network/Source/net_ip6.c"/>
-          <file category="source"  name="Network/Source/net_ip6_frag.c"/>
-          <file category="source"  name="Network/Source/net_icmp6.c"/>
-          <file category="source"  name="Network/Source/net_ping.c"   condition="Network DNS"/>
-          <file category="source"  name="Network/Source/net_ping_core.c"/>
-          <file category="source"  name="Network/Source/net_loopback.c"/>
-          <!-- System -->
-          <file category="source"  name="Network/Source/net_sys.c"/>
-          <file category="source"  name="Network/Source/net_mem.c"/>
-          <file category="source"  name="Network/Source/net_common.c"/>
-          <file category="source"  name="Network/Source/net_addr.c"/>
-          <file category="source"  name="Network/Source/net_md5.c"/>
-          <file category="source"  name="Network/Source/net_base64.c"/>
-          <file category="source"  name="Network/Source/net_version.c"/>
-        </files>
-      </component>
-      <component Cgroup="CORE" Cvariant="IPv4 Release" condition="CMSIS Core with RTOS">
-        <description>IPv4 Networking Core for Cortex-M (Release)</description>
-        <RTE_Components_h>
-          <!-- the following content goes into file 'RTE_Components.h' -->
-          #define RTE_Network_Core                /* Network Core */
-          #define RTE_Network_IPv4                /* Network IPv4 Stack */
-          #define RTE_Network_Release             /* Network Release Version */
-          #define RTE_Network_Source              /* Network Source Variant */
-        </RTE_Components_h>
-        <files>
-          <file category="other"   name="Network/Network.scvd"/>
-          <file category="header"  name="Network/Include/rl_net.h"/>
-          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.1"/>
-          <file category="include" name="Network/Source/Include/"/>
-          <!-- Core -->
-          <file category="source"  name="Network/Source/net_ip4.c"/>
-          <file category="source"  name="Network/Source/net_ip4_frag.c"/>
-          <file category="source"  name="Network/Source/net_icmp.c"/>
-          <file category="source"  name="Network/Source/net_ping.c"   condition="Network DNS"/>
-          <file category="source"  name="Network/Source/net_ping_core.c"/>
-          <file category="source"  name="Network/Source/net_loopback.c"/>
-          <!-- System -->
-          <file category="source"  name="Network/Source/net_sys.c"/>
-          <file category="source"  name="Network/Source/net_mem.c"/>
-          <file category="source"  name="Network/Source/net_common.c"/>
-          <file category="source"  name="Network/Source/net_addr.c"/>
-          <file category="source"  name="Network/Source/net_md5.c"/>
-          <file category="source"  name="Network/Source/net_base64.c"/>
-          <file category="source"  name="Network/Source/net_version.c"/>
-        </files>
-      </component>
-      <component Cgroup="CORE" Cvariant="IPv4 Debug" condition="CMSIS Core with RTOS and Event Recorder">
-        <description>IPv4 Networking Core for Cortex-M (Debug)</description>
-        <RTE_Components_h>
-          <!-- the following content goes into file 'RTE_Components.h' -->
-          #define RTE_Network_Core                /* Network Core */
-          #define RTE_Network_IPv4                /* Network IPv4 Stack */
-          #define RTE_Network_Debug               /* Network Debug Version */
-          #define RTE_Network_Source              /* Network Source Variant */
-        </RTE_Components_h>
-        <files>
-          <file category="other"   name="Network/Network.scvd"/>
-          <file category="header"  name="Network/Include/rl_net.h"/>
-          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.1"/>
-          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.2.0"/>
-          <file category="include" name="Network/Source/Include/"/>
-          <!-- Core -->
-          <file category="source"  name="Network/Source/net_ip4.c"/>
-          <file category="source"  name="Network/Source/net_ip4_frag.c"/>
-          <file category="source"  name="Network/Source/net_icmp.c"/>
-          <file category="source"  name="Network/Source/net_ping.c"   condition="Network DNS"/>
-          <file category="source"  name="Network/Source/net_ping_core.c"/>
-          <file category="source"  name="Network/Source/net_loopback.c"/>
-          <!-- System -->
-          <file category="source"  name="Network/Source/net_sys.c"/>
-          <file category="source"  name="Network/Source/net_mem.c"/>
-          <file category="source"  name="Network/Source/net_common.c"/>
-          <file category="source"  name="Network/Source/net_addr.c"/>
-          <file category="source"  name="Network/Source/net_md5.c"/>
-          <file category="source"  name="Network/Source/net_base64.c"/>
-          <file category="source"  name="Network/Source/net_version.c"/>
-        </files>
-      </component>
-      <component Cgroup="CORE" Cvariant="IPv4 Debug STDIO" condition="CMSIS Core with RTOS and STDOUT">
-        <description>IPv4 Networking Core for Cortex-M (Debug STDIO)</description>
-        <RTE_Components_h>
-          <!-- the following content goes into file 'RTE_Components.h' -->
-          #define RTE_Network_Core                /* Network Core */
-          #define RTE_Network_IPv4                /* Network IPv4 Stack */
-          #define RTE_Network_Debug_STDIO         /* Network Debug STDIO Version */
-          #define RTE_Network_Source              /* Network Source Variant */
-        </RTE_Components_h>
-        <files>
-          <file category="header"  name="Network/Include/rl_net.h"/>
-          <file category="other"   name="Network/Network.scvd"/>
-          <file category="source"  name="Network/Config/Net_Config.c" attr="config" version="7.2.1"/>
-          <file category="source"  name="Network/Config/Net_Debug.c"  attr="config" version="7.2.0"/>
-          <file category="include" name="Network/Source/Include/"/>
-          <!-- Core -->
-          <file category="source"  name="Network/Source/net_ip4.c"/>
-          <file category="source"  name="Network/Source/net_ip4_frag.c"/>
-          <file category="source"  name="Network/Source/net_icmp.c"/>
-          <file category="source"  name="Network/Source/net_ping.c"   condition="Network DNS"/>
-          <file category="source"  name="Network/Source/net_ping_core.c"/>
-          <file category="source"  name="Network/Source/net_loopback.c"/>
+          <file category="source"  name="Network/Source/net_config.c"/>
+          <file category="source"  name="Network/Source/net_debug.c"/>
           <!-- System -->
           <file category="source"  name="Network/Source/net_sys.c"/>
           <file category="source"  name="Network/Source/net_mem.c"/>
@@ -929,9 +742,9 @@
           <file category="source" name="Network/Source/net_igmp.c"/>
           <file category="source" name="Network/Source/net_dhcp_client.c"  condition="Network UDP"/>
           <file category="source" name="Network/Source/net_nbns_client.c"  condition="Network UDP"/>
-          <file category="source" name="Network/Source/net_ndp.c"          condition="Network IPv6"/>
-          <file category="source" name="Network/Source/net_mld.c"          condition="Network IPv6"/>
-          <file category="source" name="Network/Source/net_dhcp6_client.c" condition="Network UDP/IPv6"/>
+          <file category="source" name="Network/Source/net_ndp.c"/>
+          <file category="source" name="Network/Source/net_mld.c"/>
+          <file category="source" name="Network/Source/net_dhcp6_client.c" condition="Network UDP"/>
         </files>
       </component>
       <component Cgroup="Interface" Csub="WiFi" condition="Network Driver WiFi" maxInstances="2">
@@ -949,9 +762,9 @@
           <file category="source" name="Network/Source/net_igmp.c"/>
           <file category="source" name="Network/Source/net_dhcp_client.c"  condition="Network UDP"/>
           <file category="source" name="Network/Source/net_nbns_client.c"  condition="Network UDP"/>
-          <file category="source" name="Network/Source/net_ndp.c"          condition="Network IPv6"/>
-          <file category="source" name="Network/Source/net_mld.c"          condition="Network IPv6"/>
-          <file category="source" name="Network/Source/net_dhcp6_client.c" condition="Network UDP/IPv6"/>
+          <file category="source" name="Network/Source/net_ndp.c"/>
+          <file category="source" name="Network/Source/net_mld.c"/>
+          <file category="source" name="Network/Source/net_dhcp6_client.c" condition="Network UDP"/>
         </files>
       </component>
       <component Cgroup="Interface" Csub="PPP" Cvariant="Standard Modem" condition="Network Driver PPP">

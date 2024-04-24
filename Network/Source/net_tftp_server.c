@@ -43,7 +43,7 @@ static void tftp_free_buf (NET_TFTP_INFO *tftp_s);
 static NET_TFTP_INFO *tftp_map_session (const __ADDR *addr);
 static NET_TFTP_INFO *tftp_open_session (const __ADDR *addr);
 static void tftp_set_retransmit (NET_TFTP_INFO *tftp_s, uint8_t *buf, uint32_t len);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (uint16_t opcode);
 #endif
 
@@ -57,12 +57,12 @@ void net_tftp_server_init (void) {
   DEBUGF (TFTP,"Init %d Sessions, Port %d\n",tftp->NumSess,tftp->PortNum);
   EvrNetTFTPs_InitServer (tftp->NumSess, tftp->PortNum, tftp->EnFwall);
   memset (tftp->Scb, 0, sizeof (*tftp->Scb) * tftp->NumSess);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
   if (tftp->EnFwall) {
     DEBUGF (TFTP," Firewall support enabled\n");
   }
 #endif
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
   if (tftp->Root) {
     DEBUGF (TFTP," Root folder \"%s\"\n",tftp->Root);
     EvrNetTFTPs_ShowRootFolder (tftp->Root, strlen(tftp->Root));
@@ -935,7 +935,7 @@ static void tftp_set_retransmit (NET_TFTP_INFO *tftp_s, uint8_t *buf, uint32_t l
   tftp_s->BufLen = len & 0xFFFF;
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print user friendly Opcode.
   \param[in]   opcode  TFTP operation code.

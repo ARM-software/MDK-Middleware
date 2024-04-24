@@ -2,8 +2,8 @@
  * MDK Middleware - Component ::Network
  * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    net_config.h
- * Purpose: Network Library Configuration
+ * Name:    net_config.c
+ * Purpose: Network Core Configuration
  *----------------------------------------------------------------------------*/
 
 #if defined(__clang__)
@@ -12,82 +12,81 @@
   #pragma clang diagnostic ignored "-Wmissing-noreturn"
 #endif
 
-#include "RTE_Components.h"
+#include "rl_net_lib.h"
 
-#if (defined(RTE_Network_Interface_ETH_0)  && !ETH0_ENABLE)
+/* Interface configuration */
+#ifdef RTE_Network_Interface_ETH_0
   #include "Net_Config_ETH_0.h"
+  static NET_ETH_CFG  eth0_ll_config;
 #endif
-#if (defined(RTE_Network_Interface_ETH_1)  && !ETH1_ENABLE)
+#ifdef RTE_Network_Interface_ETH_1
   #include "Net_Config_ETH_1.h"
+  static NET_ETH_CFG  eth1_ll_config;
 #endif
-#if (defined(RTE_Network_Interface_WiFi_0) && !WIFI0_ENABLE)
+#ifdef RTE_Network_Interface_WiFi_0
   #include "Net_Config_WiFi_0.h"
+  static NET_WIFI_CFG wifi0_ll_config;
 #endif
-#if (defined(RTE_Network_Interface_WiFi_1) && !WIFI1_ENABLE)
+#ifdef RTE_Network_Interface_WiFi_1
   #include "Net_Config_WiFi_1.h"
+  static NET_WIFI_CFG wifi1_ll_config;
 #endif
-#if (defined(RTE_Network_Interface_PPP)    && !PPP_ENABLE)
+#ifdef RTE_Network_Interface_PPP
   #include "Net_Config_PPP.h"
+  static NET_PPP_CFG  ppp0_ll_config;
 #endif
-#if (defined(RTE_Network_Interface_SLIP)   && !SLIP_ENABLE)
+#ifdef RTE_Network_Interface_SLIP
   #include "Net_Config_SLIP.h"
+  static NET_SLIP_CFG slip0_ll_config;
 #endif
 
-#if (defined(RTE_Network_Socket_UDP)    && !UDP_ENABLE)
+/* Socket configuration */
+#ifdef RTE_Network_Socket_UDP
   #include "Net_Config_UDP.h"
 #endif
-#if (defined(RTE_Network_Socket_TCP)    && !TCP_ENABLE)
+#ifdef RTE_Network_Socket_TCP
   #include "Net_Config_TCP.h"
 #endif
-#if (defined(RTE_Network_Socket_BSD)    && !BSD_ENABLE)
+#ifdef RTE_Network_Socket_BSD
   #include "Net_Config_BSD.h"
 #endif
 
-#if (defined(RTE_Network_Web_Server_RO) && !HTTP_SERVER_ENABLE)
+/* Service configuration */
+#ifdef RTE_Network_Web_Server_RO
   #include "Net_Config_HTTP_Server.h"
 #endif
-#if (defined(RTE_Network_Web_Server_FS) && !HTTP_SERVER_ENABLE)
+#ifdef RTE_Network_Web_Server_FS
   #include "Net_Config_HTTP_Server.h"
 #endif
-#if (defined(RTE_Network_Telnet_Server) && !TELNET_SERVER_ENABLE)
+#ifdef RTE_Network_Telnet_Server
   #include "Net_Config_Telnet_Server.h"
 #endif
-#if (defined(RTE_Network_TFTP_Server)   && !TFTP_SERVER_ENABLE)
+#ifdef RTE_Network_TFTP_Server
   #include "Net_Config_TFTP_Server.h"
 #endif
-#if (defined(RTE_Network_TFTP_Client)   && !TFTP_CLIENT_ENABLE)
+#ifdef RTE_Network_TFTP_Client
   #include "Net_Config_TFTP_Client.h"
 #endif
-#if (defined(RTE_Network_FTP_Server)    && !FTP_SERVER_ENABLE)
+#ifdef RTE_Network_FTP_Server
   #include "Net_Config_FTP_Server.h"
 #endif
-#if (defined(RTE_Network_FTP_Client)    && !FTP_CLIENT_ENABLE)
+#ifdef RTE_Network_FTP_Client
   #include "Net_Config_FTP_Client.h"
 #endif
-#if (defined(RTE_Network_DNS_Client)    && !DNS_CLIENT_ENABLE)
+#ifdef RTE_Network_DNS_Client
   #include "Net_Config_DNS_Client.h"
 #endif
-#if (defined(RTE_Network_SMTP_Client)   && !SMTP_CLIENT_ENABLE)
+#ifdef RTE_Network_SMTP_Client
   #include "Net_Config_SMTP_Client.h"
 #endif
-#if (defined(RTE_Network_SNMP_Agent)    && !SNMP_AGENT_ENABLE)
+#ifdef RTE_Network_SNMP_Agent
   #include "Net_Config_SNMP_Agent.h"
 #endif
-#if (defined(RTE_Network_SNTP_Client)   && !SNTP_CLIENT_ENABLE)
+#ifdef RTE_Network_SNTP_Client
   #include "Net_Config_SNTP_Client.h"
 #endif
 
-#include "rl_net_lib.h"
-
-/* Forward declarations */
-static NET_ETH_CFG  eth0_ll_config;
-static NET_ETH_CFG  eth1_ll_config;
-static NET_WIFI_CFG wifi0_ll_config;
-static NET_WIFI_CFG wifi1_ll_config;
-static NET_PPP_CFG  ppp0_ll_config;
-static NET_SLIP_CFG slip0_ll_config;
-
-#if defined(RTE_CMSIS_RTOS2)
+#ifdef RTE_CMSIS_RTOS2
   #include "net_rtos2.h"
 #else
   #error "::CMSIS:RTOS selection invalid"
@@ -189,7 +188,7 @@ static NET_SLIP_CFG slip0_ll_config;
   #undef WIFI1_DHCP_ENABLE
 #endif
 
-#ifndef RTE_Network_IPv6
+#ifndef Network_IPv6
   #undef ETH0_IP6_ENABLE
   #undef ETH1_IP6_ENABLE
   #undef WIFI0_IP6_ENABLE
@@ -373,17 +372,6 @@ static NET_SLIP_CFG slip0_ll_config;
 /* Check SMTP advanced client */
 #if (SMTP_CLIENT_ENABLE && SMTP_CLIENT_ATTACH_ENABLE && !DNS_CLIENT_ENABLE)
   #error "::Network:Service:SMTP Client: DNS Client service required"
-#endif
-
-/* Avoid syntax-checker errors in editor */
-#ifndef NET_HOST_NAME
-  #define NET_HOST_NAME         "my_host"
-  #define NET_MEM_POOL_SIZE     8000
-  #define NET_START_SERVICE     1
-#endif
-
-#ifndef NET_MEM_POOL_SIZE
-  #define NET_MEM_POOL_SIZE     (NET_MEM_SIZE*4)
 #endif
 
 /* Tick interval is 100 ms */
@@ -1579,7 +1567,7 @@ NET_IF_CFG *const net_if_inet_def[] = {
  #else
   NULL
  #endif
-#ifdef RTE_Network_IPv6
+#ifdef Network_IPv6
  #if   (ETH0_IP6_ENABLE)
 , &net_eth0_if_config
  #elif (ETH1_IP6_ENABLE)
@@ -1607,7 +1595,7 @@ NET_IF_CFG *const net_if_link_def[] = {
  #else
   NULL
  #endif
-#ifdef RTE_Network_IPv6
+#ifdef Network_IPv6
  #if   (ETH0_IP6_ENABLE)
 , &net_eth0_if_config
  #elif (ETH1_IP6_ENABLE)
@@ -1665,7 +1653,7 @@ NET_ICMP_CFG *const net_icmp_list[] = {
 };
 
 /* List of IGMP instances */
-#if (__IGMP_ENA) || defined(RTE_Network_Source)
+#if (__IGMP_ENA) || defined(Network_Source)
   NET_IGMP_CFG *const net_igmp_list[] = {
   #if (ETH0_IGMP_ENABLE)
     &eth0_igmp_config,
@@ -1684,7 +1672,7 @@ NET_ICMP_CFG *const net_icmp_list[] = {
 #endif
 
 /* List of DHCP instances */
-#if (__DHCP_ENA) || defined(RTE_Network_Source)
+#if (__DHCP_ENA) || defined(Network_Source)
   NET_DHCP_CFG *const net_dhcp_list[] = {
   #if (ETH0_DHCP_ENABLE)
     &eth0_dhcp_config,
@@ -1703,7 +1691,7 @@ NET_ICMP_CFG *const net_icmp_list[] = {
 #endif
 
 /* List of NDP instances */
-#ifdef RTE_Network_IPv6
+#ifdef Network_IPv6
   /* Required in IPv6 */
   NET_NDP_CFG *const net_ndp_list[] = {
   #if (ETH0_IP6_ENABLE)
@@ -1723,7 +1711,7 @@ NET_ICMP_CFG *const net_icmp_list[] = {
 #endif
 
 /* List of ICMPv6 instances */
-#ifdef RTE_Network_IPv6
+#ifdef Network_IPv6
   NET_ICMP6_CFG *const net_icmp6_list[] = {
   /* Required in IPv6 */
   #if (ETH0_IP6_ENABLE)
@@ -1743,7 +1731,7 @@ NET_ICMP_CFG *const net_icmp_list[] = {
 #endif
 
 /* List of MLD instances */
-#if (__MLD_ENA) || defined(RTE_Network_Source)
+#if (__MLD_ENA) || defined(Network_Source)
   NET_MLD_CFG *const net_mld_list[] = {
   #if (ETH0_MLD_ENABLE)
     &eth0_mld_config,
@@ -1761,7 +1749,7 @@ NET_ICMP_CFG *const net_icmp_list[] = {
   };
 #endif
 
-#if (__DHCP6_ENA) || defined(RTE_Network_Source)
+#if (__DHCP6_ENA) || defined(Network_Source)
   /* List of DHCPv6 instances */
   NET_DHCP6_CFG *const net_dhcp6_list[] = {
   #if (ETH0_DHCP6_ENABLE)
@@ -1796,7 +1784,7 @@ NET_ICMP_CFG *const net_icmp_list[] = {
     IP4_FRAG_REASS_NUM,
     IP4_FRAG_REASS_TOUT * NET_TICK_RATE
   };
-#elif defined(RTE_Network_Source)
+#elif defined(Network_Source)
   NET_IP_FRAG_CFG net_ip4_frag_config = { NULL, 0, 0 };
 #endif
 
@@ -1816,7 +1804,7 @@ NET_ICMP_CFG *const net_icmp_list[] = {
     IP6_FRAG_REASS_NUM,
     IP6_FRAG_REASS_TOUT * NET_TICK_RATE
   };
-#elif defined(RTE_Network_Source)
+#elif defined(Network_Source)
   NET_IP_FRAG_CFG net_ip6_frag_config = { NULL, 0, 0 };
 #endif
 
@@ -1836,7 +1824,7 @@ NET_ICMP_CFG *const net_icmp_list[] = {
     NBNS_CLIENT_TAB_SIZE,
     NBNS_CLIENT_TAB_TOUT
   };
-#elif defined(RTE_Network_Source)
+#elif defined(Network_Source)
   NET_NBNS_CFG net_nbns_config = { NULL, 0, 0 };
 #endif
 
@@ -2440,7 +2428,7 @@ netStatus netNBNS_ClearCache (uint32_t if_id) {
   (void)if_id; return (netError); }
 #endif
 
-#if (defined(RTE_Network_IPv6) && !(__MLD_ENA))
+#if (defined(Network_IPv6) && !(__MLD_ENA))
 /* Empty functions when IPv6 Multicasting not enabled */
 netStatus netMLD_Join (uint32_t if_id, const uint8_t *ip6_addr) {
   (void)if_id; (void)ip6_addr; return (netError); }
@@ -2448,7 +2436,7 @@ netStatus netMLD_Leave (uint32_t if_id, const uint8_t *ip6_addr) {
   (void)if_id; (void)ip6_addr; return (netError); }
 #endif
 
-#if (defined(RTE_Network_IPv6) && !(__DHCP6_ENA))
+#if (defined(Network_IPv6) && !(__DHCP6_ENA))
 /* Empty functions when DHCPv6 not enabled */
 netStatus netDHCP6_Enable (uint32_t if_id, netDHCP6_Mode mode) {
   (void)if_id; (void)mode; return (netError); }
@@ -2464,7 +2452,7 @@ NET_FRAME *net_ip4_frag_get (NET_FRAME *frame, uint16_t mtu) {
   (void)mtu; return (frame); }
 #endif
 
-#if (defined(RTE_Network_IPv6) && !(__IP6_FRAG_ENA))
+#if (defined(Network_IPv6) && !(__IP6_FRAG_ENA))
 /* Empty functions when IPv6 fragmentation not enabled */
 NET_FRAME *net_ip6_frag_add (NET_FRAME *frame) {
   return (frame); }
@@ -2503,3 +2491,32 @@ __WEAK char *netHTTPs_fgets (void *file, char *buf, uint32_t size) {
 __WEAK void netHTTPs_fstat (const char *fname, uint32_t *fsize, uint32_t *ftime) {
   (void)fname; (void)fsize; (void)ftime; }
 #endif
+
+/* System error handler */
+__WEAK void net_sys_error (NET_ERROR error) {
+  switch (error) {
+    case NET_ERROR_MEM_ALLOC:
+      /* Out of memory */
+      break;
+    case NET_ERROR_MEM_FREE:
+      /* Trying to release non existing memory block */
+      break;
+    case NET_ERROR_MEM_CORRUPT:
+      /* Memory Link pointer corrupted */
+      /* More data written than the size of allocated memory block */
+      break;
+    case NET_ERROR_CONFIG:
+      /* Network configuration error detected */
+      break;
+    case NET_ERROR_UDP_ALLOC:
+      /* Out of UDP Sockets */
+      break;
+    case NET_ERROR_TCP_ALLOC:
+      /* Out of TCP Sockets */
+      break;
+    case NET_ERROR_TCP_STATE:
+      /* TCP State machine in undefined state */
+      break;
+  }
+  while (1);
+}

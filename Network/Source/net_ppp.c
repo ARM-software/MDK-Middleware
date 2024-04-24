@@ -42,7 +42,7 @@ static void que_add_tail (NET_FRAME **list, NET_FRAME *frame);
 static NET_FRAME *que_get_first (NET_FRAME **list);
 static void ppp_lock (NET_PPP_CFG *h);
 static void ppp_unlock (NET_PPP_CFG *h);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (uint16_t prot);
  static void debug_inf2 (const char *msg, const char *val);
 #endif
@@ -1022,7 +1022,7 @@ static void ppp_unlock (NET_PPP_CFG *h) {
   netif_unlock (ctrl->semaphore);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print user friendly PPP protocol.
   \param[in]   prot  protocol type for PPP.

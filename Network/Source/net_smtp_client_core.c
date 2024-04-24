@@ -36,7 +36,7 @@ static void free_cram_buf (void);
 static uint32_t get_max_dsize (void);
 static uint8_t *smtp_get_buf (uint32_t size);
 static void smtp_send_buf (uint8_t *buf, uint32_t len);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static const char *auth_mode_ascii (uint8_t auth_mode);
  static const char *evt_ascii (netSMTPc_Event cb_evt);
  static void debug_info (const __ADDR *addr);
@@ -299,7 +299,7 @@ static uint32_t smtp_listener (int32_t socket, netTCP_Event event, const NET_ADD
           }
           /* Method AUTH LOGIN */
           if (smtp->AuthMode == SMTP_AUTH_LOGIN) {
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
             (__CONST_CAST(char *)buf)[len-1] = 0;
             DEBUGF (SMTP," Prompt: %s\n",buf+4);
 #endif
@@ -321,7 +321,7 @@ static uint32_t smtp_listener (int32_t socket, netTCP_Event event, const NET_ADD
           smtp->CramBuf = (char *)net_mem_alloc (len-4);
           /* Store decoded challenge */
           smtp->CramLen = net_base64_decode (smtp->CramBuf, (const char *)buf+4, len-4) & 0xFF;
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
           (__CONST_CAST(char *)buf)[len-1] = 0;
           DEBUGF (SMTP," Challenge: %s\n",buf+4);
 #endif
@@ -343,7 +343,7 @@ static uint32_t smtp_listener (int32_t socket, netTCP_Event event, const NET_ADD
             smtp_transit (SMTP_STATE_QUIT);
             return (true);
           }
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
           (__CONST_CAST(char *)buf)[len-1] = 0;
           DEBUGF (SMTP," Prompt: %s\n",buf+4);
 #endif
@@ -406,7 +406,7 @@ static uint32_t smtp_listener (int32_t socket, netTCP_Event event, const NET_ADD
           smtp_stop (smtp->cb_event);
           return (true);
       }
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
       (__CONST_CAST(char *)buf)[len-1] = 0;
       ERRORF (SMTP,"Wrong response: %s\n",buf);
       EvrNetSMTP_WrongResponse (buf, len);
@@ -596,7 +596,7 @@ void net_smtp_client_run (void) {
       len  = net_strcpy2 ((char *)sendbuf, "QUIT");
 cr_send:
       len += net_strcpy2 ((char *)sendbuf+len, "\r\n");
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
       sendbuf[len] = 0;
       DEBUGF (SMTP,"Sending: %s",sendbuf);
       EvrNetSMTP_SendCommand (sendbuf, len-2);
@@ -917,7 +917,7 @@ static void smtp_send_buf (uint8_t *buf, uint32_t len) {
   }
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Convert authentication mode to ascii.
   \param[in]   auth_mode  SMTP authentication mode.

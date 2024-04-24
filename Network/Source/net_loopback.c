@@ -52,7 +52,7 @@ static NET_LOOP_CFG loop_ll_config = {
 #define ctrl       (h->Ctrl)
 
 /* Local functions */
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (const NET_FRAME *frm);
 #endif
 
@@ -206,7 +206,7 @@ void net_loop_iface_run (void) {
   net_mem_free (frame);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print loopback information.
   \param[in]   frm  loopback network frame.

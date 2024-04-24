@@ -42,7 +42,7 @@ static bool  arp_is_cacheable (NET_ARP_CFG *h, const uint8_t *ip4_addr);
 static bool  arp_sender_valid (NET_ARP_CFG *h, NET_ARP_HEADER *arp_r);
 static void  arp_que_send (NET_ARP_CFG *h, NET_ARP_INFO *arp_t);
 static void  arp_que_free (NET_ARP_INFO *arp_t);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  #define D_MAC  0
  #define D_IP   1
  static const char *type_ascii (uint8_t type);
@@ -1420,7 +1420,7 @@ static void arp_que_free (NET_ARP_INFO *arp_t) {
   }
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Convert cache entry type to ascii.
   \param[in]   type  cache entry type.

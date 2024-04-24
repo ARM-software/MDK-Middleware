@@ -2404,7 +2404,7 @@ INCLUDE_FILE_PATTERNS  =
 
 PREDEFINED             = __DOXYGEN__ \
                          RTE_Network_Socket_BSD \
-                         DEBUG_EVR
+                         Network_Debug_EVR
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
 # tag can be used to specify a list of macro names that should be expanded. The

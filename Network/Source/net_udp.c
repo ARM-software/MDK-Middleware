@@ -25,7 +25,7 @@
 /* Local Functions */
 static uint16_t udp_alloc_port (void);
 static bool udp_port_in_use (uint16_t port);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (const NET_UDP_HEADER *udp_hdr);
 #endif
 
@@ -817,7 +817,7 @@ static bool udp_port_in_use (uint16_t port) {
   return (false);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print UDP header information.
   \param[in]   udp_hdr  UDP frame header.

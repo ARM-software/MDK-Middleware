@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_smtp_client_legacy.c
  * Purpose: Mail Transfer Client legacy non-blocking mode
@@ -120,7 +120,6 @@ static uint32_t compose_body (char *buf, uint32_t buf_len) {
 }
 
 /* Library default function(s) */
-#ifdef Network_Source
 __WEAK uint32_t netSMTPc_Process (netSMTPc_Request request, char *buf,
                                   uint32_t buf_len, uint32_t *pvar) {
   (void)request; (void)buf; (void)buf_len; (void)pvar; return (0); }
@@ -128,4 +127,4 @@ __WEAK bool netSMTPc_AcceptAuthentication (const NET_ADDR *addr) {
   (void)addr; return (false); }
 __WEAK void netSMTPc_Notify (netSMTPc_Event event) {
   (void)event; }
-#endif
+

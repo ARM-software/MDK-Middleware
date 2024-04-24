@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_sys.h
  * Purpose: Network System Definitions
@@ -63,7 +63,7 @@
 #define net_rand_max(max)   ((net_rand16() * (max)) >> 16)
 
 /* Mutex lock macros */
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
   #define NET_SYS_LOCK      net_sys_lock()
   #define NET_SYS_UNLOCK    net_sys_unlock()
 #else

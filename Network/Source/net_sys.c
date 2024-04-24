@@ -20,7 +20,7 @@
 
 /* Global variables */
 NET_SYS_CTRL net_sys_control;
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
  uint32_t net_dbg_buf[9];
 #endif
 
@@ -38,7 +38,7 @@ static struct {
 /* Local functions */
 static void sys_proc_tick (void);
 static NET_IF_CFG *sys_map_if (uint32_t if_id, NET_IF_CFG *const *if_list);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static const char *opt_ascii (netIF_Option opt);
 #endif
 
@@ -56,10 +56,7 @@ netStatus netInitialize (void) {
   os_id.mutex = netos_mutex_create (0);
   net_sys_lock ();
 
-#ifdef DEBUG_STDIO
-  net_debug_init ();
-#endif
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   net_evr_init ();
 #endif
   DEBUGF (SYS,"Init Network %s\n",net_ver_ascii);
@@ -513,12 +510,12 @@ void net_sys_wakeup (void) {
   netos_flag_set (os_id.thread, 0x0001);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
-  \brief       Print time stamp in debug library.
+  \brief       Print time stamp in debug mode.
   \return      pointer to null-terminated ascii string.
 */
-const char *net_dbg_time (void) {
+const char *net_debug_time (void) {
   static uint32_t time_old = 0x10;
   static char dbg_ts[12];
   int32_t n;
@@ -587,7 +584,7 @@ static const char *opt_ascii (netIF_Option opt) {
   \return      pointer to null-terminated ascii string.
   \note        Must be in sync with "rl_net_lib.h" definitions!!
 */
-const char *net_dbg_proc (int32_t proc) {
+const char *net_debug_proc (int32_t proc) {
   static const char proc_id[31][6] = {
     "SYS",  "MEM",
     "ETH",  "WIFI", "PPP",  "SLIP", "LOOP",

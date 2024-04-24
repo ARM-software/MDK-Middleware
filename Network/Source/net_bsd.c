@@ -57,7 +57,7 @@ static uint16_t addr_get_port (const SOCKADDR *addr);
 static void set_sock_type (NET_BSD_INFO *bsd_s);
 static uint8_t bsd_evt_wait (NET_BSD_INFO *bsd_s, uint8_t evt, uint16_t tout);
 static void bsd_evt_send (NET_BSD_INFO *bsd_s, uint8_t evt);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static const char *evt_ascii (netTCP_Event evt);
  static void debug_info (const __ADDR *addr);
 #endif
@@ -3066,7 +3066,7 @@ static void bsd_evt_send (NET_BSD_INFO *bsd_s, uint8_t evt) {
   net_bsd_notify (bsd_s->Id, evt);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Convert TCP event to ascii.
   \param[in]   evt  TCP event.

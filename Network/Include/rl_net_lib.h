@@ -10,7 +10,24 @@
 #define __RL_NET_LIB_H
 
 #include "rl_net.h"
-#include "rl_net_rte.h"
+#include "Net_Config.h"
+#include "Net_Debug.h"
+
+/// Network configuration definitions
+#define Network_Source
+
+#if (NET_CORE_VARIANT == 1)
+  #define Network_IPv6
+#endif
+
+#if (NET_DEBUG_ENABLE)
+ #if ((NET_DEBUG_CHANNEL == 0) && defined(RTE_CMSIS_View_EventRecorder))
+  #define Network_Debug_EVR
+ #endif
+ #if  (NET_DEBUG_CHANNEL > 0)
+  #define Network_Debug_STDIO
+ #endif
+#endif
 
 #ifdef __clang__
   #pragma clang diagnostic ignored "-Wpadded"
@@ -28,7 +45,7 @@
 #define NET_IF_CLASS_LOOP   (0 << 8)    ///< Loopback interface class
 
 /// Debug process definitions
-#ifdef RTE_Network_Debug_STDIO
+#ifdef Network_Debug_STDIO
 #define NET_SYSTEM_CORE     0           ///< Main system core
 #define NET_DYNAMIC_MEMORY  1           ///< Dynamic memory management
 #define NET_ETH_INTERFACE   2           ///< Ethernet interface 0
@@ -62,7 +79,7 @@
 #define NET_TFTP_CLIENT     28          ///< TFTP client service
 #define NET_SMTP_CLIENT     29          ///< SMTP client service
 #define NET_SNTP_CLIENT     30          ///< SNTP client service
-#endif /* RTE_Network_Debug_STDIO */
+#endif /* Network_Debug_STDIO */
 
 /// Telnet definitions
 #define TELNET_LBUF_SZ      96          ///< Command line buffer size in bytes
@@ -119,7 +136,7 @@ typedef struct net_ip_frag_list {
 } NET_IP_FRAG_LIST;
 
 /// Library variant optimization
-#ifdef RTE_Network_IPv6
+#ifdef Network_IPv6
   #define __ADDR            NET_ADDR
   #define __ADDR_IP_LEN     NET_ADDR_IP6_LEN
 #else
@@ -1637,27 +1654,24 @@ extern const char *net_mac_ntoa (const uint8_t *mac_addr);
 
 //  ==== Network debug ====
 
-/// \brief Initialize STDIO debug interface.
-extern void net_debug_init (void);
-
-/// \brief Debug print information message.
+/// \brief Debug print diagnostic message.
 /// \param[in]     proc          network process id.
 /// \param[in]     fmt           printf format string.
-extern void net_dbg_info (int32_t proc, const char *fmt, ...);
+extern void net_debug_info (int32_t proc, const char *fmt, ...);
 
 /// \brief Debug print error message.
 /// \param[in]     proc          network process id.
 /// \param[in]     fmt           printf format string.
-extern void net_dbg_error (int32_t proc, const char *fmt, ...);
+extern void net_debug_error (int32_t proc, const char *fmt, ...);
 
 /// \brief Convert process id into a string.
 /// \param[in]     proc          network process id.
 /// \return        pointer to process id string.
-extern const char *net_dbg_proc (int32_t proc);
+extern const char *net_debug_proc (int32_t proc);
 
 /// \brief Get current network time for debug.
 /// \return        pointer to current time string.
-extern const char *net_dbg_time (void);
+extern const char *net_debug_time (void);
 
 /// \brief Initialize Event Recorder debug interface.
 extern void net_evr_init (void);

@@ -37,17 +37,17 @@ static void bind_tlv (uint8_t *buf, NET_SNMP_TLV *tlv);
 static void bind_val (uint8_t *buf, NET_SNMP_TLV *tlv, uint32_t val);
 static int32_t  mib_find_object (const uint8_t *buf, NET_SNMP_TLV *tlv);
 static bool mib_write (const uint8_t *buf, NET_SNMP_TLV *tlv, int32_t id);
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
  static int32_t oid_ntoa  (char *buf, const uint8_t *oid);
  static int32_t get_int   (const uint8_t *oid);
  static uint32_t get_uint (const uint8_t *oid);
 #endif
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (const uint8_t *oid);
  static void debug_inf2 (uint8_t mib_type, const uint8_t *oid);
  static void obj_ascii (char *buf, uint8_t mib_type, const uint8_t *oid);
 #endif
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
  static void record_oid (const uint8_t *oid);
  static void record_val (uint8_t mib_type, const uint8_t *oid);
 #endif
@@ -280,7 +280,7 @@ invalid_param:
     DEBUG_INFO (&sendbuf[tlv.Start]);
     DEBUG_INF2 (tlv.MibType,&sendbuf[tlv.vStart]);
     EvrNetSNMP_MibAddObject (obj_list[i], sendbuf[tlv.vStart]);
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
     record_oid (&sendbuf[tlv.Start]);
     record_val (tlv.MibType, &sendbuf[tlv.vStart]);
 #endif
@@ -484,7 +484,7 @@ err:ERRORF (SNMP,"Process, Protocol error\n");
     tlv.Check = SNMP_TYPE_OID;
     if (parse_tlv (buf, &tlv) == false) goto err;
     DEBUG_INFO (&buf[tlv.Start]);
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
     record_oid (&buf[tlv.Start]);
 #endif
 
@@ -518,7 +518,7 @@ err:ERRORF (SNMP,"Process, Protocol error\n");
         goto ex;
       }
       DEBUG_INF2 (tlv.MibType,&buf[tlv.Start]);
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
       record_val (tlv.MibType, &buf[tlv.Start]);
 #endif
       /* Check access attribute */
@@ -582,7 +582,7 @@ ex: sendbuf = net_udp_get_buf (tlv.End);
     DEBUG_INFO (&sendbuf[tlv.Start]);
     DEBUG_INF2 (tlv.MibType,&sendbuf[tlv.vStart]);
     EvrNetSNMP_MibAddObject (id[i], sendbuf[tlv.vStart]);
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
     record_oid (&sendbuf[tlv.Start]);
     record_val (tlv.MibType, &sendbuf[tlv.vStart]);
 #endif
@@ -824,7 +824,7 @@ static void mib_add_object (uint8_t *buf, NET_SNMP_TLV *tlv, int32_t id) {
   /* Correct varbind length */
   buf[1]    += tlv->Len;
   tlv->Next += tlv->vStart + tlv->Len;
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
   /* Start index of Value for debug */
   tlv->vStart = tlv->Next - tlv->Len - 2;
   /* Start index of OID for debug */
@@ -992,7 +992,7 @@ static bool mib_write (const uint8_t *buf, NET_SNMP_TLV *tlv, int32_t id) {
   return (false);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print object ID.
   \param[in]   oid  pointer to object ID structure.
@@ -1087,7 +1087,7 @@ static void obj_ascii (char *buf, uint8_t mib_type, const uint8_t *oid) {
 }
 #endif
 
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 /**
   \brief       Record object ID in event recorder.
   \param[in]   oid  pointer to object id.
@@ -1146,7 +1146,7 @@ static void record_val (uint8_t mib_type, const uint8_t *oid) {
 }
 #endif
 
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
 /**
   \brief       Convert object id to decimal string.
   \param[out]  buf  output buffer.

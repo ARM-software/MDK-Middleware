@@ -40,7 +40,7 @@ static NET_TCP_INFO *tcp_map_socket (NET_IF_CFG *net_if, NET_FRAME *frame,
 static void tcp_transit (NET_TCP_INFO *tcp_s, netTCP_State state);
 static void tcp_upd_timers (void);
 static bool tcp_port_in_use (uint16_t port);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (const NET_TCP_INFO *tcp_s);
  static void debug_inf2 (const NET_TCP_HEADER *tcp_hdr, int32_t len);
 #endif
@@ -2848,7 +2848,7 @@ const char *net_tcp_ntoa (netTCP_State state) {
   return (sa[state]);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print Round Trip Timeout information.
   \param[in]   tcp_s  socket descriptor.

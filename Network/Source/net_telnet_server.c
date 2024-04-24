@@ -42,7 +42,7 @@ void net_telnet_server_init (void) {
 
   DEBUGF (TELNET,"Init %d Sessions, Port %d\n",telnc->NumSess,telnc->PortNum);
   EvrNetTeln_InitServer (telnc->NumSess, telnc->PortNum, telnc->IdleTout);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
   if (telnc->IdleTout) {
     DEBUGF (TELNET," Idle timeout %d secs\n",telnc->IdleTout);
   }
@@ -570,7 +570,7 @@ prmpt:        len += netTELNETs_ProcessMessage (netTELNETs_MessagePrompt,
             }
             sendbuf = net_tcp_get_buf (len + 1);
             memcpy (&sendbuf[0], &teln_s->LBuf[teln_s->BCnt - len], len);
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
             sendbuf[len] = 0;
             DEBUGF (TELNET," Echo chars : %s\n",sendbuf);
             EvrNetTeln_EchoCharacters (sendbuf, len);
@@ -738,7 +738,7 @@ err_auth:       ERRORF (TELNET,"Session %d, Authentication failed\n",teln_s->Id)
             else {
               memcpy (&sendbuf[0], &teln_s->LBuf[teln_s->BCnt - len], len);
             }
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
             sendbuf[len] = 0;
             DEBUGF (TELNET," Echo chars : %s\n",sendbuf);
             EvrNetTeln_EchoCharacters (sendbuf, len);

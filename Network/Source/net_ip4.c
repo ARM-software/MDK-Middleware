@@ -35,7 +35,7 @@ static uint16_t ip4_get_mtu (NET_IF_CFG *net_if);
 static bool     ip4_tx_offl_ip (NET_IF_CFG *net_if);
 static bool     ip4_is_subcast (NET_IF_CFG *net_if, const uint8_t *ip4_addr);
 static uint16_t ip4_get_chksum (NET_IP4_HEADER *ip4_hdr);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (const NET_IP4_HEADER *ip4_hdr);
 #endif
 
@@ -597,7 +597,7 @@ uint16_t net_ip4_chksum (const uint8_t *src_addr, const uint8_t *dst_addr,
   return (net_chksum_buf (payload, (uint32_t)len, sum));
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print IPv4 header information.
   \param[in]   ip4_hdr  IPv4 frame header.

@@ -7,6 +7,8 @@
  *----------------------------------------------------------------------------*/
 
 #include "rl_net_lib.h"
+
+#ifdef Network_IPv6
 #include "net_sys.h"
 #include "net_common.h"
 #include "net_addr.h"
@@ -53,7 +55,7 @@ static bool check_server_id (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len)
 static bool check_client_id (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len);
 static void proc_opt_ia_na (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len);
 static uint16_t get_tout (uint32_t prev_tout, uint32_t max_tout, bool first);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static const char *msg_ascii (uint8_t msg_type);
  static const char *stat_ascii (uint16_t status);
  static void debug_inf2 (const uint8_t *val, uint32_t len);
@@ -70,7 +72,7 @@ void net_dhcp6_client_init (void) {
   for (p = &net_dhcp6_list[0]; *p; p++) {
     DEBUGF (DHCP6,"Init_client %s\n",(*p)->If->Name);
     EvrNetDHCP6_InitClient ((*p)->If->Id, (*p)->OptVclass);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
     if ((*p)->OptVclass) {
       DEBUGF (DHCP6," Opt.16 Vendor-Class\n");
       DEBUGF (DHCP6," + Enterprise-ID=%d\n",(*p)->EnterpId);
@@ -1122,7 +1124,7 @@ static uint16_t get_tout (uint32_t prev_tout, uint32_t max_tout, bool first) {
   return (tout & 0xFFFF);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Convert DHCPv6 message type to ascii.
   \param[in]   msg_type  DHCPv6 message type.
@@ -1185,3 +1187,4 @@ static void debug_inf2 (const uint8_t *val, uint32_t len) {
 __WEAK void netDHCP6_Notify (uint32_t if_id, uint8_t option,
                              const uint8_t *val, uint32_t len) {
   (void)if_id; (void)option; (void)val; (void)len; }
+#endif /* Network_IPv6 */

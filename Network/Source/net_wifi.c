@@ -50,7 +50,7 @@ static void wifi_iface_run (NET_WIFI_CFG *h);
 static NET_WIFI_CFG *wifi_if_map (uint32_t if_num);
 static void wifi_lock (NET_WIFI_CFG *h);
 static void wifi_unlock (NET_WIFI_CFG *h);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static const char *mode_ascii (uint32_t mode);
  static const char *opt_ascii (uint32_t opt);
  static void debug_info (NET_FRAME *frame);
@@ -1369,7 +1369,7 @@ static void wifi_unlock (NET_WIFI_CFG *h) {
   netif_unlock (ctrl->semaphore);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Convert WiFi interface mode to ascii.
   \param[in]   mode  WiFi interface mode.

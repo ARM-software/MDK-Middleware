@@ -6,41 +6,30 @@
  * Purpose: Debug Variant Definitions
  *----------------------------------------------------------------------------*/
 
-/**
-  To build a debug library use C/C++ preprocesor define:
-  - EventRecorder debug: DEBUG_EVR
-  - STDIO printf debug : DEBUG_STDIO
-*/
-
 #ifndef __NET_DBG_H
 #define __NET_DBG_H
 
 #include <stdint.h>
 #include "net_evr.h"
 
-#if (defined(DEBUG_EVR) && defined(DEBUG_STDIO))
-  #error "Both Debug variants simultaneously not allowed"
-#endif
-
-#if (defined(DEBUG_EVR) || defined(DEBUG_STDIO))
-  #define __DBG_ENABLED
+#if (defined(Network_Debug_EVR) || defined(Network_Debug_STDIO))
+  #define __DEBUG_ENABLED
 #endif
 
 #if defined(__clang__)
   #pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
-#elif (defined(__GNUC__) && defined(DEBUG_EVR))
+#elif (defined(__GNUC__) && defined(Network_Debug_EVR))
   #pragma GCC diagnostic ignored "-Warray-bounds"
   #pragma GCC diagnostic ignored "-Wstringop-overread"
 #endif
 
-#ifdef DEBUG_STDIO
-  #define DEBUGF(id,fmt,...) net_dbg_info(id,fmt,##__VA_ARGS__)
-  #define ERRORF(id,fmt,...) net_dbg_error(id,fmt,##__VA_ARGS__)
+#ifdef Network_Debug_STDIO
+  #define DEBUGF(id,fmt,...) net_debug_info(id,fmt,##__VA_ARGS__)
+  #define ERRORF(id,fmt,...) net_debug_error(id,fmt,##__VA_ARGS__)
   #define DEBUG_INFO(f)      debug_info(f)
   #define DEBUG_INF2(p,v)    debug_inf2(p,v)
-  extern void net_dbg_info (int32_t proc, const char *fmt,...);
-  extern void net_dbg_error (int32_t proc, const char *fmt,...);
-  extern void net_debug_init (void);
+  extern void net_debug_info (int32_t proc, const char *fmt,...);
+  extern void net_debug_error (int32_t proc, const char *fmt,...);
 #else
   #define DEBUGF(id,fmt,...)
   #define ERRORF(id,fmt,...)
@@ -48,7 +37,7 @@
   #define DEBUG_INF2(p,v)
 #endif
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
   /* Debug module definition wrapper */
   #define SYS               NET_SYSTEM_CORE
   #define MEM               NET_DYNAMIC_MEMORY

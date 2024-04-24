@@ -32,7 +32,7 @@ static void ipcp_set_rem_ip (NET_PPP_CFG *h);
 static void ipcp_conf_rq (NET_PPP_CFG *h);
 static void ipcp_send (NET_PPP_CFG *h, NET_FRAME *frame);
 static void ipcp_configure (NET_PPP_CFG *h);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (const NET_FRAME *frm);
  static void debug_inf2 (const char *msg, const uint8_t *ip4_addr);
 #endif
@@ -485,7 +485,7 @@ void net_ipcp_run (NET_PPP_CFG *h) {
   }
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print IPCP header information.
   \param[in]   frm  network frame.

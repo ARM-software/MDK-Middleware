@@ -7,6 +7,8 @@
  *----------------------------------------------------------------------------*/
 
 #include "rl_net_lib.h"
+
+#ifdef Network_IPv6
 #include "net_sys.h"
 #include "net_eth.h"
 #include "net_ip6.h"
@@ -504,3 +506,4 @@ static bool mld_is_addr_valid (const uint8_t *ip6_addr) {
   }
   return (true);
 }
+#endif /* Network_IPv6 */

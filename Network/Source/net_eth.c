@@ -72,7 +72,7 @@ static bool eth_is_ucast4 (const uint8_t *mac_addr);
 static NET_ETH_CFG *eth_if_map (uint32_t if_num);
 static void eth_lock (NET_ETH_CFG *h);
 static void eth_unlock (NET_ETH_CFG *h);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (uint32_t link_info);
  static void debug_inf2 (const void *eth_header, uint32_t len);
 #endif
@@ -1424,7 +1424,7 @@ static void eth_unlock (NET_ETH_CFG *h) {
   netif_unlock (ctrl->semaphore);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print Link information.
   \param[in]   link_info  link speed and duplex mode.

@@ -24,7 +24,7 @@ static uint32_t  sntp_listener (int32_t socket, const NET_ADDR *addr,
 static netStatus sntp_set_mode (netSNTPc_Mode mode);
 static netStatus sntp_send_message (void);
 static void sntp_stop (void);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (const __ADDR *addr);
 #endif
 
@@ -376,7 +376,7 @@ static void sntp_stop (void) {
   sntp->Retries= 0;
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print IP address of NTP server.
   \param[in]   addr  structure containing IP address and port.

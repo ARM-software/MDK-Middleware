@@ -7,6 +7,8 @@
  *----------------------------------------------------------------------------*/
 
 #include "rl_net_lib.h"
+
+#ifdef Network_IPv6
 #include <string.h>
 #include "net_sys.h"
 #include "net_mem.h"
@@ -41,7 +43,7 @@ static NET_IP6_CTRL ip6_control;
 
 /* Local Functions */
 static uint16_t ip6_get_mtu (NET_IF_CFG *net_if);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (const NET_IP6_HEADER *ip6_hdr);
 #endif
 
@@ -516,7 +518,7 @@ uint16_t net_ip6_chksum (const uint8_t *src_addr, const uint8_t *dst_addr,
   return (net_chksum_buf (payload, (uint32_t)len, sum));
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print IPv6 header information.
   \param[in]   ip6_hdr  IPv6 frame header.
@@ -549,3 +551,4 @@ static void debug_info (const NET_IP6_HEADER *ip6_hdr) {
 d:DEBUGF (IP6," Length %d bytes\n",ntohs(ip6_hdr->Len));
 }
 #endif
+#endif /* Network_IPv6 */

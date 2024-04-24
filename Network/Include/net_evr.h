@@ -6,7 +6,7 @@
  * Purpose: Network definitions for Event Recorder
  *----------------------------------------------------------------------------*/
 
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #include <string.h>
 #include "EventRecorder.h"
 
@@ -74,7 +74,7 @@ typedef struct evr_addr {
 
 
 // NetSYS event identifiers ----------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetSYS_InitSystem            EventID (EventLevelOp,    EvtNetSYS, 0)
 #define EvtNetSYS_ThreadCreateFailed    EventID (EventLevelError, EvtNetSYS, 1)
 #define EvtNetSYS_TimerCreateFailed     EventID (EventLevelError, EvtNetSYS, 2)
@@ -94,7 +94,7 @@ typedef struct evr_addr {
                          - mm:   minor
                          - bbbb: build
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSYS_InitSystem(uint32_t lib_version) {
     uint16_t version = lib_version >> 16;
     uint16_t build   = lib_version & 0xFFFF;
@@ -107,7 +107,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on failure to create network core thread (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSYS_ThreadCreateFailed(void) {
     EventRecord2 (EvtNetSYS_ThreadCreateFailed, 0, 0);
   }
@@ -118,7 +118,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on failure to create network interval timer (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSYS_TimerCreateFailed(void) {
     EventRecord2 (EvtNetSYS_TimerCreateFailed, 0, 0);
   }
@@ -129,7 +129,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on network initialize complete (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSYS_InitComplete(void) {
     EventRecord2 (EvtNetSYS_InitComplete, 0, 0);
   }
@@ -142,7 +142,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  option        interface option to set
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSYS_SetOption(uint16_t if_id, int32_t option) {
     EventRecord2 (EvtNetSYS_SetOption, if_id, (uint32_t)option);
   }
@@ -155,7 +155,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  option        interface option to get
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSYS_GetOption(uint16_t if_id, int32_t option) {
     EventRecord2 (EvtNetSYS_GetOption, if_id, (uint32_t)option);
   }
@@ -168,7 +168,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip_version    internet protocol version to use
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSYS_SetDefault(uint16_t if_id, int32_t ip_version) {
     EventRecord2 (EvtNetSYS_SetDefault, if_id, (uint32_t)ip_version);
   }
@@ -181,7 +181,7 @@ typedef struct evr_addr {
   \param  name          pointer to host name string
   \param  length        length of host name string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSYS_SetHostName(const char *name, uint32_t length) {
     EventRecordData (EvtNetSYS_SetHostName, name, length);
   }
@@ -192,7 +192,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on network uninitialize start (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSYS_UninitSystem(void) {
     EventRecord2 (EvtNetSYS_UninitSystem, 0, 0);
   }
@@ -203,7 +203,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on network uninitialize complete (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSYS_UninitComplete(void) {
     EventRecord2 (EvtNetSYS_UninitComplete, 0, 0);
   }
@@ -213,7 +213,7 @@ typedef struct evr_addr {
 
 
 // NetMEM event identifiers ----------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetMEM_InitMemory                EventID (EventLevelOp,    EvtNetMEM,  0)
 #define EvtNetMEM_AllocMemory               EventID (EventLevelOp,    EvtNetMEM,  1)
 #define EvtNetMEM_AllocLimitExceeded        EventID (EventLevelOp,    EvtNetMEM,  2)
@@ -232,7 +232,7 @@ typedef struct evr_addr {
   \param  limit0        usage limit 0 (limit for ethernet and BSD receive buffering)
   \param  limit1        usage limit 1 (limit for TCP send buffering)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMEM_InitMemory(void *base, uint32_t size, uint32_t limit0, uint32_t limit1) {
     EventRecord4 (EvtNetMEM_InitMemory, (uint32_t)base, size, limit0, limit1);
   }
@@ -247,7 +247,7 @@ typedef struct evr_addr {
   \param  used          used memory status in bytes
   \param  blocks        number of used blocks status
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMEM_AllocMemory(void *mem, uint32_t size, uint32_t used, uint32_t blocks) {
     EventRecord4 (EvtNetMEM_AllocMemory, (uint32_t)mem, size, used, blocks);
   }
@@ -261,7 +261,7 @@ typedef struct evr_addr {
   \param  used          used memory status in bytes
   \param  blocks        number of used blocks status
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMEM_AllocLimitExceeded(uint32_t size, uint32_t used, uint32_t blocks) {
     EventRecord4 (EvtNetMEM_AllocLimitExceeded, size, used, blocks, 0);
   }
@@ -275,7 +275,7 @@ typedef struct evr_addr {
   \param  used          used memory status in bytes
   \param  blocks        number of used blocks status
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMEM_AllocOutOfMemory(uint32_t size, uint32_t used, uint32_t blocks) {
     EventRecord4 (EvtNetMEM_AllocOutOfMemory, size, used, blocks, 0);
   }
@@ -288,7 +288,7 @@ typedef struct evr_addr {
   \param  mem           pointer to allocated memory block
   \param  new_size      new block size
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMEM_ShrinkMemory(void *mem, uint32_t new_size) {
     EventRecord2 (EvtNetMEM_ShrinkMemory, (uint32_t)mem, new_size);
   }
@@ -303,7 +303,7 @@ typedef struct evr_addr {
   \param  used          used memory status in bytes
   \param  blocks        number of used blocks status
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMEM_FreeMemory(void *mem, uint32_t size, uint32_t used, uint32_t blocks) {
     EventRecord4 (EvtNetMEM_FreeMemory, (uint32_t)mem, size, used, blocks);
   }
@@ -315,7 +315,7 @@ typedef struct evr_addr {
   \brief  Event on attempt to free an invalid memory (Error)
   \param  mem           pointer to invalid memory block
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMEM_FreeInvalidBlock(void *mem) {
     EventRecord2 (EvtNetMEM_FreeInvalidBlock, (uint32_t)mem, 0);
   }
@@ -327,7 +327,7 @@ typedef struct evr_addr {
   \brief  Event on corrupted internal memory link (Error)
   \param  link          corrupted link pointer
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMEM_FreeLinkCorrupted(void *link) {
     EventRecord2 (EvtNetMEM_FreeLinkCorrupted, (uint32_t)link, 0);
   }
@@ -338,7 +338,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on de-initialize memory management (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMEM_UninitMemory(void) {
     EventRecord2 (EvtNetMEM_UninitMemory, 0, 0);
   }
@@ -348,7 +348,7 @@ typedef struct evr_addr {
 
 
 // NetETH event identifiers ----------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetETH_InitInterface             EventID (EventLevelOp,    EvtNetETH,  0)
 #define EvtNetETH_MacAddressConfigError     EventID (EventLevelError, EvtNetETH,  1)
 #define EvtNetETH_VlanConfigError           EventID (EventLevelError, EvtNetETH, 43)
@@ -404,7 +404,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet interface initialize (Op)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_InitInterface(uint8_t if_num) {
     EventRecord2 (EvtNetETH_InitInterface, if_num, 0);
   }
@@ -416,7 +416,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet MAC address configuration error (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_MacAddressConfigError(uint8_t if_num) {
     EventRecord2 (EvtNetETH_MacAddressConfigError, if_num, 0);
   }
@@ -428,7 +428,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet VLAN configuration error (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_VlanConfigError(uint8_t if_num) {
     EventRecord2 (EvtNetETH_VlanConfigError, if_num, 0);
   }
@@ -440,7 +440,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet VLAN initialization error (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_VlanInitError(uint8_t if_num) {
     EventRecord2 (EvtNetETH_VlanInitError, if_num, 0);
   }
@@ -452,7 +452,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet PHY configuration error (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_PhyDriverConfigError(uint8_t if_num) {
     EventRecord2 (EvtNetETH_PhyDriverConfigError, if_num, 0);
   }
@@ -464,7 +464,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet PHY initialization error (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_PhyDriverInitError(uint8_t if_num) {
     EventRecord2 (EvtNetETH_PhyDriverInitError, if_num, 0);
   }
@@ -476,7 +476,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet IPv4 configuration error (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_Ip4ConfigError(uint8_t if_num) {
     EventRecord2 (EvtNetETH_Ip4ConfigError, if_num, 0);
   }
@@ -488,7 +488,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet IPv6 configuration error (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_Ip6ConfigError(uint8_t if_num) {
     EventRecord2 (EvtNetETH_Ip6ConfigError, if_num, 0);
   }
@@ -500,7 +500,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet thread create failed (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_ThreadCreateFailed(uint8_t if_num) {
     EventRecord2 (EvtNetETH_ThreadCreateFailed, if_num, 0);
   }
@@ -512,7 +512,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet semaphore create failed (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SemaphoreCreateFailed(uint8_t if_num) {
     EventRecord2 (EvtNetETH_SemaphoreCreateFailed, if_num, 0);
   }
@@ -524,7 +524,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet get_option invalid parameter (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_GetOptionInvalidParameter(uint8_t if_num) {
     EventRecord2 (EvtNetETH_GetOptionInvalidParameter, if_num, 0);
   }
@@ -536,7 +536,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet set_option invalid parameter (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SetOptionInvalidParameter(uint8_t if_num) {
     EventRecord2 (EvtNetETH_SetOptionInvalidParameter, if_num, 0);
   }
@@ -549,7 +549,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  mac_addr      pointer to MAC address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SetMacAddress(uint8_t if_num, const uint8_t *mac_addr) {
     evr_buf.u16[0] = if_num;
     memcpy (&evr_buf.u16[1], mac_addr, 6);
@@ -566,7 +566,7 @@ typedef struct evr_addr {
                          - 0: VLAN tagging disabled
   \remark VLAN identifier is limited in the range from 1 to 4093.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SetVlanIdentifier(uint8_t if_num, uint16_t vlan_id) {
     EventRecord2 (EvtNetETH_SetVlanIdentifier, if_num, vlan_id);
   }
@@ -579,7 +579,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SetIp4Address(uint8_t if_num, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetETH_SetIp4Address, if_num, evr_buf.u32[0]);
@@ -593,7 +593,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  net_mask      pointer to IPv4 subnet mask
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SetIp4SubnetMask(uint8_t if_num, const uint8_t *net_mask) {
     memcpy (&evr_buf.u32[0], net_mask, 4);
     EventRecord2 (EvtNetETH_SetIp4SubnetMask, if_num, evr_buf.u32[0]);
@@ -607,7 +607,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip4_addr      pointer to IPv4 address of a gateway
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SetIp4DefaultGateway(uint8_t if_num, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetETH_SetIp4DefaultGateway, if_num, evr_buf.u32[0]);
@@ -621,7 +621,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip4_addr      pointer to IPv4 address of a DNS server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SetIp4PrimaryDNS(uint8_t if_num, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetETH_SetIp4PrimaryDNS, if_num, evr_buf.u32[0]);
@@ -635,7 +635,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip4_addr      pointer to IPv4 address of a DNS server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SetIp4SecondaryDNS(uint8_t if_num, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetETH_SetIp4SecondaryDNS, if_num, evr_buf.u32[0]);
@@ -651,7 +651,7 @@ typedef struct evr_addr {
                          - 0: fragmentation disabled
   \remark MTU is limited in the range from 576 to 1500 bytes.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SetIp4Mtu(uint8_t if_num, uint16_t mtu) {
     EventRecord2 (EvtNetETH_SetIp4Mtu, if_num, mtu);
   }
@@ -664,7 +664,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip6_addr      pointer to IPv6 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SetIp6Address(uint8_t if_num, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_num;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -679,7 +679,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip6_addr      pointer to IPv6 address of a gateway
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SetIp6DefaultGateway(uint8_t if_num, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_num;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -694,7 +694,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip6_addr      pointer to IPv6 address of a DNS server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SetIp6PrimaryDNS(uint8_t if_num, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_num;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -709,7 +709,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip6_addr      pointer to IPv6 address of a DNS server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SetIp6SecondaryDNS(uint8_t if_num, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_num;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -724,7 +724,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  pref_len      subnet prefix length
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SetIp6PrefixLength(uint8_t if_num, uint8_t pref_len) {
     EventRecord2 (EvtNetETH_SetIp6PrefixLength, if_num, pref_len);
   }
@@ -739,7 +739,7 @@ typedef struct evr_addr {
                          - 0: fragmentation disabled
   \remark MTU is limited in the range from 1280 to 1500 bytes.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SetIp6Mtu(uint8_t if_num, uint16_t mtu) {
     EventRecord2 (EvtNetETH_SetIp6Mtu, if_num, mtu);
   }
@@ -755,7 +755,7 @@ typedef struct evr_addr {
                          - 0: IPv4
                          - 1: IPv6
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SendFrame(uint8_t if_num, uint32_t length, uint8_t ip_version) {
     uint32_t val2 = ((uint32_t)ip_version << 16) | length;
     EventRecord2 (EvtNetETH_SendFrame, if_num, val2);
@@ -768,7 +768,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet link down error (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_LinkDownError(uint8_t if_num) {
     EventRecord2 (EvtNetETH_LinkDownError, if_num, 0);
   }
@@ -782,7 +782,7 @@ typedef struct evr_addr {
   \param  length        data length in bytes
   \param  max_length    maximum length of data in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SendDataTooLarge(uint8_t if_num, uint32_t length, uint32_t max_length) {
     uint32_t val2 = (max_length << 16) | length;
     EventRecord2 (EvtNetETH_SendDataTooLarge, if_num, val2);
@@ -795,7 +795,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet send IPv4 disabled error (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SendIp4Disabled(uint8_t if_num) {
     EventRecord2 (EvtNetETH_SendIp4Disabled, if_num, 0);
   }
@@ -807,7 +807,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet local IPv4 address undefined (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_Ip4LocalAddressUndefined(uint8_t if_num) {
     EventRecord2 (EvtNetETH_Ip4LocalAddressUndefined, if_num, 0);
   }
@@ -820,7 +820,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip4_addr      pointer to IPv4 destination address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_Ip4MacAddressUnresolved(uint8_t if_num, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetETH_Ip4MacAddressUnresolved, if_num, evr_buf.u32[0]);
@@ -835,7 +835,7 @@ typedef struct evr_addr {
   \param  ca_entry      cache entry identifier
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_EnqueueFrame(uint8_t if_num, uint8_t ca_entry, uint32_t length) {
     uint32_t val2 = ((uint32_t)ca_entry << 16) | length;
     EventRecord2 (EvtNetETH_EnqueueFrame, if_num, val2);
@@ -848,7 +848,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet send IPv6 disabled error (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SendIp6Disabled(uint8_t if_num) {
     EventRecord2 (EvtNetETH_SendIp6Disabled, if_num, 0);
   }
@@ -860,7 +860,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet local IPv6 address undefined (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_Ip6LocalAddressUndefined(uint8_t if_num) {
     EventRecord2 (EvtNetETH_Ip6LocalAddressUndefined, if_num, 0);
   }
@@ -873,7 +873,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip6_addr      pointer to IPv6 destination address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_Ip6MacAddressUnresolved(uint8_t if_num, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_num;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -890,7 +890,7 @@ typedef struct evr_addr {
                         - 0: IPv4
                         - 1: IPv6
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_InvalidIpVersion(uint8_t if_num, uint8_t ip_version) {
     EventRecord2 (EvtNetETH_InvalidIpVersion, if_num, ip_version);
   }
@@ -905,7 +905,7 @@ typedef struct evr_addr {
                          - SrcAddr  (6 bytes)
                          - Protocol (2 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_ShowFrameHeader(const void *eth_header) {
     EventRecordData (EvtNetETH_ShowFrameHeader, eth_header, 14);
   }
@@ -917,7 +917,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet link down status (Op)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_LinkDownStatus(uint8_t if_num) {
     EventRecord2 (EvtNetETH_LinkDownStatus, if_num, 0);
   }
@@ -932,7 +932,7 @@ typedef struct evr_addr {
                         - duplex (bit 2)
                         - speed  (bit 1,0)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_LinkUpStatus(uint8_t if_num, uint8_t link_info) {
     EventRecord2 (EvtNetETH_LinkUpStatus, if_num, link_info);
   }
@@ -945,7 +945,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_ReceiveFrame(uint8_t if_num, uint32_t length) {
     EventRecord2 (EvtNetETH_ReceiveFrame, if_num, length);
   }
@@ -957,7 +957,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet receive VLAN invalid (Op)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_VlanInvalid(uint8_t if_num) {
     EventRecord2 (EvtNetETH_VlanInvalid, if_num, 0);
   }
@@ -969,7 +969,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet receive IPv4 disabled (Op)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_Ip4Disabled(uint8_t if_num) {
     EventRecord2 (EvtNetETH_Ip4Disabled, if_num, 0);
   }
@@ -981,7 +981,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet receive IPv6 disabled (Op)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_Ip6Disabled(uint8_t if_num) {
     EventRecord2 (EvtNetETH_Ip6Disabled, if_num, 0);
   }
@@ -994,7 +994,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  protocol      unknown ethernet protocol type
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_ProtocolUnknown(uint8_t if_num, uint16_t protocol) {
     EventRecord2 (EvtNetETH_ProtocolUnknown, if_num, protocol);
   }
@@ -1007,7 +1007,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SendRawFrame(uint8_t if_num, uint32_t length) {
     EventRecord2 (EvtNetETH_SendRawFrame, if_num, length);
   }
@@ -1019,7 +1019,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet send raw frame invalid parameter (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_SendRawInvalidParameter(uint8_t if_num) {
     EventRecord2 (EvtNetETH_SendRawInvalidParameter, if_num, 0);
   }
@@ -1032,7 +1032,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_OutputLowLevel(uint8_t if_num, uint32_t length) {
     EventRecord2 (EvtNetETH_OutputLowLevel, if_num, length);
   }
@@ -1044,7 +1044,7 @@ typedef struct evr_addr {
   \brief  Event on Ethernet interface de-initialize (Op)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetETH_UninitInterface(uint8_t if_num) {
     EventRecord2 (EvtNetETH_UninitInterface, if_num, 0);
   }
@@ -1054,7 +1054,7 @@ typedef struct evr_addr {
 
 
 // NetWiFi event identifiers ----------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetWiFi_InitInterface             EventID (EventLevelOp,    EvtNetWiFi,  0)
 #define EvtNetWiFi_DriverInitFailed          EventID (EventLevelError, EvtNetWiFi,  1)
 #define EvtNetWiFi_SetBypassModeFailed       EventID (EventLevelError, EvtNetWiFi,  2)
@@ -1121,7 +1121,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi interface initialize (Op)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_InitInterface(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_InitInterface, if_num, 0);
   }
@@ -1133,7 +1133,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi failed to initialize the driver (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_DriverInitFailed(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_DriverInitFailed, if_num, 0);
   }
@@ -1145,7 +1145,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi failed to activate bypass mode (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetBypassModeFailed(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_SetBypassModeFailed, if_num, 0);
   }
@@ -1157,7 +1157,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi driver get MAC address failed (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_GetMacAddressFailed(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_GetMacAddressFailed, if_num, 0);
   }
@@ -1170,7 +1170,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  mac_addr      pointer to MAC address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_DriverMacAddress(uint8_t if_num, const uint8_t *mac_addr) {
     evr_buf.u16[0] = if_num;
     memcpy (&evr_buf.u16[1], mac_addr, 6);
@@ -1184,7 +1184,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi MAC address configuration error (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_MacAddressConfigError(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_MacAddressConfigError, if_num, 0);
   }
@@ -1196,7 +1196,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi driver failed to set MAC address (Op)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetMacAddressFailed(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_SetMacAddressFailed, if_num, 0);
   }
@@ -1208,7 +1208,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi IPv4 configuration error (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_Ip4ConfigError(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_Ip4ConfigError, if_num, 0);
   }
@@ -1220,7 +1220,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi IPv6 configuration error (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_Ip6ConfigError(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_Ip6ConfigError, if_num, 0);
   }
@@ -1232,7 +1232,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi thread create failed (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_ThreadCreateFailed(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_ThreadCreateFailed, if_num, 0);
   }
@@ -1244,7 +1244,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi semaphore create failed (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SemaphoreCreateFailed(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_SemaphoreCreateFailed, if_num, 0);
   }
@@ -1256,7 +1256,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi get_option invalid parameter (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_GetOptionInvalidParameter(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_GetOptionInvalidParameter, if_num, 0);
   }
@@ -1268,7 +1268,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi set_option invalid parameter (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetOptionInvalidParameter(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_SetOptionInvalidParameter, if_num, 0);
   }
@@ -1281,7 +1281,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  mac_addr      pointer to MAC address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetMacAddress(uint8_t if_num, const uint8_t *mac_addr) {
     evr_buf.u16[0] = if_num;
     memcpy (&evr_buf.u16[1], mac_addr, 6);
@@ -1296,7 +1296,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetIp4Address(uint8_t if_num, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetWiFi_SetIp4Address, if_num, evr_buf.u32[0]);
@@ -1310,7 +1310,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  net_mask      pointer to IPv4 subnet mask
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetIp4SubnetMask(uint8_t if_num, const uint8_t *net_mask) {
     memcpy (&evr_buf.u32[0], net_mask, 4);
     EventRecord2 (EvtNetWiFi_SetIp4SubnetMask, if_num, evr_buf.u32[0]);
@@ -1324,7 +1324,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip4_addr      pointer to IPv4 address of a gateway
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetIp4DefaultGateway(uint8_t if_num, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetWiFi_SetIp4DefaultGateway, if_num, evr_buf.u32[0]);
@@ -1338,7 +1338,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip4_addr      pointer to IPv4 address of a DNS server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetIp4PrimaryDNS(uint8_t if_num, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetWiFi_SetIp4PrimaryDNS, if_num, evr_buf.u32[0]);
@@ -1352,7 +1352,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip4_addr      pointer to IPv4 address of a DNS server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetIp4SecondaryDNS(uint8_t if_num, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetWiFi_SetIp4SecondaryDNS, if_num, evr_buf.u32[0]);
@@ -1368,7 +1368,7 @@ typedef struct evr_addr {
                          - 0: fragmentation disabled
   \remark MTU is limited in the range from 576 to 1500 bytes.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetIp4Mtu(uint8_t if_num, uint16_t mtu) {
     EventRecord2 (EvtNetWiFi_SetIp4Mtu, if_num, mtu);
   }
@@ -1381,7 +1381,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip6_addr      pointer to IPv6 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetIp6Address(uint8_t if_num, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_num;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -1396,7 +1396,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip6_addr      pointer to IPv6 address of a gateway
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetIp6DefaultGateway(uint8_t if_num, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_num;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -1411,7 +1411,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip6_addr      pointer to IPv6 address of a DNS server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetIp6PrimaryDNS(uint8_t if_num, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_num;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -1426,7 +1426,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip6_addr      pointer to IPv6 address of a DNS server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetIp6SecondaryDNS(uint8_t if_num, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_num;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -1441,7 +1441,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  pref_len      subnet prefix length
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetIp6PrefixLength(uint8_t if_num, uint8_t pref_len) {
     EventRecord2 (EvtNetWiFi_SetIp6PrefixLength, if_num, pref_len);
   }
@@ -1456,7 +1456,7 @@ typedef struct evr_addr {
                          - 0: fragmentation disabled
   \remark MTU is limited in the range from 1280 to 1500 bytes.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetIp6Mtu(uint8_t if_num, uint16_t mtu) {
     EventRecord2 (EvtNetWiFi_SetIp6Mtu, if_num, mtu);
   }
@@ -1469,7 +1469,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  max_num       maximum number of networks to scan
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_Scan(uint8_t if_num, uint32_t max_num) {
     EventRecord2 (EvtNetWiFi_Scan, if_num, max_num);
   }
@@ -1484,7 +1484,7 @@ typedef struct evr_addr {
                          - 0: Station
                          - 1: Access Point
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_ScanWrongMode(uint8_t if_num, uint32_t mode) {
     EventRecord2 (EvtNetWiFi_ScanWrongMode, if_num, mode);
   }
@@ -1496,7 +1496,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi scan invalid parameter (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_ScanInvalidParameter(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_ScanInvalidParameter, if_num, 0);
   }
@@ -1509,7 +1509,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  num           number of wireless networks found
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_ScanComplete(uint8_t if_num, uint32_t num) {
     EventRecord2 (EvtNetWiFi_ScanComplete, if_num, num);
   }
@@ -1522,7 +1522,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  opt           WiFi driver option to get
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_GetOption(uint8_t if_num, uint32_t opt) {
     EventRecord2 (EvtNetWiFi_GetOption, if_num, opt);
   }
@@ -1535,7 +1535,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  opt           WiFi driver option to set
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SetOption(uint8_t if_num, uint32_t opt) {
     EventRecord2 (EvtNetWiFi_SetOption, if_num, opt);
   }
@@ -1550,7 +1550,7 @@ typedef struct evr_addr {
                          - 0: Station
                          - 1: Access Point
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_Activate(uint8_t if_num, uint32_t mode) {
     EventRecord2 (EvtNetWiFi_Activate, if_num, mode);
   }
@@ -1562,7 +1562,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi activate invalid parameter (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_ActivateInvalidParameter(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_ActivateInvalidParameter, if_num, 0);
   }
@@ -1577,7 +1577,7 @@ typedef struct evr_addr {
                          - 0: Station
                          - 1: Access Point
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_Deactivate(uint8_t if_num, uint32_t mode) {
     EventRecord2 (EvtNetWiFi_Deactivate, if_num, mode);
   }
@@ -1589,7 +1589,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi deactivate invalid parameter (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_DeactivateInvalidParam(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_DeactivateInvalidParam, if_num, 0);
   }
@@ -1601,7 +1601,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi get network information (API)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_GetNetInfo(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_GetNetInfo, if_num, 0);
   }
@@ -1616,7 +1616,7 @@ typedef struct evr_addr {
                          - 0: Station
                          - 1: Access Point
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_GetNetInfoWrongMode(uint8_t if_num, uint32_t mode) {
     EventRecord2 (EvtNetWiFi_GetNetInfoWrongMode, if_num, mode);
   }
@@ -1628,7 +1628,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi get network information invalid parameter (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_GetNetInfoInvalidParam(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_GetNetInfoInvalidParam, if_num, 0);
   }
@@ -1644,7 +1644,7 @@ typedef struct evr_addr {
                          - 0: IPv4
                          - 1: IPv6
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SendFrame(uint8_t if_num, uint32_t length, uint8_t ip_version) {
     uint32_t val2 = ((uint32_t)ip_version << 16) | length;
     EventRecord2 (EvtNetWiFi_SendFrame, if_num, val2);
@@ -1657,7 +1657,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi station not connected (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_NotConnected(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_NotConnected, if_num, 0);
   }
@@ -1671,7 +1671,7 @@ typedef struct evr_addr {
   \param  length        data length in bytes
   \param  max_length    maximum length of data in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SendDataTooLarge(uint8_t if_num, uint32_t length, uint32_t max_length) {
     uint32_t val2 = (max_length << 16) | length;
     EventRecord2 (EvtNetWiFi_SendDataTooLarge, if_num, val2);
@@ -1684,7 +1684,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi send IPv4 disabled error (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SendIp4Disabled(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_SendIp4Disabled, if_num, 0);
   }
@@ -1696,7 +1696,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi local IPv4 address undefined (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_Ip4LocalAddressUndefined(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_Ip4LocalAddressUndefined, if_num, 0);
   }
@@ -1709,7 +1709,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip4_addr      pointer to IPv4 destination address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_Ip4MacAddressUnresolved(uint8_t if_num, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetWiFi_Ip4MacAddressUnresolved, if_num, evr_buf.u32[0]);
@@ -1724,7 +1724,7 @@ typedef struct evr_addr {
   \param  ca_entry      cache entry identifier
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_EnqueueFrame(uint8_t if_num, uint32_t ca_entry, uint32_t length) {
     uint32_t val2 = ((uint32_t)ca_entry << 16) | length;
     EventRecord2 (EvtNetWiFi_EnqueueFrame, if_num, val2);
@@ -1737,7 +1737,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi send IPv6 disabled error (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_SendIp6Disabled(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_SendIp6Disabled, if_num, 0);
   }
@@ -1749,7 +1749,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi local IPv6 address undefined (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_Ip6LocalAddressUndefined(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_Ip6LocalAddressUndefined, if_num, 0);
   }
@@ -1762,7 +1762,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  ip6_addr      pointer to IPv6 destination address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_Ip6MacAddressUnresolved(uint8_t if_num, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_num;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -1779,7 +1779,7 @@ typedef struct evr_addr {
                         - 0: IPv4
                         - 1: IPv6
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_InvalidIpVersion(uint8_t if_num, uint8_t ip_version) {
     EventRecord2 (EvtNetWiFi_InvalidIpVersion, if_num, ip_version);
   }
@@ -1794,7 +1794,7 @@ typedef struct evr_addr {
                          - SrcAddr  (6 bytes)
                          - Protocol (2 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_ShowFrameHeader(const void *eth_header) {
     EventRecordData (EvtNetWiFi_ShowFrameHeader, eth_header, 14);
   }
@@ -1809,7 +1809,7 @@ typedef struct evr_addr {
                          - 0: disconnected
                          - 1: connected to Access Point
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_LinkStateChange(uint8_t if_num, uint32_t state) {
     EventRecord2 (EvtNetWiFi_LinkStateChange, if_num, state);
   }
@@ -1822,7 +1822,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_ReceiveFrame(uint8_t if_num, uint32_t length) {
     EventRecord2 (EvtNetWiFi_ReceiveFrame, if_num, length);
   }
@@ -1834,7 +1834,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi receive IPv4 disabled (Op)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_Ip4Disabled(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_Ip4Disabled, if_num, 0);
   }
@@ -1846,7 +1846,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi receive IPv6 disabled (Op)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_Ip6Disabled(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_Ip6Disabled, if_num, 0);
   }
@@ -1859,7 +1859,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  protocol      unknown ethernet protocol type
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_ProtocolUnknown(uint8_t if_num, uint16_t protocol) {
     EventRecord2 (EvtNetWiFi_ProtocolUnknown, if_num, protocol);
   }
@@ -1872,7 +1872,7 @@ typedef struct evr_addr {
   \param  if_num        interface number
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_OutputLowLevel(uint8_t if_num, uint32_t length) {
     EventRecord2 (EvtNetWiFi_OutputLowLevel, if_num, length);
   }
@@ -1884,7 +1884,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi output queue overflow (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_TxQueueOverflow(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_TxQueueOverflow, if_num, 0);
   }
@@ -1896,7 +1896,7 @@ typedef struct evr_addr {
   \brief  Event on WIFI output out of memory (Error)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_OutputNoMemory(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_OutputNoMemory, if_num, 0);
   }
@@ -1908,7 +1908,7 @@ typedef struct evr_addr {
   \brief  Event on WiFi interface de-initialize (Op)
   \param  if_num        interface number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetWiFi_UninitInterface(uint8_t if_num) {
     EventRecord2 (EvtNetWiFi_UninitInterface, if_num, 0);
   }
@@ -1918,7 +1918,7 @@ typedef struct evr_addr {
 
 
 // NetPPP event identifiers ----------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 /* PPP-Core events */
 #define EvtNetPPP_InitInterface             EventID (EventLevelOp,    EvtNetPPP,  0)
 #define EvtNetPPP_ThreadCreateFailed        EventID (EventLevelError, EvtNetPPP,  1)
@@ -2038,7 +2038,7 @@ typedef struct evr_addr {
   \brief  Event on PPP interface initialize (Op)
   \remark Point-to-Point Protocol
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_InitInterface(void) {
     EventRecord2 (EvtNetPPP_InitInterface, 0, 0);
   }
@@ -2049,7 +2049,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP thread create failed (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ThreadCreateFailed(void) {
     EventRecord2 (EvtNetPPP_ThreadCreateFailed, 0, 0);
   }
@@ -2060,7 +2060,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP semaphore create failed (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_SemaphoreCreateFailed(void) {
     EventRecord2 (EvtNetPPP_SemaphoreCreateFailed, 0, 0);
   }
@@ -2071,7 +2071,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP get_option invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_GetOptionInvalidParameter(void) {
     EventRecord2 (EvtNetPPP_GetOptionInvalidParameter, 0, 0);
   }
@@ -2082,7 +2082,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP set_option invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_SetOptionInvalidParameter(void) {
     EventRecord2 (EvtNetPPP_SetOptionInvalidParameter, 0, 0);
   }
@@ -2094,7 +2094,7 @@ typedef struct evr_addr {
   \brief  Event on PPP set interface IPv4 address (Op)
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_SetIp4Address(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetPPP_SetIp4Address, ip4_addr, 4);
   }
@@ -2106,7 +2106,7 @@ typedef struct evr_addr {
   \brief  Event on PPP set interface primary DNS server (Op)
   \param  ip4_addr      pointer to IPv4 address of a DNS server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_SetIp4PrimaryDNS(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetPPP_SetIp4PrimaryDNS, ip4_addr, 4);
   }
@@ -2118,7 +2118,7 @@ typedef struct evr_addr {
   \brief  Event on PPP set interface secondary DNS server (Op)
   \param  ip4_addr      pointer to IPv4 address of a DNS server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_SetIp4SecondaryDNS(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetPPP_SetIp4SecondaryDNS, ip4_addr, 4);
   }
@@ -2132,7 +2132,7 @@ typedef struct evr_addr {
                          - 0: fragmentation disabled
   \remark MTU is limited in the range from 576 to 1500 bytes.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_SetIp4Mtu(uint16_t mtu) {
     EventRecord2 (EvtNetPPP_SetIp4Mtu, mtu, 0);
   }
@@ -2150,7 +2150,7 @@ typedef struct evr_addr {
                          - 0x0021: IP
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ReceiveFrame(uint16_t protocol, uint32_t length) {
     EventRecord2 (EvtNetPPP_ReceiveFrame, protocol, length);
   }
@@ -2163,7 +2163,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_FrameTooShort(uint32_t length, uint32_t min_length) {
     if (length > 1536) length = 0;
     EventRecord2 (EvtNetPPP_FrameTooShort, length, min_length);
@@ -2176,7 +2176,7 @@ typedef struct evr_addr {
   \brief  Event on PPP frame checksum check failed (Error)
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ChecksumFailed(uint32_t length) {
     EventRecord2 (EvtNetPPP_ChecksumFailed, length, 0);
   }
@@ -2189,7 +2189,7 @@ typedef struct evr_addr {
   \param  ctrl          received control byte
   \param  ctrl_valid    valid control byte
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_CtrlByteInvalid(uint8_t ctrl, uint8_t ctrl_valid) {
     EventRecord2 (EvtNetPPP_CtrlByteInvalid, ctrl, ctrl_valid);
   }
@@ -2207,7 +2207,7 @@ typedef struct evr_addr {
                          - 0x0021: IP
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_SendFrame(uint16_t protocol, uint32_t length) {
     EventRecord2 (EvtNetPPP_SendFrame, protocol, length);
   }
@@ -2221,7 +2221,7 @@ typedef struct evr_addr {
                         - 0: IPv4
                         - 1: IPv6
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_InvalidIpVersion(uint8_t ip_version) {
     EventRecord2 (EvtNetPPP_InvalidIpVersion, ip_version, 0);
   }
@@ -2232,7 +2232,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP network layer down (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_NetworkLayerDown(void) {
     EventRecord2 (EvtNetPPP_NetworkLayerDown, 0, 0);
   }
@@ -2245,7 +2245,7 @@ typedef struct evr_addr {
   \param  length        data length in bytes
   \param  max_length    maximum length of data in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_SendDataTooLarge(uint32_t length, uint32_t max_length) {
     EventRecord2 (EvtNetPPP_SendDataTooLarge, length, max_length);
   }
@@ -2256,7 +2256,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP out of memory for send (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_NoMemoryError(void) {
     EventRecord2 (EvtNetPPP_NoMemoryError, 0, 0);
   }
@@ -2267,7 +2267,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP add frame to transmit queue (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_QueueAddTransmit(void) {
     EventRecord2 (EvtNetPPP_QueueAddTransmit, 0, 0);
   }
@@ -2279,7 +2279,7 @@ typedef struct evr_addr {
   \brief  Event on PPP reject unsupported protocol type (Op)
   \param  protocol      unsupported protocol type
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_RejectProtocol(uint16_t protocol) {
     EventRecord2 (EvtNetPPP_RejectProtocol, protocol, 0);
   }
@@ -2294,7 +2294,7 @@ typedef struct evr_addr {
                          - 0x8021: IPCP
   \param  code          unsupported control code
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_RejectCode(uint16_t protocol, uint8_t code) {
     EventRecord2 (EvtNetPPP_RejectCode, protocol, code);
   }
@@ -2307,7 +2307,7 @@ typedef struct evr_addr {
   \param  dial_number   pointer to a dial number string
   \param  length        length of the dial number string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_Connect(const char *dial_number, uint32_t length) {
     if (length > 24) length = 24;
     EventRecordData (EvtNetPPP_Connect, dial_number, length);
@@ -2319,7 +2319,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP connect invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ConnectInvalidParameter(void) {
     EventRecord2 (EvtNetPPP_ConnectInvalidParameter, 0, 0);
   }
@@ -2330,7 +2330,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP connect in wrong state (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ConnectWrongState(void) {
     EventRecord2 (EvtNetPPP_ConnectWrongState, 0, 0);
   }
@@ -2341,7 +2341,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP start listening (API)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_Listen(void) {
     EventRecord2 (EvtNetPPP_Listen, 0, 0);
   }
@@ -2352,7 +2352,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP listen invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ListenInvalidParameter(void) {
     EventRecord2 (EvtNetPPP_ListenInvalidParameter, 0, 0);
   }
@@ -2363,7 +2363,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP listen in wrong state (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ListenWrongState(void) {
     EventRecord2 (EvtNetPPP_ListenWrongState, 0, 0);
   }
@@ -2374,7 +2374,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP close connection (API)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_Close(void) {
     EventRecord2 (EvtNetPPP_Close, 0, 0);
   }
@@ -2387,7 +2387,7 @@ typedef struct evr_addr {
   \param  username      pointer to a username string
   \param  length        length of the username string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ShowUsername(const char *username, uint32_t length) {
     if (length > 24) length = 24;
     EventRecordData (EvtNetPPP_ShowUsername, username, length);
@@ -2401,7 +2401,7 @@ typedef struct evr_addr {
   \param  password      pointer to a password string
   \param  length        length of the password string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ShowPassword(const char *password, uint32_t length) {
     if (length > 24) length = 24;
     EventRecordData (EvtNetPPP_ShowPassword, password, length);
@@ -2413,7 +2413,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP link change to modem offline (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ModemOffline(void) {
     EventRecord2 (EvtNetPPP_ModemOffline, 0, 0);
   }
@@ -2424,7 +2424,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP data-link layer down (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_DataLinkDown(void) {
     EventRecord2 (EvtNetPPP_DataLinkDown, 0, 0);
   }
@@ -2435,7 +2435,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP interface de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_UninitInterface(void) {
     EventRecord2 (EvtNetPPP_UninitInterface, 0, 0);
   }
@@ -2449,7 +2449,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-LCP initialize (Op)
   \remark Point-to-Point Link Control Protocol
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpInit(void) {
     EventRecord2 (EvtNetPPP_LcpInit, 0, 0);
   }
@@ -2460,7 +2460,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-LCP send configuration request (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpSendConfigRequest(void) {
     EventRecord2 (EvtNetPPP_LcpSendConfigRequest, 0, 0);
   }
@@ -2471,7 +2471,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-LCP no retries left for LCP negotiation (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpNoRetriesLeft(void) {
     EventRecord2 (EvtNetPPP_LcpNoRetriesLeft, 0, 0);
   }
@@ -2488,7 +2488,7 @@ typedef struct evr_addr {
                          -  ...
                          - bit 31: ascii character 31
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpOptionCharMap(uint32_t char_map) {
     EventRecord2 (EvtNetPPP_LcpOptionCharMap, char_map, 0);
   }
@@ -2499,7 +2499,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-LCP option PFC (Detail)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpOptionPfc(void) {
     EventRecord2 (EvtNetPPP_LcpOptionPfc, 0, 0);
   }
@@ -2510,7 +2510,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-LCP option ACFC (Detail)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpOptionAcfc(void) {
     EventRecord2 (EvtNetPPP_LcpOptionAcfc, 0, 0);
   }
@@ -2522,7 +2522,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-LCP option magic number (Detail)
   \param  magic_number  magic random number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpOptionMagicNumber(uint32_t magic_number) {
     EventRecord2 (EvtNetPPP_LcpOptionMagicNumber, magic_number, 0);
   }
@@ -2534,7 +2534,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-LCP option Authentication PAP (Detail)
   \remark Password Authentication Protocol - plain text
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpOptionAuthPap(void) {
     EventRecord2 (EvtNetPPP_LcpOptionAuthPap, 0, 0);
   }
@@ -2546,7 +2546,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-LCP option Authentication CHAP (Detail)
   \remark Challenge Handshake Authentication Protocol with MD5
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpOptionAuthChapMd5(void) {
     EventRecord2 (EvtNetPPP_LcpOptionAuthChapMd5, 0, 0);
   }
@@ -2558,7 +2558,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-LCP send echo request (Op)
   \param  magic_number  magic random number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpSendEchoRequest(uint32_t magic_number) {
     EventRecord2 (EvtNetPPP_LcpSendEchoRequest, magic_number, 0);
   }
@@ -2569,7 +2569,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-LCP send LCP terminate request (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpSendTerminateRequest(void) {
     EventRecord2 (EvtNetPPP_LcpSendTerminateRequest, 0, 0);
   }
@@ -2584,7 +2584,7 @@ typedef struct evr_addr {
                          - Id   (1 byte)
                          - Len  (2 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpSendFrame(const void *lcp_header) {
     EventRecordData (EvtNetPPP_LcpSendFrame, lcp_header, 4);
   }
@@ -2599,7 +2599,7 @@ typedef struct evr_addr {
                          - Id   (1 byte)
                          - Len  (2 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpReceiveFrame(const void *lcp_header) {
     EventRecordData (EvtNetPPP_LcpReceiveFrame, lcp_header, 4);
   }
@@ -2610,7 +2610,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-LCP data-link layer established (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpDataLinkUp(void) {
     EventRecord2 (EvtNetPPP_LcpDataLinkUp, 0, 0);
   }
@@ -2622,7 +2622,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-LCP option MRU (Op)
   \param  mru_size      maximum receive unit size
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpOptionMru(uint16_t mru_size) {
     EventRecord2 (EvtNetPPP_LcpOptionMru, mru_size, 0);
   }
@@ -2636,7 +2636,7 @@ typedef struct evr_addr {
                          - 0xC023: PAP
                          - 0xC223: CHAP
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpOptionAuth(uint16_t auth_type) {
     EventRecord2 (EvtNetPPP_LcpOptionAuth, auth_type, 0);
   }
@@ -2647,7 +2647,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-LCP option CHAP authentication not MD5 type (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpOptionAuthChapNotMd5(void) {
     EventRecord2 (EvtNetPPP_LcpOptionAuthChapNotMd5, 0, 0);
   }
@@ -2659,7 +2659,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-LCP unknown option received (Op)
   \param  lcp_option    unknown LCP option value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpOptionUnknown(uint8_t lcp_option) {
     EventRecord2 (EvtNetPPP_LcpOptionUnknown, lcp_option, 0);
   }
@@ -2670,7 +2670,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-LCP send reject (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpSendReject(void) {
     EventRecord2 (EvtNetPPP_LcpSendReject, 0, 0);
   }
@@ -2681,7 +2681,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-LCP send not acknowledge (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpSendNak(void) {
     EventRecord2 (EvtNetPPP_LcpSendNak, 0, 0);
   }
@@ -2692,7 +2692,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-LCP send acknowledge (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpSendAck(void) {
     EventRecord2 (EvtNetPPP_LcpSendAck, 0, 0);
   }
@@ -2705,7 +2705,7 @@ typedef struct evr_addr {
   \param  id            received LCP identifier
   \param  id_valid      valid LCP identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpWrongAckReceived(uint8_t id, uint8_t id_valid) {
     EventRecord2 (EvtNetPPP_LcpWrongAckReceived, id, id_valid);
   }
@@ -2718,7 +2718,7 @@ typedef struct evr_addr {
   \param  id            received LCP identifier
   \param  id_valid      valid LCP identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpWrongNakReceived(uint8_t id, uint8_t id_valid) {
     EventRecord2 (EvtNetPPP_LcpWrongNakReceived, id, id_valid);
   }
@@ -2729,7 +2729,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-LCP authentication type negotiation failed (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpConfigAuthFailed(void) {
     EventRecord2 (EvtNetPPP_LcpConfigAuthFailed, 0, 0);
   }
@@ -2742,7 +2742,7 @@ typedef struct evr_addr {
   \param  id            received LCP identifier
   \param  id_valid      valid LCP identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpWrongRejectReceived(uint8_t id, uint8_t id_valid) {
     EventRecord2 (EvtNetPPP_LcpWrongRejectReceived, id, id_valid);
   }
@@ -2754,7 +2754,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-LCP echo magic number (Op)
   \param  magic_number  peer echo magic number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpEchoMagicNumber(uint32_t magic_number) {
     EventRecord2 (EvtNetPPP_LcpEchoMagicNumber, magic_number, 0);
   }
@@ -2767,7 +2767,7 @@ typedef struct evr_addr {
   \param  magic         received peer magic number
   \param  magic_valid   valid peer magic number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpWrongPeerMagicNumber(uint32_t magic, uint32_t magic_valid) {
     EventRecord2 (EvtNetPPP_LcpWrongPeerMagicNumber, magic, magic_valid);
   }
@@ -2778,7 +2778,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-LCP send echo reply (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpSendEchoReply(void) {
     EventRecord2 (EvtNetPPP_LcpSendEchoReply, 0, 0);
   }
@@ -2791,7 +2791,7 @@ typedef struct evr_addr {
   \param  id            received LCP identifier
   \param  id_valid      valid LCP identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpWrongEchoReplyReceived(uint8_t id, uint8_t id_valid) {
     EventRecord2 (EvtNetPPP_LcpWrongEchoReplyReceived, id, id_valid);
   }
@@ -2802,7 +2802,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-LCP send terminate acknowledge (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpSendTerminateAck(void) {
     EventRecord2 (EvtNetPPP_LcpSendTerminateAck, 0, 0);
   }
@@ -2814,7 +2814,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-LCP de-initialize (Op)
   \remark Point-to-Point Link Control Protocol
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_LcpUninit(void) {
     EventRecord2 (EvtNetPPP_LcpUninit, 0, 0);
   }
@@ -2828,7 +2828,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-PAP initialize (Op)
   \remark Password Authentication Protocol
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_PapInit(void) {
     EventRecord2 (EvtNetPPP_PapInit, 0, 0);
   }
@@ -2841,7 +2841,7 @@ typedef struct evr_addr {
   \param  peer_id       peer identifier string (username)
   \param  length        length of the peer_id string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_PapSendAuthRequest(const char *peer_id, uint32_t length) {
     if (length > 24) length = 24;
     EventRecordData (EvtNetPPP_PapSendAuthRequest, peer_id, length);
@@ -2855,7 +2855,7 @@ typedef struct evr_addr {
   \param  password      authentication password
   \param  length        length of authentication password
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_PapShowPassword(const char *password, uint32_t length) {
     if (length > 24) length = 24;
     EventRecordData (EvtNetPPP_PapShowPassword, password, length);
@@ -2871,7 +2871,7 @@ typedef struct evr_addr {
                          - Id   (1 byte)
                          - Len  (2 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_PapSendFrame(const void *pap_header) {
     EventRecordData (EvtNetPPP_PapSendFrame, pap_header, 4);
   }
@@ -2886,7 +2886,7 @@ typedef struct evr_addr {
                          - Id   (1 byte)
                          - Len  (2 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_PapReceiveFrame(const void *pap_header) {
     EventRecordData (EvtNetPPP_PapReceiveFrame, pap_header, 4);
   }
@@ -2897,7 +2897,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-PAP login success (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_PapLoginSuccess(void) {
     EventRecord2 (EvtNetPPP_PapLoginSuccess, 0, 0);
   }
@@ -2908,7 +2908,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-PAP login failed (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_PapLoginFailed(void) {
     EventRecord2 (EvtNetPPP_PapLoginFailed, 0, 0);
   }
@@ -2921,7 +2921,7 @@ typedef struct evr_addr {
   \param  id            received PAP identifier
   \param  id_valid      valid PAP identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_PapWrongAckReceived(uint8_t id, uint8_t id_valid) {
     EventRecord2 (EvtNetPPP_PapWrongAckReceived, id, id_valid);
   }
@@ -2934,7 +2934,7 @@ typedef struct evr_addr {
   \param  id            received PAP identifier
   \param  id_valid      valid PAP identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_PapWrongNakReceived(uint8_t id, uint8_t id_valid) {
     EventRecord2 (EvtNetPPP_PapWrongNakReceived, id, id_valid);
   }
@@ -2946,7 +2946,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-PAP de-initialize (Op)
   \remark Password Authentication Protocol
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_PapUninit(void) {
     EventRecord2 (EvtNetPPP_PapUninit, 0, 0);
   }
@@ -2960,7 +2960,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-CHAP initialize (Op)
   \remark Challenge-Handshake Authentication Protocol
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ChapInit(void) {
     EventRecord2 (EvtNetPPP_ChapInit, 0, 0);
   }
@@ -2973,7 +2973,7 @@ typedef struct evr_addr {
   \param  name          system identification string
   \param  length        length of the system identification string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ChapSendChallenge(const char *name, uint32_t length) {
     EventRecordData (EvtNetPPP_ChapSendChallenge, name, length);
   }
@@ -2988,7 +2988,7 @@ typedef struct evr_addr {
                          - Id   (1 byte)
                          - Len  (2 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ChapSendFrame(const void *chap_header) {
     EventRecordData (EvtNetPPP_ChapSendFrame, chap_header, 4);
   }
@@ -3003,7 +3003,7 @@ typedef struct evr_addr {
                          - Id   (1 byte)
                          - Len  (2 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ChapReceiveFrame(const void *chap_header) {
     EventRecordData (EvtNetPPP_ChapReceiveFrame, chap_header, 4);
   }
@@ -3016,7 +3016,7 @@ typedef struct evr_addr {
   \param  id            received CHAP identifier
   \param  id_valid      valid CHAP identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ChapWrongResponseReceived(uint8_t id, uint8_t id_valid) {
     EventRecord2 (EvtNetPPP_ChapWrongResponseReceived, id, id_valid);
   }
@@ -3029,7 +3029,7 @@ typedef struct evr_addr {
   \param  id            received CHAP identifier
   \param  id_valid      valid CHAP identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ChapWrongSuccessReceived(uint8_t id, uint8_t id_valid) {
     EventRecord2 (EvtNetPPP_ChapWrongSuccessReceived, id, id_valid);
   }
@@ -3042,7 +3042,7 @@ typedef struct evr_addr {
   \param  id            received CHAP identifier
   \param  id_valid      valid CHAP identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ChapWrongFailureReceived(uint8_t id, uint8_t id_valid) {
     EventRecord2 (EvtNetPPP_ChapWrongFailureReceived, id, id_valid);
   }
@@ -3053,7 +3053,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-CHAP login success (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ChapLoginSuccess(void) {
     EventRecord2 (EvtNetPPP_ChapLoginSuccess, 0, 0);
   }
@@ -3064,7 +3064,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-CHAP login failed (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ChapLoginFailed(void) {
     EventRecord2 (EvtNetPPP_ChapLoginFailed, 0, 0);
   }
@@ -3076,7 +3076,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-CHAP de-initialize (Op)
   \remark Challenge-Handshake Authentication Protocol
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_ChapUninit(void) {
     EventRecord2 (EvtNetPPP_ChapUninit, 0, 0);
   }
@@ -3090,7 +3090,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-IPCP initialize (Op)
   \remark PPP Internet Protocol Control Protocol
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpInit(void) {
     EventRecord2 (EvtNetPPP_IpcpInit, 0, 0);
   }
@@ -3101,7 +3101,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-IPCP interface IPv4 configuration error (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpIp4ConfigError(void) {
     EventRecord2 (EvtNetPPP_IpcpIp4ConfigError, 0, 0);
   }
@@ -3112,7 +3112,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-IPCP send configuration request (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpSendConfigRequest(void) {
     EventRecord2 (EvtNetPPP_IpcpSendConfigRequest, 0, 0);
   }
@@ -3124,7 +3124,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-IPCP option IP-address (Detail)
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpOptionIpAddress(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetPPP_IpcpOptionIpAddress, ip4_addr, 4);
   }
@@ -3136,7 +3136,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-IPCP option primary DNS server address (Detail)
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpOptionPrimaryDns(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetPPP_IpcpOptionPrimaryDns, ip4_addr, 4);
   }
@@ -3148,7 +3148,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-IPCP option secondary DNS server address (Detail)
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpOptionSecondaryDns(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetPPP_IpcpOptionSecondaryDns, ip4_addr, 4);
   }
@@ -3163,7 +3163,7 @@ typedef struct evr_addr {
                          - Id   (1 byte)
                          - Len  (2 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpSendFrame(const void *ipcp_header) {
     EventRecordData (EvtNetPPP_IpcpSendFrame, ipcp_header, 4);
   }
@@ -3178,7 +3178,7 @@ typedef struct evr_addr {
                          - Id   (1 byte)
                          - Len  (2 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpReceiveFrame(const void *ipcp_header) {
     EventRecordData (EvtNetPPP_IpcpReceiveFrame, ipcp_header, 4);
   }
@@ -3190,7 +3190,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-IPCP unknown option received (Op)
   \param  ipcp_option   unknown IPCP option
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpOptionUnknown(uint8_t ipcp_option) {
     EventRecord2 (EvtNetPPP_IpcpOptionUnknown, ipcp_option, 0);
   }
@@ -3201,7 +3201,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-IPCP send reject (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpSendReject(void) {
     EventRecord2 (EvtNetPPP_IpcpSendReject, 0, 0);
   }
@@ -3212,7 +3212,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-IPCP send not acknowledge (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpSendNak(void) {
     EventRecord2 (EvtNetPPP_IpcpSendNak, 0, 0);
   }
@@ -3223,7 +3223,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-IPCP send acknowledge (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpSendAck(void) {
     EventRecord2 (EvtNetPPP_IpcpSendAck, 0, 0);
   }
@@ -3236,7 +3236,7 @@ typedef struct evr_addr {
   \param  id            received IPCP identifier
   \param  id_valid      valid IPCP identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpWrongAckReceived(uint8_t id, uint8_t id_valid) {
     EventRecord2 (EvtNetPPP_IpcpWrongAckReceived, id, id_valid);
   }
@@ -3247,7 +3247,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-IPCP network-layer established (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpNetworkLayerUp(void) {
     EventRecord2 (EvtNetPPP_IpcpNetworkLayerUp, 0, 0);
   }
@@ -3260,7 +3260,7 @@ typedef struct evr_addr {
   \param  id            received IPCP identifier
   \param  id_valid      valid IPCP identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpWrongNakReceived(uint8_t id, uint8_t id_valid) {
     EventRecord2 (EvtNetPPP_IpcpWrongNakReceived, id, id_valid);
   }
@@ -3273,7 +3273,7 @@ typedef struct evr_addr {
   \param  id            received IPCP identifier
   \param  id_valid      valid IPCP identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpWrongRejectReceived(uint8_t id, uint8_t id_valid) {
     EventRecord2 (EvtNetPPP_IpcpWrongRejectReceived, id, id_valid);
   }
@@ -3285,7 +3285,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-IPCP advertised IP-address not in subnet (Op)
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpWrongSubnet(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetPPP_IpcpWrongSubnet, ip4_addr, 4);
   }
@@ -3296,7 +3296,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-IPCP primary DNS server option rejected (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpPrimaryDnsRejected(void) {
     EventRecord2 (EvtNetPPP_IpcpPrimaryDnsRejected, 0, 0);
   }
@@ -3307,7 +3307,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-IPCP secondary DNS server option rejected (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpSecondaryDnsRejected(void) {
     EventRecord2 (EvtNetPPP_IpcpSecondaryDnsRejected, 0, 0);
   }
@@ -3318,7 +3318,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on PPP-IPCP IP-address option rejected (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpIpAddressRejected(void) {
     EventRecord2 (EvtNetPPP_IpcpIpAddressRejected, 0, 0);
   }
@@ -3330,7 +3330,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-IPCP not requested option rejected (Error)
   \param  ipcp_option   rejected option value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpNotRequestedOption(uint8_t ipcp_option) {
     EventRecord2 (EvtNetPPP_IpcpNotRequestedOption, ipcp_option, 0);
   }
@@ -3342,7 +3342,7 @@ typedef struct evr_addr {
   \brief  Event on PPP-IPCP de-initialize (Op)
   \remark PPP Internet Protocol Control Protocol
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetPPP_IpcpUninit(void) {
     EventRecord2 (EvtNetPPP_IpcpUninit, 0, 0);
   }
@@ -3352,7 +3352,7 @@ typedef struct evr_addr {
 
 
 // NetSLIP event identifiers ---------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetSLIP_InitInterface            EventID (EventLevelOp,    EvtNetSLIP,  0)
 #define EvtNetSLIP_Ip4ConfigError           EventID (EventLevelError, EvtNetSLIP,  1)
 #define EvtNetSLIP_ThreadCreateFailed       EventID (EventLevelError, EvtNetSLIP,  2)
@@ -3382,7 +3382,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SLIP interface initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_InitInterface(void) {
     EventRecord2 (EvtNetSLIP_InitInterface, 0, 0);
   }
@@ -3393,7 +3393,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SLIP IPv4 configuration error (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_Ip4ConfigError(void) {
     EventRecord2 (EvtNetSLIP_Ip4ConfigError, 0, 0);
   }
@@ -3404,7 +3404,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SLIP thread create failed (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_ThreadCreateFailed(void) {
     EventRecord2 (EvtNetSLIP_ThreadCreateFailed, 0, 0);
   }
@@ -3415,7 +3415,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SLIP semaphore create failed (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_SemaphoreCreateFailed(void) {
     EventRecord2 (EvtNetSLIP_SemaphoreCreateFailed, 0, 0);
   }
@@ -3426,7 +3426,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SLIP get_option invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_GetOptionInvalidParameter(void) {
     EventRecord2 (EvtNetSLIP_GetOptionInvalidParameter, 0, 0);
   }
@@ -3437,7 +3437,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SLIP set_option invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_SetOptionInvalidParameter(void) {
     EventRecord2 (EvtNetSLIP_SetOptionInvalidParameter, 0, 0);
   }
@@ -3449,7 +3449,7 @@ typedef struct evr_addr {
   \brief  Event on SLIP set interface IPv4 address (Op)
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_SetIp4Address(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetSLIP_SetIp4Address, ip4_addr, 4);
   }
@@ -3461,7 +3461,7 @@ typedef struct evr_addr {
   \brief  Event on SLIP set interface primary DNS server (Op)
   \param  ip4_addr      pointer to IPv4 address of a DNS server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_SetIp4PrimaryDNS(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetSLIP_SetIp4PrimaryDNS, ip4_addr, 4);
   }
@@ -3473,7 +3473,7 @@ typedef struct evr_addr {
   \brief  Event on SLIP set interface secondary DNS server (Op)
   \param  ip4_addr      pointer to IPv4 address of a DNS server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_SetIp4SecondaryDNS(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetSLIP_SetIp4SecondaryDNS, ip4_addr, 4);
   }
@@ -3487,7 +3487,7 @@ typedef struct evr_addr {
                          - 0: fragmentation disabled
   \remark MTU is limited in the range from 296 to 1500 bytes.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_SetIp4Mtu(uint16_t mtu) {
     EventRecord2 (EvtNetSLIP_SetIp4Mtu, mtu, 0);
   }
@@ -3500,7 +3500,7 @@ typedef struct evr_addr {
   \param  dial_number   pointer to a number to dial string
   \param  length        length of the dial_number string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_Connect(const char *dial_number, uint32_t length) {
     if (length > 24) length = 24;
     EventRecordData (EvtNetSLIP_Connect, dial_number, length);
@@ -3512,7 +3512,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SLIP connect invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_ConnectInvalidParameter(void) {
     EventRecord2 (EvtNetSLIP_ConnectInvalidParameter, 0, 0);
   }
@@ -3523,7 +3523,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SLIP connect in wrong state (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_ConnectWrongState(void) {
     EventRecord2 (EvtNetSLIP_ConnectWrongState, 0, 0);
   }
@@ -3534,7 +3534,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SLIP start listening (API)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_Listen(void) {
     EventRecord2 (EvtNetSLIP_Listen, 0, 0);
   }
@@ -3545,7 +3545,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SLIP listen in wrong state (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_ListenWrongState(void) {
     EventRecord2 (EvtNetSLIP_ListenWrongState, 0, 0);
   }
@@ -3556,7 +3556,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SLIP close connection (API)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_Close(void) {
     EventRecord2 (EvtNetSLIP_Close, 0, 0);
   }
@@ -3571,7 +3571,7 @@ typedef struct evr_addr {
                          - 0: IPv4
                          - 1: IPv6
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_SendFrame(uint32_t length, uint8_t ip_version) {
     EventRecord2 (EvtNetSLIP_SendFrame, length, ip_version);
   }
@@ -3585,7 +3585,7 @@ typedef struct evr_addr {
                         - 0: IPv4
                         - 1: IPv6
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_InvalidIpVersion(uint8_t ip_version) {
     EventRecord2 (EvtNetSLIP_InvalidIpVersion, ip_version, 0);
   }
@@ -3598,7 +3598,7 @@ typedef struct evr_addr {
   \param  length        data length in bytes
   \param  max_length    maximum length of data in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_SendDataTooLarge(uint32_t length, uint32_t max_length) {
     EventRecord2 (EvtNetSLIP_SendDataTooLarge, length, max_length);
   }
@@ -3609,7 +3609,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SLIP out of memory for send (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_NoMemoryError(void) {
     EventRecord2 (EvtNetSLIP_NoMemoryError, 0, 0);
   }
@@ -3620,7 +3620,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SLIP add frame to transmit queue (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_QueueAddTransmit(void) {
     EventRecord2 (EvtNetSLIP_QueueAddTransmit, 0, 0);
   }
@@ -3631,7 +3631,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SLIP link change to modem offline (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_ModemOffline(void) {
     EventRecord2 (EvtNetSLIP_ModemOffline, 0, 0);
   }
@@ -3643,7 +3643,7 @@ typedef struct evr_addr {
   \brief  Event on SLIP receive frame (Op)
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_ReceiveFrame(uint32_t length) {
     EventRecord2 (EvtNetSLIP_ReceiveFrame, length, 0);
   }
@@ -3654,7 +3654,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SLIP interface de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSLIP_UninitInterface(void) {
     EventRecord2 (EvtNetSLIP_UninitInterface, 0, 0);
   }
@@ -3664,7 +3664,7 @@ typedef struct evr_addr {
 
 
 // NetLOOP event identifiers ---------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetLOOP_InitInterface            EventID (EventLevelOp,    EvtNetLOOP, 0)
 #define EvtNetLOOP_SendFrame                EventID (EventLevelOp,    EvtNetLOOP, 1)
 #define EvtNetLOOP_NoMemoryError            EventID (EventLevelError, EvtNetLOOP, 2)
@@ -3675,7 +3675,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on Loopback interface initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetLOOP_InitInterface(void) {
     EventRecord2 (EvtNetLOOP_InitInterface, 0, 0);
   }
@@ -3690,7 +3690,7 @@ typedef struct evr_addr {
                          - 0: IPv4
                          - 1: IPv6
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetLOOP_SendFrame(uint32_t length, uint8_t ip_version) {
     EventRecord2 (EvtNetLOOP_SendFrame, length, ip_version);
   }
@@ -3701,7 +3701,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on Loopback out of memory for send (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetLOOP_NoMemoryError(void) {
     EventRecord2 (EvtNetLOOP_NoMemoryError, 0, 0);
   }
@@ -3716,7 +3716,7 @@ typedef struct evr_addr {
                          - 0: IPv4
                          - 1: IPv6
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetLOOP_ReceiveFrame(uint32_t length, uint8_t ip_version) {
     EventRecord2 (EvtNetLOOP_ReceiveFrame, length, ip_version);
   }
@@ -3727,7 +3727,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on Loopback interface de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetLOOP_UninitInterface(void) {
     EventRecord2 (EvtNetLOOP_UninitInterface, 0, 0);
   }
@@ -3737,7 +3737,7 @@ typedef struct evr_addr {
 
 
 // NetIP4 event identifiers ----------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetIP4_InitCore                  EventID (EventLevelOp,    EvtNetIP4,  0)
 #define EvtNetIP4_ReceiveFrame              EventID (EventLevelOp,    EvtNetIP4,  1)
 #define EvtNetIP4_FrameTooShort             EventID (EventLevelError, EvtNetIP4,  2)
@@ -3761,7 +3761,7 @@ typedef struct evr_addr {
   \brief  Event on IP4 core initialize (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_InitCore(uint16_t if_id) {
     EventRecord2 (EvtNetIP4_InitCore, if_id, 0);
   }
@@ -3774,7 +3774,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_ReceiveFrame(uint16_t if_id, uint32_t length) {
     EventRecord2 (EvtNetIP4_ReceiveFrame, if_id, length);
   }
@@ -3788,7 +3788,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_FrameTooShort(uint16_t if_id, uint32_t length, uint32_t min_length) {
     uint32_t val2 = (min_length << 16) | length;
     EventRecord2 (EvtNetIP4_FrameTooShort, if_id, val2);
@@ -3802,7 +3802,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip_version    IP protocol version value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_InvalidIpVersion(uint16_t if_id, uint8_t ip_version) {
     EventRecord2 (EvtNetIP4_InvalidIpVersion, if_id, ip_version);
   }
@@ -3824,7 +3824,7 @@ typedef struct evr_addr {
                          - SrcAddr  (4 bytes)
                          - DstAddr  (4 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_ShowFrameHeader(const void *ip4_header) {
     EventRecordData (EvtNetIP4_ShowFrameHeader, ip4_header, 20);
   }
@@ -3837,7 +3837,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_SourceIpAddressInvalid(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetIP4_SourceIpAddressInvalid, if_id, evr_buf.u32[0]);
@@ -3852,7 +3852,7 @@ typedef struct evr_addr {
   \param  ip4_protocol  wrong protocol type value
   \remark Only UDP and IGMP multicast frames are allowed.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_WrongMulticastProtocol(uint16_t if_id, uint8_t ip4_protocol) {
     EventRecord2 (EvtNetIP4_WrongMulticastProtocol, if_id, ip4_protocol);
   }
@@ -3866,7 +3866,7 @@ typedef struct evr_addr {
   \param  ip4_protocol  wrong protocol type value
   \remark Only UDP subnet broadcast frames are allowed.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_WrongBroadcastProtocol(uint16_t if_id, uint8_t ip4_protocol) {
     EventRecord2 (EvtNetIP4_WrongBroadcastProtocol, if_id, ip4_protocol);
   }
@@ -3879,7 +3879,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 destination address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_WrongDestinationAddress(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetIP4_WrongDestinationAddress, if_id, evr_buf.u32[0]);
@@ -3893,7 +3893,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  length        header length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_ChecksumFailed(uint16_t if_id, uint32_t length) {
     EventRecord2 (EvtNetIP4_ChecksumFailed, if_id, length);
   }
@@ -3906,19 +3906,19 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  frag          IP flags and fragment offset
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_FragmentDfFlagSet(uint16_t if_id, uint16_t frag) {
     EventRecord2 (EvtNetIP4_FragmentDfFlagSet, if_id, frag);
   }
 #else
-  #define EvrNetIP4_FragmentDfFlagSet(if_id, flags)
+  #define EvrNetIP4_FragmentDfFlagSet(if_id, frag)
 #endif
 
 /**
   \brief  Event on IP4 receive fragmented frame (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_FragmentationDisabled(uint16_t if_id) {
     EventRecord2 (EvtNetIP4_FragmentationDisabled, if_id, 0);
   }
@@ -3936,7 +3936,7 @@ typedef struct evr_addr {
                          - 17: UDP
   \param  length        frame length
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_SendFrame(uint16_t if_id, uint8_t ip4_protocol, uint32_t length) {
     uint32_t val2 = (length << 16) | ip4_protocol;
     EventRecord2 (EvtNetIP4_SendFrame, if_id, val2);
@@ -3950,7 +3950,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_protocol  unknown IPv4 protocol type value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_ProtocolUnknown(uint16_t if_id, uint8_t ip4_protocol) {
     EventRecord2 (EvtNetIP4_ProtocolUnknown, if_id, ip4_protocol);
   }
@@ -3962,7 +3962,7 @@ typedef struct evr_addr {
   \brief  Event on IP4 destination address not provided (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_DestinationAddressNull(uint16_t if_id) {
     EventRecord2 (EvtNetIP4_DestinationAddressNull, if_id, 0);
   }
@@ -3974,7 +3974,7 @@ typedef struct evr_addr {
   \brief  Event on IP4 set default interface for internet access (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_SetDefaultInterface(uint16_t if_id) {
     EventRecord2 (EvtNetIP4_SetDefaultInterface, if_id, 0);
   }
@@ -3985,7 +3985,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on IP4 core de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP4_UninitCore(void) {
     EventRecord2 (EvtNetIP4_UninitCore, 0, 0);
   }
@@ -3995,7 +3995,7 @@ typedef struct evr_addr {
 
 
 // NetICMP event identifiers ---------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 /* ICMP-Core events */
 #define EvtNetICMP_ReceiveFrame             EventID (EventLevelOp,    EvtNetICMP,  0)
 #define EvtNetICMP_ShowFrameHeader          EventID (EventLevelDetail,EvtNetICMP, 24)
@@ -4031,7 +4031,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_ReceiveFrame(uint16_t if_id, uint32_t length) {
     EventRecord2 (EvtNetICMP_ReceiveFrame, if_id, length);
   }
@@ -4048,7 +4048,7 @@ typedef struct evr_addr {
                          - EchoId  (2 bytes)
                          - EchoSeq (2 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_ShowFrameHeader(const void *icmp_header) {
     EventRecordData (EvtNetICMP_ShowFrameHeader, icmp_header, 8);
   }
@@ -4062,7 +4062,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_FrameTooShort(uint16_t if_id, uint32_t length, uint32_t min_length) {
     uint32_t val2 = (min_length << 16) | length;
     EventRecord2 (EvtNetICMP_FrameTooShort, if_id, val2);
@@ -4076,7 +4076,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_ChecksumFailed(uint16_t if_id, uint32_t length) {
     EventRecord2 (EvtNetICMP_ChecksumFailed, if_id, length);
   }
@@ -4090,7 +4090,7 @@ typedef struct evr_addr {
   \param  code          received ICMP code
   \param  code_valid    valid ICMP code
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_EchoRequestWrongCode(uint16_t if_id, uint8_t code, uint8_t code_valid) {
     uint32_t val2 = ((uint32_t)code_valid << 16) | code;
     EventRecord2 (EvtNetICMP_EchoRequestWrongCode, if_id, val2);
@@ -4104,7 +4104,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  data_length   length of the payload data
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_EchoRequestReceived(uint16_t if_id, uint32_t data_length) {
     EventRecord2 (EvtNetICMP_EchoRequestReceived, if_id, data_length);
   }
@@ -4116,7 +4116,7 @@ typedef struct evr_addr {
   \brief  Event on ICMP sending echo reply disabled (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_EchoReplyDisabled(uint16_t if_id) {
     EventRecord2 (EvtNetICMP_EchoReplyDisabled, if_id, 0);
   }
@@ -4128,7 +4128,7 @@ typedef struct evr_addr {
   \brief  Event on ICMP send echo reply (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_SendEchoReply(uint16_t if_id) {
     EventRecord2 (EvtNetICMP_SendEchoReply, if_id, 0);
   }
@@ -4141,7 +4141,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  data_length   length of the payload data
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_EchoReplyReceived(uint16_t if_id, uint32_t data_length) {
     EventRecord2 (EvtNetICMP_EchoReplyReceived, if_id, data_length);
   }
@@ -4153,7 +4153,7 @@ typedef struct evr_addr {
   \brief  Event on ICMP receive echo reply in wrong state (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_EchoReplyWrongState(uint16_t if_id) {
     EventRecord2 (EvtNetICMP_EchoReplyWrongState, if_id, 0);
   }
@@ -4167,7 +4167,7 @@ typedef struct evr_addr {
   \param  code          received ICMP code
   \param  code_valid    valid ICMP code
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_EchoReplyWrongCode(uint16_t if_id, uint8_t code, uint8_t code_valid) {
     uint32_t val2 = ((uint32_t)code_valid << 16) | code;
     EventRecord2 (EvtNetICMP_EchoReplyWrongCode, if_id, val2);
@@ -4181,7 +4181,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_EchoReplyWrongIpAddress(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetICMP_EchoReplyWrongIpAddress, if_id, evr_buf.u32[0]);
@@ -4196,7 +4196,7 @@ typedef struct evr_addr {
   \param  eid           received echo identifier
   \param  eid_valid     valid echo identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_EchoReplyWrongId(uint16_t if_id, uint16_t eid, uint16_t eid_valid) {
     uint32_t val2 = ((uint32_t)eid_valid << 16) | eid;
     EventRecord2 (EvtNetICMP_EchoReplyWrongId, if_id, val2);
@@ -4209,7 +4209,7 @@ typedef struct evr_addr {
   \brief  Event on ICMP invalid payload data in echo reply (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_EchoReplyWrongPayload(uint16_t if_id) {
     EventRecord2 (EvtNetICMP_EchoReplyWrongPayload, if_id, 0);
   }
@@ -4222,7 +4222,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  icmp_type     wrong ICMP message type value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_MessageTypeUnknown(uint16_t if_id, uint8_t icmp_type) {
     EventRecord2 (EvtNetICMP_MessageTypeUnknown, if_id, icmp_type);
   }
@@ -4234,7 +4234,7 @@ typedef struct evr_addr {
   \brief  Event on ICMP send echo request (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_SendEchoRequest(uint16_t if_id) {
     EventRecord2 (EvtNetICMP_SendEchoRequest, if_id, 0);
   }
@@ -4247,7 +4247,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on Ping client initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_PingInit(void) {
     EventRecord2 (EvtNetICMP_PingInit, 0, 0);
   }
@@ -4259,7 +4259,7 @@ typedef struct evr_addr {
   \brief  Event on Ping echo request (API)
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_PingEcho(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetICMP_PingEcho, ip4_addr, 4);
   }
@@ -4270,7 +4270,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on Ping target name not valid (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_PingTargetNotValid(void) {
     EventRecord2 (EvtNetICMP_PingTargetNotValid, 0, 0);
   }
@@ -4281,7 +4281,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on Ping host name resolver error (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_PingDnsError(void) {
     EventRecord2 (EvtNetICMP_PingDnsError, 0, 0);
   }
@@ -4292,7 +4292,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on Ping invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_PingInvalidParameter(void) {
     EventRecord2 (EvtNetICMP_PingInvalidParameter, 0, 0);
   }
@@ -4303,7 +4303,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on Ping client busy (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_PingClientBusy(void) {
     EventRecord2 (EvtNetICMP_PingClientBusy, 0, 0);
   }
@@ -4315,7 +4315,7 @@ typedef struct evr_addr {
   \brief  Event on Ping send echo request (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_PingSendRequest(uint16_t if_id) {
     EventRecord2 (EvtNetICMP_PingSendRequest, if_id, 0);
   }
@@ -4327,7 +4327,7 @@ typedef struct evr_addr {
   \brief  Event on Ping retransmit echo request (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_PingRetransmitRequest(uint16_t if_id) {
     EventRecord2 (EvtNetICMP_PingRetransmitRequest, if_id, 0);
   }
@@ -4339,7 +4339,7 @@ typedef struct evr_addr {
   \brief  Event on Ping client timeout (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_PingTimeout(uint16_t if_id) {
     EventRecord2 (EvtNetICMP_PingTimeout, if_id, 0);
   }
@@ -4350,7 +4350,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on Ping client de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP_PingUninit(void) {
     EventRecord2 (EvtNetICMP_PingUninit, 0, 0);
   }
@@ -4360,7 +4360,7 @@ typedef struct evr_addr {
 
 
 // NetIGMP event identifiers ---------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetIGMP_InitManager              EventID (EventLevelOp,    EvtNetIGMP,  0)
 #define EvtNetIGMP_Join                     EventID (EventLevelAPI,   EvtNetIGMP,  1)
 #define EvtNetIGMP_AlreadyInGroup           EventID (EventLevelOp,    EvtNetIGMP,  2)
@@ -4392,7 +4392,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  num_entries   number of entries available in membership table
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_InitManager(uint16_t if_id, uint32_t num_entries) {
     EventRecord2 (EvtNetIGMP_InitManager, if_id, num_entries);
   }
@@ -4405,7 +4405,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address of a group
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_Join(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetIGMP_Join, if_id, evr_buf.u32[0]);
@@ -4419,7 +4419,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  group_id      group membership identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_AlreadyInGroup(uint16_t if_id, uint8_t group_id) {
     EventRecord2 (EvtNetIGMP_AlreadyInGroup, if_id, group_id);
   }
@@ -4432,7 +4432,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  num_used      number of used membership table entries
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_NoFreeEntries(uint16_t if_id, uint8_t num_used) {
     EventRecord2 (EvtNetIGMP_NoFreeEntries, if_id, num_used);
   }
@@ -4445,7 +4445,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address of a group
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_SendReport(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetIGMP_SendReport, if_id, evr_buf.u32[0]);
@@ -4459,7 +4459,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address of a group
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_Leave(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetIGMP_Leave, if_id, evr_buf.u32[0]);
@@ -4473,7 +4473,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address of a group
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_NotInGroup(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetIGMP_NotInGroup, if_id, evr_buf.u32[0]);
@@ -4487,7 +4487,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address of a group
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_SendLeave(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetIGMP_SendLeave, if_id, evr_buf.u32[0]);
@@ -4502,7 +4502,7 @@ typedef struct evr_addr {
   \param  message_type  type of received message
   \param  length        length of received message
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_ReceiveFrame(uint16_t if_id, uint8_t message_type, uint32_t length) {
     uint32_t val1 = ((uint32_t)message_type << 16) | if_id;
     EventRecord2 (EvtNetIGMP_ReceiveFrame, val1, length);
@@ -4517,7 +4517,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_FrameTooShort(uint16_t if_id, uint32_t length, uint32_t min_length) {
     uint32_t val2 = (min_length << 16) | length;
     EventRecord2 (EvtNetIGMP_FrameTooShort, if_id, val2);
@@ -4531,7 +4531,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_ChecksumFailed(uint16_t if_id, uint32_t length) {
     EventRecord2 (EvtNetIGMP_ChecksumFailed, if_id, length);
   }
@@ -4544,7 +4544,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address of a group
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_GroupSpecificQuery(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetIGMP_GroupSpecificQuery, if_id, evr_buf.u32[0]);
@@ -4558,7 +4558,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address of a group
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_DestAddressWrong(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetIGMP_DestAddressWrong, if_id, evr_buf.u32[0]);
@@ -4572,7 +4572,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  max_time      maximum delay time in 100 ms ticks
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_DelayedReportScheduled(uint16_t if_id, uint8_t max_time) {
     EventRecord2 (EvtNetIGMP_DelayedReportScheduled, if_id, max_time);
   }
@@ -4585,7 +4585,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address of a group
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_GeneralQuery(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetIGMP_GeneralQuery, if_id, evr_buf.u32[0]);
@@ -4598,7 +4598,7 @@ typedef struct evr_addr {
   \brief  Event on start IGMPv1 mode (Op)
   \param  if_id         network interface identifier
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_StartModeIGMPv1(uint16_t if_id) {
     EventRecord2 (EvtNetIGMP_StartModeIGMPv1, if_id, 0);
   }
@@ -4611,7 +4611,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  max_time      maximum delay time in 100 ms ticks
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_MaxTimeForReport(uint16_t if_id, uint8_t max_time) {
     EventRecord2 (EvtNetIGMP_MaxTimeForReport, if_id, max_time);
   }
@@ -4624,7 +4624,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  n_reports     number of scheduled reports
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_GroupReportsScheduled(uint16_t if_id, uint32_t n_reports) {
     EventRecord2 (EvtNetIGMP_GroupReportsScheduled, if_id, n_reports);
   }
@@ -4636,7 +4636,7 @@ typedef struct evr_addr {
   \brief  Event on IGMP no report scheduled as no active group (Op)
   \param  if_id         network interface identifier
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_NoReportScheduled(uint16_t if_id) {
     EventRecord2 (EvtNetIGMP_NoReportScheduled, if_id, 0);
   }
@@ -4649,7 +4649,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address of a group
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_ReportReceived(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetIGMP_ReportReceived, if_id, evr_buf.u32[0]);
@@ -4663,7 +4663,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  group_id      group membership identifier
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_OwnReportCanceled(uint16_t if_id, uint8_t group_id) {
     EventRecord2 (EvtNetIGMP_OwnReportCanceled, if_id, group_id);
   }
@@ -4675,7 +4675,7 @@ typedef struct evr_addr {
   \brief  Event on start IGMPv2 mode (Op)
   \param  if_id         network interface identifier
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_StartModeIGMPv2(uint16_t if_id) {
     EventRecord2 (EvtNetIGMP_StartModeIGMPv2, if_id, 0);
   }
@@ -4688,7 +4688,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address of a group
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_SendDelayedReport(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetIGMP_SendDelayedReport, if_id, evr_buf.u32[0]);
@@ -4701,7 +4701,7 @@ typedef struct evr_addr {
   \brief  Event on IGMP manager de-initialize (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIGMP_UninitManager(uint16_t if_id) {
     EventRecord2 (EvtNetIGMP_UninitManager, if_id, 0);
   }
@@ -4711,7 +4711,7 @@ typedef struct evr_addr {
 
 
 // NetNBNS event identifiers ---------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetNBNS_InitService              EventID (EventLevelOp,    EvtNetNBNS,  0)
 #define EvtNetNBNS_GetSocketFailed          EventID (EventLevelError, EvtNetNBNS,  1)
 #define EvtNetNBNS_ReceiveFrame             EventID (EventLevelOp,    EvtNetNBNS,  2)
@@ -4741,7 +4741,7 @@ typedef struct evr_addr {
   \brief  Event on NBNS name service initialize (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_InitService(uint16_t if_id) {
     EventRecord2 (EvtNetNBNS_InitService, if_id, 0);
   }
@@ -4752,7 +4752,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on NBNS failed to allocate UDP socket (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_GetSocketFailed(void) {
     EventRecord2 (EvtNetNBNS_GetSocketFailed, 0, 0);
   }
@@ -4765,7 +4765,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_ReceiveFrame(uint16_t if_id, uint32_t length) {
     EventRecord2 (EvtNetNBNS_ReceiveFrame, if_id, length);
   }
@@ -4779,7 +4779,7 @@ typedef struct evr_addr {
   \param  port          received remote port number
   \param  port_valid    valid remote port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_WrongRemotePort(uint16_t if_id, uint16_t port, uint16_t port_valid) {
     uint32_t val2 = ((uint32_t)port_valid << 16) | port;
     EventRecord2 (EvtNetNBNS_WrongRemotePort, if_id, val2);
@@ -4794,7 +4794,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_FrameTooShort(uint16_t if_id, uint32_t length, uint32_t min_length) {
     uint32_t val2 = (min_length << 16) | length;
     EventRecord2 (EvtNetNBNS_FrameTooShort, if_id, val2);
@@ -4807,7 +4807,7 @@ typedef struct evr_addr {
   \brief  Event on NBNS receive frame for NetBIOS disabled (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_NetBiosDisabled(uint16_t if_id) {
     EventRecord2 (EvtNetNBNS_NetBiosDisabled, if_id, 0);
   }
@@ -4820,7 +4820,7 @@ typedef struct evr_addr {
   \param  q_name        pointer to a question name string
   \param  length        length of the question name string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_NameQueryRequest(const char *q_name, uint32_t length) {
     if (length > 16) length = 16;
     EventRecordData (EvtNetNBNS_NameQueryRequest, q_name, length);
@@ -4834,7 +4834,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address of a host
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_QueryFromAddress(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetNBNS_QueryFromAddress, if_id, evr_buf.u32[0]);
@@ -4848,7 +4848,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to local IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_NameQueryResponse(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetNBNS_NameQueryResponse, if_id, evr_buf.u32[0]);
@@ -4863,7 +4863,7 @@ typedef struct evr_addr {
   \param  tid           received transaction identifier
   \param  tid_valid     valid transaction identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_WrongTransactionId(uint16_t if_id, uint16_t tid, uint16_t tid_valid) {
     uint32_t val2 = ((uint32_t)tid_valid << 16) | tid;
     EventRecord2 (EvtNetNBNS_WrongTransactionId, if_id, val2);
@@ -4876,7 +4876,7 @@ typedef struct evr_addr {
   \brief  Event on NBNS resolve request with invalid parameter (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_ResolveInvalidParameter(uint16_t if_id) {
     EventRecord2 (EvtNetNBNS_ResolveInvalidParameter, if_id, 0);
   }
@@ -4888,7 +4888,7 @@ typedef struct evr_addr {
   \brief  Event on NBNS resolve request with NetBIOS disabled (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_ResolveNetBiosDisabled(uint16_t if_id) {
     EventRecord2 (EvtNetNBNS_ResolveNetBiosDisabled, if_id, 0);
   }
@@ -4900,7 +4900,7 @@ typedef struct evr_addr {
   \brief  Event on NBNS resolve request with client busy (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_ResolveClientBusy(uint16_t if_id) {
     EventRecord2 (EvtNetNBNS_ResolveClientBusy, if_id, 0);
   }
@@ -4913,7 +4913,7 @@ typedef struct evr_addr {
   \param  host_name     name of the host to resolve
   \param  length        length of the host_name string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_Resolve(const char *host_name, uint32_t length) {
     if (length > 16) length = 16;
     EventRecordData (EvtNetNBNS_Resolve, host_name, length);
@@ -4927,7 +4927,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IP address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_ResolvedFromCache(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetNBNS_ResolvedFromCache, if_id, evr_buf.u32[0]);
@@ -4940,7 +4940,7 @@ typedef struct evr_addr {
   \brief  Event on NBNS resolve request timeout expired (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_ResolveTimeoutExpired(uint16_t if_id) {
     EventRecord2 (EvtNetNBNS_ResolveTimeoutExpired, if_id, 0);
   }
@@ -4953,7 +4953,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IP address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_ResolvedAddress(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetNBNS_ResolvedAddress, if_id, evr_buf.u32[0]);
@@ -4966,7 +4966,7 @@ typedef struct evr_addr {
   \brief  Event on NBNS clear cache request with invalid parameter (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_ClearCacheInvalidParam(uint16_t if_id) {
     EventRecord2 (EvtNetNBNS_ClearCacheInvalidParam, if_id, 0);
   }
@@ -4978,7 +4978,7 @@ typedef struct evr_addr {
   \brief  Event on NBNS clear cache request with NetBIOS disabled (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_ClrCacheNetBiosDisabled(uint16_t if_id) {
     EventRecord2 (EvtNetNBNS_ClrCacheNetBiosDisabled, if_id, 0);
   }
@@ -4990,7 +4990,7 @@ typedef struct evr_addr {
   \brief  Event on NBNS clear cache request with client busy (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_ClearCacheClientBusy(uint16_t if_id) {
     EventRecord2 (EvtNetNBNS_ClearCacheClientBusy, if_id, 0);
   }
@@ -5004,7 +5004,7 @@ typedef struct evr_addr {
   \param  deleted       number of entries deleted from cache
   \param  available     number of entries available in cache
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_ClearCache(uint16_t if_id, uint32_t deleted, uint32_t available) {
     uint32_t val2 = (available << 16) | deleted;
     EventRecord2 (EvtNetNBNS_ClearCache, if_id, val2);
@@ -5017,7 +5017,7 @@ typedef struct evr_addr {
   \brief  Event on NBNS resolve address retransmit (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_ResolveRetransmit(uint16_t if_id) {
     EventRecord2 (EvtNetNBNS_ResolveRetransmit, if_id, 0);
   }
@@ -5029,7 +5029,7 @@ typedef struct evr_addr {
   \brief  Event on NBNS name service de-initialize (Op)
   \param  if_id         network interface identifier
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNBNS_UninitService(uint16_t if_id) {
     EventRecord2 (EvtNetNBNS_UninitService, if_id, 0);
   }
@@ -5039,7 +5039,7 @@ typedef struct evr_addr {
 
 
 // NetDHCP event identifiers ---------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetDHCP_InitClient               EventID (EventLevelOp,    EvtNetDHCP,  0)
 #define EvtNetDHCP_GetSocketFailed          EventID (EventLevelError, EvtNetDHCP,  1)
 #define EvtNetDHCP_StartClient              EventID (EventLevelOp,    EvtNetDHCP,  2)
@@ -5095,7 +5095,7 @@ typedef struct evr_addr {
   \param  ntp_servers   NTP servers list option enabled
   \param  vcid          Vendor Class Identifier option enabled
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_InitClient(uint16_t if_id, uint8_t bootfile,
                                              uint8_t ntp_servers, uint8_t vcid) {
     uint32_t val2 = (uint32_t)((bootfile << 2) | (ntp_servers << 1) | vcid);
@@ -5108,7 +5108,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DHCP failed to allocate UDP socket (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_GetSocketFailed(void) {
     EventRecord2 (EvtNetDHCP_GetSocketFailed, 0, 0);
   }
@@ -5120,7 +5120,7 @@ typedef struct evr_addr {
   \brief  Event on DHCP client start (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_StartClient(uint16_t if_id) {
     EventRecord2 (EvtNetDHCP_StartClient, if_id, 0);
   }
@@ -5132,7 +5132,7 @@ typedef struct evr_addr {
   \brief  Event on DHCP client stop (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_StopClient(uint16_t if_id) {
     EventRecord2 (EvtNetDHCP_StopClient, if_id, 0);
   }
@@ -5145,7 +5145,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  state         current state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ClientState(uint16_t if_id, uint8_t state) {
     EventRecord2 (EvtNetDHCP_ClientState, if_id, state);
   }
@@ -5158,7 +5158,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  state         next state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_NextState(uint16_t if_id, uint8_t state) {
     EventRecord2 (EvtNetDHCP_NextState, if_id, state);
   }
@@ -5171,7 +5171,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  state         current state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_StateRetransmit(uint16_t if_id, uint8_t state) {
     EventRecord2 (EvtNetDHCP_StateRetransmit, if_id, state);
   }
@@ -5185,7 +5185,7 @@ typedef struct evr_addr {
   \param  current       current state
   \param  next          next state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ChangeStateOnTimeout(uint16_t if_id, uint8_t current, uint8_t next) {
     uint32_t val2 = ((uint32_t)next << 16) | current;
     EventRecord2 (EvtNetDHCP_ChangeStateOnTimeout, if_id, val2);
@@ -5199,7 +5199,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IP address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_AutoIpAddressProbe(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetDHCP_AutoIpAddressProbe, if_id, evr_buf.u32[0]);
@@ -5213,7 +5213,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  auto_lm       pointer to assigned AutoIP address and network mask
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_AutoIpSuccess(uint16_t if_id, const uint8_t *auto_lm) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], auto_lm, 8);
@@ -5228,7 +5228,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  state         current state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_T2Expired(uint16_t if_id, uint8_t state) {
     EventRecord2 (EvtNetDHCP_T2Expired, if_id, state);
   }
@@ -5241,7 +5241,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  state         current state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_LeaseExpired(uint16_t if_id, uint8_t state) {
     EventRecord2 (EvtNetDHCP_LeaseExpired, if_id, state);
   }
@@ -5257,7 +5257,7 @@ typedef struct evr_addr {
                          - 0: no
                          - 1: yes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_SendDhcpMessage(uint16_t if_id, uint8_t msg_type, uint8_t broadcast) {
     uint32_t val2 = ((uint32_t)broadcast << 16) | msg_type;
     EventRecord2 (EvtNetDHCP_SendDhcpMessage, if_id, val2);
@@ -5272,7 +5272,7 @@ typedef struct evr_addr {
   \param  ip4_addr      pointer to IPv4 address of the server
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ReceiveFrame(uint16_t if_id, const uint8_t *ip4_addr, uint32_t length) {
     uint32_t val1 = (length << 16) | if_id;
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
@@ -5288,7 +5288,7 @@ typedef struct evr_addr {
   \param  port          received server port number
   \param  port_valid    valid server port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_WrongServerPort(uint16_t if_id, uint16_t port, uint16_t port_valid) {
     uint32_t val2 = ((uint32_t)port_valid << 16) | port;
     EventRecord2 (EvtNetDHCP_WrongServerPort, if_id, val2);
@@ -5303,7 +5303,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_FrameTooShort(uint16_t if_id, uint32_t length, uint32_t min_length) {
     uint32_t val2 = (min_length << 16) | length;
     EventRecord2 (EvtNetDHCP_FrameTooShort, if_id, val2);
@@ -5316,7 +5316,7 @@ typedef struct evr_addr {
   \brief  Event on DHCP receive misformed reply (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_MisformedReply(uint16_t if_id) {
     EventRecord2 (EvtNetDHCP_MisformedReply, if_id, 0);
   }
@@ -5330,7 +5330,7 @@ typedef struct evr_addr {
   \param  xid           received transaction identifier
   \param  xid_valid     valid transaction identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_WrongTransactionId(uint16_t if_id, uint32_t xid, uint32_t xid_valid) {
     EventRecord4 (EvtNetDHCP_WrongTransactionId, if_id, xid, xid_valid, 0);
   }
@@ -5343,7 +5343,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  chaddr        pointer to received chaddr address (MAC)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_WrongClientHwAddress(uint16_t if_id, const uint8_t *chaddr) {
     evr_buf.u16[0] = if_id;
     memcpy (&evr_buf.u16[1], chaddr, 6);
@@ -5359,7 +5359,7 @@ typedef struct evr_addr {
   \param  cookie        received magic cookie
   \param  cookie_valid  valid magic cookie
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_WrongMagicCookie(uint16_t if_id, uint32_t cookie, uint32_t cookie_valid) {
     EventRecord4 (EvtNetDHCP_WrongMagicCookie, if_id, cookie, cookie_valid, 0);
   }
@@ -5373,7 +5373,7 @@ typedef struct evr_addr {
   \param  msg_type      received message type
   \param  msg_valid     valid message type
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_InvalidMessageType(uint16_t if_id, uint8_t msg_type, uint8_t msg_valid) {
     uint32_t val2 = ((uint32_t)msg_valid << 16) | msg_type;
     EventRecord2 (EvtNetDHCP_InvalidMessageType, if_id, val2);
@@ -5387,7 +5387,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  msg_type      message type
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ViewMessage(uint16_t if_id, uint8_t msg_type) {
     EventRecord2 (EvtNetDHCP_ViewMessage, if_id, msg_type);
   }
@@ -5400,7 +5400,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  msg_type      message type
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_FileOverloadOptions(uint16_t if_id, uint8_t msg_type) {
     EventRecord2 (EvtNetDHCP_FileOverloadOptions, if_id, msg_type);
   }
@@ -5413,7 +5413,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  msg_type      message type
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_SnameOverloadOptions(uint16_t if_id, uint8_t msg_type) {
     EventRecord2 (EvtNetDHCP_SnameOverloadOptions, if_id, msg_type);
   }
@@ -5426,7 +5426,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  msg_type      received message type
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_MissingServerId(uint16_t if_id, uint8_t msg_type) {
     EventRecord2 (EvtNetDHCP_MissingServerId, if_id, msg_type);
   }
@@ -5439,7 +5439,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  msg_type      received message type
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ForwardedMessage(uint16_t if_id, uint8_t msg_type) {
     EventRecord2 (EvtNetDHCP_ForwardedMessage, if_id, msg_type);
   }
@@ -5452,7 +5452,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_OfferedAddressInvalid(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetDHCP_OfferedAddressInvalid, if_id,  evr_buf.u32[0]);
@@ -5466,7 +5466,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ViewRelayAgentAddress(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetDHCP_ViewRelayAgentAddress, if_id, evr_buf.u32[0]);
@@ -5480,7 +5480,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ViewOfferedAddress(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetDHCP_ViewOfferedAddress, if_id, evr_buf.u32[0]);
@@ -5494,7 +5494,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ServerAddressNotSelected(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetDHCP_ServerAddressNotSelected, if_id, evr_buf.u32[0]);
@@ -5508,7 +5508,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_AssignedAddrNotRequested(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetDHCP_AssignedAddrNotRequested, if_id, evr_buf.u32[0]);
@@ -5522,7 +5522,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ViewAssignedAddress(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetDHCP_ViewAssignedAddress, if_id, evr_buf.u32[0]);
@@ -5536,7 +5536,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ViewServerId(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetDHCP_ViewServerId, if_id, evr_buf.u32[0]);
@@ -5550,7 +5550,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  net_mask      pointer to network mask
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ViewNetMask(uint16_t if_id, const uint8_t *net_mask) {
     memcpy (&evr_buf.u32[0], net_mask, 4);
     EventRecord2 (EvtNetDHCP_ViewNetMask, if_id, evr_buf.u32[0]);
@@ -5564,7 +5564,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IPv4 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ViewGatewayAddress(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetDHCP_ViewGatewayAddress, if_id, evr_buf.u32[0]);
@@ -5579,7 +5579,7 @@ typedef struct evr_addr {
   \param  dns_list      pointer to DNS server address list
   \remark Displays primary and secondary DNS server address.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ViewDnsServers(uint16_t if_id, const uint8_t *dns_list) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], dns_list, 8);
@@ -5594,7 +5594,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  lease_time    lease time in seconds
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ViewLeaseTime(uint16_t if_id, uint32_t lease_time) {
     EventRecord2 (EvtNetDHCP_ViewLeaseTime, if_id, lease_time);
   }
@@ -5607,7 +5607,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  t1_time       t1 time in seconds
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ViewTimeT1(uint16_t if_id, uint32_t t1_time) {
     EventRecord2 (EvtNetDHCP_ViewTimeT1, if_id, t1_time);
   }
@@ -5620,7 +5620,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  t2_time       t2 time in seconds
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ViewTimeT2(uint16_t if_id, uint32_t t2_time) {
     EventRecord2 (EvtNetDHCP_ViewTimeT2, if_id, t2_time);
   }
@@ -5633,7 +5633,7 @@ typedef struct evr_addr {
   \param  bootfile      bootfile name string
   \param  length        length of the bootfile name string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ViewBootfileName(const uint8_t *bootfile, uint32_t length) {
     if (length > 32) length = 32;
     EventRecordData (EvtNetDHCP_ViewBootfileName, bootfile, length);
@@ -5648,7 +5648,7 @@ typedef struct evr_addr {
   \param  ntp_list      pointer to an array of NTP server IP addresses
   \param  length        length of an array in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_ViewNtpServerList(uint16_t if_id, const uint8_t *ntp_list, uint32_t length) {
     evr_buf.u16[0] = if_id;
     evr_buf.u16[1] = (length > 12 ? 12 : length) & 0xFFFF;
@@ -5663,7 +5663,7 @@ typedef struct evr_addr {
   \brief  Event on DHCP set_option invalid parameter (Error)
   \param  if_id         network interface identifier
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_SetOptionInvalidParam(uint16_t if_id) {
     EventRecord2 (EvtNetDHCP_SetOptionInvalidParam, if_id, 0);
   }
@@ -5676,7 +5676,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  state         DHCP client state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_SetOptionInvalidState(uint16_t if_id, uint8_t state) {
     EventRecord2 (EvtNetDHCP_SetOptionInvalidState, if_id, state);
   }
@@ -5693,7 +5693,7 @@ typedef struct evr_addr {
                          - 255: IANA.
   \remark Default DHCP Client-identifier is ethernet MAC address.
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_SetOptionClientIdDefault(uint16_t if_id, uint8_t type) {
     EventRecord2 (EvtNetDHCP_SetOptionClientIdDefault, if_id, type);
   }
@@ -5710,7 +5710,7 @@ typedef struct evr_addr {
                          - 255: IANA.
   \param  length        length of DHCP option including hardware type
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_SetOptionClientId(uint16_t if_id, uint8_t type, uint32_t length) {
     uint32_t val2 = ((uint32_t)type << 16) | length;
     EventRecord2 (EvtNetDHCP_SetOptionClientId, if_id, val2);
@@ -5723,7 +5723,7 @@ typedef struct evr_addr {
   \brief  Event on DHCP client de-initialize (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP_UninitClient(uint16_t if_id) {
     EventRecord2 (EvtNetDHCP_UninitClient, if_id, 0);
   }
@@ -5733,7 +5733,7 @@ typedef struct evr_addr {
 
 
 // NetARP event identifiers ----------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetARP_InitCache                 EventID (EventLevelOp,    EvtNetARP,  0)
 #define EvtNetARP_ReceiveFrame              EventID (EventLevelOp,    EvtNetARP,  1)
 #define EvtNetARP_FrameTooShort             EventID (EventLevelError, EvtNetARP,  2)
@@ -5794,7 +5794,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  num_entries   number of entries available in cache
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_InitCache(uint16_t if_id, uint32_t num_entries) {
     EventRecord2 (EvtNetARP_InitCache, if_id, num_entries);
   }
@@ -5814,7 +5814,7 @@ typedef struct evr_addr {
                          - 0x0009: Inverse ARP Response
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_ReceiveFrame(uint16_t if_id, uint16_t opcode, uint32_t length) {
     uint32_t val2 = ((uint32_t)opcode << 16) | length;
     EventRecord2 (EvtNetARP_ReceiveFrame, if_id, val2);
@@ -5829,7 +5829,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_FrameTooShort(uint16_t if_id, uint32_t length, uint32_t min_length) {
     uint32_t val2 = (min_length << 16) | length;
     EventRecord2 (EvtNetARP_FrameTooShort, if_id, val2);
@@ -5842,7 +5842,7 @@ typedef struct evr_addr {
   \brief  Event on ARP received frame corrupted (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_FrameCorrupted(uint16_t if_id) {
     EventRecord2 (EvtNetARP_FrameCorrupted, if_id, 0);
   }
@@ -5863,7 +5863,7 @@ typedef struct evr_addr {
                          - TargHwAddr   (6 bytes)
                          - TargIpAddr   (4 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_ShowFrameHeader(const void *arp_header) {
     EventRecordData (EvtNetARP_ShowFrameHeader, arp_header, 28);
   }
@@ -5875,7 +5875,7 @@ typedef struct evr_addr {
   \brief  Event on ARP invalid IP or MAC address of sender received (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_SenderAddressInvalid(uint16_t if_id) {
     EventRecord2 (EvtNetARP_SenderAddressInvalid, if_id, 0);
   }
@@ -5888,7 +5888,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  entry         cache entry number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_CacheEntryUpdate(uint16_t if_id, uint32_t entry) {
     EventRecord2 (EvtNetARP_CacheEntryUpdate, if_id, entry);
   }
@@ -5901,7 +5901,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IP address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_ProbeResponseReceived(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetARP_ProbeResponseReceived, if_id, evr_buf.u32[0]);
@@ -5915,7 +5915,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IP address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_WrongIpAddress(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetARP_WrongIpAddress, if_id, evr_buf.u32[0]);
@@ -5929,7 +5929,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  mac_addr      pointer to MAC address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_WrongMacAddress(uint16_t if_id, const uint8_t *mac_addr) {
     evr_buf.u16[0] = if_id;
     memcpy (&evr_buf.u16[1], mac_addr, 6);
@@ -5944,7 +5944,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  opcode        unknown operation code value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_OpcodeUnknown(uint16_t if_id, uint16_t opcode) {
     EventRecord2 (EvtNetARP_OpcodeUnknown, if_id, opcode);
   }
@@ -5959,7 +5959,7 @@ typedef struct evr_addr {
                          - 0x0002: ARP Reply
                          - 0x0009: Inverse ARP Response
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_SendReply(uint16_t if_id, uint16_t opcode) {
     EventRecord2 (EvtNetARP_SendReply, if_id, opcode);
   }
@@ -5972,7 +5972,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  entry         cache entry number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_CacheEntryRefreshed(uint16_t if_id, uint32_t entry) {
     EventRecord2 (EvtNetARP_CacheEntryRefreshed, if_id, entry);
   }
@@ -5984,7 +5984,7 @@ typedef struct evr_addr {
   \brief  Event on ARP wrong response received (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_WrongResponse(uint16_t if_id) {
     EventRecord2 (EvtNetARP_WrongResponse, if_id, 0);
   }
@@ -5999,7 +5999,7 @@ typedef struct evr_addr {
                          - 0x0001: ARP Request
                          - 0x0008: Inverse ARP Request
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_SendRequest(uint16_t if_id, uint16_t opcode) {
     EventRecord2 (EvtNetARP_SendRequest, if_id, opcode);
   }
@@ -6011,7 +6011,7 @@ typedef struct evr_addr {
   \brief  Event on ARP allocate free cache entry failed (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_CacheAllocFailed(uint16_t if_id) {
     EventRecord2 (EvtNetARP_CacheAllocFailed, if_id, 0);
   }
@@ -6024,7 +6024,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IP address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_CacheIpRefreshed(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetARP_CacheIpRefreshed, if_id, evr_buf.u32[0]);
@@ -6039,7 +6039,7 @@ typedef struct evr_addr {
   \param  ip4_addr      pointer to IP address
   \param  mac_addr      pointer to MAC address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_CacheAdd(uint16_t if_id, const uint8_t *ip4_addr, const uint8_t *mac_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u8[4], ip4_addr, 4);
@@ -6055,7 +6055,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IP address of a gateway
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_GatewayUnknown(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetARP_GatewayUnknown, if_id, evr_buf.u32[0]);
@@ -6069,7 +6069,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  entry         cache entry number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_CacheEntryAdded(uint16_t if_id, uint32_t entry) {
     EventRecord2 (EvtNetARP_CacheEntryAdded, if_id, entry);
   }
@@ -6083,7 +6083,7 @@ typedef struct evr_addr {
   \param  ip4_addr      pointer to IP address
   \param  mac_addr      pointer to MAC address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_CacheEarly(uint16_t if_id, const uint8_t *ip4_addr, const uint8_t *mac_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u8[4], ip4_addr, 4);
@@ -6099,7 +6099,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IP address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_CacheFind(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetARP_CacheFind, if_id, evr_buf.u32[0]);
@@ -6113,7 +6113,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IP address of a gateway
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_UsingGateway(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetARP_UsingGateway, if_id, evr_buf.u32[0]);
@@ -6127,7 +6127,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to requested IP address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_UnresolvedMacAddress(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetARP_UnresolvedMacAddress, if_id, evr_buf.u32[0]);
@@ -6141,7 +6141,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  entry         cache entry number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_EntryFound(uint16_t if_id, uint32_t entry) {
     EventRecord2 (EvtNetARP_EntryFound, if_id, entry);
   }
@@ -6154,7 +6154,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to requested IP address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_CacheIp(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetARP_CacheIp, if_id, evr_buf.u32[0]);
@@ -6167,7 +6167,7 @@ typedef struct evr_addr {
   \brief  Event on netARP_CacheIP invalid parameter (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_CacheIpInvalidParameter(uint16_t if_id) {
     EventRecord2 (EvtNetARP_CacheIpInvalidParameter, if_id, 0);
   }
@@ -6180,7 +6180,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  mac_addr      pointer to requested MAC address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_CacheMac(uint16_t if_id, const uint8_t *mac_addr) {
     evr_buf.u16[0] = if_id;
     memcpy (&evr_buf.u16[1], mac_addr, 6);
@@ -6194,7 +6194,7 @@ typedef struct evr_addr {
   \brief  Event on netARP_CacheMAC invalid parameter (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_CacheMacInvalidParameter(uint16_t if_id) {
     EventRecord2 (EvtNetARP_CacheMacInvalidParameter, if_id, 0);
   }
@@ -6207,7 +6207,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  mac_addr      pointer to MAC cache address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_UnresolvedIpAddress(uint16_t if_id, const uint8_t *mac_addr) {
     evr_buf.u16[0] = if_id;
     memcpy (&evr_buf.u16[1], mac_addr, 6);
@@ -6223,7 +6223,7 @@ typedef struct evr_addr {
   \param  mac_addr      pointer to requested MAC address
   \param  ip4_addr      pointer to resolved IP address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_GetIp(uint16_t if_id, const uint8_t *mac_addr, const uint8_t *ip4_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u8[4], ip4_addr, 4);
@@ -6238,7 +6238,7 @@ typedef struct evr_addr {
   \brief  Event on netARP_GetIP invalid parameter (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_GetIpInvalidParameter(uint16_t if_id) {
     EventRecord2 (EvtNetARP_GetIpInvalidParameter, if_id, 0);
   }
@@ -6251,7 +6251,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  mac_addr      pointer to requested MAC address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_GetIpEntryNotFound(uint16_t if_id, const uint8_t *mac_addr) {
     evr_buf.u16[0] = if_id;
     memcpy (&evr_buf.u16[1], mac_addr, 6);
@@ -6267,7 +6267,7 @@ typedef struct evr_addr {
   \param  ip4_addr      pointer to requested IP address
   \param  mac_addr      pointer to resolved MAC address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_GetMac(uint16_t if_id, const uint8_t *ip4_addr, const uint8_t *mac_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u8[4], ip4_addr, 4);
@@ -6282,7 +6282,7 @@ typedef struct evr_addr {
   \brief  Event on netARP_GetMAC invalid parameter (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_GetMacInvalidParameter(uint16_t if_id) {
     EventRecord2 (EvtNetARP_GetMacInvalidParameter, if_id, 0);
   }
@@ -6295,7 +6295,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to requested IP address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_GetMacEntryNotFound(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetARP_GetMacEntryNotFound, if_id, evr_buf.u32[0]);
@@ -6309,7 +6309,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to requested IP address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_Probe(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetARP_Probe, if_id, evr_buf.u32[0]);
@@ -6322,7 +6322,7 @@ typedef struct evr_addr {
   \brief  Event on netARP_Probe invalid parameter (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_ProbeInvalidParameter(uint16_t if_id) {
     EventRecord2 (EvtNetARP_ProbeInvalidParameter, if_id, 0);
   }
@@ -6334,7 +6334,7 @@ typedef struct evr_addr {
   \brief  Event on ARP probe process busy (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_ProbeBusy(uint16_t if_id) {
     EventRecord2 (EvtNetARP_ProbeBusy, if_id, 0);
   }
@@ -6347,7 +6347,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IP address of probed host
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_ProbeRetransmit(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetARP_ProbeRetransmit, if_id, evr_buf.u32[0]);
@@ -6361,7 +6361,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip4_addr      pointer to IP address of probed host
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_ProbeTimeout(uint16_t if_id, const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetARP_ProbeTimeout, if_id, evr_buf.u32[0]);
@@ -6376,7 +6376,7 @@ typedef struct evr_addr {
   \param  ip4_addr      pointer to IP address of the host
   \param  mac_addr      pointer to MAC address of the host
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_AddCache(uint16_t if_id, const uint8_t *ip4_addr, const uint8_t *mac_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u8[4], ip4_addr, 4);
@@ -6391,7 +6391,7 @@ typedef struct evr_addr {
   \brief  Event on netARP_AddCache invalid parameter (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_AddCacheInvalidParam(uint16_t if_id) {
     EventRecord2 (EvtNetARP_AddCacheInvalidParam, if_id, 0);
   }
@@ -6403,7 +6403,7 @@ typedef struct evr_addr {
   \brief  Event on netARP_AddCache invalid IP address error (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_AddCacheInvalidIpAddress(uint16_t if_id) {
     EventRecord2 (EvtNetARP_AddCacheInvalidIpAddress, if_id, 0);
   }
@@ -6415,7 +6415,7 @@ typedef struct evr_addr {
   \brief  Event on netARP_AddCache invalid MAC address error (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_AddCacheInvalidMacAddress(uint16_t if_id) {
     EventRecord2 (EvtNetARP_AddCacheInvalidMacAddress, if_id, 0);
   }
@@ -6429,7 +6429,7 @@ typedef struct evr_addr {
   \param  deleted       number of entries deleted from cache
   \param  available     number of entries available in cache
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_ClearCache(uint16_t if_id, uint32_t deleted, uint32_t available) {
     uint32_t val2 = (available << 16) | deleted;
     EventRecord2 (EvtNetARP_ClearCache, if_id, val2);
@@ -6442,7 +6442,7 @@ typedef struct evr_addr {
   \brief  Event on netARP_ClearCache invalid parameter (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_ClearCacheInvalidParam(uint16_t if_id) {
     EventRecord2 (EvtNetARP_ClearCacheInvalidParam, if_id, 0);
   }
@@ -6454,7 +6454,7 @@ typedef struct evr_addr {
   \brief  Event on ARP clear cache client busy (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_ClearCacheClientBusy(uint16_t if_id) {
     EventRecord2 (EvtNetARP_ClearCacheClientBusy, if_id, 0);
   }
@@ -6473,7 +6473,7 @@ typedef struct evr_addr {
                         - 1: Temporary IP
                         - 2: In-use temporary IP
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_CacheEntryTimeout(uint16_t if_id, uint32_t entry,
                     const uint8_t *ip4_addr, const uint8_t *mac_addr, uint32_t type) {
     evr_buf.u16[0] = if_id;
@@ -6492,7 +6492,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  entry         cache entry number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_EntryReleased(uint16_t if_id, uint32_t entry) {
     EventRecord2 (EvtNetARP_EntryReleased, if_id, entry);
   }
@@ -6505,7 +6505,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  entry         cache entry number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_ResolveEntry(uint16_t if_id, uint32_t entry) {
     EventRecord2 (EvtNetARP_ResolveEntry, if_id, entry);
   }
@@ -6518,7 +6518,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  entry         cache entry number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_RefreshEntry(uint16_t if_id, uint32_t entry) {
     EventRecord2 (EvtNetARP_RefreshEntry, if_id, entry);
   }
@@ -6530,7 +6530,7 @@ typedef struct evr_addr {
   \brief  Event on ARP cache de-initialize (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetARP_UninitCache(uint16_t if_id) {
     EventRecord2 (EvtNetARP_UninitCache, if_id, 0);
   }
@@ -6540,7 +6540,7 @@ typedef struct evr_addr {
 
 
 // NetIP6 event identifiers ----------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetIP6_InitCore                  EventID (EventLevelOp,    EvtNetIP6,  0)
 #define EvtNetIP6_ReceiveFrame              EventID (EventLevelOp,    EvtNetIP6,  1)
 #define EvtNetIP6_FrameTooShort             EventID (EventLevelError, EvtNetIP6,  2)
@@ -6562,7 +6562,7 @@ typedef struct evr_addr {
   \brief  Event on IP6 core initialize (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP6_InitCore(uint16_t if_id) {
     EventRecord2 (EvtNetIP6_InitCore, if_id, 0);
   }
@@ -6575,7 +6575,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP6_ReceiveFrame(uint16_t if_id, uint32_t length) {
     EventRecord2 (EvtNetIP6_ReceiveFrame, if_id, length);
   }
@@ -6589,7 +6589,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP6_FrameTooShort(uint16_t if_id, uint32_t length, uint32_t min_length) {
     uint32_t val2 = (min_length << 16) | length;
     EventRecord2 (EvtNetIP6_FrameTooShort, if_id, val2);
@@ -6603,7 +6603,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip_version    IPv6 protocol version value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP6_InvalidIpVersion(uint16_t if_id, uint8_t ip_version) {
     EventRecord2 (EvtNetIP6_InvalidIpVersion, if_id, ip_version);
   }
@@ -6623,7 +6623,7 @@ typedef struct evr_addr {
                          - SrcAddr   (16 bytes)
                          - DstAddr   (16 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP6_ShowFrameHeader(const void *ip6_header) {
     EventRecordData (EvtNetIP6_ShowFrameHeader, ip6_header, 40);
   }
@@ -6636,7 +6636,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 destination address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP6_WrongDestinationAddress(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -6650,7 +6650,7 @@ typedef struct evr_addr {
   \brief  Event on IP6 network interface not supported (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP6_InterfaceNotSupported(uint16_t if_id) {
     EventRecord2 (EvtNetIP6_InterfaceNotSupported, if_id, 0);
   }
@@ -6664,7 +6664,7 @@ typedef struct evr_addr {
   \param  ip6_protocol  received protocol type
   \remark Only UDP multicast frames are allowed.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP6_WrongMulticastProtocol(uint16_t if_id, uint8_t ip6_protocol) {
     EventRecord2 (EvtNetIP6_WrongMulticastProtocol, if_id, ip6_protocol);
   }
@@ -6676,7 +6676,7 @@ typedef struct evr_addr {
   \brief  Event on IP6 receive fragmented frame (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP6_FragmentationDisabled(uint16_t if_id) {
     EventRecord2 (EvtNetIP6_FragmentationDisabled, if_id, 0);
   }
@@ -6693,7 +6693,7 @@ typedef struct evr_addr {
                          - 58: ICMP6
   \param  length        frame length
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP6_SendFrame(uint16_t if_id, uint8_t ip6_protocol, uint32_t length) {
     uint32_t val2 = (length << 16) | ip6_protocol;
     EventRecord2 (EvtNetIP6_SendFrame, if_id, val2);
@@ -6707,7 +6707,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_protocol  unknown IPv6 protocol type value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP6_ProtocolUnknown(uint16_t if_id, uint8_t ip6_protocol) {
     EventRecord2 (EvtNetIP6_ProtocolUnknown, if_id, ip6_protocol);
   }
@@ -6719,7 +6719,7 @@ typedef struct evr_addr {
   \brief  Event on IP6 source address not provided (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP6_SourceAddressNull(uint16_t if_id) {
     EventRecord2 (EvtNetIP6_SourceAddressNull, if_id, 0);
   }
@@ -6731,7 +6731,7 @@ typedef struct evr_addr {
   \brief  Event on IP6 destination address not provided (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP6_DestinationAddressNull(uint16_t if_id) {
     EventRecord2 (EvtNetIP6_DestinationAddressNull, if_id, 0);
   }
@@ -6743,7 +6743,7 @@ typedef struct evr_addr {
   \brief  Event on IP6 set default interface for internet access (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP6_SetDefaultInterface(uint16_t if_id) {
     EventRecord2 (EvtNetIP6_SetDefaultInterface, if_id, 0);
   }
@@ -6754,7 +6754,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on IP6 core de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetIP6_UninitCore(void) {
     EventRecord2 (EvtNetIP6_UninitCore, 0, 0);
   }
@@ -6764,7 +6764,7 @@ typedef struct evr_addr {
 
 
 // NetICMP6 event identifiers --------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetICMP6_ReceiveFrame            EventID (EventLevelOp,    EvtNetICMP6,  0)
 #define EvtNetICMP6_ShowFrameHeader         EventID (EventLevelDetail,EvtNetICMP6, 25)
 #define EvtNetICMP6_FrameTooShort           EventID (EventLevelError, EvtNetICMP6,  1)
@@ -6800,7 +6800,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_ReceiveFrame(uint16_t if_id, uint32_t length) {
     EventRecord2 (EvtNetICMP6_ReceiveFrame, if_id, length);
   }
@@ -6817,7 +6817,7 @@ typedef struct evr_addr {
                          - EchoId  (2 bytes)
                          - EchoSeq (2 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_ShowFrameHeader(const void *icmp6_header) {
     EventRecordData (EvtNetICMP6_ShowFrameHeader, icmp6_header, 8);
   }
@@ -6831,7 +6831,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_FrameTooShort(uint16_t if_id, uint32_t length, uint32_t min_length) {
     uint32_t val2 = (min_length << 16) | length;
     EventRecord2 (EvtNetICMP6_FrameTooShort, if_id, val2);
@@ -6845,7 +6845,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_ChecksumFailed(uint16_t if_id, uint32_t length) {
     EventRecord2 (EvtNetICMP6_ChecksumFailed, if_id, length);
   }
@@ -6859,7 +6859,7 @@ typedef struct evr_addr {
   \param  code          received ICMPv6 code
   \param  code_valid    valid ICMPv6 code
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_EchoRequestWrongCode(uint16_t if_id, uint8_t code, uint8_t code_valid) {
     uint32_t val2 = ((uint32_t)code_valid) | code;
     EventRecord2 (EvtNetICMP6_EchoRequestWrongCode, if_id, val2);
@@ -6873,7 +6873,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  data_length   length of the payload data
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_EchoRequestReceived(uint16_t if_id, uint32_t data_length) {
     EventRecord2 (EvtNetICMP6_EchoRequestReceived, if_id, data_length);
   }
@@ -6885,7 +6885,7 @@ typedef struct evr_addr {
   \brief  Event on ICMP6 sending echo reply disabled (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_EchoReplyDisabled(uint16_t if_id) {
     EventRecord2 (EvtNetICMP6_EchoReplyDisabled, if_id, 0);
   }
@@ -6897,7 +6897,7 @@ typedef struct evr_addr {
   \brief  Event on ICMP6 send echo reply (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_SendEchoReply(uint16_t if_id) {
     EventRecord2 (EvtNetICMP6_SendEchoReply, if_id, 0);
   }
@@ -6910,7 +6910,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  data_length   length of the payload data
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_EchoReplyReceived(uint16_t if_id, uint32_t data_length) {
     EventRecord2 (EvtNetICMP6_EchoReplyReceived, if_id, data_length);
   }
@@ -6922,7 +6922,7 @@ typedef struct evr_addr {
   \brief  Event on ICMP6 echo reply received in wrong ping process state (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_EchoReplyWrongState(uint16_t if_id) {
     EventRecord2 (EvtNetICMP6_EchoReplyWrongState, if_id, 0);
   }
@@ -6936,7 +6936,7 @@ typedef struct evr_addr {
   \param  code          received ICMPv6 code
   \param  code_valid    valid ICMPv6 code
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_EchoReplyWrongCode(uint16_t if_id, uint8_t code, uint8_t code_valid) {
     uint32_t val2 = ((uint32_t)code_valid << 16) | code;
     EventRecord2 (EvtNetICMP6_EchoReplyWrongCode, if_id, val2);
@@ -6950,7 +6950,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_EchoReplyWrongIpAddress(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -6966,7 +6966,7 @@ typedef struct evr_addr {
   \param  eid           received echo identifier
   \param  eid_valid     valid echo identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_EchoReplyWrongId(uint16_t if_id, uint16_t eid, uint16_t eid_valid) {
     uint32_t val2 = ((uint32_t)eid_valid << 16) | eid;
     EventRecord2 (EvtNetICMP6_EchoReplyWrongId, if_id, val2);
@@ -6979,7 +6979,7 @@ typedef struct evr_addr {
   \brief  Event on ICMP6 echo reply payload data invalid (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_EchoReplyWrongPayload(uint16_t if_id) {
     EventRecord2 (EvtNetICMP6_EchoReplyWrongPayload, if_id, 0);
   }
@@ -6993,7 +6993,7 @@ typedef struct evr_addr {
   \param  type          ICMPv6 message type
   \remark Hosts must silently discard RS messages [RFC4861 page 38]
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_MessageDiscarded(uint16_t if_id, uint8_t type) {
     EventRecord2 (EvtNetICMP6_MessageDiscarded, if_id, type);
   }
@@ -7007,7 +7007,7 @@ typedef struct evr_addr {
   \param  hop_limit     received hop limit
   \param  hop_valid     valid hop limit
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_WrongHopLimit(uint16_t if_id, uint8_t hop_limit, uint8_t hop_valid) {
     uint32_t val2 = ((uint32_t)hop_valid << 16) | hop_limit;
     EventRecord2 (EvtNetICMP6_WrongHopLimit, if_id, val2);
@@ -7022,7 +7022,7 @@ typedef struct evr_addr {
   \param  code          received ICMPv6 code
   \param  code_valid    valid ICMPv6 code
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_WrongCode(uint16_t if_id, uint8_t code, uint8_t code_valid) {
     uint32_t val2 = ((uint32_t)code_valid << 16) | code;
     EventRecord2 (EvtNetICMP6_WrongCode, if_id, val2);
@@ -7036,7 +7036,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  type          ICMP6 message type
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_MessageTypeUnknown(uint16_t if_id, uint8_t type) {
     EventRecord2 (EvtNetICMP6_MessageTypeUnknown, if_id, type);
   }
@@ -7049,7 +7049,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_SendFrame(uint16_t if_id, uint32_t length) {
     EventRecord2 (EvtNetICMP6_SendFrame, if_id, length);
   }
@@ -7061,7 +7061,7 @@ typedef struct evr_addr {
   \brief  Event on ICMP6 ping echo request (API)
   \param  ip6_addr      pointer to IPv6 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_PingEcho(const uint8_t *ip6_addr) {
     EventRecordData (EvtNetICMP6_PingEcho, ip6_addr, 16);
   }
@@ -7072,7 +7072,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on ICMP6 ping target name not valid (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_PingTargetNotValid(void) {
     EventRecord2 (EvtNetICMP6_PingTargetNotValid, 0, 0);
   }
@@ -7083,7 +7083,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on ICMP6 ping host name resolver error (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_PingDnsError(void) {
     EventRecord2 (EvtNetICMP6_PingDnsError, 0, 0);
   }
@@ -7094,7 +7094,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on ICMP6 ping invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_PingInvalidParameter(void) {
     EventRecord2 (EvtNetICMP6_PingInvalidParameter, 0, 0);
   }
@@ -7105,7 +7105,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on ICMP6 ping client busy (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_PingClientBusy(void) {
     EventRecord2 (EvtNetICMP6_PingClientBusy, 0, 0);
   }
@@ -7117,7 +7117,7 @@ typedef struct evr_addr {
   \brief  Event on ICMP6 send echo request (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_PingSendRequest(uint16_t if_id) {
     EventRecord2 (EvtNetICMP6_PingSendRequest, if_id, 0);
   }
@@ -7129,7 +7129,7 @@ typedef struct evr_addr {
   \brief  Event on ICMP6 retransmit echo request (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_PingRetransmitRequest(uint16_t if_id) {
     EventRecord2 (EvtNetICMP6_PingRetransmitRequest, if_id, 0);
   }
@@ -7141,7 +7141,7 @@ typedef struct evr_addr {
   \brief  Event on ICMP6 timeout on send echo request (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetICMP6_PingTimeout(uint16_t if_id) {
     EventRecord2 (EvtNetICMP6_PingTimeout, if_id, 0);
   }
@@ -7151,7 +7151,7 @@ typedef struct evr_addr {
 
 
 // NetDHCP6 event identifiers --------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetDHCP6_InitClient              EventID (EventLevelOp,    EvtNetDHCP6,  0)
 #define EvtNetDHCP6_GetSocketFailed         EventID (EventLevelError, EvtNetDHCP6,  1)
 #define EvtNetDHCP6_StartClient             EventID (EventLevelOp,    EvtNetDHCP6,  2)
@@ -7190,7 +7190,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  vclass        Vendor Class option enabled
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_InitClient(uint16_t if_id, uint8_t vclass) {
     EventRecord2 (EvtNetDHCP6_InitClient, if_id, vclass);
   }
@@ -7201,7 +7201,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DHCP6 failed to allocate UDP socket (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_GetSocketFailed(void) {
     EventRecord2 (EvtNetDHCP6_GetSocketFailed, 0, 0);
   }
@@ -7216,7 +7216,7 @@ typedef struct evr_addr {
                          - 0: Stateless mode
                          - 1: Stateful mode
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_StartClient(uint16_t if_id, uint32_t mode) {
     EventRecord2 (EvtNetDHCP6_StartClient, if_id, mode);
   }
@@ -7228,7 +7228,7 @@ typedef struct evr_addr {
   \brief  Event on DHCP6 client stop (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_StopClient(uint16_t if_id) {
     EventRecord2 (EvtNetDHCP6_StopClient, if_id, 0);
   }
@@ -7241,7 +7241,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  state         current state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_ClientState(uint16_t if_id, uint8_t state) {
     EventRecord2 (EvtNetDHCP6_ClientState, if_id, state);
   }
@@ -7255,7 +7255,7 @@ typedef struct evr_addr {
   \param  state         next state
 
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_NextState(uint16_t if_id, uint8_t state) {
     EventRecord2 (EvtNetDHCP6_NextState, if_id, state);
   }
@@ -7269,7 +7269,7 @@ typedef struct evr_addr {
   \param  state         next state
   \param  delay         start delay (in 100ms ticks)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_NextStateDelay(uint16_t if_id, uint8_t state, uint16_t delay) {
     uint32_t val2 = ((uint32_t)delay << 16) | state;
     EventRecord2 (EvtNetDHCP6_NextStateDelay, if_id, val2);
@@ -7283,7 +7283,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  state         next state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_ChangeStateLinkDown(uint16_t if_id, uint8_t state) {
     EventRecord2 (EvtNetDHCP6_ChangeStateLinkDown, if_id, state);
   }
@@ -7296,7 +7296,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  state         current state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_NoAddressAvailable(uint16_t if_id, uint8_t state) {
     EventRecord2 (EvtNetDHCP6_NoAddressAvailable, if_id, state);
   }
@@ -7309,7 +7309,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  state         current state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_StateRetransmit(uint16_t if_id, uint8_t state) {
     EventRecord2 (EvtNetDHCP6_StateRetransmit, if_id, state);
   }
@@ -7322,7 +7322,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  state         current state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_StateTimeout(uint16_t if_id, uint8_t state) {
     EventRecord2 (EvtNetDHCP6_StateTimeout, if_id, state);
   }
@@ -7336,7 +7336,7 @@ typedef struct evr_addr {
   \param  current       current state
   \param  next          next state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_ChangeStateOnTimeout(uint16_t if_id, uint8_t current, uint8_t next) {
     uint32_t val2 = ((uint32_t)next << 16) | current;
     EventRecord2 (EvtNetDHCP6_ChangeStateOnTimeout, if_id, val2);
@@ -7350,7 +7350,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  state         current state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_T1Expired(uint16_t if_id, uint8_t state) {
     EventRecord2 (EvtNetDHCP6_T1Expired, if_id, state);
   }
@@ -7363,7 +7363,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  state         current state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_T2Expired(uint16_t if_id, uint8_t state) {
     EventRecord2 (EvtNetDHCP6_T2Expired, if_id, state);
   }
@@ -7377,7 +7377,7 @@ typedef struct evr_addr {
   \param  msg_type      message type
   \param  xid           transaction identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_SendDhcpMessage(uint16_t if_id, uint8_t msg_type, uint32_t xid) {
     uint32_t val1 = ((uint32_t)msg_type << 16) | if_id;
     EventRecord2 (EvtNetDHCP6_SendDhcpMessage, val1, xid);
@@ -7391,7 +7391,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  length        message length
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_ReceiveFrame(uint16_t if_id, uint32_t length) {
     EventRecord2 (EvtNetDHCP6_ReceiveFrame, if_id, length);
   }
@@ -7405,7 +7405,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_FrameTooShort(uint16_t if_id, uint32_t length, uint32_t min_length) {
     uint32_t val2 = (min_length << 16) | length;
     EventRecord2 (EvtNetDHCP6_FrameTooShort, if_id, val2);
@@ -7421,7 +7421,7 @@ typedef struct evr_addr {
   \param  xid_valid     valid transaction identifier
   \remark The size of transaction identifier (XID) is 3 bytes.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_WrongTransactionId(uint16_t if_id, uint32_t xid, uint32_t xid_valid) {
     EventRecord4 (EvtNetDHCP6_WrongTransactionId, if_id, xid, xid_valid, 0);
   }
@@ -7434,7 +7434,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  msg_type      message type
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_MessageTypeUnknown(uint16_t if_id, uint8_t msg_type) {
     EventRecord2 (EvtNetDHCP6_MessageTypeUnknown, if_id, msg_type);
   }
@@ -7449,7 +7449,7 @@ typedef struct evr_addr {
   \param  xid           transaction identifier
   \remark The size of transaction identifier (XID) is 3 bytes.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_ViewMessage(uint16_t if_id, uint8_t msg_type, uint32_t xid) {
     uint32_t val1 = ((uint32_t)msg_type << 16) | if_id;
     EventRecord2 (EvtNetDHCP6_ViewMessage, val1, xid);
@@ -7465,7 +7465,7 @@ typedef struct evr_addr {
   \param  msg_valid     valid message type
   \remark Silently discard other message types.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_InvalidMessageType(uint16_t if_id, uint8_t msg_type, uint8_t msg_valid) {
     uint32_t val2 = ((uint32_t)msg_valid << 16) | msg_type;
     EventRecord2 (EvtNetDHCP6_InvalidMessageType, if_id, val2);
@@ -7480,7 +7480,7 @@ typedef struct evr_addr {
   \param  msg_type      received message type
   \remark Silently discard the message.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_WrongClientId(uint16_t if_id, uint8_t msg_type) {
     EventRecord2 (EvtNetDHCP6_WrongClientId, if_id, msg_type);
   }
@@ -7494,7 +7494,7 @@ typedef struct evr_addr {
   \param  msg_type      received message type
   \remark Silently discard the message.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_ServerNotChosen(uint16_t if_id, uint8_t msg_type) {
     EventRecord2 (EvtNetDHCP6_ServerNotChosen, if_id, msg_type);
   }
@@ -7507,7 +7507,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  status        status code
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_StatusCode(uint16_t if_id, uint16_t status) {
     EventRecord2 (EvtNetDHCP6_StatusCode, if_id, status);
   }
@@ -7521,7 +7521,7 @@ typedef struct evr_addr {
   \param  msg_type      received message type
   \remark Silently discard the message.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_WrongServerId(uint16_t if_id, uint8_t msg_type) {
     EventRecord2 (EvtNetDHCP6_WrongServerId, if_id, msg_type);
   }
@@ -7535,7 +7535,7 @@ typedef struct evr_addr {
   \param  dns_list      pointer to DNS server address list
   \remark Displays primary and secondary DNS server address.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_ViewDnsServers(uint16_t if_id, const uint8_t *dns_list) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], dns_list, 32);
@@ -7551,7 +7551,7 @@ typedef struct evr_addr {
   \param  msg_type      received message type
   \remark Silently discard the message.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_MissingServerId(uint16_t if_id, uint8_t msg_type) {
     EventRecord2 (EvtNetDHCP6_MissingServerId, if_id, msg_type);
   }
@@ -7565,7 +7565,7 @@ typedef struct evr_addr {
   \param  iaid          received IAID value
   \param  iaid_valid    valid IAID value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_WrongIaid(uint16_t if_id, uint32_t iaid, uint32_t iaid_valid) {
     EventRecord4 (EvtNetDHCP6_WrongIaid, if_id, iaid, iaid_valid, 0);
   }
@@ -7583,7 +7583,7 @@ typedef struct evr_addr {
                          - ValidTime (4 bytes)
   \remark IANA: Identity Association for non-temporary Address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_ViewIanaOffer(const void *iana_offer) {
     EventRecordData (EvtNetDHCP6_ViewIanaOffer, iana_offer, 32);
   }
@@ -7595,7 +7595,7 @@ typedef struct evr_addr {
   \brief  Event on DHCP6 offer address timer check failed (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_OfferTimerCheckFailed(uint16_t if_id) {
     EventRecord2 (EvtNetDHCP6_OfferTimerCheckFailed, if_id, 0);
   }
@@ -7607,7 +7607,7 @@ typedef struct evr_addr {
   \brief  Event on DHCP6 client de-initialize (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDHCP6_UninitClient(uint16_t if_id) {
     EventRecord2 (EvtNetDHCP6_UninitClient, if_id, 0);
   }
@@ -7617,7 +7617,7 @@ typedef struct evr_addr {
 
 
 // NetNDP event identifiers ----------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetNDP_InitCache                 EventID (EventLevelOp,    EvtNetNDP,  0)
 #define EvtNetNDP_FrameCheckFailed          EventID (EventLevelError, EvtNetNDP,  1)
 #define EvtNetNDP_AddressNotLinkLocal       EventID (EventLevelOp,    EvtNetNDP,  2)
@@ -7681,7 +7681,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  num_entries   number of entries available in NDP cache
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_InitCache(uint16_t if_id, uint32_t num_entries) {
     EventRecord2 (EvtNetNDP_InitCache, if_id, num_entries);
   }
@@ -7697,7 +7697,7 @@ typedef struct evr_addr {
                          - 135: Neighbor Solicitation
                          - 136: Neighbor Advertisement
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_FrameCheckFailed(uint16_t if_id, uint8_t msg_type) {
     EventRecord2 (EvtNetNDP_FrameCheckFailed, if_id, msg_type);
   }
@@ -7711,7 +7711,7 @@ typedef struct evr_addr {
   \param  ip6_addr      pointer to IPv6 source address
   \remark Nodes must silently discard RA messages if source IP not link-local.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_AddressNotLinkLocal(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -7730,7 +7730,7 @@ typedef struct evr_addr {
                          - 0x40: O-flag (Other configuration)
   \param  lifetime      router lifetime in seconds
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_RouterAdvertisement(uint16_t if_id,
                            uint8_t hop_limit, uint8_t flags, uint16_t lifetime) {
     evr_buf.u16[0] = lifetime;
@@ -7747,7 +7747,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  mtu           maximum transmission unit
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_OptionMtu(uint16_t if_id, uint32_t mtu) {
     EventRecord2 (EvtNetNDP_OptionMtu, if_id, mtu);
   }
@@ -7760,7 +7760,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  src_addr      source link-layer address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_OptionSourceMacAddress(uint16_t if_id, const uint8_t *src_addr) {
     evr_buf.u16[0] = if_id;
     memcpy (&evr_buf.u16[1], src_addr, 6);
@@ -7782,7 +7782,7 @@ typedef struct evr_addr {
                          - Reserved:  4 bytes
                          - Prefix:   16 bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_OptionPrefixInfo(const uint8_t *opt_prefix) {
     EventRecordData (EvtNetNDP_OptionPrefixInfo, opt_prefix, 32);
   }
@@ -7794,7 +7794,7 @@ typedef struct evr_addr {
   \brief  Event on NDP prefix information option not valid (Op)
   \remark Nodes must silently discard not valid RA messages.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_PrefixInfoNotValid(uint16_t if_id) {
     EventRecord2 (EvtNetNDP_PrefixInfoNotValid, if_id, 0);
   }
@@ -7807,7 +7807,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  targ_addr     pointer to target address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_WrongTargetAddress(uint16_t if_id, const uint8_t *targ_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], targ_addr, 16);
@@ -7822,7 +7822,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  targ_addr     pointer to target address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_NeighborSolicitation(uint16_t if_id, const uint8_t *targ_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], targ_addr, 16);
@@ -7836,7 +7836,7 @@ typedef struct evr_addr {
   \brief  Event on NDP receive probe request (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_ProbeRequest(uint16_t if_id) {
     EventRecord2 (EvtNetNDP_ProbeRequest, if_id, 0);
   }
@@ -7849,7 +7849,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  targ_addr     pointer to target address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_NeighborAdvertisement(uint16_t if_id, const uint8_t *targ_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], targ_addr, 16);
@@ -7863,7 +7863,7 @@ typedef struct evr_addr {
   \brief  Event on NDP receive probe response (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_ProbeResponse(uint16_t if_id) {
     EventRecord2 (EvtNetNDP_ProbeResponse, if_id, 0);
   }
@@ -7876,7 +7876,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  dst_addr      pointer to destination address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_WrongDestinationAddress(uint16_t if_id, const uint8_t *dst_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], dst_addr, 16);
@@ -7891,7 +7891,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  targ_addr     pointer to target address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_SendReply(uint16_t if_id, const uint8_t *targ_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], targ_addr, 16);
@@ -7906,7 +7906,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  flags         message flags
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_ViewFlags(uint16_t if_id, uint32_t flags) {
     EventRecord2 (EvtNetNDP_ViewFlags, if_id, flags);
   }
@@ -7921,7 +7921,7 @@ typedef struct evr_addr {
                          - 133: Router Solicitation
                          - 135: Neighbor Solicitation
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_SendRequest(uint16_t if_id, uint32_t type) {
     if (type == 255) type = 135;
     EventRecord2 (EvtNetNDP_SendRequest, if_id, type);
@@ -7935,7 +7935,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  targ_addr     pointer to target address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_ViewTargetAddress(uint16_t if_id, const uint8_t *targ_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], targ_addr, 16);
@@ -7950,7 +7950,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  targ_addr     target link-layer address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_OptionTargetMacAddress(uint16_t if_id, const uint8_t *targ_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], targ_addr, 16);
@@ -7965,7 +7965,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  entry         cache entry number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_CacheEntryUpdate(uint16_t if_id, uint32_t entry) {
     EventRecord2 (EvtNetNDP_CacheEntryUpdate, if_id, entry);
   }
@@ -7979,7 +7979,7 @@ typedef struct evr_addr {
   \param  msg_type      discovery message type
                          - 136: Neighbor Advertisement
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_WrongResponse(uint16_t if_id, uint8_t msg_type) {
     EventRecord2 (EvtNetNDP_WrongResponse, if_id, msg_type);
   }
@@ -7992,7 +7992,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  local_addr    pointer to link-local address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_MakeLinkLocalAddress(uint16_t if_id, const uint8_t *local_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], local_addr, 16);
@@ -8007,7 +8007,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  temp_addr     pointer to temporary address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_MakeTempAddress(uint16_t if_id, const uint8_t *temp_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], temp_addr, 16);
@@ -8022,7 +8022,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_CacheIpRefreshed(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8041,7 +8041,7 @@ typedef struct evr_addr {
                          - 0x01: Host
                          - 0x02: Router
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_CacheAdd(uint16_t if_id,
                     const uint8_t *ip6_addr, const uint8_t *mac_addr, uint8_t type) {
     evr_buf.u16[0] = if_id;
@@ -8060,7 +8060,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  max_count     maximum number of routers cached
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_RouterListFull(uint16_t if_id, uint32_t max_count) {
     EventRecord2 (EvtNetNDP_RouterListFull, if_id, max_count);
   }
@@ -8072,7 +8072,7 @@ typedef struct evr_addr {
   \brief  Event on NDP allocate free cache entry failed (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_CacheAllocFailed(uint16_t if_id) {
     EventRecord2 (EvtNetNDP_CacheAllocFailed, if_id, 0);
   }
@@ -8086,7 +8086,7 @@ typedef struct evr_addr {
   \param  entry         cache entry number
   \param  timeout       entry timeout in seconds
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_CacheEntryAdded(uint16_t if_id, uint32_t entry, uint32_t timeout) {
     uint32_t val1 = (entry << 16) | if_id;
     EventRecord2 (EvtNetNDP_CacheEntryAdded, val1, timeout);
@@ -8104,7 +8104,7 @@ typedef struct evr_addr {
                          - 0x01: Host
                          - 0x02: Router
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_CacheEntryDeleted(uint16_t if_id,
                          uint32_t entry, const uint8_t *ip6_addr, uint8_t type) {
     evr_buf.u16[0] = if_id;
@@ -8123,7 +8123,7 @@ typedef struct evr_addr {
   \param  entry         cache entry number
   \param  ip6_addr      pointer to IPv6 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_CacheEntryRefreshed(uint16_t if_id,
                          uint32_t entry, const uint8_t *ip6_addr) {
     evr_buf.u16[0] = if_id;
@@ -8140,7 +8140,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_CacheFind(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8155,7 +8155,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address of a gateway
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_GatewayUnknown(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8170,7 +8170,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address of a gateway
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_UsingGateway(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8185,7 +8185,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to requested IPv6 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_UnresolvedMacAddress(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8200,7 +8200,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  entry         cache entry number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_EntryFound(uint16_t if_id, uint32_t entry) {
     EventRecord2 (EvtNetNDP_EntryFound, if_id, entry);
   }
@@ -8213,7 +8213,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to requested IPv6 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_CacheIp(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u8[4], ip6_addr, 16);
@@ -8227,7 +8227,7 @@ typedef struct evr_addr {
   \brief  Event on netNDP_CacheIP invalid parameter (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_CacheIpInvalidParameter(uint16_t if_id) {
     EventRecord2 (EvtNetNDP_CacheIpInvalidParameter, if_id, 0);
   }
@@ -8241,7 +8241,7 @@ typedef struct evr_addr {
   \param  mac_addr      pointer to requested MAC address
   \param  ip6_addr      pointer to resolved IPv6 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_GetIp(uint16_t if_id, const uint8_t *mac_addr, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u8[4], ip6_addr, 16);
@@ -8256,7 +8256,7 @@ typedef struct evr_addr {
   \brief  Event on netNDP_GetIP invalid parameter (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_GetIpInvalidParameter(uint16_t if_id) {
     EventRecord2 (EvtNetNDP_GetIpInvalidParameter, if_id, 0);
   }
@@ -8269,7 +8269,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  mac_addr      pointer to requested MAC address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_GetIpEntryNotFound(uint16_t if_id, const uint8_t *mac_addr) {
     evr_buf.u16[0] = if_id;
     memcpy (&evr_buf.u16[1], mac_addr, 6);
@@ -8285,7 +8285,7 @@ typedef struct evr_addr {
   \param  ip6_addr      pointer to requested IPv6 address
   \param  mac_addr      pointer to resolved MAC address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_GetMac(uint16_t if_id, const uint8_t *ip6_addr, const uint8_t *mac_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u8[4], ip6_addr, 16);
@@ -8300,7 +8300,7 @@ typedef struct evr_addr {
   \brief  Event on netNDP_GetMAC invalid parameter (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_GetMacInvalidParameter(uint16_t if_id) {
     EventRecord2 (EvtNetNDP_GetMacInvalidParameter, if_id, 0);
   }
@@ -8313,7 +8313,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to requested IPv6 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_GetMacEntryNotFound(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8328,7 +8328,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to requested IPv6 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_Probe(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8342,7 +8342,7 @@ typedef struct evr_addr {
   \brief  Event on netNDP_Probe invalid parameter (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_ProbeInvalidParameter(uint16_t if_id) {
     EventRecord2 (EvtNetNDP_ProbeInvalidParameter, if_id, 0);
   }
@@ -8354,7 +8354,7 @@ typedef struct evr_addr {
   \brief  Event on NDP probe process busy (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_ProbeBusy(uint16_t if_id) {
     EventRecord2 (EvtNetNDP_ProbeBusy, if_id, 0);
   }
@@ -8367,7 +8367,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address of probed host
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_ProbeRetransmit(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8382,7 +8382,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address of probed host
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_ProbeTimeout(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8398,7 +8398,7 @@ typedef struct evr_addr {
   \param  deleted       number of entries deleted from cache
   \param  available     number of entries available in cache
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_ClearCache(uint16_t if_id, uint32_t deleted, uint32_t available) {
     uint32_t val2 = (available << 16) | deleted;
     EventRecord2 (EvtNetNDP_ClearCache, if_id, val2);
@@ -8411,7 +8411,7 @@ typedef struct evr_addr {
   \brief  Event on netNDP_ClearCache invalid parameter (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_ClearCacheInvalidParam(uint16_t if_id) {
     EventRecord2 (EvtNetNDP_ClearCacheInvalidParam, if_id, 0);
   }
@@ -8423,7 +8423,7 @@ typedef struct evr_addr {
   \brief  Event on NDP clear cache client busy (Error)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_ClearCacheClientBusy(uint16_t if_id) {
     EventRecord2 (EvtNetNDP_ClearCacheClientBusy, if_id, 0);
   }
@@ -8441,7 +8441,7 @@ typedef struct evr_addr {
                          - 0x01: Host
                          - 0x02: Router
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_CacheEntryTimeout(uint16_t if_id, uint32_t entry,
                     const uint8_t *ip6_addr, const uint8_t *mac_addr, uint32_t type) {
     evr_buf.u16[0] = if_id;
@@ -8460,7 +8460,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  entry         cache entry number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_EntryReleased(uint16_t if_id, uint32_t entry) {
     EventRecord2 (EvtNetNDP_EntryReleased, if_id, entry);
   }
@@ -8473,7 +8473,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  entry         cache entry number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_ResolveEntry(uint16_t if_id, uint32_t entry) {
     EventRecord2 (EvtNetNDP_ResolveEntry, if_id, entry);
   }
@@ -8486,7 +8486,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  entry         cache entry number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_RefreshEntry(uint16_t if_id, uint32_t entry) {
     EventRecord2 (EvtNetNDP_RefreshEntry, if_id, entry);
   }
@@ -8498,7 +8498,7 @@ typedef struct evr_addr {
   \brief  Event on NDP cache de-initialize (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetNDP_UninitCache(uint16_t if_id) {
     EventRecord2 (EvtNetNDP_UninitCache, if_id, 0);
   }
@@ -8508,7 +8508,7 @@ typedef struct evr_addr {
 
 
 // NetMLD event identifiers ----------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetMLD_InitNode                  EventID (EventLevelOp,    EvtNetMLD,  0)
 #define EvtNetMLD_Join                      EventID (EventLevelAPI,   EvtNetMLD,  1)
 #define EvtNetMLD_AlreadyInGroup            EventID (EventLevelOp,    EvtNetMLD,  2)
@@ -8536,7 +8536,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  num_entries   number of entries available in membership table
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_InitNode(uint16_t if_id, uint32_t num_entries) {
     EventRecord2 (EvtNetMLD_InitNode, if_id, num_entries);
   }
@@ -8549,7 +8549,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address of a group
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_Join(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8564,7 +8564,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  group_id      group membership identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_AlreadyInGroup(uint16_t if_id, uint8_t group_id) {
     EventRecord2 (EvtNetMLD_AlreadyInGroup, if_id, group_id);
   }
@@ -8577,7 +8577,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  num_used      number of used membership table entries
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_NoFreeEntries(uint16_t if_id, uint8_t num_used) {
     EventRecord2 (EvtNetMLD_NoFreeEntries, if_id, num_used);
   }
@@ -8590,7 +8590,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address of a group
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_SendReport(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8605,7 +8605,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address of a group
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_Leave(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8620,7 +8620,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address of a group
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_NotInGroup(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8635,7 +8635,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address of a group
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_SendLeave(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8651,7 +8651,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_FrameTooShort(uint16_t if_id, uint32_t length, uint32_t min_length) {
     uint32_t val2 = (min_length << 16) | length;
     EventRecord2 (EvtNetMLD_FrameTooShort, if_id, val2);
@@ -8665,7 +8665,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_AddressSpecificQuery(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8680,7 +8680,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_DestAddressWrong(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8695,7 +8695,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  max_time      maximum delay time in ms
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_DelayedReportScheduled(uint16_t if_id, uint16_t max_time) {
     EventRecord2 (EvtNetMLD_DelayedReportScheduled, if_id, max_time);
   }
@@ -8708,7 +8708,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_GeneralQuery(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8723,7 +8723,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  max_time      maximum delay time in ms
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_MaxTimeForReport(uint16_t if_id, uint16_t max_time) {
     EventRecord2 (EvtNetMLD_MaxTimeForReport, if_id, max_time);
   }
@@ -8736,7 +8736,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  n_reports     number of scheduled reports
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_GroupReportsScheduled(uint16_t if_id, uint32_t n_reports) {
     EventRecord2 (EvtNetMLD_GroupReportsScheduled, if_id, n_reports);
   }
@@ -8748,7 +8748,7 @@ typedef struct evr_addr {
   \brief  Event on MLD no report scheduled as no active group (Op)
   \param  if_id         network interface identifier
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_NoReportScheduled(uint16_t if_id) {
     EventRecord2 (EvtNetMLD_NoReportScheduled, if_id, 0);
   }
@@ -8761,7 +8761,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv6 address
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_ReportReceived(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8776,7 +8776,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  group_id      group membership identifier
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_OwnReportCanceled(uint16_t if_id, uint8_t group_id) {
     EventRecord2 (EvtNetMLD_OwnReportCanceled, if_id, group_id);
   }
@@ -8789,7 +8789,7 @@ typedef struct evr_addr {
   \param  if_id         network interface identifier
   \param  ip6_addr      pointer to IPv4 address of a group
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_SendDelayedReport(uint16_t if_id, const uint8_t *ip6_addr) {
     evr_buf.u32[0] = if_id;
     memcpy (&evr_buf.u32[1], ip6_addr, 16);
@@ -8803,7 +8803,7 @@ typedef struct evr_addr {
   \brief  Event on MLD node de-initialize (Op)
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetMLD_UninitNode(uint16_t if_id) {
     EventRecord2 (EvtNetMLD_UninitNode, if_id, 0);
   }
@@ -8813,7 +8813,7 @@ typedef struct evr_addr {
 
 
 // NetUDP event identifiers ----------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetUDP_InitSockets               EventID (EventLevelOp,    EvtNetUDP,  0)
 #define EvtNetUDP_GetSocket                 EventID (EventLevelOp,    EvtNetUDP,  1)
 #define EvtNetUDP_GetSocketInvalidParameter EventID (EventLevelError, EvtNetUDP,  2)
@@ -8863,7 +8863,7 @@ typedef struct evr_addr {
   \brief  Event on UDP socket initialize (Op)
   \param  num_sockets   number of available UDP sockets
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_InitSockets(uint32_t num_sockets) {
     EventRecord2 (EvtNetUDP_InitSockets, num_sockets, 0);
   }
@@ -8876,7 +8876,7 @@ typedef struct evr_addr {
   \param  socket        allocated socket handle
   \param  num_socks     number of available UDP sockets
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_GetSocket(int32_t socket, uint32_t num_socks) {
     EventRecord2 (EvtNetUDP_GetSocket, (uint32_t)socket, num_socks);
   }
@@ -8887,7 +8887,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on UDP get socket failed, invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_GetSocketInvalidParameter(void) {
     EventRecord2 (EvtNetUDP_GetSocketInvalidParameter, 0, 0);
   }
@@ -8899,7 +8899,7 @@ typedef struct evr_addr {
   \brief  Event on UDP get socket failed, no free socket available (Error)
   \param  num_socks     number of available UDP sockets
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_NoSocketAvailable(uint32_t num_socks) {
     EventRecord2 (EvtNetUDP_NoSocketAvailable, num_socks, 0);
   }
@@ -8911,7 +8911,7 @@ typedef struct evr_addr {
   \brief  Event on UDP release socket (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_ReleaseSocket(int32_t socket) {
     EventRecord2 (EvtNetUDP_ReleaseSocket, (uint32_t)socket, 0);
   }
@@ -8923,7 +8923,7 @@ typedef struct evr_addr {
   \brief  Event on UDP release failed, not valid socket (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_ReleaseSocketNotValid(int32_t socket) {
     EventRecord2 (EvtNetUDP_ReleaseSocketNotValid, (uint32_t)socket, 0);
   }
@@ -8936,7 +8936,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_ReleaseSocketWrongState(int32_t socket, uint8_t state) {
     EventRecord2 (EvtNetUDP_ReleaseSocketWrongState, (uint32_t)socket, state);
   }
@@ -8949,7 +8949,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  port          local port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_OpenSocket(int32_t socket, uint16_t port) {
     EventRecord2 (EvtNetUDP_OpenSocket, (uint32_t)socket, port);
   }
@@ -8961,7 +8961,7 @@ typedef struct evr_addr {
   \brief  Event on UDP open failed, not valid socket (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_OpenSocketNotValid(int32_t socket) {
     EventRecord2 (EvtNetUDP_OpenSocketNotValid, (uint32_t)socket, 0);
   }
@@ -8974,7 +8974,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_OpenSocketWrongState(int32_t socket, uint8_t state) {
     EventRecord2 (EvtNetUDP_OpenSocketWrongState, (uint32_t)socket, state);
   }
@@ -8987,7 +8987,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  local_port    assigned local port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_AssignLocalPort(int32_t socket, uint16_t local_port) {
     EventRecord2 (EvtNetUDP_AssignLocalPort, (uint32_t)socket, local_port);
   }
@@ -9000,7 +9000,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  port          local port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_OpenLocalPortInUse(int32_t socket, uint16_t port) {
     EventRecord2 (EvtNetUDP_OpenLocalPortInUse, (uint32_t)socket, port);
   }
@@ -9012,7 +9012,7 @@ typedef struct evr_addr {
   \brief  Event on UDP close socket (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_CloseSocket(int32_t socket) {
     EventRecord2 (EvtNetUDP_CloseSocket, (uint32_t)socket, 0);
   }
@@ -9024,7 +9024,7 @@ typedef struct evr_addr {
   \brief  Event on UDP close socket failed, not valid socket (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_CloseSocketNotValid(int32_t socket) {
     EventRecord2 (EvtNetUDP_CloseSocketNotValid, (uint32_t)socket, 0);
   }
@@ -9038,7 +9038,7 @@ typedef struct evr_addr {
   \param  option        interface option as specified by \ref netUDP_Option
   \param  val           option value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SetOptionSocket(int32_t socket, int32_t option, uint32_t val) {
     uint32_t val2 = (val << 8) | (option & 0xFF);
     EventRecord2 (EvtNetUDP_SetOptionSocket, (uint32_t)socket, val2);
@@ -9051,7 +9051,7 @@ typedef struct evr_addr {
   \brief  Event on UDP set socket option failed, not valid socket (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SetOptionSocketNotValid(int32_t socket) {
     EventRecord2 (EvtNetUDP_SetOptionSocketNotValid, (uint32_t)socket, 0);
   }
@@ -9064,7 +9064,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SetOptionSocketWrongState(int32_t socket, uint8_t state) {
     EventRecord2 (EvtNetUDP_SetOptionSocketWrongState, (uint32_t)socket, state);
   }
@@ -9077,7 +9077,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  ip4_tos       type of service value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SetOptionTos(int32_t socket, uint8_t ip4_tos) {
     EventRecord2 (EvtNetUDP_SetOptionTos, (uint32_t)socket, ip4_tos);
   }
@@ -9090,7 +9090,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  ip4_ttl       time to live value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SetOptionTtl(int32_t socket, uint8_t ip4_ttl) {
     EventRecord2 (EvtNetUDP_SetOptionTtl, (uint32_t)socket, ip4_ttl);
   }
@@ -9103,7 +9103,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  ip6_tclass    traffic class value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SetOptionTclass(int32_t socket, uint8_t ip6_tclass) {
     EventRecord2 (EvtNetUDP_SetOptionTclass, (uint32_t)socket, ip6_tclass);
   }
@@ -9116,7 +9116,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  ip6_hoplimit  hop limit value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SetOptionHopLimit(int32_t socket, uint8_t ip6_hoplimit) {
     EventRecord2 (EvtNetUDP_SetOptionHopLimit, (uint32_t)socket, ip6_hoplimit);
   }
@@ -9131,7 +9131,7 @@ typedef struct evr_addr {
                          - 0x01: calculate checksum for send frames
                          - 0x02: verify checksum for received frames
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SetOptionChecksum(int32_t socket, uint32_t checksum) {
     EventRecord2 (EvtNetUDP_SetOptionChecksum, (uint32_t)socket, checksum);
   }
@@ -9144,7 +9144,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  if_id         network interface identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SetOptionInterface(int32_t socket, uint16_t if_id) {
     EventRecord2 (EvtNetUDP_SetOptionInterface, (uint32_t)socket, if_id);
   }
@@ -9157,7 +9157,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  udp_option    wrong set option value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SetOptionWrongOption(int32_t socket, int32_t udp_option) {
     EventRecord2 (EvtNetUDP_SetOptionWrongOption, (uint32_t)socket, (uint32_t)udp_option);
   }
@@ -9170,7 +9170,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  opt_value     wrong value for set option
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SetOptionWrongValue(int32_t socket, uint32_t opt_value) {
     EventRecord2 (EvtNetUDP_SetOptionWrongValue, (uint32_t)socket, opt_value);
   }
@@ -9182,7 +9182,7 @@ typedef struct evr_addr {
   \brief  Event on UDP get buffer failed, out of memory (Error)
   \param  mem_size      requested memory size
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_GetBufferFailed(uint16_t mem_size) {
     EventRecord2 (EvtNetUDP_GetBufferFailed, mem_size, 0);
   }
@@ -9195,7 +9195,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SendFrame(int32_t socket, uint32_t length) {
     EventRecord2 (EvtNetUDP_SendFrame, (uint32_t)socket, length);
   }
@@ -9207,7 +9207,7 @@ typedef struct evr_addr {
   \brief  Event on UDP send buffer is invalid (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SendBufferInvalid(int32_t socket) {
     EventRecord2 (EvtNetUDP_SendBufferInvalid, (uint32_t)socket, 0);
   }
@@ -9219,7 +9219,7 @@ typedef struct evr_addr {
   \brief  Event on UDP send socket handle is not valid (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SendSocketNotValid(int32_t socket) {
     EventRecord2 (EvtNetUDP_SendSocketNotValid, (uint32_t)socket, 0);
   }
@@ -9231,7 +9231,7 @@ typedef struct evr_addr {
   \brief  Event on UDP send destination address not specified (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SendAddressUnspecified(int32_t socket) {
     EventRecord2 (EvtNetUDP_SendAddressUnspecified, (uint32_t)socket, 0);
   }
@@ -9243,7 +9243,7 @@ typedef struct evr_addr {
   \brief  Event on UDP send port undefined (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SendPortUndefined(int32_t socket) {
     EventRecord2 (EvtNetUDP_SendPortUndefined, (uint32_t)socket, 0);
   }
@@ -9255,7 +9255,7 @@ typedef struct evr_addr {
   \brief  Event on UDP send socket not open, invalid socket state (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SendSocketNotOpen(int32_t socket) {
     EventRecord2 (EvtNetUDP_SendSocketNotOpen, (uint32_t)socket, 0);
   }
@@ -9267,7 +9267,7 @@ typedef struct evr_addr {
   \brief  Event on UDP send 0-length frame, frame is dumped (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SendZeroLengthFrame(int32_t socket) {
     EventRecord2 (EvtNetUDP_SendZeroLengthFrame, (uint32_t)socket, 0);
   }
@@ -9279,7 +9279,7 @@ typedef struct evr_addr {
   \brief  Event on UDP send failed, no route to destination found (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SendNoRouteFound(int32_t socket) {
     EventRecord2 (EvtNetUDP_SendNoRouteFound, (uint32_t)socket, 0);
   }
@@ -9292,7 +9292,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  new_length    truncated frame length
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_SendSizeTruncated(int32_t socket, uint32_t new_length) {
     EventRecord2 (EvtNetUDP_SendSizeTruncated, (uint32_t)socket, new_length);
   }
@@ -9308,7 +9308,7 @@ typedef struct evr_addr {
                          - Len     (2 bytes)
                          - Chksum  (2 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_ShowFrameHeader(const void *udp_header) {
     EventRecordData (EvtNetUDP_ShowFrameHeader, udp_header, 8);
   }
@@ -9323,7 +9323,7 @@ typedef struct evr_addr {
                          - 0: IPv4
                          - 1: IPv6
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_ReceiveFrame(uint32_t length, uint8_t ip_version) {
     EventRecord2 (EvtNetUDP_ReceiveFrame, length, ip_version);
   }
@@ -9336,7 +9336,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_FrameTooShort(uint32_t length, uint32_t min_length) {
     EventRecord2 (EvtNetUDP_FrameTooShort, length, min_length);
   }
@@ -9348,7 +9348,7 @@ typedef struct evr_addr {
   \brief  Event on UDP received frame mapped to a socket (Op)
   \param  socket        mapped socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_MapFrameToSocket(int32_t socket) {
     EventRecord2 (EvtNetUDP_MapFrameToSocket, (uint32_t)socket, 0);
   }
@@ -9360,7 +9360,7 @@ typedef struct evr_addr {
   \brief  Event on UDP received frame not mapped, no open sockets found (Op)
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_FrameNotMapped(uint32_t length) {
     EventRecord2 (EvtNetUDP_FrameNotMapped, length, 0);
   }
@@ -9372,7 +9372,7 @@ typedef struct evr_addr {
   \brief  Event on UDP received frame link-layer addressed (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_LinkLayerAddressed(int32_t socket) {
     EventRecord2 (EvtNetUDP_LinkLayerAddressed, (uint32_t)socket, 0);
   }
@@ -9384,7 +9384,7 @@ typedef struct evr_addr {
   \brief  Event on UDP frame checksum check failed (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_ChecksumFailed(int32_t socket) {
     EventRecord2 (EvtNetUDP_ChecksumFailed, (uint32_t)socket, 0);
   }
@@ -9395,7 +9395,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on UDP de-initialize available sockets (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetUDP_UninitSockets(void) {
     EventRecord2 (EvtNetUDP_UninitSockets, 0, 0);
   }
@@ -9405,7 +9405,7 @@ typedef struct evr_addr {
 
 
 // NetTCP event identifiers ----------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetTCP_InitSockets               EventID (EventLevelOp,    EvtNetTCP,  0)
 #define EvtNetTCP_GetSocket                 EventID (EventLevelOp,    EvtNetTCP,  1)
 #define EvtNetTCP_GetSocketInvalidParameter EventID (EventLevelError, EvtNetTCP,  2)
@@ -9529,7 +9529,7 @@ typedef struct evr_addr {
   \param  num_sockets   number of available TCP sockets
   \param  max_segsize   maximum segment size in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_InitSockets(uint32_t num_sockets, uint16_t max_segsize) {
     EventRecord2 (EvtNetTCP_InitSockets, num_sockets, max_segsize);
   }
@@ -9542,7 +9542,7 @@ typedef struct evr_addr {
   \param  socket        allocated socket handle
   \param  num_socks     number of available TCP sockets
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_GetSocket(int32_t socket, uint32_t num_socks) {
     EventRecord2 (EvtNetTCP_GetSocket, (uint32_t)socket, num_socks);
   }
@@ -9553,7 +9553,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TCP get socket failed, invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_GetSocketInvalidParameter(void) {
     EventRecord2 (EvtNetTCP_GetSocketInvalidParameter, 0, 0);
   }
@@ -9565,7 +9565,7 @@ typedef struct evr_addr {
   \brief  Event on TCP get socket failed, no free socket available (Error)
   \param  num_socks     number of available TCP sockets
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_NoSocketAvailable(uint32_t num_socks) {
     EventRecord2 (EvtNetTCP_NoSocketAvailable, num_socks, 0);
   }
@@ -9577,7 +9577,7 @@ typedef struct evr_addr {
   \brief  Event on TCP release socket (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ReleaseSocket(int32_t socket) {
     EventRecord2 (EvtNetTCP_ReleaseSocket, (uint32_t)socket, 0);
   }
@@ -9589,7 +9589,7 @@ typedef struct evr_addr {
   \brief  Event on TCP release failed, not valid socket (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ReleaseSocketNotValid(int32_t socket) {
     EventRecord2 (EvtNetTCP_ReleaseSocketNotValid, (uint32_t)socket, 0);
   }
@@ -9602,7 +9602,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ReleaseSocketWrongState(int32_t socket, int32_t state) {
     EventRecord2 (EvtNetTCP_ReleaseSocketWrongState, (uint32_t)socket, (uint32_t)state);
   }
@@ -9615,7 +9615,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  port          local port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ListenSocket(int32_t socket, uint16_t port) {
     EventRecord2 (EvtNetTCP_ListenSocket, (uint32_t)socket, port);
   }
@@ -9627,7 +9627,7 @@ typedef struct evr_addr {
   \brief  Event on TCP listen failed, not valid socket (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ListenSocketNotValid(int32_t socket) {
     EventRecord2 (EvtNetTCP_ListenSocketNotValid, (uint32_t)socket, 0);
   }
@@ -9639,7 +9639,7 @@ typedef struct evr_addr {
   \brief  Event on TCP listen failed, listening port undefined (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ListenPortUndefined(int32_t socket) {
     EventRecord2 (EvtNetTCP_ListenPortUndefined, (uint32_t)socket, 0);
   }
@@ -9652,7 +9652,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ListenSocketWrongState(int32_t socket, int32_t state) {
     EventRecord2 (EvtNetTCP_ListenSocketWrongState, (uint32_t)socket, (uint32_t)state);
   }
@@ -9665,7 +9665,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  local_port    local port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ConnectSocket(int32_t socket, uint16_t local_port) {
     EventRecord2 (EvtNetTCP_ConnectSocket, (uint32_t)socket, local_port);
   }
@@ -9677,7 +9677,7 @@ typedef struct evr_addr {
   \brief  Event on TCP connect failed, not valid socket (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ConnectSocketNotValid(int32_t socket) {
     EventRecord2 (EvtNetTCP_ConnectSocketNotValid, (uint32_t)socket, 0);
   }
@@ -9689,7 +9689,7 @@ typedef struct evr_addr {
   \brief  Event on TCP connect failed, address unspecified (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ConnectAddressUnspecified(int32_t socket) {
     EventRecord2 (EvtNetTCP_ConnectAddressUnspecified, (uint32_t)socket, 0);
   }
@@ -9701,7 +9701,7 @@ typedef struct evr_addr {
   \brief  Event on TCP connect failed, port undefined (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ConnectPortUndefined(int32_t socket) {
     EventRecord2 (EvtNetTCP_ConnectPortUndefined, (uint32_t)socket, 0);
   }
@@ -9713,7 +9713,7 @@ typedef struct evr_addr {
   \brief  Event on TCP display net address (Op)
   \param  net_addr      pointer to \ref NET_ADDR address structure
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ShowNetAddress(const void *net_addr) {
     const EVR_ADDR *addr = net_addr;
     EventRecordData (EvtNetTCP_ShowNetAddress, addr, addr->type ? 20 : 8);
@@ -9727,7 +9727,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  local_port    local port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ConnectLocalPortInvalid(int32_t socket, uint16_t local_port) {
     EventRecord2 (EvtNetTCP_ConnectLocalPortInvalid, (uint32_t)socket, local_port);
   }
@@ -9740,7 +9740,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  local_port    assigned local port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_AssignLocalPort(int32_t socket, uint16_t local_port) {
     EventRecord2 (EvtNetTCP_AssignLocalPort, (uint32_t)socket, local_port);
   }
@@ -9753,7 +9753,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ConnectSocketWrongState(int32_t socket, int32_t state) {
     EventRecord2 (EvtNetTCP_ConnectSocketWrongState, (uint32_t)socket, (uint32_t)state);
   }
@@ -9765,7 +9765,7 @@ typedef struct evr_addr {
   \brief  Event on TCP connect failed, no route to destination found (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ConnectNoRouteFound(int32_t socket) {
     EventRecord2 (EvtNetTCP_ConnectNoRouteFound, (uint32_t)socket, 0);
   }
@@ -9781,7 +9781,7 @@ typedef struct evr_addr {
   \remark Those variables are taken from VJs original code in his paper.
           (Congestion avoidance and control, page 20)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ShowRttVariables(int32_t socket, int16_t sa, int16_t sv) {
     /* uint32_t rto = ((sa>>3) + sv) * 100; */
     uint32_t val2 = (uint32_t)sa << 16  | (uint32_t)sv;
@@ -9795,7 +9795,7 @@ typedef struct evr_addr {
   \brief  Event on TCP get buffer failed, out of memory (Error)
   \param  mem_size      requested memory size
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_GetBufferFailed(uint16_t mem_size) {
     EventRecord2 (EvtNetTCP_GetBufferFailed, mem_size, 0);
   }
@@ -9808,7 +9808,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendFrame(int32_t socket, uint32_t length) {
     EventRecord2 (EvtNetTCP_SendFrame, (uint32_t)socket, length);
   }
@@ -9820,7 +9820,7 @@ typedef struct evr_addr {
   \brief  Event on TCP send failed, invalid buffer (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendBufferInvalid(int32_t socket) {
     EventRecord2 (EvtNetTCP_SendBufferInvalid, (uint32_t)socket, 0);
   }
@@ -9832,7 +9832,7 @@ typedef struct evr_addr {
   \brief  Event on TCP send failed, socket handle not valid (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendSocketNotValid(int32_t socket) {
     EventRecord2 (EvtNetTCP_SendSocketNotValid, (uint32_t)socket, 0);
   }
@@ -9844,7 +9844,7 @@ typedef struct evr_addr {
   \brief  Event on TCP send failed, socket not connected (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendSocketNotConnected(int32_t socket) {
     EventRecord2 (EvtNetTCP_SendSocketNotConnected, (uint32_t)socket, 0);
   }
@@ -9856,7 +9856,7 @@ typedef struct evr_addr {
   \brief  Event on TCP send failed, socket closing (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendSocketClosing(int32_t socket) {
     EventRecord2 (EvtNetTCP_SendSocketClosing, (uint32_t)socket, 0);
   }
@@ -9868,7 +9868,7 @@ typedef struct evr_addr {
   \brief  Event on TCP send failed, called from a callback function (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendReenteredCall(int32_t socket) {
     EventRecord2 (EvtNetTCP_SendReenteredCall, (uint32_t)socket, 0);
   }
@@ -9880,7 +9880,7 @@ typedef struct evr_addr {
   \brief  Event on TCP send failed, unacked data pending (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendDataUnacked(int32_t socket) {
     EventRecord2 (EvtNetTCP_SendDataUnacked, (uint32_t)socket, 0);
   }
@@ -9893,7 +9893,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \remark Frame length is larger than MSS.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendMssExceeded(int32_t socket) {
     EventRecord2 (EvtNetTCP_SendMssExceeded, (uint32_t)socket, 0);
   }
@@ -9905,7 +9905,7 @@ typedef struct evr_addr {
   \brief  Event on TCP send 0-length frame, frame dumped (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendZeroLengthFrame(int32_t socket) {
     EventRecord2 (EvtNetTCP_SendZeroLengthFrame, (uint32_t)socket, 0);
   }
@@ -9917,7 +9917,7 @@ typedef struct evr_addr {
   \brief  Event on TCP close socket (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_CloseSocket(int32_t socket) {
     EventRecord2 (EvtNetTCP_CloseSocket, (uint32_t)socket, 0);
   }
@@ -9929,7 +9929,7 @@ typedef struct evr_addr {
   \brief  Event on TCP close socket failed, not valid socket (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_CloseSocketNotValid(int32_t socket) {
     EventRecord2 (EvtNetTCP_CloseSocketNotValid, (uint32_t)socket, 0);
   }
@@ -9942,7 +9942,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  unack_length  length of unacked data
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_CloseDataUnacked(int32_t socket, uint32_t unack_length) {
     EventRecord2 (EvtNetTCP_CloseDataUnacked, (uint32_t)socket, unack_length);
   }
@@ -9955,7 +9955,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_CloseSocketWrongState(int32_t socket, int32_t state) {
     EventRecord2 (EvtNetTCP_CloseSocketWrongState, (uint32_t)socket, (uint32_t)state);
   }
@@ -9967,7 +9967,7 @@ typedef struct evr_addr {
   \brief  Event on TCP abort socket (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_AbortSocket(int32_t socket) {
     EventRecord2 (EvtNetTCP_AbortSocket, (uint32_t)socket, 0);
   }
@@ -9979,7 +9979,7 @@ typedef struct evr_addr {
   \brief  Event on TCP abort failed, not valid socket (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_AbortSocketNotValid(int32_t socket) {
     EventRecord2 (EvtNetTCP_AbortSocketNotValid, (uint32_t)socket, 0);
   }
@@ -9992,7 +9992,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_AbortSocketWrongState(int32_t socket, int32_t state) {
     EventRecord2 (EvtNetTCP_AbortSocketWrongState, (uint32_t)socket, (uint32_t)state);
   }
@@ -10004,7 +10004,7 @@ typedef struct evr_addr {
   \brief  Event on TCP send ready failed, not valid socket (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendReadySocketNotValid(int32_t socket) {
     EventRecord2 (EvtNetTCP_SendReadySocketNotValid, (uint32_t)socket, 0);
   }
@@ -10016,7 +10016,7 @@ typedef struct evr_addr {
   \brief  Event on TCP send ready failed, called from a callback function (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendReadyReenteredCall(int32_t socket) {
     EventRecord2 (EvtNetTCP_SendReadyReenteredCall, (uint32_t)socket, 0);
   }
@@ -10028,7 +10028,7 @@ typedef struct evr_addr {
   \brief  Event on TCP reset window failed, not valid socket (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ResetWindowSocketNotValid(int32_t socket) {
     EventRecord2 (EvtNetTCP_ResetWindowSocketNotValid, (uint32_t)socket, 0);
   }
@@ -10040,7 +10040,7 @@ typedef struct evr_addr {
   \brief  Event on TCP reset window failed, invalid socket state (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ResetWindowNotConnected(int32_t socket) {
     EventRecord2 (EvtNetTCP_ResetWindowNotConnected, (uint32_t)socket, 0);
   }
@@ -10052,7 +10052,7 @@ typedef struct evr_addr {
   \brief  Event on TCP reset window failed, flow-control not enabled (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ResetWindowNoFlowControl(int32_t socket) {
     EventRecord2 (EvtNetTCP_ResetWindowNoFlowControl, (uint32_t)socket, 0);
   }
@@ -10065,7 +10065,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  window_size   updated receive window size
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ResetWindowUpdate(int32_t socket, uint16_t window_size) {
     EventRecord2 (EvtNetTCP_ResetWindowUpdate, (uint32_t)socket, window_size);
   }
@@ -10079,7 +10079,7 @@ typedef struct evr_addr {
   \param  option        interface option as specified by \ref netTCP_Option
   \param  val           option value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SetOptionSocket(int32_t socket, int32_t option, uint32_t val) {
     uint32_t val2 = (val << 8) | (option & 0xFF);
     EventRecord2 (EvtNetTCP_SetOptionSocket, (uint32_t)socket, val2);
@@ -10092,7 +10092,7 @@ typedef struct evr_addr {
   \brief  Event on TCP set socket option failed, not valid socket (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SetOptionSocketNotValid(int32_t socket) {
     EventRecord2 (EvtNetTCP_SetOptionSocketNotValid, (uint32_t)socket, 0);
   }
@@ -10105,7 +10105,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SetOptionSocketWrongState(int32_t socket, int32_t state) {
     EventRecord2 (EvtNetTCP_SetOptionSocketWrongState, (uint32_t)socket, (uint32_t)state);
   }
@@ -10118,7 +10118,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  ip4_tos       type of service value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SetOptionTos(int32_t socket, uint8_t ip4_tos) {
     EventRecord2 (EvtNetTCP_SetOptionTos, (uint32_t)socket, ip4_tos);
   }
@@ -10131,7 +10131,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  ip6_tclass    traffic class value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SetOptionTclass(int32_t socket, uint8_t ip6_tclass) {
     EventRecord2 (EvtNetTCP_SetOptionTclass, (uint32_t)socket, ip6_tclass);
   }
@@ -10144,7 +10144,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  timeout       connection or keep-alive timeout in seconds
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SetOptionTimeout(int32_t socket, uint16_t timeout) {
     EventRecord2 (EvtNetTCP_SetOptionTimeout, (uint32_t)socket, timeout);
   }
@@ -10159,7 +10159,7 @@ typedef struct evr_addr {
                          - 0: disable
                          - 1: enable
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SetOptionKeepAlive(int32_t socket, uint32_t enable) {
     EventRecord2 (EvtNetTCP_SetOptionKeepAlive, (uint32_t)socket, enable);
   }
@@ -10174,7 +10174,7 @@ typedef struct evr_addr {
                          - 0: disable
                          - 1: enable
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SetOptionFlowControl(int32_t socket, uint32_t enable) {
     EventRecord2 (EvtNetTCP_SetOptionFlowControl, (uint32_t)socket, enable);
   }
@@ -10189,7 +10189,7 @@ typedef struct evr_addr {
                          - 0: disable
                          - 1: enable
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SetOptionDelayedAck(int32_t socket, uint32_t enable) {
     EventRecord2 (EvtNetTCP_SetOptionDelayedAck, (uint32_t)socket, enable);
   }
@@ -10202,7 +10202,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  tcp_option    wrong set option value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SetOptionWrongOption(int32_t socket, int32_t tcp_option) {
     EventRecord2 (EvtNetTCP_SetOptionWrongOption, (uint32_t)socket, (uint32_t)tcp_option);
   }
@@ -10215,7 +10215,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  opt_value     wrong value for set option
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SetOptionWrongValue(int32_t socket, uint32_t opt_value) {
     EventRecord2 (EvtNetTCP_SetOptionWrongValue, (uint32_t)socket, opt_value);
   }
@@ -10227,7 +10227,7 @@ typedef struct evr_addr {
   \brief  Event on TCP send delayed-acknowledge (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendDelayedAck(int32_t socket) {
     EventRecord2 (EvtNetTCP_SendDelayedAck, (uint32_t)socket, 0);
   }
@@ -10239,7 +10239,7 @@ typedef struct evr_addr {
   \brief  Event on TCP send keep-alive probe (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendKeepAliveProbe(int32_t socket) {
     EventRecord2 (EvtNetTCP_SendKeepAliveProbe, (uint32_t)socket, 0);
   }
@@ -10251,7 +10251,7 @@ typedef struct evr_addr {
   \brief  Event on TCP keep-alive timeout no response, close socket (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_KeepAliveTimeoutClosing(int32_t socket) {
     EventRecord2 (EvtNetTCP_KeepAliveTimeoutClosing, (uint32_t)socket, 0);
   }
@@ -10263,7 +10263,7 @@ typedef struct evr_addr {
   \brief  Event on TCP acknowledge callback notification to the user (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_CallbackEventAck(int32_t socket) {
     EventRecord2 (EvtNetTCP_CallbackEventAck, (uint32_t)socket, 0);
   }
@@ -10276,7 +10276,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  length        length of data to resend
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ResendOnTimeout(int32_t socket, uint32_t length) {
     EventRecord2 (EvtNetTCP_ResendOnTimeout, (uint32_t)socket, length);
   }
@@ -10290,7 +10290,7 @@ typedef struct evr_addr {
   \param  cwnd          congestion window
   \param  ssth          slow start threshold
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ShowCongestionVariables(int32_t socket, uint16_t cwnd, uint16_t ssth) {
     uint32_t val2 = ((uint32_t)cwnd << 16) | ssth;
     EventRecord2 (EvtNetTCP_ShowCongestionVariables, (uint32_t)socket, val2);
@@ -10304,7 +10304,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         current socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_TimeoutInState(int32_t socket, int32_t state) {
     EventRecord2 (EvtNetTCP_TimeoutInState, (uint32_t)socket, (uint32_t)state);
   }
@@ -10316,7 +10316,7 @@ typedef struct evr_addr {
   \brief  Event on TCP timeout in TIME_WAIT state, closing socket (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_TwaitTimeoutClosing(int32_t socket) {
     EventRecord2 (EvtNetTCP_TwaitTimeoutClosing, (uint32_t)socket, 0);
   }
@@ -10328,7 +10328,7 @@ typedef struct evr_addr {
   \brief  Event on TCP timeout in CLOSING, FIN_WAIT_1 or LAST_ACK state (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ClosingTimeout(int32_t socket) {
     EventRecord2 (EvtNetTCP_ClosingTimeout, (uint32_t)socket, 0);
   }
@@ -10340,7 +10340,7 @@ typedef struct evr_addr {
   \brief  Event on TCP no retries left (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_NoRetriesLeft(int32_t socket) {
     EventRecord2 (EvtNetTCP_NoRetriesLeft, (uint32_t)socket, 0);
   }
@@ -10355,7 +10355,7 @@ typedef struct evr_addr {
                          - 0: IPv4
                          - 1: IPv6
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ReceiveFrame(uint32_t length, uint8_t ip_version) {
     EventRecord2 (EvtNetTCP_ReceiveFrame, length, ip_version);
   }
@@ -10368,7 +10368,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_FrameTooShort(uint32_t length, uint32_t min_length) {
     EventRecord2 (EvtNetTCP_FrameTooShort, length, min_length);
   }
@@ -10380,7 +10380,7 @@ typedef struct evr_addr {
   \brief  Event on TCP received frame not mapped, no active socket found (Op)
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_FrameNotMapped(uint32_t length) {
     EventRecord2 (EvtNetTCP_FrameNotMapped, length, 0);
   }
@@ -10393,7 +10393,7 @@ typedef struct evr_addr {
   \param  socket        mapped socket handle
   \param  state         current socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_MapFrameToSocket(int32_t socket, int32_t state) {
     EventRecord2 (EvtNetTCP_MapFrameToSocket, (uint32_t)socket, (uint32_t)state);
   }
@@ -10405,7 +10405,7 @@ typedef struct evr_addr {
   \brief  Event on TCP frame checksum check failed (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ChecksumFailed(int32_t socket) {
     EventRecord2 (EvtNetTCP_ChecksumFailed, (uint32_t)socket, 0);
   }
@@ -10426,7 +10426,7 @@ typedef struct evr_addr {
                          - Chksum  (2 bytes)
                          - UrgPtr  (2 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ShowFrameHeader(const void *tcp_header) {
     EventRecordData (EvtNetTCP_ShowFrameHeader, tcp_header, 20);
   }
@@ -10438,7 +10438,7 @@ typedef struct evr_addr {
   \brief  Event on TCP RST-flag received within current receive window (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_RstInWindow(int32_t socket) {
     EventRecord2 (EvtNetTCP_RstInWindow, (uint32_t)socket, 0);
   }
@@ -10450,7 +10450,7 @@ typedef struct evr_addr {
   \brief  Event on TCP RST-flag received outside current receive window (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_RstNotValid(int32_t socket) {
     EventRecord2 (EvtNetTCP_RstNotValid, (uint32_t)socket, 0);
   }
@@ -10462,7 +10462,7 @@ typedef struct evr_addr {
   \brief  Event on TCP repeated SYN+ACK-flags received (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_RepeatedSynAck(int32_t socket) {
     EventRecord2 (EvtNetTCP_RepeatedSynAck, (uint32_t)socket, 0);
   }
@@ -10474,7 +10474,7 @@ typedef struct evr_addr {
   \brief  Event on TCP ACK-flag not set in received frame (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_AckNotSet(int32_t socket) {
     EventRecord2 (EvtNetTCP_AckNotSet, (uint32_t)socket, 0);
   }
@@ -10487,7 +10487,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  send_window   current sending window size
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ShowSendWindow(int32_t socket, uint16_t send_window) {
     EventRecord2 (EvtNetTCP_ShowSendWindow, (uint32_t)socket, send_window);
   }
@@ -10499,7 +10499,7 @@ typedef struct evr_addr {
   \brief  Event on TCP keep-alive frame received (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_KeepAliveSegment(int32_t socket) {
     EventRecord2 (EvtNetTCP_KeepAliveSegment, (uint32_t)socket, 0);
   }
@@ -10511,7 +10511,7 @@ typedef struct evr_addr {
   \brief  Event on TCP retransmitted frame received (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_RetransmittedSegment(int32_t socket) {
     EventRecord2 (EvtNetTCP_RetransmittedSegment, (uint32_t)socket, 0);
   }
@@ -10523,7 +10523,7 @@ typedef struct evr_addr {
   \brief  Event on TCP out of range segment received (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_OutOfRangeSegment(int32_t socket) {
     EventRecord2 (EvtNetTCP_OutOfRangeSegment, (uint32_t)socket, 0);
   }
@@ -10535,7 +10535,7 @@ typedef struct evr_addr {
   \brief  Event on TCP zero-window probe received (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ZeroWindowProbe(int32_t socket) {
     EventRecord2 (EvtNetTCP_ZeroWindowProbe, (uint32_t)socket, 0);
   }
@@ -10547,7 +10547,7 @@ typedef struct evr_addr {
   \brief  Event on TCP FIN-flag received, remote peer wants to close (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_RemotePeerClosing(int32_t socket) {
     EventRecord2 (EvtNetTCP_RemotePeerClosing, (uint32_t)socket, 0);
   }
@@ -10560,7 +10560,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  rec_window    current receiving window size
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ShowReceiveWindow(int32_t socket, uint16_t rec_window) {
     EventRecord2 (EvtNetTCP_ShowReceiveWindow, (uint32_t)socket, rec_window);
   }
@@ -10572,7 +10572,7 @@ typedef struct evr_addr {
   \brief  Event on TCP ACK-flag set received, invalid in state LISTEN (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_InvalidAck(int32_t socket) {
     EventRecord2 (EvtNetTCP_InvalidAck, (uint32_t)socket, 0);
   }
@@ -10584,7 +10584,7 @@ typedef struct evr_addr {
   \brief  Event on TCP SYN-flag not set in received frame (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SynNotSet(int32_t socket) {
     EventRecord2 (EvtNetTCP_SynNotSet, (uint32_t)socket, 0);
   }
@@ -10596,7 +10596,7 @@ typedef struct evr_addr {
   \brief  Event on TCP user rejected inbound connection (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_UserConnectionReject(int32_t socket) {
     EventRecord2 (EvtNetTCP_UserConnectionReject, (uint32_t)socket, 0);
   }
@@ -10609,7 +10609,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         next socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_NextState(int32_t socket, int32_t state) {
     EventRecord2 (EvtNetTCP_NextState, (uint32_t)socket, (uint32_t)state);
   }
@@ -10621,7 +10621,7 @@ typedef struct evr_addr {
   \brief  Event on TCP SYN+ACK-flags set but wrong ack number (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_WrongSynAck(int32_t socket) {
     EventRecord2 (EvtNetTCP_WrongSynAck, (uint32_t)socket, 0);
   }
@@ -10633,7 +10633,7 @@ typedef struct evr_addr {
   \brief  Event on TCP ACK-flag set but wrong ack number (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_WrongAckNumber(int32_t socket) {
     EventRecord2 (EvtNetTCP_WrongAckNumber, (uint32_t)socket, 0);
   }
@@ -10645,7 +10645,7 @@ typedef struct evr_addr {
   \brief  Event on TCP ACK-flag set but wrong seq number (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_WrongSeqNumber(int32_t socket) {
     EventRecord2 (EvtNetTCP_WrongSeqNumber, (uint32_t)socket, 0);
   }
@@ -10657,7 +10657,7 @@ typedef struct evr_addr {
   \brief  Event on TCP repeated SYN-flag set frame received (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_RepeatedSyn(int32_t socket) {
     EventRecord2 (EvtNetTCP_RepeatedSyn, (uint32_t)socket, 0);
   }
@@ -10669,7 +10669,7 @@ typedef struct evr_addr {
   \brief  Event on TCP unrecognised frame received (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_FrameUnrecognised(int32_t socket) {
     EventRecord2 (EvtNetTCP_FrameUnrecognised, (uint32_t)socket, 0);
   }
@@ -10682,7 +10682,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         next socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SimultOpenNextState(int32_t socket, int32_t state) {
     EventRecord2 (EvtNetTCP_SimultOpenNextState, (uint32_t)socket, (uint32_t)state);
   }
@@ -10694,7 +10694,7 @@ typedef struct evr_addr {
   \brief  Event on TCP frame with FIN+ACK-flags set but wrong ack number (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_WrongFinAck(int32_t socket) {
     EventRecord2 (EvtNetTCP_WrongFinAck, (uint32_t)socket, 0);
   }
@@ -10707,7 +10707,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         next socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_FinAckNextState(int32_t socket, int32_t state) {
     EventRecord2 (EvtNetTCP_FinAckNextState, (uint32_t)socket, (uint32_t)state);
   }
@@ -10720,7 +10720,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         next socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SimultCloseNextState(int32_t socket, int32_t state) {
     EventRecord2 (EvtNetTCP_SimultCloseNextState, (uint32_t)socket, (uint32_t)state);
   }
@@ -10733,7 +10733,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         next socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_AckNextState(int32_t socket, int32_t state) {
     EventRecord2 (EvtNetTCP_AckNextState, (uint32_t)socket, (uint32_t)state);
   }
@@ -10746,7 +10746,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         next socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_FinNextState(int32_t socket, int32_t state) {
     EventRecord2 (EvtNetTCP_FinNextState, (uint32_t)socket, (uint32_t)state);
   }
@@ -10758,7 +10758,7 @@ typedef struct evr_addr {
   \brief  Event on TCP PSH+ACK-flags received in half closed state FIN_WAIT_2 (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_PshAckInHalfClosed(int32_t socket) {
     EventRecord2 (EvtNetTCP_PshAckInHalfClosed, (uint32_t)socket, 0);
   }
@@ -10770,7 +10770,7 @@ typedef struct evr_addr {
   \brief  Event on TCP repeated FIN-flag received (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_RepeatedFin(int32_t socket) {
     EventRecord2 (EvtNetTCP_RepeatedFin, (uint32_t)socket, 0);
   }
@@ -10783,7 +10783,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  state         next socket state
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_LastAckNextState(int32_t socket, int32_t state) {
     EventRecord2 (EvtNetTCP_LastAckNextState, (uint32_t)socket, (uint32_t)state);
   }
@@ -10795,7 +10795,7 @@ typedef struct evr_addr {
   \brief  Event on TCP RST-flag received (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_RstReceived(int32_t socket) {
     EventRecord2 (EvtNetTCP_RstReceived, (uint32_t)socket, 0);
   }
@@ -10807,7 +10807,7 @@ typedef struct evr_addr {
   \brief  Event on TCP socket in invalid state (Error)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_InvalidState(int32_t socket) {
     EventRecord2 (EvtNetTCP_InvalidState, (uint32_t)socket, 0);
   }
@@ -10820,7 +10820,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  length        data length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendData(int32_t socket, uint16_t length) {
     EventRecord2 (EvtNetTCP_SendData, (uint32_t)socket, length);
   }
@@ -10832,7 +10832,7 @@ typedef struct evr_addr {
   \brief  Event on TCP send control frame (Op)
   \param  socket        socket handle
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendControl(int32_t socket) {
     EventRecord2 (EvtNetTCP_SendControl, (uint32_t)socket, 0);
   }
@@ -10843,7 +10843,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TCP send reset to remote host for unmapped frame (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_SendReset(void) {
     EventRecord2 (EvtNetTCP_SendReset, 0, 0);
   }
@@ -10856,7 +10856,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  opt_length    length of header options
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ParseHeaderOptions(int32_t socket, uint32_t opt_length) {
     EventRecord2 (EvtNetTCP_ParseHeaderOptions, (uint32_t)socket, opt_length);
   }
@@ -10869,7 +10869,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  mss           maximum segment size
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_OptionMss(int32_t socket, uint32_t mss) {
     EventRecord2 (EvtNetTCP_OptionMss, (uint32_t)socket, mss);
   }
@@ -10882,7 +10882,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  dup_acks      number of duplicate acks
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_DuplicateAck(int32_t socket, uint32_t dup_acks) {
     EventRecord2 (EvtNetTCP_DuplicateAck, (uint32_t)socket, dup_acks);
   }
@@ -10895,7 +10895,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  data_length   length of data to fast retransmit
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_FastRetransmit(int32_t socket, uint32_t data_length) {
     EventRecord2 (EvtNetTCP_FastRetransmit, (uint32_t)socket, data_length);
   }
@@ -10908,7 +10908,7 @@ typedef struct evr_addr {
   \param  socket        socket handle
   \param  ack_length    acknowledged data length
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_DataAcked(int32_t socket, uint32_t ack_length) {
     EventRecord2 (EvtNetTCP_DataAcked, (uint32_t)socket, ack_length);
   }
@@ -10922,7 +10922,7 @@ typedef struct evr_addr {
   \param  length        length of the data to resend
   \param  tout          retry timeout in 100ms ticks
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_ResendData(int32_t socket, uint32_t length, uint32_t tout) {
     uint32_t val2 = length << 16 | tout;
     EventRecord2 (EvtNetTCP_ResendData, (uint32_t)socket, val2);
@@ -10934,7 +10934,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TCP map socket failed, wrong TCP flags set (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_MapSocketWrongFlagsSet(void) {
     EventRecord2 (EvtNetTCP_MapSocketWrongFlagsSet, 0, 0);
   }
@@ -10945,7 +10945,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TCP map socket failed, SYN-flag not set (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_MapSocketSynNotSet(void) {
     EventRecord2 (EvtNetTCP_MapSocketSynNotSet, 0, 0);
   }
@@ -10956,7 +10956,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TCP map socket failed, no listening sockets found (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_MapSocketNoListenSocket(void) {
     EventRecord2 (EvtNetTCP_MapSocketNoListenSocket, 0, 0);
   }
@@ -10967,7 +10967,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TCP de-initialize available sockets (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTCP_UninitSockets(void) {
     EventRecord2 (EvtNetTCP_UninitSockets, 0, 0);
   }
@@ -10977,7 +10977,7 @@ typedef struct evr_addr {
 
 
 // NetBSD event identifiers ----------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetBSD_InitSockets               EventID (EventLevelOp,    EvtNetBSD,  0)
 #define EvtNetBSD_SocketCreate              EventID (EventLevelAPI,   EvtNetBSD,  1)
 #define EvtNetBSD_SocketInvalidParameter    EventID (EventLevelError, EvtNetBSD,  2)
@@ -11140,7 +11140,7 @@ typedef struct evr_addr {
   \brief  Event on BSD sockets API initialize (Op)
   \param  num_socks     number of available BSD sockets
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_InitSockets(uint32_t num_socks) {
     EventRecord2 (EvtNetBSD_InitSockets, num_socks, 0);
   }
@@ -11155,7 +11155,7 @@ typedef struct evr_addr {
                          - 1: SOCK_STREAM
                          - 2: SOCK_DGRAM
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SocketCreate(int32_t sock, int32_t type) {
     EventRecord2 (EvtNetBSD_SocketCreate, (uint32_t)sock, (uint32_t)type);
   }
@@ -11166,7 +11166,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on BSD \ref socket create failed, invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SocketInvalidParameter(void) {
     EventRecord2 (EvtNetBSD_SocketInvalidParameter, 0, 0);
   }
@@ -11178,7 +11178,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref socket create failed, no free socket available (Error)
   \param  num_socks     number of available BSD sockets
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_NoSocketAvailable(uint32_t num_socks) {
     EventRecord2 (EvtNetBSD_NoSocketAvailable, num_socks, 0);
   }
@@ -11190,7 +11190,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref bind socket (API)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_BindSocket(int32_t sock) {
     EventRecord2 (EvtNetBSD_BindSocket, (uint32_t)sock, 0);
   }
@@ -11202,7 +11202,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref bind failed, socket not valid (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_BindSocketNotValid(int32_t sock) {
     EventRecord2 (EvtNetBSD_BindSocketNotValid, (uint32_t)sock, 0);
   }
@@ -11214,7 +11214,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref bind failed, invalid parameter (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_BindInvalidParameter(int32_t sock) {
     EventRecord2 (EvtNetBSD_BindInvalidParameter, (uint32_t)sock, 0);
   }
@@ -11226,7 +11226,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref bind failed, socket not created (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_BindSocketNotCreated(int32_t sock) {
     EventRecord2 (EvtNetBSD_BindSocketNotCreated, (uint32_t)sock, 0);
   }
@@ -11238,7 +11238,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref bind failed, socket already bound (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_BindSocketAlreadyBound(int32_t sock) {
     EventRecord2 (EvtNetBSD_BindSocketAlreadyBound, (uint32_t)sock, 0);
   }
@@ -11250,7 +11250,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref bind failed, socket already connected (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_BindSocketConnected(int32_t sock) {
     EventRecord2 (EvtNetBSD_BindSocketConnected, (uint32_t)sock, 0);
   }
@@ -11262,7 +11262,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref bind failed, port in use (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_BindPortInUse(int32_t sock) {
     EventRecord2 (EvtNetBSD_BindPortInUse, (uint32_t)sock, 0);
   }
@@ -11274,7 +11274,7 @@ typedef struct evr_addr {
   \brief  Event on BSD display network address (Op)
   \param  net_addr      pointer to \ref NET_ADDR address structure
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ViewNetAddress(const void *net_addr) {
     const EVR_ADDR *addr = net_addr;
     EventRecordData (EvtNetBSD_ViewNetAddress, addr, addr->type ? 20 : 8);
@@ -11288,7 +11288,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  backlog       max number of queued connection requests
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ListenSocket(int32_t sock, int32_t backlog) {
     EventRecord2 (EvtNetBSD_ListenSocket, (uint32_t)sock, (uint32_t)backlog);
   }
@@ -11300,7 +11300,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref listen failed, socket not valid (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ListenSocketNotValid(int32_t sock) {
     EventRecord2 (EvtNetBSD_ListenSocketNotValid, (uint32_t)sock, 0);
   }
@@ -11312,7 +11312,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref listen failed, invalid parameter (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ListenInvalidParameter(int32_t sock) {
     EventRecord2 (EvtNetBSD_ListenInvalidParameter, (uint32_t)sock, 0);
   }
@@ -11324,7 +11324,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref listen failed, socket not created (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ListenSocketNotCreated(int32_t sock) {
     EventRecord2 (EvtNetBSD_ListenSocketNotCreated, (uint32_t)sock, 0);
   }
@@ -11336,7 +11336,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref listen failed, socket not bound (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ListenSocketNotBound(int32_t sock) {
     EventRecord2 (EvtNetBSD_ListenSocketNotBound, (uint32_t)sock, 0);
   }
@@ -11348,7 +11348,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref listen failed, socket not stream type (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ListenSocketNotStreamType(int32_t sock) {
     EventRecord2 (EvtNetBSD_ListenSocketNotStreamType, (uint32_t)sock, 0);
   }
@@ -11360,7 +11360,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref listen failed, socket already listens (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ListenSockAlreadyListens(int32_t sock) {
     EventRecord2 (EvtNetBSD_ListenSockAlreadyListens, (uint32_t)sock, 0);
   }
@@ -11372,7 +11372,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref listen failed, creating socket backlog failed (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ListenBacklogCreateFailed(int32_t sock) {
     EventRecord2 (EvtNetBSD_ListenBacklogCreateFailed, (uint32_t)sock, 0);
   }
@@ -11384,7 +11384,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref accept socket (API)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_AcceptSocket(int32_t sock) {
     EventRecord2 (EvtNetBSD_AcceptSocket, (uint32_t)sock, 0);
   }
@@ -11396,7 +11396,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref accept failed, socket not valid (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_AcceptSocketNotValid(int32_t sock) {
     EventRecord2 (EvtNetBSD_AcceptSocketNotValid, (uint32_t)sock, 0);
   }
@@ -11408,7 +11408,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref accept failed, socket not created (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_AcceptSocketNotCreated(int32_t sock) {
     EventRecord2 (EvtNetBSD_AcceptSocketNotCreated, (uint32_t)sock, 0);
   }
@@ -11420,7 +11420,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref accept failed, socket not listening (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_AcceptSocketNotListening(int32_t sock) {
     EventRecord2 (EvtNetBSD_AcceptSocketNotListening, (uint32_t)sock, 0);
   }
@@ -11432,7 +11432,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref accept failed, socket not stream type (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_AcceptSocketNotStreamType(int32_t sock) {
     EventRecord2 (EvtNetBSD_AcceptSocketNotStreamType, (uint32_t)sock, 0);
   }
@@ -11444,7 +11444,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref accept failed, socket locked by another thread (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_AcceptSocketLocked(int32_t sock) {
     EventRecord2 (EvtNetBSD_AcceptSocketLocked, (uint32_t)sock, 0);
   }
@@ -11456,7 +11456,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref accept success, child socket connected (Op)
   \param  child_sock    child socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_AcceptChildSockConnected(int32_t child_sock) {
     EventRecord2 (EvtNetBSD_AcceptChildSockConnected, (uint32_t)child_sock, 0);
   }
@@ -11468,7 +11468,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref accept failed, socket closed by peer (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_AcceptSocketClosed(int32_t sock) {
     EventRecord2 (EvtNetBSD_AcceptSocketClosed, (uint32_t)sock, 0);
   }
@@ -11480,7 +11480,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref accept failed, socket killed locally (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_AcceptSocketKilled(int32_t sock) {
     EventRecord2 (EvtNetBSD_AcceptSocketKilled, (uint32_t)sock, 0);
   }
@@ -11492,7 +11492,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref connect socket (API)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ConnectSocket(int32_t sock) {
     EventRecord2 (EvtNetBSD_ConnectSocket, (uint32_t)sock, 0);
   }
@@ -11504,7 +11504,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref connect failed, socket not valid (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ConnectSocketNotValid(int32_t sock) {
     EventRecord2 (EvtNetBSD_ConnectSocketNotValid, (uint32_t)sock, 0);
   }
@@ -11516,7 +11516,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref connect failed, invalid parameter (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ConnectInvalidParameter(int32_t sock) {
     EventRecord2 (EvtNetBSD_ConnectInvalidParameter, (uint32_t)sock, 0);
   }
@@ -11528,7 +11528,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref connect failed, socket locked by another thread (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ConnectSocketLocked(int32_t sock) {
     EventRecord2 (EvtNetBSD_ConnectSocketLocked, (uint32_t)sock, 0);
   }
@@ -11540,7 +11540,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref connect failed, socket not created (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ConnectSocketNotCreated(int32_t sock) {
     EventRecord2 (EvtNetBSD_ConnectSocketNotCreated, (uint32_t)sock, 0);
   }
@@ -11552,7 +11552,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref connect failed, wrong socket state (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ConnectSocketWrongState(int32_t sock) {
     EventRecord2 (EvtNetBSD_ConnectSocketWrongState, (uint32_t)sock, 0);
   }
@@ -11564,7 +11564,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref connect success, datagram socket connected (Op)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ConnectDatagramSuccess(int32_t sock) {
     EventRecord2 (EvtNetBSD_ConnectDatagramSuccess, (uint32_t)sock, 0);
   }
@@ -11576,7 +11576,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref connect success, stream socket connected (Op)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ConnectStreamSuccess(int32_t sock) {
     EventRecord2 (EvtNetBSD_ConnectStreamSuccess, (uint32_t)sock, 0);
   }
@@ -11588,7 +11588,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref connect failed, connect request has timed out (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ConnectStreamTimeout(int32_t sock) {
     EventRecord2 (EvtNetBSD_ConnectStreamTimeout, (uint32_t)sock, 0);
   }
@@ -11600,7 +11600,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref connect failed, remote host refused connection (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ConnectStreamRefused(int32_t sock) {
     EventRecord2 (EvtNetBSD_ConnectStreamRefused, (uint32_t)sock, 0);
   }
@@ -11612,7 +11612,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref connect failed, socket killed locally (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_ConnectSocketKilled(int32_t sock) {
     EventRecord2 (EvtNetBSD_ConnectSocketKilled, (uint32_t)sock, 0);
   }
@@ -11625,7 +11625,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  length        length of data to send
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendSocket(int32_t sock, uint32_t length) {
     EventRecord2 (EvtNetBSD_SendSocket, (uint32_t)sock, length);
   }
@@ -11637,7 +11637,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref send failed, socket not valid (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendSocketNotValid(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendSocketNotValid, (uint32_t)sock, 0);
   }
@@ -11649,7 +11649,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref send failed, invalid parameter (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendInvalidParameter(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendInvalidParameter, (uint32_t)sock, 0);
   }
@@ -11661,7 +11661,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref send failed, socket not created (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendSocketNotCreated(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendSocketNotCreated, (uint32_t)sock, 0);
   }
@@ -11673,7 +11673,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref send failed, socket locked by another thread (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendSocketLocked(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendSocketLocked, (uint32_t)sock, 0);
   }
@@ -11685,7 +11685,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref send failed, socket not connected (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendSocketNotConnected(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendSocketNotConnected, (uint32_t)sock, 0);
   }
@@ -11697,7 +11697,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref send failed, wrong socket state (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendSocketWrongState(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendSocketWrongState, (uint32_t)sock, 0);
   }
@@ -11709,7 +11709,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref send failed, socket closed by peer (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendSocketClosed(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendSocketClosed, (uint32_t)sock, 0);
   }
@@ -11723,7 +11723,7 @@ typedef struct evr_addr {
   \param  num           number of bytes successfully sent
   \param  length        length of data requested to send
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendCompleteNonBlocking(int32_t sock, uint32_t num, uint32_t length) {
     uint32_t val2 = (num << 16) | length;
     EventRecord2 (EvtNetBSD_SendCompleteNonBlocking, (uint32_t)sock, val2);
@@ -11736,7 +11736,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref send failed, socket killed locally (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendSocketKilled(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendSocketKilled, (uint32_t)sock, 0);
   }
@@ -11748,7 +11748,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref send failed, stream socket unspecified error (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendStreamError(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendStreamError, (uint32_t)sock, 0);
   }
@@ -11760,7 +11760,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref sendto failed, invalid parameter (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendtoInvalidParameter(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendtoInvalidParameter, (uint32_t)sock, 0);
   }
@@ -11773,7 +11773,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \remark The \ref connect function was not previously called for datagram socket.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendDestAddressUndefined(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendDestAddressUndefined, (uint32_t)sock, 0);
   }
@@ -11786,7 +11786,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  length        length of data requested to send
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendtoMsgTooLarge(int32_t sock, uint32_t length) {
     EventRecord2 (EvtNetBSD_SendtoMsgTooLarge, (uint32_t)sock, length);
   }
@@ -11799,7 +11799,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  length        length of data requested to send
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendtoNoMemory(int32_t sock, uint32_t length) {
     EventRecord2 (EvtNetBSD_SendtoNoMemory, (uint32_t)sock, length);
   }
@@ -11811,7 +11811,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref send failed, datagram socket unspecified error (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendDatagramError(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendDatagramError, (uint32_t)sock, 0);
   }
@@ -11824,7 +11824,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  num           number of bytes successfully sent
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendCompleteBlocking(int32_t sock, uint32_t num) {
     EventRecord2 (EvtNetBSD_SendCompleteBlocking, (uint32_t)sock, num);
   }
@@ -11838,7 +11838,7 @@ typedef struct evr_addr {
   \param  num           number of bytes successfully sent
   \param  length        length of data requested to send
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendTimeoutBlocking(int32_t sock, uint32_t num, uint32_t length) {
     uint32_t val2 = (num << 16) | length;
     EventRecord2 (EvtNetBSD_SendTimeoutBlocking, (uint32_t)sock, val2);
@@ -11853,7 +11853,7 @@ typedef struct evr_addr {
   \param  num           number of bytes successfully sent
   \param  length        length of data requested to send
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendNoMemory(int32_t sock, uint32_t num, uint32_t length) {
     uint32_t val2 = (num << 16) | length;
     EventRecord2 (EvtNetBSD_SendNoMemory, (uint32_t)sock, val2);
@@ -11866,7 +11866,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref sendmsg socket (API)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendmsgSocket(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendmsgSocket, (uint32_t)sock, 0);
   }
@@ -11878,7 +11878,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref sendmsg failed, socket not valid (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendmsgSocketNotValid(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendmsgSocketNotValid, (uint32_t)sock, 0);
   }
@@ -11890,7 +11890,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref sendmsg failed, invalid parameter (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendmsgInvalidParameter(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendmsgInvalidParameter, (uint32_t)sock, 0);
   }
@@ -11902,7 +11902,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref sendmsg failed, socket not created (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendmsgSocketNotCreated(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendmsgSocketNotCreated, (uint32_t)sock, 0);
   }
@@ -11914,7 +11914,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref sendmsg failed, socket locked by another thread (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendmsgSocketLocked(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendmsgSocketLocked, (uint32_t)sock, 0);
   }
@@ -11927,7 +11927,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \remark The \ref connect function was not previously called for datagram socket.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendmsgDestAddrUndefined(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendmsgDestAddrUndefined, (uint32_t)sock, 0);
   }
@@ -11940,7 +11940,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  length        length of message requested to send
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendmsgMsgTooLarge(int32_t sock, uint32_t length) {
     EventRecord2 (EvtNetBSD_SendmsgMsgTooLarge, (uint32_t)sock, length);
   }
@@ -11953,7 +11953,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  length        length of message requested to send
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendmsgNoMemory(int32_t sock, uint32_t length) {
     EventRecord2 (EvtNetBSD_SendmsgNoMemory, (uint32_t)sock, length);
   }
@@ -11965,7 +11965,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref sendmsg failed, datagram socket unspecified error (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendmsgDatagramError(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendmsgDatagramError, (uint32_t)sock, 0);
   }
@@ -11977,7 +11977,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref sendmsg failed, socket killed locally (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendmsgSocketKilled(int32_t sock) {
     EventRecord2 (EvtNetBSD_SendmsgSocketKilled, (uint32_t)sock, 0);
   }
@@ -11990,7 +11990,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  num           number of bytes successfully sent
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SendmsgComplete(int32_t sock, uint32_t num) {
     EventRecord2 (EvtNetBSD_SendmsgComplete, (uint32_t)sock, num);
   }
@@ -12003,7 +12003,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  length        length of data to receive
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvSocket(int32_t sock, uint32_t length) {
     EventRecord2 (EvtNetBSD_RecvSocket, (uint32_t)sock, length);
   }
@@ -12015,7 +12015,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recv failed, socket not valid (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvSocketNotValid(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvSocketNotValid, (uint32_t)sock, 0);
   }
@@ -12027,7 +12027,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recv failed, invalid parameter (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvInvalidParameter(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvInvalidParameter, (uint32_t)sock, 0);
   }
@@ -12039,7 +12039,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recv failed, socket not created (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvSocketNotCreated(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvSocketNotCreated, (uint32_t)sock, 0);
   }
@@ -12051,7 +12051,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recv failed, socket not connected (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvSocketNotConnected(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvSocketNotConnected, (uint32_t)sock, 0);
   }
@@ -12063,7 +12063,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recv failed, wrong socket state (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvSocketWrongState(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvSocketWrongState, (uint32_t)sock, 0);
   }
@@ -12075,7 +12075,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recv failed, socket locked by another thread (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvSocketLocked(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvSocketLocked, (uint32_t)sock, 0);
   }
@@ -12087,7 +12087,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recv failed, socket closed by peer (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvSocketClosed(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvSocketClosed, (uint32_t)sock, 0);
   }
@@ -12099,7 +12099,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recv timeout (Op)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvTimeout(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvTimeout, (uint32_t)sock, 0);
   }
@@ -12111,7 +12111,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recv failed, socket killed locally (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvSocketKilled(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvSocketKilled, (uint32_t)sock, 0);
   }
@@ -12124,7 +12124,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  length        length of data to release
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvQueueFree(int32_t sock, uint32_t length) {
     EventRecord2 (EvtNetBSD_RecvQueueFree, (uint32_t)sock, length);
   }
@@ -12137,7 +12137,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  length        length of data received
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvComplete(int32_t sock, uint32_t length) {
     EventRecord2 (EvtNetBSD_RecvComplete, (uint32_t)sock, length);
   }
@@ -12149,7 +12149,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recvmsg socket (API)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvmsgSocket(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvmsgSocket, (uint32_t)sock, 0);
   }
@@ -12161,7 +12161,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recvmsg failed, socket not valid (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvmsgSocketNotValid(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvmsgSocketNotValid, (uint32_t)sock, 0);
   }
@@ -12173,7 +12173,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recvmsg failed, invalid parameter (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvmsgInvalidParameter(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvmsgInvalidParameter, (uint32_t)sock, 0);
   }
@@ -12185,7 +12185,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recvmsg failed, socket not created (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvmsgSocketNotCreated(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvmsgSocketNotCreated, (uint32_t)sock, 0);
   }
@@ -12197,7 +12197,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recvmsg failed, socket locked by another thread (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvmsgSocketLocked(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvmsgSocketLocked, (uint32_t)sock, 0);
   }
@@ -12209,7 +12209,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recvmsg failed, wrong socket state (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvmsgSocketWrongState(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvmsgSocketWrongState, (uint32_t)sock, 0);
   }
@@ -12221,7 +12221,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recvmsg timeout (Op)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvmsgTimeout(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvmsgTimeout, (uint32_t)sock, 0);
   }
@@ -12233,7 +12233,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref recvmsg failed, socket killed locally (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvmsgSocketKilled(int32_t sock) {
     EventRecord2 (EvtNetBSD_RecvmsgSocketKilled, (uint32_t)sock, 0);
   }
@@ -12246,7 +12246,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  length        length of data received
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_RecvmsgComplete(int32_t sock, uint32_t length) {
     EventRecord2 (EvtNetBSD_RecvmsgComplete, (uint32_t)sock, length);
   }
@@ -12258,7 +12258,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref closesocket (API)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_Closesocket(int32_t sock) {
     EventRecord2 (EvtNetBSD_Closesocket, (uint32_t)sock, 0);
   }
@@ -12270,7 +12270,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref closesocket failed, socket not valid (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_CloseSocketNotValid(int32_t sock) {
     EventRecord2 (EvtNetBSD_CloseSocketNotValid, (uint32_t)sock, 0);
   }
@@ -12282,7 +12282,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref closesocket failed, socket not created (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_CloseSocketNotCreated(int32_t sock) {
     EventRecord2 (EvtNetBSD_CloseSocketNotCreated, (uint32_t)sock, 0);
   }
@@ -12294,7 +12294,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref select (API)
   \param  nfds          range of sockets to be tested
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_Select(int32_t nfds) {
     EventRecord2 (EvtNetBSD_Select, (uint32_t)nfds, 0);
   }
@@ -12307,7 +12307,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref select failed, invalid parameter (Error)
   \param  nfds          range of sockets to be tested
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SelectInvalidParameter(int32_t nfds) {
     EventRecord2 (EvtNetBSD_SelectInvalidParameter, (uint32_t)nfds, 0);
   }
@@ -12320,7 +12320,7 @@ typedef struct evr_addr {
   \param  nfds          range of sockets to be subscribed to resume events
   \remark Subscription to resume events has failed, no sockets subscribed.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SelectSuspendFailed(int32_t nfds) {
     EventRecord2 (EvtNetBSD_SelectSuspendFailed, (uint32_t)nfds, 0);
   }
@@ -12332,7 +12332,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref select complete non-blocking (Op)
   \param  n_ready       number of ready sockets
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SelectComplete(int32_t n_ready) {
     EventRecord2 (EvtNetBSD_SelectComplete, (uint32_t)n_ready, 0);
   }
@@ -12344,7 +12344,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref select complete blocking (Op)
   \param  n_ready       number of ready sockets
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SelectCompleteBlocking(int32_t n_ready) {
     EventRecord2 (EvtNetBSD_SelectCompleteBlocking, (uint32_t)n_ready, 0);
   }
@@ -12356,7 +12356,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref getpeername (API)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_Getpeername(int32_t sock) {
     EventRecord2 (EvtNetBSD_Getpeername, (uint32_t)sock, 0);
   }
@@ -12368,7 +12368,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref getpeername failed, socket not valid (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetpeerSocketNotValid(int32_t sock) {
     EventRecord2 (EvtNetBSD_GetpeerSocketNotValid, (uint32_t)sock, 0);
   }
@@ -12380,7 +12380,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref getpeername failed, socket not created (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetpeerSocketNotCreated(int32_t sock) {
     EventRecord2 (EvtNetBSD_GetpeerSocketNotCreated, (uint32_t)sock, 0);
   }
@@ -12392,7 +12392,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref getpeername failed, invalid parameter (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetpeerInvalidParameter(int32_t sock) {
     EventRecord2 (EvtNetBSD_GetpeerInvalidParameter, (uint32_t)sock, 0);
   }
@@ -12404,7 +12404,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref getpeername failed, socket not connected (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetpeerSocketNotConnected(int32_t sock) {
     EventRecord2 (EvtNetBSD_GetpeerSocketNotConnected, (uint32_t)sock, 0);
   }
@@ -12416,7 +12416,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref getsockname (API)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_Getsockname(int32_t sock) {
     EventRecord2 (EvtNetBSD_Getsockname, (uint32_t)sock, 0);
   }
@@ -12428,7 +12428,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref getsockname failed, socket not valid (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetsockSocketNotValid(int32_t sock) {
     EventRecord2 (EvtNetBSD_GetsockSocketNotValid, (uint32_t)sock, 0);
   }
@@ -12440,7 +12440,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref getsockname failed, socket not created (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetsockSocketNotCreated(int32_t sock) {
     EventRecord2 (EvtNetBSD_GetsockSocketNotCreated, (uint32_t)sock, 0);
   }
@@ -12452,7 +12452,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref getsockname failed, invalid parameter (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetsockInvalidParameter(int32_t sock) {
     EventRecord2 (EvtNetBSD_GetsockInvalidParameter, (uint32_t)sock, 0);
   }
@@ -12464,7 +12464,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref getsockname failed, socket not bound (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetsockSocketNotBound(int32_t sock) {
     EventRecord2 (EvtNetBSD_GetsockSocketNotBound, (uint32_t)sock, 0);
   }
@@ -12478,7 +12478,7 @@ typedef struct evr_addr {
   \param  level         level at which the option is defined
   \param  optname       socket option to be set
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_Setsockopt(int32_t sock, int32_t level, int32_t optname) {
     uint32_t val2 = (uint32_t)((level << 4) | optname);
     EventRecord2 (EvtNetBSD_Setsockopt, (uint32_t)sock, val2);
@@ -12491,7 +12491,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref setsockopt failed, socket not valid (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SetoptSocketNotValid(int32_t sock) {
     EventRecord2 (EvtNetBSD_SetoptSocketNotValid, (uint32_t)sock, 0);
   }
@@ -12503,7 +12503,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref setsockopt failed, invalid parameter (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SetoptInvalidParameter(int32_t sock) {
     EventRecord2 (EvtNetBSD_SetoptInvalidParameter, (uint32_t)sock, 0);
   }
@@ -12515,7 +12515,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref setsockopt failed, socket not created (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SetoptSocketNotCreated(int32_t sock) {
     EventRecord2 (EvtNetBSD_SetoptSocketNotCreated, (uint32_t)sock, 0);
   }
@@ -12529,7 +12529,7 @@ typedef struct evr_addr {
   \param  level         level at which the option is defined
   \param  optname       socket option to be set
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SetoptOptionNotSupported(int32_t sock, int32_t level, int32_t optname) {
     uint32_t val2 = (uint32_t)((level << 4) | optname);
     EventRecord2 (EvtNetBSD_SetoptOptionNotSupported, (uint32_t)sock, val2);
@@ -12545,7 +12545,7 @@ typedef struct evr_addr {
                          - 0: disable
                          - 1: enable
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SetoptKeepAlive(int32_t sock, uint32_t enable) {
     EventRecord2 (EvtNetBSD_SetoptKeepAlive, (uint32_t)sock, enable);
   }
@@ -12558,7 +12558,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  timeout       receive timeout in ms
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SetoptRecvTimeout(int32_t sock, uint32_t timeout) {
     EventRecord2 (EvtNetBSD_SetoptRecvTimeout, (uint32_t)sock, timeout);
   }
@@ -12571,7 +12571,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  timeout       send timeout in ms
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SetoptSendTimeout(int32_t sock, uint32_t timeout) {
     EventRecord2 (EvtNetBSD_SetoptSendTimeout, (uint32_t)sock, timeout);
   }
@@ -12584,7 +12584,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  ip4_tos       type of service value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SetoptIp4Tos(int32_t sock, uint8_t ip4_tos) {
     EventRecord2 (EvtNetBSD_SetoptIp4Tos, (uint32_t)sock, ip4_tos);
   }
@@ -12597,7 +12597,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  ip4_ttl       time to live value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SetoptIp4Ttl(int32_t sock, uint8_t ip4_ttl) {
     EventRecord2 (EvtNetBSD_SetoptIp4Ttl, (uint32_t)sock, ip4_ttl);
   }
@@ -12612,7 +12612,7 @@ typedef struct evr_addr {
                          - 0: disable
                          - 1: enable
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SetoptIp4RecvDstAddr(int32_t sock, uint32_t enable) {
     EventRecord2 (EvtNetBSD_SetoptIp4RecvDstAddr, (uint32_t)sock, enable);
   }
@@ -12625,7 +12625,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  ip6_tclass    traffic class value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SetoptIp6Tclass(int32_t sock, uint8_t ip6_tclass) {
     EventRecord2 (EvtNetBSD_SetoptIp6Tclass, (uint32_t)sock, ip6_tclass);
   }
@@ -12638,7 +12638,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  ip6_hoplimit  hop limit value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SetoptIp6HopLimit(int32_t sock, uint8_t ip6_hoplimit) {
     EventRecord2 (EvtNetBSD_SetoptIp6HopLimit, (uint32_t)sock, ip6_hoplimit);
   }
@@ -12653,7 +12653,7 @@ typedef struct evr_addr {
                          - 0: disable
                          - 1: enable
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SetoptIp6RecvDstAddr(int32_t sock, uint32_t enable) {
     EventRecord2 (EvtNetBSD_SetoptIp6RecvDstAddr, (uint32_t)sock, enable);
   }
@@ -12668,7 +12668,7 @@ typedef struct evr_addr {
                          - 0: disable
                          - 1: enable
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SetoptIp6Only(int32_t sock, uint32_t enable) {
     EventRecord2 (EvtNetBSD_SetoptIp6Only, (uint32_t)sock, enable);
   }
@@ -12680,7 +12680,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref setsockopt failed, socket already bound (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_SetoptSocketBound(int32_t sock) {
     EventRecord2 (EvtNetBSD_SetoptSocketBound, (uint32_t)sock, 0);
   }
@@ -12694,7 +12694,7 @@ typedef struct evr_addr {
   \param  level         level at which the option is defined
   \param  optname       socket option to be retrieved
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_Getsockopt(int32_t sock, int32_t level, int32_t optname) {
     uint32_t val2 = (uint32_t)((level << 4) | optname);
     EventRecord2 (EvtNetBSD_Getsockopt, (uint32_t)sock, val2);
@@ -12707,7 +12707,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref getsockopt failed, socket not valid (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetoptSocketNotValid(int32_t sock) {
     EventRecord2 (EvtNetBSD_GetoptSocketNotValid, (uint32_t)sock, 0);
   }
@@ -12719,7 +12719,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref getsockopt failed, invalid parameter (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetoptInvalidParameter(int32_t sock) {
     EventRecord2 (EvtNetBSD_GetoptInvalidParameter, (uint32_t)sock, 0);
   }
@@ -12731,7 +12731,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref getsockopt failed, socket not created (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetoptSocketNotCreated(int32_t sock) {
     EventRecord2 (EvtNetBSD_GetoptSocketNotCreated, (uint32_t)sock, 0);
   }
@@ -12745,7 +12745,7 @@ typedef struct evr_addr {
   \param  level         level at which the option is defined
   \param  optname       socket option to be retrieved
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetoptOptionNotSupported(int32_t sock, int32_t level, int32_t optname) {
     uint32_t val2 = (uint32_t)((level << 4) | optname);
     EventRecord2 (EvtNetBSD_GetoptOptionNotSupported, (uint32_t)sock, val2);
@@ -12758,7 +12758,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref ioctlsocket control (API)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_Ioctlsocket(int32_t sock) {
     EventRecord2 (EvtNetBSD_Ioctlsocket, (uint32_t)sock, 0);
   }
@@ -12770,7 +12770,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref ioctlsocket control failed, socket not valid (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_IoctlSocketNotValid(int32_t sock) {
     EventRecord2 (EvtNetBSD_IoctlSocketNotValid, (uint32_t)sock, 0);
   }
@@ -12782,7 +12782,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref ioctlsocket control failed, invalid parameter (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_IoctlInvalidParameter(int32_t sock) {
     EventRecord2 (EvtNetBSD_IoctlInvalidParameter, (uint32_t)sock, 0);
   }
@@ -12794,7 +12794,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref ioctlsocket control failed, socket not created (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_IoctlSocketNotCreated(int32_t sock) {
     EventRecord2 (EvtNetBSD_IoctlSocketNotCreated, (uint32_t)sock, 0);
   }
@@ -12806,7 +12806,7 @@ typedef struct evr_addr {
   \brief  Event on BSD \ref ioctlsocket control failed, socket not stream type (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_IoctlSocketNotStreamType(int32_t sock) {
     EventRecord2 (EvtNetBSD_IoctlSocketNotStreamType, (uint32_t)sock, 0);
   }
@@ -12821,7 +12821,7 @@ typedef struct evr_addr {
                          - 0: disable
                          - 1: enable
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_IoctlNonBlocking(int32_t sock, uint32_t enable) {
     if (enable) enable = 1;
     EventRecord2 (EvtNetBSD_IoctlNonBlocking, (uint32_t)sock, enable);
@@ -12837,7 +12837,7 @@ typedef struct evr_addr {
                          - 0: disable
                          - 1: enable
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_IoctlDelayAck(int32_t sock, uint32_t enable) {
     if (enable) enable = 1;
     EventRecord2 (EvtNetBSD_IoctlDelayAck, (uint32_t)sock, enable);
@@ -12853,7 +12853,7 @@ typedef struct evr_addr {
                          - 0: disable
                          - 1: enable
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_IoctlKeepAlive(int32_t sock, uint32_t enable) {
     if (enable) enable = 1;
     EventRecord2 (EvtNetBSD_IoctlKeepAlive, (uint32_t)sock, enable);
@@ -12869,7 +12869,7 @@ typedef struct evr_addr {
                          - 0: disable
                          - 1: enable
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_IoctlFlowControl(int32_t sock, uint32_t enable) {
     if (enable) enable = 1;
     EventRecord2 (EvtNetBSD_IoctlFlowControl, (uint32_t)sock, enable);
@@ -12887,7 +12887,7 @@ typedef struct evr_addr {
                          - 2: netTCP_EventClosed
                          - 3: netTCP_EventAborted
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_CbfuncTcpEvent(int32_t sock, int32_t tcp_event) {
     EventRecord2 (EvtNetBSD_CbfuncTcpEvent, (uint32_t)sock, (uint32_t)tcp_event);
   }
@@ -12900,7 +12900,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  length        length of data received
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_CbfuncTcpQueueAdd(int32_t sock, uint32_t length) {
     EventRecord2 (EvtNetBSD_CbfuncTcpQueueAdd, (uint32_t)sock, length);
   }
@@ -12912,7 +12912,7 @@ typedef struct evr_addr {
   \brief  Event on BSD callback no memory for TCP data (Error)
   \param  sock          socket descriptor
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_CbfuncTcpNoMemory(int32_t sock) {
     EventRecord2 (EvtNetBSD_CbfuncTcpNoMemory, (uint32_t)sock, 0);
   }
@@ -12925,7 +12925,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  length        length of data received
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_CbfuncUdpQueueAdd(int32_t sock, uint32_t length) {
     EventRecord2 (EvtNetBSD_CbfuncUdpQueueAdd, (uint32_t)sock, length);
   }
@@ -12938,7 +12938,7 @@ typedef struct evr_addr {
   \param  sock          socket descriptor
   \param  length        length of dumped data
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_CbfuncUdpDumpData(int32_t sock, uint32_t length) {
     EventRecord2 (EvtNetBSD_CbfuncUdpDumpData, (uint32_t)sock, length);
   }
@@ -12949,7 +12949,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on BSD de-initialize available sockets (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_UninitSockets(void) {
     EventRecord2 (EvtNetBSD_UninitSockets, 0, 0);
   }
@@ -12962,7 +12962,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on BSD hostname resolver initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetHostInit(void) {
     EventRecord2 (EvtNetBSD_GetHostInit, 0, 0);
   }
@@ -12975,7 +12975,7 @@ typedef struct evr_addr {
   \param  hostname      name of the host to resolve
   \param  length        length of the hostname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetHostByName(const char *hostname, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetBSD_GetHostByName, hostname, length);
@@ -12987,7 +12987,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on BSD hostname resolved successfully (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetHostNameResolved(void) {
     EventRecord2 (EvtNetBSD_GetHostNameResolved, 0, 0);
   }
@@ -12998,7 +12998,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on BSD requested hostname not existing (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetHostNameNotExisting(void) {
     EventRecord2 (EvtNetBSD_GetHostNameNotExisting, 0, 0);
   }
@@ -13009,7 +13009,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on BSD resolver timeout expired (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetHostResolverTimeout(void) {
     EventRecord2 (EvtNetBSD_GetHostResolverTimeout, 0, 0);
   }
@@ -13020,7 +13020,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on BSD resolver protocol error (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetHostResolverError(void) {
     EventRecord2 (EvtNetBSD_GetHostResolverError, 0, 0);
   }
@@ -13031,7 +13031,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on BSD resolver busy error (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetHostResolverBusy(void) {
     EventRecord2 (EvtNetBSD_GetHostResolverBusy, 0, 0);
   }
@@ -13042,7 +13042,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on BSD \ref gethostbyname invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetHostInvalidParameter(void) {
     EventRecord2 (EvtNetBSD_GetHostInvalidParameter, 0, 0);
   }
@@ -13053,7 +13053,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on BSD hostname resolver de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetBSD_GetHostUninit(void) {
     EventRecord2 (EvtNetBSD_GetHostUninit, 0, 0);
   }
@@ -13063,7 +13063,7 @@ typedef struct evr_addr {
 
 
 // NetHTTPs event identifiers --------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetHTTPs_InitServer              EventID (EventLevelOp,    EvtNetHTTPs,  0)
 #define EvtNetHTTPs_ViewRootFolder          EventID (EventLevelOp,    EvtNetHTTPs,  1)
 #define EvtNetHTTPs_GetSocketFailed         EventID (EventLevelError, EvtNetHTTPs,  2)
@@ -13117,7 +13117,7 @@ typedef struct evr_addr {
   \param  num_sessions  number of available HTTP sessions
   \param  port          listening port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_InitServer(uint32_t num_sessions, uint16_t port) {
     EventRecord2 (EvtNetHTTPs_InitServer, num_sessions, port);
   }
@@ -13130,7 +13130,7 @@ typedef struct evr_addr {
   \param  root_folder   path to server root folder
   \param  length        length of the root_folder string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_ViewRootFolder(const char *root_folder, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetHTTPs_ViewRootFolder, root_folder, length);
@@ -13143,7 +13143,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server failed to allocate TCP socket (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_GetSocketFailed(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_GetSocketFailed, session, 0);
   }
@@ -13156,7 +13156,7 @@ typedef struct evr_addr {
   \param  path          path to server root folder
   \param  length        length of the path string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_SetRootPath(const char *path, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetHTTPs_SetRootPath, path, length);
@@ -13170,7 +13170,7 @@ typedef struct evr_addr {
   \param  username      new username
   \param  length        length of the username string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_SetUsername(const char *username, uint32_t length) {
     if (length > 16) length = 16;
     EventRecordData (EvtNetHTTPs_SetUsername, username, length);
@@ -13184,7 +13184,7 @@ typedef struct evr_addr {
   \param  password      new password
   \param  length        length of the password string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_SetPassword(const char *password, uint32_t length) {
     if (length > 16) length = 16;
     EventRecordData (EvtNetHTTPs_SetPassword, password, length);
@@ -13197,7 +13197,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server start service (Op)
   \param  port          listening port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_StartService(uint16_t port) {
     EventRecord2 (EvtNetHTTPs_StartService, port, 0);
   }
@@ -13208,7 +13208,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on HTTP server stop service (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_StopService(void) {
     EventRecord2 (EvtNetHTTPs_StopService, 0, 0);
   }
@@ -13220,7 +13220,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server requested resource file not found (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_FileNotFound(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_FileNotFound, session, 0);
   }
@@ -13232,7 +13232,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server access to requested resource not allowed (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_FileAccessForbidden(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_FileAccessForbidden, session, 0);
   }
@@ -13244,7 +13244,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server requested resource file cached on the client (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_FileCached(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_FileCached, session, 0);
   }
@@ -13256,7 +13256,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server session close (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_CloseSession(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_CloseSession, session, 0);
   }
@@ -13268,7 +13268,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server send a resource file (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_SendFile(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_SendFile, session, 0);
   }
@@ -13280,7 +13280,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server CGI send dynamic resource file (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_CgiSendFile(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_CgiSendFile, session, 0);
   }
@@ -13292,7 +13292,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server CGI include a file (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_CgiIncludeFile(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_CgiIncludeFile, session, 0);
   }
@@ -13304,7 +13304,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server stop CGI script interpreter engine (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_CgiStopEngine(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_CgiStopEngine, session, 0);
   }
@@ -13316,7 +13316,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server CGI script error found (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_CgiScriptError(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_CgiScriptError, session, 0);
   }
@@ -13328,7 +13328,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server unauthorized access (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_UnauthorizedAccess(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_UnauthorizedAccess, session, 0);
   }
@@ -13340,7 +13340,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server requested method not implemented (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_MethodNotImplemented(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_MethodNotImplemented, session, 0);
   }
@@ -13352,7 +13352,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server user denied access (Error)
   \param  net_addr      pointer to \ref NET_ADDR address structure
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_UserAccessDenied(const void *net_addr) {
     const EVR_ADDR *addr = net_addr;
     EventRecordData (EvtNetHTTPs_UserAccessDenied, addr, addr->type ? 20 : 8);
@@ -13366,7 +13366,7 @@ typedef struct evr_addr {
   \param  cookie        cookie to send to the client
   \param  length        length of the cookie string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_SetCookie(const char *cookie, uint32_t length) {
     if (length > 120) length = 120;
     EventRecordData (EvtNetHTTPs_SetCookie, cookie, length);
@@ -13379,7 +13379,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server session open (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_SessionOpen(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_SessionOpen, session, 0);
   }
@@ -13391,7 +13391,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server socket aborted (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_SocketAborted(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_SocketAborted, session, 0);
   }
@@ -13403,7 +13403,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server socket closed (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_SocketClosed(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_SocketClosed, session, 0);
   }
@@ -13416,7 +13416,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_ReceiveFrame(uint8_t session, uint32_t length) {
     EventRecord2 (EvtNetHTTPs_ReceiveFrame, session, length);
   }
@@ -13430,7 +13430,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_FrameTooShort(uint8_t session, uint32_t length, uint32_t min_length) {
     uint32_t val2 = (min_length << 16) | length;
     EventRecord2 (EvtNetHTTPs_FrameTooShort, session, val2);
@@ -13452,7 +13452,7 @@ typedef struct evr_addr {
                          - 7: OPTIONS
                          - 8: TRACE
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_RequestMethod(uint8_t session, uint8_t method) {
     EventRecord2 (EvtNetHTTPs_RequestMethod, session, method);
   }
@@ -13464,7 +13464,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server start CGI script interpreter engine (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_CgiStartEngine(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_CgiStartEngine, session, 0);
   }
@@ -13477,7 +13477,7 @@ typedef struct evr_addr {
   \param  fname         name of the requested file
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_RequestedFile(const char *fname, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetHTTPs_RequestedFile, fname, length);
@@ -13492,7 +13492,7 @@ typedef struct evr_addr {
                          - 0: ROM Image
                          - 1: External Drive
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_FileOpenDrive(uint32_t drive) {
     EventRecord2 (EvtNetHTTPs_FileOpenDrive, drive, 0);
   }
@@ -13505,7 +13505,7 @@ typedef struct evr_addr {
   \param  size          size of the open file
   \param  lm_time       last-modified time of the file
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_ViewFileStatus(uint32_t size, uint32_t lm_time) {
     EventRecord2 (EvtNetHTTPs_ViewFileStatus, size, lm_time);
   }
@@ -13518,7 +13518,7 @@ typedef struct evr_addr {
   \param  url           redirection url in text format
   \param  length        length of the url string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_ViewRedirectionUrl(const char *url, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetHTTPs_ViewRedirectionUrl, url, length);
@@ -13532,7 +13532,7 @@ typedef struct evr_addr {
   \param  credentials   user credentials in the form of: "username:password"
   \param  length        length of the credentials string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_ViewUserCredentials(const char *credentials, uint32_t length) {
     if (length > 40) length = 40;
     EventRecordData (EvtNetHTTPs_ViewUserCredentials, credentials, length);
@@ -13546,7 +13546,7 @@ typedef struct evr_addr {
   \param  accept_lang   accept language header content
   \param  length        length of the accept_lang string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_ViewAcceptLanguage(const char *accept_lang, uint32_t length) {
     if (length > 8) length = 8;
     EventRecordData (EvtNetHTTPs_ViewAcceptLanguage, accept_lang, length);
@@ -13560,7 +13560,7 @@ typedef struct evr_addr {
   \param  cookie        cookie header content
   \param  length        length of the cookie header
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_ViewCookie(const char *cookie, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetHTTPs_ViewCookie, cookie, length);
@@ -13574,7 +13574,7 @@ typedef struct evr_addr {
   \param  xml_type      xml content type in text format
   \param  length        length of the xml_type string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_ViewXmlType(const char *xml_type, uint32_t length) {
     if (length > 64) length = 64;
     EventRecordData (EvtNetHTTPs_ViewXmlType, xml_type, length);
@@ -13587,7 +13587,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server POST type: xml-encoded (Op)
   \param  length        content-length
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_PostXmlEncoded(uint32_t length) {
     EventRecord2 (EvtNetHTTPs_PostXmlEncoded, length, 0);
   }
@@ -13599,7 +13599,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server POST complete for multipacket POST (Op)
   \param  length        data length
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_PostCompleteMultipacket(uint32_t length) {
     EventRecord2 (EvtNetHTTPs_PostCompleteMultipacket, length, 0);
   }
@@ -13611,7 +13611,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server POST type: www-form-urlencoded (Op)
   \param  length        content-length
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_PostFormUrlEncoded(uint32_t length) {
     EventRecord2 (EvtNetHTTPs_PostFormUrlEncoded, length, 0);
   }
@@ -13624,7 +13624,7 @@ typedef struct evr_addr {
   \param  new_length    truncated data length
   \remark Buffer mode is used for www-form-urlencoded POST type only.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_PostDataTruncated(uint32_t new_length) {
     EventRecord2 (EvtNetHTTPs_PostDataTruncated, new_length, 0);
   }
@@ -13637,7 +13637,7 @@ typedef struct evr_addr {
   \param  fname         name of the requested file
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_FileUploadRequested(const char *fname, uint32_t length) {
     if (length > 64) length = 64;
     EventRecordData (EvtNetHTTPs_FileUploadRequested, fname, length);
@@ -13651,7 +13651,7 @@ typedef struct evr_addr {
   \param  length        length of a file data chunk
   \remark File data is received in multiple packets.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_FileUploadDataReceived(uint32_t length) {
     EventRecord2 (EvtNetHTTPs_FileUploadDataReceived, length, 0);
   }
@@ -13664,7 +13664,7 @@ typedef struct evr_addr {
   \param  length        length of the remaining data
   \remark File data is received in multiple packets.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_FileUploadRemaining(uint32_t length) {
     EventRecord2 (EvtNetHTTPs_FileUploadRemaining, length, 0);
   }
@@ -13675,7 +13675,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on HTTP server file upload completed (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_FileUploadComplete(void) {
     EventRecord2 (EvtNetHTTPs_FileUploadComplete, 0, 0);
   }
@@ -13687,7 +13687,7 @@ typedef struct evr_addr {
   \brief  Event on HTTP server failed to allocate secure TLS context (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_TlsGetContextFailed(uint8_t session) {
     EventRecord2 (EvtNetHTTPs_TlsGetContextFailed, session, 0);
   }
@@ -13698,7 +13698,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on HTTP server de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetHTTPs_UninitServer(void) {
     EventRecord2 (EvtNetHTTPs_UninitServer, 0, 0);
   }
@@ -13708,7 +13708,7 @@ typedef struct evr_addr {
 
 
 // NetFTPs event identifiers ---------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetFTPs_InitServer               EventID (EventLevelOp,    EvtNetFTPs,  0)
 #define EvtNetFTPs_ShowRootFolder           EventID (EventLevelOp,    EvtNetFTPs,  1)
 #define EvtNetFTPs_GetSocketFailed          EventID (EventLevelError, EvtNetFTPs,  2)
@@ -13785,7 +13785,7 @@ typedef struct evr_addr {
   \param  port          listening port number
   \param  idle_tout     idle timeout in seconds (0= permanent connection)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_InitServer(uint32_t num_sessions, uint16_t port, uint16_t idle_tout) {
     uint32_t val2 = (uint32_t)idle_tout << 16 | port;
     EventRecord2 (EvtNetFTPs_InitServer, num_sessions, val2);
@@ -13799,7 +13799,7 @@ typedef struct evr_addr {
   \param  root_folder   path to server root folder
   \param  length        length of the root_folder string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ShowRootFolder(const char *root_folder, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_ShowRootFolder, root_folder, length);
@@ -13812,7 +13812,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server failed to allocate TCP socket (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_GetSocketFailed(uint8_t session) {
     EventRecord2 (EvtNetFTPs_GetSocketFailed, session, 0);
   }
@@ -13825,7 +13825,7 @@ typedef struct evr_addr {
   \param  path          path to server root folder
   \param  length        length of the path string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_SetRootPath(const char *path, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_SetRootPath, path, length);
@@ -13839,7 +13839,7 @@ typedef struct evr_addr {
   \param  username      new username
   \param  length        length of the username string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_SetUsername(const char *username, uint32_t length) {
     if (length > 16) length = 16;
     EventRecordData (EvtNetFTPs_SetUsername, username, length);
@@ -13853,7 +13853,7 @@ typedef struct evr_addr {
   \param  password      new password
   \param  length        length of the password string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_SetPassword(const char *password, uint32_t length) {
     if (length > 16) length = 16;
     EventRecordData (EvtNetFTPs_SetPassword, password, length);
@@ -13866,7 +13866,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server user denied access (Error)
   \param  net_addr      pointer to \ref NET_ADDR address structure
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_UserAccessDenied(const void *net_addr) {
     const EVR_ADDR *addr = net_addr;
     EventRecordData (EvtNetFTPs_UserAccessDenied, addr, addr->type ? 20 : 8);
@@ -13879,7 +13879,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server session open (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_SessionOpen(uint8_t session) {
     EventRecord2 (EvtNetFTPs_SessionOpen, session, 0);
   }
@@ -13891,7 +13891,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server socket aborted (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_SocketAborted(uint8_t session) {
     EventRecord2 (EvtNetFTPs_SocketAborted, session, 0);
   }
@@ -13903,7 +13903,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server socket closed (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_SocketClosed(uint8_t session) {
     EventRecord2 (EvtNetFTPs_SocketClosed, session, 0);
   }
@@ -13915,7 +13915,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server unacked data error (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_UnackedDataError(uint8_t session) {
     EventRecord2 (EvtNetFTPs_UnackedDataError, session, 0);
   }
@@ -13928,7 +13928,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ReceiveFrame(uint8_t session, uint32_t length) {
     EventRecord2 (EvtNetFTPs_ReceiveFrame, session, length);
   }
@@ -13942,7 +13942,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_FrameTooShort(uint8_t session, uint32_t length, uint32_t min_length) {
     uint32_t val2 = (min_length << 16) | length;
     EventRecord2 (EvtNetFTPs_FrameTooShort, session, val2);
@@ -13956,7 +13956,7 @@ typedef struct evr_addr {
   \param  cmd_client    command received from the client in text format
   \param  length        length of the cmd_client string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ShowCommand(const uint8_t *cmd_client, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_ShowCommand, cmd_client, length);
@@ -13969,7 +13969,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server verify the client username (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_VerifyUsername(uint8_t session) {
     EventRecord2 (EvtNetFTPs_VerifyUsername, session, 0);
   }
@@ -13981,7 +13981,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server verify the client password (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_VerifyPassword(uint8_t session) {
     EventRecord2 (EvtNetFTPs_VerifyPassword, session, 0);
   }
@@ -13993,7 +13993,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server authentication failed (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_AuthenticationFailed(uint8_t session) {
     EventRecord2 (EvtNetFTPs_AuthenticationFailed, session, 0);
   }
@@ -14005,7 +14005,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server user login successful (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_UserLoginSuccess(uint8_t session) {
     EventRecord2 (EvtNetFTPs_UserLoginSuccess, session, 0);
   }
@@ -14017,7 +14017,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server command ignored, user not authenticated (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_NotAuthenticated(uint8_t session) {
     EventRecord2 (EvtNetFTPs_NotAuthenticated, session, 0);
   }
@@ -14029,7 +14029,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server show system identification type command (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ShowSystemType(uint8_t session) {
     EventRecord2 (EvtNetFTPs_ShowSystemType, session, 0);
   }
@@ -14041,7 +14041,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server execute no operation command (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_NoOperation(uint8_t session) {
     EventRecord2 (EvtNetFTPs_NoOperation, session, 0);
   }
@@ -14054,7 +14054,7 @@ typedef struct evr_addr {
   \param  path          path to the working directory
   \param  length        length of the path string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_CurrentDirectory(const char *path, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_CurrentDirectory, path, length);
@@ -14068,7 +14068,7 @@ typedef struct evr_addr {
   \param  path          path to the new working directory
   \param  length        length of the path string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ChangeDirectory(const char *path, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_ChangeDirectory, path, length);
@@ -14081,7 +14081,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server change working directory failed (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ChangeDirectoryFailed(uint8_t session) {
     EventRecord2 (EvtNetFTPs_ChangeDirectoryFailed, session, 0);
   }
@@ -14093,7 +14093,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server change working directory one level up command (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ChangeDirectoryLevelUp(uint8_t session) {
     EventRecord2 (EvtNetFTPs_ChangeDirectoryLevelUp, session, 0);
   }
@@ -14106,7 +14106,7 @@ typedef struct evr_addr {
   \param  path          path to the new directory to make
   \param  length        length of the path string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_MakeDirectory(const char *path, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_MakeDirectory, path, length);
@@ -14119,7 +14119,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server access or operation denied (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_OperationDenied(uint8_t session) {
     EventRecord2 (EvtNetFTPs_OperationDenied, session, 0);
   }
@@ -14132,7 +14132,7 @@ typedef struct evr_addr {
   \param  path          path to the directory to remove
   \param  length        length of the path string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_RemoveDirectory(const char *path, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_RemoveDirectory, path, length);
@@ -14145,7 +14145,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server remove directory command failed (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_RemoveDirectoryFailed(uint8_t session) {
     EventRecord2 (EvtNetFTPs_RemoveDirectoryFailed, session, 0);
   }
@@ -14157,7 +14157,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server requested directory successfuly removed (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_DirectoryRemoved(uint8_t session) {
     EventRecord2 (EvtNetFTPs_DirectoryRemoved, session, 0);
   }
@@ -14172,7 +14172,7 @@ typedef struct evr_addr {
                          - 0: Binary mode
                          - 1: ASCII mode
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ShowDataMode(uint8_t session, uint32_t data_mode) {
     EventRecord2 (EvtNetFTPs_ShowDataMode, session, data_mode);
   }
@@ -14185,7 +14185,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  port          port number to connect to
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ActiveModeStart(uint8_t session, uint16_t port) {
     EventRecord2 (EvtNetFTPs_ActiveModeStart, session, port);
   }
@@ -14198,7 +14198,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  local_port    local port number to accept data connection
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_PassiveModeStart(uint8_t session, uint16_t local_port) {
     EventRecord2 (EvtNetFTPs_PassiveModeStart, session, local_port);
   }
@@ -14211,7 +14211,7 @@ typedef struct evr_addr {
   \param  fname         name of the file
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_GetFileSize(const char *fname, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_GetFileSize, fname, length);
@@ -14225,7 +14225,7 @@ typedef struct evr_addr {
   \param  fname         name of the file
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_GetFileLastModifiedTime(const char *fname, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_GetFileLastModifiedTime, fname, length);
@@ -14238,7 +14238,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server list directory names command (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ListDirectoryBasic(uint8_t session) {
     EventRecord2 (EvtNetFTPs_ListDirectoryBasic, session, 0);
   }
@@ -14250,7 +14250,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server list directory in extended format (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ListDirectoryExtended(uint8_t session) {
     EventRecord2 (EvtNetFTPs_ListDirectoryExtended, session, 0);
   }
@@ -14263,7 +14263,7 @@ typedef struct evr_addr {
   \param  fname         name of the file to read
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ReadFile(const char *fname, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_ReadFile, fname, length);
@@ -14276,7 +14276,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server requested file not found (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_FileNotFound(uint8_t session) {
     EventRecord2 (EvtNetFTPs_FileNotFound, session, 0);
   }
@@ -14289,7 +14289,7 @@ typedef struct evr_addr {
   \param  fname         name of the file to write
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_WriteFile(const char *fname, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_WriteFile, fname, length);
@@ -14303,7 +14303,7 @@ typedef struct evr_addr {
   \param  fname         name of the file to append
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_AppendFile(const char *fname, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_AppendFile, fname, length);
@@ -14316,7 +14316,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server requested file create failed (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_FileCreateFailed(uint8_t session) {
     EventRecord2 (EvtNetFTPs_FileCreateFailed, session, 0);
   }
@@ -14329,7 +14329,7 @@ typedef struct evr_addr {
   \param  fname         name of the file to delete
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_DeleteFile(const char *fname, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_DeleteFile, fname, length);
@@ -14342,7 +14342,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server requested file delete failed (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_FileDeleteFailed(uint8_t session) {
     EventRecord2 (EvtNetFTPs_FileDeleteFailed, session, 0);
   }
@@ -14354,7 +14354,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server requested file deleted successfuly (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_FileDeleted(uint8_t session) {
     EventRecord2 (EvtNetFTPs_FileDeleted, session, 0);
   }
@@ -14367,7 +14367,7 @@ typedef struct evr_addr {
   \param  fname         name of the file to rename
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_RenameFileFrom(const char *fname, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_RenameFileFrom, fname, length);
@@ -14381,7 +14381,7 @@ typedef struct evr_addr {
   \param  new_name      new name of the file to rename to
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_RenameFileTo(const char *new_name, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_RenameFileTo, new_name, length);
@@ -14394,7 +14394,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server requested file renamed successfuly (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_FileRenamed(uint8_t session) {
     EventRecord2 (EvtNetFTPs_FileRenamed, session, 0);
   }
@@ -14406,7 +14406,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server requested file rename failed (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_FileRenameFailed(uint8_t session) {
     EventRecord2 (EvtNetFTPs_FileRenameFailed, session, 0);
   }
@@ -14418,7 +14418,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server unknown command received (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_UnknownCommand(uint8_t session) {
     EventRecord2 (EvtNetFTPs_UnknownCommand, session, 0);
   }
@@ -14430,7 +14430,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server session in invalid state, command ignored (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_InvalidState(uint8_t session) {
     EventRecord2 (EvtNetFTPs_InvalidState, session, 0);
   }
@@ -14443,7 +14443,7 @@ typedef struct evr_addr {
   \param  session       session number
   \remark Inbound data connections are accepted in passive mode, rejected in active mode.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_InboundConnRejected(uint8_t session) {
     EventRecord2 (EvtNetFTPs_InboundConnRejected, session, 0);
   }
@@ -14455,7 +14455,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server data socket closed when transfer completed (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_DataSocketClosed(uint8_t session) {
     EventRecord2 (EvtNetFTPs_DataSocketClosed, session, 0);
   }
@@ -14467,7 +14467,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server data socket open for data transfer (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_DataSocketOpen(uint8_t session) {
     EventRecord2 (EvtNetFTPs_DataSocketOpen, session, 0);
   }
@@ -14479,7 +14479,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server write to local disk failed, disk full (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_LocalDiskWriteError(uint8_t session) {
     EventRecord2 (EvtNetFTPs_LocalDiskWriteError, session, 0);
   }
@@ -14491,7 +14491,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server start service (Op)
   \param  port          listening port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_StartService(uint16_t port) {
     EventRecord2 (EvtNetFTPs_StartService, port, 0);
   }
@@ -14502,7 +14502,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP server stop service (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_StopService(void) {
     EventRecord2 (EvtNetFTPs_StopService, 0, 0);
   }
@@ -14515,7 +14515,7 @@ typedef struct evr_addr {
   \param  path          path to list directory
   \param  length        length of the path string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ShowFileFindMask(const char *path, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_ShowFileFindMask, path, length);
@@ -14528,7 +14528,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server requested directory create failed (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_MakeDirectoryFailed(uint8_t session) {
     EventRecord2 (EvtNetFTPs_MakeDirectoryFailed, session, 0);
   }
@@ -14540,7 +14540,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server requested directory created successfuly (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_DirectoryCreated(uint8_t session) {
     EventRecord2 (EvtNetFTPs_DirectoryCreated, session, 0);
   }
@@ -14553,7 +14553,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  file_size     size of a file in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ShowFileSize(uint8_t session, uint32_t file_size) {
     EventRecord2 (EvtNetFTPs_ShowFileSize, session, file_size);
   }
@@ -14567,7 +14567,7 @@ typedef struct evr_addr {
   \param  file_time     last-modified time of a file in text format
   \param  length        length of the file_time string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ShowFileLastModifiedTime(uint8_t session,
                                             const char *file_time, uint32_t length) {
     evr_buf.u32[0] = session;
@@ -14582,7 +14582,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server closing data connection (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_CloseDataConnection(uint8_t session) {
     EventRecord2 (EvtNetFTPs_CloseDataConnection, session, 0);
   }
@@ -14594,7 +14594,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server closing session (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_CloseSession(uint8_t session) {
     EventRecord2 (EvtNetFTPs_CloseSession, session, 0);
   }
@@ -14606,7 +14606,7 @@ typedef struct evr_addr {
   \brief  Event on FTP server session in idle state (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_SessionIdle(uint8_t session) {
     EventRecord2 (EvtNetFTPs_SessionIdle, session, 0);
   }
@@ -14619,7 +14619,7 @@ typedef struct evr_addr {
   \param  path          absolute path for file access
   \param  length        length of the path string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_ShowPath(const char *path, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetFTPs_ShowPath, path, length);
@@ -14631,7 +14631,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP server de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPs_UninitServer(void) {
     EventRecord2 (EvtNetFTPs_UninitServer, 0, 0);
   }
@@ -14641,7 +14641,7 @@ typedef struct evr_addr {
 
 
 // NetFTPc event identifiers ---------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetFTPc_InitClient               EventID (EventLevelOp,    EvtNetFTPc,  0)
 #define EvtNetFTPc_GetSocketFailed          EventID (EventLevelError, EvtNetFTPc,  1)
 #define EvtNetFTPc_Connect                  EventID (EventLevelAPI,   EvtNetFTPc,  2)
@@ -14703,7 +14703,7 @@ typedef struct evr_addr {
                           - 0: active mode (accepts inbound data connections)
                           - 1: passive mode (starts outbound data connections)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_InitClient(uint32_t mode) {
     EventRecord2 (EvtNetFTPc_InitClient, mode, 0);
   }
@@ -14714,7 +14714,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client failed to allocate TCP socket (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_GetSocketFailed(void) {
     EventRecord2 (EvtNetFTPc_GetSocketFailed, 0, 0);
   }
@@ -14726,7 +14726,7 @@ typedef struct evr_addr {
   \brief  Event on FTP client \ref netFTPc_Connect to the server (API)
   \param  net_addr      pointer to \ref NET_ADDR server address structure
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_Connect(const void *net_addr) {
     const EVR_ADDR *addr = net_addr;
     EventRecordData (EvtNetFTPc_Connect, addr, addr->type ? 20 : 8);
@@ -14738,7 +14738,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netFTPc_Connect invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_ConnectInvalidParameter(void) {
     EventRecord2 (EvtNetFTPc_ConnectInvalidParameter, 0, 0);
   }
@@ -14749,7 +14749,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netFTPc_Connect failed, client busy (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_ConnectClientBusy(void) {
     EventRecord2 (EvtNetFTPc_ConnectClientBusy, 0, 0);
   }
@@ -14761,7 +14761,7 @@ typedef struct evr_addr {
   \brief  Event on FTP client inbound connection rejected (Error)
   \param  socket        assigned TCP socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_InboundConnRejected(int32_t socket) {
     EventRecord2 (EvtNetFTPc_InboundConnRejected, (uint32_t)socket, 0);
   }
@@ -14773,7 +14773,7 @@ typedef struct evr_addr {
   \brief  Event on FTP client socket aborted (Error)
   \param  socket        assigned TCP socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_SocketAborted(int32_t socket) {
     EventRecord2 (EvtNetFTPc_SocketAborted, (uint32_t)socket, 0);
   }
@@ -14785,7 +14785,7 @@ typedef struct evr_addr {
   \brief  Event on FTP client socket connected (Op)
   \param  socket        assigned TCP socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_SocketConnected(int32_t socket) {
     EventRecord2 (EvtNetFTPc_SocketConnected, (uint32_t)socket, 0);
   }
@@ -14797,7 +14797,7 @@ typedef struct evr_addr {
   \brief  Event on FTP client socket closed (Op)
   \param  socket        assigned TCP socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_SocketClosed(int32_t socket) {
     EventRecord2 (EvtNetFTPc_SocketClosed, (uint32_t)socket, 0);
   }
@@ -14810,7 +14810,7 @@ typedef struct evr_addr {
   \param  socket        assigned TCP socket
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_ReceiveFrame(int32_t socket, uint32_t length) {
     EventRecord2 (EvtNetFTPc_ReceiveFrame, (uint32_t)socket, length);
   }
@@ -14823,7 +14823,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_FrameTooShort(uint32_t length, uint32_t min_length) {
     EventRecord2 (EvtNetFTPc_FrameTooShort, length, min_length);
   }
@@ -14835,7 +14835,7 @@ typedef struct evr_addr {
   \brief  Event on FTP client display numeric reply code received from server (Op)
   \param  reply_code    numeric reply code in text format (3 characters)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_ShowReplyCode(const uint8_t *reply_code) {
     EventRecordData (EvtNetFTPc_ShowReplyCode, reply_code, 3);
   }
@@ -14846,7 +14846,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client response divided into multiple frames (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_ResponseFragmented(void) {
     EventRecord2 (EvtNetFTPc_ResponseFragmented, 0, 0);
   }
@@ -14857,7 +14857,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client server ready response (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_ServerReady(void) {
     EventRecord2 (EvtNetFTPc_ServerReady, 0, 0);
   }
@@ -14868,7 +14868,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client username ok, password needed (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_UserOkNeedPassword(void) {
     EventRecord2 (EvtNetFTPc_UserOkNeedPassword, 0, 0);
   }
@@ -14879,7 +14879,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client user login to server failed (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_UserLoginFailed(void) {
     EventRecord2 (EvtNetFTPc_UserLoginFailed, 0, 0);
   }
@@ -14890,7 +14890,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client user login successful (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_UserLoginSuccess(void) {
     EventRecord2 (EvtNetFTPc_UserLoginSuccess, 0, 0);
   }
@@ -14901,7 +14901,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client change working directory failed, invalid path (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_WorkingDirectoryInvalid(void) {
     EventRecord2 (EvtNetFTPc_WorkingDirectoryInvalid, 0, 0);
   }
@@ -14922,7 +14922,7 @@ typedef struct evr_addr {
                          - 7: Removes an empty directory on FTP serve
                          - 8: Lists file names only (short format)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_ExecuteUserCommand(uint8_t command) {
     EventRecord2 (EvtNetFTPc_ExecuteUserCommand, command, 0);
   }
@@ -14933,7 +14933,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client binary transfer mode enabled (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_BinaryModeEnabled(void) {
     EventRecord2 (EvtNetFTPc_BinaryModeEnabled, 0, 0);
   }
@@ -14944,7 +14944,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client PASV command failed (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_PasvCommandFailed(void) {
     EventRecord2 (EvtNetFTPc_PasvCommandFailed, 0, 0);
   }
@@ -14956,7 +14956,7 @@ typedef struct evr_addr {
   \brief  Event on FTP client start passive server mode (Op)
   \param  port          server port number to connect to
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_PassiveModeStart(uint16_t port) {
     EventRecord2 (EvtNetFTPc_PassiveModeStart, port, 0);
   }
@@ -14967,7 +14967,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client PORT command failed (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_PortCommandFailed(void) {
     EventRecord2 (EvtNetFTPc_PortCommandFailed, 0, 0);
   }
@@ -14979,7 +14979,7 @@ typedef struct evr_addr {
   \brief  Event on FTP client start active server mode (Op)
   \param  local_port    local port number to accept connection
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_ActiveModeStart(uint16_t local_port) {
     EventRecord2 (EvtNetFTPc_ActiveModeStart, local_port, 0);
   }
@@ -14990,7 +14990,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client error, requested file not found on server (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_FileNotFoundOnServer(void) {
     EventRecord2 (EvtNetFTPc_FileNotFoundOnServer, 0, 0);
   }
@@ -15001,7 +15001,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client error, operation not allowed on server (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_OperationNotAllowed(void) {
     EventRecord2 (EvtNetFTPc_OperationNotAllowed, 0, 0);
   }
@@ -15013,7 +15013,7 @@ typedef struct evr_addr {
   \brief  Event on FTP client about to open data connection (Op)
   \param  socket        assigned TCP data socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_AboutToOpenDataConn(int32_t socket) {
     EventRecord2 (EvtNetFTPc_AboutToOpenDataConn, (uint32_t)socket, 0);
   }
@@ -15025,7 +15025,7 @@ typedef struct evr_addr {
   \brief  Event on FTP client data connection already opened (Op)
   \param  socket        assigned TCP data socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_DataConnAlreadyOpen(int32_t socket) {
     EventRecord2 (EvtNetFTPc_DataConnAlreadyOpen, (uint32_t)socket, 0);
   }
@@ -15036,7 +15036,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client data transfer aborted (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_TransferAborted(void) {
     EventRecord2 (EvtNetFTPc_TransferAborted, 0, 0);
   }
@@ -15047,7 +15047,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client data transfer completed successfully (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_TransferCompleted(void) {
     EventRecord2 (EvtNetFTPc_TransferCompleted, 0, 0);
   }
@@ -15058,7 +15058,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client file deleted on the server (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_FileDeleted(void) {
     EventRecord2 (EvtNetFTPc_FileDeleted, 0, 0);
   }
@@ -15069,7 +15069,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client new name required to rename a file on the server (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_NewNameRequired(void) {
     EventRecord2 (EvtNetFTPc_NewNameRequired, 0, 0);
   }
@@ -15080,7 +15080,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client file or directory renamed successfully on the server (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_FileOrDirectoryRenamed(void) {
     EventRecord2 (EvtNetFTPc_FileOrDirectoryRenamed, 0, 0);
   }
@@ -15091,7 +15091,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client directory successfully created on the server (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_DirectoryCreated(void) {
     EventRecord2 (EvtNetFTPc_DirectoryCreated, 0, 0);
   }
@@ -15102,7 +15102,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client requested file or path not found on the server (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_FileOrPathNotFound(void) {
     EventRecord2 (EvtNetFTPc_FileOrPathNotFound, 0, 0);
   }
@@ -15113,7 +15113,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client directory removed on the server (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_DirectoryRemoved(void) {
     EventRecord2 (EvtNetFTPc_DirectoryRemoved, 0, 0);
   }
@@ -15124,7 +15124,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client command error response received (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_CommandErrorResponse(void) {
     EventRecord2 (EvtNetFTPc_CommandErrorResponse, 0, 0);
   }
@@ -15137,7 +15137,7 @@ typedef struct evr_addr {
   \param  response      response from the server in text format
   \param  length        length of the response string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_WrongResponse(const uint8_t *response, uint32_t length) {
     if (length > 40) length = 40;
     EventRecordData (EvtNetFTPc_WrongResponse, response, length);
@@ -15150,7 +15150,7 @@ typedef struct evr_addr {
   \brief  Event on FTP client data socket closed (Op)
   \param  socket        assigned TCP data socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_DataSocketClosed(int32_t socket) {
     EventRecord2 (EvtNetFTPc_DataSocketClosed, (uint32_t)socket, 0);
   }
@@ -15162,7 +15162,7 @@ typedef struct evr_addr {
   \brief  Event on FTP client data socket opened (Op)
   \param  socket        assigned TCP data socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_DataSocketOpened(int32_t socket) {
     EventRecord2 (EvtNetFTPc_DataSocketOpened, (uint32_t)socket, 0);
   }
@@ -15173,7 +15173,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client write to local disk failed, disk full (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_LocalDiskWriteError(void) {
     EventRecord2 (EvtNetFTPc_LocalDiskWriteError, 0, 0);
   }
@@ -15184,7 +15184,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client stop operation timeout expired (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_ClientStopTimeoutExpired(void) {
     EventRecord2 (EvtNetFTPc_ClientStopTimeoutExpired, 0, 0);
   }
@@ -15196,7 +15196,7 @@ typedef struct evr_addr {
   \brief  Event on FTP client local port assigned for server active mode (Op)
   \param  local_port    local port number to accept connection
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_LocalPortAssigned(uint16_t local_port) {
     EventRecord2 (EvtNetFTPc_LocalPortAssigned, local_port, 0);
   }
@@ -15209,7 +15209,7 @@ typedef struct evr_addr {
   \param  local_fname   name of the local file
   \param  length        length of the local_fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_OpenLocalFile(const char *local_fname, uint32_t length) {
     if (length > 120) length = 120;
     EventRecordData (EvtNetFTPc_OpenLocalFile, local_fname, length);
@@ -15221,7 +15221,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client local file create failed (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_LocalFileCreateFailed(void) {
     EventRecord2 (EvtNetFTPc_LocalFileCreateFailed, 0, 0);
   }
@@ -15232,7 +15232,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client local file not found (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_LocalFileNotFound(void) {
     EventRecord2 (EvtNetFTPc_LocalFileNotFound, 0, 0);
   }
@@ -15244,7 +15244,7 @@ typedef struct evr_addr {
   \brief  Event on FTP client open data connection failed (Error)
   \param  socket        assigned TCP data socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_OpenDataConnFailed(int32_t socket) {
     EventRecord2 (EvtNetFTPc_OpenDataConnFailed, (uint32_t)socket, 0);
   }
@@ -15257,7 +15257,7 @@ typedef struct evr_addr {
   \param  command       server command in text form
   \param  length        length of the command string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_SendCommand(const uint8_t *command, uint32_t length) {
     if (length > 64) length = 64;
     EventRecordData (EvtNetFTPc_SendCommand, command, length);
@@ -15270,7 +15270,7 @@ typedef struct evr_addr {
   \brief  Event on FTP client close control socket (Op)
   \param  socket        assigned TCP control socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_ClientCloseSocket(int32_t socket) {
     EventRecord2 (EvtNetFTPc_ClientCloseSocket, (uint32_t)socket, 0);
   }
@@ -15290,7 +15290,7 @@ typedef struct evr_addr {
                          - 6: Local file read/write error
                          - 7: Generic FTP client error
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_ClientDone(uint8_t cb_event) {
     EventRecord2 (EvtNetFTPc_ClientDone, cb_event, 0);
   }
@@ -15301,7 +15301,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client close local file (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_CloseLocalFile(void) {
     EventRecord2 (EvtNetFTPc_CloseLocalFile, 0, 0);
   }
@@ -15312,7 +15312,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on FTP client de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetFTPc_UninitClient(void) {
     EventRecord2 (EvtNetFTPc_UninitClient, 0, 0);
   }
@@ -15322,7 +15322,7 @@ typedef struct evr_addr {
 
 
 // NetTeln event identifiers ---------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetTeln_InitServer               EventID (EventLevelOp,    EvtNetTeln,  0)
 #define EvtNetTeln_GetSocketFailed          EventID (EventLevelError, EvtNetTeln,  1)
 #define EvtNetTeln_SetUsername              EventID (EventLevelAPI,   EvtNetTeln,  2)
@@ -15361,7 +15361,7 @@ typedef struct evr_addr {
   \param  port          listening port number
   \param  idle_tout     idle timeout in seconds (0= permanent connection)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_InitServer(uint32_t num_sessions, uint16_t port, uint16_t idle_tout) {
     uint32_t val2 = (uint32_t)idle_tout << 16 | port;
     EventRecord2 (EvtNetTeln_InitServer, num_sessions, val2);
@@ -15374,7 +15374,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server failed to allocate TCP socket (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_GetSocketFailed(uint8_t session) {
     EventRecord2 (EvtNetTeln_GetSocketFailed, session, 0);
   }
@@ -15387,7 +15387,7 @@ typedef struct evr_addr {
   \param  username      new username
   \param  length        length of the username string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_SetUsername(const char *username, uint32_t length) {
     if (length > 16) length = 16;
     EventRecordData (EvtNetTeln_SetUsername, username, length);
@@ -15401,7 +15401,7 @@ typedef struct evr_addr {
   \param  password      new password
   \param  length        length of the password string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_SetPassword(const char *password, uint32_t length) {
     if (length > 16) length = 16;
     EventRecordData (EvtNetTeln_SetPassword, password, length);
@@ -15414,7 +15414,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server start service (Op)
   \param  port          listening port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_StartService(uint16_t port) {
     EventRecord2 (EvtNetTeln_StartService, port, 0);
   }
@@ -15425,7 +15425,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on Telnet server stop service (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_StopService(void) {
     EventRecord2 (EvtNetTeln_StopService, 0, 0);
   }
@@ -15437,7 +15437,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server session close (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_CloseSession(uint8_t session) {
     EventRecord2 (EvtNetTeln_CloseSession, session, 0);
   }
@@ -15450,7 +15450,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  length        length of client data to process
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_ProcessData(uint8_t session, uint32_t length) {
     EventRecord2 (EvtNetTeln_ProcessData, session, length);
   }
@@ -15463,7 +15463,7 @@ typedef struct evr_addr {
   \param  command       user entered command to process
   \param  length        length of the command string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_ProcessCommand(const char *command, uint32_t length) {
     if (length > 96) length = 96;
     EventRecordData (EvtNetTeln_ProcessCommand, command, length);
@@ -15476,7 +15476,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server echo backspace (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_EchoBackspace(uint8_t session) {
     EventRecord2 (EvtNetTeln_EchoBackspace, session, 0);
   }
@@ -15489,7 +15489,7 @@ typedef struct evr_addr {
   \param  command       command from the command history
   \param  length        length of the command string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_CommandHistory(const char *command, uint32_t length) {
     if (length > 96) length = 96;
     EventRecordData (EvtNetTeln_CommandHistory, command, length);
@@ -15503,7 +15503,7 @@ typedef struct evr_addr {
   \param  line_buffer   command line buffer
   \param  num_char      number of characters to echo
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_EchoCharacters(uint8_t *line_buffer, uint32_t num_char) {
     if (num_char > 96) num_char = 96;
     EventRecordData (EvtNetTeln_EchoCharacters, line_buffer, num_char);
@@ -15517,7 +15517,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  num_char      number of characters in command line buffer
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_LineBufferUsage(uint8_t session, uint32_t num_char) {
     EventRecord2 (EvtNetTeln_LineBufferUsage, session, num_char);
   }
@@ -15529,7 +15529,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server send authorization request to the client (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_SendAuthorizationRequest(uint8_t session) {
     EventRecord2 (EvtNetTeln_SendAuthorizationRequest, session, 0);
   }
@@ -15541,7 +15541,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server send initial telnet header to the client (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_SendInitialHeader(uint8_t session) {
     EventRecord2 (EvtNetTeln_SendInitialHeader, session, 0);
   }
@@ -15553,7 +15553,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server login timeout expired (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_LoginTimeoutExpired(uint8_t session) {
     EventRecord2 (EvtNetTeln_LoginTimeoutExpired, session, 0);
   }
@@ -15566,7 +15566,7 @@ typedef struct evr_addr {
   \param  password      password entered by the client
   \param  length        length of the password string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_ShowPassword(const char *password, uint32_t length) {
     if (length > 24) length = 24;
     EventRecordData (EvtNetTeln_ShowPassword, password, length);
@@ -15579,7 +15579,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server user authentication failed, invalid credentials (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_AuthenticationFailed(uint8_t session) {
     EventRecord2 (EvtNetTeln_AuthenticationFailed, session, 0);
   }
@@ -15591,7 +15591,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server user login successful (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_UserLoginSuccess(uint8_t session) {
     EventRecord2 (EvtNetTeln_UserLoginSuccess, session, 0);
   }
@@ -15604,7 +15604,7 @@ typedef struct evr_addr {
   \param  username      username entered by the client
   \param  length        length of the username string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_ShowUsername(const char *username, uint32_t length) {
     if (length > 24) length = 24;
     EventRecordData (EvtNetTeln_ShowUsername, username, length);
@@ -15617,7 +15617,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server option negotiation start (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_NegotiateStart(uint8_t session) {
     EventRecord2 (EvtNetTeln_NegotiateStart, session, 0);
   }
@@ -15629,7 +15629,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server option negotiation failed (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_NegotiateFailed(uint8_t session) {
     EventRecord2 (EvtNetTeln_NegotiateFailed, session, 0);
   }
@@ -15641,7 +15641,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server user denied access (Error)
   \param  net_addr      pointer to \ref NET_ADDR address structure
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_UserAccessDenied(const void *net_addr) {
     const EVR_ADDR *addr = net_addr;
     EventRecordData (EvtNetTeln_UserAccessDenied, addr, addr->type ? 20 : 8);
@@ -15654,7 +15654,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server session open (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_SessionOpen(uint8_t session) {
     EventRecord2 (EvtNetTeln_SessionOpen, session, 0);
   }
@@ -15666,7 +15666,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server socket aborted (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_SocketAborted(uint8_t session) {
     EventRecord2 (EvtNetTeln_SocketAborted, session, 0);
   }
@@ -15678,7 +15678,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server socket closed (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_SocketClosed(uint8_t session) {
     EventRecord2 (EvtNetTeln_SocketClosed, session, 0);
   }
@@ -15691,7 +15691,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_ReceiveFrame(uint8_t session, uint32_t length) {
     EventRecord2 (EvtNetTeln_ReceiveFrame, session, length);
   }
@@ -15703,7 +15703,7 @@ typedef struct evr_addr {
   \brief  Event on Telnet server option negotiation success (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_NegotiateSuccess(uint8_t session) {
     EventRecord2 (EvtNetTeln_NegotiateSuccess, session, 0);
   }
@@ -15714,7 +15714,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on Telnet server de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTeln_UninitServer(void) {
     EventRecord2 (EvtNetTeln_UninitServer, 0, 0);
   }
@@ -15724,7 +15724,7 @@ typedef struct evr_addr {
 
 
 // NetTFTPs event identifiers --------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetTFTPs_InitServer              EventID (EventLevelOp,    EvtNetTFTPs,  0)
 #define EvtNetTFTPs_ShowRootFolder          EventID (EventLevelOp,    EvtNetTFTPs,  1)
 #define EvtNetTFTPs_GetSocketFailed         EventID (EventLevelError, EvtNetTFTPs,  2)
@@ -15777,7 +15777,7 @@ typedef struct evr_addr {
                          - 0: disabled
                          - 1: enabled
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_InitServer(uint32_t num_sessions, uint16_t port, uint8_t firewall_en) {
     uint32_t val2 = (uint32_t)firewall_en << 16 | port;
     EventRecord2 (EvtNetTFTPs_InitServer, num_sessions, val2);
@@ -15791,7 +15791,7 @@ typedef struct evr_addr {
   \param  root_folder   path to server root folder
   \param  length        length of the root_folder string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_ShowRootFolder(const char *root_folder, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetTFTPs_ShowRootFolder, root_folder, length);
@@ -15804,7 +15804,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP server failed to allocate UDP socket (Error)
   \param  session       session number (0= control session)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_GetSocketFailed(uint8_t session) {
     EventRecord2 (EvtNetTFTPs_GetSocketFailed, session, 0);
   }
@@ -15817,7 +15817,7 @@ typedef struct evr_addr {
   \param  path          path to server root folder
   \param  length        length of the path string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_SetRootPath(const char *path, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetTFTPs_SetRootPath, path, length);
@@ -15830,7 +15830,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP server start service (Op)
   \param  port          listening port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_StartService(uint16_t port) {
     EventRecord2 (EvtNetTFTPs_StartService, port, 0);
   }
@@ -15841,7 +15841,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TFTP server stop service (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_StopService(void) {
     EventRecord2 (EvtNetTFTPs_StopService, 0, 0);
   }
@@ -15853,7 +15853,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP server session timeout expired, abort transfer (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_TimeoutExpiredAbort(uint8_t session) {
     EventRecord2 (EvtNetTFTPs_TimeoutExpiredAbort, session, 0);
   }
@@ -15867,7 +15867,7 @@ typedef struct evr_addr {
   \param  block_nr      block number
   \param  length        length of a block
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_SendBlock(uint8_t session, uint32_t block_nr, uint32_t length) {
     uint32_t val2 = (block_nr << 16) | length;
     EventRecord2 (EvtNetTFTPs_SendBlock, session, val2);
@@ -15881,7 +15881,7 @@ typedef struct evr_addr {
   \param  socket        assigned UDP socket
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_ReceiveFrame(int32_t socket, uint32_t length) {
     EventRecord2 (EvtNetTFTPs_ReceiveFrame, (uint32_t)socket, length);
   }
@@ -15894,7 +15894,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_FrameTooShort(uint32_t length, uint32_t min_length) {
     EventRecord2 (EvtNetTFTPs_FrameTooShort, length, min_length);
   }
@@ -15906,7 +15906,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP server user denied access (Error)
   \param  net_addr      pointer to \ref NET_ADDR address structure
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_UserAccessDenied(const void *net_addr) {
     const EVR_ADDR *addr = net_addr;
     EventRecordData (EvtNetTFTPs_UserAccessDenied, addr, addr->type ? 20 : 8);
@@ -15918,7 +15918,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TFTP server denied client access on out of resources (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_AccessDeniedNoResources(void) {
     EventRecord2 (EvtNetTFTPs_AccessDeniedNoResources, 0, 0);
   }
@@ -15930,7 +15930,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP server display client IP address and port number (Op)
   \param  net_addr      pointer to \ref NET_ADDR address structure
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_ShowClientAddress(const void *net_addr) {
     const EVR_ADDR *addr = net_addr;
     EventRecordData (EvtNetTFTPs_ShowClientAddress, addr, addr->type ? 20 : 8);
@@ -15950,7 +15950,7 @@ typedef struct evr_addr {
                          - 5: error
                          - 6: option acknowledgment
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_OperationRequest(uint8_t session, uint16_t tftp_opcode) {
     EventRecord2 (EvtNetTFTPs_OperationRequest, session, tftp_opcode);
   }
@@ -15962,7 +15962,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP server session restart, maybe our response was lost (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_SessionRestart(uint8_t session) {
     EventRecord2 (EvtNetTFTPs_SessionRestart, session, 0);
   }
@@ -15975,7 +15975,7 @@ typedef struct evr_addr {
   \param  session       session number
   \remark TID is treated in UDP socket as the source and destination port.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_InvalidTransferId(uint8_t session) {
     EventRecord2 (EvtNetTFTPs_InvalidTransferId, session, 0);
   }
@@ -15996,7 +15996,7 @@ typedef struct evr_addr {
                          - 6: file already exists error
                          - 7: no such user error
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_ErrorCodeReceived(uint8_t session, uint16_t error_code) {
     EventRecord2 (EvtNetTFTPs_ErrorCodeReceived, session, error_code);
   }
@@ -16015,7 +16015,7 @@ typedef struct evr_addr {
                          - 5: error
                          - 6: option acknowledgment
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_IllegalOpcodeReceived(uint8_t session, uint16_t tftp_opcode) {
     EventRecord2 (EvtNetTFTPs_IllegalOpcodeReceived, session, tftp_opcode);
   }
@@ -16028,7 +16028,7 @@ typedef struct evr_addr {
   \param  fname         name of the requested file
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_FileRequested(const char *fname, uint32_t length) {
     if (length > 40) length = 40;
     EventRecordData (EvtNetTFTPs_FileRequested, fname, length);
@@ -16042,7 +16042,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  block_size    size of transfer block
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_TransferBlockSize(uint8_t session, uint16_t block_size) {
     EventRecord2 (EvtNetTFTPs_TransferBlockSize, session, block_size);
   }
@@ -16054,7 +16054,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP server transfer mode not set to binary (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_TransferModeNotBinary(uint8_t session) {
     EventRecord2 (EvtNetTFTPs_TransferModeNotBinary, session, 0);
   }
@@ -16066,7 +16066,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP server error, requested file not found on server (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_LocalFileNotFound(uint8_t session) {
     EventRecord2 (EvtNetTFTPs_LocalFileNotFound, session, 0);
   }
@@ -16078,7 +16078,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP server local file create failed (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_LocalFileCreateFailed(uint8_t session) {
     EventRecord2 (EvtNetTFTPs_LocalFileCreateFailed, session, 0);
   }
@@ -16091,7 +16091,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_ReceiveDataFrame(uint8_t session, uint32_t length) {
     EventRecord2 (EvtNetTFTPs_ReceiveDataFrame, session, length);
   }
@@ -16105,7 +16105,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_DataFrameTooShort(uint8_t session, uint32_t length, uint32_t min_length) {
     uint32_t val2 = (min_length << 16) | length;
     EventRecord2 (EvtNetTFTPs_DataFrameTooShort, session, val2);
@@ -16119,7 +16119,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  block_nr      block number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_DuplicateBlockReceived(uint8_t session, uint32_t block_nr) {
     EventRecord2 (EvtNetTFTPs_DuplicateBlockReceived, session, block_nr);
   }
@@ -16131,7 +16131,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP server too many retransmissions (Error)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_TooManyRetries(uint8_t session) {
     EventRecord2 (EvtNetTFTPs_TooManyRetries, session, 0);
   }
@@ -16144,7 +16144,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  block_nr      block number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_BlockReceived(uint8_t session, uint32_t block_nr) {
     EventRecord2 (EvtNetTFTPs_BlockReceived, session, block_nr);
   }
@@ -16157,7 +16157,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  block_nr      block number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_InvalidBlockReceived(uint8_t session, uint32_t block_nr) {
     EventRecord2 (EvtNetTFTPs_InvalidBlockReceived, session, block_nr);
   }
@@ -16170,7 +16170,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  length        block data length
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_WriteErrorDiskFull(uint8_t session, uint32_t length) {
     EventRecord2 (EvtNetTFTPs_WriteErrorDiskFull, session, length);
   }
@@ -16183,7 +16183,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  block_nr      block number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_BlockAckReceived(uint8_t session, uint32_t block_nr) {
     EventRecord2 (EvtNetTFTPs_BlockAckReceived, session, block_nr);
   }
@@ -16196,7 +16196,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  block_nr      block number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_BlockRetransmit(uint8_t session, uint32_t block_nr) {
     EventRecord2 (EvtNetTFTPs_BlockRetransmit, session, block_nr);
   }
@@ -16209,7 +16209,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  block_nr      block number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_InvalidBlockAck(uint8_t session, uint32_t block_nr) {
     EventRecord2 (EvtNetTFTPs_InvalidBlockAck, session, block_nr);
   }
@@ -16222,7 +16222,7 @@ typedef struct evr_addr {
   \param  mode          mode parameter in text format
   \param  length        length of the mode string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_ShowRequestMode(const uint8_t *mode, uint32_t length) {
     if (length > 16) length = 16;
     EventRecordData (EvtNetTFTPs_ShowRequestMode, mode, length);
@@ -16236,7 +16236,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  block_size    block size
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_SendOptionAck(uint8_t session, uint32_t block_size) {
     EventRecord2 (EvtNetTFTPs_SendOptionAck, session, block_size);
   }
@@ -16249,7 +16249,7 @@ typedef struct evr_addr {
   \param  session       session number
   \param  block_nr      block number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_SendBlockAck(uint8_t session, uint16_t block_nr) {
     EventRecord2 (EvtNetTFTPs_SendBlockAck, session, block_nr);
   }
@@ -16270,7 +16270,7 @@ typedef struct evr_addr {
                          - 6: file already exists error
                          - 7: no such user error
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_SendError(uint8_t session, uint16_t error_nr) {
     EventRecord2 (EvtNetTFTPs_SendError, session, error_nr);
   }
@@ -16282,7 +16282,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP server abnormal session close on error (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_AbortSession(uint8_t session) {
     EventRecord2 (EvtNetTFTPs_AbortSession, session, 0);
   }
@@ -16294,7 +16294,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP server normal session close (Op)
   \param  session       session number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_CloseSession(uint8_t session) {
     EventRecord2 (EvtNetTFTPs_CloseSession, session, 0);
   }
@@ -16305,7 +16305,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TFTP server de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPs_UninitServer(void) {
     EventRecord2 (EvtNetTFTPs_UninitServer, 0, 0);
   }
@@ -16315,7 +16315,7 @@ typedef struct evr_addr {
 
 
 // NetTFTPc event identifiers --------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetTFTPc_InitClient              EventID (EventLevelOp,    EvtNetTFTPc,  0)
 #define EvtNetTFTPc_GetSocketFailed         EventID (EventLevelError, EvtNetTFTPc,  1)
 #define EvtNetTFTPc_PutFile                 EventID (EventLevelAPI,   EvtNetTFTPc,  2)
@@ -16360,7 +16360,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TFTP client initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_InitClient(void) {
     EventRecord2 (EvtNetTFTPc_InitClient, 0, 0);
   }
@@ -16371,7 +16371,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TFTP client failed to allocate UDP socket (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_GetSocketFailed(void) {
     EventRecord2 (EvtNetTFTPc_GetSocketFailed, 0, 0);
   }
@@ -16384,7 +16384,7 @@ typedef struct evr_addr {
   \param  local_fname   name of the local file
   \param  length        length of the local_fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_PutFile(const char *local_fname, uint32_t length) {
     if (length > 32) length = 32;
     EventRecordData (EvtNetTFTPc_PutFile, local_fname, length);
@@ -16398,7 +16398,7 @@ typedef struct evr_addr {
   \param  fname         name of the remote file
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_PutRemoteName(const char *fname, uint32_t length) {
     if (length > 32) length = 32;
     EventRecordData (EvtNetTFTPc_PutRemoteName, fname, length);
@@ -16410,7 +16410,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netTFTPc_Put invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_PutInvalidParameter(void) {
     EventRecord2 (EvtNetTFTPc_PutInvalidParameter, 0, 0);
   }
@@ -16426,7 +16426,7 @@ typedef struct evr_addr {
                          - 2: get file
                          - 3: stop client
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_PutWrongState(uint8_t state) {
     EventRecord2 (EvtNetTFTPc_PutWrongState, state, 0);
   }
@@ -16438,7 +16438,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP client display server IP address (Op)
   \param  net_addr      pointer to \ref NET_ADDR server address structure
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_ShowServerAddress(const void *net_addr) {
     const EVR_ADDR *addr = net_addr;
     EventRecordData (EvtNetTFTPc_ShowServerAddress, addr, addr->type ? 20 : 8);
@@ -16450,7 +16450,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TFTP client open local file (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_OpenLocalFile(void) {
     EventRecord2 (EvtNetTFTPc_OpenLocalFile, 0, 0);
   }
@@ -16461,7 +16461,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TFTP client open local file failed (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_OpenLocalFileFailed(void) {
     EventRecord2 (EvtNetTFTPc_OpenLocalFileFailed, 0, 0);
   }
@@ -16474,7 +16474,7 @@ typedef struct evr_addr {
   \param  fname         name of the remote file
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_GetFile(const char *fname, uint32_t length) {
     if (length > 32) length = 32;
     EventRecordData (EvtNetTFTPc_GetFile, fname, length);
@@ -16488,7 +16488,7 @@ typedef struct evr_addr {
   \param  local_fname   name of the local file
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_GetLocalName(const char *local_fname, uint32_t length) {
     if (length > 32) length = 32;
     EventRecordData (EvtNetTFTPc_GetLocalName, local_fname, length);
@@ -16500,7 +16500,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netTFTPc_Get invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_GetInvalidParameter(void) {
     EventRecord2 (EvtNetTFTPc_GetInvalidParameter, 0, 0);
   }
@@ -16516,7 +16516,7 @@ typedef struct evr_addr {
                          - 2: get file
                          - 3: stop client
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_GetWrongState(uint8_t state) {
     EventRecord2 (EvtNetTFTPc_GetWrongState, state, 0);
   }
@@ -16528,7 +16528,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP client block retransmit on timeout (Op)
   \param  block_nr      block number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_TimeoutBlockRetransmit(uint32_t block_nr) {
     EventRecord2 (EvtNetTFTPc_TimeoutBlockRetransmit, block_nr, 0);
   }
@@ -16541,7 +16541,7 @@ typedef struct evr_addr {
   \param  block_nr      block number
   \param  length        length of a block
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_SendBlock(uint32_t block_nr, uint32_t length) {
     EventRecord2 (EvtNetTFTPc_SendBlock, block_nr, length);
   }
@@ -16552,7 +16552,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TFTP client stop operation (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_StopClient(void) {
     EventRecord2 (EvtNetTFTPc_StopClient, 0, 0);
   }
@@ -16563,7 +16563,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TFTP client close local file (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_CloseLocalFile(void) {
     EventRecord2 (EvtNetTFTPc_CloseLocalFile, 0, 0);
   }
@@ -16575,7 +16575,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP client wrong server IP address (Error)
   \param  net_addr      pointer to \ref NET_ADDR address structure
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_WrongServerAddress(const void *net_addr) {
     const EVR_ADDR *addr = net_addr;
     EventRecordData (EvtNetTFTPc_WrongServerAddress, addr, addr->type ? 20 : 8);
@@ -16588,7 +16588,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP client wrong server port (Error)
   \param  udp_port      wrong UDP port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_WrongServerPort(uint16_t udp_port) {
     EventRecord2 (EvtNetTFTPc_WrongServerPort, udp_port, 0);
   }
@@ -16601,7 +16601,7 @@ typedef struct evr_addr {
   \param  tid           server transfer identifier
   \remark Transfer identifier is used as UDP port number.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_ServerTidAssigned(uint16_t tid) {
     EventRecord2 (EvtNetTFTPc_ServerTidAssigned, tid, 0);
   }
@@ -16614,7 +16614,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_FrameTooShort(uint32_t length, uint32_t min_length) {
     EventRecord2 (EvtNetTFTPc_FrameTooShort, length, min_length);
   }
@@ -16626,7 +16626,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP client receive frame (Op)
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_ReceiveFrame(uint32_t length) {
     EventRecord2 (EvtNetTFTPc_ReceiveFrame, length, 0);
   }
@@ -16646,7 +16646,7 @@ typedef struct evr_addr {
                          - 6: file already exists error
                          - 7: no such user error
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_ErrorCodeReceived(uint16_t error_code) {
     EventRecord2 (EvtNetTFTPc_ErrorCodeReceived, error_code, 0);
   }
@@ -16658,7 +16658,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP client duplicate block acknowledge received (Op)
   \param  block_nr      block number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_DuplicateBlockAck(uint32_t block_nr) {
     EventRecord2 (EvtNetTFTPc_DuplicateBlockAck, block_nr, 0);
   }
@@ -16670,7 +16670,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP client invalid block acknowledge received (Error)
   \param  block_nr      block number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_InvalidBlockAck(uint32_t block_nr) {
     EventRecord2 (EvtNetTFTPc_InvalidBlockAck, block_nr, 0);
   }
@@ -16682,7 +16682,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP client block acknowledge received (Op)
   \param  block_nr      block number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_BlockAckReceived(uint32_t block_nr) {
     EventRecord2 (EvtNetTFTPc_BlockAckReceived, block_nr, 0);
   }
@@ -16694,7 +16694,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP client duplicate block received (Op)
   \param  block_nr      block number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_DuplicateBlockReceived(uint32_t block_nr) {
     EventRecord2 (EvtNetTFTPc_DuplicateBlockReceived, block_nr, 0);
   }
@@ -16706,7 +16706,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP client invalid block received (Error)
   \param  block_nr      block number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_InvalidBlockReceived(uint32_t block_nr) {
     EventRecord2 (EvtNetTFTPc_InvalidBlockReceived, block_nr, 0);
   }
@@ -16718,7 +16718,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP client block data received (Op)
   \param  block_nr      block number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_BlockReceived(uint32_t block_nr) {
     EventRecord2 (EvtNetTFTPc_BlockReceived, block_nr, 0);
   }
@@ -16730,7 +16730,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP client write local disk failed, disk full (Error)
   \param  length        block data length
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_WriteErrorDiskFull(uint32_t length) {
     EventRecord2 (EvtNetTFTPc_WriteErrorDiskFull, length, 0);
   }
@@ -16741,7 +16741,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TFTP client deteced illegal server operation (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_IllegalServerOperation(void) {
     EventRecord2 (EvtNetTFTPc_IllegalServerOperation, 0, 0);
   }
@@ -16759,7 +16759,7 @@ typedef struct evr_addr {
                          - 5: error
                          - 6: option acknowledgment
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_SendRequest(uint16_t tftp_opcode) {
     EventRecord2 (EvtNetTFTPc_SendRequest, tftp_opcode, 0);
   }
@@ -16771,7 +16771,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP client add block size option (Op)
   \param  block_size    size of transfer block
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_OptionBlockSize(uint16_t block_size) {
     EventRecord2 (EvtNetTFTPc_OptionBlockSize, block_size, 0);
   }
@@ -16783,7 +16783,7 @@ typedef struct evr_addr {
   \brief  Event on TFTP client send acknowledgment (Op)
   \param  block_nr      block number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_SendAck(uint16_t block_nr) {
     EventRecord2 (EvtNetTFTPc_SendAck, block_nr, 0);
   }
@@ -16803,7 +16803,7 @@ typedef struct evr_addr {
                          - 6: file already exists error
                          - 7: no such user error
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_SendError(uint16_t error_nr) {
     EventRecord2 (EvtNetTFTPc_SendError, error_nr, 0);
   }
@@ -16814,7 +16814,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TFTP client option acknowledgment received (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_OptionAckReceived(void) {
     EventRecord2 (EvtNetTFTPc_OptionAckReceived, 0, 0);
   }
@@ -16825,7 +16825,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on TFTP client de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetTFTPc_UninitClient(void) {
     EventRecord2 (EvtNetTFTPc_UninitClient, 0, 0);
   }
@@ -16835,7 +16835,7 @@ typedef struct evr_addr {
 
 
 // NetSMTP event identifiers ---------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetSMTP_InitClient               EventID (EventLevelOp,    EvtNetSMTP,  0)
 #define EvtNetSMTP_GetSocketFailed          EventID (EventLevelError, EvtNetSMTP,  1)
 #define EvtNetSMTP_Connect                  EventID (EventLevelAPI,   EvtNetSMTP,  2)
@@ -16889,7 +16889,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_InitClient(void) {
     EventRecord2 (EvtNetSMTP_InitClient, 0, 0);
   }
@@ -16900,7 +16900,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client failed to allocate TCP socket (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_GetSocketFailed(void) {
     EventRecord2 (EvtNetSMTP_GetSocketFailed, 0, 0);
   }
@@ -16912,7 +16912,7 @@ typedef struct evr_addr {
   \brief  Event on SMTP client \ref netSMTPc_Connect to the server (API)
   \param  net_addr      pointer to \ref NET_ADDR server address structure
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_Connect(const void *net_addr) {
     const EVR_ADDR *addr = net_addr;
     EventRecordData (EvtNetSMTP_Connect, addr, addr->type ? 20 : 8);
@@ -16924,7 +16924,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSMTPc_Connect invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_ConnectInvalidParameter(void) {
     EventRecord2 (EvtNetSMTP_ConnectInvalidParameter, 0, 0);
   }
@@ -16935,7 +16935,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSMTPc_Connect failed, client busy (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_ConnectClientBusy(void) {
     EventRecord2 (EvtNetSMTP_ConnectClientBusy, 0, 0);
   }
@@ -16947,7 +16947,7 @@ typedef struct evr_addr {
   \brief  Event on SMTP client \ref netSMTPc_SendMail to mail server (API)
   \param  num_rcpt      number of mail recipients (To, CC, BCC)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SendMail(uint8_t num_rcpt) {
     EventRecord2 (EvtNetSMTP_SendMail, num_rcpt, 0);
   }
@@ -16958,7 +16958,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSMTPc_SendMail invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SendMailInvalidParameter(void) {
     EventRecord2 (EvtNetSMTP_SendMailInvalidParameter, 0, 0);
   }
@@ -16969,7 +16969,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSMTPc_SendMail secure TLS not enabled (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SendMailTlsNotEnabled(void) {
     EventRecord2 (EvtNetSMTP_SendMailTlsNotEnabled, 0, 0);
   }
@@ -16980,7 +16980,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSMTPc_SendMail failed, client busy (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SendMailClientBusy(void) {
     EventRecord2 (EvtNetSMTP_SendMailClientBusy, 0, 0);
   }
@@ -16991,7 +16991,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSMTPc_SendMail failed, mail recipient not specified (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SendMailNoRecipients(void) {
     EventRecord2 (EvtNetSMTP_SendMailNoRecipients, 0, 0);
   }
@@ -17002,7 +17002,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSMTPc_SendMail failed, mail server not valid (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SendMailServerNotValid(void) {
     EventRecord2 (EvtNetSMTP_SendMailServerNotValid, 0, 0);
   }
@@ -17013,7 +17013,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSMTPc_SendMail failed, DNS host resolver error (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SendMailDnsError(void) {
     EventRecord2 (EvtNetSMTP_SendMailDnsError, 0, 0);
   }
@@ -17024,7 +17024,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSMTPc_SendMail failed, support for attachments not enabled (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SendMailAttachNotEnabled(void) {
     EventRecord2 (EvtNetSMTP_SendMailAttachNotEnabled, 0, 0);
   }
@@ -17037,7 +17037,7 @@ typedef struct evr_addr {
   \param  fname         name of the requested file
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SendMailAttachFailed(const char *fname, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetSMTP_SendMailAttachFailed, fname, length);
@@ -17050,7 +17050,7 @@ typedef struct evr_addr {
   \brief  Event on SMTP client \ref netSMTPc_SendMail multipart with attachments (Op)
   \param  num_files     number of files to attach
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SendMailMultipart(uint8_t num_files) {
     EventRecord2 (EvtNetSMTP_SendMailMultipart, num_files, 0);
   }
@@ -17063,7 +17063,7 @@ typedef struct evr_addr {
   \param  fname         name of the requested file
   \param  length        length of the fname string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SendMailAttachment(const char *fname, uint32_t length) {
     if (length > 80) length = 80;
     EventRecordData (EvtNetSMTP_SendMailAttachment, fname, length);
@@ -17076,7 +17076,7 @@ typedef struct evr_addr {
   \brief  Event on SMTP client inbound connection rejected (Error)
   \param  socket        assigned TCP socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_InboundConnRejected(int32_t socket) {
     EventRecord2 (EvtNetSMTP_InboundConnRejected, (uint32_t)socket, 0);
   }
@@ -17088,7 +17088,7 @@ typedef struct evr_addr {
   \brief  Event on SMTP client socket aborted (Error)
   \param  socket        assigned TCP socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SocketAborted(int32_t socket) {
     EventRecord2 (EvtNetSMTP_SocketAborted, (uint32_t)socket, 0);
   }
@@ -17100,7 +17100,7 @@ typedef struct evr_addr {
   \brief  Event on SMTP client socket connected (Op)
   \param  socket        assigned TCP socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SocketConnected(int32_t socket) {
     EventRecord2 (EvtNetSMTP_SocketConnected, (uint32_t)socket, 0);
   }
@@ -17112,7 +17112,7 @@ typedef struct evr_addr {
   \brief  Event on SMTP client socket closed (Op)
   \param  socket        assigned TCP socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SocketClosed(int32_t socket) {
     EventRecord2 (EvtNetSMTP_SocketClosed, (uint32_t)socket, 0);
   }
@@ -17125,7 +17125,7 @@ typedef struct evr_addr {
   \param  socket        assigned TCP socket
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_ReceiveFrame(int32_t socket, uint32_t length) {
     EventRecord2 (EvtNetSMTP_ReceiveFrame, (uint32_t)socket, length);
   }
@@ -17137,7 +17137,7 @@ typedef struct evr_addr {
   \brief  Event on SMTP client unacked data error (Error)
   \param  socket        assigned TCP socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_UnackedDataError(int32_t socket) {
     EventRecord2 (EvtNetSMTP_UnackedDataError, (uint32_t)socket, 0);
   }
@@ -17150,7 +17150,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_FrameTooShort(uint32_t length, uint32_t min_length) {
     EventRecord2 (EvtNetSMTP_FrameTooShort, length, min_length);
   }
@@ -17161,7 +17161,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client server ready response (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_ServerReady(void) {
     EventRecord2 (EvtNetSMTP_ServerReady, 0, 0);
   }
@@ -17172,7 +17172,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client Extended SMTP mode (ESMTP) not supported (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_EsmtpModeNotSupported(void) {
     EventRecord2 (EvtNetSMTP_EsmtpModeNotSupported, 0, 0);
   }
@@ -17183,7 +17183,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client EHLO response divided into multiple frames (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_EhloResponseFragmented(void) {
     EventRecord2 (EvtNetSMTP_EhloResponseFragmented, 0, 0);
   }
@@ -17194,7 +17194,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client Extended SMTP mode (ESMTP) active (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_EsmtpModeActive(void) {
     EventRecord2 (EvtNetSMTP_EsmtpModeActive, 0, 0);
   }
@@ -17213,7 +17213,7 @@ typedef struct evr_addr {
                          - 5: NTLM
                          - 6: unknown
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_StartAuthentication(uint8_t auth_mode) {
     EventRecord2 (EvtNetSMTP_StartAuthentication, auth_mode, 0);
   }
@@ -17224,7 +17224,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client authentication denied by the user (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_AuthenticationDenied(void) {
     EventRecord2 (EvtNetSMTP_AuthenticationDenied, 0, 0);
   }
@@ -17243,7 +17243,7 @@ typedef struct evr_addr {
                          - 5: NTLM
                          - 6: unknown
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_AuthMethodNotSupported(uint8_t auth_mode) {
     EventRecord2 (EvtNetSMTP_AuthMethodNotSupported, auth_mode, 0);
   }
@@ -17254,7 +17254,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client basic SMTP mode active (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SmtpModeActive(void) {
     EventRecord2 (EvtNetSMTP_SmtpModeActive, 0, 0);
   }
@@ -17265,7 +17265,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client authentication completed successfully (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_AuthenticationSuccessful(void) {
     EventRecord2 (EvtNetSMTP_AuthenticationSuccessful, 0, 0);
   }
@@ -17276,7 +17276,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client authentication failed (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_AuthenticationFailed(void) {
     EventRecord2 (EvtNetSMTP_AuthenticationFailed, 0, 0);
   }
@@ -17287,7 +17287,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client received server acknowledgment (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_ServerAcknowledge(void) {
     EventRecord2 (EvtNetSMTP_ServerAcknowledge, 0, 0);
   }
@@ -17300,7 +17300,7 @@ typedef struct evr_addr {
   \param  response      server response in text form
   \param  length        length of the response string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_WrongResponse(const uint8_t *response, uint32_t length) {
     if (length > 64) length = 64;
     EventRecordData (EvtNetSMTP_WrongResponse, response, length);
@@ -17312,7 +17312,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client stop operation, timeout expired (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_ClientStopTimeoutExpired(void) {
     EventRecord2 (EvtNetSMTP_ClientStopTimeoutExpired, 0, 0);
   }
@@ -17323,7 +17323,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client send message body start (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SendMessageBody(void) {
     EventRecord2 (EvtNetSMTP_SendMessageBody, 0, 0);
   }
@@ -17334,7 +17334,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client send end of message sequence (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SendMessageEnd(void) {
     EventRecord2 (EvtNetSMTP_SendMessageEnd, 0, 0);
   }
@@ -17347,7 +17347,7 @@ typedef struct evr_addr {
   \param  command       server command in text form
   \param  length        length of the command string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_SendCommand(const uint8_t *command, uint32_t length) {
     if (length > 64) length = 64;
     EventRecordData (EvtNetSMTP_SendCommand, command, length);
@@ -17360,7 +17360,7 @@ typedef struct evr_addr {
   \brief  Event on SMTP client close socket (Op)
   \param  socket        assigned TCP socket
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_ClientCloseSocket(int32_t socket) {
     EventRecord2 (EvtNetSMTP_ClientCloseSocket, (uint32_t)socket, 0);
   }
@@ -17376,7 +17376,7 @@ typedef struct evr_addr {
                          - 2: Login failed, username/password invalid
                          - 3: Generic SMTP client error
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_ClientDone(uint8_t cb_event) {
     EventRecord2 (EvtNetSMTP_ClientDone, cb_event, 0);
   }
@@ -17387,7 +17387,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client TLS support indicated by the server (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_TlsSupportIndicated(void) {
     EventRecord2 (EvtNetSMTP_TlsSupportIndicated, 0, 0);
   }
@@ -17398,7 +17398,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client STARTTLS command accepted by the server (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_StartTlsAccepted(void) {
     EventRecord2 (EvtNetSMTP_StartTlsAccepted, 0, 0);
   }
@@ -17409,7 +17409,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client failed to allocate secure TLS context (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_TlsGetContextFailed(void) {
     EventRecord2 (EvtNetSMTP_TlsGetContextFailed, 0, 0);
   }
@@ -17420,7 +17420,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client started secure TLS mode (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_TlsModeStarted(void) {
     EventRecord2 (EvtNetSMTP_TlsModeStarted, 0, 0);
   }
@@ -17432,7 +17432,7 @@ typedef struct evr_addr {
   \brief  Event on SMTP client established secure TLS session (Op)
   \param  tls_id        TLS session identifier
 */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_TlsModeEstablished(uint8_t tls_id) {
     EventRecord2 (EvtNetSMTP_TlsModeEstablished, tls_id, 0);
   }
@@ -17443,7 +17443,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SMTP client de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSMTP_UninitClient(void) {
     EventRecord2 (EvtNetSMTP_UninitClient, 0, 0);
   }
@@ -17453,7 +17453,7 @@ typedef struct evr_addr {
 
 
 // NetDNS event identifiers ----------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetDNS_InitClient                EventID (EventLevelOp,    EvtNetDNS,  0)
 #define EvtNetDNS_GetSocketFailed           EventID (EventLevelError, EvtNetDNS,  1)
 #define EvtNetDNS_ChangeDnsServer           EventID (EventLevelOp,    EvtNetDNS,  2)
@@ -17496,7 +17496,7 @@ typedef struct evr_addr {
   \brief  Event on DNS client initialize (Op)
   \param  num_entries   number of entries available in cache
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_InitClient(uint32_t num_entries) {
     EventRecord2 (EvtNetDNS_InitClient, num_entries, 0);
   }
@@ -17507,7 +17507,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client failed to allocate UDP socket (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_GetSocketFailed(void) {
     EventRecord2 (EvtNetDNS_GetSocketFailed, 0, 0);
   }
@@ -17521,7 +17521,7 @@ typedef struct evr_addr {
                          - 0: primary
                          - 1: secondary
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_ChangeDnsServer(int32_t server) {
     EventRecord2 (EvtNetDNS_ChangeDnsServer, (uint32_t)server, 0);
   }
@@ -17532,7 +17532,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client stop operation timeout expired (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_ClientStopTimeoutExpired(void) {
     EventRecord2 (EvtNetDNS_ClientStopTimeoutExpired, 0, 0);
   }
@@ -17546,7 +17546,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \remark Port member is undefined and reused for the length parameter.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_ReceiveFrame(const void *net_addr, uint32_t length) {
     const EVR_ADDR *addr = net_addr;
     evr_buf.u16[0] = (uint16_t)addr->type;
@@ -17562,7 +17562,7 @@ typedef struct evr_addr {
   \brief  Event on DNS client wrong server port (Error)
   \param  udp_port      wrong UDP port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_WrongServerPort(uint16_t udp_port) {
     EventRecord2 (EvtNetDNS_WrongServerPort, udp_port, 0);
   }
@@ -17575,7 +17575,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_FrameTooShort(uint32_t length, uint32_t min_length) {
     EventRecord2 (EvtNetDNS_FrameTooShort, length, min_length);
   }
@@ -17586,7 +17586,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client wrong DNS server address received (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_WrongServerAddress(void) {
     EventRecord2 (EvtNetDNS_WrongServerAddress, 0, 0);
   }
@@ -17604,7 +17604,7 @@ typedef struct evr_addr {
                          - NSCOUNT (2 bytes)
                          - ARCOUNT (2 bytes)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_ShowFrameHeader(const void *dns_header) {
     EventRecordData (EvtNetDNS_ShowFrameHeader, dns_header, 12);
   }
@@ -17617,7 +17617,7 @@ typedef struct evr_addr {
   \param  tid           received transaction identifier
   \param  tid_valid     valid transaction identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_WrongTransactionId(uint16_t tid, uint16_t tid_valid) {
     EventRecord2 (EvtNetDNS_WrongTransactionId, tid, tid_valid);
   }
@@ -17628,7 +17628,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client received a DNS request (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_DnsRequestReceived(void) {
     EventRecord2 (EvtNetDNS_DnsRequestReceived, 0, 0);
   }
@@ -17639,7 +17639,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client OPCODE in a response is not QUERY (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_OpcodeNotQuery(void) {
     EventRecord2 (EvtNetDNS_OpcodeNotQuery, 0, 0);
   }
@@ -17650,7 +17650,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client truncated response message received (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_MessageTruncated(void) {
     EventRecord2 (EvtNetDNS_MessageTruncated, 0, 0);
   }
@@ -17661,7 +17661,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client no such name found message received (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_NoSuchNameFound(void) {
     EventRecord2 (EvtNetDNS_NoSuchNameFound, 0, 0);
   }
@@ -17672,7 +17672,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client RCODE not zero and recursion available received (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_RcodeAndRecursion(void) {
     EventRecord2 (EvtNetDNS_RcodeAndRecursion, 0, 0);
   }
@@ -17683,7 +17683,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client more than one answer received (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_MoreAnswersReceived(void) {
     EventRecord2 (EvtNetDNS_MoreAnswersReceived, 0, 0);
   }
@@ -17694,7 +17694,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client QNAME in a response not the same as requested (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_QnameNotTheSame(void) {
     EventRecord2 (EvtNetDNS_QnameNotTheSame, 0, 0);
   }
@@ -17705,7 +17705,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client QTYPE in a response not the same as requested (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_QtypeNotTheSame(void) {
     EventRecord2 (EvtNetDNS_QtypeNotTheSame, 0, 0);
   }
@@ -17716,7 +17716,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client QCLASS in a response is not CLASS_INET (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_QclassNotInet(void) {
     EventRecord2 (EvtNetDNS_QclassNotInet, 0, 0);
   }
@@ -17729,7 +17729,7 @@ typedef struct evr_addr {
   \param  net_addr      pointer to network address of the host
   \param  ttl           address expiration timeout
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_GotHostAddress(const void *net_addr, uint32_t ttl) {
     const EVR_ADDR *addr = net_addr;
     evr_buf.u32[0] = (ttl << 1) | (addr->type & 0x1);
@@ -17744,7 +17744,7 @@ typedef struct evr_addr {
   \brief  Event on DNS client receive IP address of the authority (Op)
   \param  net_addr      pointer to net address of the authority
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_GotAuthorityAddress(const void *net_addr) {
     const EVR_ADDR *addr = net_addr;
     EventRecordData (EvtNetDNS_GotAuthorityAddress, addr, addr->type ? 20 : 8);
@@ -17757,7 +17757,7 @@ typedef struct evr_addr {
   \brief  Event on DNS client can not handle resource record type (Error)
   \param  rr_type       recource record type
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_RecordTypeNotSupported(uint16_t rr_type) {
     EventRecord2 (EvtNetDNS_RecordTypeNotSupported, rr_type, 0);
   }
@@ -17770,7 +17770,7 @@ typedef struct evr_addr {
   \param  host_name     name of the host to resolve
   \param  length        length of the host_name string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_Resolve(const char *host_name, uint32_t length) {
     if (length > 40) length = 40;
     EventRecordData (EvtNetDNS_Resolve, host_name, length);
@@ -17782,7 +17782,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client invalid parameter for resolve request (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_ResolveInvalidParameter(void) {
     EventRecord2 (EvtNetDNS_ResolveInvalidParameter, 0, 0);
   }
@@ -17793,7 +17793,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client resolve request failed, client busy (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_ResolveClientBusy(void) {
     EventRecord2 (EvtNetDNS_ResolveClientBusy, 0, 0);
   }
@@ -17805,7 +17805,7 @@ typedef struct evr_addr {
   \brief  Event on DNS client resolved IP address internally (Op)
   \param  net_addr      pointer to \ref NET_ADDR address structure
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_ResolvedAddress(const void *net_addr) {
     const EVR_ADDR *addr = net_addr;
     EventRecordData (EvtNetDNS_ResolvedAddress, addr, addr->type ? 20 : 8);
@@ -17817,7 +17817,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client resolve failed, DNS server unknown (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_ResolveDnsServerUnknown(void) {
     EventRecord2 (EvtNetDNS_ResolveDnsServerUnknown, 0, 0);
   }
@@ -17829,7 +17829,7 @@ typedef struct evr_addr {
   \brief  Event on DNS client send resolve request to the server (Op)
   \param  net_addr      pointer to \ref NET_ADDR address structure
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_SendRequest(const void *net_addr) {
     const EVR_ADDR *addr = net_addr;
     EventRecordData (EvtNetDNS_SendRequest, addr, addr->type ? 20 : 8);
@@ -17843,7 +17843,7 @@ typedef struct evr_addr {
   \param  deleted       number of entries deleted from cache
   \param  available     number of entries available in cache
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_ClearCache(uint32_t deleted, uint32_t available) {
     EventRecord2 (EvtNetDNS_ClearCache, deleted, available);
   }
@@ -17854,7 +17854,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client clear cache request failed, client busy (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_ClearCacheClientBusy(void) {
     EventRecord2 (EvtNetDNS_ClearCacheClientBusy, 0, 0);
   }
@@ -17865,7 +17865,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on DNS client de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetDNS_UninitClient(void) {
     EventRecord2 (EvtNetDNS_UninitClient, 0, 0);
   }
@@ -17875,7 +17875,7 @@ typedef struct evr_addr {
 
 
 // NetSNMP event identifiers ---------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetSNMP_InitAgent                EventID (EventLevelOp,    EvtNetSNMP,  0)
 #define EvtNetSNMP_GetSocketFailed          EventID (EventLevelError, EvtNetSNMP,  1)
 #define EvtNetSNMP_ViewCommunity            EventID (EventLevelOp,    EvtNetSNMP,  2)
@@ -17917,7 +17917,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SNMP agent initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_InitAgent(void) {
     EventRecord2 (EvtNetSNMP_InitAgent, 0, 0);
   }
@@ -17928,7 +17928,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SNMP agent failed to allocate UDP socket (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_GetSocketFailed(void) {
     EventRecord2 (EvtNetSNMP_GetSocketFailed, 0, 0);
   }
@@ -17941,7 +17941,7 @@ typedef struct evr_addr {
   \param  community     pointer to SNMP community string
   \param  length        length of the community string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_ViewCommunity(const char *community, uint32_t length) {
     if (length > 24) length = 24;
     EventRecordData(EvtNetSNMP_ViewCommunity, community, length);
@@ -17955,7 +17955,7 @@ typedef struct evr_addr {
   \param  community     pointer to SNMP community string
   \param  length        length of the community string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_SetCommunity(const char *community, uint32_t length) {
     if (length > 32) length = 32;
     EventRecordData(EvtNetSNMP_SetCommunity, community, length);
@@ -17967,7 +17967,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSNMP_SetCommunity invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_SetCommunityInvalidParam(void) {
     EventRecord2 (EvtNetSNMP_SetCommunityInvalidParam, 0, 0);
   }
@@ -17979,7 +17979,7 @@ typedef struct evr_addr {
   \brief  Event on \ref netSNMP_SetMIB_Table (API)
   \param  num_entries   number of entries in MIB table
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_SetMibTable(uint32_t num_entries) {
     EventRecord2 (EvtNetSNMP_SetMibTable, num_entries, 0);
   }
@@ -17990,7 +17990,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSNMP_SetMIB_Table invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_SetMibTableInvalidParam(void) {
     EventRecord2 (EvtNetSNMP_SetMibTableInvalidParam, 0, 0);
   }
@@ -18013,7 +18013,7 @@ typedef struct evr_addr {
                          - must be set to 0 for generic traps 0 .. 5
   \param  nobj          number of objects in a trap message
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_Trap(const uint8_t *ip4_addr, uint8_t generic, uint8_t specific, uint16_t nobj) {
     evr_buf.u16[0] = nobj;
     evr_buf.u8[2]  = generic;
@@ -18028,7 +18028,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSNMP_Trap invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_TrapInvalidParameter(void) {
     EventRecord2 (EvtNetSNMP_TrapInvalidParameter, 0, 0);
   }
@@ -18039,7 +18039,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSNMP_Trap invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_TrapMibTableNotSet(void) {
     EventRecord2 (EvtNetSNMP_TrapMibTableNotSet, 0, 0);
   }
@@ -18050,7 +18050,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSNMP_Trap missing 'sysObjectID' object in MIB table (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_TrapMissingSysObjectId(void) {
     EventRecord2 (EvtNetSNMP_TrapMissingSysObjectId, 0, 0);
   }
@@ -18063,7 +18063,7 @@ typedef struct evr_addr {
   \param  generic       invalid generic trap type
   \param  max_generic   maximum value for generic trap type
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_TrapGenericTrapInvalid(uint8_t generic, uint8_t max_generic) {
     EventRecord2 (EvtNetSNMP_TrapGenericTrapInvalid, generic, max_generic);
   }
@@ -18076,7 +18076,7 @@ typedef struct evr_addr {
   \param  nobj          number of TLV objects
   \param  max_nobj      maximum number of TLV objects
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_TrapTooManyObjects(int32_t nobj, int32_t max_nobj) {
     EventRecord2 (EvtNetSNMP_TrapTooManyObjects, (uint32_t)nobj, (uint32_t)max_nobj);
   }
@@ -18089,7 +18089,7 @@ typedef struct evr_addr {
   \param  obj           object identification number
   \param  max_obj       maximum value for object identification number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_TrapObjectNotExisting(int32_t obj, int32_t max_obj) {
     EventRecord2 (EvtNetSNMP_TrapObjectNotExisting, (uint32_t)obj, (uint32_t)max_obj);
   }
@@ -18102,7 +18102,7 @@ typedef struct evr_addr {
   \param  size          requested message size
   \param  max_size      maximum message size accepted
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_TrapMessageTooBig(uint16_t size, uint16_t max_size) {
     EventRecord2 (EvtNetSNMP_TrapMessageTooBig, size, max_size);
   }
@@ -18125,7 +18125,7 @@ typedef struct evr_addr {
                          - 0x43: Time Ticks Data Type (pos.integer)
                          - 0x44: Opaque Data Type (ASN.1 encoded)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_MibAddObject(int32_t obj, uint8_t obj_type) {
     EventRecord2 (EvtNetSNMP_MibAddObject, (uint32_t)obj, obj_type);
   }
@@ -18138,7 +18138,7 @@ typedef struct evr_addr {
   \param  oid           object identification string
   \param  length        length of the oid string
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_ViewObjectId(const char *oid, uint32_t length) {
     if (length > 64) length = 64;
     EventRecordData (EvtNetSNMP_ViewObjectId, oid, length);
@@ -18153,7 +18153,7 @@ typedef struct evr_addr {
   \param  val           4-byte object value
   \note   Object types: INTEGER, COUNTER, GAUGE, TICKS
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_ViewObjectVal(uint8_t type, uint32_t val) {
     EventRecord2 (EvtNetSNMP_ViewObjectVal, type, val);
   }
@@ -18165,7 +18165,7 @@ typedef struct evr_addr {
   \brief  Event on SNMP display object IP address (Detail)
   \param  ip4_addr      pointer to IPv4 address object value
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_ViewObjectAddr(const uint8_t *ip4_addr) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetSNMP_ViewObjectAddr, evr_buf.u32[0], 0);
@@ -18181,7 +18181,7 @@ typedef struct evr_addr {
   \param  length        length of the object value
   \note   Object types: OID, OCTET_STRING, BYTE_STRING
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_ViewObjectVar(uint8_t type, const void *value, uint32_t length) {
     if (length > 32) length = 32;
     evr_buf.u16[0] = type;
@@ -18198,7 +18198,7 @@ typedef struct evr_addr {
   \param  ip4_addr      pointer to IPv4 address of the sender
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_ReceiveFrame(const uint8_t *ip4_addr, uint32_t length) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetSNMP_ReceiveFrame, length, evr_buf.u32[0]);
@@ -18212,7 +18212,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_FrameTooShort(uint32_t length, uint32_t min_length) {
     EventRecord2 (EvtNetSNMP_FrameTooShort, length, min_length);
   }
@@ -18223,7 +18223,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SNMP received frame protocol error detected (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_FrameProtocolError(void) {
     EventRecord2 (EvtNetSNMP_FrameProtocolError, 0, 0);
   }
@@ -18239,7 +18239,7 @@ typedef struct evr_addr {
                          - 3: SNMPv3
   \remark Only SNMPv1 is currently supported.
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_VersionNotSupported(int32_t version) {
     if (version == 0) version = 1;
     EventRecord2 (EvtNetSNMP_VersionNotSupported, (uint32_t)version, 0);
@@ -18251,7 +18251,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SNMP received community wrong (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_WrongCommunityReceived(void) {
     EventRecord2 (EvtNetSNMP_WrongCommunityReceived, 0, 0);
   }
@@ -18268,7 +18268,7 @@ typedef struct evr_addr {
                          - 0xA3: SetRequest PDU
                          - 0xA4: Trap PDU
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_InvalidRequestType(uint8_t req_type) {
     EventRecord2 (EvtNetSNMP_InvalidRequestType, req_type, 0);
   }
@@ -18286,7 +18286,7 @@ typedef struct evr_addr {
                          - 0xA4: Trap PDU
   \param  req_id        PDU request identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_ViewRequest(uint8_t req_type, int32_t req_id) {
     EventRecord2 (EvtNetSNMP_ViewRequest, req_type, (uint32_t)req_id);
   }
@@ -18299,7 +18299,7 @@ typedef struct evr_addr {
   \param  nobj          number of TLV objects
   \param  max_nobj      maximum number of TLV objects
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_TooManyObjectsReceived(int32_t nobj, int32_t max_nobj) {
     EventRecord2 (EvtNetSNMP_TooManyObjectsReceived, (uint32_t)nobj, (uint32_t)max_nobj);
   }
@@ -18311,7 +18311,7 @@ typedef struct evr_addr {
   \brief  Event on SNMP receive message object not found in the MIB table (Error)
   \param  obj           object identification number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_ObjectNotFound(int32_t obj) {
     EventRecord2 (EvtNetSNMP_ObjectNotFound, (uint32_t)obj, 0);
   }
@@ -18323,7 +18323,7 @@ typedef struct evr_addr {
   \brief  Event on SNMP receive message object type not the same as in the MIB table (Error)
   \param  obj           object identification number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_ObjectWrongType(int32_t obj) {
     EventRecord2 (EvtNetSNMP_ObjectWrongType, (uint32_t)obj, 0);
   }
@@ -18335,7 +18335,7 @@ typedef struct evr_addr {
   \brief  Event on SNMP write read-only object not allowed (Error)
   \param  obj           object identification number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_ObjectReadOnly(int32_t obj) {
     EventRecord2 (EvtNetSNMP_ObjectReadOnly, (uint32_t)obj, 0);
   }
@@ -18347,7 +18347,7 @@ typedef struct evr_addr {
   \brief  Event on SNMP object write attempt failed for unknown reason (Error)
   \param  obj           object identification number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_ObjectWriteFailed(int32_t obj) {
     EventRecord2 (EvtNetSNMP_ObjectWriteFailed, (uint32_t)obj, 0);
   }
@@ -18360,7 +18360,7 @@ typedef struct evr_addr {
   \param  stat          error status
   \param  obj_index     error object index
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_SendErrorStatus(uint8_t stat, uint8_t obj_index) {
     EventRecord2 (EvtNetSNMP_SendErrorStatus, stat, obj_index);
   }
@@ -18373,7 +18373,7 @@ typedef struct evr_addr {
   \param  size          response message size
   \param  max_size      maximum message size allowed
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_ResponseMessageTooBig(uint16_t size, uint16_t max_size) {
     EventRecord2 (EvtNetSNMP_ResponseMessageTooBig, size, max_size);
   }
@@ -18385,7 +18385,7 @@ typedef struct evr_addr {
   \brief  Event on SNMP send get-response to a SNMP request (Op)
   \param  req_id        PDU request identifier
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_SendGetResponse(int32_t req_id) {
     EventRecord2 (EvtNetSNMP_SendGetResponse, (uint32_t)req_id, 0);
   }
@@ -18396,7 +18396,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SNMP agent de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNMP_UninitAgent(void) {
     EventRecord2 (EvtNetSNMP_UninitAgent, 0, 0);
   }
@@ -18406,7 +18406,7 @@ typedef struct evr_addr {
 
 
 // NetSNTP event identifiers ---------------------------------------------------
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
 #define EvtNetSNTP_InitClient               EventID (EventLevelOp,    EvtNetSNTP,  0)
 #define EvtNetSNTP_GetSocketFailed          EventID (EventLevelError, EvtNetSNTP,  1)
 #define EvtNetSNTP_GetTime                  EventID (EventLevelAPI,   EvtNetSNTP,  2)
@@ -18442,7 +18442,7 @@ typedef struct evr_addr {
                          - 0: unicast
                          - 1: broadcast
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_InitClient(uint8_t mode) {
     EventRecord2 (EvtNetSNTP_InitClient, mode, 0);
   }
@@ -18453,7 +18453,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SNTP failed to allocate UDP socket (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_GetSocketFailed(void) {
     EventRecord2 (EvtNetSNTP_GetSocketFailed, 0, 0);
   }
@@ -18467,7 +18467,7 @@ typedef struct evr_addr {
                          - 0: unicast
                          - 1: broadcast
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_GetTime(uint8_t mode) {
     EventRecord2 (EvtNetSNTP_GetTime, mode, 0);
   }
@@ -18478,7 +18478,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSNTPc_GetTime invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_GetTimeInvalidParameter(void) {
     EventRecord2 (EvtNetSNTP_GetTimeInvalidParameter, 0, 0);
   }
@@ -18493,7 +18493,7 @@ typedef struct evr_addr {
                          - 1: busy in unicast send
                          - 2: open in broadcast receive
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_GetTimeWrongState(uint8_t state) {
     EventRecord2 (EvtNetSNTP_GetTimeWrongState, state, 0);
   }
@@ -18505,7 +18505,7 @@ typedef struct evr_addr {
   \brief  Event on \ref netSNTPc_GetTime open broadcast receive (Op)
   \param  ip4_addr      pointer to IPv4 address of NTP server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_GetTimeOpen(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetSNTP_GetTimeOpen, ip4_addr, 4);
   }
@@ -18516,7 +18516,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSNTPc_GetTime close broadcast receive (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_GetTimeClose(void) {
     EventRecord2 (EvtNetSNTP_GetTimeClose, 0, 0);
   }
@@ -18528,7 +18528,7 @@ typedef struct evr_addr {
   \brief  Event on \ref netSNTPc_GetTime unknown server for unicast mode (Error)
   \param  ip4_addr      pointer to IPv4 address of NTP server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_GetTimeServerUnknown(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetSNTP_GetTimeServerUnknown, ip4_addr, 4);
   }
@@ -18539,7 +18539,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSNTPc_GetTimeX invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_GetTimexInvalidParameter(void) {
     EventRecord2 (EvtNetSNTP_GetTimexInvalidParameter, 0, 0);
   }
@@ -18550,7 +18550,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSNTPc_GetTimeX client busy (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_GetTimexClientBusy(void) {
     EventRecord2 (EvtNetSNTP_GetTimexClientBusy, 0, 0);
   }
@@ -18561,7 +18561,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSNTPc_GetTimeX server name not valid (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_GetTimexServerNotValid(void) {
     EventRecord2 (EvtNetSNTP_GetTimexServerNotValid, 0, 0);
   }
@@ -18572,7 +18572,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSNTPc_GetTimeX host name resolver error (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_GetTimexDnsError(void) {
     EventRecord2 (EvtNetSNTP_GetTimexDnsError, 0, 0);
   }
@@ -18586,7 +18586,7 @@ typedef struct evr_addr {
                          - 0: unicast
                          - 1: broadcast
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_SetMode(uint8_t mode) {
     EventRecord2 (EvtNetSNTP_SetMode, mode, 0);
   }
@@ -18597,7 +18597,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on \ref netSNTPc_SetMode invalid parameter (Error)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_SetModeInvalidParameter(void) {
     EventRecord2 (EvtNetSNTP_SetModeInvalidParameter, 0, 0);
   }
@@ -18612,7 +18612,7 @@ typedef struct evr_addr {
                          - 1: busy in unicast send
                          - 2: open in broadcast receive
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_SetModeWrongState(uint8_t state) {
     EventRecord2 (EvtNetSNTP_SetModeWrongState, state, 0);
   }
@@ -18624,7 +18624,7 @@ typedef struct evr_addr {
   \brief  Event on SNTP send message to NTP server (Op)
   \param  ip4_addr      pointer to IPv4 address of NTP server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_SendMessage(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetSNTP_SendMessage, ip4_addr, 4);
   }
@@ -18636,7 +18636,7 @@ typedef struct evr_addr {
   \brief  Event on SNTP send message timeout (Op)
   \param  ip4_addr      pointer to IPv4 address of NTP server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_ServerNotResponding(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetSNTP_ServerNotResponding, ip4_addr, 4);
   }
@@ -18649,7 +18649,7 @@ typedef struct evr_addr {
   \param  ip4_addr      pointer to IPv4 address of the server
   \param  length        frame length in bytes
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_ReceiveFrame(const uint8_t *ip4_addr, uint32_t length) {
     memcpy (&evr_buf.u32[0], ip4_addr, 4);
     EventRecord2 (EvtNetSNTP_ReceiveFrame, evr_buf.u32[0], length);
@@ -18662,7 +18662,7 @@ typedef struct evr_addr {
   \brief  Event on SNTP wrong server port (Error)
   \param  udp_port      wrong UDP port number
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_WrongServerPort(uint16_t udp_port) {
     EventRecord2 (EvtNetSNTP_WrongServerPort, udp_port, 0);
   }
@@ -18675,7 +18675,7 @@ typedef struct evr_addr {
   \param  length        frame length in bytes
   \param  min_length    minimum length of the frame
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_FrameTooShort(uint32_t length, uint32_t min_length) {
     EventRecord2 (EvtNetSNTP_FrameTooShort, length, min_length);
   }
@@ -18687,7 +18687,7 @@ typedef struct evr_addr {
   \brief  Event on SNTP wrong NTP server address (Error)
   \param  ip4_addr      pointer to IPv4 address of NTP server
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_WrongServerAddress(const uint8_t *ip4_addr) {
     EventRecordData (EvtNetSNTP_WrongServerAddress, ip4_addr, 4);
   }
@@ -18707,7 +18707,7 @@ typedef struct evr_addr {
                          - 6: reserved
                          - 7: reserved
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_ModeNotServer(uint8_t mode) {
     EventRecord2 (EvtNetSNTP_ModeNotServer, mode, 0);
   }
@@ -18727,7 +18727,7 @@ typedef struct evr_addr {
                          - 6: reserved
                          - 7: reserved
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_ModeNotBroadcast(uint8_t mode) {
     EventRecord2 (EvtNetSNTP_ModeNotBroadcast, mode, 0);
   }
@@ -18742,7 +18742,7 @@ typedef struct evr_addr {
                          - 1: busy in unicast send
                          - 2: open in broadcast receive
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_AnswerInWrongState(uint8_t state) {
     EventRecord2 (EvtNetSNTP_AnswerInWrongState, state, 0);
   }
@@ -18755,7 +18755,7 @@ typedef struct evr_addr {
   \param  ref_time      reference time (since Jan 1, 1900)
   \param  utc_time      utc time       (since Jan 1, 1970)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_ShowTimeStamp(uint32_t ref_time, uint32_t utc_time) {
     EventRecord2 (EvtNetSNTP_ShowTimeStamp, ref_time, utc_time);
   }
@@ -18767,7 +18767,7 @@ typedef struct evr_addr {
   \brief  Event on SNTP invalid time stamp (Op)
   \param  ref_time      reference time (since Jan 1, 1900)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_TimeStampInvalid(uint32_t ref_time) {
     EventRecord2 (EvtNetSNTP_TimeStampInvalid, ref_time, 0);
   }
@@ -18778,7 +18778,7 @@ typedef struct evr_addr {
 /**
   \brief  Event on SNTP client de-initialize (Op)
  */
-#ifdef DEBUG_EVR
+#ifdef Network_Debug_EVR
   __STATIC_INLINE void EvrNetSNTP_UninitClient(void) {
     EventRecord2 (EvtNetSNTP_UninitClient, 0, 0);
   }

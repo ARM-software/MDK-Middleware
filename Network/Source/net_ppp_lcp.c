@@ -28,7 +28,7 @@ static void lcp_echo_rq (NET_PPP_CFG *h);
 static void lcp_term_rq (NET_PPP_CFG *h);
 static void lcp_send (NET_PPP_CFG *h, NET_FRAME *frame);
 static void lcp_configure (NET_PPP_CFG *h);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (uint32_t ch_map);
  static void debug_inf2 (const NET_FRAME *frm, int32_t dummy);
 #endif
@@ -656,7 +656,7 @@ opt_rej:      ti = LCP_HEADER_LEN;
 
           case LCP_OPT_AUTHP:
             /* Authentication Protocol */
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
             if (get_u16 (&PPP_FRAME(frame)->Data[ri+2]) == PPP_PROT_PAP) {
               DEBUGF (PPP," Opt Auth=PAP\n");
             }
@@ -854,7 +854,7 @@ void net_lcp_run (NET_PPP_CFG *h) {
   }
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print LCP character map information.
   \param[in]   ch_map  character map bit-mask.

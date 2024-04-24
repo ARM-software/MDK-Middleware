@@ -68,7 +68,7 @@ static int32_t http_strcpy (char *dp, const char *sp, int32_t max_len);
 static void fix_fname (char *fname);
 static void read_script_line (NET_HTTP_INFO *http_s);
 static bool is_cookie_valid (const char *cookie);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_inf2 (const char *cookie, uint32_t len);
 #endif
 
@@ -81,7 +81,7 @@ void net_http_server_init (void) {
 
   DEBUGF (HTTP,"Init %d Sessions, Port %d\n",httpc->NumSess,httpc->PortNum);
   EvrNetHTTPs_InitServer (httpc->NumSess, httpc->PortNum);
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
   if (httpc->Root) {
     DEBUGF (HTTP," Root folder \"%s\"\n",httpc->Root);
     EvrNetHTTPs_ViewRootFolder (httpc->Root, strlen(httpc->Root));
@@ -1632,7 +1632,7 @@ open_again:
       }
       /* Check for resource file redirection */
       http_s->pUser = __CONST_CAST(char *)(netCGI_Redirect (name));
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
       if (http_s->pUser != NULL) {
         DEBUGF (HTTP," Redirection URL: %s\n",http_s->pUser);
         EvrNetHTTPs_ViewRedirectionUrl (http_s->pUser, strlen(http_s->pUser));
@@ -2524,7 +2524,7 @@ static bool is_cookie_valid (const char *cookie) {
   return (true);
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print received cookie.
   \param[in]   cookie  pointer to cookie.

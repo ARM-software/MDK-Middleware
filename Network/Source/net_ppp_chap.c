@@ -33,7 +33,7 @@ static void chap_run (NET_PPP_CFG *h);
 /* Local functions */
 static void chap_auth_rq (NET_PPP_CFG *h);
 static void chap_send (NET_PPP_CFG *h, NET_FRAME *frame);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (const NET_FRAME *frm);
 #endif
 
@@ -267,7 +267,7 @@ static void chap_run (NET_PPP_CFG *h) {
   }
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print CHAP header information.
   \param[in]   frm  network frame.

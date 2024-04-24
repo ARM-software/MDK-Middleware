@@ -7,6 +7,8 @@
  *----------------------------------------------------------------------------*/
 
 #include "rl_net_lib.h"
+
+#ifdef Network_IPv6
 #include "net_sys.h"
 #include "net_eth.h"
 #include "net_ip6.h"
@@ -55,7 +57,7 @@ static void ndp_probe_run (NET_NDP_CFG *h);
 static void ndp_cache_run (NET_NDP_CFG *h);
 static void ndp_que_send (NET_NDP_CFG *h, NET_NDP_INFO *ndp_t);
 static void ndp_que_free (NET_NDP_INFO *ndp_t);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  #define D_MAC  0
  #define D_IP   1
  static void debug_inf2 (uint32_t type, const uint8_t *addr);
@@ -1607,7 +1609,7 @@ static void ndp_que_free (NET_NDP_INFO *ndp_t) {
   }
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print IPv6 or MAC address.
   \param[in]   type  address type.
@@ -1625,3 +1627,4 @@ static void debug_inf2 (uint32_t type, const uint8_t *addr) {
   }
 }
 #endif
+#endif /* Network_IPv6 */

@@ -44,7 +44,7 @@ static uint32_t proc_opt_sel (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t inde
 static uint32_t proc_opt_req (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t index);
 static uint32_t proc_opt_renew (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t index);
 static void assign_auto_ip (NET_DHCP_CFG *h);
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
  static void debug_info (const uint8_t *opt);
  static void debug_inf2 (const char *msg, const uint8_t *ip4_addr);
 #endif
@@ -60,7 +60,7 @@ void net_dhcp_client_init (void) {
     DEBUGF (DHCP,"Init_client %s\n",(*p)->If->Name);
     EvrNetDHCP_InitClient ((*p)->If->Id, (*p)->OptBootfile,
                                          (*p)->OptNtpServ, ((*p)->VcidLen>0));
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
     if ((*p)->VcidLen) {
       DEBUGF (DHCP," Opt.60 Vcid [%s]\n",(*p)->Vcid);
     }
@@ -527,7 +527,7 @@ static void dhcp_send_message (NET_DHCP_CFG *h, uint8_t msg_type) {
       bcast = false;
       break;
   }
-#ifdef __DBG_ENABLED
+#ifdef __DEBUG_ENABLED
   switch (msg_type) {
     case DHCP_DISCOVER:
       DEBUGF (DHCP," Sending %ccast DHCP_DISCOVER\n",bcast ? 'b' : 'u');
@@ -1257,7 +1257,7 @@ static void assign_auto_ip (NET_DHCP_CFG *h) {
   }
 }
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
 /**
   \brief       Debug print NTP Server list option.
   \param[in]   opt  pointer to option list.

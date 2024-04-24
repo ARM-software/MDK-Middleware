@@ -7,6 +7,8 @@
  *----------------------------------------------------------------------------*/
 
 #include "rl_net_lib.h"
+
+#ifdef Network_IPv6
 #include <string.h>
 #include "net_sys.h"
 #include "net_mem.h"
@@ -329,3 +331,4 @@ static void que_free_list (NET_IP_FRAG_INFO *frag_s) {
     net_mem_free (frame);
   }
 }
+#endif /* Network_IPv6 */

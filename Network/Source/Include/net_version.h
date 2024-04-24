@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_version.h
  * Purpose: Network Component Version Definitions
@@ -14,7 +14,7 @@
 /* Constants */
 extern const uint32_t net_lib_version;
 
-#ifdef DEBUG_STDIO
+#ifdef Network_Debug_STDIO
   extern const char   net_ver_ascii[];
 #endif
 
