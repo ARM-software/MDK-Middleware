@@ -1539,8 +1539,6 @@
           <file category="other"   name="USB/USB.scvd"/>
           <file category="header"  name="USB/Include/rl_usb.h"/>
           <file category="header"  name="USB/Config/USB_Debug.h" attr="config" version="8.0.0"/>
-          <!-- Source files -->
-          <file category="source"  name="USB/Include/usb_debug.c"/>
           <!-- Library source files -->
           <file category="include" name="USB/Source/Include/"/>
           <file category="source"  name="USB/Source/usb_lib_ver.c"/>
@@ -1556,6 +1554,7 @@
           <file category="doc"    name="Documentation/html/USB/USB_Host.html"/>
           <file category="header" name="USB/Config/USBH_Config.h" attr="config" version="8.0.0"/>
           <!-- Source files -->
+          <file category="source" name="USB/Include/usbh_debug.c"/>
           <file category="source" name="USB/Include/usbh_config.c"/>
           <!-- Library source files -->
           <file category="source" name="USB/Source/usbh_lib_core.c"/>
@@ -1632,6 +1631,7 @@
           <file category="source" name="USB/Template/USBD_User_Device.c"        attr="template" select="USB Device"/>
           <file category="source" name="USB/Template/USBD_User_Device_SerNum.c" attr="template" select="USB Device Serial Number"/>
           <!-- Source files -->
+          <file category="source" name="USB/Include/usbd_debug.c"/>
           <file category="source" name="USB/Include/usbd_config.c"/>
           <!-- Library source files -->
           <file category="source" name="USB/Source/usbd_lib_core.c"/>
