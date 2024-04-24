@@ -1,7 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2019, 2023 Arm Limited (or its affiliates).
- * All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_evr.h
  * Purpose: USB Device (USBD) - Event Recorder definitions
@@ -10,13 +9,14 @@
 #ifndef __USBD_EVR_H__
 #define __USBD_EVR_H__
 
+#include "RTE_Components.h"
+
 #include "rl_usb.h"
 #include "Driver_USBD.h"
 
-#if (defined(USBD_DEBUG) && (USBD_DEBUG == 1))
+#ifdef    RTE_CMSIS_View_EventRecorder
 #include "EventRecorder.h"
 #endif
-
 
 // Define component numbers
 #define EvtCompNo_USBD_Core                                         0xA0U   /// < USB Device Core
@@ -27,6 +27,13 @@
 #define EvtCompNo_USBD_HID                                          0xA5U   /// < USB Device HID
 #define EvtCompNo_USBD_MSC                                          0xA6U   /// < USB Device MSC
 
+#if (defined(USBD_DEBUG) && (USBD_DEBUG == 1) && defined(RTE_CMSIS_View_EventRecorder))
+#define USBD_EVR_USED                   1
+#else
+#define USBD_EVR_USED                   0
+#endif
+
+#if    (USBD_EVR_USED == 1)                                         // Define USB Device Library debug events
 
 // Define message numbers
 #define EvtMsgNo_USBD_Core_Initialize                               0x00U
@@ -300,9 +307,6 @@
 #define EvtMsgNo_USBD_MSC_OnWrite                                   0x22U
 #define EvtMsgNo_USBD_MSC_OnWriteFailed                             0x23U
 #define EvtMsgNo_USBD_MSC_OnCheckMedia                              0x24U
-
-
-#if (defined(USBD_DEBUG) && (USBD_DEBUG == 1))                      // Define USB Device Library debug events
 
 // Pack parameter in byte
 #define TO_BYTE0(x)                                                 (((uint32_t)(x) & 0xFFU))
@@ -589,8 +593,7 @@
 #define EvtUSBD_MSC_OnWriteFailed                                   EventID(EventLevelError,  EvtCompNo_USBD_MSC,     EvtMsgNo_USBD_MSC_OnWriteFailed)
 #define EvtUSBD_MSC_OnCheckMedia                                    EventID(EventLevelDetail, EvtCompNo_USBD_MSC,     EvtMsgNo_USBD_MSC_OnCheckMedia)
 
-#endif // USBD_DEBUG
-
+#endif // (USBD_EVR_USED == 1)
 
 // USB Device Core component event record functions ----------------------------
 

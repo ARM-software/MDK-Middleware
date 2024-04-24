@@ -2402,6 +2402,7 @@ PREDEFINED             = __DOXYGEN__ \
                          __ARMCC_VERSION:=7000000 \
                          USBH_DEBUG:=1 \
                          USBD_DEBUG:=1 \
+                         RTE_CMSIS_View_EventRecorder \
                          EvtUSBH_Core_PipeRegisterCallback \
                          EvtUSBH_Core_PipeRegisterCallbackFailed
 

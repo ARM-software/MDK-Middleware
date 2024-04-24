@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2021 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_evr.h
  * Purpose: USB Host (USBH) - Event Recorder definitions
@@ -9,13 +9,14 @@
 #ifndef __USBH_EVR_H__
 #define __USBH_EVR_H__
 
+#include "RTE_Components.h"
+
 #include "rl_usb.h"
 #include "Driver_USBH.h"
 
-#if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
+#ifdef    RTE_CMSIS_View_EventRecorder
 #include "EventRecorder.h"
 #endif
-
 
 // Define component numbers
 #define EvtCompNo_USBH_Core                                         0xB0U   /// < USB Host Core
@@ -25,6 +26,13 @@
 #define EvtCompNo_USBH_HID                                          0xB4U   /// < USB Host HID
 #define EvtCompNo_USBH_MSC                                          0xB5U   /// < USB Host MSC
 
+#if (defined(USBH_DEBUG) && (USBH_DEBUG == 1) && defined(RTE_CMSIS_View_EventRecorder))
+#define USBH_EVR_USED                   1
+#else
+#define USBH_EVR_USED                   0
+#endif
+
+#if    (USBH_EVR_USED == 1)                                         // Define USB Host Library debug events
 
 // Define message numbers
 #define EvtMsgNo_USBH_Core_Initialize                               0x00U
@@ -256,7 +264,6 @@
 #define EvtMsgNo_USBH_MSC_Recover                                   0x27U
 #define EvtMsgNo_USBH_MSC_RecoverFailed                             0x28U
 
-#if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))                      // Define USB Host Library debug events
 
 // Pack parameter in byte
 #define TO_BYTE0(x)                                                 (((uint32_t)(x) & 0xFFU))
@@ -497,8 +504,7 @@
 #define EvtUSBH_MSC_Recover                                         EventID(EventLevelOp,     EvtCompNo_USBH_MSC,     EvtMsgNo_USBH_MSC_Recover)
 #define EvtUSBH_MSC_RecoverFailed                                   EventID(EventLevelError,  EvtCompNo_USBH_MSC,     EvtMsgNo_USBH_MSC_RecoverFailed)
 
-#endif // USBH_DEBUG
-
+#endif // (USBH_EVR_USED == 1)
 
 // USB Host Core component event record functions ------------------------------
 

@@ -1529,7 +1529,7 @@
     <bundle Cbundle="MDK" Cclass="USB" Cversion="8.0.0">
       <description>USB Communication with various device classes</description>
       <doc>Documentation/html/USB/index.html</doc>
-      <component Cgroup="CORE" condition="CMSIS Core with RTOS and Event Recorder">
+      <component Cgroup="CORE" condition="CMSIS Core with RTOS">
         <description>USB Core for Cortex-M</description>
         <RTE_Components_h>
           <!-- the following content goes into file 'RTE_Components.h' -->
