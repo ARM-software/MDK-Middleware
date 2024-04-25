@@ -57,22 +57,24 @@ echo | "%MBED_TLS_PRG_PATH%\gen_key" type=rsa rsa_keysize=2048 format=pem filena
 echo | "%MBED_TLS_PRG_PATH%\cert_write" ^
   selfsign=1 ^
   issuer_key=ca.key ^
-  issuer_name="CN=Test CA,O=Unknown,C=US" ^
+  issuer_name="CN=Test CA,O=MyOrganization,C=US" ^
   not_before=20200101000000 ^
   not_after=20301231235959 ^
   is_ca=1 ^
-  output_file=ca.crt
+  output_file=ca.crt ^
+  san="DNS:my_host"
 
 :: Generate Server Certificate
 echo | "%MBED_TLS_PRG_PATH%\cert_write" ^
   subject_key=server.key ^
-  subject_name="CN=localhost,O=MyOrganization,C=US" ^
+  subject_name="CN=my_host,O=MyOrganization,C=US" ^
   issuer_key=ca.key ^
   issuer_crt=ca.crt ^
-  serial=1 ^
+  serial=2 ^
   not_before=20200101000000 ^
   not_after=20301231235959 ^
-  output_file=server.crt
+  output_file=server.crt ^
+  san="DNS:my_host" 
 
 :: Update Net_Security.c with generated Certificates and Server Key
 echo | "%MW_NET_TOOL_PATH%\pem2mw" --r=ca.crt --c=server.crt --p=server.key --o=Net_Security.c
