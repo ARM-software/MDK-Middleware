@@ -40,7 +40,7 @@
 
 // <e>USB Device Debug
 // <i>Enable USB Device debugging with Event Recorder
-#define USBD_DEBUG_EVR                  1
+#define USBD_DEBUG_EVR                  0
 
 //   <o>Core <0=>Off <1=>Errors <2=>Errors + API <3=>All
 //   <i>Configure USB Device Core event recording

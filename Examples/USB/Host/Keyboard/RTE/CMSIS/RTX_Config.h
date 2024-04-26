@@ -215,7 +215,7 @@
 //   <i> Enables stack overrun check at thread switch (requires RTX source variant).
 //   <i> Enabling this option increases slightly the execution time of a thread switch.
 #ifndef OS_STACK_CHECK
-#define OS_STACK_CHECK              0
+#define OS_STACK_CHECK              1
 #endif
  
 //   <q>Stack usage watermark
@@ -426,7 +426,7 @@
 //   <e>Global Initialization
 //   <i> Initialize Event Recorder during 'osKernelInitialize'.
 #ifndef OS_EVR_INIT
-#define OS_EVR_INIT                 1
+#define OS_EVR_INIT                 0
 #endif
  
 //     <q>Start recording
@@ -443,7 +443,7 @@
 //       <o.3>Detailed operation events
 //     </h>
 #ifndef OS_EVR_LEVEL
-#define OS_EVR_LEVEL                0x01U
+#define OS_EVR_LEVEL                0x00U
 #endif
  
 //     <h>RTOS Event Filter Setup
@@ -480,7 +480,7 @@
 //         <o.3>Detailed operation events
 //       </e>
 #ifndef OS_EVR_THREAD_LEVEL
-#define OS_EVR_THREAD_LEVEL         0x81U
+#define OS_EVR_THREAD_LEVEL         0x85U
 #endif
  
 //       <e.7>Generic Wait

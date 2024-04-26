@@ -426,7 +426,7 @@
 //   <e>Global Initialization
 //   <i> Initialize Event Recorder during 'osKernelInitialize'.
 #ifndef OS_EVR_INIT
-#define OS_EVR_INIT                 1
+#define OS_EVR_INIT                 0
 #endif
  
 //     <q>Start recording
