@@ -625,6 +625,27 @@
       <require condition="CMSIS Core with RTOS"/>
       <require Cbundle="MDK"         Cclass="USB"        Cgroup="CORE"/>
     </condition>
+    <condition id="USB Core and Device Driver and Class Instance">
+      <description>USB Core and Device Driver and Class Instance</description>
+      <require condition="USB Core"/>
+      <require Cclass="CMSIS Driver" Cgroup="USB Device" Capiversion="2.1.0"/>
+      <accept  Cclass="USB"          Cgroup="Device"     Csub="ADC"/>
+      <accept  Cclass="USB"          Cgroup="Device"     Csub="CDC"/>
+      <accept  Cclass="USB"          Cgroup="Device"     Csub="Custom Class"/>
+      <accept  Cclass="USB"          Cgroup="Device"     Csub="HID"/>
+      <accept  Cclass="USB"          Cgroup="Device"     Csub="MSC"/>
+    </condition>
+    <condition id="USB Core and Device Instance and Device Driver">
+      <description>USB Core and Device Instance and Device Driver</description>
+      <require condition="USB Core"/>
+      <require Cclass="USB"          Cgroup="Device"     Csub=""/>
+      <require Cclass="CMSIS Driver" Cgroup="USB Device" Capiversion="2.1.0"/>
+    </condition>
+    <condition id="USB Core and Device Instance and Device Driver and CDC">
+      <description>USB Core and Device Instance and Device Driver and CDC</description>
+      <require condition="USB Core and Device Instance and Device Driver"/>
+      <require Cclass="USB"          Cgroup="Device"     Csub="CDC"/>
+    </condition>
     <condition id="USB Core and Host Driver and Class Instance">
       <description>USB Core and Host Driver and Class Instance</description>
       <require condition="USB Core"/>
@@ -654,27 +675,6 @@
       <description>USB Core and Host Instance and Host Driver and CDC</description>
       <require condition="USB Core and Host Instance and Host Driver"/>
       <require Cclass="USB"          Cgroup="Host"       Csub="CDC"/>
-    </condition>
-    <condition id="USB Core and Device Driver and Class Instance">
-      <description>USB Core and Device Driver and Class Instance</description>
-      <require condition="USB Core"/>
-      <require Cclass="CMSIS Driver" Cgroup="USB Device" Capiversion="2.1.0"/>
-      <accept  Cclass="USB"          Cgroup="Device"     Csub="ADC"/>
-      <accept  Cclass="USB"          Cgroup="Device"     Csub="CDC"/>
-      <accept  Cclass="USB"          Cgroup="Device"     Csub="Custom Class"/>
-      <accept  Cclass="USB"          Cgroup="Device"     Csub="HID"/>
-      <accept  Cclass="USB"          Cgroup="Device"     Csub="MSC"/>
-    </condition>
-    <condition id="USB Core and Device Instance and Device Driver">
-      <description>USB Core and Device Instance and Device Driver</description>
-      <require condition="USB Core"/>
-      <require Cclass="USB"          Cgroup="Device"     Csub=""/>
-      <require Cclass="CMSIS Driver" Cgroup="USB Device" Capiversion="2.1.0"/>
-    </condition>
-    <condition id="USB Core and Device Instance and Device Driver and CDC">
-      <description>USB Core and Device Instance and Device Driver and CDC</description>
-      <require condition="USB Core and Device Instance and Device Driver"/>
-      <require Cclass="USB"          Cgroup="Device"     Csub="CDC"/>
     </condition>
   </conditions>
 
@@ -1357,81 +1357,6 @@
           <file category="source"  name="USB/Source/usb_lib_ver.c"/>
         </files>
       </component>
-      <component Cgroup="Host" condition="USB Core and Host Driver and Class Instance" maxInstances="4">
-        <description>USB Host</description>
-        <RTE_Components_h>
-          <!-- the following content goes into file 'RTE_Components.h' -->
-          #define RTE_USB_Host_%Instance%                  /* USB Host %Instance% */
-        </RTE_Components_h>
-        <files>
-          <file category="doc"    name="Documentation/html/USB/USB_Host.html"/>
-          <file category="header" name="USB/Config/USBH_Config.h" attr="config" version="8.0.0"/>
-          <!-- Source files -->
-          <file category="source" name="USB/Include/usbh_debug.c"/>
-          <file category="source" name="USB/Include/usbh_config.c"/>
-          <!-- Library source files -->
-          <file category="source" name="USB/Source/usbh_lib_core.c"/>
-          <file category="source" name="USB/Source/usbh_lib_mem.c"/>
-          <file category="source" name="USB/Source/usbh_lib_drv.c"/>
-          <file category="source" name="USB/Source/usbh_lib_ohci.c"/>
-          <file category="source" name="USB/Source/usbh_lib_ehci_tt.c"/>
-        </files>
-      </component>
-      <component Cgroup="Host" Csub="HID" condition="USB Core and Host Instance and Host Driver">
-        <description>USB Host: Human Interface Device (HID) Class</description>
-        <RTE_Components_h>
-          <!-- the following content goes into file 'RTE_Components.h' -->
-          #define RTE_USB_Host_HID                /* USB Host HID */
-        </RTE_Components_h>
-        <files>
-          <file category="doc"    name="Documentation/html/USB/HID.html"/>
-          <file category="header" name="USB/Config/USBH_Config_HID.h" attr="config" version="5.1.0"/>
-          <!-- Library source files -->
-          <file category="source" name="USB/Source/usbh_lib_hid.c"/>
-          <file category="source" name="USB/Source/usbh_lib_hid_idtoascii.c"/>
-        </files>
-      </component>
-      <component Cgroup="Host" Csub="MSC" condition="USB Core and Host Instance and Host Driver and File System USB Drive">
-        <description>USB Host: Mass Storage Class (MSC)</description>
-        <RTE_Components_h>
-          <!-- the following content goes into file 'RTE_Components.h' -->
-          #define RTE_USB_Host_MSC                /* USB Host MSC */
-        </RTE_Components_h>
-        <files>
-          <file category="doc"    name="Documentation/html/USB/MSC.html"/>
-          <file category="header" name="USB/Config/USBH_Config_MSC.h" attr="config"   version="5.0.0"/>
-          <file category="source" name="USB/Template/USBH_MSC.c"      attr="template" select="USB Host Mass Storage Access"/>
-          <file category="source" name="USB/Template/USBH_MSC.h"      attr="template" select="USB Host Mass Storage Access"/>
-          <!-- Library source files -->
-          <file category="source" name="USB/Source/usbh_lib_msc.c"/>
-        </files>
-      </component>
-      <component Cgroup="Host" Csub="CDC" condition="USB Core and Host Instance and Host Driver">
-        <description>USB Host: Communication Device Class (CDC)</description>
-        <RTE_Components_h>
-          <!-- the following content goes into file 'RTE_Components.h' -->
-          #define RTE_USB_Host_CDC                /* USB Host CDC */
-        </RTE_Components_h>
-        <files>
-          <file category="doc"    name="Documentation/html/USB/CDC.html"/>
-          <file category="header" name="USB/Config/USBH_Config_CDC.h" attr="config" version="5.0.0"/>
-          <!-- Library source files -->
-          <file category="source" name="USB/Source/usbh_lib_cdc.c"/>
-        </files>
-      </component>
-      <component Cgroup="Host" Csub="Custom Class" condition="USB Core and Host Instance and Host Driver">
-        <description>USB Host: Custom Class</description>
-        <RTE_Components_h>
-          <!-- the following content goes into file 'RTE_Components.h' -->
-          #define RTE_USB_Host_CustomClass        /* USB Host Custom Class */
-        </RTE_Components_h>
-        <files>
-          <file category="doc"    name="Documentation/html/USB/CustomClass.html"/>
-          <file category="header" name="USB/Config/USBH_Config_CustomClass.h" attr="config"   version="5.0.0"/>
-          <file category="source" name="USB/Template/USBH_User_CustomClass.c" attr="template" select="USB Host Generic Custom Class"/>
-          <file category="source" name="USB/Template/USBH_PL2303.c"           attr="template" select="USB Host Prolific PL2303"/>
-        </files>
-      </component>
       <component Cgroup="Device" condition="USB Core and Device Driver and Class Instance" maxInstances="4">
         <description>USB Device</description>
         <RTE_Components_h>
@@ -1534,6 +1459,81 @@
           <!-- Library source files -->
           <file category="source" name="USB/Source/usbd_lib_core_custom_class.c"/>
           <file category="source" name="USB/Source/usbd_lib_custom_class.c"/>
+        </files>
+      </component>
+      <component Cgroup="Host" condition="USB Core and Host Driver and Class Instance" maxInstances="4">
+        <description>USB Host</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Host_%Instance%                  /* USB Host %Instance% */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/html/USB/USB_Host.html"/>
+          <file category="header" name="USB/Config/USBH_Config.h" attr="config" version="8.0.0"/>
+          <!-- Source files -->
+          <file category="source" name="USB/Include/usbh_debug.c"/>
+          <file category="source" name="USB/Include/usbh_config.c"/>
+          <!-- Library source files -->
+          <file category="source" name="USB/Source/usbh_lib_core.c"/>
+          <file category="source" name="USB/Source/usbh_lib_mem.c"/>
+          <file category="source" name="USB/Source/usbh_lib_drv.c"/>
+          <file category="source" name="USB/Source/usbh_lib_ohci.c"/>
+          <file category="source" name="USB/Source/usbh_lib_ehci_tt.c"/>
+        </files>
+      </component>
+      <component Cgroup="Host" Csub="HID" condition="USB Core and Host Instance and Host Driver">
+        <description>USB Host: Human Interface Device (HID) Class</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Host_HID                /* USB Host HID */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/html/USB/HID.html"/>
+          <file category="header" name="USB/Config/USBH_Config_HID.h" attr="config" version="5.1.0"/>
+          <!-- Library source files -->
+          <file category="source" name="USB/Source/usbh_lib_hid.c"/>
+          <file category="source" name="USB/Source/usbh_lib_hid_idtoascii.c"/>
+        </files>
+      </component>
+      <component Cgroup="Host" Csub="MSC" condition="USB Core and Host Instance and Host Driver and File System USB Drive">
+        <description>USB Host: Mass Storage Class (MSC)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Host_MSC                /* USB Host MSC */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/html/USB/MSC.html"/>
+          <file category="header" name="USB/Config/USBH_Config_MSC.h" attr="config"   version="5.0.0"/>
+          <file category="source" name="USB/Template/USBH_MSC.c"      attr="template" select="USB Host Mass Storage Access"/>
+          <file category="source" name="USB/Template/USBH_MSC.h"      attr="template" select="USB Host Mass Storage Access"/>
+          <!-- Library source files -->
+          <file category="source" name="USB/Source/usbh_lib_msc.c"/>
+        </files>
+      </component>
+      <component Cgroup="Host" Csub="CDC" condition="USB Core and Host Instance and Host Driver">
+        <description>USB Host: Communication Device Class (CDC)</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Host_CDC                /* USB Host CDC */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/html/USB/CDC.html"/>
+          <file category="header" name="USB/Config/USBH_Config_CDC.h" attr="config" version="5.0.0"/>
+          <!-- Library source files -->
+          <file category="source" name="USB/Source/usbh_lib_cdc.c"/>
+        </files>
+      </component>
+      <component Cgroup="Host" Csub="Custom Class" condition="USB Core and Host Instance and Host Driver">
+        <description>USB Host: Custom Class</description>
+        <RTE_Components_h>
+          <!-- the following content goes into file 'RTE_Components.h' -->
+          #define RTE_USB_Host_CustomClass        /* USB Host Custom Class */
+        </RTE_Components_h>
+        <files>
+          <file category="doc"    name="Documentation/html/USB/CustomClass.html"/>
+          <file category="header" name="USB/Config/USBH_Config_CustomClass.h" attr="config"   version="5.0.0"/>
+          <file category="source" name="USB/Template/USBH_User_CustomClass.c" attr="template" select="USB Host Generic Custom Class"/>
+          <file category="source" name="USB/Template/USBH_PL2303.c"           attr="template" select="USB Host Prolific PL2303"/>
         </files>
       </component>
     </bundle>
