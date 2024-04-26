@@ -28,17 +28,9 @@ void netDHCP_Notify (uint32_t if_id, uint8_t option, const uint8_t *val, uint32_
 }
 
 /*-----------------------------------------------------------------------------
- * Application initialization
+  Application Main Thread 'app_main_thread': Run Network
  *----------------------------------------------------------------------------*/
-int32_t app_initialize (void) {
-  osThreadNew(app_main, NULL, NULL);
-  return 0;
-}
-
-/*-----------------------------------------------------------------------------
-  Main Thread 'app_main': Run Network
- *----------------------------------------------------------------------------*/
-__NO_RETURN void app_main (void *argument) {
+__NO_RETURN void app_main_thread (void *argument) {
   uint8_t ip_addr[NET_ADDR_IP6_LEN];
   char    ip_ascii[40];
   (void)argument;
@@ -58,4 +50,14 @@ __NO_RETURN void app_main (void *argument) {
   }
 
   osThreadExit();
+}
+
+/*-----------------------------------------------------------------------------
+ *        Application main function
+ *----------------------------------------------------------------------------*/
+int app_main (void) {
+  osKernelInitialize();
+  osThreadNew(app_main_thread, NULL, NULL);
+  osKernelStart();
+  return 0;
 }

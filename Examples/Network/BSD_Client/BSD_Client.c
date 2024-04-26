@@ -133,17 +133,9 @@ static __NO_RETURN void Client (void *argument) {
 }
 
 /*-----------------------------------------------------------------------------
- * Application initialization
+  Application Main Thread 'app_main_thread': Run Network
  *----------------------------------------------------------------------------*/
-int32_t app_initialize (void) {
-  osThreadNew(app_main, NULL, NULL);
-  return 0;
-}
-
-/*-----------------------------------------------------------------------------
-  Main Thread 'app_main': Run Network
- *----------------------------------------------------------------------------*/
-__NO_RETURN void app_main (void *argument) {
+__NO_RETURN void app_main_thread (void *argument) {
   (void)argument;
 
   printf("Network BSD Client example\n");
@@ -154,4 +146,14 @@ __NO_RETURN void app_main (void *argument) {
   osThreadNew(Client, NULL, NULL);
 
   osThreadExit();
+}
+
+/*-----------------------------------------------------------------------------
+ *        Application main function
+ *----------------------------------------------------------------------------*/
+int app_main (void) {
+  osKernelInitialize();
+  osThreadNew(app_main_thread, NULL, NULL);
+  osKernelStart();
+  return 0;
 }

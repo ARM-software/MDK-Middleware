@@ -647,17 +647,9 @@ static void init_filesystem (void) {
 }
 
 /*-----------------------------------------------------------------------------
- *        Application initialization
- *----------------------------------------------------------------------------*/
-int32_t app_initialize (void) {
-  osThreadNew(app_main, NULL, &app_main_attr);
-  return 0;
-}
-
-/*-----------------------------------------------------------------------------
  *        Application main thread 
  *----------------------------------------------------------------------------*/
-__NO_RETURN void app_main (void *argument) {
+__NO_RETURN void app_main_thread (void *argument) {
   char *sp,*cp,*next;
   uint32_t i;
 
@@ -694,4 +686,14 @@ __NO_RETURN void app_main (void *argument) {
       printf("\nCommand error\n");
     }
   }
+}
+
+/*-----------------------------------------------------------------------------
+ *        Application main function
+ *----------------------------------------------------------------------------*/
+int app_main (void) {
+  osKernelInitialize();
+  osThreadNew(app_main_thread, NULL, &app_main_attr);
+  osKernelStart();
+  return 0;
 }

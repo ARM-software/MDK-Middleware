@@ -23,17 +23,9 @@ static const osThreadAttr_t app_main_attr = {
 };
 
 /*-----------------------------------------------------------------------------
- * Application initialization
- *----------------------------------------------------------------------------*/
-int32_t app_initialize (void) {
-  osThreadNew(app_main, NULL, &app_main_attr);
-  return 0;
-}
-
-/*-----------------------------------------------------------------------------
  * Application main thread
  *----------------------------------------------------------------------------*/
-void app_main (void *argument) {
+void app_main_thread (void *argument) {
   (void)argument;
 
   printf("USB Device Mass Storage example\n");
@@ -42,4 +34,14 @@ void app_main (void *argument) {
   USBD_Connect   (0U);                  // USB Device 0 Connect
 
   osThreadExit();
+}
+
+/*-----------------------------------------------------------------------------
+ *        Application main function
+ *----------------------------------------------------------------------------*/
+int app_main (void) {
+  osKernelInitialize();
+  osThreadNew(app_main_thread, NULL, &app_main_attr);
+  osKernelStart();
+  return 0;
 }

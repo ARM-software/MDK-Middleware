@@ -23,17 +23,9 @@ static const osThreadAttr_t app_main_attr = {
 };
 
 /*---------------------------------------------------------------------------
- * Application initialization
- *---------------------------------------------------------------------------*/
-int32_t app_initialize (void) {
-  osThreadNew(app_main, NULL, &app_main_attr);
-  return 0;
-}
-
-/*---------------------------------------------------------------------------
  * Application main thread
  *---------------------------------------------------------------------------*/
-__NO_RETURN void app_main (void *argument) {
+__NO_RETURN void app_main_thread (void *argument) {
   usbStatus usb_status;                 // USB status
   int32_t   msc_status;                 // MSC status
   FILE     *f;                          // Pointer to stream object
@@ -76,4 +68,14 @@ __NO_RETURN void app_main (void *argument) {
     }
     osDelay(100U);
   }
+}
+
+/*-----------------------------------------------------------------------------
+ *        Application main function
+ *----------------------------------------------------------------------------*/
+int app_main (void) {
+  osKernelInitialize();
+  osThreadNew(app_main_thread, NULL, &app_main_attr);
+  osKernelStart();
+  return 0;
 }

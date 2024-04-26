@@ -48,17 +48,9 @@ static const NET_SMTP_MTA server = {
 };
 
 /*-----------------------------------------------------------------------------
- * Application initialization
+  Application Main Thread 'app_main_thread': Run Network
  *----------------------------------------------------------------------------*/
-int32_t app_initialize (void) {
-  osThreadNew(app_main, NULL, NULL);
-  return 0;
-}
-
-/*-----------------------------------------------------------------------------
-  Main Thread 'app_main': Run Network
- *----------------------------------------------------------------------------*/
-__NO_RETURN void app_main (void *argument) {
+__NO_RETURN void app_main_thread (void *argument) {
   netStatus retv;
   (void)argument;
 
@@ -76,4 +68,14 @@ __NO_RETURN void app_main (void *argument) {
   }
 
   osThreadExit();
+}
+
+/*-----------------------------------------------------------------------------
+ *        Application main function
+ *----------------------------------------------------------------------------*/
+int app_main (void) {
+  osKernelInitialize();
+  osThreadNew(app_main_thread, NULL, NULL);
+  osKernelStart();
+  return 0;
 }
