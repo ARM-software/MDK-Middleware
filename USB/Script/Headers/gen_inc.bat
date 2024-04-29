@@ -59,21 +59,3 @@ sed s/$x/0/g usbd_config_dev_x.c >> ..\..\Include\usbd_config_dev_0.c
 sed s/$x/1/g usbd_config_dev_x.c >> ..\..\Include\usbd_config_dev_1.c
 sed s/$x/2/g usbd_config_dev_x.c >> ..\..\Include\usbd_config_dev_2.c
 sed s/$x/3/g usbd_config_dev_x.c >> ..\..\Include\usbd_config_dev_3.c
-
-del ..\..\Include\usbh_config_def_0.h
-del ..\..\Include\usbh_config_def_1.h
-del ..\..\Include\usbh_config_def_2.h
-del ..\..\Include\usbh_config_def_3.h
-sed s/$x/0/g usbh_config_def_x.h >> ..\..\Include\usbh_config_def_0.h
-sed s/$x/1/g usbh_config_def_x.h >> ..\..\Include\usbh_config_def_1.h
-sed s/$x/2/g usbh_config_def_x.h >> ..\..\Include\usbh_config_def_2.h
-sed s/$x/3/g usbh_config_def_x.h >> ..\..\Include\usbh_config_def_3.h
-
-del ..\..\Include\usbh_config_hc_0.c
-del ..\..\Include\usbh_config_hc_1.c
-del ..\..\Include\usbh_config_hc_2.c
-del ..\..\Include\usbh_config_hc_3.c
-sed s/$x/0/g usbh_config_hc_x.c >> ..\..\Include\usbh_config_hc_0.c
-sed s/$x/1/g usbh_config_hc_x.c >> ..\..\Include\usbh_config_hc_1.c
-sed s/$x/2/g usbh_config_hc_x.c >> ..\..\Include\usbh_config_hc_2.c
-sed s/$x/3/g usbh_config_hc_x.c >> ..\..\Include\usbh_config_hc_3.c
