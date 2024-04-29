@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2021 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_config_def.h
  * Purpose: USB Host System Configuration header file (for USB Library)
@@ -32,10 +32,7 @@ extern       ARM_USBH_SignalEndpointEvent_t const usbh_cb_pipe_event_ptr        
 extern       ARM_DRIVER_VERSION                   usbh_drv_version                                 [];
 extern       ARM_USBH_CAPABILITIES                usbh_capabilities                                [];
 extern       ARM_DRIVER_USBH             ** const usbh_hcd_ptr                                     [];
-extern       ARM_DRIVER_USBH_HCI         ** const usbh_hci_hcd_ptr                                 [];
 extern       USBH_HC_t                   ** const usbh_hc_ptr                                      [];
-extern       USBH_OHCI_t                 ** const usbh_ohci_ptr                                    [];
-extern       USBH_EHCI_t                 ** const usbh_ehci_ptr                                    [];
 extern const uint8_t                      * const usbh_power_ptr                                   [];
 extern const uint8_t                      * const usbh_mem_pool_reloc_ptr                          [];
 extern       uint32_t                     * const usbh_mem_pool_ptr                                [];

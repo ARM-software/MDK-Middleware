@@ -58,6 +58,7 @@ The <a class="el" href="https://www.usb.org/developers" target="_blank">USB-IF D
         - changed source config files to headers
         - removed support for legacy Arm Compiler 5
         - removed support for CMSIS-RTOS version 1
+        - USB Host: removed OHCI and EHCI drivers (moved to CMSIS-Driver pack)
         - USB Host: increased default Core Thread stack size (from 1024 to 2048)
         - USB Device: increased default Core Thread stack size (from 512 to 1024)
       </td>

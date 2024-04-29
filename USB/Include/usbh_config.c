@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_config.c
  * Purpose: USB Host (0..3) Configuration
@@ -56,7 +56,6 @@
 
 #include "usb_os.h"
 
-
 /*------------------------------------------------------------------------------
  *      USB Host Global Macros
  *----------------------------------------------------------------------------*/
@@ -67,13 +66,6 @@
 #define USBHn_DRIVER_HCI_(n)            Driver_USBH##n##_HCI
 #define USBHn_DRIVER_HCI(n)             USBHn_DRIVER_HCI_(n)
 
-#define USBHn_DRIVER_OHCI_LIB_(n)       Driver_USBH##n##_OHCI_LIB
-#define USBHn_DRIVER_OHCI_LIB(n)        USBHn_DRIVER_OHCI_LIB_(n)
-
-#define USBHn_DRIVER_EHCI_LIB_(n)       Driver_USBH##n##_EHCI_LIB
-#define USBHn_DRIVER_EHCI_LIB(n)        USBHn_DRIVER_EHCI_LIB_(n)
-
-
 /*------------------------------------------------------------------------------
  *      USB Host 0 Macros, Calculations and Constants for Library
  *----------------------------------------------------------------------------*/
@@ -82,7 +74,6 @@
 #include "usbh_config_def_0.h"
 #include "usbh_config_hc_0.c"
 #endif
-
 
 /*------------------------------------------------------------------------------
  *      USB Host 1 Macros, Calculations and Constants for Library
@@ -93,7 +84,6 @@
 #include "usbh_config_hc_1.c"
 #endif
 
-
 /*------------------------------------------------------------------------------
  *      USB Host 2 Macros, Calculations and Constants for Library
  *----------------------------------------------------------------------------*/
@@ -103,7 +93,6 @@
 #include "usbh_config_hc_2.c"
 #endif
 
-
 /*------------------------------------------------------------------------------
  *      USB Host 3 Macros, Calculations and Constants for Library
  *----------------------------------------------------------------------------*/
@@ -112,7 +101,6 @@
 #include "usbh_config_def_3.h"
 #include "usbh_config_hc_3.c"
 #endif
-
 
 /*------------------------------------------------------------------------------
  *      USB Host Global Macros
@@ -160,11 +148,8 @@
 
 #define USBH_HC_NUM                    (USBH0_HC + USBH1_HC + USBH2_HC + USBH3_HC)
 #define USBH_HC_MSK                    (0x0F >> (4 - USBH_HC_NUM))
-#define USBH_OHCI_NUM                  (USBH_HC_NUM)
-#define USBH_EHCI_NXP_NUM              (USBH_HC_NUM)
 #define USBH_DCD_NUM                  ((USBH_MSC_NUM > 0) + (USBH_HID_NUM > 0) + (USBH_CDC_NUM > 0) + (USBH_CUSTOM_CLASS_NUM > 0))
 #define USBH_DEV_NUM                   (USBH_MSC_NUM      +  USBH_HID_NUM      +  USBH_CDC_NUM      +  USBH_CUSTOM_CLASS_NUM     )
-
 
 /*------------------------------------------------------------------------------
  *      USB Host OS abstraction
@@ -175,7 +160,6 @@
 #else
   #error USB Host component requires CMSIS-RTOS2!
 #endif
-
 
 /*------------------------------------------------------------------------------
  *      USB Host 0..3 Configurations
@@ -230,27 +214,6 @@ extern  ARM_DRIVER_USBH ** const usbh_hcd_ptr[USBH_HC_NUM];
 #endif
 };
 
-extern  ARM_DRIVER_USBH_HCI *usbh0_hci_hcd_ptr;
-extern  ARM_DRIVER_USBH_HCI *usbh1_hci_hcd_ptr;
-extern  ARM_DRIVER_USBH_HCI *usbh2_hci_hcd_ptr;
-extern  ARM_DRIVER_USBH_HCI *usbh3_hci_hcd_ptr;
-
-extern  ARM_DRIVER_USBH_HCI ** const usbh_hci_hcd_ptr[USBH_HC_NUM];
-        ARM_DRIVER_USBH_HCI ** const usbh_hci_hcd_ptr[USBH_HC_NUM] = {
-#ifdef  RTE_USB_Host_0
-       &usbh0_hci_hcd_ptr
-#endif
-#ifdef  RTE_USB_Host_1
-     , &usbh1_hci_hcd_ptr
-#endif
-#ifdef  RTE_USB_Host_2
-     , &usbh2_hci_hcd_ptr
-#endif
-#ifdef  RTE_USB_Host_3
-     , &usbh3_hci_hcd_ptr
-#endif
-};
-
 extern  USBH_HC_t *usbh0_hc_ptr;
 extern  USBH_HC_t *usbh1_hc_ptr;
 extern  USBH_HC_t *usbh2_hc_ptr;
@@ -269,48 +232,6 @@ extern  USBH_HC_t ** const usbh_hc_ptr [USBH_HC_NUM];
 #endif
 #ifdef  RTE_USB_Host_3
      , &usbh3_hc_ptr
-#endif
-};
-
-extern  USBH_OHCI_t *usbh0_ohci_ptr;
-extern  USBH_OHCI_t *usbh1_ohci_ptr;
-extern  USBH_OHCI_t *usbh2_ohci_ptr;
-extern  USBH_OHCI_t *usbh3_ohci_ptr;
-
-extern  USBH_OHCI_t ** const usbh_ohci_ptr [USBH_HC_NUM];
-        USBH_OHCI_t ** const usbh_ohci_ptr [USBH_HC_NUM] = {
-#ifdef  RTE_USB_Host_0
-       &usbh0_ohci_ptr
-#endif
-#ifdef  RTE_USB_Host_1
-     , &usbh1_ohci_ptr
-#endif
-#ifdef  RTE_USB_Host_2
-     , &usbh2_ohci_ptr
-#endif
-#ifdef  RTE_USB_Host_3
-     , &usbh3_ohci_ptr
-#endif
-};
-
-extern  USBH_EHCI_t *usbh0_ehci_ptr;
-extern  USBH_EHCI_t *usbh1_ehci_ptr;
-extern  USBH_EHCI_t *usbh2_ehci_ptr;
-extern  USBH_EHCI_t *usbh3_ehci_ptr;
-
-extern  USBH_EHCI_t ** const usbh_ehci_ptr [USBH_HC_NUM];
-        USBH_EHCI_t ** const usbh_ehci_ptr [USBH_HC_NUM] = {
-#ifdef  RTE_USB_Host_0
-       &usbh0_ehci_ptr
-#endif
-#ifdef  RTE_USB_Host_1
-     , &usbh1_ehci_ptr
-#endif
-#ifdef  RTE_USB_Host_2
-     , &usbh2_ehci_ptr
-#endif
-#ifdef  RTE_USB_Host_3
-     , &usbh3_ehci_ptr
 #endif
 };
 

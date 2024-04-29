@@ -1013,15 +1013,6 @@
       <member name="int_in_pipe_hndl"             type="uint32_t"               offset="12"  info="Interrupt in pipe handle"/>
       <member name="int_in_thread_id"             type="uint32_t"               offset="16"  info="Interrupt in pipe thread ID"/>
     </typedef>
-
-    <!-- USB Host Auxiliary Structures -->
-    <typedef  name="usbh_hci_type_t"              info="USB Host Controller Interface Type"  size="1">
-      <member name="type"                         type="uint8_t"                offset="0"   info="Controller Interface Type">
-        <enum name="Custom"                         value="0"                                  info="Custom"/>
-        <enum name="OHCI"                           value="1"                                  info="OHCI"/>
-        <enum name="EHCI"                           value="2"                                  info="EHCI"/>
-      </member>
-    </typedef>
   </typedefs>
 
   <objects>
@@ -1734,29 +1725,15 @@
       <!-- USB Host Component variables ************************************************************************************** -->
       <!-- USB Host 0: if it exists read and prepare variables for display -->
       <var  name="usbh0_en"                type="uint8_t"         value="__Symbol_exists(&quot;usbh0_pipe&quot;)"/>
-      <var  name="usbh0_ehci_used"         type="uint8_t"         value="__Symbol_exists(&quot;usbh0_ehci_ptr&quot;) &amp;&amp; __Symbol_exists(&quot;usbh0_ehci&quot;)"/>
-      <var  name="usbh0_ohci_used"         type="uint8_t"         value="__Symbol_exists(&quot;usbh0_ohci_ptr&quot;) &amp;&amp; __Symbol_exists(&quot;usbh0_ohci&quot;)"/>
-      <var  name="usbh0_hc_used"           type="uint8_t"         value="__Symbol_exists(&quot;usbh0_hc_ptr&quot;)   &amp;&amp; !usbh0_ehci_used &amp;&amp; !usbh0_ohci_used"/>
+      <var  name="usbh0_hc_used"           type="uint8_t"         value="__Symbol_exists(&quot;usbh0_hc_ptr&quot;)"/>
       <var  name="usbh0_transfer_exists"   type="uint8_t"         value="__Symbol_exists(&quot;usbh0_transfer&quot;)"/>
-      <var  name="usbh0_hci_type"          type="usbh_hci_type_t" value="0"/>
       <var  name="usbh0_pipe_used_num"     type="uint32_t"        value="0"/>
       <var  name="usbh0_transfer_used_num" type="uint32_t"        value="0"/>
 
       <read     cond="usbh0_hc_used"         name="usbh0_hc_ptr"       type="uint32_t"             symbol="usbh0_hc_ptr"        const="1"/>
-      <read     cond="usbh0_ohci_used"       name="usbh0_ohci_ptr"     type="uint32_t"             symbol="usbh0_ohci_ptr"      const="1"/>
-      <read     cond="usbh0_ehci_used"       name="usbh0_ehci_ptr"     type="uint32_t"             symbol="usbh0_ehci_ptr"      const="1"/>
       <read     cond="usbh0_en"              name="usbh0_pipe_num"     type="uint32_t"             symbol="usbh0_pipe_num"      const="1"/>
       <readlist cond="usbh0_en"              name="usbh0_pipe"         type="USBH_PIPE"            symbol="usbh0_pipe"          based="0" count="usbh0_pipe_num" init="1"/>
       <readlist cond="usbh0_transfer_exists" name="usbh0_transfer"     type="USBH_TRANSFER_INFO_t" symbol="usbh0_transfer_info" based="0" count="usbh0_pipe_num" init="1"/>
-      <calc     cond="usbh0_hc_used">
-        usbh0_hci_type.type = 0;
-      </calc>
-      <calc     cond="usbh0_ohci_used">
-        usbh0_hci_type.type = 1;
-      </calc>
-      <calc     cond="usbh0_ehci_used">
-        usbh0_hci_type.type = 2;
-      </calc>
       <list name="usb_i" start="0" limit="usbh0_pipe._count" >                                               <!-- list: use above local var "i"  -->
         <calc>usbh0_pipe_used_num += (usbh0_pipe[usb_i].hw_handle != 0) ? 1 : 0;</calc>
       </list>
@@ -1767,29 +1744,15 @@
 
       <!-- USB Host 1: if it exists read and prepare variables for display -->
       <var  name="usbh1_en"                type="uint8_t"         value="__Symbol_exists(&quot;usbh1_pipe&quot;)"/>
-      <var  name="usbh1_ehci_used"         type="uint8_t"         value="__Symbol_exists(&quot;usbh1_ehci_ptr&quot;) &amp;&amp; __Symbol_exists(&quot;usbh1_ehci&quot;)"/>
-      <var  name="usbh1_ohci_used"         type="uint8_t"         value="__Symbol_exists(&quot;usbh1_ohci_ptr&quot;) &amp;&amp; __Symbol_exists(&quot;usbh1_ohci&quot;)"/>
-      <var  name="usbh1_hc_used"           type="uint8_t"         value="__Symbol_exists(&quot;usbh1_hc_ptr&quot;)   &amp;&amp; !usbh1_ehci_used &amp;&amp; !usbh1_ohci_used"/>
+      <var  name="usbh1_hc_used"           type="uint8_t"         value="__Symbol_exists(&quot;usbh1_hc_ptr&quot;)"/>
       <var  name="usbh1_transfer_exists"   type="uint8_t"         value="__Symbol_exists(&quot;usbh1_transfer&quot;)"/>
-      <var  name="usbh1_hci_type"          type="usbh_hci_type_t" value="0"/>
       <var  name="usbh1_pipe_used_num"     type="uint32_t"        value="0"/>
       <var  name="usbh1_transfer_used_num" type="uint32_t"        value="0"/>
 
       <read     cond="usbh1_hc_used"         name="usbh1_hc_ptr"       type="uint32_t"             symbol="usbh1_hc_ptr"        const="1"/>
-      <read     cond="usbh1_ohci_used"       name="usbh1_ohci_ptr"     type="uint32_t"             symbol="usbh1_ohci_ptr"      const="1"/>
-      <read     cond="usbh1_ehci_used"       name="usbh1_ehci_ptr"     type="uint32_t"             symbol="usbh1_ehci_ptr"      const="1"/>
       <read     cond="usbh1_en"              name="usbh1_pipe_num"     type="uint32_t"             symbol="usbh1_pipe_num"      const="1"/>
       <readlist cond="usbh1_en"              name="usbh1_pipe"         type="USBH_PIPE"            symbol="usbh1_pipe"          based="0" count="usbh1_pipe_num" init="1"/>
       <readlist cond="usbh1_transfer_exists" name="usbh1_transfer"     type="USBH_TRANSFER_INFO_t" symbol="usbh1_transfer_info" based="0" count="usbh1_pipe_num" init="1"/>
-      <calc     cond="usbh1_hc_used">
-        usbh1_hci_type.type = 0;
-      </calc>
-      <calc     cond="usbh1_ohci_used">
-        usbh1_hci_type.type = 1;
-      </calc>
-      <calc     cond="usbh1_ehci_used">
-        usbh1_hci_type.type = 2;
-      </calc>
       <list name="usb_i" start="0" limit="usbh1_pipe._count" >                                               <!-- list: use above local var "i"  -->
         <calc>usbh1_pipe_used_num += (usbh1_pipe[usb_i].hw_handle != 0) ? 1 : 0;</calc>
       </list>
@@ -1800,29 +1763,15 @@
 
       <!-- USB Host 2: if it exists read and prepare variables for display -->
       <var  name="usbh2_en"                type="uint8_t"         value="__Symbol_exists(&quot;usbh2_pipe&quot;)"/>
-      <var  name="usbh2_ehci_used"         type="uint8_t"         value="__Symbol_exists(&quot;usbh2_ehci_ptr&quot;) &amp;&amp; __Symbol_exists(&quot;usbh2_ehci&quot;)"/>
-      <var  name="usbh2_ohci_used"         type="uint8_t"         value="__Symbol_exists(&quot;usbh2_ohci_ptr&quot;) &amp;&amp; __Symbol_exists(&quot;usbh2_ohci&quot;)"/>
-      <var  name="usbh2_hc_used"           type="uint8_t"         value="__Symbol_exists(&quot;usbh2_hc_ptr&quot;)   &amp;&amp; !usbh2_ehci_used &amp;&amp; !usbh2_ohci_used"/>
+      <var  name="usbh2_hc_used"           type="uint8_t"         value="__Symbol_exists(&quot;usbh2_hc_ptr&quot;)"/>
       <var  name="usbh2_transfer_exists"   type="uint8_t"         value="__Symbol_exists(&quot;usbh2_transfer&quot;)"/>
-      <var  name="usbh2_hci_type"          type="usbh_hci_type_t" value="0"/>
       <var  name="usbh2_pipe_used_num"     type="uint32_t"        value="0"/>
       <var  name="usbh2_transfer_used_num" type="uint32_t"        value="0"/>
 
       <read     cond="usbh2_hc_used"         name="usbh2_hc_ptr"       type="uint32_t"             symbol="usbh2_hc_ptr"        const="1"/>
-      <read     cond="usbh2_ohci_used"       name="usbh2_ohci_ptr"     type="uint32_t"             symbol="usbh2_ohci_ptr"      const="1"/>
-      <read     cond="usbh2_ehci_used"       name="usbh2_ehci_ptr"     type="uint32_t"             symbol="usbh2_ehci_ptr"      const="1"/>
       <read     cond="usbh2_en"              name="usbh2_pipe_num"     type="uint32_t"             symbol="usbh2_pipe_num"      const="1"/>
       <readlist cond="usbh2_en"              name="usbh2_pipe"         type="USBH_PIPE"            symbol="usbh2_pipe"          based="0" count="usbh2_pipe_num" init="1"/>
       <readlist cond="usbh2_transfer_exists" name="usbh2_transfer"     type="USBH_TRANSFER_INFO_t" symbol="usbh2_transfer_info" based="0" count="usbh2_pipe_num" init="1"/>
-      <calc     cond="usbh2_hc_used">
-        usbh2_hci_type.type = 0;
-      </calc>
-      <calc     cond="usbh2_ohci_used">
-        usbh2_hci_type.type = 1;
-      </calc>
-      <calc     cond="usbh2_ehci_used">
-        usbh2_hci_type.type = 2;
-      </calc>
       <list name="usb_i" start="0" limit="usbh2_pipe._count" >                                               <!-- list: use above local var "i"  -->
         <calc>usbh2_pipe_used_num += (usbh2_pipe[usb_i].hw_handle != 0) ? 1 : 0;</calc>
       </list>
@@ -1833,29 +1782,15 @@
 
       <!-- USB Host 3: if it exists read and prepare variables for display -->
       <var  name="usbh3_en"                type="uint8_t"         value="__Symbol_exists(&quot;usbh3_pipe&quot;)"/>
-      <var  name="usbh3_ehci_used"         type="uint8_t"         value="__Symbol_exists(&quot;usbh3_ehci_ptr&quot;) &amp;&amp; __Symbol_exists(&quot;usbh3_ehci&quot;)"/>
-      <var  name="usbh3_ohci_used"         type="uint8_t"         value="__Symbol_exists(&quot;usbh3_ohci_ptr&quot;) &amp;&amp; __Symbol_exists(&quot;usbh3_ohci&quot;)"/>
-      <var  name="usbh3_hc_used"           type="uint8_t"         value="__Symbol_exists(&quot;usbh3_hc_ptr&quot;)   &amp;&amp; !usbh3_ehci_used &amp;&amp; !usbh3_ohci_used"/>
+      <var  name="usbh3_hc_used"           type="uint8_t"         value="__Symbol_exists(&quot;usbh3_hc_ptr&quot;)"/>
       <var  name="usbh3_transfer_exists"   type="uint8_t"         value="__Symbol_exists(&quot;usbh3_transfer&quot;)"/>
-      <var  name="usbh3_hci_type"          type="usbh_hci_type_t" value="0"/>
       <var  name="usbh3_pipe_used_num"     type="uint32_t"        value="0"/>
       <var  name="usbh3_transfer_used_num" type="uint32_t"        value="0"/>
 
       <read     cond="usbh3_hc_used"         name="usbh3_hc_ptr"       type="uint32_t"             symbol="usbh3_hc_ptr"        const="1"/>
-      <read     cond="usbh3_ohci_used"       name="usbh3_ohci_ptr"     type="uint32_t"             symbol="usbh3_ohci_ptr"      const="1"/>
-      <read     cond="usbh3_ehci_used"       name="usbh3_ehci_ptr"     type="uint32_t"             symbol="usbh3_ehci_ptr"      const="1"/>
       <read     cond="usbh3_en"              name="usbh3_pipe_num"     type="uint32_t"             symbol="usbh3_pipe_num"      const="1"/>
       <readlist cond="usbh3_en"              name="usbh3_pipe"         type="USBH_PIPE"            symbol="usbh3_pipe"          based="0" count="usbh3_pipe_num" init="1"/>
       <readlist cond="usbh3_transfer_exists" name="usbh3_transfer"     type="USBH_TRANSFER_INFO_t" symbol="usbh3_transfer_info" based="0" count="usbh3_pipe_num" init="1"/>
-      <calc     cond="usbh3_hc_used">
-        usbh3_hci_type.type = 0;
-      </calc>
-      <calc     cond="usbh3_ohci_used">
-        usbh3_hci_type.type = 1;
-      </calc>
-      <calc     cond="usbh3_ehci_used">
-        usbh3_hci_type.type = 2;
-      </calc>
       <list name="usb_i" start="0" limit="usbh3_pipe._count">
         <calc>usbh3_pipe_used_num += (usbh3_pipe[usb_i].hw_handle != 0) ? 1 : 0;</calc>
       </list>
@@ -2864,7 +2799,6 @@
         <!-- USB Host Component display ************************************************************************************** -->
         <!-- USB Host 0: if it exists display it -->
         <item cond="usbh0_en" property="Host 0">
-          <item                                     property="Controller Interface" value="%E[usbh0_hci_type.type]"/>
           <item                                     property="Pipes"                value="In use %d[usbh0_pipe_used_num] of %d[usbh0_pipe_num]"/>
           <item cond="(usbh0_transfer_exists == 1)" property="Transfers"            value="Active %d[usbh0_transfer_used_num] of %d[usbh0_pipe_num]"/>
           <list name="usbh0_disp_i" start="0" limit="usbh_dev._count">
@@ -2892,7 +2826,6 @@
 
         <!-- USB Host 1: if it exists display it -->
         <item cond="usbh1_en" property="Host 1">
-          <item                                     property="Controller Interface" value="%E[usbh1_hci_type.type]"/>
           <item                                     property="Pipes"                value="In use %d[usbh1_pipe_used_num] of %d[usbh1_pipe_num]"/>
           <item cond="(usbh1_transfer_exists == 1)" property="Transfers"            value="Active %d[usbh1_transfer_used_num] of %d[usbh1_pipe_num]"/>
           <list name="usbh1_disp_i" start="0" limit="usbh_dev._count">
@@ -2920,7 +2853,6 @@
 
         <!-- USB Host 2: if it exists display it -->
         <item cond="usbh2_en" property="Host 2">
-          <item                                     property="Controller Interface" value="%E[usbh2_hci_type.type]"/>
           <item                                     property="Pipes"                value="In use %d[usbh2_pipe_used_num] of %d[usbh2_pipe_num]"/>
           <item cond="(usbh2_transfer_exists == 1)" property="Transfers"            value="Active %d[usbh2_transfer_used_num] of %d[usbh2_pipe_num]"/>
           <list name="usbh2_disp_i" start="0" limit="usbh_dev._count">
@@ -2948,7 +2880,6 @@
 
         <!-- USB Host 3: if it exists display it -->
         <item cond="usbh3_en" property="Host 3">
-          <item                                     property="Controller Interface" value="%E[usbh3_hci_type.type]"/>
           <item                                     property="Pipes"                value="In use %d[usbh3_pipe_used_num] of %d[usbh3_pipe_num]"/>
           <item cond="(usbh3_transfer_exists == 1)" property="Transfers"            value="Active %d[usbh3_transfer_used_num] of %d[usbh3_pipe_num]"/>
           <list name="usbh3_disp_i" start="0" limit="usbh_dev._count">

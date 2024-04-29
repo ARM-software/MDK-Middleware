@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_compatibility.h
  * Purpose: USB Host (USBH) - Compatibility definitions
@@ -17,21 +17,9 @@
 #ifndef USBH0_HC_PIPE_NUM
 #define USBH0_HC_PIPE_NUM                      (USBH0_HC_ENDPOINT_NUM)
 #endif
-#ifndef USBH0_HC_OHCI_PIPE_NUM
-#define USBH0_HC_OHCI_PIPE_NUM                 (USBH0_HC_OHCI_ENDPOINT_NUM)
-#endif
-#ifndef USBH0_HC_EHCI_PIPE_NUM
-#define USBH0_HC_EHCI_PIPE_NUM                 (USBH0_HC_EHCI_ENDPOINT_NUM)
-#endif
 
 #ifndef USBH0_HC_POWER
 #define USBH0_HC_POWER                         (500U)
-#endif
-#ifndef USBH0_HC_OHCI_POWER
-#define USBH0_HC_OHCI_POWER                    (500U)
-#endif
-#ifndef USBH0_HC_EHCI_POWER
-#define USBH0_HC_EHCI_POWER                    (500U)
 #endif
 
 #ifndef USBH0_CORE_THREAD_STACK_SIZE
@@ -46,21 +34,9 @@
 #ifndef USBH1_HC_PIPE_NUM
 #define USBH1_HC_PIPE_NUM                      (USBH1_HC_ENDPOINT_NUM)
 #endif
-#ifndef USBH1_HC_OHCI_PIPE_NUM
-#define USBH1_HC_OHCI_PIPE_NUM                 (USBH1_HC_OHCI_ENDPOINT_NUM)
-#endif
-#ifndef USBH1_HC_EHCI_PIPE_NUM
-#define USBH1_HC_EHCI_PIPE_NUM                 (USBH1_HC_EHCI_ENDPOINT_NUM)
-#endif
 
 #ifndef USBH1_HC_POWER
 #define USBH1_HC_POWER                         (500U)
-#endif
-#ifndef USBH1_HC_OHCI_POWER
-#define USBH1_HC_OHCI_POWER                    (500U)
-#endif
-#ifndef USBH1_HC_EHCI_POWER
-#define USBH1_HC_EHCI_POWER                    (500U)
 #endif
 
 #ifndef USBH1_CORE_THREAD_STACK_SIZE
@@ -75,21 +51,9 @@
 #ifndef USBH2_HC_PIPE_NUM
 #define USBH2_HC_PIPE_NUM                      (USBH2_HC_ENDPOINT_NUM)
 #endif
-#ifndef USBH2_HC_OHCI_PIPE_NUM
-#define USBH2_HC_OHCI_PIPE_NUM                 (USBH2_HC_OHCI_ENDPOINT_NUM)
-#endif
-#ifndef USBH2_HC_EHCI_PIPE_NUM
-#define USBH2_HC_EHCI_PIPE_NUM                 (USBH2_HC_EHCI_ENDPOINT_NUM)
-#endif
 
 #ifndef USBH2_HC_POWER
 #define USBH2_HC_POWER                         (500U)
-#endif
-#ifndef USBH2_HC_OHCI_POWER
-#define USBH2_HC_OHCI_POWER                    (500U)
-#endif
-#ifndef USBH2_HC_EHCI_POWER
-#define USBH2_HC_EHCI_POWER                    (500U)
 #endif
 
 #ifndef USBH2_CORE_THREAD_STACK_SIZE
@@ -104,21 +68,9 @@
 #ifndef USBH3_HC_PIPE_NUM
 #define USBH3_HC_PIPE_NUM                      (USBH3_HC_ENDPOINT_NUM)
 #endif
-#ifndef USBH3_HC_OHCI_PIPE_NUM
-#define USBH3_HC_OHCI_PIPE_NUM                 (USBH3_HC_OHCI_ENDPOINT_NUM)
-#endif
-#ifndef USBH3_HC_EHCI_PIPE_NUM
-#define USBH3_HC_EHCI_PIPE_NUM                 (USBH3_HC_EHCI_ENDPOINT_NUM)
-#endif
 
 #ifndef USBH3_HC_POWER
 #define USBH3_HC_POWER                         (500U)
-#endif
-#ifndef USBH3_HC_OHCI_POWER
-#define USBH3_HC_OHCI_POWER                    (500U)
-#endif
-#ifndef USBH3_HC_EHCI_POWER
-#define USBH3_HC_EHCI_POWER                    (500U)
 #endif
 
 #ifndef USBH3_CORE_THREAD_STACK_SIZE

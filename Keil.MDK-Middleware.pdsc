@@ -31,6 +31,7 @@
       - changed source config files to headers
       - removed support for legacy Arm Compiler 5
       - removed support for CMSIS-RTOS version 1
+      - USB Host: removed OHCI and EHCI drivers (moved to CMSIS-Driver pack)
     </release>
     <release version="7.17.0" date="2024-01-17">
       Network Component Version 7.19.0
@@ -1477,8 +1478,6 @@
           <file category="source" name="USB/Source/usbh_lib_core.c"/>
           <file category="source" name="USB/Source/usbh_lib_mem.c"/>
           <file category="source" name="USB/Source/usbh_lib_drv.c"/>
-          <file category="source" name="USB/Source/usbh_lib_ohci.c"/>
-          <file category="source" name="USB/Source/usbh_lib_ehci_tt.c"/>
         </files>
       </component>
       <component Cgroup="Host" Csub="HID" condition="USB Core and Host Instance and Host Driver">

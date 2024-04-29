@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2021 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    rl_usbh_lib.h
  * Purpose: USB Host header file
@@ -143,39 +143,6 @@ typedef struct {
 typedef struct {
   uint16_t              max_pipe;                           ///< maximum Pipes
 } const USBH_HC_t;
-
-/// Structure containing configuration values for OHCI Compliant Controller
-typedef struct {
-  uint32_t             *ptr_OHCI;                           ///< pointer to memory mapped reg base address
-  uint16_t              max_ED;                             ///< maximum Endpoint Descriptors
-  uint16_t              max_TD;                             ///< maximum Transfer Descriptors
-  uint16_t              max_ITD;                            ///< maximum Isochronous Transfer Descriptors
-  uint16_t              pad0;                               ///< explicit padding
-  uint32_t             *ptr_HCCA;                           ///< pointer to HCCA memory start
-  uint32_t             *ptr_ED;                             ///< pointer to ED memory start
-  uint32_t             *ptr_TD;                             ///< pointer to TD memory start
-  uint32_t             *ptr_ITD;                            ///< pointer to ITD memory start
-  USBH_TRANSFER_INFO_t *ptr_TI;                             ///< pointer to Transfer Info (TI) array start
-} const USBH_OHCI_t;
-
-/// Structure containing configuration values for EHCI Compliant Controller
-typedef struct {
-  uint32_t             *ptr_EHCI;                           ///< pointer to memory mapped reg base address
-  uint16_t              max_qH;                             ///< maximum queue Heads
-  uint16_t              max_qTD;                            ///< maximum queue Transfer Descriptors
-  uint16_t              max_iTD;                            ///< maximum Isochronous Transfer Descriptors
-  uint16_t              max_siTD;                           ///< maximum split Isochronous Transfer Descriptors
-  uint16_t              max_FSTN;                           ///< maximum periodic Frame Span Traversal Nodes
-  uint16_t              pad0;                               ///< explicit padding
-  uint32_t             *ptr_PFL;                            ///< pointer to Periodic Frame List memory
-  uint32_t             *ptr_qH;                             ///< pointer to qH memory start
-  uint32_t             *ptr_qTD;                            ///< pointer to qTD memory start
-  uint32_t             *ptr_iTD;                            ///< pointer to iTD memory start
-  uint32_t             *ptr_siTD;                           ///< pointer to siTD memory start
-  uint32_t             *ptr_FSTN;                           ///< pointer to FSTN memory start
-  USBH_TRANSFER_INFO_t *ptr_TI;                             ///< pointer to Transfer Info (TI) array start
-  USBH_PipeEventInfo_t *ptr_PEI;                            ///< pointer to Pipe Event Info (PEI)
-} const USBH_EHCI_t;
 
 /// Host Controller Instance (HCI) structure
 typedef struct {
