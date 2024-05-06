@@ -139,12 +139,7 @@ typedef struct {
   USBH_PipeEvent_t      cb_pipe_event;                      ///< pipe event callback
 } USBH_PIPE;
 
-/// Structure containing configuration values for Custom Controller Interface
-typedef struct {
-  uint16_t              max_pipe;                           ///< maximum Pipes
-} const USBH_HC_t;
-
-/// Host Controller Instance (HCI) structure
+/// Host Controller (HC) structure
 typedef struct {
   uint16_t              init;                               ///< initialized status
   uint16_t              port_con;                           ///< port connected map in software
@@ -164,7 +159,7 @@ typedef struct {
   uint16_t              debounce_max_countdown;             ///< de-bounce maximum countdown counter
   uint32_t              dev_addr_mask[4];                   ///< mask of used device addresses
   USBH_PIPE_HANDLE      def_pipe_hndl;                      ///< default pipe handle
-} USBH_HCI;
+} USBH_HC;
 
 /// Device (DEV) instance structure
 typedef struct {

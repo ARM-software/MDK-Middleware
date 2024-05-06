@@ -947,8 +947,8 @@
       <member name="recovery_thread_id"           type="uint32_t"               offset="24"  info="Thread ID of thread that activated Recovery"/>
     </typedef>
 
-    <!-- USB Host Controller Instance Runtime Structure -->
-    <typedef  name="USBH_HCI"                     info="USB Host Controller Instance Runtime Structure" size="124">
+    <!-- USB Host Controller Runtime Structure -->
+    <typedef  name="USBH_HC"                      info="USB Host Controller Runtime Structure" size="124">
       <member name="init"                         type="uint16_t"               offset="0"   info="Initialized status"/>
       <member name="port_con"                     type="uint16_t"               offset="2"   info="Port connected map in software"/>
       <member name="port_discon"                  type="uint16_t"               offset="4"   info="Port disconnect map in software"/>

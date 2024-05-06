@@ -60,7 +60,7 @@ uint32_t USBH_GetVersion (void) {
 /// \param[in]     ctrl                 index of USB Host controller.
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 usbStatus USBH_Initialize (uint8_t ctrl) {
-  USBH_HCI  *ptr_hci;
+  USBH_HC   *ptr_hc;
   uint32_t   port_num;
   uint8_t    port;
   usbStatus  status;
@@ -82,15 +82,15 @@ usbStatus USBH_Initialize (uint8_t ctrl) {
     goto exit;
   }
 
-  ptr_hci = &usbh_hci[ctrl];
-  if (ptr_hci->init != 0U) {
+  ptr_hc = &usbh_hc[ctrl];
+  if (ptr_hc->init != 0U) {
     return usbOK;
   }
 
   usbh_drv_version[ctrl]  = USBH_DriverGetVersion      (ctrl);
   usbh_capabilities[ctrl] = USBH_DriverGetCapabilities (ctrl);
 
-  memset ((void *)ptr_hci,             0, sizeof(USBH_HCI));
+  memset ((void *)ptr_hc,              0, sizeof(USBH_HC));
   memset ((void *)usbh_pipe_ptr[ctrl], 0, (*usbh_pipe_num_ptr[ctrl]) * sizeof (USBH_PIPE));
 
   if (usbh_driver_semaphore_id[ctrl] == NULL) {
@@ -157,12 +157,12 @@ usbStatus USBH_Initialize (uint8_t ctrl) {
   if (port_num == 0U) {
     port_num = 1U;
   }
-  ptr_hci->port_mem_max = USBH_MemoryGetPoolSize(ctrl) / port_num;
+  ptr_hc->port_mem_max = USBH_MemoryGetPoolSize(ctrl) / port_num;
   (void)USBH_Delay (500U);              // Delay for VBUS high to stabilize
 
 cleanup_and_exit:
   if (status == usbOK) {
-    ptr_hci->init = 1U;
+    ptr_hc->init = 1U;
   } else {
     if (usbh_core_thread_id[ctrl] != NULL) {
       (void)USBH_ThreadTerminate (usbh_core_thread_id[ctrl]);
@@ -195,7 +195,7 @@ exit:
 /// \param[in]     ctrl                 index of USB Host controller.
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 usbStatus USBH_Uninitialize (uint8_t ctrl) {
-  USBH_HCI  *ptr_hci;
+  USBH_HC   *ptr_hc;
   uint8_t    port;
   usbStatus  status, first_err_status;
 
@@ -206,8 +206,8 @@ usbStatus USBH_Uninitialize (uint8_t ctrl) {
     goto exit;
   }
 
-  ptr_hci = &usbh_hci[ctrl];
-  if (ptr_hci->init == 0U) {
+  ptr_hc = &usbh_hc[ctrl];
+  if (ptr_hc->init == 0U) {
     return usbOK;
   }
 
@@ -216,7 +216,7 @@ usbStatus USBH_Uninitialize (uint8_t ctrl) {
 
   for (port = 0U; port < 15U; port++) {
     if ((usbh_capabilities[ctrl].port_mask & (1UL << port)) != 0U) {
-      if ((ptr_hci->port_con & (1UL << port)) != 0U) {
+      if ((ptr_hc->port_con & (1UL << port)) != 0U) {
         // Uninitialize devices on active ports
         status = USBH_UninitializeDevices (ctrl, port);
         if ((status != usbOK) && (first_err_status == usbOK)) {
@@ -287,7 +287,7 @@ usbStatus USBH_Uninitialize (uint8_t ctrl) {
   }
 
   // Clear all runtime information
-  memset((void *)ptr_hci, 0, sizeof(USBH_HCI));
+  memset((void *)ptr_hc, 0, sizeof(USBH_HC));
 
   (void)USBH_Delay (100U);              // Delay 100 ms
 
@@ -781,7 +781,7 @@ usbStatus USBH_PipeReset (USBH_PIPE_HANDLE pipe_hndl) {
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 usbStatus USBH_PipeReceive (USBH_PIPE_HANDLE pipe_hndl, uint8_t *buf, uint32_t len) {
   const USBH_DEV           *ptr_dev;
-  const USBH_HCI           *ptr_hci;
+  const USBH_HC            *ptr_hc;
         USBH_PIPE          *ptr_pipe;
         uint32_t            event;
         ARM_USBH_EP_HANDLE  hw_handle;
@@ -817,7 +817,7 @@ usbStatus USBH_PipeReceive (USBH_PIPE_HANDLE pipe_hndl, uint8_t *buf, uint32_t l
 
   ptr_dev         = &usbh_dev[ptr_pipe->device];
   ctrl            =  ptr_dev->ctrl;
-  ptr_hci         = &usbh_hci[ctrl];
+  ptr_hc          = &usbh_hc[ctrl];
   hw_handle       =  ptr_pipe->hw_handle;
   max_packet_size =  ptr_pipe->wMaxPacketSize;
 
@@ -841,8 +841,8 @@ usbStatus USBH_PipeReceive (USBH_PIPE_HANDLE pipe_hndl, uint8_t *buf, uint32_t l
     }
     if (alloc_mem) {
       // If memory for USB must be relocated, allocate maximum memory chunk for reception
-      if (max_data_len > ptr_hci->port_mem_max) {
-        max_data_len = ptr_hci->port_mem_max & (~((uint32_t)max_packet_size-1U));
+      if (max_data_len > ptr_hc->port_mem_max) {
+        max_data_len = ptr_hc->port_mem_max & (~((uint32_t)max_packet_size-1U));
       }
       do {
         mstatus = USBH_MemoryAllocate (ctrl, (uint8_t **)((uint32_t)&ptr_data), max_data_len);
@@ -929,13 +929,13 @@ transfer_data:
           if (event != 0U) {                                            // Handle pipe event
             if ((event & (~ARM_USBH_PIPE_EVENT_MASK)) != 0U) {          // If port event happened also resend it to thread and stop current transfer
               (void)USBH_ThreadFlagsSet (ptr_pipe->thread_id, event & (~ARM_USBH_PIPE_EVENT_MASK));
-              if (ptr_hci->port_lock != 0U) {
-                if ((ptr_hci->port_event[ptr_hci->port_lock - 1U]) != 0U) {
+              if (ptr_hc->port_lock != 0U) {
+                if ((ptr_hc->port_event[ptr_hc->port_lock - 1U]) != 0U) {
                   status = usbTransferError;
                   goto done;
                 }
               } else {
-                if ((ptr_hci->port_event[ptr_dev->hub_port - 1U]) != 0U) {
+                if ((ptr_hc->port_event[ptr_dev->hub_port - 1U]) != 0U) {
                   status = usbTransferError;
                   goto done;
                 }
@@ -1053,7 +1053,7 @@ uint32_t USBH_PipeReceiveGetResult (USBH_PIPE_HANDLE pipe_hndl) {
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 usbStatus USBH_PipeSend (USBH_PIPE_HANDLE pipe_hndl, const uint8_t *buf, uint32_t len) {
   const USBH_DEV           *ptr_dev;
-  const USBH_HCI           *ptr_hci;
+  const USBH_HC            *ptr_hc;
         USBH_PIPE          *ptr_pipe;
         uint32_t            event;
         ARM_USBH_EP_HANDLE  hw_handle;
@@ -1090,7 +1090,7 @@ usbStatus USBH_PipeSend (USBH_PIPE_HANDLE pipe_hndl, const uint8_t *buf, uint32_
 
   ptr_dev         = &usbh_dev[ptr_pipe->device];
   ctrl            =  ptr_dev->ctrl;
-  ptr_hci         = &usbh_hci[ctrl];
+  ptr_hc          = &usbh_hc[ctrl];
   hw_handle       =  ptr_pipe->hw_handle;
   max_packet_size =  ptr_pipe->wMaxPacketSize;
 
@@ -1114,8 +1114,8 @@ usbStatus USBH_PipeSend (USBH_PIPE_HANDLE pipe_hndl, const uint8_t *buf, uint32_
     }
     if (alloc_mem) {
       // If memory for USB must be relocated, allocate maximum memory chunk for transmission
-      if (max_data_len > ptr_hci->port_mem_max) {
-        max_data_len = ptr_hci->port_mem_max & (~((uint32_t)max_packet_size-1U));
+      if (max_data_len > ptr_hc->port_mem_max) {
+        max_data_len = ptr_hc->port_mem_max & (~((uint32_t)max_packet_size-1U));
       }
       do {
         mstatus = USBH_MemoryAllocate (ctrl, (uint8_t **)((uint32_t)&ptr_data), max_data_len);
@@ -1207,13 +1207,13 @@ transfer_data:
           if (event != 0U) {                                            // Handle pipe event
             if ((event & (~ARM_USBH_PIPE_EVENT_MASK)) != 0U) {          // If port event happened also resend it to thread and stop current transfer
               (void)USBH_ThreadFlagsSet (ptr_pipe->thread_id, event & (~ARM_USBH_PIPE_EVENT_MASK));
-              if (ptr_hci->port_lock != 0U) {
-                if ((ptr_hci->port_event[ptr_hci->port_lock - 1U]) != 0U) {
+              if (ptr_hc->port_lock != 0U) {
+                if ((ptr_hc->port_event[ptr_hc->port_lock - 1U]) != 0U) {
                   status = usbTransferError;
                   goto done;
                 }
               } else {
-                if ((ptr_hci->port_event[ptr_dev->hub_port - 1U]) != 0U) {
+                if ((ptr_hc->port_event[ptr_dev->hub_port - 1U]) != 0U) {
                   status = usbTransferError;
                   goto done;
                 }
@@ -1417,7 +1417,7 @@ usbStatus USBH_ControlTransfer (uint8_t device, const USB_SETUP_PACKET *setup_pa
         status    = usbMutexError;
       } else {
         status    = USBH_DefaultPipeModify (ctrl, device);
-        pipe_hndl = usbh_hci[ctrl].def_pipe_hndl;
+        pipe_hndl = usbh_hc[ctrl].def_pipe_hndl;
 
         if (status == usbOK) {
           retry = 3U;
@@ -2153,19 +2153,19 @@ usbStatus USBH_MemoryFree (uint8_t ctrl, uint8_t *ptr) {
 /// \param[in]     port                 port index (0 .. 127).
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 usbStatus USBH_RecoverDevice (USBH_DEV *ptr_dev) {
-  USBH_HCI *ptr_hci;
+  USBH_HC  *ptr_hc;
   uint32_t  event;
   uint8_t   ctrl, port;
 
   ctrl    =  ptr_dev->ctrl;
   port    =  ptr_dev->hub_port;
-  ptr_hci = &usbh_hci[ctrl];
+  ptr_hc  = &usbh_hc[ctrl];
 
   ptr_dev->recovery_thread_id = USBH_ThreadGetHandle ();
-  while (ptr_hci->port_lock != 0U) {
+  while (ptr_hc->port_lock != 0U) {
     (void)USBH_Delay (1U);
   }
-  ptr_hci->port_event[port] |= ARM_USBH_EVENT_CORE_DO_RECOVERY;
+  ptr_hc->port_event[port] |= ARM_USBH_EVENT_CORE_DO_RECOVERY;
   (void)USBH_ThreadFlagsSet (usbh_core_thread_id[ctrl], ARM_USBH_EVENT_PORT);
 
   event = USBH_ThreadFlagsWait (5000U);     // Wait max 5 seconds for recovery, as device 
@@ -2187,7 +2187,7 @@ usbStatus USBH_RecoverDevice (USBH_DEV *ptr_dev) {
 /// \param[in]     arg                  index (instance) of USB Host controller.
 /// \return                             none.
 void USBH_ConnectDebounce (void const *arg){
-  USBH_HCI            *ptr_hci;
+  USBH_HC             *ptr_hc;
   ARM_USBH_PORT_STATE  port_state;
   uint8_t              instance;
   uint16_t             port_mask;
@@ -2198,54 +2198,54 @@ void USBH_ConnectDebounce (void const *arg){
     return;
   }
 
-  ptr_hci   = &usbh_hci[instance];
+  ptr_hc    = &usbh_hc[instance];
   port_mask =  usbh_capabilities[instance].port_mask;
 
-  if (ptr_hci->debounce_restart != 0U) {
-    ptr_hci->debounce_restart       = 0U;
-    ptr_hci->debounce_countdown     = usbh_debounce_in_ms[instance] / 8U;
-    ptr_hci->debounce_max_countdown = usbh_debounce_in_ms[instance] / 4U;
+  if (ptr_hc->debounce_restart != 0U) {
+    ptr_hc->debounce_restart       = 0U;
+    ptr_hc->debounce_countdown     = usbh_debounce_in_ms[instance] / 8U;
+    ptr_hc->debounce_max_countdown = usbh_debounce_in_ms[instance] / 4U;
   }
-  if (ptr_hci->debounce_countdown != 0U) {
-    ptr_hci->debounce_countdown--;
+  if (ptr_hc->debounce_countdown != 0U) {
+    ptr_hc->debounce_countdown--;
   }
-  if (ptr_hci->debounce_max_countdown != 0U) {
-    ptr_hci->debounce_max_countdown--;
+  if (ptr_hc->debounce_max_countdown != 0U) {
+    ptr_hc->debounce_max_countdown--;
   }
 
   for (port = 0U; port < 15U; port++) {
-    if (((port_mask >> port) == 0U) || ((ptr_hci->port_debounce >> port) == 0U)) {
+    if (((port_mask >> port) == 0U) || ((ptr_hc->port_debounce >> port) == 0U)) {
       break;
     }
     port_state = USBH_DriverPortGetState (instance, port);
-    if (((ptr_hci->port_debounce >> port) & 1U) != 0U) {
-      if (port_state.connected == ((ptr_hci->port_con >> port) & 1U)) {
+    if (((ptr_hc->port_debounce >> port) & 1U) != 0U) {
+      if (port_state.connected == ((ptr_hc->port_con >> port) & 1U)) {
         // If debouncing port state changed reload debouncing countdown value
-        ptr_hci->debounce_countdown = usbh_debounce_in_ms[instance] / 10U;
+        ptr_hc->debounce_countdown = usbh_debounce_in_ms[instance] / 10U;
       }
     }
   }
 
-  if (ptr_hci->debounce_max_countdown == 0U) {
-    ptr_hci->port_debounce = 0U;
+  if (ptr_hc->debounce_max_countdown == 0U) {
+    ptr_hc->port_debounce = 0U;
     return;
   }
-  if (ptr_hci->debounce_countdown == 0U) {
+  if (ptr_hc->debounce_countdown == 0U) {
     for (port = 0U; port < 15U; port++) {
-      if (((port_mask >> port) == 0U) || ((ptr_hci->port_debounce >> port) == 0U)) {
+      if (((port_mask >> port) == 0U) || ((ptr_hc->port_debounce >> port) == 0U)) {
         break;
       }
       port_state = USBH_DriverPortGetState (instance, port);
-      if (((ptr_hci->port_debounce >> port) & 1U) != 0U) {
-        if ((port_state.connected != 0U) && ((((ptr_hci->port_con >> port) & 1U)) == 0U)) {
-          ptr_hci->port_event[port] |= ARM_USBH_EVENT_CORE_CONNECT_DEBOUNCED;
+      if (((ptr_hc->port_debounce >> port) & 1U) != 0U) {
+        if ((port_state.connected != 0U) && ((((ptr_hc->port_con >> port) & 1U)) == 0U)) {
+          ptr_hc->port_event[port] |= ARM_USBH_EVENT_CORE_CONNECT_DEBOUNCED;
           (void)USBH_ThreadFlagsSet (usbh_core_thread_id[instance], ARM_USBH_EVENT_PORT);
         }
       }
     }
-    ptr_hci->port_debounce = 0U;
+    ptr_hc->port_debounce = 0U;
   }
-  if (ptr_hci->port_debounce != 0U) {
+  if (ptr_hc->port_debounce != 0U) {
     (void)USBH_TimerStart (usbh_debounce_timer_id[instance], 12U);      // Restart timer
   }
 }
@@ -2350,7 +2350,7 @@ static usbStatus USBH_DefaultPipeCreate (uint8_t ctrl) {
         ptr_pipe->locked             = 0U;
         ptr_pipe->transfer_active    = 0U;
         ptr_pipe->transferred        = 0U;
-        usbh_hci[ctrl].def_pipe_hndl = (USBH_PIPE_HANDLE)ptr_pipe;
+        usbh_hc[ctrl].def_pipe_hndl = (USBH_PIPE_HANDLE)ptr_pipe;
       } else {
         status = usbDriverError;
       }
@@ -2373,7 +2373,7 @@ static usbStatus USBH_DefaultPipeDelete (uint8_t ctrl) {
 
   status = CheckController (ctrl);
   if (status == usbOK) {
-    ptr_pipe = (USBH_PIPE *)usbh_hci[ctrl].def_pipe_hndl;
+    ptr_pipe = (USBH_PIPE *)usbh_hc[ctrl].def_pipe_hndl;
     EvrUSBH_Core_PipeDelete((USBH_PIPE_HANDLE)ptr_pipe);
     if (ptr_pipe != NULL) {
       status  = USBH_DriverPipeTransferAbort (ctrl, ptr_pipe->hw_handle);
@@ -2405,7 +2405,7 @@ static usbStatus USBH_DefaultPipeModify (uint8_t ctrl, uint8_t device) {
         USBH_PIPE *ptr_pipe;
         usbStatus  status;
 
-  ptr_pipe = (USBH_PIPE *)usbh_hci[ctrl].def_pipe_hndl;
+  ptr_pipe = (USBH_PIPE *)usbh_hc[ctrl].def_pipe_hndl;
   if (ptr_pipe == NULL) {
     return usbControllerError;
   }
@@ -2428,7 +2428,7 @@ static usbStatus USBH_DefaultPipeModify (uint8_t ctrl, uint8_t device) {
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 static usbStatus USBH_PipeDoPing (USBH_PIPE_HANDLE pipe_hndl) {
   const USBH_DEV           *ptr_dev;
-  const USBH_HCI           *ptr_hci;
+  const USBH_HC            *ptr_hc;
         USBH_PIPE          *ptr_pipe;
         uint32_t            event;
         ARM_USBH_EP_HANDLE  hw_handle;
@@ -2445,7 +2445,7 @@ static usbStatus USBH_PipeDoPing (USBH_PIPE_HANDLE pipe_hndl) {
   device    =  ptr_pipe->device;
   ptr_dev   = &usbh_dev[device];
   ctrl      =  ptr_dev->ctrl;
-  ptr_hci   = &usbh_hci[ctrl];
+  ptr_hc    = &usbh_hc[ctrl];
   hw_handle =  ptr_pipe->hw_handle;
 
   if (ptr_pipe->thread_id != NULL) {
@@ -2465,13 +2465,13 @@ static usbStatus USBH_PipeDoPing (USBH_PIPE_HANDLE pipe_hndl) {
         if (event != 0U) {                                              // Handle pipe event
           if ((event & (~ARM_USBH_PIPE_EVENT_MASK)) != 0U) {            // If port event happened also resend it to thread and stop current transfer
             (void)USBH_ThreadFlagsSet (ptr_pipe->thread_id, event & (~ARM_USBH_PIPE_EVENT_MASK));
-            if (ptr_hci->port_lock != 0U) {
-              if ((ptr_hci->port_event[ptr_hci->port_lock - 1U]) != 0U) {
+            if (ptr_hc->port_lock != 0U) {
+              if ((ptr_hc->port_event[ptr_hc->port_lock - 1U]) != 0U) {
                 status = usbTransferError;
                 goto done;
               }
             } else {
-              if ((ptr_hci->port_event[ptr_dev->hub_port - 1U]) != 0U) {
+              if ((ptr_hc->port_event[ptr_dev->hub_port - 1U]) != 0U) {
                 status = usbTransferError;
                 goto done;
               }
@@ -2520,7 +2520,7 @@ done:
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 static usbStatus USBH_PipeSendSetup (USBH_PIPE_HANDLE pipe_hndl, const USB_SETUP_PACKET *setup_packet) {
   const USBH_DEV           *ptr_dev;
-  const USBH_HCI           *ptr_hci;
+  const USBH_HC            *ptr_hc;
         USBH_PIPE          *ptr_pipe;
         uint32_t            event;
         ARM_USBH_EP_HANDLE  hw_handle;
@@ -2547,7 +2547,7 @@ static usbStatus USBH_PipeSendSetup (USBH_PIPE_HANDLE pipe_hndl, const USB_SETUP
 
   ptr_dev   = &usbh_dev[ptr_pipe->device];
   ctrl      =  ptr_dev->ctrl;
-  ptr_hci   = &usbh_hci[ctrl];
+  ptr_hc    = &usbh_hc[ctrl];
   hw_handle =  ptr_pipe->hw_handle;
 
   ptr_pipe->locked = 1U;
@@ -2588,13 +2588,13 @@ static usbStatus USBH_PipeSendSetup (USBH_PIPE_HANDLE pipe_hndl, const USB_SETUP
       if (event != 0U) {                                                // Handle pipe event
         if ((event & (~ARM_USBH_PIPE_EVENT_MASK)) != 0U) {              // If port event happened also resend it to thread and stop current transfer
           (void)USBH_ThreadFlagsSet (ptr_pipe->thread_id, event & (~ARM_USBH_PIPE_EVENT_MASK));
-          if (ptr_hci->port_lock != 0U) {
-            if ((ptr_hci->port_event[ptr_hci->port_lock - 1U]) != 0U) {
+          if (ptr_hc->port_lock != 0U) {
+            if ((ptr_hc->port_event[ptr_hc->port_lock - 1U]) != 0U) {
               status = usbTransferError;
               goto done;
             }
           } else {
-            if ((ptr_hci->port_event[ptr_dev->hub_port - 1U]) != 0U) {
+            if ((ptr_hc->port_event[ptr_dev->hub_port - 1U]) != 0U) {
               status = usbTransferError;
               goto done;
             }
@@ -2677,7 +2677,7 @@ static usbStatus USBH_PrepareEnumerateDevice (uint8_t ctrl, uint8_t port, uint8_
   }
 
   usbh_dev[device].state.in_use = 1U;
-  usbh_hci[ctrl].device = device;             // Device being enumerated
+  usbh_hc[ctrl].device = device;              // Device being enumerated
 
   // Initialize default device communication parameters
   usbh_dev[device].ctrl              = ctrl;
@@ -2714,7 +2714,7 @@ static usbStatus USBH_PrepareEnumerateDevice (uint8_t ctrl, uint8_t port, uint8_
 /// \param[in]     speed                device speed.
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 static usbStatus USBH_EnumerateDevice (uint8_t ctrl, uint8_t port, uint8_t speed) {
-        USBH_HCI                     *ptr_hci;
+        USBH_HC                      *ptr_hc;
         USBH_DEV                     *ptr_dev;
         USB_DEVICE_DESCRIPTOR        *ptr_dev_desc;
         USB_CONFIGURATION_DESCRIPTOR *ptr_cfg_desc;
@@ -2733,29 +2733,29 @@ static usbStatus USBH_EnumerateDevice (uint8_t ctrl, uint8_t port, uint8_t speed
     return status;
   }
 
-  ptr_hci = &usbh_hci[ctrl];
+  ptr_hc = &usbh_hc[ctrl];
   ptr_dev_desc = NULL;
   ptr_cfg_desc = NULL;
 
-  len = ((USBH_PIPE *)(ptr_hci->def_pipe_hndl))->wMaxPacketSize;
+  len = ((USBH_PIPE *)(ptr_hc->def_pipe_hndl))->wMaxPacketSize;
 
   // Check if there is an available address for new device
-  if (((ptr_hci->dev_addr_mask[0] &  0xFFFFFFFEU) == 0xFFFFFFFEU) &&
-       (ptr_hci->dev_addr_mask[1] == 0xFFFFFFFFU)                 &&
-       (ptr_hci->dev_addr_mask[2] == 0xFFFFFFFFU)                 &&
-       (ptr_hci->dev_addr_mask[3] == 0xFFFFFFFFU)) {
+  if (((ptr_hc->dev_addr_mask[0] &  0xFFFFFFFEU) == 0xFFFFFFFEU) &&
+       (ptr_hc->dev_addr_mask[1] == 0xFFFFFFFFU)                 &&
+       (ptr_hc->dev_addr_mask[2] == 0xFFFFFFFFU)                 &&
+       (ptr_hc->dev_addr_mask[3] == 0xFFFFFFFFU)) {
     return usbDeviceError;
   }
 
   // Find first free device address
-  dev_addr = (ptr_hci->last_dev_addr + 1U) & 0x7FU;
-  while (((ptr_hci->dev_addr_mask[dev_addr >> 5] & (1UL << (dev_addr & 0x1FU))) != 0U) || (dev_addr == 0U)) {
+  dev_addr = (ptr_hc->last_dev_addr + 1U) & 0x7FU;
+  while (((ptr_hc->dev_addr_mask[dev_addr >> 5] & (1UL << (dev_addr & 0x1FU))) != 0U) || (dev_addr == 0U)) {
     dev_addr++;
     dev_addr &= 0x7FU;
   }
-  ptr_hci->last_dev_addr = dev_addr;
+  ptr_hc->last_dev_addr = dev_addr;
 
-  device = usbh_hci[ctrl].device;
+  device = usbh_hc[ctrl].device;
 
   // 1. USB bus: Set Address
   status = USBH_DeviceRequest_SetAddress        (device, dev_addr);
@@ -2803,7 +2803,7 @@ static usbStatus USBH_EnumerateDevice (uint8_t ctrl, uint8_t port, uint8_t speed
   }
   status  = USBH_DeviceRequest_GetDescriptor    (device, USB_REQUEST_TO_DEVICE, USB_CONFIGURATION_DESCRIPTOR_TYPE, 0U, 0U, (uint8_t *)ptr_cfg_desc, len);
   if (status == usbOK) {
-    ptr_hci->dev_addr_mask[dev_addr >> 5] |= (1UL << (dev_addr & 0x1FU));
+    ptr_hc->dev_addr_mask[dev_addr >> 5] |= (1UL << (dev_addr & 0x1FU));
     ptr_desc                 = (uint8_t *)ptr_cfg_desc;
     ptr_desc                += (uint32_t)ptr_cfg_desc->bLength;
     ptr_if_desc              = (const USB_INTERFACE_DESCRIPTOR *)ptr_desc;
@@ -3019,7 +3019,7 @@ static uint8_t USBH_FindRecoveryDevice (uint8_t ctrl, uint8_t port) {
 /// \param[in]     port                 port index (0 .. 127).
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 static usbStatus USBH_RecoveryEnumerateDevice (uint8_t ctrl, uint8_t port) {
-  USBH_HCI                     *ptr_hci;
+  USBH_HC                      *ptr_hc;
   USBH_DEV                     *ptr_dev;
   USB_DEVICE_DESCRIPTOR        *ptr_dev_desc;
   USB_CONFIGURATION_DESCRIPTOR *ptr_cfg_desc;
@@ -3033,33 +3033,33 @@ static usbStatus USBH_RecoveryEnumerateDevice (uint8_t ctrl, uint8_t port) {
     return status;
   }
 
-  ptr_hci = &usbh_hci[ctrl];
+  ptr_hc = &usbh_hc[ctrl];
 
   device = USBH_FindRecoveryDevice (ctrl, port);
 
   // Clear previously used address
   if (device != 0xFFU) {
-    ptr_hci->dev_addr_mask[usbh_dev[device].dev_addr >> 5] |= (1UL << (usbh_dev[device].dev_addr & 0x1FU));
+    ptr_hc->dev_addr_mask[usbh_dev[device].dev_addr >> 5] |= (1UL << (usbh_dev[device].dev_addr & 0x1FU));
     ptr_dev = &usbh_dev[device];
   } else {
     return usbDeviceError;
   }
 
   // Check if there is an available address
-  if (((ptr_hci->dev_addr_mask[0] &  0xFFFFFFFEU) == 0xFFFFFFFEU) &&
-       (ptr_hci->dev_addr_mask[1] == 0xFFFFFFFFU)                 &&
-       (ptr_hci->dev_addr_mask[2] == 0xFFFFFFFFU)                 &&
-       (ptr_hci->dev_addr_mask[3] == 0xFFFFFFFFU)) {
+  if (((ptr_hc->dev_addr_mask[0] &  0xFFFFFFFEU) == 0xFFFFFFFEU) &&
+       (ptr_hc->dev_addr_mask[1] == 0xFFFFFFFFU)                 &&
+       (ptr_hc->dev_addr_mask[2] == 0xFFFFFFFFU)                 &&
+       (ptr_hc->dev_addr_mask[3] == 0xFFFFFFFFU)) {
     return usbDeviceError;
   }
 
   // Find first free device address
-  dev_addr = (ptr_hci->last_dev_addr + 1U) & 0x7FU;
-  while (((ptr_hci->dev_addr_mask[dev_addr >> 5] & (1UL << (dev_addr & 0x1FU))) != 0U) || (dev_addr == 0U)) {
+  dev_addr = (ptr_hc->last_dev_addr + 1U) & 0x7FU;
+  while (((ptr_hc->dev_addr_mask[dev_addr >> 5] & (1UL << (dev_addr & 0x1FU))) != 0U) || (dev_addr == 0U)) {
     dev_addr++;
     dev_addr &= 0x7FU;
   }
-  ptr_hci->last_dev_addr = dev_addr;
+  ptr_hc->last_dev_addr = dev_addr;
 
   // Reset address to 0 to restart communication with recovery device
   ptr_dev->dev_addr = 0U;
@@ -3114,14 +3114,14 @@ static usbStatus USBH_RecoveryEnumerateDevice (uint8_t ctrl, uint8_t port) {
     return status;
   }
 
-  ptr_hci->dev_addr_mask[dev_addr >> 5] |= (1UL << (dev_addr & 0x1FU));
+  ptr_hc->dev_addr_mask[dev_addr >> 5] |= (1UL << (dev_addr & 0x1FU));
   (void)USBH_Delay (10U);
 
   // 5. USB bus: Set Configuration (1)
   status = USBH_DeviceRequest_SetConfiguration  (device, 1U);
   (void)USBH_Delay (50U);
 
-  ptr_hci->device = device;
+  ptr_hc->device = device;
 
   return status;
 }
@@ -3131,7 +3131,7 @@ static usbStatus USBH_RecoveryEnumerateDevice (uint8_t ctrl, uint8_t port) {
 /// \param[in]     port                 port index (0 .. 127).
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 static usbStatus USBH_UninitializeDevices (uint8_t ctrl, uint8_t port) {
-  USBH_HCI *ptr_hci;
+  USBH_HC  *ptr_hc;
   USBH_DEV *ptr_dev;
   uint8_t   device;
   uint8_t   dev_addr;
@@ -3143,7 +3143,7 @@ static usbStatus USBH_UninitializeDevices (uint8_t ctrl, uint8_t port) {
     goto exit;
   }
 
-  ptr_hci = &usbh_hci[ctrl];
+  ptr_hc  = &usbh_hc[ctrl];
   ptr_dev = &usbh_dev[0];
   status  = usbOK;
 
@@ -3201,7 +3201,7 @@ static usbStatus USBH_UninitializeDevices (uint8_t ctrl, uint8_t port) {
         }
       }
       memset ((void *)ptr_dev, 0, sizeof (USBH_DEV));
-      ptr_hci->dev_addr_mask[dev_addr >> 5] &= ~(1UL << (dev_addr & 0x1FU));
+      ptr_hc->dev_addr_mask[dev_addr >> 5] &= ~(1UL << (dev_addr & 0x1FU));
     }
     ptr_dev++;
   }
@@ -3216,7 +3216,7 @@ exit:
 /// \param[in]     event                USB Host event.
 /// \return                             none.
 static void USBH_Engine (uint8_t ctrl, uint8_t port, uint32_t event) {
-  USBH_HCI            *ptr_hci;
+  USBH_HC             *ptr_hc;
   ARM_USBH_PORT_STATE  port_state;
   uint8_t             *ptr_port_state;
   uint8_t              device, loop_cnt;
@@ -3227,8 +3227,8 @@ static void USBH_Engine (uint8_t ctrl, uint8_t port, uint32_t event) {
     return;
   }
 
-  ptr_hci        = &usbh_hci[ctrl];
-  ptr_port_state = &ptr_hci->port_state[port];
+  ptr_hc         = &usbh_hc[ctrl];
+  ptr_port_state = &ptr_hc->port_state[port];
 
   EvrUSBH_Core_Engine(ctrl, port, event, *ptr_port_state);
 
@@ -3243,26 +3243,26 @@ static void USBH_Engine (uint8_t ctrl, uint8_t port, uint32_t event) {
         ((*ptr_port_state != 0U) &&                             // (If port is in any state except Idle and 
         (USBH_DriverPortGetState (ctrl, port).connected == 0U))) {      // if state is not connected)
       if ((*ptr_port_state >= 7U) && (*ptr_port_state <= 10U)){ // If state was during reset recovery
-        device = usbh_hci[ctrl].device;
+        device = usbh_hc[ctrl].device;
         (void)USBH_ThreadFlagsSet (usbh_dev[device].recovery_thread_id, ARM_USBH_EVENT_CORE_RECOVERY_FAIL);
       }
-      ptr_hci->port_con    &= (uint16_t)(~(1UL << port));
-      ptr_hci->port_discon &= (uint16_t)(~(1UL << port));
-      ptr_hci->port_rst     = 0U;
+      ptr_hc->port_con    &= (uint16_t)(~(1UL << port));
+      ptr_hc->port_discon &= (uint16_t)(~(1UL << port));
+      ptr_hc->port_rst     = 0U;
       (void)USBH_Delay      (100U);
       (void)USBH_UninitializeDevices (ctrl, port);
       *ptr_port_state = 0U;                                     // => Idle
 
       // Unlock and force check if any other device is ready for enumeration
-      ptr_hci->port_lock    = 0U;
+      ptr_hc->port_lock    = 0U;
       (void)USBH_ThreadFlagsSet (usbh_core_thread_id[ctrl], ARM_USBH_EVENT_PORT);
       break;
     }
     switch (*ptr_port_state) {
       case 0:   // 0. Idle (check connection change)
-        if (((~(ptr_hci->port_con) & (1UL << port)) != 0U) && ((event & ARM_USBH_EVENT_CONNECT) != 0U)) {
-          ptr_hci->port_con   |= (uint16_t)(1UL <<  port);
-          ptr_hci->port_retry  = 3U;
+        if (((~(ptr_hc->port_con) & (1UL << port)) != 0U) && ((event & ARM_USBH_EVENT_CONNECT) != 0U)) {
+          ptr_hc->port_con   |= (uint16_t)(1UL <<  port);
+          ptr_hc->port_retry  = 3U;
           loop_cnt++;
           *ptr_port_state += 1U;
         }
@@ -3276,7 +3276,7 @@ static void USBH_Engine (uint8_t ctrl, uint8_t port, uint32_t event) {
         break;
       case 2:   // 2. Wait for 1st reset to finish
         if ((event & ARM_USBH_EVENT_RESET) != 0U) {             // If reset done
-          ptr_hci->port_rst = 0U;
+          ptr_hc->port_rst = 0U;
           (void)USBH_Delay (35U);
           (void)USBH_DriverPortSuspend (ctrl, port);            // Suspend port
           (void)USBH_Delay (100U);                              // for 100 ms
@@ -3297,7 +3297,7 @@ static void USBH_Engine (uint8_t ctrl, uint8_t port, uint32_t event) {
         break;
       case 4:   // 4. Wait for 2nd reset to finish
         if ((event & ARM_USBH_EVENT_RESET) != 0U) {             // If reset done
-          ptr_hci->port_rst = 0U;
+          ptr_hc->port_rst = 0U;
           (void)USBH_Delay (1600U);
           port_state = USBH_DriverPortGetState (ctrl, port);
           status = USBH_PrepareEnumerateDevice (ctrl, port, port_state.speed);
@@ -3305,8 +3305,8 @@ static void USBH_Engine (uint8_t ctrl, uint8_t port, uint32_t event) {
             *ptr_port_state += 1U;
           } else if (status == usbDeviceError) {                // If no available resource
             *ptr_port_state = 15U;                              // => Port active
-          } else if (ptr_hci->port_retry != 0U) {
-            ptr_hci->port_retry--;
+          } else if (ptr_hc->port_retry != 0U) {
+            ptr_hc->port_retry--;
             *ptr_port_state = 1U;                               // Repeat 1st reset
           } else {                                              // Pre-enumeration failed 3 times
             *ptr_port_state = 15U;                              // => Port active
@@ -3325,7 +3325,7 @@ static void USBH_Engine (uint8_t ctrl, uint8_t port, uint32_t event) {
         break;
       case 6:   // 6. Wait for 3rd reset to finish
         if ((event & ARM_USBH_EVENT_RESET) != 0U) {             // If reset done
-          ptr_hci->port_rst = 0U;
+          ptr_hc->port_rst = 0U;
           (void)USBH_Delay (250U);
           port_state = USBH_DriverPortGetState (ctrl, port);
           status = USBH_EnumerateDevice        (ctrl, port, port_state.speed);
@@ -3333,8 +3333,8 @@ static void USBH_Engine (uint8_t ctrl, uint8_t port, uint32_t event) {
               (status == usbUnsupportedClass) ||                // if driver not available
               (status == usbNotConfigured))    {                // if device was not configured successfully
             *ptr_port_state = 15U;                              // device enumerated ok => port active but not device
-          } else if (ptr_hci->port_retry != 0U) {
-            ptr_hci->port_retry--;
+          } else if (ptr_hc->port_retry != 0U) {
+            ptr_hc->port_retry--;
             *ptr_port_state = 1U;                               // Repeat 1st reset
           } else {                                              // Enumeration failed 3 times
             *ptr_port_state = 15U;                              // => Port active
@@ -3353,15 +3353,15 @@ static void USBH_Engine (uint8_t ctrl, uint8_t port, uint32_t event) {
         break;
       case 8:   // 8. Wait 1st recovery reset to finish
         if ((event & ARM_USBH_EVENT_RESET) != 0U) {             // If reset done
-          ptr_hci->port_rst = 0U;
+          ptr_hc->port_rst = 0U;
           (void)USBH_Delay (100U);
           status = USBH_RecoveryEnumerateDevice (ctrl, port);
           if ((status == usbOK)               ||                // If enumeration succeeded
               (status == usbUnsupportedClass) ||                // if driver not available
               (status == usbNotConfigured))    {                // if device was not configured successfully
             *ptr_port_state = 15U;                              // device enumerated ok => port active but not device
-          } else if (ptr_hci->port_retry != 0U) {
-            ptr_hci->port_retry--;
+          } else if (ptr_hc->port_retry != 0U) {
+            ptr_hc->port_retry--;
             *ptr_port_state = 7U;                               // Repeat 1st recovery reset
           } else {                                              // Enumeration failed 3 times
             *ptr_port_state = 15U;                              // => Port active
@@ -3380,15 +3380,15 @@ static void USBH_Engine (uint8_t ctrl, uint8_t port, uint32_t event) {
         break;
       case 10:  // 10. Wait 2nd recovery reset to finish
         if ((event & ARM_USBH_EVENT_RESET) != 0U) {             // If reset done
-          ptr_hci->port_rst = 0U;
+          ptr_hc->port_rst = 0U;
           (void)USBH_Delay (100U);
           status = USBH_RecoveryEnumerateDevice (ctrl, port);
-          device = usbh_hci[ctrl].device;
+          device = usbh_hc[ctrl].device;
           if (status == usbOK) {                                // If recovery succeeded
             (void)USBH_ThreadFlagsSet (usbh_dev[device].recovery_thread_id, ARM_USBH_EVENT_CORE_RECOVERY_OK);
             *ptr_port_state = 15U;                              // => Port active
-          } else if (ptr_hci->port_retry != 0U) {
-            ptr_hci->port_retry--;
+          } else if (ptr_hc->port_retry != 0U) {
+            ptr_hc->port_retry--;
             *ptr_port_state = 7U;                               // Repeat 1st recovery reset
           } else {                                              // If recovery enumeration failed
             if (device != 0xFFU) { 
@@ -3402,7 +3402,7 @@ static void USBH_Engine (uint8_t ctrl, uint8_t port, uint32_t event) {
         loop_cnt++;
         break;
       case 15:  // 15. Active state, connected and enumerated, device might be non-functional if it failed to enumerate in 3 retries
-        ptr_hci->port_lock = 0U;
+        ptr_hc->port_lock = 0U;
         (void)USBH_ThreadFlagsSet (usbh_core_thread_id[ctrl], ARM_USBH_EVENT_PORT);
         break;
       default:
@@ -3419,7 +3419,7 @@ static void USBH_Engine (uint8_t ctrl, uint8_t port, uint32_t event) {
 /// \brief Thread Function: USB Host Core
 /// \param[in]     arg                  index of USB Host controller.
 void USBH_Core_Thread (void *arg) {
-  USBH_HCI            *ptr_hci;
+  USBH_HC             *ptr_hc;
   ARM_USBH_PORT_STATE  port_state;
   uint32_t             event;
   uint32_t             millisec;
@@ -3437,7 +3437,7 @@ void USBH_Core_Thread (void *arg) {
     return;
   }
 
-  ptr_hci         = &usbh_hci[ctrl];
+  ptr_hc          = &usbh_hc[ctrl];
   port_mask       =  usbh_capabilities[ctrl].port_mask;
   millisec        =  0xFFFFFFFFU;
   polling_mask    =  0U;
@@ -3462,33 +3462,33 @@ void USBH_Core_Thread (void *arg) {
         if ((port_mask >> port) == 0U) {
           break;
         }
-        events = ptr_hci->port_event[port];
+        events = ptr_hc->port_event[port];
         if (events != 0U) {
-          if ((ptr_hci->port_lock != 0U) && (ptr_hci->port_lock != (port + 1U))) {
+          if ((ptr_hc->port_lock != 0U) && (ptr_hc->port_lock != (port + 1U))) {
             continue;
           }
-          ptr_hci->port_event[port] ^= events;
+          ptr_hc->port_event[port] ^= events;
           if ((events & ARM_USBH_EVENT_CORE_CONNECT_DEBOUNCED) != 0U) {
-            ptr_hci->port_lock  = port + 1U;
+            ptr_hc->port_lock  = port + 1U;
             USBH_Notify_Lib (ctrl, port, 255U, USBH_NOTIFY_CONNECT);
             USBH_Engine     (ctrl, port,       ARM_USBH_EVENT_CONNECT);
           }
           if ((events & ARM_USBH_EVENT_CONNECT) != 0U) {
-            if (((ptr_hci->port_con >> port) & 1U) == 0U) {
+            if (((ptr_hc->port_con >> port) & 1U) == 0U) {
               // If port status was inactive => start debounce
               port_debounce |= (uint16_t)(1UL << port);
             }
           }
           if ((events & ARM_USBH_EVENT_DISCONNECT) != 0U) {
-            if (((ptr_hci->port_con >> port) & 1U) != 0U) {
+            if (((ptr_hc->port_con >> port) & 1U) != 0U) {
               // If port status was active => send disconnect event
               USBH_Engine     (ctrl, port,       ARM_USBH_EVENT_DISCONNECT);
               USBH_Notify_Lib (ctrl, port, 255U, USBH_NOTIFY_DISCONNECT);
             }
           }
           if ((events & ARM_USBH_EVENT_OVERCURRENT) != 0U) {
-            if (((ptr_hci->port_oc >> port) & 1U) == 0U) {
-              ptr_hci->port_oc |= (uint16_t)(1UL << port);
+            if (((ptr_hc->port_oc >> port) & 1U) == 0U) {
+              ptr_hc->port_oc |= (uint16_t)(1UL << port);
               // If port overcurrent was not active => send overcurrent event
               (void)USBH_DriverPortVbusOnOff (ctrl, port, false);
               USBH_Engine                    (ctrl, port,       ARM_USBH_EVENT_OVERCURRENT);
@@ -3496,7 +3496,7 @@ void USBH_Core_Thread (void *arg) {
             }
           }
           if ((events & ARM_USBH_EVENT_RESET) != 0U) {
-            if (usbh_hci[ctrl].port_rst == (port + 1U)) {
+            if (usbh_hc[ctrl].port_rst == (port + 1U)) {
               USBH_Engine (ctrl, port, ARM_USBH_EVENT_RESET);
             }
           }
@@ -3504,7 +3504,7 @@ void USBH_Core_Thread (void *arg) {
             USBH_Notify_Lib (ctrl, port, 255U, USBH_NOTIFY_REMOTE_WAKEUP);
           }
           if ((events & ARM_USBH_EVENT_CORE_DO_RECOVERY) != 0U) {
-            ptr_hci->port_lock = port + 1U;
+            ptr_hc->port_lock = port + 1U;
             USBH_Engine (ctrl, port, ARM_USBH_EVENT_CORE_DO_RECOVERY);
           }
         }
@@ -3516,28 +3516,28 @@ void USBH_Core_Thread (void *arg) {
         }
         port_state = USBH_DriverPortGetState (ctrl, port);
         if ((polling_mask & 1U) != 0U) {
-          if ((port_state.connected != 0U) && (((ptr_hci->port_con >> port) & 1U) == 0U)) {
+          if ((port_state.connected != 0U) && (((ptr_hc->port_con >> port) & 1U) == 0U)) {
             // If port current status is connected and was inactive => start debounce
             port_debounce |= (uint16_t)(1UL << port);
           }
         }
         if ((polling_mask & (1UL << 1)) != 0U) {
-          if ((port_state.connected != 0U) && (((ptr_hci->port_con >> port) & 1U) != 0U)) {
+          if ((port_state.connected != 0U) && (((ptr_hc->port_con >> port) & 1U) != 0U)) {
             // If port current status is not connected and was active => send disconnect event
             USBH_Engine     (ctrl, port,       ARM_USBH_EVENT_DISCONNECT);
             USBH_Notify_Lib (ctrl, port, 255U, USBH_NOTIFY_DISCONNECT);
           }
         }
         if ((polling_mask & (1UL << 2)) != 0U) {
-          if ((port_state.overcurrent != 0U) && (((ptr_hci->port_oc >> port) & 1U) == 0U)) {
-            ptr_hci->port_oc |=  (uint16_t)(1UL << port);
+          if ((port_state.overcurrent != 0U) && (((ptr_hc->port_oc >> port) & 1U) == 0U)) {
+            ptr_hc->port_oc |=  (uint16_t)(1UL << port);
             // If port overcurrent is now active and not active => send overcurrent event
             (void)USBH_DriverPortVbusOnOff (ctrl, port, false);
             USBH_Engine                    (ctrl, port,       ARM_USBH_EVENT_OVERCURRENT);
             USBH_Notify_Lib                (ctrl, port, 255U, USBH_NOTIFY_OVERCURRENT);
           } else {
-            if ((port_state.overcurrent == 0U) && (((ptr_hci->port_oc >> port) & 1U) != 0U)) {
-              ptr_hci->port_oc &= (uint16_t)(~(1UL << port));
+            if ((port_state.overcurrent == 0U) && (((ptr_hc->port_oc >> port) & 1U) != 0U)) {
+              ptr_hc->port_oc &= (uint16_t)(~(1UL << port));
             }
           }
         }
@@ -3545,11 +3545,11 @@ void USBH_Core_Thread (void *arg) {
     }
     if (port_debounce != 0U) {
       start_timer = 0U;
-      if (ptr_hci->port_debounce == 0U) {
+      if (ptr_hc->port_debounce == 0U) {
         start_timer = 1U;
       }
-      ptr_hci->debounce_restart  = 1U;
-      ptr_hci->port_debounce    |= port_debounce;
+      ptr_hc->debounce_restart  = 1U;
+      ptr_hc->port_debounce    |= port_debounce;
       if (start_timer != 0U) {
         (void)USBH_TimerStart (usbh_debounce_timer_id[ctrl], 12U);
       }

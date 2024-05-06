@@ -198,7 +198,7 @@ usbStatus USBH_DriverPortReset (uint8_t ctrl, uint8_t port) {
     return usbDriverBusy;
   }
 
-  usbh_hci[ctrl].port_rst = port + 1U;
+  usbh_hc[ctrl].port_rst = port + 1U;
   retry = 3U;
   do {
     driver_status = (*usbh_hcd_ptr[ctrl])->PortReset (port);
@@ -300,7 +300,7 @@ ARM_USBH_PORT_STATE USBH_DriverPortGetState (uint8_t ctrl, uint8_t port) {
   ARM_USBH_PORT_STATE port_state;
 
   port_state = (*usbh_hcd_ptr[ctrl])->PortGetState (port);
-  if ((usbh_hci[ctrl].port_discon & (1UL << port)) != 0U) {
+  if ((usbh_hc[ctrl].port_discon & (1UL << port)) != 0U) {
     port_state.connected = 0U;
   }
 
@@ -604,20 +604,20 @@ uint16_t USBH_DriverGetFrameNumber (uint8_t ctrl) {
 /// \param[in]   port event \ref USBH_port_events
 /// \return      none
 void USBH_SignalPortEvent (uint8_t ctrl, uint8_t port, uint32_t event) {
-  USBH_HCI *ptr_hci;
+  USBH_HC *ptr_hc;
 
-  ptr_hci = &usbh_hci[ctrl];
+  ptr_hc = &usbh_hc[ctrl];
 
-  if (((event & ARM_USBH_EVENT_DISCONNECT) != 0U) && ((usbh_hci[ctrl].port_con & (1UL << port)) != 0U) && (usbh_hci[ctrl].port_rst != (port + 1U))) {
+  if (((event & ARM_USBH_EVENT_DISCONNECT) != 0U) && ((usbh_hc[ctrl].port_con & (1UL << port)) != 0U) && (usbh_hc[ctrl].port_rst != (port + 1U))) {
     // If disconnect happened while port was connected and reset driving was not
     // active then store disconnect state.
     // Point of this additional disconnect state is to terminate enumeration if
     // it was in progress when disconnect happened.
-    usbh_hci[ctrl].port_discon |= (uint16_t)(1UL << port);
+    usbh_hc[ctrl].port_discon |= (uint16_t)(1UL << port);
   }
 
-  ptr_hci->port_event[port] |= event;
-  if ((ptr_hci->port_lock == 0U) || (ptr_hci->port_lock == (port + 1U))) {
+  ptr_hc->port_event[port] |= event;
+  if ((ptr_hc->port_lock == 0U) || (ptr_hc->port_lock == (port + 1U))) {
     EvrUSBH_Driver_OnSignalPortEvent(ctrl, port, event);
     (void)USBH_ThreadFlagsSet (usbh_core_thread_id[ctrl], ARM_USBH_EVENT_PORT);
   }

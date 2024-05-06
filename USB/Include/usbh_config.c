@@ -167,10 +167,6 @@ extern  void USBH_SignalPipeEvent       (uint8_t ctrl, ARM_USBH_EP_HANDLE ep_hnd
 
         ARM_DRIVER_USBH        *usbh0_hcd_ptr  =       &USBHn_DRIVER(USBH0_HC_NUM);
 
-        USBH_HC_t               usbh0_hc       =      { USBH0_HC_PIPE_NUM };
-
-        USBH_HC_t              *usbh0_hc_ptr   =       &usbh0_hc;
-
 // Core Thread definitions
 
 #ifdef USB_CMSIS_RTOS2
@@ -227,10 +223,6 @@ const  osThreadAttr_t usbh0_core_thread_attr = {
         uint32_t                usbh1_mem_pool         [(USBH1_HC_MEM_POOL_SIZE + 8 * USBH1_HC_PIPE_NUM + 32 + 4 + 3) / 4] USBH1_SECTION_NAME(USBH1_HC_MEM_POOL_ADDR);
 
         ARM_DRIVER_USBH        *usbh1_hcd_ptr  =       &USBHn_DRIVER(USBH1_HC_NUM);
-
-        USBH_HC_t               usbh1_hc       =      { USBH1_HC_PIPE_NUM };
-
-        USBH_HC_t              *usbh1_hc_ptr   =       &usbh1_hc;
 
 // Core Thread definitions
 
@@ -289,10 +281,6 @@ const  osThreadAttr_t usbh1_core_thread_attr = {
 
         ARM_DRIVER_USBH        *usbh2_hcd_ptr  =       &USBHn_DRIVER(USBH2_HC_NUM);
 
-        USBH_HC_t               usbh2_hc       =      { USBH2_HC_PIPE_NUM };
-
-        USBH_HC_t              *usbh2_hc_ptr   =       &usbh2_hc;
-
 // Core Thread definitions
 
 #ifdef USB_CMSIS_RTOS2
@@ -349,10 +337,6 @@ const  osThreadAttr_t usbh2_core_thread_attr = {
         uint32_t                usbh3_mem_pool         [(USBH3_HC_MEM_POOL_SIZE + 8 * USBH3_HC_PIPE_NUM + 32 + 4 + 3) / 4] USBH3_SECTION_NAME(USBH3_HC_MEM_POOL_ADDR);
 
         ARM_DRIVER_USBH        *usbh3_hcd_ptr  =       &USBHn_DRIVER(USBH3_HC_NUM);
-
-        USBH_HC_t               usbh3_hc       =      { USBH3_HC_PIPE_NUM };
-
-        USBH_HC_t              *usbh3_hc_ptr   =       &usbh3_hc;
 
 // Core Thread definitions
 
@@ -419,21 +403,6 @@ const   uint8_t usbh_cls_num =  USBH_CUSTOM_CLASS_NUM;
 #endif
 #ifdef  RTE_USB_Host_3
       , &usbh3_hcd_ptr
-#endif
-};
-
-        USBH_HC_t ** const usbh_hc_ptr [USBH_HC_NUM] = {
-#ifdef  RTE_USB_Host_0
-       &usbh0_hc_ptr
-#endif
-#ifdef  RTE_USB_Host_1
-     , &usbh1_hc_ptr
-#endif
-#ifdef  RTE_USB_Host_2
-     , &usbh2_hc_ptr
-#endif
-#ifdef  RTE_USB_Host_3
-     , &usbh3_hc_ptr
 #endif
 };
 
@@ -613,7 +582,7 @@ void *usbh_debounce_timer_id[USBH_HC_NUM];
         ARM_DRIVER_VERSION      usbh_drv_version [USBH_HC_NUM];
         ARM_USBH_CAPABILITIES   usbh_capabilities[USBH_HC_NUM];
 
-        USBH_HCI                usbh_hci [USBH_HC_NUM];
+        USBH_HC                 usbh_hc  [USBH_HC_NUM];
 #endif
 
         USBH_DEV                usbh_dev [USBH_DEV_NUM];
