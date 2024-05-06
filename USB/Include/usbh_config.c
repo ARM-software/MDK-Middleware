@@ -52,8 +52,6 @@
 #include "rl_usb.h"
 #include "rl_usbh_lib.h"
 
-#include "usbh_compatibility.h"
-
 #include "usb_os.h"
 
 /*------------------------------------------------------------------------------
