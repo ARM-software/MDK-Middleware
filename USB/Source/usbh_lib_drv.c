@@ -1,6 +1,7 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates).
+ * All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_drv.c
  * Purpose: USB Host - Driver access module
@@ -9,7 +10,7 @@
 #include "usbh_lib_drv.h"
 
 #include "usb_lib_debug.h"
-#include "usbh_lib_config_def.h"
+#include "usbh_config.h"
 #include "usbh_lib_core.h"
 #include "usbh_evr.h"
 

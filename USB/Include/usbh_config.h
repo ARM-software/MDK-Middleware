@@ -2,12 +2,12 @@
  * MDK Middleware - Component ::USB:Host
  * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    usbh_lib_config_def.h
- * Purpose: USB Host System Configuration header file (for USB Library)
+ * Name:    usbh_config.h
+ * Purpose: USB Host Configuration header file
  *----------------------------------------------------------------------------*/
 
-#ifndef __USBH_LIB_CONFIG_DEF_H__
-#define __USBH_LIB_CONFIG_DEF_H__
+#ifndef USBH_CONFIG_H_
+#define USBH_CONFIG_H_
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -50,4 +50,4 @@ extern       void                         *       usbh_def_pipe_mutex_id        
 extern const uint16_t                             usbh_debounce_in_ms                              [];
 extern       void                         *       usbh_debounce_timer_id                           [];
 
-#endif  // __USBH_LIB_CONFIG_DEF_H__
+#endif  // USBH_CONFIG_H_

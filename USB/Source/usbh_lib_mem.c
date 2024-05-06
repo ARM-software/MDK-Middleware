@@ -1,6 +1,7 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2021 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates).
+ * All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_mem.c
  * Purpose: USB Host - Memory Management module
@@ -10,7 +11,7 @@
 
 #include <string.h>
 
-#include "usbh_lib_config_def.h"
+#include "usbh_config.h"
 
 
 /************************** Important *****************************************/

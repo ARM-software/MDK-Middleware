@@ -6,6 +6,8 @@
  * Purpose: USB Host (0..3) Configuration
  *----------------------------------------------------------------------------*/
 
+#include "usbh_config.h"
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
@@ -114,6 +116,29 @@
 #define USBHn_DRIVER_HCI(n)     USBHn_DRIVER_HCI_(n)
 
 /*------------------------------------------------------------------------------
+ *      USB Host externals
+ *----------------------------------------------------------------------------*/
+
+#ifdef  USBH0_HC_NUM
+extern  ARM_DRIVER_USBH         USBHn_DRIVER(USBH0_HC_NUM);
+#endif
+
+#ifdef  USBH1_HC_NUM
+extern  ARM_DRIVER_USBH         USBHn_DRIVER(USBH1_HC_NUM);
+#endif
+
+#ifdef  USBH2_HC_NUM
+extern  ARM_DRIVER_USBH         USBHn_DRIVER(USBH2_HC_NUM);
+#endif
+
+#ifdef  USBH3_HC_NUM
+extern  ARM_DRIVER_USBH         USBHn_DRIVER(USBH3_HC_NUM);
+#endif
+
+extern  void USBH_SignalPortEvent       (uint8_t ctrl, uint8_t port, uint32_t event);
+extern  void USBH_SignalPipeEvent       (uint8_t ctrl, ARM_USBH_EP_HANDLE ep_hndl, uint32_t event);
+
+/*------------------------------------------------------------------------------
  *      USB Host 0 variables declaration/definition
  *----------------------------------------------------------------------------*/
 
@@ -126,34 +151,24 @@
 #endif
 #define USBH0_SECTION_NAME(x)   USBH0_SECTION_NAME_(x)
 
-extern  const uint8_t           usbh0_power;
         const uint8_t           usbh0_power =          (uint8_t)(USBH0_HC_POWER / 2);
 
-extern  const uint32_t          usbh0_pipe_num;
         const uint32_t          usbh0_pipe_num =        USBH0_HC_PIPE_NUM;
 
-extern  const uint32_t          usbh0_transfer_num;
         const uint32_t          usbh0_transfer_num =    USBH0_HC_PIPE_NUM;
 
-extern  const uint32_t          usbh0_mem_pool_size;
         const uint32_t          usbh0_mem_pool_size = ((USBH0_HC_MEM_POOL_SIZE + 8 * USBH0_HC_PIPE_NUM + 32 + 4 + 3) / 4) * 4;
 
-extern  const uint8_t           usbh0_mem_pool_reloc;
         const uint8_t           usbh0_mem_pool_reloc =  USBH0_HC_MEM_POOL_RELOC;
 
-extern  USBH_PIPE               usbh0_pipe             [USBH0_HC_PIPE_NUM];
         USBH_PIPE               usbh0_pipe             [USBH0_HC_PIPE_NUM];
 
-extern  uint32_t                usbh0_mem_pool         [(USBH0_HC_MEM_POOL_SIZE + 8 * USBH0_HC_PIPE_NUM + 32 + 4 + 3) / 4];
         uint32_t                usbh0_mem_pool         [(USBH0_HC_MEM_POOL_SIZE + 8 * USBH0_HC_PIPE_NUM + 32 + 4 + 3) / 4] USBH0_SECTION_NAME(USBH0_HC_MEM_POOL_ADDR);
 
-extern  ARM_DRIVER_USBH         USBHn_DRIVER(USBH0_HC_NUM);
         ARM_DRIVER_USBH        *usbh0_hcd_ptr  =       &USBHn_DRIVER(USBH0_HC_NUM);
 
-extern  USBH_HC_t               usbh0_hc;
         USBH_HC_t               usbh0_hc       =      { USBH0_HC_PIPE_NUM };
 
-extern  USBH_HC_t              *usbh0_hc_ptr;
         USBH_HC_t              *usbh0_hc_ptr   =       &usbh0_hc;
 
 // Core Thread definitions
@@ -163,8 +178,6 @@ extern  USBH_HC_t              *usbh0_hc_ptr;
 static osRtxThread_t  usbh0_core_thread_cb_mem                                              __SECTION(.bss.os.thread.cb);
 static uint64_t       usbh0_core_thread_stack_mem[(USBH0_CORE_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
 #endif
-extern 
-const  osThreadAttr_t usbh0_core_thread_attr;
 const  osThreadAttr_t usbh0_core_thread_attr = {
   "USBH0_Core_Thread",
   0U,
@@ -199,34 +212,24 @@ const  osThreadAttr_t usbh0_core_thread_attr = {
 #endif
 #define USBH1_SECTION_NAME(x)   USBH1_SECTION_NAME_(x)
 
-extern  const uint8_t           usbh1_power;
         const uint8_t           usbh1_power =          (uint8_t)(USBH1_HC_POWER / 2);
 
-extern  const uint32_t          usbh1_pipe_num;
         const uint32_t          usbh1_pipe_num =        USBH1_HC_PIPE_NUM;
 
-extern  const uint32_t          usbh1_transfer_num;
         const uint32_t          usbh1_transfer_num =    USBH1_HC_PIPE_NUM;
 
-extern  const uint32_t          usbh1_mem_pool_size;
         const uint32_t          usbh1_mem_pool_size = ((USBH1_HC_MEM_POOL_SIZE + 8 * USBH1_HC_PIPE_NUM + 32 + 4 + 3) / 4) * 4;
 
-extern  const uint8_t           usbh1_mem_pool_reloc;
         const uint8_t           usbh1_mem_pool_reloc =  USBH1_HC_MEM_POOL_RELOC;
 
-extern  USBH_PIPE               usbh1_pipe             [USBH1_HC_PIPE_NUM];
         USBH_PIPE               usbh1_pipe             [USBH1_HC_PIPE_NUM];
 
-extern  uint32_t                usbh1_mem_pool         [(USBH1_HC_MEM_POOL_SIZE + 8 * USBH1_HC_PIPE_NUM + 32 + 4 + 3) / 4];
         uint32_t                usbh1_mem_pool         [(USBH1_HC_MEM_POOL_SIZE + 8 * USBH1_HC_PIPE_NUM + 32 + 4 + 3) / 4] USBH1_SECTION_NAME(USBH1_HC_MEM_POOL_ADDR);
 
-extern  ARM_DRIVER_USBH         USBHn_DRIVER(USBH1_HC_NUM);
         ARM_DRIVER_USBH        *usbh1_hcd_ptr  =       &USBHn_DRIVER(USBH1_HC_NUM);
 
-extern  USBH_HC_t               usbh1_hc;
         USBH_HC_t               usbh1_hc       =      { USBH1_HC_PIPE_NUM };
 
-extern  USBH_HC_t              *usbh1_hc_ptr;
         USBH_HC_t              *usbh1_hc_ptr   =       &usbh1_hc;
 
 // Core Thread definitions
@@ -236,8 +239,6 @@ extern  USBH_HC_t              *usbh1_hc_ptr;
 static osRtxThread_t  usbh1_core_thread_cb_mem                                              __SECTION(.bss.os.thread.cb);
 static uint64_t       usbh1_core_thread_stack_mem[(USBH1_CORE_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
 #endif
-extern 
-const  osThreadAttr_t usbh1_core_thread_attr;
 const  osThreadAttr_t usbh1_core_thread_attr = {
   "USBH1_Core_Thread",
   0U,
@@ -272,34 +273,24 @@ const  osThreadAttr_t usbh1_core_thread_attr = {
 #endif
 #define USBH2_SECTION_NAME(x)   USBH2_SECTION_NAME_(x)
 
-extern  const uint8_t           usbh2_power;
         const uint8_t           usbh2_power =          (uint8_t)(USBH2_HC_POWER / 2);
 
-extern  const uint32_t          usbh2_pipe_num;
         const uint32_t          usbh2_pipe_num =        USBH2_HC_PIPE_NUM;
 
-extern  const uint32_t          usbh2_transfer_num;
         const uint32_t          usbh2_transfer_num =    USBH2_HC_PIPE_NUM;
 
-extern  const uint32_t          usbh2_mem_pool_size;
         const uint32_t          usbh2_mem_pool_size = ((USBH2_HC_MEM_POOL_SIZE + 8 * USBH2_HC_PIPE_NUM + 32 + 4 + 3) / 4) * 4;
 
-extern  const uint8_t           usbh2_mem_pool_reloc;
         const uint8_t           usbh2_mem_pool_reloc =  USBH2_HC_MEM_POOL_RELOC;
 
-extern  USBH_PIPE               usbh2_pipe             [USBH2_HC_PIPE_NUM];
         USBH_PIPE               usbh2_pipe             [USBH2_HC_PIPE_NUM];
 
-extern  uint32_t                usbh2_mem_pool         [(USBH2_HC_MEM_POOL_SIZE + 8 * USBH2_HC_PIPE_NUM + 32 + 4 + 3) / 4];
         uint32_t                usbh2_mem_pool         [(USBH2_HC_MEM_POOL_SIZE + 8 * USBH2_HC_PIPE_NUM + 32 + 4 + 3) / 4] USBH2_SECTION_NAME(USBH2_HC_MEM_POOL_ADDR);
 
-extern  ARM_DRIVER_USBH         USBHn_DRIVER(USBH2_HC_NUM);
         ARM_DRIVER_USBH        *usbh2_hcd_ptr  =       &USBHn_DRIVER(USBH2_HC_NUM);
 
-extern  USBH_HC_t               usbh2_hc;
         USBH_HC_t               usbh2_hc       =      { USBH2_HC_PIPE_NUM };
 
-extern  USBH_HC_t              *usbh2_hc_ptr;
         USBH_HC_t              *usbh2_hc_ptr   =       &usbh2_hc;
 
 // Core Thread definitions
@@ -309,8 +300,6 @@ extern  USBH_HC_t              *usbh2_hc_ptr;
 static osRtxThread_t  usbh2_core_thread_cb_mem                                              __SECTION(.bss.os.thread.cb);
 static uint64_t       usbh2_core_thread_stack_mem[(USBH2_CORE_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
 #endif
-extern 
-const  osThreadAttr_t usbh2_core_thread_attr;
 const  osThreadAttr_t usbh2_core_thread_attr = {
   "USBH2_Core_Thread",
   0U,
@@ -345,34 +334,24 @@ const  osThreadAttr_t usbh2_core_thread_attr = {
 #endif
 #define USBH3_SECTION_NAME(x)   USBH3_SECTION_NAME_(x)
 
-extern  const uint8_t           usbh3_power;
         const uint8_t           usbh3_power =          (uint8_t)(USBH3_HC_POWER / 2);
 
-extern  const uint32_t          usbh3_pipe_num;
         const uint32_t          usbh3_pipe_num =        USBH3_HC_PIPE_NUM;
 
-extern  const uint32_t          usbh3_transfer_num;
         const uint32_t          usbh3_transfer_num =    USBH3_HC_PIPE_NUM;
 
-extern  const uint32_t          usbh3_mem_pool_size;
         const uint32_t          usbh3_mem_pool_size = ((USBH3_HC_MEM_POOL_SIZE + 8 * USBH3_HC_PIPE_NUM + 32 + 4 + 3) / 4) * 4;
 
-extern  const uint8_t           usbh3_mem_pool_reloc;
         const uint8_t           usbh3_mem_pool_reloc =  USBH3_HC_MEM_POOL_RELOC;
 
-extern  USBH_PIPE               usbh3_pipe             [USBH3_HC_PIPE_NUM];
         USBH_PIPE               usbh3_pipe             [USBH3_HC_PIPE_NUM];
 
-extern  uint32_t                usbh3_mem_pool         [(USBH3_HC_MEM_POOL_SIZE + 8 * USBH3_HC_PIPE_NUM + 32 + 4 + 3) / 4];
         uint32_t                usbh3_mem_pool         [(USBH3_HC_MEM_POOL_SIZE + 8 * USBH3_HC_PIPE_NUM + 32 + 4 + 3) / 4] USBH3_SECTION_NAME(USBH3_HC_MEM_POOL_ADDR);
 
-extern  ARM_DRIVER_USBH         USBHn_DRIVER(USBH3_HC_NUM);
         ARM_DRIVER_USBH        *usbh3_hcd_ptr  =       &USBHn_DRIVER(USBH3_HC_NUM);
 
-extern  USBH_HC_t               usbh3_hc;
         USBH_HC_t               usbh3_hc       =      { USBH3_HC_PIPE_NUM };
 
-extern  USBH_HC_t              *usbh3_hc_ptr;
         USBH_HC_t              *usbh3_hc_ptr   =       &usbh3_hc;
 
 // Core Thread definitions
@@ -382,8 +361,6 @@ extern  USBH_HC_t              *usbh3_hc_ptr;
 static osRtxThread_t  usbh3_core_thread_cb_mem                                              __SECTION(.bss.os.thread.cb);
 static uint64_t       usbh3_core_thread_stack_mem[(USBH3_CORE_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
 #endif
-extern 
-const  osThreadAttr_t usbh3_core_thread_attr;
 const  osThreadAttr_t usbh3_core_thread_attr = {
   "USBH3_Core_Thread",
   0U,
@@ -420,39 +397,16 @@ const  osThreadAttr_t usbh3_core_thread_attr = {
  *----------------------------------------------------------------------------*/
 
                                         // Define constants
-extern 
-const   uint8_t usbh_hc_num;
 const   uint8_t usbh_hc_num  =  USBH_HC_NUM;
-extern 
-const   uint8_t usbh_hc_msk;
 const   uint8_t usbh_hc_msk  =  USBH_HC_MSK;
-extern 
-const   uint8_t usbh_dcd_num;
 const   uint8_t usbh_dcd_num =  USBH_DCD_NUM;
-extern 
-const   uint8_t usbh_dev_num;
 const   uint8_t usbh_dev_num =  USBH_DEV_NUM;
-extern 
-const   uint8_t usbh_msc_num;
 const   uint8_t usbh_msc_num =  USBH_MSC_NUM;
-extern 
-const   uint8_t usbh_hid_num;
 const   uint8_t usbh_hid_num =  USBH_HID_NUM;
-extern 
-const   uint8_t usbh_cdc_num;
 const   uint8_t usbh_cdc_num =  USBH_CDC_NUM;
-extern 
-const   uint8_t usbh_cls_num;
 const   uint8_t usbh_cls_num =  USBH_CUSTOM_CLASS_NUM;
 
-                                        // Define drivers
-extern  ARM_DRIVER_USBH   *usbh0_hcd_ptr;
-extern  ARM_DRIVER_USBH   *usbh1_hcd_ptr;
-extern  ARM_DRIVER_USBH   *usbh2_hcd_ptr;
-extern  ARM_DRIVER_USBH   *usbh3_hcd_ptr;
-
                                         // Register Host Controller Drivers
-extern  ARM_DRIVER_USBH ** const usbh_hcd_ptr[USBH_HC_NUM];
         ARM_DRIVER_USBH ** const usbh_hcd_ptr[USBH_HC_NUM] = {
 #ifdef  RTE_USB_Host_0
        &usbh0_hcd_ptr
@@ -468,12 +422,6 @@ extern  ARM_DRIVER_USBH ** const usbh_hcd_ptr[USBH_HC_NUM];
 #endif
 };
 
-extern  USBH_HC_t *usbh0_hc_ptr;
-extern  USBH_HC_t *usbh1_hc_ptr;
-extern  USBH_HC_t *usbh2_hc_ptr;
-extern  USBH_HC_t *usbh3_hc_ptr;
-
-extern  USBH_HC_t ** const usbh_hc_ptr [USBH_HC_NUM];
         USBH_HC_t ** const usbh_hc_ptr [USBH_HC_NUM] = {
 #ifdef  RTE_USB_Host_0
        &usbh0_hc_ptr
@@ -489,8 +437,6 @@ extern  USBH_HC_t ** const usbh_hc_ptr [USBH_HC_NUM];
 #endif
 };
 
-extern 
-const   uint8_t          * const usbh_power_ptr [USBH_HC_NUM];
 const   uint8_t          * const usbh_power_ptr [USBH_HC_NUM] = {
 #ifdef  RTE_USB_Host_0
        &usbh0_power
@@ -506,8 +452,6 @@ const   uint8_t          * const usbh_power_ptr [USBH_HC_NUM] = {
 #endif
 };
 
-extern 
-const   uint8_t          * const usbh_mem_pool_reloc_ptr [USBH_HC_NUM];
 const   uint8_t          * const usbh_mem_pool_reloc_ptr [USBH_HC_NUM] = {
 #ifdef  RTE_USB_Host_0
        &usbh0_mem_pool_reloc
@@ -523,7 +467,6 @@ const   uint8_t          * const usbh_mem_pool_reloc_ptr [USBH_HC_NUM] = {
 #endif
 };
 
-extern  uint32_t       * const usbh_mem_pool_ptr [USBH_HC_NUM];
         uint32_t       * const usbh_mem_pool_ptr [USBH_HC_NUM] = {
 #ifdef  RTE_USB_Host_0
         usbh0_mem_pool
@@ -539,8 +482,6 @@ extern  uint32_t       * const usbh_mem_pool_ptr [USBH_HC_NUM];
 #endif
 };
 
-extern 
-const   uint32_t       * const usbh_mem_pool_size_ptr [USBH_HC_NUM];
 const   uint32_t       * const usbh_mem_pool_size_ptr [USBH_HC_NUM] = {
 #ifdef  RTE_USB_Host_0
        &usbh0_mem_pool_size
@@ -556,7 +497,6 @@ const   uint32_t       * const usbh_mem_pool_size_ptr [USBH_HC_NUM] = {
 #endif
 };
 
-extern  USBH_PIPE        * const usbh_pipe_ptr [USBH_HC_NUM];
         USBH_PIPE        * const usbh_pipe_ptr [USBH_HC_NUM] = {
 #ifdef  RTE_USB_Host_0
         usbh0_pipe
@@ -572,8 +512,6 @@ extern  USBH_PIPE        * const usbh_pipe_ptr [USBH_HC_NUM];
 #endif
 };
 
-extern 
-const   uint32_t         * const usbh_pipe_num_ptr [USBH_HC_NUM];
 const   uint32_t         * const usbh_pipe_num_ptr [USBH_HC_NUM] = {
 #ifdef  RTE_USB_Host_0
        &usbh0_pipe_num
@@ -589,14 +527,10 @@ const   uint32_t         * const usbh_pipe_num_ptr [USBH_HC_NUM] = {
 #endif
 };
 
-extern 
-void   *usbh_core_thread_id[USBH_HC_NUM];
 void   *usbh_core_thread_id[USBH_HC_NUM];
 
 #define USBH_DEBOUNCE_IN_MS             100
 
-extern 
-const   uint16_t usbh_debounce_in_ms[USBH_HC_NUM];
 const   uint16_t usbh_debounce_in_ms[USBH_HC_NUM] = {
 #ifdef  RTE_USB_Host_0
         USBH_DEBOUNCE_IN_MS
@@ -613,21 +547,13 @@ const   uint16_t usbh_debounce_in_ms[USBH_HC_NUM] = {
 };
 
                                         // Define semaphores
-extern 
-void *usbh_driver_semaphore_id [USBH_HC_NUM];
 void *usbh_driver_semaphore_id [USBH_HC_NUM];
 
                                         // Define mutexes
-extern 
-void *usbh_def_pipe_mutex_id [USBH_HC_NUM];
 void *usbh_def_pipe_mutex_id [USBH_HC_NUM];
 
-extern 
-void *usbh_debounce_timer_id[USBH_HC_NUM];
 void *usbh_debounce_timer_id[USBH_HC_NUM];
 
-extern  void USBH_SignalPortEvent       (uint8_t ctrl, uint8_t port, uint32_t event);
-extern  void USBH_SignalPipeEvent       (uint8_t ctrl, ARM_USBH_EP_HANDLE ep_hndl, uint32_t event);
 #ifdef  RTE_USB_Host_0
         void USBH0_SignalPortEvent      (uint8_t port, uint32_t event);
         void USBH0_SignalPortEvent      (uint8_t port, uint32_t event)                      { USBH_SignalPortEvent (0, port, event);      }
@@ -654,7 +580,6 @@ extern  void USBH_SignalPipeEvent       (uint8_t ctrl, ARM_USBH_EP_HANDLE ep_hnd
 #endif
 
 #if    (USBH_HC_NUM)
-extern  ARM_USBH_SignalPortEvent_t const usbh_cb_port_event_ptr[USBH_HC_NUM];
         ARM_USBH_SignalPortEvent_t const usbh_cb_port_event_ptr[USBH_HC_NUM] = {
 #ifdef  RTE_USB_Host_0
         USBH0_SignalPortEvent
@@ -670,7 +595,6 @@ extern  ARM_USBH_SignalPortEvent_t const usbh_cb_port_event_ptr[USBH_HC_NUM];
 #endif
 };
 
-extern  ARM_USBH_SignalPipeEvent_t const usbh_cb_pipe_event_ptr[USBH_HC_NUM];
         ARM_USBH_SignalPipeEvent_t const usbh_cb_pipe_event_ptr[USBH_HC_NUM] = {
 #ifdef  RTE_USB_Host_0
         USBH0_SignalPipeEvent
@@ -686,20 +610,15 @@ extern  ARM_USBH_SignalPipeEvent_t const usbh_cb_pipe_event_ptr[USBH_HC_NUM];
 #endif
 };
 
-extern  ARM_DRIVER_VERSION      usbh_drv_version [USBH_HC_NUM];
         ARM_DRIVER_VERSION      usbh_drv_version [USBH_HC_NUM];
-extern  ARM_USBH_CAPABILITIES   usbh_capabilities[USBH_HC_NUM];
         ARM_USBH_CAPABILITIES   usbh_capabilities[USBH_HC_NUM];
 
-extern  USBH_HCI                usbh_hci [USBH_HC_NUM];
         USBH_HCI                usbh_hci [USBH_HC_NUM];
 #endif
 
-extern  USBH_DEV                usbh_dev [USBH_DEV_NUM];
         USBH_DEV                usbh_dev [USBH_DEV_NUM];
 
 #if    (USBH_MSC_NUM)
-extern  USBH_MSC                usbh_msc [USBH_MSC_NUM];
         USBH_MSC                usbh_msc [USBH_MSC_NUM];
 #else
 uint8_t   USBH_MSC_Configure        (uint8_t device, const USB_DEVICE_DESCRIPTOR *ptr_dev_desc, const USB_CONFIGURATION_DESCRIPTOR *ptr_cfg_desc) { (void)device; (void)ptr_dev_desc; (void)ptr_cfg_desc; return 254U; }
@@ -709,7 +628,6 @@ usbStatus USBH_MSC_Uninitialize_Lib (uint8_t instance) { (void)instance; return 
 #endif
 
 #if    (USBH_HID_NUM)
-extern  USBH_HID                usbh_hid [USBH_HID_NUM];
         USBH_HID                usbh_hid [USBH_HID_NUM];
 #else
 uint8_t   USBH_HID_Configure        (uint8_t device, const USB_DEVICE_DESCRIPTOR *ptr_dev_desc, const USB_CONFIGURATION_DESCRIPTOR *ptr_cfg_desc) { (void)device; (void)ptr_dev_desc; (void)ptr_cfg_desc; return 254U; }
@@ -719,7 +637,6 @@ usbStatus USBH_HID_Uninitialize_Lib (uint8_t instance) { (void)instance; return 
 #endif
 
 #if    (USBH_CDC_NUM)
-extern  USBH_CDC                usbh_cdc [USBH_CDC_NUM];
         USBH_CDC                usbh_cdc [USBH_CDC_NUM];
 #else
 uint8_t   USBH_CDC_Configure        (uint8_t device, const USB_DEVICE_DESCRIPTOR *ptr_dev_desc, const USB_CONFIGURATION_DESCRIPTOR *ptr_cfg_desc) { (void)device; (void)ptr_dev_desc; (void)ptr_cfg_desc; return 254U; }
