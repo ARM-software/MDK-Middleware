@@ -1,4 +1,5 @@
 project:
+  description: USB Device Virtual COM example demonstrating Communication Device Class (CDC) Abstract Control Model (ACM)
 
   packs:
     - pack: Keil::MDK-Middleware@>=8.0.0-0

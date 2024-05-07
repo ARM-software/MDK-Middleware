@@ -1,4 +1,5 @@
 project:
+  description: USB Host Mass Storage example demonstrating Mass Storage Class (MSC)
 
   packs:
     - pack: Keil::MDK-Middleware@>=8.0.0-0

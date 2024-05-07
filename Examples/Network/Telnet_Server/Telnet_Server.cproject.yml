@@ -1,4 +1,5 @@
 project:
+  description: Telnet Server example
 
   packs:
     - pack: Keil::MDK-Middleware@>=8.0.0-0

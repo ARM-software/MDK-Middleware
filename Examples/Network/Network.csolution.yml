@@ -1,4 +1,5 @@
 solution:
+  description: IPv4/IPv6 Network examples
   created-for: CMSIS-Toolbox@2.0.0
 
   cdefault:
