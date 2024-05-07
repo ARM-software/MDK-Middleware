@@ -45,8 +45,7 @@ project:
     - component: Keil::CMSIS-Compiler:File Interface:MDK-MW File System
     - component: Keil::File System&MDK:CORE&LFN
     - component: Keil::File System&MDK:Drive:Memory Card
-    - component: Keil::Network&MDK:CORE&IPv4/IPv6 Release
-    # - component: Keil::Network&MDK:CORE&IPv4/IPv6 Debug
+    - component: Keil::Network&MDK:CORE
     - component: Keil::Network&MDK:Interface:ETH
     - component: Keil::Network&MDK:Socket:TCP
     - component: Keil::Network&MDK:Socket:UDP
