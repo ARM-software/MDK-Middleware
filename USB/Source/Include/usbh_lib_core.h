@@ -82,6 +82,6 @@ extern usbStatus USBH_RecoverDevice (USBH_DEV *ptr_dev);
 /// \brief De-bounce timer for connect events
 /// \param[in]     arg                  index (instance) of USB Host controller.
 /// \return                             none.
-extern void USBH_ConnectDebounce (void const * arg);
+extern void USBH_ConnectDebounce (void * arg);
 
 #endif  // __USBH_LIB_CORE_H__

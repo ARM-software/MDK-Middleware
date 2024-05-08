@@ -101,24 +101,6 @@
 
 //  ==== USB Host Internal Structures ====
 
-/// Structure containing transfer information
-typedef struct {
-  uint32_t             *ptr_transfer;                       ///< pointer to transfer structure
-  uint32_t             *ptr_pipe;                           ///< pointer to pipe structure
-  uint32_t              packet;                             ///< packet
-  uint8_t              *data;                               ///< pointer to data
-  uint32_t              num;                                ///< number of bytes to transfer
-  uint32_t              num_transferred_total;              ///< total number of bytes transferred
-  uint32_t              num_to_transfer;                    ///< number of bytes to transfer in single transfer
-  uint32_t              active;                             ///< activity flag
-  uint32_t             *iso_ptr_pipe1;                      ///< iso pointer to additional pipe structure
-  uint8_t              *iso_data1;                          ///< iso pointer to data for second transfer
-  uint16_t              iso_max_transfer_size;              ///< iso maximum transfer size per frame
-  uint16_t              iso_interval;                       ///< iso endpoint interval in (u)SOFs
-  uint32_t              iso_last_frame_index;               ///< iso last transfer frame index
-  uint32_t              iso_frame_index[2];                 ///< iso transfer frame index
-} USBH_TRANSFER_INFO_t;
-
 typedef struct {                                            ///< Additional Pipe Event parameters
   const uint8_t *buf;                                       ///< Data buffer start address
         uint32_t len;                                       ///< Number of transferred data bytes

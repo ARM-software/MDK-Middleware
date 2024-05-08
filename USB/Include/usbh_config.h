@@ -105,6 +105,19 @@ extern const uint8_t                              usbh_hid_num;
 extern const uint8_t                              usbh_cdc_num;
 extern const uint8_t                              usbh_cls_num;
 
+#ifdef USBH0_HC_NUM
+extern USBH_PIPE                                  usbh0_pipe[];
+#endif
+#ifdef USBH1_HC_NUM
+extern USBH_PIPE                                  usbh1_pipe[];
+#endif
+#ifdef USBH2_HC_NUM
+extern USBH_PIPE                                  usbh2_pipe[];
+#endif
+#ifdef USBH3_HC_NUM
+extern USBH_PIPE                                  usbh3_pipe[];
+#endif
+
 extern const uint8_t                      * const usbh_power_ptr          [];
 extern const uint8_t                      * const usbh_mem_pool_reloc_ptr [];
 extern       uint32_t                     * const usbh_mem_pool_ptr       [];

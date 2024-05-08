@@ -11,7 +11,7 @@
 
 // <h>USB Host %Instance%
 //   <o>Connect to hardware via Driver_USBH# <0-255>
-//   <i>Select driver control block for hardware interface.
+//   <i>Specifies instance of the Host Controller hardware interface.
 #define USBH%Instance%_HC_NUM                    %Instance%
 
 //   <o>Maximum Port Power Consumption<2-500:2>
@@ -19,22 +19,21 @@
 #define USBH%Instance%_HC_POWER                  500
 
 //   <o>Maximum Pipes in system
-//     <i>Maximum number of Pipes that will be used by Custom Controller
-//     <i>in system simultaneously.
+//     <i>Specifies the maximum number of Pipes that will be used by
+//     <i>the USB Host controller in the system simultaneously.
 #define USBH%Instance%_HC_PIPE_NUM               3
 
-//   <o>Memory Pool Size <512-1048576:4>
-//     <i>Specify size of memory pool (in bytes) that the USB Host Controller
-//     <i>will use for USB communication data.
-#define USBH%Instance%_HC_MEM_POOL_SIZE          512
+//   <o>Memory Pool Size <640-1048576:4>
+//     <i>Specifies the size of the memory pool (in bytes) that
+//     <i>the USB Host controller will use for the USB communication data.
+//     <i>This size should be at least equal to
+//     <i>size of maximum expected packet + 128 bytes.
+#define USBH%Instance%_HC_MEM_POOL_SIZE          640
 
-//   <e>Relocate Memory Pool
-//     <i>Locate the Memory Pool at a specific address.
+//   <e>Relocated Memory Pool
+//     <i>Specifies if the memory pool is located at a specific address
+//     <i>(via linker script).
 #define USBH%Instance%_HC_MEM_POOL_RELOC         0
-
-//     <o>Memory Pool Address <0-0xFFFFFE00:0x200>
-//       <i>Start address of the Memory Pool.
-#define USBH%Instance%_HC_MEM_POOL_ADDR          0x00000000
 //   </e>
 
 //   <h>OS Resources Settings
@@ -44,6 +43,5 @@
 
 //        Core Thread Priority
 #define USBH%Instance%_CORE_THREAD_PRIORITY      osPriorityAboveNormal
-
 //   </h>
 // </h>

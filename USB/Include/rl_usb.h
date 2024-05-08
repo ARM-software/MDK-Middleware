@@ -2362,17 +2362,13 @@ extern usbStatus         USBH_CustomClass_Uninitialize      (uint8_t instance);
 
 // USB Host thread function prototypes
 extern void              USBH_Core_Thread                   (void       *arg);
-extern void              USBH0_Core_Thread                  (void const *arg);
-extern void              USBH1_Core_Thread                  (void const *arg);
-extern void              USBH2_Core_Thread                  (void const *arg);
-extern void              USBH3_Core_Thread                  (void const *arg);
 
 extern void              USBH_CDC_IntIn_Thread              (void       *arg);
 
 extern void              USBH_HID_IntIn_Thread              (void       *arg);
 
 // USB Host timer function prototypes
-extern void              USBH_ConnectDebounce               (void const *arg);
+extern void              USBH_ConnectDebounce               (void       *arg);
 
 #ifdef __cplusplus
 }

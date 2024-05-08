@@ -2186,7 +2186,7 @@ usbStatus USBH_RecoverDevice (USBH_DEV *ptr_dev) {
 /// \brief De-bounce timer callback for connect events
 /// \param[in]     arg                  index (instance) of USB Host controller.
 /// \return                             none.
-void USBH_ConnectDebounce (void const *arg){
+void USBH_ConnectDebounce (void *arg){
   USBH_HC             *ptr_hc;
   ARM_USBH_PORT_STATE  port_state;
   uint8_t              instance;
@@ -3556,8 +3556,3 @@ void USBH_Core_Thread (void *arg) {
     }
   }
 }
-
-void USBH0_Core_Thread (void const *arg) { (void)arg; USBH_Core_Thread ((void *)0U); }
-void USBH1_Core_Thread (void const *arg) { (void)arg; USBH_Core_Thread ((void *)1U); }
-void USBH2_Core_Thread (void const *arg) { (void)arg; USBH_Core_Thread ((void *)2U); }
-void USBH3_Core_Thread (void const *arg) { (void)arg; USBH_Core_Thread ((void *)3U); }

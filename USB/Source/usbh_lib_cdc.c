@@ -14,7 +14,6 @@
 #include "rl_usbh_lib.h"
 #include "usb_lib_debug.h"
 #include "usbh_config.h"
-#include "usbh_lib_config_def.h"
 #include "usbh_lib_core.h"
 #include "usbh_evr.h"
 

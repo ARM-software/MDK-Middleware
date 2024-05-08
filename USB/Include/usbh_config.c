@@ -52,19 +52,12 @@ extern  void USBH_SignalPipeEvent (uint8_t ctrl, ARM_USBH_EP_HANDLE ep_hndl, uin
 
 #ifdef  USBH0_HC_NUM
 
-#if    (USBH0_HC_MEM_POOL_RELOC == 1) && defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-#define USBH0_SECTION_NAME_(x)  __attribute__((section(".ARM.__AT_"#x)))
-#else
-#define USBH0_SECTION_NAME_(x)  __attribute__((section("usbh0_memory")))
-#endif
-#define USBH0_SECTION_NAME(x)   USBH0_SECTION_NAME_(x)
-
 static  const uint8_t           usbh0_power =          (uint8_t)(USBH0_HC_POWER / 2);
 static  const uint32_t          usbh0_pipe_num =        USBH0_HC_PIPE_NUM;
-static  const uint32_t          usbh0_mem_pool_size = ((USBH0_HC_MEM_POOL_SIZE + 8 * USBH0_HC_PIPE_NUM + 32 + 4 + 3) / 4) * 4;
+static  const uint32_t          usbh0_mem_pool_size =   USBH0_HC_MEM_POOL_SIZE;
 static  const uint8_t           usbh0_mem_pool_reloc =  USBH0_HC_MEM_POOL_RELOC;
         USBH_PIPE               usbh0_pipe             [USBH0_HC_PIPE_NUM];
-static  uint32_t                usbh0_mem_pool         [(USBH0_HC_MEM_POOL_SIZE + 8 * USBH0_HC_PIPE_NUM + 32 + 4 + 3) / 4] USBH0_SECTION_NAME(USBH0_HC_MEM_POOL_ADDR);
+static  uint32_t                usbh0_mem_pool         [USBH0_HC_MEM_POOL_SIZE / 4] __attribute__((section("usbh0_memory")));
 static  ARM_DRIVER_USBH        *usbh0_hcd_ptr  =       &USBHn_DRIVER(USBH0_HC_NUM);
 
 // Core Thread definitions
@@ -74,7 +67,7 @@ static  ARM_DRIVER_USBH        *usbh0_hcd_ptr  =       &USBHn_DRIVER(USBH0_HC_NU
 static osRtxThread_t  usbh0_core_thread_cb_mem                                              __SECTION(.bss.os.thread.cb);
 static uint64_t       usbh0_core_thread_stack_mem[(USBH0_CORE_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
 #endif
-const  osThreadAttr_t usbh0_core_thread_attr = {
+static const  osThreadAttr_t usbh0_core_thread_attr = {
   "USBH0_Core_Thread",
   0U,
 #ifdef USB_CMSIS_RTOS2_RTX5
@@ -101,19 +94,12 @@ const  osThreadAttr_t usbh0_core_thread_attr = {
 
 #ifdef  USBH1_HC_NUM
 
-#if    (USBH1_HC_MEM_POOL_RELOC == 1) && defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-#define USBH1_SECTION_NAME_(x)  __attribute__((section(".ARM.__AT_"#x)))
-#else
-#define USBH1_SECTION_NAME_(x)  __attribute__((section("usbh1_memory")))
-#endif
-#define USBH1_SECTION_NAME(x)   USBH1_SECTION_NAME_(x)
-
 static  const uint8_t           usbh1_power =          (uint8_t)(USBH1_HC_POWER / 2);
 static  const uint32_t          usbh1_pipe_num =        USBH1_HC_PIPE_NUM;
-static  const uint32_t          usbh1_mem_pool_size = ((USBH1_HC_MEM_POOL_SIZE + 8 * USBH1_HC_PIPE_NUM + 32 + 4 + 3) / 4) * 4;
+static  const uint32_t          usbh1_mem_pool_size =   USBH1_HC_MEM_POOL_SIZE;
 static  const uint8_t           usbh1_mem_pool_reloc =  USBH1_HC_MEM_POOL_RELOC;
         USBH_PIPE               usbh1_pipe             [USBH1_HC_PIPE_NUM];
-static  uint32_t                usbh1_mem_pool         [(USBH1_HC_MEM_POOL_SIZE + 8 * USBH1_HC_PIPE_NUM + 32 + 4 + 3) / 4] USBH1_SECTION_NAME(USBH1_HC_MEM_POOL_ADDR);
+static  uint32_t                usbh1_mem_pool         [USBH1_HC_MEM_POOL_SIZE / 4] __attribute__((section("usbh1_memory")));
 static  ARM_DRIVER_USBH        *usbh1_hcd_ptr  =       &USBHn_DRIVER(USBH1_HC_NUM);
 
 // Core Thread definitions
@@ -123,7 +109,7 @@ static  ARM_DRIVER_USBH        *usbh1_hcd_ptr  =       &USBHn_DRIVER(USBH1_HC_NU
 static osRtxThread_t  usbh1_core_thread_cb_mem                                              __SECTION(.bss.os.thread.cb);
 static uint64_t       usbh1_core_thread_stack_mem[(USBH1_CORE_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
 #endif
-const  osThreadAttr_t usbh1_core_thread_attr = {
+static const  osThreadAttr_t usbh1_core_thread_attr = {
   "USBH1_Core_Thread",
   0U,
 #ifdef USB_CMSIS_RTOS2_RTX5
@@ -150,19 +136,12 @@ const  osThreadAttr_t usbh1_core_thread_attr = {
 
 #ifdef  USBH2_HC_NUM
 
-#if    (USBH2_HC_MEM_POOL_RELOC == 1) && defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-#define USBH2_SECTION_NAME_(x)  __attribute__((section(".ARM.__AT_"#x)))
-#else
-#define USBH2_SECTION_NAME_(x)  __attribute__((section("usbh2_memory")))
-#endif
-#define USBH2_SECTION_NAME(x)   USBH2_SECTION_NAME_(x)
-
 static  const uint8_t           usbh2_power =          (uint8_t)(USBH2_HC_POWER / 2);
 static  const uint32_t          usbh2_pipe_num =        USBH2_HC_PIPE_NUM;
-static  const uint32_t          usbh2_mem_pool_size = ((USBH2_HC_MEM_POOL_SIZE + 8 * USBH2_HC_PIPE_NUM + 32 + 4 + 3) / 4) * 4;
+static  const uint32_t          usbh2_mem_pool_size =   USBH2_HC_MEM_POOL_SIZE;
 static  const uint8_t           usbh2_mem_pool_reloc =  USBH2_HC_MEM_POOL_RELOC;
         USBH_PIPE               usbh2_pipe             [USBH2_HC_PIPE_NUM];
-static  uint32_t                usbh2_mem_pool         [(USBH2_HC_MEM_POOL_SIZE + 8 * USBH2_HC_PIPE_NUM + 32 + 4 + 3) / 4] USBH2_SECTION_NAME(USBH2_HC_MEM_POOL_ADDR);
+static  uint32_t                usbh2_mem_pool         [USBH2_HC_MEM_POOL_SIZE / 4] __attribute__((section("usbh2_memory")));
 static  ARM_DRIVER_USBH        *usbh2_hcd_ptr  =       &USBHn_DRIVER(USBH2_HC_NUM);
 
 // Core Thread definitions
@@ -172,7 +151,7 @@ static  ARM_DRIVER_USBH        *usbh2_hcd_ptr  =       &USBHn_DRIVER(USBH2_HC_NU
 static osRtxThread_t  usbh2_core_thread_cb_mem                                              __SECTION(.bss.os.thread.cb);
 static uint64_t       usbh2_core_thread_stack_mem[(USBH2_CORE_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
 #endif
-const  osThreadAttr_t usbh2_core_thread_attr = {
+static const  osThreadAttr_t usbh2_core_thread_attr = {
   "USBH2_Core_Thread",
   0U,
 #ifdef USB_CMSIS_RTOS2_RTX5
@@ -199,19 +178,12 @@ const  osThreadAttr_t usbh2_core_thread_attr = {
 
 #ifdef  USBH3_HC_NUM
 
-#if    (USBH3_HC_MEM_POOL_RELOC == 1) && defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-#define USBH3_SECTION_NAME_(x)  __attribute__((section(".ARM.__AT_"#x)))
-#else
-#define USBH3_SECTION_NAME_(x)  __attribute__((section("usbh3_memory")))
-#endif
-#define USBH3_SECTION_NAME(x)   USBH3_SECTION_NAME_(x)
-
 static  const uint8_t           usbh3_power =          (uint8_t)(USBH3_HC_POWER / 2);
 static  const uint32_t          usbh3_pipe_num =        USBH3_HC_PIPE_NUM;
-static  const uint32_t          usbh3_mem_pool_size = ((USBH3_HC_MEM_POOL_SIZE + 8 * USBH3_HC_PIPE_NUM + 32 + 4 + 3) / 4) * 4;
+static  const uint32_t          usbh3_mem_pool_size =   USBH3_HC_MEM_POOL_SIZE;
 static  const uint8_t           usbh3_mem_pool_reloc =  USBH3_HC_MEM_POOL_RELOC;
         USBH_PIPE               usbh3_pipe             [USBH3_HC_PIPE_NUM];
-static  uint32_t                usbh3_mem_pool         [(USBH3_HC_MEM_POOL_SIZE + 8 * USBH3_HC_PIPE_NUM + 32 + 4 + 3) / 4] USBH3_SECTION_NAME(USBH3_HC_MEM_POOL_ADDR);
+static  uint32_t                usbh3_mem_pool         [USBH3_HC_MEM_POOL_SIZE / 4] __attribute__((section("usbh3_memory")));
 static  ARM_DRIVER_USBH        *usbh3_hcd_ptr  =       &USBHn_DRIVER(USBH3_HC_NUM);
 
 // Core Thread definitions
@@ -221,7 +193,7 @@ static  ARM_DRIVER_USBH        *usbh3_hcd_ptr  =       &USBHn_DRIVER(USBH3_HC_NU
 static osRtxThread_t  usbh3_core_thread_cb_mem                                              __SECTION(.bss.os.thread.cb);
 static uint64_t       usbh3_core_thread_stack_mem[(USBH3_CORE_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
 #endif
-const  osThreadAttr_t usbh3_core_thread_attr = {
+static const  osThreadAttr_t usbh3_core_thread_attr = {
   "USBH3_Core_Thread",
   0U,
 #ifdef USB_CMSIS_RTOS2_RTX5
