@@ -10,19 +10,28 @@
 #define __RL_FS_LIB_H
 
 #include <stddef.h>
+
+#include "FS_Config.h"
+#include "FS_Debug.h"
+
 #include "rl_fs.h"
 #include "rl_fs_rte.h"
 
-#if defined(FS_MEMORY_CARD)
+#if defined(FS_MEMORY_CARD_0) || defined(FS_MEMORY_CARD_1)
   #include "fs_memory_card.h"
 #endif
 
-#if defined(FS_NAND_FLASH)
+#if defined(FS_NAND_FLASH_0) || defined(FS_NAND_FLASH_1)
   #include "fs_nand_flash.h"
 #endif
 
-#if defined(FS_NOR_FLASH)
+#if defined(FS_NOR_FLASH_0) || defined(FS_NOR_FLASH_1)
   #include "fs_nor_flash.h"
+#endif
+
+/* Enable debug build */
+#if defined(FS_DEBUG_EVR) && (FS_DEBUG_EVR_ENABLE == 1)
+  #define FS_DEBUG
 #endif
 
 
@@ -307,7 +316,6 @@ extern int32_t  fat_flen      (int32_t handle);
 extern int64_t  fat_seek      (int32_t handle, int64_t offset, int32_t whence);
 
 /* FAT File Maintenance Routines */
-extern fsStatus fat_delete_l  (const char *fn, fsFAT_Volume *vol);
 extern fsStatus fat_delete    (const char *fn, const char *options, fsFAT_Volume *vol);
 extern fsStatus fat_ffind     (const char *fn, fsFileInfo *info, fsFAT_Volume *vol);
 extern fsStatus fat_rename    (const char *path, const char *newname, fsFAT_Volume *vol);
@@ -379,7 +387,7 @@ extern uint8_t const fs_ndrv;
 /* FileSystem version */
 extern uint32_t const fs_lib_version;
 
-#ifdef RTE_FileSystem_Debug
+#ifdef FS_DEBUG
 /* Media objects */
 extern RAM_DEV fs_ram0_dev;
 #endif

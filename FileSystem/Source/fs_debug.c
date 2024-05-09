@@ -1,16 +1,18 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    fs_debug.h
+ * Name:    fs_debug.c
  * Purpose: File System Debug Configuration
  *----------------------------------------------------------------------------*/
 
 #include <stdint.h>
 
 #include "rl_fs_lib.h"
-#include "EventRecorder.h"              // Keil.ARM Compiler::Compiler:Event Recorder
 #include "fs_evr.h"
+
+#ifdef FS_DEBUG_EVR
+#include "EventRecorder.h"
 
 /*
   Debug Configuration values
@@ -31,7 +33,7 @@
                           FS_DEBUG_EVR_MC_SPI )
 
 #if (FS_DEBUG_EVR_CFG > 3)
-  #error "FS_Debug.c contains invalid Event Recorder filter configuration."
+  #error "FS_Debug.h contains invalid Event Recorder filter configuration."
 #endif
 
 #define Level_Msk(cfg)                             \
@@ -59,3 +61,4 @@ void fs_config_evr (void) {
   EventRecorderEnable (Level_Msk(FS_DEBUG_EVR_MC_SPI), EvtFsMcSPI_No, EvtFsMcSPI_No);
 #endif /* (FS_DEBUG_EVR_ENABLE != 0) */
 }
+#endif /* FS_DEBUG_EVR */

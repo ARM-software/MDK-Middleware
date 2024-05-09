@@ -43,6 +43,8 @@ This user's guide contains the following chapters:
     <tr>
       <td>V8.0.0</td>
       <td>
+        - removed CORE component variants
+        - changed source config files to headers
         - removed support for legacy Arm Compiler 5
         - removed support for CMSIS-RTOS version 1
         - removed support for legacy fdelete function

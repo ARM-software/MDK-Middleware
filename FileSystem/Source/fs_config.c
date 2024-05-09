@@ -9,45 +9,47 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "RTE_Components.h"
+#include "rl_fs_lib.h"
+#include "cmsis_compiler.h"
 
-#if defined(RTE_FileSystem_Drive_RAM_0) && !defined(RAM0_ENABLE)
+#if defined(FS_RAM_0)
 #include "FS_Config_RAM_0.h"
 #endif
-#if defined(RTE_FileSystem_Drive_RAM_1) && !defined(RAM1_ENABLE)
+#if defined(FS_RAM_1)
 #include "FS_Config_RAM_1.h"
 #endif
 
-#if defined(RTE_FileSystem_Drive_NOR_0) && !defined(NOR0_ENABLE)
+#if defined(FS_NOR_FLASH_0)
 #include "FS_Config_NOR_0.h"
 #endif
-#if defined(RTE_FileSystem_Drive_NOR_1) && !defined(NOR1_ENABLE)
+#if defined(FS_NOR_FLASH_1)
 #include "FS_Config_NOR_1.h"
 #endif
 
-#if defined(RTE_FileSystem_Drive_NAND_0) && !defined(NAND0_ENABLE)
+#if defined(FS_NAND_FLASH_0)
 #include "FS_Config_NAND_0.h"
 #endif
-#if defined(RTE_FileSystem_Drive_NAND_1) && !defined(NAND1_ENABLE)
+#if defined(FS_NAND_FLASH_1)
 #include "FS_Config_NAND_1.h"
 #endif
 
-#if defined(RTE_FileSystem_Drive_MC_0) && !defined(MC0_ENABLE)
+#if defined(FS_MEMORY_CARD_0)
 #include "FS_Config_MC_0.h"
 #endif
-#if defined(RTE_FileSystem_Drive_MC_1) && !defined(MC1_ENABLE)
+#if defined(FS_MEMORY_CARD_1)
 #include "FS_Config_MC_1.h"
 #endif
 
-#if defined(RTE_FileSystem_Drive_USB_0) && !defined(USB0_ENABLE)
+#if defined(FS_USB_0)
 #include "FS_Config_USB_0.h"
 #endif
-#if defined(RTE_FileSystem_Drive_USB_1) && !defined(USB1_ENABLE)
+#if defined(FS_USB_1)
 #include "FS_Config_USB_1.h"
 #endif
 
-#include "rl_fs_lib.h"
-#include "cmsis_compiler.h"
+#if defined (FS_RTOS_RTX5)
+  #include "rtx_os.h"
+#endif
 
 /* ---------------------------------------------------------------------------*/
 /* Reject MicroLib since it does not provide retargeting */
@@ -295,15 +297,24 @@ uint8_t const fs_ndrv = FS_NDRV;
 #define EXPAND_SYMBOL(name, port) name##port
 #define CREATE_SYMBOL(name, port) EXPAND_SYMBOL(name, port)
 
-#include "fs_os.h"
-
 /*----------------------------------------------------------------------------
  *  Drive F0: NOR Flash device NOR0 configuration
  *---------------------------------------------------------------------------*/
 #if (NOR0_ENABLE)
-  #if !defined        (fs_nor0_mtx)
-    #error "Mutex object for drive F0 is undefined."
+
+  #if defined (RTE_CMSIS_RTOS2_RTX5)
+  /* CMSIS RTOS2 RTX5 */
+  static osRtxMutex_t  fs_nor0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+  static
+  const osMutexAttr_t  fs_nor0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nor0_mtx_cb, sizeof(osRtxMutex_t) };
+  #else
+  /* CMSIS RTOS2 (dynamic memory allocation) */
+  static
+  const osMutexAttr_t  fs_nor0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
   #endif
+
+  #define fs_nor0_mtx &fs_nor0_mtx_at
+
   static fsEFS_Volume  fs_nor0_vol;
 
   static FLASH_TIMEOUT fs_nor0_flash_tout = {
@@ -369,9 +380,19 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive F1: NOR Flash device NOR1 configuration
  *---------------------------------------------------------------------------*/
 #if (NOR1_ENABLE)
-  #if !defined        (fs_nor1_mtx)
-    #error "Mutex object for drive F1 is undefined."
+  #if defined (RTE_CMSIS_RTOS2_RTX5)
+  /* CMSIS RTOS2 RTX5 */
+  static osRtxMutex_t  fs_nor1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+  static
+  const osMutexAttr_t  fs_nor1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nor1_mtx_cb, sizeof(osRtxMutex_t) };
+  #else
+  /* CMSIS RTOS2 (dynamic memory allocation) */
+  static
+  const osMutexAttr_t  fs_nor1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
   #endif
+
+  #define fs_nor1_mtx &fs_nor1_mtx_at
+
   static fsEFS_Volume  fs_nor1_vol;
 
   static FLASH_TIMEOUT fs_nor1_flash_tout = {
@@ -436,9 +457,19 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive M0: Memory Card device MC0 configuration
  *---------------------------------------------------------------------------*/
 #if (MC0_ENABLE)
-  #if !defined       (fs_mc0_mtx)
-    #error "Mutex object for drive M0 is undefined."
+  #if defined (RTE_CMSIS_RTOS2_RTX5)
+  /* CMSIS RTOS2 RTX5 */
+  static osRtxMutex_t fs_mc0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+  static
+  const osMutexAttr_t fs_mc0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_mc0_mtx_cb, sizeof(osRtxMutex_t) };
+  #else
+  /* CMSIS RTOS2 (dynamic memory allocation) */
+  static
+  const osMutexAttr_t fs_mc0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
   #endif
+
+  #define fs_mc0_mtx &fs_mc0_mtx_at
+
   static fsFAT_Volume fs_mc0_vol;
 
   #if (MC0_FAT_JOURNAL)
@@ -550,9 +581,19 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive M1: Memory Card device MC1 configuration
  *---------------------------------------------------------------------------*/
 #if (MC1_ENABLE)
-  #if !defined       (fs_mc1_mtx)
-    #error "Mutex object for drive M1 is undefined."
+  #if defined (RTE_CMSIS_RTOS2_RTX5)
+  /* CMSIS RTOS2 RTX5 */
+  static osRtxMutex_t fs_mc1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+  static
+  const osMutexAttr_t fs_mc1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_mc1_mtx_cb, sizeof(osRtxMutex_t) };
+  #else
+  /* CMSIS RTOS2 (dynamic memory allocation) */
+  static
+  const osMutexAttr_t fs_mc1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
   #endif
+
+  #define fs_mc1_mtx &fs_mc1_mtx_at
+
   static fsFAT_Volume fs_mc1_vol;
 
   #if (MC1_FAT_JOURNAL)
@@ -798,9 +839,19 @@ uint8_t const fs_ndrv = FS_NDRV;
   static BLOCK_CACHE  nand0_cabl [NAND0_BLOCK_CACHE + 2];
   static uint32_t     nand0_ttsn [NAND_TSN_SIZE(NAND0_BLOCK_COUNT, NAND0_PAGE_SIZE)];
 
-  #if !defined       (fs_nand0_mtx)
-    #error "Mutex object for drive N0 is undefined."
+  #if defined (RTE_CMSIS_RTOS2_RTX5)
+  /* CMSIS RTOS2 RTX5 */
+  static osRtxMutex_t   fs_nand0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+  static
+  const osMutexAttr_t   fs_nand0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nand0_mtx_cb, sizeof(osRtxMutex_t) };
+  #else
+  /* CMSIS RTOS2 (dynamic memory allocation) */
+  static
+  const osMutexAttr_t   fs_nand0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
   #endif
+
+#define fs_nand0_mtx &fs_nand0_mtx_at
+
   static fsFAT_Volume fs_nand0_vol;
   #if (NAND0_FAT_JOURNAL)
   static FSJOUR       fs_nand0_fsj;
@@ -954,9 +1005,19 @@ uint8_t const fs_ndrv = FS_NDRV;
   static BLOCK_CACHE  nand1_cabl [NAND1_BLOCK_CACHE + 2];
   static uint32_t     nand1_ttsn [NAND_TSN_SIZE(NAND1_BLOCK_COUNT, NAND1_PAGE_SIZE)];
 
-  #if !defined       (fs_nand1_mtx)
-    #error "Mutex object for drive N1 is undefined."
+  #if defined (RTE_CMSIS_RTOS2_RTX5)
+  /* CMSIS RTOS2 RTX5 */
+  static osRtxMutex_t   fs_nand1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+  static
+  const osMutexAttr_t   fs_nand1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nand1_mtx_cb, sizeof(osRtxMutex_t) };
+  #else
+  /* CMSIS RTOS2 (dynamic memory allocation) */
+  static
+  const osMutexAttr_t   fs_nand1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
   #endif
+
+  #define fs_nand1_mtx &fs_nand1_mtx_at
+
   static fsFAT_Volume fs_nand1_vol;
   #if (NAND1_FAT_JOURNAL)
   static FSJOUR       fs_nand1_fsj;
@@ -1089,9 +1150,19 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive R0: RAM device RAM0 configuration
  *---------------------------------------------------------------------------*/
 #if (RAM0_ENABLE)
-  #if !defined       (fs_ram0_mtx)
-    #error "Mutex object for drive R0 is undefined."
+  #if defined (RTE_CMSIS_RTOS2_RTX5)
+  /* CMSIS RTOS2 RTX5 */
+  static osRtxMutex_t  fs_ram0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+  static
+  const osMutexAttr_t  fs_ram0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_ram0_mtx_cb, sizeof(osRtxMutex_t) };
+  #else
+  /* CMSIS RTOS2 (dynamic memory allocation) */
+  static
+  const osMutexAttr_t  fs_ram0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
   #endif
+
+  #define fs_ram0_mtx &fs_ram0_mtx_at
+
   static fsFAT_Volume fs_ram0_vol;
 
   #if (RAM0_SIZE < 0x4A00)
@@ -1108,7 +1179,7 @@ uint8_t const fs_ndrv = FS_NDRV;
   static uint32_t ram0_buf[256 + (RAM0_SIZE/4)] __AT_RAM0;
 
   /* RAM0 device info */
-  #ifndef RTE_FileSystem_Debug
+  #ifndef FS_DEBUG
   static
   #endif
   RAM_DEV fs_ram0_dev = {
@@ -1151,9 +1222,19 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive R1: RAM device RAM1 configuration
  *---------------------------------------------------------------------------*/
 #if (RAM1_ENABLE)
-  #if !defined       (fs_ram1_mtx)
-    #error "Mutex object for drive R1 is undefined."
+  #if defined (RTE_CMSIS_RTOS2_RTX5)
+  /* CMSIS RTOS2 RTX5 */
+  static osRtxMutex_t  fs_ram1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+  static
+  const osMutexAttr_t  fs_ram1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_ram1_mtx_cb, sizeof(osRtxMutex_t) };
+  #else
+  /* CMSIS RTOS2 (dynamic memory allocation) */
+  static
+  const osMutexAttr_t  fs_ram1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
   #endif
+
+  #define fs_ram1_mtx &fs_ram1_mtx_at
+
   static fsFAT_Volume fs_ram1_vol;
 
   #if (RAM1_SIZE < 0x4A00)
@@ -1213,9 +1294,19 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive U0: USB Flash device USB0 configuration
  *---------------------------------------------------------------------------*/
 #if (USB0_ENABLE)
-  #if !defined       (fs_usb0_mtx)
-    #error "Mutex object for drive U0 is undefined."
+  #if defined (RTE_CMSIS_RTOS2_RTX5)
+  /* CMSIS RTOS2 RTX5 */
+  static osRtxMutex_t  fs_usb0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+  static
+  const osMutexAttr_t  fs_usb0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_usb0_mtx_cb, sizeof(osRtxMutex_t) };
+  #else
+  /* CMSIS RTOS2 (dynamic memory allocation) */
+  static
+  const osMutexAttr_t  fs_usb0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
   #endif
+
+  #define fs_usb0_mtx &fs_usb0_mtx_at
+
   static fsFAT_Volume fs_usb0_vol;
 
   #if (USB0_FAT_JOURNAL)
@@ -1274,9 +1365,19 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive U1: USB Flash device USB1 configuration
  *---------------------------------------------------------------------------*/
 #if (USB1_ENABLE)
-  #if !defined       (fs_usb1_mtx)
-    #error "Mutex object for drive U1 is undefined."
+  #if defined (RTE_CMSIS_RTOS2_RTX5)
+  /* CMSIS RTOS2 RTX5 */
+  static osRtxMutex_t  fs_usb1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
+  static
+  const osMutexAttr_t  fs_usb1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_usb1_mtx_cb, sizeof(osRtxMutex_t) };
+  #else
+  /* CMSIS RTOS2 (dynamic memory allocation) */
+  static
+  const osMutexAttr_t  fs_usb1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
   #endif
+
+  #define fs_usb1_mtx &fs_usb1_mtx_at
+
   static fsFAT_Volume fs_usb1_vol;
 
   #if (USB1_FAT_JOURNAL)
@@ -1678,7 +1779,6 @@ void fs_config (const char *drive) {
       break;
   }
 }
-
 
 #if defined(__ARMCC_VERSION)
 #if (__ARMCC_VERSION >= 6010050)

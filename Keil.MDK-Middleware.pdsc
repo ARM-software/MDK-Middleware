@@ -22,6 +22,8 @@
       - added option for updating mbedTLS certificates at runtime
       - added IPv6 Multicasting with MLD, Multicast Listener Discovery Protocol
       FileSystem Component Version 8.0.0
+      - removed CORE component variants
+      - changed source config files to headers
       - removed support for legacy Arm Compiler 5
       - removed support for CMSIS-RTOS version 1
       - removed support for legacy fdelete function
@@ -458,13 +460,6 @@
       <require condition="CMSIS Core"/>
       <require condition="CMSIS RTOS"/>
       <require Cclass="CMSIS-Compiler" Cgroup="File Interface" Csub="MDK-MW File System"/>
-    </condition>
-    <condition id="CMSIS Core with RTOS and File System I/O and Event Recorder">
-      <description>CMSIS Core with RTOS for Cortex-M and File System I/O and Event Recorder</description>
-      <require condition="CMSIS Core"/>
-      <require condition="CMSIS RTOS"/>
-      <require Cclass="CMSIS-Compiler" Cgroup="File Interface" Csub="MDK-MW File System"/>
-      <require Cclass="CMSIS-View" Cgroup="Event Recorder"/>
     </condition>
     <condition id="File System Core">
       <description>File System CORE component</description>
@@ -1170,103 +1165,28 @@
     <bundle Cbundle="MDK" Cclass="File System" Cversion="8.0.0">
       <description>File Access on various storage devices</description>
       <doc>Documentation/html/FileSystem/index.html</doc>
-      <component Cgroup="CORE" Cvariant="LFN" isDefaultVariant="true" condition="CMSIS Core with RTOS and File System I/O">
-        <description>File System with Long Filename support for Cortex-M (Release)</description>
+      <component Cgroup="CORE" condition="CMSIS Core with RTOS and File System I/O">
+        <description>File System Core Implementation</description>
         <RTE_Components_h>
           <!-- the following content goes into file 'RTE_Components.h' -->
           #define RTE_FileSystem_Core             /* File System Core */
-          #define RTE_FileSystem_LFN              /* File System with Long Filename support */
-          #define RTE_FileSystem_Release          /* File System Release Version */
         </RTE_Components_h>
         <files>
           <file category="other"   name="FileSystem/FileSystem.scvd"/>
           <file category="header"  name="FileSystem/Include/rl_fs.h"/>
-          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.5.0"/>
+          <file category="header"  name="FileSystem/Config/FS_Config.h" attr="config" version="8.0.0"/>
+          <file category="header"  name="FileSystem/Config/FS_Debug.h"  attr="config" version="8.0.0"/>
           <file category="include" name="FileSystem/Source/Include/"/>
           <file category="source"  name="FileSystem/Source/fs_common.c"/>
+          <file category="source"  name="FileSystem/Source/fs_config.c"/>
+          <file category="source"  name="FileSystem/Source/fs_debug.c"/>
           <file category="source"  name="FileSystem/Source/fs_efs.c"/>
           <file category="source"  name="FileSystem/Source/fs_fat.c"/>
           <file category="source"  name="FileSystem/Source/fs_fat_elink.c"/>
           <file category="source"  name="FileSystem/Source/fs_ioc.c"/>
           <file category="source"  name="FileSystem/Source/fs_journal.c"/>
           <file category="source"  name="FileSystem/Source/fs_mapi.c"/>
-          <file category="source"  name="FileSystem/Source/fs_sys.c"/>
-          <file category="source"  name="FileSystem/Source/fs_time.c"/>
-          <file category="source"  name="FileSystem/Source/fs_version.c"/>
-        </files>
-      </component>
-      <component Cgroup="CORE" Cvariant="LFN Debug" condition="CMSIS Core with RTOS and File System I/O and Event Recorder">
-        <description>File System with Long Filename support for Cortex-M (Debug)</description>
-        <RTE_Components_h>
-          <!-- the following content goes into file 'RTE_Components.h' -->
-          #define RTE_FileSystem_Core             /* File System Core */
-          #define RTE_FileSystem_LFN              /* File System with Long Filename support */
-          #define RTE_FileSystem_Debug            /* File System Debug Version */
-        </RTE_Components_h>
-        <files>
-          <file category="other"   name="FileSystem/FileSystem.scvd"/>
-          <file category="header"  name="FileSystem/Include/rl_fs.h"/>
-          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.5.0"/>
-          <file category="source"  name="FileSystem/Config/FS_Debug.c"  attr="config" version="1.0.0"/>
-          <file category="include" name="FileSystem/Source/Include/"/>
-          <file category="source"  name="FileSystem/Source/fs_common.c"/>
-          <file category="source"  name="FileSystem/Source/fs_efs.c"/>
-          <file category="source"  name="FileSystem/Source/fs_fat.c"/>
-          <file category="source"  name="FileSystem/Source/fs_fat_elink.c"/>
-          <file category="source"  name="FileSystem/Source/fs_ioc.c"/>
-          <file category="source"  name="FileSystem/Source/fs_journal.c"/>
-          <file category="source"  name="FileSystem/Source/fs_mapi.c"/>
-          <file category="source"  name="FileSystem/Source/fs_sys.c"/>
-          <file category="source"  name="FileSystem/Source/fs_time.c"/>
-          <file category="source"  name="FileSystem/Source/fs_version.c"/>
-        </files>
-      </component>
-      <component Cgroup="CORE" Cvariant="SFN" condition="CMSIS Core with RTOS and File System I/O">
-        <description>File System without Long Filename support for Cortex-M (Release)</description>
-        <RTE_Components_h>
-          <!-- the following content goes into file 'RTE_Components.h' -->
-          #define RTE_FileSystem_Core             /* File System Core */
-          #define RTE_FileSystem_SFN              /* File System without Long Filename support */
-          #define RTE_FileSystem_Release          /* File System Release Version */
-        </RTE_Components_h>
-        <files>
-          <file category="other"   name="FileSystem/FileSystem.scvd"/>
-          <file category="header"  name="FileSystem/Include/rl_fs.h"/>
-          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.5.0"/>
-          <file category="include" name="FileSystem/Source/Include/"/>
-          <file category="source"  name="FileSystem/Source/fs_common.c"/>
-          <file category="source"  name="FileSystem/Source/fs_efs.c"/>
-          <file category="source"  name="FileSystem/Source/fs_fat.c"/>
-          <file category="source"  name="FileSystem/Source/fs_fat_elink.c"/>
-          <file category="source"  name="FileSystem/Source/fs_ioc.c"/>
-          <file category="source"  name="FileSystem/Source/fs_journal.c"/>
-          <file category="source"  name="FileSystem/Source/fs_mapi.c"/>
-          <file category="source"  name="FileSystem/Source/fs_sys.c"/>
-          <file category="source"  name="FileSystem/Source/fs_time.c"/>
-          <file category="source"  name="FileSystem/Source/fs_version.c"/>
-        </files>
-      </component>
-      <component Cgroup="CORE" Cvariant="SFN Debug" condition="CMSIS Core with RTOS and File System I/O and Event Recorder">
-        <description>File System without Long Filename support for Cortex-M (Debug)</description>
-        <RTE_Components_h>
-          <!-- the following content goes into file 'RTE_Components.h' -->
-          #define RTE_FileSystem_Core             /* File System Core */
-          #define RTE_FileSystem_SFN              /* File System without Long Filename support */
-          #define RTE_FileSystem_Debug            /* File System Debug Version */
-        </RTE_Components_h>
-        <files>
-          <file category="other"   name="FileSystem/FileSystem.scvd"/>
-          <file category="header"  name="FileSystem/Include/rl_fs.h"/>
-          <file category="source"  name="FileSystem/Config/FS_Config.c" attr="config" version="6.5.0"/>
-          <file category="source"  name="FileSystem/Config/FS_Debug.c"  attr="config" version="1.0.0"/>
-          <file category="include" name="FileSystem/Source/Include/"/>
-          <file category="source"  name="FileSystem/Source/fs_common.c"/>
-          <file category="source"  name="FileSystem/Source/fs_efs.c"/>
-          <file category="source"  name="FileSystem/Source/fs_fat.c"/>
-          <file category="source"  name="FileSystem/Source/fs_fat_elink.c"/>
-          <file category="source"  name="FileSystem/Source/fs_ioc.c"/>
-          <file category="source"  name="FileSystem/Source/fs_journal.c"/>
-          <file category="source"  name="FileSystem/Source/fs_mapi.c"/>
+          <file category="source"  name="FileSystem/Source/fs_os_rtos2.c"/>
           <file category="source"  name="FileSystem/Source/fs_sys.c"/>
           <file category="source"  name="FileSystem/Source/fs_time.c"/>
           <file category="source"  name="FileSystem/Source/fs_version.c"/>

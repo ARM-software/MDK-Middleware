@@ -342,7 +342,7 @@
 #define EvtFsNFTL_CacheWrite            EvtFsNFTLId(EventLevelDetail, 68)
 #define EvtFsNFTL_CacheRead             EvtFsNFTLId(EventLevelDetail, 69)
 
-#if defined(FS_NAND_FLASH)
+#if defined(FS_NAND_FLASH_0) || defined(FS_NAND_FLASH_1)
 /* Event id list for "FsNAND" */
 #define EvtFsNAND_Init                  EvtFsNANDId(EventLevelOp,      0)
 #define EvtFsNAND_InitDriver            EvtFsNANDId(EventLevelOp,      1)
@@ -365,9 +365,9 @@
 #define EvtFsNAND_ParamPageRead         EvtFsNANDId(EventLevelOp,     18)
 #define EvtFsNAND_IdRead                EvtFsNANDId(EventLevelOp,     19)
 #define EvtFsNAND_DeviceReset           EvtFsNANDId(EventLevelOp,     20)
-#endif /* FS_NAND_FLASH */
+#endif /* defined(FS_NAND_FLASH_0) || defined(FS_NAND_FLASH_1) */
 
-#if defined(FS_MEMORY_CARD)
+#if defined(FS_MEMORY_CARD_0) || defined(FS_MEMORY_CARD_1)
 /* Event id list for "FsMcMCI" */
 #define EvtFsMcMCI_InitDriver           EvtFsMcMCIId(EventLevelOp,     0)
 #define EvtFsMcMCI_InitDriverError      EvtFsMcMCIId(EventLevelError,  1)
@@ -475,7 +475,7 @@
 #define EvtFsMcSPI_ACmdResponseError    EvtFsMcSPIId(EventLevelError, 45)
 #define EvtFsMcSPI_ParameterInvalid     EvtFsMcSPIId(EventLevelError, 46)
 #define EvtFsMcSPI_MediaPasswordEnabled EvtFsMcSPIId(EventLevelError, 47)
-#endif /* FS_MEMORY_CARD */
+#endif /* defined(FS_MEMORY_CARD_0) || defined(FS_MEMORY_CARD_1) */
 #endif
 
 

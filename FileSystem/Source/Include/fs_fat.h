@@ -70,7 +70,7 @@
 #define MAX_PATH_LFN          260
 #define MAX_PATH_SFN          80
 
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
 #define FAT_MAX_PATH          MAX_PATH_LFN
 #else
 #define FAT_MAX_PATH          MAX_PATH_SFN

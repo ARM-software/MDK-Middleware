@@ -54,7 +54,7 @@ static const DEVPAR IniDevCfg[] = {
 /* Optimal file system is FAT12/FAT16 with Cluster sizes 8k, 16k, 32k.        */
 /* Cluster 2 shall be block aligned (32K aligned)                             */
 
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
 static const uint8_t ChIndex[13] = { 1, 3, 5, 7, 9, 14, 16, 18, 20, 22, 24, 28, 30 };
 #endif
 
@@ -546,7 +546,7 @@ static uint32_t short_ent_hash (FILEREC *frec, uint32_t hash) {
 }
 
 
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
 /**
   Calculate hash number from the long filename
   \param[in]  frec                      LFN entry component
@@ -575,7 +575,7 @@ static uint32_t long_ent_hash (LFN_FILEREC *frec, uint32_t hash) {
 #endif
 
 
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
 /**
   Copy LFN name to an entry
 
@@ -602,7 +602,7 @@ static void lfn_name_copy (LFN_FILEREC *lfnr, const char *fn, uint32_t len) {
 #endif
 
 
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
 /**
   Compare len of fn with chars in long entry name (case insensitive).
 
@@ -633,7 +633,7 @@ static bool lfn_name_cmp (LFN_FILEREC *lfnr, const char *fn, uint32_t len) {
 #endif
 
 
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
 /**
   Determine number of name characters in long entry
 
@@ -662,7 +662,7 @@ static uint32_t lfn_char_cnt (LFN_FILEREC *lfnr) {
 } 
 #endif
 
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
 /**
   Extract name characters from long entry
 
@@ -683,7 +683,7 @@ static void lfn_extract (char *dst, LFN_FILEREC *lfnr, uint32_t cnt) {
 #endif
 
 
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
 /**
   Calculate short entry name checksum which is placed in every long entry.
 */
@@ -791,7 +791,7 @@ static uint32_t char_validate (char ch) {
 
     val = 1;
   }
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
   if ((ch == '+')              ||
       (ch == ',')              ||
       (ch == ';')              ||
@@ -899,7 +899,7 @@ static uint32_t path_validate (const char *path) {
 }
 
 
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
 /**
   Insert numeric tail into input name string.
 
@@ -999,7 +999,7 @@ static bool name_nt_gen (char *fn, uint32_t num) {
 #endif
 
 
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
 /**
   Generate basis name from the input name
 
@@ -1096,7 +1096,7 @@ static bool name_basis_gen (const char *fn, uint32_t fn_len, char *bn) {
               - >0: analyze result bit mask
 */
 static uint8_t name_analyse (const char *fn, uint32_t fn_len) {
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
   char     pch; /* Previous character in a name */
 #endif
   char     ch;  /* Current character in a name */
@@ -1106,13 +1106,13 @@ static uint8_t name_analyse (const char *fn, uint32_t fn_len) {
   uint32_t len;
 
   res = FAT_NAME_SFN |
-        #ifdef FS_FAT_LFN
+        #ifndef FS_FAT_NO_LFN
         FAT_NAME_LFN |
         #endif
         0;
   dot = 0;
   ext = 0;
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
   pch = 0;
 #endif
 
@@ -1124,7 +1124,7 @@ static uint8_t name_analyse (const char *fn, uint32_t fn_len) {
     }
 
     /* Check if current character valid */
-    #ifdef FS_FAT_LFN
+    #ifndef FS_FAT_NO_LFN
     if (char_validate (ch) == 2) {
       /* Invalid SFN character */
       res &= ~FAT_NAME_SFN;
@@ -1135,7 +1135,7 @@ static uint8_t name_analyse (const char *fn, uint32_t fn_len) {
       ext++;
       if (ext > 3) {
         /* Extension is longer than 3 characters, not SFN name */
-        #ifdef FS_FAT_LFN
+        #ifndef FS_FAT_NO_LFN
         res &= ~FAT_NAME_SFN;
         #else
         return (0);
@@ -1155,7 +1155,7 @@ static uint8_t name_analyse (const char *fn, uint32_t fn_len) {
       else {
         if (dot > 1) {
           /* Dot exists in name more than once: only in LFN */
-          #ifdef FS_FAT_LFN
+          #ifndef FS_FAT_NO_LFN
             res &= ~FAT_NAME_SFN;
           #else
             /* Multiple dots are not allowed in SFN */
@@ -1164,7 +1164,7 @@ static uint8_t name_analyse (const char *fn, uint32_t fn_len) {
         }
       }
     }
-    #ifdef FS_FAT_LFN
+    #ifndef FS_FAT_NO_LFN
     else if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) {
       if (pch) {
         if ((pch ^ ch) & 0x20) {
@@ -1178,7 +1178,7 @@ static uint8_t name_analyse (const char *fn, uint32_t fn_len) {
 
     if (len > 8) {
       if (!dot) {
-        #ifdef FS_FAT_LFN
+        #ifndef FS_FAT_NO_LFN
         res &= ~FAT_NAME_SFN;
         #else
         /* Name without extension must consist of 8 characters for SFN */
@@ -2255,7 +2255,7 @@ static fsStatus frec_delete (FREC_POS *rpos, fsFAT_Volume *vol) {
                 - fsError        = io operation failed
 */
 static fsStatus frec_next (PATH_INFO *pinfo, char *fn, uint32_t len, fsFAT_Volume *vol) {
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
   uint8_t chksum;
   uint8_t valid;
   bool    ord;
@@ -2273,7 +2273,7 @@ static fsStatus frec_next (PATH_INFO *pinfo, char *fn, uint32_t len, fsFAT_Volum
   hash  = 0;
   found = false;
   ents  = 0;
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
   valid   = 0;
   chksum  = 0;
   ord     = false;
@@ -2292,7 +2292,7 @@ static fsStatus frec_next (PATH_INFO *pinfo, char *fn, uint32_t len, fsFAT_Volum
         /* Free entry, last one in directory */
         return (fsFileNotFound);
 
-      #ifdef FS_FAT_LFN
+      #ifndef FS_FAT_NO_LFN
       case ENTRY_TYPE_LFN:
         /* Process LFN entry */
         lfne = (LFN_FILEREC *)pinfo->sfne;
@@ -2343,7 +2343,7 @@ static fsStatus frec_next (PATH_INFO *pinfo, char *fn, uint32_t len, fsFAT_Volum
 
       case ENTRY_TYPE_SFN:
         /* Process SFN entry */
-        #ifdef FS_FAT_LFN
+        #ifndef FS_FAT_NO_LFN
         if (ord) {
           ord = 0;
           if (ents == valid) {
@@ -2474,7 +2474,7 @@ static fsStatus frec_find_elink (PATH_INFO *pinfo, fsFAT_Volume *vol) {
   \return \ref fsStatus
 */
 static fsStatus frec_find (PATH_INFO *pinfo, fsFAT_Volume *vol) {
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
   bool     ord;
   uint8_t  offs;
   uint8_t  chksum;
@@ -2500,7 +2500,7 @@ static fsStatus frec_find (PATH_INFO *pinfo, fsFAT_Volume *vol) {
   hash   = 0;
   match  = false;
   ents   = 0;
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
   vlen   = 0;
   chksum = 0;
   ord    = false;
@@ -2524,7 +2524,7 @@ static fsStatus frec_find (PATH_INFO *pinfo, fsFAT_Volume *vol) {
           /* Free entry, last one in directory (0x00) */
           return (fsFileNotFound);
 
-        #ifdef FS_FAT_LFN
+        #ifndef FS_FAT_NO_LFN
         case ENTRY_TYPE_LFN:
           /* Process LFN entry component */
           lfne = (LFN_FILEREC *)sfne;
@@ -2574,7 +2574,7 @@ static fsStatus frec_find (PATH_INFO *pinfo, fsFAT_Volume *vol) {
 
         case ENTRY_TYPE_SFN:
           /* Process SFN entry */
-          #ifdef FS_FAT_LFN
+          #ifndef FS_FAT_NO_LFN
           if (ord) {
             ord = 0;
             if (vlen == pinfo->fn_len) {
@@ -2718,7 +2718,7 @@ static uint32_t is_dir_empty (uint32_t dir_clus, fsFAT_Volume *vol) {
 }
 
 
-#ifdef FS_FAT_LFN
+#ifndef FS_FAT_NO_LFN
 /**
   Create long name component of the directory entry
 
@@ -3974,7 +3974,7 @@ static fsStatus path_create (PATH_INFO *pinfo, bool mkdir, fsFAT_Volume *vol) {
   uint32_t  first_clus;
   uint8_t   attrib;
   ELINK    *el;
-  #ifdef FS_FAT_LFN
+  #ifndef FS_FAT_NO_LFN
   fsStatus  stat;
   uint32_t  num;
   PATH_INFO pinfo_nt;
@@ -4011,7 +4011,7 @@ static fsStatus path_create (PATH_INFO *pinfo, bool mkdir, fsFAT_Volume *vol) {
 
     pinfo->frec.cnt = 1;
 
-    #ifdef FS_FAT_LFN
+    #ifndef FS_FAT_NO_LFN
     if (!(pinfo->fn_flags & FAT_NAME_SFN)) {
       /* Set number of entries to store long name */
       pinfo->frec.cnt += (pinfo->fn_len + 12) / 13;
@@ -4080,7 +4080,7 @@ static fsStatus path_create (PATH_INFO *pinfo, bool mkdir, fsFAT_Volume *vol) {
     /* Convert name to 8.3 short entry format */
     sfn_embed (sn, sn);
 
-    #ifdef FS_FAT_LFN
+    #ifndef FS_FAT_NO_LFN
     if (pinfo->frec.cnt > 1) {
       if (el) {
         /* Fill LFN part of entry link */
