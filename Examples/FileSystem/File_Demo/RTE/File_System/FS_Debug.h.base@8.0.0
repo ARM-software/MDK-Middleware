@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2018 ARM Germany GmbH. All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    FS_Debug.c
+ * Name:    FS_Debug.h
  * Purpose: File System Debug Configuration
- * Rev.:    V1.0.0
+ * Rev.:    V8.0.0
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -46,5 +46,3 @@
 #define FS_DEBUG_EVR_MC_SPI     1
 
 //   </e>
-
-#include "fs_debug.h"

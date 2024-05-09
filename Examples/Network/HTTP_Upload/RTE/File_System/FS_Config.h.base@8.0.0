@@ -2,9 +2,9 @@
  * MDK Middleware - Component ::File System
  * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    FS_Config.c
+ * Name:    FS_Config.h
  * Purpose: File System Configuration
- * Rev.:    V6.5.0
+ * Rev.:    V8.0.0
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -28,5 +28,3 @@
 #define EFS_MAX_OPEN_FILES      4
 
 // </h>
-
-#include "fs_config.h"
