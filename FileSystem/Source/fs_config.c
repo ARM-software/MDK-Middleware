@@ -1473,7 +1473,8 @@ FS_DEV fs_DevPool[FS_NDRV] = {
 /*-----------------------------------------------------------------------------
  *  Configuration per drive
  *----------------------------------------------------------------------------*/
-__inline static void fs_config_flash (char num) {
+#if (NOR0_ENABLE || NOR1_ENABLE)
+__STATIC_INLINE void fs_config_flash (char num) {
   switch (num) {
 #if (NOR0_ENABLE)
     case '0':
@@ -1498,8 +1499,10 @@ __inline static void fs_config_flash (char num) {
 #endif /* NOR1_ENABLE */
   }
 }
+#endif
 
-__inline static void fs_config_mc (char num) {
+#if (MC0_ENABLE || MC1_ENABLE)
+__STATIC_INLINE void fs_config_mc (char num) {
   switch (num) {
 #if (MC0_ENABLE)
     case '0':
@@ -1582,8 +1585,10 @@ __inline static void fs_config_mc (char num) {
 #endif /* MC1_ENABLE */
   }
 }
+#endif
 
-__inline static void fs_config_nand (char num) {
+#if (NAND0_ENABLE || NAND1_ENABLE)
+__STATIC_INLINE void fs_config_nand (char num) {
   switch (num) {
 #if (NAND0_ENABLE)
     case '0':
@@ -1662,8 +1667,10 @@ __inline static void fs_config_nand (char num) {
 #endif /* NAND1_ENABLE */
   }
 }
+#endif
 
-__inline static void fs_config_ram (char num) {
+#if (RAM0_ENABLE || RAM1_ENABLE)
+__STATIC_INLINE void fs_config_ram (char num) {
   switch (num) {
 #if (RAM0_ENABLE)
     case '0':
@@ -1688,8 +1695,10 @@ __inline static void fs_config_ram (char num) {
 #endif /* RAM1_ENABLE */
   }
 }
+#endif
 
-__inline static void fs_config_usb (char num) {
+#if (USB0_ENABLE || USB1_ENABLE)
+__STATIC_INLINE void fs_config_usb (char num) {
   switch (num) {
 #if (USB0_ENABLE)
     case '0':
@@ -1740,6 +1749,7 @@ __inline static void fs_config_usb (char num) {
 #endif /* USB1_ENABLE */
   }
 }
+#endif
 
 /*-----------------------------------------------------------------------------
  *  Configure FileSystem drives
