@@ -38,10 +38,6 @@
   #error Select only IPv4 or only IPv6!
 #endif
 
-#if (IP6_ENABLE && !defined(RTE_Network_IPv6))
-  #error Network IPv6 Core not enabled!
-#endif
-
 #define BLINKLED        0x01
 
 /// Stream socket server thread
@@ -186,6 +182,10 @@ __NO_RETURN void app_main_thread (void *argument) {
     /* IPv6 enabled on ETH0, print Link-local address */
     netIP_ntoa(NET_ADDR_IP6, ip6_addr, ip_ascii, sizeof(ip_ascii));
     printf("IP6: %s\n", ip_ascii);
+  }
+  else {
+    /* IPv6 not supported */
+    for (;;);
   }
 #endif
 

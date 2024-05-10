@@ -54,10 +54,6 @@
   #error Select only IPv4 or only IPv6!
 #endif
 
-#if (IP6_ENABLE && !defined(RTE_Network_IPv6))
-  #error Network IPv6 Core not enabled!
-#endif
-
 #define BLINKLED        0x01
 #define SOCKTYPE        ((SOCK_TYPE == 0) ? SOCK_STREAM : SOCK_DGRAM)
 
