@@ -1886,7 +1886,6 @@ int __wrap_fflush (FILE *stream) {
  int32_t  fat_flen (int32_t h)                                       { (void)h;                   return (-1);      }
  int64_t  fat_seek (int32_t h, int64_t o, int32_t w)                 { (void)h; (void)o; (void)w; return (fsError); }
  fsStatus fat_ffind  (const char *p, fsFileInfo *i, fsFAT_Volume *v) { (void)p; (void)i; (void)v; return (fsError); }
- fsStatus fat_delete_l(const char *p, fsFAT_Volume *v)               { (void)p; (void)v;          return (fsError); }
  fsStatus fat_delete  (const char *p, const char *o, fsFAT_Volume *v){ (void)p; (void)o; (void)v; return (fsError); }
  fsStatus fat_rename (const char *p, const char *n, fsFAT_Volume *v) { (void)p; (void)n; (void)v; return (fsError); }
  fsStatus fat_format (fsFAT_Volume *v, const char *o)                { (void)v; (void)o;          return (fsError); }
