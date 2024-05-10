@@ -4,8 +4,7 @@
 
 \section fs_overview Overview
 The <b>File System Component</b> allows your embedded applications to create, save, read, and modify files in storage devices
-such as \b RAM, \b Flash, <b>memory cards</b>, or <b>USB memory devices</b>. It is part of
-\urlout{MDK-Pro-Editions} and \urlout{MDK-Plus-Editions}.
+such as \b RAM, \b Flash, <b>memory cards</b>, or <b>USB memory devices</b>.
 
 \image html "filesystem.png" "File System Overview"
 
@@ -14,9 +13,7 @@ The File System Component is structured as follows:
 - <b>Multiple instances</b> of the same storage device can be implemented (for example you might want to have two SD cards
   attached to your system).
 - The File System \b CORE supports thread-safe operation and uses an \ref emb_fs (for NOR and SPI Flashes) or a \ref fat_fs
-  which is available in two variants:
-  - The <b>Long File Name</b> variant supports up to 255 characters.
-  - The <b>Short File Name</b> variant is limited to 8.3 file name support.
+  (for RAM, NAND, SD/eMMC and USB devices).
 - The Core allows <b>simultaneous access</b> to multiple storage devices (for example backing up data from internal flash to
   an external USB device).
 - For accessing the drives appropriate \b drivers are in place to support
@@ -317,7 +314,6 @@ This user's guide contains the following chapters:
       <td>V5.0</td>
       <td>
         - Initial release for MDK-ARM Version 5.
-        - \ref fs_diffs explains changes compared to previous releases.
       </td>
     </tr>
  </table>

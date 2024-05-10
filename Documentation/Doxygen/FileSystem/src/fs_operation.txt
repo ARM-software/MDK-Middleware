@@ -3,7 +3,7 @@
 \page fs_operation Theory of Operation
 
 The File System Component provides functions to create, save, read, and modify files.
-The Retarget Interface of the ARM C/C++ compiler run-time library allows the usage of 
+The Retarget Interface of the C/C++ compiler run-time library allows the usage of 
 ANSI C standard file I/O functions. The File System Component is designed for Cortex-M 
 processor-based devices and requires an CMSIS-RTOS compliant real-time operating system
 for thread-safe operation.
@@ -20,11 +20,10 @@ The File System Component consists of two different file systems, placed on top 
   \ref nand_usage "NAND Flash" devices.
 
 \section fs_usage Using the File System
-The File System Component integrates with the ARM Standard Run-Time Library and requires a CMSIS-RTOS compliant RTOS.
-It cannot be used with the ARM MicroLIB library since this library does not provide the hooks for I/O file handling.
+The File System Component integrates with the Standard C/C++ Library and requires a CMSIS-RTOS2 compliant RTOS.
+It cannot be used with the Standard C/C++ Library that does not provide the (retarget) hooks for I/O file handling.
 
-The following picture shows the File System's structure from a
-developer's perspective. 
+The following picture shows the File System's structure from a developer's perspective.
 
 \image html "fs_structure.png" File System Component Structure
 
@@ -47,7 +46,7 @@ The configuration steps and files that are needed to create applications for the
 
 \section drive Drives, Memory Devices and Drivers
 
-The File System Component supports various memory and storage devices that are assigned  to a <b>drive</b>. 
+The File System Component supports various memory and storage devices that are assigned to a <b>drive</b>. 
 
 \image html "fs_types.png" "File System Component: Media types and Drives"
 
@@ -167,8 +166,8 @@ folder1\\ ..    | Relative | Current directory
 
 \section lfn_sfn_handling Long and Short File Name handling
 
-File System Component is provided with the library with long (LFN) and short (SFN or 8.3) filename
-support. Since there is no compulsory algorithm for creating the 8.3 name from an LFN, File System
+File System Component is provided with the long (LFN) and short (SFN or 8.3) filename support.
+Since there is no compulsory algorithm for creating the 8.3 name from an LFN, File System
 Component uses convention described below.
 
 - Uppercased or lowercased name which is 8.3 valid, is stored uppercased in a single SFN entry

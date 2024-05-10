@@ -14,8 +14,7 @@ The steps to create a microcontroller application that uses the File System are:
 Only a few steps are necessary to complete the RTE Component selection: 
  
  -# From the \b File \b System Component:
-   - Select <b>File System:CORE</b> that provides the basic functionality required for data storage and access. In the \b Variant
-     drop-down box you can choose to use the short (SFN) or long filename (LFN) version.
+   - Select <b>File System:CORE</b> that provides the basic functionality required for data storage and access.
    - Select your desired <b>File System:Drive</b>. \ref fs_drives gives more details.
  -# From the \b CMSIS \b Driver Component select an appropriate driver suitable for your \b drive. \ref fs_drives gives more
     details.
@@ -118,7 +117,7 @@ Set the drive characteristics in the \b FS_Config_NAND_n.h file:
 
 \section fs_Device_Configuration File System Configuration
 
-The File System configuration file \b FS_Config.c contains settings for the amount of files that can be open at the same time:
+The File System configuration file \b FS_Config.h contains settings for the amount of files that can be open at the same time:
 
 \image html fs_config_c.png "File System Configuration File"
 
@@ -160,19 +159,12 @@ needed.
 
 \section fs_debugging Debugging
 
-File System Component is distributed in library form and doesn't allow direct code debug.
-However it can be easily configured to generate debug events and provide dynamic visibility to the component operation.
+File System Component can be easily configured to generate debug events and provide dynamic visibility to the component operation.
 
-Following variants can be selected for the <b>File System:CORE</b> software component in the <b>Manage Run-Time Environment</b> window:
- - <b>LFN/SFN Debug</b>: these variants support event annotations for the \urlout{Event-Recorder-About}
-and make it very easy to analyze the internal operation of the File System Component during application debug.
-\ref fsEvrSupport "Event Recorder Support" below explains how to configure and use this variant.
- - <b>LFN/SFN Release</b>: these variants do not include additional debugging code. Use these variants when deploying the application.
+File System supports event annotations for the \urlout{Event-Recorder-About} and make it very easy to analyze the internal operation
+of the File System Component during application debug. The \ref evr_gr describes the events implemented in the File System Component.
 
-The figure below shows selection of the <b>LFN Debug</b> variant as an example.
-\image html "fs_debug_variant.png"
-
-The \ref evr_gr describes the events implemented in the File System Component.
+\ref fsEvrSupport "Event Recorder Support" below explains how to configure File System for debugging.
 
 \anchor fsEvrSupport
 Event Recorder Support
@@ -182,11 +174,11 @@ Event Recorder Support
 The File System Component generates \ref evr_gr "a broad set of Debug Events" for the Event Recorder and implements required infrastructure to interface with it.
 
 To use the Event Recorder it is required to create an image with event generation support. The necessary steps are:
-  1. \urlout{Debug-Variant-Select}: in the RTE management dialog select the \b Debug variant for the target <b>File System:CORE</b> software component. 
-  2. \urlout{Event-Recorder-Enable}: in the RTE management dialog enable the software component <b>Compiler:Event Recorder</b>.
-  3. Ensure that Event Recorder is initialized preferably by \urlout{RTX5-Event-Recorder-Config} if CMSIS-RTOS2 RTX v5 is used,
+  1. \urlout{Event-Recorder-Enable}: in the RTE management dialog enable the software component <b>CMSIS-View:Event Recorder</b>.
+  2. Ensure that Event Recorder is initialized preferably by \urlout{RTX5-Event-Recorder-Config} if CMSIS-RTOS2 RTX v5 is used,
      or alternatively by calling the function \urlout{Event-Recorder-Initialize-Func} in the application code.
-  4. \ref fsEvrConfig "Event Recorder Configuration": if necessary, adjust default Event Recorder configuration.
+  3. \ref fsEvrConfig "Event Recorder Configuration": if necessary, adjust default Event Recorder configuration.
+  4. In <b>FS_Debug.h</b> enable File System event generation and configure event filters.
   5. Build the application code, download it to the target hardware and start debug session.
 
 Now, when the File System generates event information, it can be viewed in the \urlout{uv4-Event-Recorder}.
@@ -194,15 +186,14 @@ Now, when the File System generates event information, it can be viewed in the \
 \anchor fsEvrConfig
 Event Recorder Configuration
 ----------------------
-This section describes the configuration settings for the Event Recorder. The usage requires the debug variant of the
-<b>File System:CORE</b> software component; refer to \ref fsEvrSupport "Event Recorder Support" for more information.
+This section describes the configuration settings for the Event Recorder.
 
 <b>File System Event Generation Configuration</b>
 
-Selecting the <b>File System:CORE</b> debug variant will add the file \c FS_Debug.c to your project. Use this file to set the event
+Selecting the <b>File System:CORE</b> will add the file \c FS_Debug.h to your project. Use this file to set the event
 generation configuration for File System core and drivers separately.
 
-\image html fs_debug_c.png "FS_Debug.c file for event generation configuration"
+\image html fs_debug_c.png "FS_Debug.h file for event generation configuration"
 
 The following settings are available for event generation configuration of each module:
 - \b Off means no events will be generated by the module

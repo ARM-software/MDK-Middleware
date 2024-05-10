@@ -925,7 +925,6 @@ INPUT                  = src/FileSystem.txt \
                          src/fs_examples.txt \
                          src/fs_operation.txt \
                          src/fs_function_reference.txt \
-                         src/FS_Diffs.txt \
                          src/fs_resource_requirements.txt \
                          src/Reference_Files.txt \
                          src/stdio.h \
