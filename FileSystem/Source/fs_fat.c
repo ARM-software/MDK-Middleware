@@ -703,22 +703,46 @@ static uint8_t sn_chksum (char *fn) {
 /**
   Validate label character
 
+  The allowed characters for a FAT volume are the same as for SFN with
+  the period excluded. Lowercase characters are converted to uppercase.
+  Valid label:
+  - is up to 11 characters long
+  - contains characters A-Z
+  - contains digits 0-9
+  - contains spaces
+  - contains ! # $ % & ' () - @ ^ _ ` {} ~ characters
+  - does not contain " * ? . , ; : / \ | + = < > [ ] characters
+
   \param[in]  ch                        ASCII character
   \return     ch if character is valid FAT label character, zero otherwise
 */
 static char val_char_lab (char ch) {
+  char val_ch;
 
-  if ((ch >= '0' && ch <= '9') ||
-      (ch >= 'A' && ch <= 'Z') ||
-      (ch == '_') || (ch == ' ')) {
-    return (ch);
-  }
   if (ch >= 'a' && ch <= 'z') {
     /* Convert to uppercase. */
-    return (ch & ~0x20);
+    val_ch = ch & ~0x20;
   }
-  /* This is not a valid disk label character. */
-  return (0);
+  else {
+    /* Check for invalid character */
+    if ((ch <  ' ')              ||
+        (ch == '"')              ||
+        (ch >= '*' && ch <= ',') ||
+        (ch == '.')              ||
+        (ch == '/')              ||
+        (ch >= ':' && ch <= '?') ||
+        (ch >= '[' && ch <= ']') ||
+        (ch == '|')) {
+      /* This is not a valid label character */
+      val_ch = 0;
+    }
+    else {
+      /* Valid character */
+      val_ch = ch;
+    }
+  }
+
+  return (val_ch);
 }
 
 

@@ -28,6 +28,7 @@
       - removed support for CMSIS-RTOS version 1
       - removed support for legacy fdelete function
       - fixed allocation table write access (regression) when using FAT12
+      - fixed FAT volume label character checking
       USB Component Version 8.0.0
       - removed CORE component variants
       - changed source config files to headers

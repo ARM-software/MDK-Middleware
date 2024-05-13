@@ -46,6 +46,7 @@ This user's guide contains the following chapters:
         - removed support for CMSIS-RTOS version 1
         - removed support for legacy fdelete function
         - fixed allocation table write access (regression) when using FAT12
+        - fixed FAT volume label character checking
       </td>
     </tr>
     <tr>

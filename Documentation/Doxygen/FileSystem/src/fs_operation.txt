@@ -134,8 +134,8 @@ The actual FAT file system is made up of four different sections:
 
 \section fat_volume_label Volume name
 
-Volume label for FAT12, FAT16 or FAT32 volume must be maximum 11 characters long and cannot contain the following
-characters: * ? / \ | , ; : + = < > [ ] "" .
+Volume label for FAT12, FAT16 or FAT32 volume must be maximum 11 characters long and cannot contain the
+* ? / \ | , ; : + = < > [ ] " characters.
 
 \section fat_path_handling Path name handling
 
