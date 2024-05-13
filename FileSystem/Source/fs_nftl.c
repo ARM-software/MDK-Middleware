@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_nftl.c
  * Purpose: NAND FTL Implementation
@@ -3606,7 +3606,7 @@ static uint32_t ecc_Hamming8 (uint8_t *dataBuf, uint8_t *eccBuf) {
   rowSum = 0;
 
   for (i = 0; i < 2; i++, dataBuf += 4) {
-    val = __UNALIGNED_UINT32 (dataBuf);
+    val = __UNALIGNED_UINT32_READ (dataBuf);
 
     colSum ^= val;
     rowSum |= parity32(val) << i;
@@ -3625,7 +3625,7 @@ static uint32_t ecc_Hamming8 (uint8_t *dataBuf, uint8_t *eccBuf) {
  *----------------------------------------------------------------------------*/
 static uint32_t ecc_Hamming8Verify (uint8_t *dataBuf, uint8_t *eccBuf) {
   uint8_t ecc[2];
-  uint32_t err, xor, addr, row;
+  uint32_t err, xor, addr, row, val;
 
   ecc_Hamming8(dataBuf, ecc);
   xor = ecc[0] ^ ecc[1] ^ eccBuf[0] ^ eccBuf[1];
@@ -3635,7 +3635,8 @@ static uint32_t ecc_Hamming8Verify (uint8_t *dataBuf, uint8_t *eccBuf) {
     addr = ecc[1] ^ eccBuf[1];
     row = addr >> 5;
 
-    __UNALIGNED_UINT32 (&dataBuf[row << 2]) ^= (1 << (addr & 0x1F));
+    val = __UNALIGNED_UINT32_READ (&dataBuf[row << 2]) ^ (1 << (addr & 0x1F));
+    __UNALIGNED_UINT32_WRITE (&dataBuf[row << 2], val);
 
     err = ECC_SINGLEBITERR;
   }
@@ -3689,7 +3690,7 @@ static uint32_t ecc_Hamming512 (uint8_t *dataBuf, uint8_t *eccBuf) {
   rowSum3 = 0;
 
   for (i = 0; i < 32; i++, dataBuf += 4) {
-    val = __UNALIGNED_UINT32 (dataBuf);
+    val = __UNALIGNED_UINT32_READ (dataBuf);
 
     /* Column sum */
     colSum ^= val;
@@ -3698,7 +3699,7 @@ static uint32_t ecc_Hamming512 (uint8_t *dataBuf, uint8_t *eccBuf) {
     rowSum0 |= parity32(val) << (i & 0x1F);
   }
   for (; i < 64; i++, dataBuf += 4) {
-    val = __UNALIGNED_UINT32 (dataBuf);
+    val = __UNALIGNED_UINT32_READ (dataBuf);
 
     /* Column sum */
     colSum ^= val;
@@ -3707,7 +3708,7 @@ static uint32_t ecc_Hamming512 (uint8_t *dataBuf, uint8_t *eccBuf) {
     rowSum1 |= parity32(val) << (i & 0x1F);
   }
   for (; i < 96; i++, dataBuf += 4) {
-    val = __UNALIGNED_UINT32 (dataBuf);
+    val = __UNALIGNED_UINT32_READ (dataBuf);
 
     /* Column sum */
     colSum ^= val;
@@ -3716,7 +3717,7 @@ static uint32_t ecc_Hamming512 (uint8_t *dataBuf, uint8_t *eccBuf) {
     rowSum2 |= parity32(val) << (i & 0x1F);
   }
   for (; i < 128; i++, dataBuf += 4) {
-    val = __UNALIGNED_UINT32 (dataBuf);
+    val = __UNALIGNED_UINT32_READ (dataBuf);
 
     /* Column sum */
     colSum ^= val;
@@ -3762,7 +3763,7 @@ static uint32_t ecc_Hamming512 (uint8_t *dataBuf, uint8_t *eccBuf) {
 static uint32_t ecc_Hamming512Verify (uint8_t *dataBuf, uint8_t *eccBuf) {
   uint8_t ecc[3];
   int32_t newEcc, oldEcc, xorEcc;
-  uint32_t err, addr, row;
+  uint32_t err, addr, row, val;
 
   ecc_Hamming512(dataBuf, ecc);
   newEcc = ecc[0]    | (ecc[1]    << 8) | (ecc[2]    << 16);
@@ -3780,7 +3781,8 @@ static uint32_t ecc_Hamming512Verify (uint8_t *dataBuf, uint8_t *eccBuf) {
     row  = addr >> 5;
 
     /* Flip bit in calculated row */
-    __UNALIGNED_UINT32 (&dataBuf[row << 2]) ^= (1UL << (addr & 0x1F));
+    val = __UNALIGNED_UINT32_READ (&dataBuf[row << 2]) ^ (1UL << (addr & 0x1F));
+    __UNALIGNED_UINT32_WRITE (&dataBuf[row << 2], val);
 
     err = ECC_SINGLEBITERR;
   }

@@ -54,12 +54,6 @@
   #define __FALLTHROUGH  __attribute__((fallthrough))
 #endif
 
-/* Access to the unaligned unsigned 32-bit variable */
-#ifndef __UNALIGNED_UINT32
-  struct __attribute__((packed)) T_UINT32 { uint32_t v; };
-  #define __UNALIGNED_UINT32(x)                  (((struct T_UINT32 *)(x))->v)
-#endif
-
 /* Device System Type attribute */
 #define FS_CUR         ((uint8_t)0x01)  /* Initial Current Drive attribute    */
 #define FS_EMB         ((uint8_t)0x02)  /* Embedded File System (F:)          */
