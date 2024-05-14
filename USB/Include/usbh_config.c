@@ -57,7 +57,7 @@ static  const uint32_t          usbh0_pipe_num =        USBH0_HC_PIPE_NUM;
 static  const uint32_t          usbh0_mem_pool_size =   USBH0_HC_MEM_POOL_SIZE;
 static  const uint8_t           usbh0_mem_pool_reloc =  USBH0_HC_MEM_POOL_RELOC;
         USBH_PIPE               usbh0_pipe             [USBH0_HC_PIPE_NUM];
-static  uint32_t                usbh0_mem_pool         [USBH0_HC_MEM_POOL_SIZE / 4] __attribute__((section("usbh0_memory")));
+static  uint32_t                usbh0_mem_pool         [USBH0_HC_MEM_POOL_SIZE / 4] __attribute__((section(".driver.usbh0")));
 static  ARM_DRIVER_USBH        *usbh0_hcd_ptr  =       &USBHn_DRIVER(USBH0_HC_NUM);
 
 // Core Thread definitions
@@ -99,7 +99,7 @@ static  const uint32_t          usbh1_pipe_num =        USBH1_HC_PIPE_NUM;
 static  const uint32_t          usbh1_mem_pool_size =   USBH1_HC_MEM_POOL_SIZE;
 static  const uint8_t           usbh1_mem_pool_reloc =  USBH1_HC_MEM_POOL_RELOC;
         USBH_PIPE               usbh1_pipe             [USBH1_HC_PIPE_NUM];
-static  uint32_t                usbh1_mem_pool         [USBH1_HC_MEM_POOL_SIZE / 4] __attribute__((section("usbh1_memory")));
+static  uint32_t                usbh1_mem_pool         [USBH1_HC_MEM_POOL_SIZE / 4] __attribute__((section(".driver.usbh1")));
 static  ARM_DRIVER_USBH        *usbh1_hcd_ptr  =       &USBHn_DRIVER(USBH1_HC_NUM);
 
 // Core Thread definitions
@@ -141,7 +141,7 @@ static  const uint32_t          usbh2_pipe_num =        USBH2_HC_PIPE_NUM;
 static  const uint32_t          usbh2_mem_pool_size =   USBH2_HC_MEM_POOL_SIZE;
 static  const uint8_t           usbh2_mem_pool_reloc =  USBH2_HC_MEM_POOL_RELOC;
         USBH_PIPE               usbh2_pipe             [USBH2_HC_PIPE_NUM];
-static  uint32_t                usbh2_mem_pool         [USBH2_HC_MEM_POOL_SIZE / 4] __attribute__((section("usbh2_memory")));
+static  uint32_t                usbh2_mem_pool         [USBH2_HC_MEM_POOL_SIZE / 4] __attribute__((section(".driver.usbh2")));
 static  ARM_DRIVER_USBH        *usbh2_hcd_ptr  =       &USBHn_DRIVER(USBH2_HC_NUM);
 
 // Core Thread definitions
@@ -183,7 +183,7 @@ static  const uint32_t          usbh3_pipe_num =        USBH3_HC_PIPE_NUM;
 static  const uint32_t          usbh3_mem_pool_size =   USBH3_HC_MEM_POOL_SIZE;
 static  const uint8_t           usbh3_mem_pool_reloc =  USBH3_HC_MEM_POOL_RELOC;
         USBH_PIPE               usbh3_pipe             [USBH3_HC_PIPE_NUM];
-static  uint32_t                usbh3_mem_pool         [USBH3_HC_MEM_POOL_SIZE / 4] __attribute__((section("usbh3_memory")));
+static  uint32_t                usbh3_mem_pool         [USBH3_HC_MEM_POOL_SIZE / 4] __attribute__((section(".driver.usbh3")));
 static  ARM_DRIVER_USBH        *usbh3_hcd_ptr  =       &USBHn_DRIVER(USBH3_HC_NUM);
 
 // Core Thread definitions
