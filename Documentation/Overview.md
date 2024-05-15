@@ -1,6 +1,6 @@
 # MDK-Middleware
 
-The MDK-Middleware software pack contains components for IPv4 and IPv6 networking, USB Host and Device communication, as well as file system for data storage.
+The MDK-Middleware software pack contains components for IPv4 and IPv6 networking, USB Host and Device communication, as well as file system for data storage. It is restricted for commercial free-of-charge usage with Arm-based devices.
 
 ![MDK-Middleware](./MDK-Middleware.png)
 

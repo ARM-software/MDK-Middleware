@@ -1,0 +1,24 @@
+===============================================================================
+This file lists the package level copyright and license information for third
+party software included in this release of 'Keil MDK-Middleware'. Refer to the
+License Agreement (End User License Agreement (EULA)) that accompanies this
+release of 'Keil MDK-Middleware' for terms and conditions relating to your use
+of such third party software.
+
+The information is grouped into two sections. The first section lists out
+details of third party software projects, including names of the applicable
+licenses as per the SPDX format (http://spdx.org/licenses). The second section
+includes the full license text of all applicable licenses referenced in the
+first section.
+================================================================================
+
+SECTION 1: THIRD PARTY SOFTWARE PROJECTS
+================================================================================
+- blank -
+===============================================================================
+
+SECTION 2: APPLICABLE LICENSES 
+===============================================================================
+ - blank -
+================================================================================
+END OF FILE: third_party_licenses.txt

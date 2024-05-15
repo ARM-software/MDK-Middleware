@@ -4,7 +4,12 @@
   <name>MDK-Middleware</name>
   <description overview="Documentation/Overview.md">Middleware for Arm based processors</description>
   <url>https://www.keil.com/pack/</url>
-  <license>license_terms/license_terms.txt</license>
+  <license>license_terms/license_agreement.txt</license>
+  <licenseSets>
+    <licenseSet id="all" default="true" gating="true">
+      <license name="license_terms/license_agreement.txt" title="END USER LICENSE AGREEMENT FOR ARM SOFTWARE DEVELOPMENT TOOLS"/>
+    </licenseSet>
+  </licenseSets>
   <releases>
     <release version="8.0.0-dev">
       MDK bundle with source code replaces MDK-Pro and MDK-Plus bundles with pre-built libraries.
