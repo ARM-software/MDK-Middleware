@@ -1513,7 +1513,6 @@
   <examples>
     <example name="File System Demo" doc="File_Demo/README.md" folder="Examples/FileSystem">
       <description>File manipulation example: create, read, copy, delete files on any enabled drive (SD/MMC Card, NOR/NAND Flash, RAM) and format each drive</description>
-      <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="csolution" load="FileSystem.csolution.yml"/>
       </project>
@@ -1527,7 +1526,6 @@
 
     <example name="BSD Client IPv4/IPv6" doc="BSD_Client/README.md" folder="Examples/Network">
       <description>Example using BSD sockets to send commands to remote server</description>
-      <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="csolution" load="Network.csolution.yml"/>
       </project>
@@ -1540,7 +1538,6 @@
     </example>
     <example name="BSD Server IPv4/IPv6" doc="BSD_Server/README.md" folder="Examples/Network">
       <description>Example using BSD sockets to accept commands from remote clients</description>
-      <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="csolution" load="Network.csolution.yml"/>
       </project>
@@ -1553,7 +1550,6 @@
     </example>
     <example name="FTP Server IPv4/IPv6" doc="FTP_Server/README.md" folder="Examples/Network">
       <description>File Server using FTP protocol with SD/MMC Memory Card as storage media</description>
-      <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="csolution" load="Network.csolution.yml"/>
       </project>
@@ -1566,7 +1562,6 @@
     </example>
     <example name="HTTP Server IPv4/IPv6" doc="HTTP_Server/README.md" folder="Examples/Network">
       <description>Compact Web Server with CGI interface</description>
-      <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="csolution" load="Network.csolution.yml"/>
       </project>
@@ -1580,7 +1575,6 @@
     </example>
     <example name="HTTP Upload IPv4/IPv6" doc="HTTP_Upload/README.md" folder="Examples/Network">
       <description>Web Server with CGI interface and SD/MMC Memory Card as storage media</description>
-      <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="csolution" load="Network.csolution.yml"/>
       </project>
@@ -1594,7 +1588,6 @@
     </example>
     <example name="SMTP Client IPv4/IPv6" doc="SMTP_Client/README.md" folder="Examples/Network">
       <description>Example showing how to compose and send emails</description>
-      <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="csolution" load="Network.csolution.yml"/>
       </project>
@@ -1607,7 +1600,6 @@
     </example>
     <example name="SNMP Agent IPv4/IPv6" doc="SNMP_Agent/README.md" folder="Examples/Network">
       <description>Example showing how to use a Simple Network Management Protocol (SNMP)</description>
-      <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="csolution" load="Network.csolution.yml"/>
       </project>
@@ -1620,7 +1612,6 @@
     </example>
     <example name="Telnet Server IPv4/IPv6" doc="Telnet_Server/README.md" folder="Examples/Network">
       <description>Command-line Host service example using Telnet protocol</description>
-      <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="csolution" load="Network.csolution.yml"/>
       </project>
@@ -1634,7 +1625,6 @@
 
     <example name="USB Device HID" doc="HID/README.md" folder="Examples/USB/Device">
       <description>USB Human Interface Device providing access from PC to board LEDs and joystick</description>
-      <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="csolution" load="USB_Device.csolution.yml"/>
       </project>
@@ -1647,7 +1637,6 @@
     </example>
     <example name="USB Device Mass Storage" doc="MassStorage/README.md" folder="Examples/USB/Device">
       <description>USB Mass Storage Device using RAM as storage media</description>
-      <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="csolution" load="USB_Device.csolution.yml"/>
       </project>
@@ -1660,7 +1649,6 @@
     </example>
     <example name="USB Device Virtual COM" doc="VirtualCOM/README.md" folder="Examples/USB/Device">
       <description>Bridge between PC USB Virtual COM Port and UART port</description>
-      <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="csolution" load="USB_Device.csolution.yml"/>
       </project>
@@ -1674,7 +1662,6 @@
 
     <example name="USB Host Mass Storage" doc="MassStorage/README.md" folder="Examples/USB/Host">
       <description>USB Host file manipulation example: create, read, copy, delete files from USB Mass Storage Device and format the storage device</description>
-      <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="csolution" load="USB_Host.csolution.yml"/>
       </project>
@@ -1687,7 +1674,6 @@
     </example>
     <example name="USB Host Keyboard" doc="Keyboard/README.md" folder="Examples/USB/Host">
       <description>Measure example using USB HID Keyboard as input device</description>
-      <board name="uVision Simulator" vendor="Keil"/>
       <project>
         <environment name="csolution" load="USB_Host.csolution.yml"/>
       </project>
