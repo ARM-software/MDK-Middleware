@@ -1653,42 +1653,38 @@ NET_ICMP_CFG *const net_icmp_list[] = {
 };
 
 /* List of IGMP instances */
-#if (__IGMP_ENA) || defined(Network_Source)
-  NET_IGMP_CFG *const net_igmp_list[] = {
-  #if (ETH0_IGMP_ENABLE)
-    &eth0_igmp_config,
-  #endif
-  #if (ETH1_IGMP_ENABLE)
-    &eth1_igmp_config,
-  #endif
-  #if (WIFI0_IGMP_ENABLE)
-    &wifi0_igmp_config,
-  #endif
-  #if (WIFI1_IGMP_ENABLE)
-    &wifi1_igmp_config,
-  #endif
-    NULL
-  };
-#endif
+NET_IGMP_CFG *const net_igmp_list[] = {
+ #if (ETH0_IGMP_ENABLE)
+  &eth0_igmp_config,
+ #endif
+ #if (ETH1_IGMP_ENABLE)
+  &eth1_igmp_config,
+ #endif
+ #if (WIFI0_IGMP_ENABLE)
+  &wifi0_igmp_config,
+ #endif
+ #if (WIFI1_IGMP_ENABLE)
+  &wifi1_igmp_config,
+ #endif
+  NULL
+};
 
 /* List of DHCP instances */
-#if (__DHCP_ENA) || defined(Network_Source)
-  NET_DHCP_CFG *const net_dhcp_list[] = {
-  #if (ETH0_DHCP_ENABLE)
-    &eth0_dhcp_config,
-  #endif
-  #if (ETH1_DHCP_ENABLE)
-    &eth1_dhcp_config,
-  #endif
-  #if (WIFI0_DHCP_ENABLE)
-    &wifi0_dhcp_config,
-  #endif
-  #if (WIFI1_DHCP_ENABLE)
-    &wifi1_dhcp_config,
-  #endif
-    NULL
-  };
-#endif
+NET_DHCP_CFG *const net_dhcp_list[] = {
+ #if (ETH0_DHCP_ENABLE)
+  &eth0_dhcp_config,
+ #endif
+ #if (ETH1_DHCP_ENABLE)
+  &eth1_dhcp_config,
+ #endif
+ #if (WIFI0_DHCP_ENABLE)
+  &wifi0_dhcp_config,
+ #endif
+ #if (WIFI1_DHCP_ENABLE)
+  &wifi1_dhcp_config,
+ #endif
+  NULL
+};
 
 /* List of NDP instances */
 #ifdef Network_IPv6
@@ -1731,7 +1727,7 @@ NET_ICMP_CFG *const net_icmp_list[] = {
 #endif
 
 /* List of MLD instances */
-#if (__MLD_ENA) || defined(Network_Source)
+#ifdef Network_IPv6
   NET_MLD_CFG *const net_mld_list[] = {
   #if (ETH0_MLD_ENABLE)
     &eth0_mld_config,
@@ -1749,8 +1745,8 @@ NET_ICMP_CFG *const net_icmp_list[] = {
   };
 #endif
 
-#if (__DHCP6_ENA) || defined(Network_Source)
-  /* List of DHCPv6 instances */
+/* List of DHCPv6 instances */
+#ifdef Network_IPv6
   NET_DHCP6_CFG *const net_dhcp6_list[] = {
   #if (ETH0_DHCP6_ENABLE)
     &eth0_dhcp6_config,
@@ -1784,7 +1780,7 @@ NET_ICMP_CFG *const net_icmp_list[] = {
     IP4_FRAG_REASS_NUM,
     IP4_FRAG_REASS_TOUT * NET_TICK_RATE
   };
-#elif defined(Network_Source)
+#else
   NET_IP_FRAG_CFG net_ip4_frag_config = { NULL, 0, 0 };
 #endif
 
@@ -1804,7 +1800,7 @@ NET_ICMP_CFG *const net_icmp_list[] = {
     IP6_FRAG_REASS_NUM,
     IP6_FRAG_REASS_TOUT * NET_TICK_RATE
   };
-#elif defined(Network_Source)
+#elif defined(Network_IPv6)
   NET_IP_FRAG_CFG net_ip6_frag_config = { NULL, 0, 0 };
 #endif
 
@@ -1824,7 +1820,7 @@ NET_ICMP_CFG *const net_icmp_list[] = {
     NBNS_CLIENT_TAB_SIZE,
     NBNS_CLIENT_TAB_TOUT
   };
-#elif defined(Network_Source)
+#else
   NET_NBNS_CFG net_nbns_config = { NULL, 0, 0 };
 #endif
 

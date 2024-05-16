@@ -14,8 +14,6 @@
 #include "Net_Debug.h"
 
 /// Network configuration definitions
-#define Network_Source
-
 #if (NET_CORE_VARIANT == 1)
   #define Network_IPv6
 #endif
