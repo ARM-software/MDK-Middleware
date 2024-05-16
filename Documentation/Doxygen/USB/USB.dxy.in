@@ -930,11 +930,11 @@ INPUT                  = src/usb.txt \
                          src/Reference_Files.txt \
                          src/usb_structs.txt \
                          src/rl_usb.txt \
-                         ../../../USB/Include/rl_usb.h \
+                         ../../../Components/USB/Include/rl_usb.h \
                          src/template/USBD_MSC.h \
-                         ../../../USB/Include/usbd_evr.h \
+                         ../../../Components/USB/Include/usbd_evr.h \
                          src/usbd_evr.txt \
-                         ../../../USB/Include/usbh_evr.h \
+                         ../../../Components/USB/Include/usbh_evr.h \
                          src/usbh_evr.txt
 
 # This tag can be used to specify the character encoding of the source files
@@ -1069,7 +1069,7 @@ EXCLUDE_SYMBOLS        =
 # command).
 
 EXAMPLE_PATH           = ./ \
-                         ../../../USB/Template
+                         ../../../Components/USB/Template
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and

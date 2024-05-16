@@ -929,9 +929,9 @@ INPUT                  = src/FileSystem.txt \
                          src/Reference_Files.txt \
                          src/stdio.h \
                          src/stdio.txt \
-                         ../../../FileSystem/Include/rl_fs.h \
+                         ../../../Components/FileSystem/Include/rl_fs.h \
                          src/rl_fs.txt \
-                         ../../../FileSystem/Include/fs_evr.h \
+                         ../../../Components/FileSystem/Include/fs_evr.h \
                          src/fs_evr.txt
 
 # This tag can be used to specify the character encoding of the source files
@@ -1065,7 +1065,7 @@ EXCLUDE_SYMBOLS        =
 # that contain example code fragments that are included (see the \include
 # command).
 
-EXAMPLE_PATH           = ../../../FileSystem/Include
+EXAMPLE_PATH           = ../../../Components/FileSystem/Include
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and

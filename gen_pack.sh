@@ -29,11 +29,9 @@ DEFAULT_ARGS=(-c "v")
 # Default: empty (all folders)
 #
 PACK_DIRS="
+  Components
   Documentation
   Examples
-  FileSystem
-  Network
-  USB
   license_terms
 "
 

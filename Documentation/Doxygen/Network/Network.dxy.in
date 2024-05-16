@@ -935,10 +935,10 @@ INPUT                  = src/Network.txt \
                          src/network_diffs_ds.txt \
                          src/network_resource_requirements.txt \
                          src/net_modem.txt \
-                         ../../../Network/Include/rl_net.h \
-                         ../../../Network/Include/net_modem.h \
+                         ../../../Components/Network/Include/rl_net.h \
+                         ../../../Components/Network/Include/net_modem.h \
                          src/net_function_overview.txt \
-                         ../../../Network/Include/net_evr.h \
+                         ../../../Components/Network/Include/net_evr.h \
                          src/net_evr.txt
 
 # This tag can be used to specify the character encoding of the source files
@@ -1072,8 +1072,8 @@ EXCLUDE_SYMBOLS        =
 # that contain example code fragments that are included (see the \include
 # command).
 
-EXAMPLE_PATH           = ../../../Network/Template \
-                         ../../../Network/Interface
+EXAMPLE_PATH           = ../../../Components/Network/Template \
+                         ../../../Components/Network/Interface
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and

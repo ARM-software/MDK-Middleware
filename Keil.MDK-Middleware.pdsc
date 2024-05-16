@@ -702,31 +702,31 @@
           #define RTE_Network_Core                /* Network Core */
         </RTE_Components_h>
         <files>
-          <file category="other"   name="Network/Network.scvd"/>
-          <file category="header"  name="Network/Include/rl_net.h"/>
-          <file category="header"  name="Network/Config/Net_Config.h" attr="config" version="8.0.0"/>
-          <file category="header"  name="Network/Config/Net_Debug.h"  attr="config" version="8.0.0"/>
-          <file category="include" name="Network/Source/Include/"/>
+          <file category="other"   name="Components/Network/Network.scvd"/>
+          <file category="header"  name="Components/Network/Include/rl_net.h"/>
+          <file category="header"  name="Components/Network/Config/Net_Config.h" attr="config" version="8.0.0"/>
+          <file category="header"  name="Components/Network/Config/Net_Debug.h"  attr="config" version="8.0.0"/>
+          <file category="include" name="Components/Network/Source/Include/"/>
           <!-- Core -->
-          <file category="source"  name="Network/Source/net_ip4.c"/>
-          <file category="source"  name="Network/Source/net_ip4_frag.c"/>
-          <file category="source"  name="Network/Source/net_icmp.c"/>
-          <file category="source"  name="Network/Source/net_ip6.c"/>
-          <file category="source"  name="Network/Source/net_ip6_frag.c"/>
-          <file category="source"  name="Network/Source/net_icmp6.c"/>
-          <file category="source"  name="Network/Source/net_ping.c"   condition="Network DNS"/>
-          <file category="source"  name="Network/Source/net_ping_core.c"/>
-          <file category="source"  name="Network/Source/net_loopback.c"/>
-          <file category="source"  name="Network/Source/net_config.c"/>
-          <file category="source"  name="Network/Source/net_debug.c"/>
+          <file category="source"  name="Components/Network/Source/net_ip4.c"/>
+          <file category="source"  name="Components/Network/Source/net_ip4_frag.c"/>
+          <file category="source"  name="Components/Network/Source/net_icmp.c"/>
+          <file category="source"  name="Components/Network/Source/net_ip6.c"/>
+          <file category="source"  name="Components/Network/Source/net_ip6_frag.c"/>
+          <file category="source"  name="Components/Network/Source/net_icmp6.c"/>
+          <file category="source"  name="Components/Network/Source/net_ping.c"   condition="Network DNS"/>
+          <file category="source"  name="Components/Network/Source/net_ping_core.c"/>
+          <file category="source"  name="Components/Network/Source/net_loopback.c"/>
+          <file category="source"  name="Components/Network/Source/net_config.c"/>
+          <file category="source"  name="Components/Network/Source/net_debug.c"/>
           <!-- System -->
-          <file category="source"  name="Network/Source/net_sys.c"/>
-          <file category="source"  name="Network/Source/net_mem.c"/>
-          <file category="source"  name="Network/Source/net_common.c"/>
-          <file category="source"  name="Network/Source/net_addr.c"/>
-          <file category="source"  name="Network/Source/net_md5.c"/>
-          <file category="source"  name="Network/Source/net_base64.c"/>
-          <file category="source"  name="Network/Source/net_version.c"/>
+          <file category="source"  name="Components/Network/Source/net_sys.c"/>
+          <file category="source"  name="Components/Network/Source/net_mem.c"/>
+          <file category="source"  name="Components/Network/Source/net_common.c"/>
+          <file category="source"  name="Components/Network/Source/net_addr.c"/>
+          <file category="source"  name="Components/Network/Source/net_md5.c"/>
+          <file category="source"  name="Components/Network/Source/net_base64.c"/>
+          <file category="source"  name="Components/Network/Source/net_version.c"/>
         </files>
       </component>
       <component Cgroup="Interface" Csub="ETH" condition="Network Driver ETH" maxInstances="2">
@@ -736,17 +736,17 @@
           #define RTE_Network_Interface_ETH_%Instance%     /* Network Interface ETH %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netETH__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_ETH.h" attr="config" version="7.5.0"/>
+          <file category="doc"    name="Documentation/html/Network/group__netETH__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_ETH.h" attr="config" version="7.5.0"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_eth.c"/>
-          <file category="source" name="Network/Source/net_arp.c"/>
-          <file category="source" name="Network/Source/net_igmp.c"/>
-          <file category="source" name="Network/Source/net_dhcp_client.c"  condition="Network UDP"/>
-          <file category="source" name="Network/Source/net_nbns_client.c"  condition="Network UDP"/>
-          <file category="source" name="Network/Source/net_ndp.c"/>
-          <file category="source" name="Network/Source/net_mld.c"/>
-          <file category="source" name="Network/Source/net_dhcp6_client.c" condition="Network UDP"/>
+          <file category="source" name="Components/Network/Source/net_eth.c"/>
+          <file category="source" name="Components/Network/Source/net_arp.c"/>
+          <file category="source" name="Components/Network/Source/net_igmp.c"/>
+          <file category="source" name="Components/Network/Source/net_dhcp_client.c"  condition="Network UDP"/>
+          <file category="source" name="Components/Network/Source/net_nbns_client.c"  condition="Network UDP"/>
+          <file category="source" name="Components/Network/Source/net_ndp.c"/>
+          <file category="source" name="Components/Network/Source/net_mld.c"/>
+          <file category="source" name="Components/Network/Source/net_dhcp6_client.c" condition="Network UDP"/>
         </files>
       </component>
       <component Cgroup="Interface" Csub="WiFi" condition="Network Driver WiFi" maxInstances="2">
@@ -756,17 +756,17 @@
           #define RTE_Network_Interface_WiFi_%Instance%    /* Network Interface WiFi %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netWiFi__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_WiFi.h" attr="config" version="7.3.0"/>
+          <file category="doc"    name="Documentation/html/Network/group__netWiFi__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_WiFi.h" attr="config" version="7.3.0"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_wifi.c"/>
-          <file category="source" name="Network/Source/net_arp.c"/>
-          <file category="source" name="Network/Source/net_igmp.c"/>
-          <file category="source" name="Network/Source/net_dhcp_client.c"  condition="Network UDP"/>
-          <file category="source" name="Network/Source/net_nbns_client.c"  condition="Network UDP"/>
-          <file category="source" name="Network/Source/net_ndp.c"/>
-          <file category="source" name="Network/Source/net_mld.c"/>
-          <file category="source" name="Network/Source/net_dhcp6_client.c" condition="Network UDP"/>
+          <file category="source" name="Components/Network/Source/net_wifi.c"/>
+          <file category="source" name="Components/Network/Source/net_arp.c"/>
+          <file category="source" name="Components/Network/Source/net_igmp.c"/>
+          <file category="source" name="Components/Network/Source/net_dhcp_client.c"  condition="Network UDP"/>
+          <file category="source" name="Components/Network/Source/net_nbns_client.c"  condition="Network UDP"/>
+          <file category="source" name="Components/Network/Source/net_ndp.c"/>
+          <file category="source" name="Components/Network/Source/net_mld.c"/>
+          <file category="source" name="Components/Network/Source/net_dhcp6_client.c" condition="Network UDP"/>
         </files>
       </component>
       <component Cgroup="Interface" Csub="PPP" Cvariant="Standard Modem" condition="Network Driver PPP">
@@ -776,17 +776,17 @@
           #define RTE_Network_Interface_PPP       /* Network Interface PPP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netPPP__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_PPP.h" attr="config" version="7.2.0"/>
-          <file category="source" name="Network/Driver/Modem_Standard.c"/>
+          <file category="doc"    name="Documentation/html/Network/group__netPPP__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_PPP.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Components/Network/Driver/Modem_Standard.c"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_ppp.c"/>
-          <file category="source" name="Network/Source/net_ppp_lcp.c"/>
-          <file category="source" name="Network/Source/net_ppp_ipcp.c"/>
-          <file category="source" name="Network/Source/net_ppp_pap.c"/>
-          <file category="source" name="Network/Source/net_ppp_chap.c"/>
-          <file category="source" name="Network/Source/net_serial.c"/>
-          <file category="source" name="Network/Source/net_modem_drv.c"/>
+          <file category="source" name="Components/Network/Source/net_ppp.c"/>
+          <file category="source" name="Components/Network/Source/net_ppp_lcp.c"/>
+          <file category="source" name="Components/Network/Source/net_ppp_ipcp.c"/>
+          <file category="source" name="Components/Network/Source/net_ppp_pap.c"/>
+          <file category="source" name="Components/Network/Source/net_ppp_chap.c"/>
+          <file category="source" name="Components/Network/Source/net_serial.c"/>
+          <file category="source" name="Components/Network/Source/net_modem_drv.c"/>
         </files>
       </component>
       <component Cgroup="Interface" Csub="PPP" Cvariant="Null Modem" condition="Network Driver PPP">
@@ -796,17 +796,17 @@
           #define RTE_Network_Interface_PPP       /* Network Interface PPP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netPPP__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_PPP.h" attr="config" version="7.2.0"/>
-          <file category="source" name="Network/Driver/Modem_Null.c"/>
+          <file category="doc"    name="Documentation/html/Network/group__netPPP__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_PPP.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Components/Network/Driver/Modem_Null.c"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_ppp.c"/>
-          <file category="source" name="Network/Source/net_ppp_lcp.c"/>
-          <file category="source" name="Network/Source/net_ppp_ipcp.c"/>
-          <file category="source" name="Network/Source/net_ppp_pap.c"/>
-          <file category="source" name="Network/Source/net_ppp_chap.c"/>
-          <file category="source" name="Network/Source/net_serial.c"/>
-          <file category="source" name="Network/Source/net_modem_drv.c"/>
+          <file category="source" name="Components/Network/Source/net_ppp.c"/>
+          <file category="source" name="Components/Network/Source/net_ppp_lcp.c"/>
+          <file category="source" name="Components/Network/Source/net_ppp_ipcp.c"/>
+          <file category="source" name="Components/Network/Source/net_ppp_pap.c"/>
+          <file category="source" name="Components/Network/Source/net_ppp_chap.c"/>
+          <file category="source" name="Components/Network/Source/net_serial.c"/>
+          <file category="source" name="Components/Network/Source/net_modem_drv.c"/>
         </files>
       </component>
       <component Cgroup="Interface" Csub="PPP" Cvariant="Custom Modem" condition="Network Driver PPP">
@@ -816,16 +816,16 @@
           #define RTE_Network_Interface_PPP       /* Network Interface PPP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netPPP__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_PPP.h" attr="config" version="7.2.0"/>
+          <file category="doc"    name="Documentation/html/Network/group__netPPP__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_PPP.h" attr="config" version="7.2.0"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_ppp.c"/>
-          <file category="source" name="Network/Source/net_ppp_lcp.c"/>
-          <file category="source" name="Network/Source/net_ppp_ipcp.c"/>
-          <file category="source" name="Network/Source/net_ppp_pap.c"/>
-          <file category="source" name="Network/Source/net_ppp_chap.c"/>
-          <file category="source" name="Network/Source/net_serial.c"/>
-          <file category="source" name="Network/Source/net_modem_drv.c"/>
+          <file category="source" name="Components/Network/Source/net_ppp.c"/>
+          <file category="source" name="Components/Network/Source/net_ppp_lcp.c"/>
+          <file category="source" name="Components/Network/Source/net_ppp_ipcp.c"/>
+          <file category="source" name="Components/Network/Source/net_ppp_pap.c"/>
+          <file category="source" name="Components/Network/Source/net_ppp_chap.c"/>
+          <file category="source" name="Components/Network/Source/net_serial.c"/>
+          <file category="source" name="Components/Network/Source/net_modem_drv.c"/>
         </files>
       </component>
       <component Cgroup="Interface" Csub="SLIP" Cvariant="Standard Modem" condition="Network Driver SLIP">
@@ -835,13 +835,13 @@
           #define RTE_Network_Interface_SLIP      /* Network Interface SLIP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netSLIP__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_SLIP.h" attr="config" version="7.2.0"/>
-          <file category="source" name="Network/Driver/Modem_Standard.c"/>
+          <file category="doc"    name="Documentation/html/Network/group__netSLIP__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_SLIP.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Components/Network/Driver/Modem_Standard.c"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_slip.c"/>
-          <file category="source" name="Network/Source/net_serial.c"/>
-          <file category="source" name="Network/Source/net_modem_drv.c"/>
+          <file category="source" name="Components/Network/Source/net_slip.c"/>
+          <file category="source" name="Components/Network/Source/net_serial.c"/>
+          <file category="source" name="Components/Network/Source/net_modem_drv.c"/>
         </files>
       </component>
       <component Cgroup="Interface" Csub="SLIP" Cvariant="Null Modem" condition="Network Driver SLIP">
@@ -851,13 +851,13 @@
           #define RTE_Network_Interface_SLIP      /* Network Interface SLIP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netSLIP__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_SLIP.h" attr="config" version="7.2.0"/>
-          <file category="source" name="Network/Driver/Modem_Null.c"/>
+          <file category="doc"    name="Documentation/html/Network/group__netSLIP__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_SLIP.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Components/Network/Driver/Modem_Null.c"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_slip.c"/>
-          <file category="source" name="Network/Source/net_serial.c"/>
-          <file category="source" name="Network/Source/net_modem_drv.c"/>
+          <file category="source" name="Components/Network/Source/net_slip.c"/>
+          <file category="source" name="Components/Network/Source/net_serial.c"/>
+          <file category="source" name="Components/Network/Source/net_modem_drv.c"/>
         </files>
       </component>
       <component Cgroup="Interface" Csub="SLIP" Cvariant="Custom Modem" condition="Network Driver SLIP">
@@ -867,12 +867,12 @@
           #define RTE_Network_Interface_SLIP      /* Network Interface SLIP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netSLIP__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_SLIP.h" attr="config" version="7.2.0"/>
+          <file category="doc"    name="Documentation/html/Network/group__netSLIP__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_SLIP.h" attr="config" version="7.2.0"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_slip.c"/>
-          <file category="source" name="Network/Source/net_serial.c"/>
-          <file category="source" name="Network/Source/net_modem_drv.c"/>
+          <file category="source" name="Components/Network/Source/net_slip.c"/>
+          <file category="source" name="Components/Network/Source/net_serial.c"/>
+          <file category="source" name="Components/Network/Source/net_modem_drv.c"/>
         </files>
       </component>
       <component Cgroup="Socket" Csub="UDP" condition="Network Interface">
@@ -882,11 +882,11 @@
           #define RTE_Network_Socket_UDP          /* Network Socket UDP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netUDP__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_UDP.h" attr="config" version="5.1.0"/>
-          <file category="source" name="Network/Template/UDP_Socket.c" attr="template" select="UDP Socket"/>
+          <file category="doc"    name="Documentation/html/Network/group__netUDP__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_UDP.h" attr="config" version="5.1.0"/>
+          <file category="source" name="Components/Network/Template/UDP_Socket.c" attr="template" select="UDP Socket"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_udp.c"/>
+          <file category="source" name="Components/Network/Source/net_udp.c"/>
         </files>
       </component>
       <component Cgroup="Socket" Csub="TCP" condition="Network Interface">
@@ -896,12 +896,12 @@
           #define RTE_Network_Socket_TCP          /* Network Socket TCP */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netTCP__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_TCP.h" attr="config" version="7.1.1"/>
-          <file category="source" name="Network/Template/TCP_Socket_Server.c" attr="template" select="TCP Socket Server"/>
-          <file category="source" name="Network/Template/TCP_Socket_Client.c" attr="template" select="TCP Socket Client"/>
+          <file category="doc"    name="Documentation/html/Network/group__netTCP__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_TCP.h" attr="config" version="7.1.1"/>
+          <file category="source" name="Components/Network/Template/TCP_Socket_Server.c" attr="template" select="TCP Socket Server"/>
+          <file category="source" name="Components/Network/Template/TCP_Socket_Client.c" attr="template" select="TCP Socket Client"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_tcp.c"/>
+          <file category="source" name="Components/Network/Source/net_tcp.c"/>
         </files>
       </component>
       <component Cgroup="Socket" Csub="BSD" condition="Network UDP/TCP">
@@ -911,11 +911,11 @@
           #define RTE_Network_Socket_BSD          /* Network Socket BSD */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netBSD__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_BSD.h" attr="config" version="5.0.0"/>
+          <file category="doc"    name="Documentation/html/Network/group__netBSD__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_BSD.h" attr="config" version="5.0.0"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_bsd.c"/>
-          <file category="source" name="Network/Source/net_bsd_host.c" condition="Network DNS"/>
+          <file category="source" name="Components/Network/Source/net_bsd.c"/>
+          <file category="source" name="Components/Network/Source/net_bsd_host.c" condition="Network DNS"/>
         </files>
       </component>
       <component Cgroup="Service" Csub="Web Server Compact" Cvariant="HTTP" isDefaultVariant="true" condition="Network Web Server Compact">
@@ -925,17 +925,17 @@
           #define RTE_Network_Web_Server_RO       /* Network Web Server with Read-only Web Resources */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netHTTP__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
-          <file category="source" name="Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
-          <file category="source" name="Network/Template/HTTP_Server_Access.c" attr="template" select="HTTP Server Access"/>
-          <file category="source" name="Network/Template/HTTP_Server_Multiuser.c" attr="template" select="HTTP Server Multi-user"/>
-          <file category="source" name="Network/Template/HTTP_Server_Error.c" attr="template" select="HTTP Server Error Messages"/>
+          <file category="doc"    name="Documentation/html/Network/group__netHTTP__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_Access.c" attr="template" select="HTTP Server Access"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_Multiuser.c" attr="template" select="HTTP Server Multi-user"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_Error.c" attr="template" select="HTTP Server Error Messages"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_http_server.c"/>
-          <file category="source" name="Network/Source/net_http_server_err.c"/>
-          <file category="source" name="Network/Source/net_http_server_web.c"/>
-          <file category="source" name="Network/Source/net_http_server_auth.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server_err.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server_web.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server_auth.c"/>
         </files>
       </component>
       <component Cgroup="Service" Csub="Web Server Compact" Cvariant="HTTPS" condition="Network Web Server Compact TLS">
@@ -946,20 +946,20 @@
           #define RTE_Network_Web_Server_RO_TLS   /* Network Web Server with Read-only Web Resources and TLS */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netHTTP__Func.html"/>
-          <file category="other"  name="Network/Tool/Net_Security.bat" attr="copy"/>
-          <file category="source" name="Network/Config/Net_Security.c" attr="config" version="7.2.0"/>
-          <file category="header" name="Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
-          <file category="source" name="Network/Interface/TLS_mbed.c"/>
-          <file category="source" name="Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
-          <file category="source" name="Network/Template/HTTP_Server_Access.c" attr="template" select="HTTP Server Access"/>
-          <file category="source" name="Network/Template/HTTP_Server_Multiuser.c" attr="template" select="HTTP Server Multi-user"/>
-          <file category="source" name="Network/Template/HTTP_Server_Error.c" attr="template" select="HTTP Server Error Messages"/>
+          <file category="doc"    name="Documentation/html/Network/group__netHTTP__Func.html"/>
+          <file category="other"  name="Components/Network/Tool/Net_Security.bat" attr="copy"/>
+          <file category="source" name="Components/Network/Config/Net_Security.c" attr="config" version="7.2.0"/>
+          <file category="header" name="Components/Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Components/Network/Interface/TLS_mbed.c"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_Access.c" attr="template" select="HTTP Server Access"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_Multiuser.c" attr="template" select="HTTP Server Multi-user"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_Error.c" attr="template" select="HTTP Server Error Messages"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_http_server.c"/>
-          <file category="source" name="Network/Source/net_http_server_err.c"/>
-          <file category="source" name="Network/Source/net_http_server_web.c"/>
-          <file category="source" name="Network/Source/net_http_server_auth.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server_err.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server_web.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server_auth.c"/>
         </files>
       </component>
       <component Cgroup="Service" Csub="Web Server" Cvariant="HTTP" isDefaultVariant="true" condition="Network Web Server">
@@ -969,18 +969,18 @@
           #define RTE_Network_Web_Server_FS       /* Network Web Server with Web Resources on File System */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netHTTP__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
-          <file category="source" name="Network/Interface/HTTP_Server_FS.c"/>
-          <file category="source" name="Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
-          <file category="source" name="Network/Template/HTTP_Server_Access.c" attr="template" select="HTTP Server Access"/>
-          <file category="source" name="Network/Template/HTTP_Server_Multiuser.c" attr="template" select="HTTP Server Multi-user"/>
-          <file category="source" name="Network/Template/HTTP_Server_Error.c" attr="template" select="HTTP Server Error Messages"/>
+          <file category="doc"    name="Documentation/html/Network/group__netHTTP__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Components/Network/Interface/HTTP_Server_FS.c"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_Access.c" attr="template" select="HTTP Server Access"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_Multiuser.c" attr="template" select="HTTP Server Multi-user"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_Error.c" attr="template" select="HTTP Server Error Messages"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_http_server.c"/>
-          <file category="source" name="Network/Source/net_http_server_err.c"/>
-          <file category="source" name="Network/Source/net_http_server_web.c"/>
-          <file category="source" name="Network/Source/net_http_server_auth.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server_err.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server_web.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server_auth.c"/>
         </files>
       </component>
       <component Cgroup="Service" Csub="Web Server" Cvariant="HTTPS" condition="Network Web Server TLS">
@@ -991,21 +991,21 @@
           #define RTE_Network_Web_Server_FS_TLS   /* Network Web Server with Web Resources on File System and TLS */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netHTTP__Func.html"/>
-          <file category="other"  name="Network/Tool/Net_Security.bat" attr="copy"/>
-          <file category="source" name="Network/Config/Net_Security.c" attr="config" version="7.2.0"/>
-          <file category="header" name="Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
-          <file category="source" name="Network/Interface/TLS_mbed.c"/>
-          <file category="source" name="Network/Interface/HTTP_Server_FS.c"/>
-          <file category="source" name="Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
-          <file category="source" name="Network/Template/HTTP_Server_Access.c" attr="template" select="HTTP Server Access"/>
-          <file category="source" name="Network/Template/HTTP_Server_Multiuser.c" attr="template" select="HTTP Server Multi-user"/>
-          <file category="source" name="Network/Template/HTTP_Server_Error.c" attr="template" select="HTTP Server Error Messages"/>
+          <file category="doc"    name="Documentation/html/Network/group__netHTTP__Func.html"/>
+          <file category="other"  name="Components/Network/Tool/Net_Security.bat" attr="copy"/>
+          <file category="source" name="Components/Network/Config/Net_Security.c" attr="config" version="7.2.0"/>
+          <file category="header" name="Components/Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
+          <file category="source" name="Components/Network/Interface/TLS_mbed.c"/>
+          <file category="source" name="Components/Network/Interface/HTTP_Server_FS.c"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_Access.c" attr="template" select="HTTP Server Access"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_Multiuser.c" attr="template" select="HTTP Server Multi-user"/>
+          <file category="source" name="Components/Network/Template/HTTP_Server_Error.c" attr="template" select="HTTP Server Error Messages"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_http_server.c"/>
-          <file category="source" name="Network/Source/net_http_server_err.c"/>
-          <file category="source" name="Network/Source/net_http_server_web.c"/>
-          <file category="source" name="Network/Source/net_http_server_auth.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server_err.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server_web.c"/>
+          <file category="source" name="Components/Network/Source/net_http_server_auth.c"/>
         </files>
       </component>
       <component Cgroup="Service" Csub="Telnet Server" condition="Network TCP">
@@ -1015,13 +1015,13 @@
           #define RTE_Network_Telnet_Server       /* Network Telnet Server */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netTELNET__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_Telnet_Server.h" attr="config" version="7.0.1"/>
-          <file category="source" name="Network/Template/Telnet_Server_UIF.c" attr="template" select="Telnet Server"/>
-          <file category="source" name="Network/Template/Telnet_Server_Access.c" attr="template" select="Telnet Server Access"/>
-          <file category="source" name="Network/Template/Telnet_Server_Multiuser.c" attr="template" select="Telnet Server Multi-user"/>
+          <file category="doc"    name="Documentation/html/Network/group__netTELNET__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_Telnet_Server.h" attr="config" version="7.0.1"/>
+          <file category="source" name="Components/Network/Template/Telnet_Server_UIF.c" attr="template" select="Telnet Server"/>
+          <file category="source" name="Components/Network/Template/Telnet_Server_Access.c" attr="template" select="Telnet Server Access"/>
+          <file category="source" name="Components/Network/Template/Telnet_Server_Multiuser.c" attr="template" select="Telnet Server Multi-user"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_telnet_server.c"/>
+          <file category="source" name="Components/Network/Source/net_telnet_server.c"/>
         </files>
       </component>
       <component Cgroup="Service" Csub="TFTP Server" condition="Network UDP and File System Drive">
@@ -1031,12 +1031,12 @@
           #define RTE_Network_TFTP_Server         /* Network TFTP Server */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netTFTPc__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_TFTP_Server.h" attr="config" version="7.0.0"/>
-          <file category="source" name="Network/Interface/TFTP_Server_FS.c"/>
-          <file category="source" name="Network/Template/TFTP_Server_Access.c" attr="template" select="TFTP Server Access"/>
+          <file category="doc"    name="Documentation/html/Network/group__netTFTPc__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_TFTP_Server.h" attr="config" version="7.0.0"/>
+          <file category="source" name="Components/Network/Interface/TFTP_Server_FS.c"/>
+          <file category="source" name="Components/Network/Template/TFTP_Server_Access.c" attr="template" select="TFTP Server Access"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_tftp_server.c"/>
+          <file category="source" name="Components/Network/Source/net_tftp_server.c"/>
         </files>
       </component>
       <component Cgroup="Service" Csub="TFTP Client" condition="Network UDP and File System Drive">
@@ -1046,12 +1046,12 @@
           #define RTE_Network_TFTP_Client         /* Network TFTP Client */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netTFTPc__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_TFTP_Client.h" attr="config" version="5.0.0"/>
-          <file category="source" name="Network/Interface/TFTP_Client_FS.c"/>
-          <file category="source" name="Network/Template/TFTP_Client_UIF.c" attr="template" select="TFTP Client"/>
+          <file category="doc"    name="Documentation/html/Network/group__netTFTPc__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_TFTP_Client.h" attr="config" version="5.0.0"/>
+          <file category="source" name="Components/Network/Interface/TFTP_Client_FS.c"/>
+          <file category="source" name="Components/Network/Template/TFTP_Client_UIF.c" attr="template" select="TFTP Client"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_tftp_client.c"/>
+          <file category="source" name="Components/Network/Source/net_tftp_client.c"/>
         </files>
       </component>
       <component Cgroup="Service" Csub="FTP Server" condition="Network TCP and File System Drive">
@@ -1061,14 +1061,14 @@
           #define RTE_Network_FTP_Server          /* Network FTP Server */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netFTPs__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_FTP_Server.h" attr="config" version="7.0.0"/>
-          <file category="source" name="Network/Interface/FTP_Server_FS.c"/>
-          <file category="source" name="Network/Template/FTP_Server_Event.c" attr="template" select="FTP Server Notification Events"/>
-          <file category="source" name="Network/Template/FTP_Server_Access.c" attr="template" select="FTP Server Access"/>
-          <file category="source" name="Network/Template/FTP_Server_Multiuser.c" attr="template" select="FTP Server Multi-user"/>
+          <file category="doc"    name="Documentation/html/Network/group__netFTPs__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_FTP_Server.h" attr="config" version="7.0.0"/>
+          <file category="source" name="Components/Network/Interface/FTP_Server_FS.c"/>
+          <file category="source" name="Components/Network/Template/FTP_Server_Event.c" attr="template" select="FTP Server Notification Events"/>
+          <file category="source" name="Components/Network/Template/FTP_Server_Access.c" attr="template" select="FTP Server Access"/>
+          <file category="source" name="Components/Network/Template/FTP_Server_Multiuser.c" attr="template" select="FTP Server Multi-user"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_ftp_server.c"/>
+          <file category="source" name="Components/Network/Source/net_ftp_server.c"/>
         </files>
       </component>
       <component Cgroup="Service" Csub="FTP Client" condition="Network TCP and File System Drive">
@@ -1078,12 +1078,12 @@
           #define RTE_Network_FTP_Client          /* Network FTP Client */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netFTPc__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_FTP_Client.h" attr="config" version="5.0.0"/>
-          <file category="source" name="Network/Interface/FTP_Client_FS.c"/>
-          <file category="source" name="Network/Template/FTP_Client_UIF.c" attr="template" select="FTP Client"/>
+          <file category="doc"    name="Documentation/html/Network/group__netFTPc__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_FTP_Client.h" attr="config" version="5.0.0"/>
+          <file category="source" name="Components/Network/Interface/FTP_Client_FS.c"/>
+          <file category="source" name="Components/Network/Template/FTP_Client_UIF.c" attr="template" select="FTP Client"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_ftp_client.c"/>
+          <file category="source" name="Components/Network/Source/net_ftp_client.c"/>
         </files>
       </component>
       <component Cgroup="Service" Csub="DNS Client" condition="Network UDP">
@@ -1093,11 +1093,11 @@
           #define RTE_Network_DNS_Client          /* Network DNS Client */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netDNSc__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_DNS_Client.h" attr="config" version="5.0.0"/>
-          <file category="source" name="Network/Template/DNS_Client.c" attr="template" select="DNS Client"/>
+          <file category="doc"    name="Documentation/html/Network/group__netDNSc__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_DNS_Client.h" attr="config" version="5.0.0"/>
+          <file category="source" name="Components/Network/Template/DNS_Client.c" attr="template" select="DNS Client"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_dns_client.c"/>
+          <file category="source" name="Components/Network/Source/net_dns_client.c"/>
         </files>
       </component>
       <component Cgroup="Service" Csub="SMTP Client" Cvariant="SMTP" isDefaultVariant="true" condition="Network TCP">
@@ -1107,14 +1107,14 @@
           #define RTE_Network_SMTP_Client         /* Network SMTP Client */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netSMTPc__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_SMTP_Client.h" attr="config" version="5.1.0"/>
-          <file category="source" name="Network/Interface/SMTP_Client_FS.c"/>
-          <file category="source" name="Network/Template/SMTP_Client_UIF.c" attr="template" select="SMTP Client"/>
+          <file category="doc"    name="Documentation/html/Network/group__netSMTPc__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_SMTP_Client.h" attr="config" version="5.1.0"/>
+          <file category="source" name="Components/Network/Interface/SMTP_Client_FS.c"/>
+          <file category="source" name="Components/Network/Template/SMTP_Client_UIF.c" attr="template" select="SMTP Client"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_smtp_client.c"   condition="Network DNS"/>
-          <file category="source" name="Network/Source/net_smtp_client_core.c"/>
-          <file category="source" name="Network/Source/net_smtp_client_legacy.c"/>
+          <file category="source" name="Components/Network/Source/net_smtp_client.c"   condition="Network DNS"/>
+          <file category="source" name="Components/Network/Source/net_smtp_client_core.c"/>
+          <file category="source" name="Components/Network/Source/net_smtp_client_legacy.c"/>
         </files>
       </component>
       <component Cgroup="Service" Csub="SMTP Client" Cvariant="SMTPS" condition="Network TCP TLS">
@@ -1125,16 +1125,16 @@
           #define RTE_Network_SMTP_Client_TLS     /* Network SMTP Client and TLS */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netSMTPc__Func.html"/>
-          <file category="source" name="Network/Config/Net_Security.c" attr="config" version="7.2.0"/>
-          <file category="header" name="Network/Config/Net_Config_SMTP_Client.h" attr="config" version="5.1.0"/>
-          <file category="source" name="Network/Interface/SMTP_Client_FS.c"/>
-          <file category="source" name="Network/Interface/TLS_mbed.c"/>
-          <file category="source" name="Network/Template/SMTP_Client_UIF.c" attr="template" select="SMTP Client"/>
+          <file category="doc"    name="Documentation/html/Network/group__netSMTPc__Func.html"/>
+          <file category="source" name="Components/Network/Config/Net_Security.c" attr="config" version="7.2.0"/>
+          <file category="header" name="Components/Network/Config/Net_Config_SMTP_Client.h" attr="config" version="5.1.0"/>
+          <file category="source" name="Components/Network/Interface/SMTP_Client_FS.c"/>
+          <file category="source" name="Components/Network/Interface/TLS_mbed.c"/>
+          <file category="source" name="Components/Network/Template/SMTP_Client_UIF.c" attr="template" select="SMTP Client"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_smtp_client.c"   condition="Network DNS"/>
-          <file category="source" name="Network/Source/net_smtp_client_core.c"/>
-          <file category="source" name="Network/Source/net_smtp_client_legacy.c"/>
+          <file category="source" name="Components/Network/Source/net_smtp_client.c"   condition="Network DNS"/>
+          <file category="source" name="Components/Network/Source/net_smtp_client_core.c"/>
+          <file category="source" name="Components/Network/Source/net_smtp_client_legacy.c"/>
         </files>
       </component>
       <component Cgroup="Service" Csub="SNMP Agent" condition="Network UDP">
@@ -1144,11 +1144,11 @@
           #define RTE_Network_SNMP_Agent          /* Network SNMP Agent */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netSNMP__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_SNMP_Agent.h" attr="config" version="7.0.0"/>
-          <file category="source" name="Network/Template/SNMP_Agent_MIB.c" attr="template" select="SNMP Agent"/>
+          <file category="doc"    name="Documentation/html/Network/group__netSNMP__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_SNMP_Agent.h" attr="config" version="7.0.0"/>
+          <file category="source" name="Components/Network/Template/SNMP_Agent_MIB.c" attr="template" select="SNMP Agent"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_snmp_agent.c"/>
+          <file category="source" name="Components/Network/Source/net_snmp_agent.c"/>
         </files>
       </component>
       <component Cgroup="Service" Csub="SNTP Client" condition="Network UDP">
@@ -1158,11 +1158,11 @@
           #define RTE_Network_SNTP_Client         /* Network SNTP Client */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/Network/group__netSNTPc__Func.html"/>
-          <file category="header" name="Network/Config/Net_Config_SNTP_Client.h" attr="config" version="7.0.0"/>
+          <file category="doc"    name="Documentation/html/Network/group__netSNTPc__Func.html"/>
+          <file category="header" name="Components/Network/Config/Net_Config_SNTP_Client.h" attr="config" version="7.0.0"/>
           <!-- Library source files -->
-          <file category="source" name="Network/Source/net_sntp_client.c"  condition="Network DNS"/>
-          <file category="source" name="Network/Source/net_sntp_client_core.c"/>
+          <file category="source" name="Components/Network/Source/net_sntp_client.c"  condition="Network DNS"/>
+          <file category="source" name="Components/Network/Source/net_sntp_client_core.c"/>
         </files>
       </component>
     </bundle>
@@ -1178,24 +1178,24 @@
           #define RTE_FileSystem_Core             /* File System Core */
         </RTE_Components_h>
         <files>
-          <file category="other"   name="FileSystem/FileSystem.scvd"/>
-          <file category="header"  name="FileSystem/Include/rl_fs.h"/>
-          <file category="header"  name="FileSystem/Config/FS_Config.h" attr="config" version="8.0.0"/>
-          <file category="header"  name="FileSystem/Config/FS_Debug.h"  attr="config" version="8.0.0"/>
-          <file category="include" name="FileSystem/Source/Include/"/>
-          <file category="source"  name="FileSystem/Source/fs_common.c"/>
-          <file category="source"  name="FileSystem/Source/fs_config.c"/>
-          <file category="source"  name="FileSystem/Source/fs_debug.c"/>
-          <file category="source"  name="FileSystem/Source/fs_efs.c"/>
-          <file category="source"  name="FileSystem/Source/fs_fat.c"/>
-          <file category="source"  name="FileSystem/Source/fs_fat_elink.c"/>
-          <file category="source"  name="FileSystem/Source/fs_ioc.c"/>
-          <file category="source"  name="FileSystem/Source/fs_journal.c"/>
-          <file category="source"  name="FileSystem/Source/fs_mapi.c"/>
-          <file category="source"  name="FileSystem/Source/fs_os_rtos2.c"/>
-          <file category="source"  name="FileSystem/Source/fs_sys.c"/>
-          <file category="source"  name="FileSystem/Source/fs_time.c"/>
-          <file category="source"  name="FileSystem/Source/fs_version.c"/>
+          <file category="other"   name="Components/FileSystem/FileSystem.scvd"/>
+          <file category="header"  name="Components/FileSystem/Include/rl_fs.h"/>
+          <file category="header"  name="Components/FileSystem/Config/FS_Config.h" attr="config" version="8.0.0"/>
+          <file category="header"  name="Components/FileSystem/Config/FS_Debug.h"  attr="config" version="8.0.0"/>
+          <file category="include" name="Components/FileSystem/Source/Include/"/>
+          <file category="source"  name="Components/FileSystem/Source/fs_common.c"/>
+          <file category="source"  name="Components/FileSystem/Source/fs_config.c"/>
+          <file category="source"  name="Components/FileSystem/Source/fs_debug.c"/>
+          <file category="source"  name="Components/FileSystem/Source/fs_efs.c"/>
+          <file category="source"  name="Components/FileSystem/Source/fs_fat.c"/>
+          <file category="source"  name="Components/FileSystem/Source/fs_fat_elink.c"/>
+          <file category="source"  name="Components/FileSystem/Source/fs_ioc.c"/>
+          <file category="source"  name="Components/FileSystem/Source/fs_journal.c"/>
+          <file category="source"  name="Components/FileSystem/Source/fs_mapi.c"/>
+          <file category="source"  name="Components/FileSystem/Source/fs_os_rtos2.c"/>
+          <file category="source"  name="Components/FileSystem/Source/fs_sys.c"/>
+          <file category="source"  name="Components/FileSystem/Source/fs_time.c"/>
+          <file category="source"  name="Components/FileSystem/Source/fs_version.c"/>
         </files>
       </component>
       <component Cgroup="Drive" Csub="RAM" condition="File System Core" maxInstances="2">
@@ -1205,10 +1205,10 @@
           #define RTE_FileSystem_Drive_RAM_%Instance%      /* File System RAM Drive %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/FileSystem/fs_create_app.html#ram_usage"/>
-          <file category="header" name="FileSystem/Config/FS_Config_RAM.h" attr="config" version="6.2.0"/>
+          <file category="doc"    name="Documentation/html/FileSystem/fs_create_app.html#ram_usage"/>
+          <file category="header" name="Components/FileSystem/Config/FS_Config_RAM.h" attr="config" version="6.2.0"/>
           <!-- Library source files -->
-          <file category="source" name="FileSystem/Source/fs_ram_drv.c"/>
+          <file category="source" name="Components/FileSystem/Source/fs_ram_drv.c"/>
         </files>
       </component>
       <component Cgroup="Drive" Csub="NOR" condition="File System and Flash Driver" maxInstances="2">
@@ -1218,10 +1218,10 @@
           #define RTE_FileSystem_Drive_NOR_%Instance%      /* File System NOR Flash Drive %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/FileSystem/fs_create_app.html#nor_usage"/>
-          <file category="header" name="FileSystem/Config/FS_Config_NOR.h" attr="config" version="6.2.0"/>
+          <file category="doc"    name="Documentation/html/FileSystem/fs_create_app.html#nor_usage"/>
+          <file category="header" name="Components/FileSystem/Config/FS_Config_NOR.h" attr="config" version="6.2.0"/>
           <!-- Library source files -->
-          <file category="source" name="FileSystem/Source/fs_nor_media.c"/>
+          <file category="source" name="Components/FileSystem/Source/fs_nor_media.c"/>
         </files>
       </component>
       <component Cgroup="Drive" Csub="NAND" condition="File System and NAND Driver" maxInstances="2">
@@ -1231,11 +1231,11 @@
           #define RTE_FileSystem_Drive_NAND_%Instance%     /* File System NAND Flash Drive %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/FileSystem/fs_create_app.html#nand_usage"/>
-          <file category="header" name="FileSystem/Config/FS_Config_NAND.h" attr="config" version="6.3.0"/>
+          <file category="doc"    name="Documentation/html/FileSystem/fs_create_app.html#nand_usage"/>
+          <file category="header" name="Components/FileSystem/Config/FS_Config_NAND.h" attr="config" version="6.3.0"/>
           <!-- Library source files -->
-          <file category="source" name="FileSystem/Source/fs_nand_media.c"/>
-          <file category="source" name="FileSystem/Source/fs_nftl.c"/>
+          <file category="source" name="Components/FileSystem/Source/fs_nand_media.c"/>
+          <file category="source" name="Components/FileSystem/Source/fs_nftl.c"/>
         </files>
       </component>
       <component Cgroup="Drive" Csub="Memory Card" condition="File System and SD/MMC Driver" maxInstances="2">
@@ -1245,11 +1245,11 @@
           #define RTE_FileSystem_Drive_MC_%Instance%       /* File System Memory Card Drive %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/FileSystem/fs_create_app.html#mc_usage"/>
-          <file category="header" name="FileSystem/Config/FS_Config_MC.h" attr="config" version="6.2.0"/>
+          <file category="doc"    name="Documentation/html/FileSystem/fs_create_app.html#mc_usage"/>
+          <file category="header" name="Components/FileSystem/Config/FS_Config_MC.h" attr="config" version="6.2.0"/>
           <!-- Library source files -->
-          <file category="source" name="FileSystem/Source/fs_mc_mci.c"/>
-          <file category="source" name="FileSystem/Source/fs_mc_spi.c"/>
+          <file category="source" name="Components/FileSystem/Source/fs_mc_mci.c"/>
+          <file category="source" name="Components/FileSystem/Source/fs_mc_spi.c"/>
         </files>
       </component>
       <component Cgroup="Drive" Csub="USB" condition="File System and USB Host MSC" maxInstances="2">
@@ -1259,8 +1259,8 @@
           #define RTE_FileSystem_Drive_USB_%Instance%      /* File System USB Drive %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc" name="Documentation/html/FileSystem/fs_create_app.html#usb_usage"/>
-          <file category="header" name="FileSystem/Config/FS_Config_USB.h" attr="config" version="6.2.0"/>
+          <file category="doc"    name="Documentation/html/FileSystem/fs_create_app.html#usb_usage"/>
+          <file category="header" name="Components/FileSystem/Config/FS_Config_USB.h" attr="config" version="6.2.0"/>
         </files>
       </component>
     </bundle>
@@ -1276,12 +1276,12 @@
           #define RTE_USB_Core                    /* USB Core */
         </RTE_Components_h>
         <files>
-          <file category="other"   name="USB/USB.scvd"/>
-          <file category="header"  name="USB/Include/rl_usb.h"/>
-          <file category="header"  name="USB/Config/USB_Debug.h" attr="config" version="8.0.0"/>
+          <file category="other"   name="Components/USB/USB.scvd"/>
+          <file category="header"  name="Components/USB/Include/rl_usb.h"/>
+          <file category="header"  name="Components/USB/Config/USB_Debug.h" attr="config" version="8.0.0"/>
           <!-- Library source files -->
-          <file category="include" name="USB/Source/Include/"/>
-          <file category="source"  name="USB/Source/usb_lib_ver.c"/>
+          <file category="include" name="Components/USB/Source/Include/"/>
+          <file category="source"  name="Components/USB/Source/usb_lib_ver.c"/>
         </files>
       </component>
       <component Cgroup="Device" condition="USB Core and Device Driver and Class Instance" maxInstances="4">
@@ -1292,16 +1292,16 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/USB_Device.html"/>
-          <file category="header" name="USB/Config/USBD_Config.h"               attr="config"   version="8.0.0"/>
-          <file category="source" name="USB/Template/USBD_User_Device.c"        attr="template" select="USB Device"/>
-          <file category="source" name="USB/Template/USBD_User_Device_SerNum.c" attr="template" select="USB Device Serial Number"/>
+          <file category="header" name="Components/USB/Config/USBD_Config.h"               attr="config"   version="8.0.0"/>
+          <file category="source" name="Components/USB/Template/USBD_User_Device.c"        attr="template" select="USB Device"/>
+          <file category="source" name="Components/USB/Template/USBD_User_Device_SerNum.c" attr="template" select="USB Device Serial Number"/>
           <!-- Source files -->
-          <file category="source" name="USB/Include/usbd_debug.c"/>
-          <file category="source" name="USB/Include/usbd_config.c"/>
+          <file category="source" name="Components/USB/Include/usbd_debug.c"/>
+          <file category="source" name="Components/USB/Include/usbd_config.c"/>
           <!-- Library source files -->
-          <file category="source" name="USB/Source/usbd_lib_core.c"/>
-          <file category="source" name="USB/Source/usbd_lib_drv.c"/>
-          <file category="source" name="USB/Source/usbd_lib_core_device.c"/>
+          <file category="source" name="Components/USB/Source/usbd_lib_core.c"/>
+          <file category="source" name="Components/USB/Source/usbd_lib_drv.c"/>
+          <file category="source" name="Components/USB/Source/usbd_lib_core_device.c"/>
         </files>
       </component>
       <component Cgroup="Device" Csub="HID" condition="USB Core and Device Instance and Device Driver" maxInstances="8">
@@ -1312,12 +1312,12 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/HID.html"/>
-          <file category="header" name="USB/Config/USBD_Config_HID.h"       attr="config"   version="5.1.0"/>
-          <file category="source" name="USB/Template/USBD_User_HID.c"       attr="template" select="USB Device HID (Human Interface Device)"/>
-          <file category="source" name="USB/Template/USBD_User_HID_Mouse.c" attr="template" select="USB Device HID Mouse"/>
+          <file category="header" name="Components/USB/Config/USBD_Config_HID.h"       attr="config"   version="5.1.0"/>
+          <file category="source" name="Components/USB/Template/USBD_User_HID.c"       attr="template" select="USB Device HID (Human Interface Device)"/>
+          <file category="source" name="Components/USB/Template/USBD_User_HID_Mouse.c" attr="template" select="USB Device HID Mouse"/>
           <!-- Library source files -->
-          <file category="source" name="USB/Source/usbd_lib_core_hid.c"/>
-          <file category="source" name="USB/Source/usbd_lib_hid.c"/>
+          <file category="source" name="Components/USB/Source/usbd_lib_core_hid.c"/>
+          <file category="source" name="Components/USB/Source/usbd_lib_hid.c"/>
         </files>
       </component>
       <component Cgroup="Device" Csub="MSC" condition="USB Core and Device Instance and Device Driver" maxInstances="4">
@@ -1328,14 +1328,14 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/MSC.html"/>
-          <file category="header" name="USB/Config/USBD_Config_MSC.h"     attr="config"   version="5.2.0"/>
-          <file category="source" name="USB/Template/USBD_User_MSC.c"     attr="template" select="USB Device MSC (Mass Storage Class)"/>
-          <file category="source" name="USB/Template/USBD_User_MSC_LUN.c" attr="template" select="USB Device MSC multiple Logical Units (Mass Storage Class)"/>
-          <file category="source" name="USB/Template/USBD_MSC.c"          attr="template" select="USB Device MSC Media Ownership Control"/>
-          <file category="source" name="USB/Template/USBD_MSC.h"          attr="template" select="USB Device MSC Media Ownership Control"/>
+          <file category="header" name="Components/USB/Config/USBD_Config_MSC.h"     attr="config"   version="5.2.0"/>
+          <file category="source" name="Components/USB/Template/USBD_User_MSC.c"     attr="template" select="USB Device MSC (Mass Storage Class)"/>
+          <file category="source" name="Components/USB/Template/USBD_User_MSC_LUN.c" attr="template" select="USB Device MSC multiple Logical Units (Mass Storage Class)"/>
+          <file category="source" name="Components/USB/Template/USBD_MSC.c"          attr="template" select="USB Device MSC Media Ownership Control"/>
+          <file category="source" name="Components/USB/Template/USBD_MSC.h"          attr="template" select="USB Device MSC Media Ownership Control"/>
           <!-- Library source files -->
-          <file category="source" name="USB/Source/usbd_lib_core_msc.c"/>
-          <file category="source" name="USB/Source/usbd_lib_msc.c"/>
+          <file category="source" name="Components/USB/Source/usbd_lib_core_msc.c"/>
+          <file category="source" name="Components/USB/Source/usbd_lib_msc.c"/>
         </files>
       </component>
       <component Cgroup="Device" Csub="CDC" condition="USB Core and Device Instance and Device Driver" maxInstances="8">
@@ -1346,16 +1346,16 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/CDC.html"/>
-          <file category="header" name="USB/Config/USBD_Config_CDC.h"                attr="config"   version="5.3.0"/>
-          <file category="source" name="USB/Template/USBD_User_CDC_ACM.c"            attr="template" select="USB Device CDC ACM (Abstract Control Model)"/>
-          <file category="source" name="USB/Template/USBD_User_CDC_ACM_RNDIS_ETH.c"  attr="template" select="USB Device CDC ACM RNDIS and Ethernet Bridge"/>
-          <file category="source" name="USB/Template/USBD_User_CDC_ACM_RNDIS_VETH.c" attr="template" select="USB Device CDC ACM RNDIS Virtual Ethernet"/>
-          <file category="source" name="USB/Template/USBD_User_CDC_ACM_UART.c"       attr="template" select="USB Device CDC ACM and UART Bridge"/>
-          <file category="source" name="USB/Template/USBD_User_CDC_NCM.c"            attr="template" select="USB Device CDC NCM (Network Control Model)"/>
-          <file category="source" name="USB/Template/USBD_User_CDC_NCM_ETH.c"        attr="template" select="USB Device CDC NCM and Ethernet Bridge"/>
+          <file category="header" name="Components/USB/Config/USBD_Config_CDC.h"                attr="config"   version="5.3.0"/>
+          <file category="source" name="Components/USB/Template/USBD_User_CDC_ACM.c"            attr="template" select="USB Device CDC ACM (Abstract Control Model)"/>
+          <file category="source" name="Components/USB/Template/USBD_User_CDC_ACM_RNDIS_ETH.c"  attr="template" select="USB Device CDC ACM RNDIS and Ethernet Bridge"/>
+          <file category="source" name="Components/USB/Template/USBD_User_CDC_ACM_RNDIS_VETH.c" attr="template" select="USB Device CDC ACM RNDIS Virtual Ethernet"/>
+          <file category="source" name="Components/USB/Template/USBD_User_CDC_ACM_UART.c"       attr="template" select="USB Device CDC ACM and UART Bridge"/>
+          <file category="source" name="Components/USB/Template/USBD_User_CDC_NCM.c"            attr="template" select="USB Device CDC NCM (Network Control Model)"/>
+          <file category="source" name="Components/USB/Template/USBD_User_CDC_NCM_ETH.c"        attr="template" select="USB Device CDC NCM and Ethernet Bridge"/>
           <!-- Library source files -->
-          <file category="source" name="USB/Source/usbd_lib_core_cdc.c"/>
-          <file category="source" name="USB/Source/usbd_lib_cdc.c"/>
+          <file category="source" name="Components/USB/Source/usbd_lib_core_cdc.c"/>
+          <file category="source" name="Components/USB/Source/usbd_lib_cdc.c"/>
         </files>
       </component>
       <component Cgroup="Device" Csub="ADC" condition="USB Core and Device Instance and Device Driver" maxInstances="4">
@@ -1366,11 +1366,11 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/ADC.html"/>
-          <file category="header" name="USB/Config/USBD_Config_ADC.h"       attr="config"   version="5.3.0"/>
-          <file category="source" name="USB/Template/USBD_User_ADC_Audio.c" attr="template" select="USB Device ADC (Audio Interface)"/>
+          <file category="header" name="Components/USB/Config/USBD_Config_ADC.h"       attr="config"   version="5.3.0"/>
+          <file category="source" name="Components/USB/Template/USBD_User_ADC_Audio.c" attr="template" select="USB Device ADC (Audio Interface)"/>
           <!-- Library source files -->
-          <file category="source" name="USB/Source/usbd_lib_core_adc.c"/>
-          <file category="source" name="USB/Source/usbd_lib_adc.c"/>
+          <file category="source" name="Components/USB/Source/usbd_lib_core_adc.c"/>
+          <file category="source" name="Components/USB/Source/usbd_lib_adc.c"/>
         </files>
       </component>
       <component Cgroup="Device" Csub="Custom Class" condition="USB Core and Device Instance and Device Driver" maxInstances="4">
@@ -1381,11 +1381,11 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/CustomClass.html"/>
-          <file category="header" name="USB/Config/USBD_Config_CustomClass.h" attr="config"   version="5.3.0"/>
-          <file category="source" name="USB/Template/USBD_User_CustomClass.c" attr="template" select="USB Device Custom Class"/>
+          <file category="header" name="Components/USB/Config/USBD_Config_CustomClass.h" attr="config"   version="5.3.0"/>
+          <file category="source" name="Components/USB/Template/USBD_User_CustomClass.c" attr="template" select="USB Device Custom Class"/>
           <!-- Library source files -->
-          <file category="source" name="USB/Source/usbd_lib_core_custom_class.c"/>
-          <file category="source" name="USB/Source/usbd_lib_custom_class.c"/>
+          <file category="source" name="Components/USB/Source/usbd_lib_core_custom_class.c"/>
+          <file category="source" name="Components/USB/Source/usbd_lib_custom_class.c"/>
         </files>
       </component>
       <component Cgroup="Host" condition="USB Core and Host Driver and Class Instance" maxInstances="4">
@@ -1396,14 +1396,14 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/USB_Host.html"/>
-          <file category="header" name="USB/Config/USBH_Config.h" attr="config" version="8.0.0"/>
+          <file category="header" name="Components/USB/Config/USBH_Config.h" attr="config" version="8.0.0"/>
           <!-- Source files -->
-          <file category="source" name="USB/Include/usbh_debug.c"/>
-          <file category="source" name="USB/Include/usbh_config.c"/>
+          <file category="source" name="Components/USB/Include/usbh_debug.c"/>
+          <file category="source" name="Components/USB/Include/usbh_config.c"/>
           <!-- Library source files -->
-          <file category="source" name="USB/Source/usbh_lib_core.c"/>
-          <file category="source" name="USB/Source/usbh_lib_mem.c"/>
-          <file category="source" name="USB/Source/usbh_lib_drv.c"/>
+          <file category="source" name="Components/USB/Source/usbh_lib_core.c"/>
+          <file category="source" name="Components/USB/Source/usbh_lib_mem.c"/>
+          <file category="source" name="Components/USB/Source/usbh_lib_drv.c"/>
         </files>
       </component>
       <component Cgroup="Host" Csub="HID" condition="USB Core and Host Instance and Host Driver">
@@ -1414,10 +1414,10 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/HID.html"/>
-          <file category="header" name="USB/Config/USBH_Config_HID.h" attr="config" version="5.1.0"/>
+          <file category="header" name="Components/USB/Config/USBH_Config_HID.h" attr="config" version="5.1.0"/>
           <!-- Library source files -->
-          <file category="source" name="USB/Source/usbh_lib_hid.c"/>
-          <file category="source" name="USB/Source/usbh_lib_hid_idtoascii.c"/>
+          <file category="source" name="Components/USB/Source/usbh_lib_hid.c"/>
+          <file category="source" name="Components/USB/Source/usbh_lib_hid_idtoascii.c"/>
         </files>
       </component>
       <component Cgroup="Host" Csub="MSC" condition="USB Core and Host Instance and Host Driver and File System USB Drive">
@@ -1428,11 +1428,11 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/MSC.html"/>
-          <file category="header" name="USB/Config/USBH_Config_MSC.h" attr="config"   version="5.0.0"/>
-          <file category="source" name="USB/Template/USBH_MSC.c"      attr="template" select="USB Host Mass Storage Access"/>
-          <file category="source" name="USB/Template/USBH_MSC.h"      attr="template" select="USB Host Mass Storage Access"/>
+          <file category="header" name="Components/USB/Config/USBH_Config_MSC.h" attr="config"   version="5.0.0"/>
+          <file category="source" name="Components/USB/Template/USBH_MSC.c"      attr="template" select="USB Host Mass Storage Access"/>
+          <file category="source" name="Components/USB/Template/USBH_MSC.h"      attr="template" select="USB Host Mass Storage Access"/>
           <!-- Library source files -->
-          <file category="source" name="USB/Source/usbh_lib_msc.c"/>
+          <file category="source" name="Components/USB/Source/usbh_lib_msc.c"/>
         </files>
       </component>
       <component Cgroup="Host" Csub="CDC" condition="USB Core and Host Instance and Host Driver">
@@ -1443,9 +1443,9 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/CDC.html"/>
-          <file category="header" name="USB/Config/USBH_Config_CDC.h" attr="config" version="5.0.0"/>
+          <file category="header" name="Components/USB/Config/USBH_Config_CDC.h" attr="config" version="5.0.0"/>
           <!-- Library source files -->
-          <file category="source" name="USB/Source/usbh_lib_cdc.c"/>
+          <file category="source" name="Components/USB/Source/usbh_lib_cdc.c"/>
         </files>
       </component>
       <component Cgroup="Host" Csub="Custom Class" condition="USB Core and Host Instance and Host Driver">
@@ -1456,9 +1456,9 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/CustomClass.html"/>
-          <file category="header" name="USB/Config/USBH_Config_CustomClass.h" attr="config"   version="5.0.0"/>
-          <file category="source" name="USB/Template/USBH_User_CustomClass.c" attr="template" select="USB Host Generic Custom Class"/>
-          <file category="source" name="USB/Template/USBH_PL2303.c"           attr="template" select="USB Host Prolific PL2303"/>
+          <file category="header" name="Components/USB/Config/USBH_Config_CustomClass.h" attr="config"   version="5.0.0"/>
+          <file category="source" name="Components/USB/Template/USBH_User_CustomClass.c" attr="template" select="USB Host Generic Custom Class"/>
+          <file category="source" name="Components/USB/Template/USBH_PL2303.c"           attr="template" select="USB Host Prolific PL2303"/>
         </files>
       </component>
     </bundle>
@@ -1471,7 +1471,7 @@
         #define RTE_CMSIS_Compiler_File_Interface_MDK_MW /* CMSIS-Compiler File Interface: MDK-Middleware File System */
       </RTE_Components_h>
       <files>
-        <file category="source" name="FileSystem/Interface/retarget_mdk-fs.c"/>
+        <file category="source" name="Components/FileSystem/Interface/retarget_mdk-fs.c"/>
       </files>
     </component>
 
@@ -1483,7 +1483,7 @@
         #define RTE_Drivers_ETH_CDC_ACM_RNDIS   /* Driver ETH CDC ACM RNDIS */
       </RTE_Components_h>
       <files>
-        <file category="source" name="USB/Driver/EMAC_CDC_ACM_RNDIS.c"/>
+        <file category="source" name="Components/USB/Driver/EMAC_CDC_ACM_RNDIS.c"/>
       </files>
     </component>
     <component Cclass="CMSIS Driver" Cgroup="USART" Csub="PL2303" Capiversion="2.1.0" Cversion="1.11.0" condition="USB Core and Host Instance and Host Driver and Custom Class">
@@ -1494,7 +1494,7 @@
         #define RTE_Drivers_USART_PL2303        /* Driver USART PL2303 */
       </RTE_Components_h>
       <files>
-        <file category="source" name="USB/Driver/USART_PL2303.c"/>
+        <file category="source" name="Components/USB/Driver/USART_PL2303.c"/>
       </files>
     </component>
     <component Cclass="CMSIS Driver" Cgroup="USART" Csub="CDC" Capiversion="2.1.0" Cversion="1.11.0" condition="USB Core and Host Instance and Host Driver and CDC">
@@ -1505,7 +1505,7 @@
         #define RTE_Drivers_USART_CDC_ACM       /* Driver USART CDC ACM */
       </RTE_Components_h>
       <files>
-        <file category="source" name="USB/Driver/USART_CDC_ACM.c"/>
+        <file category="source" name="Components/USB/Driver/USART_CDC_ACM.c"/>
       </files>
     </component>
   </components>

@@ -100,7 +100,7 @@ function generate() {
 
   if [ $1 == "USB" ]; then
     # Replacing '%Instance%' with 'n' in all USB templates and storing them in Doxygen/USB/src/ folder
-    TOOL_PATH="../../../USB/Template"
+    TOOL_PATH="../../../Components/USB/Template"
     INSTANCE="n"
     found_files=$(find "$TOOL_PATH" -type f -name "USBD*")
     mkdir -p "./src/template/"
@@ -145,4 +145,3 @@ cp -f "${DIRNAME}/index.html" "${DIRNAME}/../html/"
 popd > /dev/null || exit 1
 
 exit 0
-
