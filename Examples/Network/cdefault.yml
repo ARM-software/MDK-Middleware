@@ -53,6 +53,7 @@ default:
 
     - for-compiler: IAR
       C-CPP: 
+        - -e
         - --dlib_config DLib_Config_Full.h
       Link:
         - --semihosting
