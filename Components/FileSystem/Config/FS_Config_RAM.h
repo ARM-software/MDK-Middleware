@@ -4,7 +4,7 @@
  *------------------------------------------------------------------------------
  * Name:    FS_Config_RAM_%Instance%.h
  * Purpose: File System Configuration for RAM Drive
- * Rev.:    V6.2.0
+ * Rev.:    V6.3.0
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -23,10 +23,10 @@
 //   <i>If not enabled, the linker selects base address.
 #define RAM%Instance%_RELOC              0
 
-//     <o>Base address <0x0-0xFFFFF000:0x1000>
-//     <i>Define the target device Base address.
-//     <i>Default: 0x80000000
-#define RAM%Instance%_BASE_ADDR          0x80000000
+//     <s>Section Name
+//     <i>Define the name of the section for the file system buffer.
+//     <i>Linker script shall have this section defined.
+#define RAM0%Instance%_SECTION           ".filesystem.ram%Instance%"
 
 //   </e>
 

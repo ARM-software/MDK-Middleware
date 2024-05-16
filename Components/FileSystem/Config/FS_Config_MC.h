@@ -4,7 +4,7 @@
  *------------------------------------------------------------------------------
  * Name:    FS_Config_MC_%Instance%.h
  * Purpose: File System Configuration for Memory Card Drive
- * Rev.:    V6.2.0
+ * Rev.:    V6.3.0
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -37,9 +37,10 @@
 //   <i>require to locate the drive buffers at a fixed address.
 #define MC%Instance%_CACHE_RELOC         0
 
-//     <o>Base address <0x0000-0xFFFFFE00:0x200>
-//     <i>Set buffer base address to RAM areas that support DMA with the drive.
-#define MC%Instance%_CACHE_ADDR          0x7FD00000
+//     <s>Section Name
+//     <i>Define the name of the section for the drive cache and drive buffers.
+//     <i>Linker script shall have this section defined.
+#define MC%Instance%_CACHE_SECTION       ".driver.mci%Instance%"
 
 //   </e>
 //   <o>Filename Cache Size <0-1000000>

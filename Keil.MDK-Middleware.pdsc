@@ -1206,7 +1206,7 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/FileSystem/fs_create_app.html#ram_usage"/>
-          <file category="header" name="Components/FileSystem/Config/FS_Config_RAM.h" attr="config" version="6.2.0"/>
+          <file category="header" name="Components/FileSystem/Config/FS_Config_RAM.h" attr="config" version="6.3.0"/>
           <!-- Library source files -->
           <file category="source" name="Components/FileSystem/Source/fs_ram_drv.c"/>
         </files>
@@ -1232,7 +1232,7 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/FileSystem/fs_create_app.html#nand_usage"/>
-          <file category="header" name="Components/FileSystem/Config/FS_Config_NAND.h" attr="config" version="6.3.0"/>
+          <file category="header" name="Components/FileSystem/Config/FS_Config_NAND.h" attr="config" version="6.4.0"/>
           <!-- Library source files -->
           <file category="source" name="Components/FileSystem/Source/fs_nand_media.c"/>
           <file category="source" name="Components/FileSystem/Source/fs_nftl.c"/>
@@ -1246,7 +1246,7 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/FileSystem/fs_create_app.html#mc_usage"/>
-          <file category="header" name="Components/FileSystem/Config/FS_Config_MC.h" attr="config" version="6.2.0"/>
+          <file category="header" name="Components/FileSystem/Config/FS_Config_MC.h" attr="config" version="6.3.0"/>
           <!-- Library source files -->
           <file category="source" name="Components/FileSystem/Source/fs_mc_mci.c"/>
           <file category="source" name="Components/FileSystem/Source/fs_mc_spi.c"/>

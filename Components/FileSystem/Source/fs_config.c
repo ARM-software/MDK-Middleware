@@ -226,16 +226,34 @@
 #define FAT_SECT_RSVD 64
 
 /* ---------------------------------------------------------------------------*/
-/* Support for absolute placement of variables */
-#ifndef __MEMORY_AT
-  /* Macro __MEMORY_AT is used to place ZI data at specific address. */
-  #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6060100)
-    #define __MEMORY_AT__(x) __attribute__((section(".bss.ARM.__at_"#x)))
-  #else
-    /* Define __MEMORY_AT to create sections used by the linker script */
-    #define __MEMORY_AT__(x) __attribute__((section(".bss.MDK-FileSystem.at."#x)))
-  #endif
-  #define __MEMORY_AT(x) __MEMORY_AT__(x)
+/* Support for drive buffer memory placement into linker sections */
+
+/* Common per-drive section names */
+#ifndef SECTION_MCI
+#define SECTION_MCI  ".driver.mci"
+#endif
+#ifndef SECTION_NAND
+#define SECTION_NAND ".driver.nand"
+#endif
+#ifndef SECTION_SPI
+#define SECTION_SPI  ".driver.spi"
+#endif
+
+/* RAM file system location: the buffer that contains the file system
+   is placed into the SECTION_RAM section. */
+#ifndef SECTION_RAM
+#define SECTION_RAM  ".filesystem.ram"
+#endif
+
+/* Macro that creates section name from string and integer value */
+#ifndef __IN_SECTION_DEF
+  /* Default section name */
+  #define __PP_STRINGIFY(x) #x
+  #define __IN_SECTION_DEF(name, num) __attribute__((section(name __PP_STRINGIFY(num))))
+#endif
+#ifndef __IN_SECTION_USR
+  /* User specified section name */
+  #define __IN_SECTION_USR(name)      __attribute__((section(name)))
 #endif
 
 /* ---------------------------------------------------------------------------*/
@@ -477,25 +495,31 @@ uint8_t const fs_ndrv = FS_NDRV;
   #endif
 
   #if (MC0_SPI == 0)
+    #if (MC0_CACHE_RELOC == 1)
+      #define __SECTION_MC0  __IN_SECTION_USR (MC0_CACHE_SECTION)
+    #else
+      #define __SECTION_MC0  __IN_SECTION_DEF (SECTION_MCI, MC0_MCI_DRIVER)
+    #endif
+
   #ifndef RTE_FileSystem_Debug
   static
   #endif
   MC_MCI fs_mc0_mci;
   #else
+    #if (MC0_CACHE_RELOC == 1)
+      #define __SECTION_MC0  __IN_SECTION_USR (MC0_CACHE_SECTION)
+    #else
+      #define __SECTION_MC0  __IN_SECTION_DEF (SECTION_SPI, MC0_SPI_DRIVER)
+    #endif
+
   #ifndef RTE_FileSystem_Debug
   static
   #endif
   MC_SPI fs_mc0_spi;
   #endif
 
-  #if (MC0_CACHE_RELOC == 1)
-    #define __AT_MC0  __MEMORY_AT(MC0_CACHE_ADDR)
-  #else
-    #define __AT_MC0
-  #endif
-
   /* MC0 Cache Buffer for Data and FAT Caching */
-  static uint32_t mc0_cache[(MC0_CACHE_SIZE+1) * 256 + MC0_FAT_JOURNAL * 128] __ALIGNED(32) __AT_MC0;
+  static uint32_t mc0_cache[(MC0_CACHE_SIZE+1) * 256 + MC0_FAT_JOURNAL * 128] __ALIGNED(32) __SECTION_MC0;
 
   #if (MC0_NAME_CACHE_SIZE > 0)
     #define MC0_NAME_CACHE_MAX_DEPTH 8
@@ -601,25 +625,31 @@ uint8_t const fs_ndrv = FS_NDRV;
   #endif
 
   #if (MC1_SPI == 0)
+    #if (MC1_CACHE_RELOC == 1)
+      #define __SECTION_MC1  __IN_SECTION_USR (MC1_CACHE_SECTION)
+    #else
+      #define __SECTION_MC1  __IN_SECTION_DEF (SECTION_MCI, MC1_MCI_DRIVER)
+    #endif
+
   #ifndef RTE_FileSystem_Debug
   static
   #endif
   MC_MCI fs_mc1_mci;
   #else
+    #if (MC1_CACHE_RELOC == 1)
+      #define __SECTION_MC1  __IN_SECTION_USR (MC1_CACHE_SECTION)
+    #else
+      #define __SECTION_MC1  __IN_SECTION_DEF (SECTION_SPI, MC1_SPI_DRIVER)
+    #endif
+
   #ifndef RTE_FileSystem_Debug
   static
   #endif
   MC_SPI fs_mc1_spi;
   #endif
 
-  #if (MC1_CACHE_RELOC == 1)
-    #define __AT_MC1  __MEMORY_AT(MC1_CACHE_ADDR)
-  #else
-    #define __AT_MC1
-  #endif
-
   /* MC1 Cache Buffer for Data and FAT Caching */
-  static uint32_t mc1_cache[(MC1_CACHE_SIZE+1) * 256 + MC1_FAT_JOURNAL * 128] __ALIGNED(32) __AT_MC1;
+  static uint32_t mc1_cache[(MC1_CACHE_SIZE+1) * 256 + MC1_FAT_JOURNAL * 128] __ALIGNED(32) __SECTION_MC1;
 
   #if (MC1_NAME_CACHE_SIZE > 0)
     #define MC1_NAME_CACHE_MAX_DEPTH 8
@@ -823,9 +853,9 @@ uint8_t const fs_ndrv = FS_NDRV;
   extern ARM_DRIVER_NAND  CREATE_SYMBOL (Driver_NAND, NAND0_DRIVER);
 
   #if (NAND0_CACHE_RELOC == 1)
-    #define __AT_NAND0  __MEMORY_AT(NAND0_CACHE_ADDR)
+    #define __SECTION_NAND0  __IN_SECTION_USR (NAND0_CACHE_SECTION)
   #else
-    #define __AT_NAND0
+    #define __SECTION_NAND0  __IN_SECTION_DEF (SECTION_NAND, NAND0_DRIVER)
   #endif
 
   /* NAND Cache Buffer for FAT, Page and Block Caching */
@@ -834,7 +864,7 @@ uint8_t const fs_ndrv = FS_NDRV;
                        (NAND0_BLOCK_CACHE + 2) * NAND0_PAGE_COUNT)
   #define NAND0_FSJBUF (NAND0_FAT_JOURNAL      * 512)
 
-  static uint32_t     nand0_cache[NAND0_CSZ/4 + NAND0_FSJBUF/4] __ALIGNED(32) __AT_NAND0;
+  static uint32_t     nand0_cache[NAND0_CSZ/4 + NAND0_FSJBUF/4] __ALIGNED(32) __SECTION_NAND0;
   static PAGE_CACHE   nand0_capg [NAND0_PAGE_CACHE  + 1];
   static BLOCK_CACHE  nand0_cabl [NAND0_BLOCK_CACHE + 2];
   static uint32_t     nand0_ttsn [NAND_TSN_SIZE(NAND0_BLOCK_COUNT, NAND0_PAGE_SIZE)];
@@ -989,9 +1019,9 @@ uint8_t const fs_ndrv = FS_NDRV;
   #endif
 
   #if (NAND1_CACHE_RELOC == 1)
-    #define __AT_NAND1  __MEMORY_AT(NAND1_CACHE_ADDR)
+    #define __SECTION_NAND1  __IN_SECTION_USR (NAND1_CACHE_SECTION)
   #else
-    #define __AT_NAND1
+    #define __SECTION_NAND1  __IN_SECTION_DEF (SECTION_NAND, NAND1_DRIVER)
   #endif
 
   /* NAND Cache Buffer for FAT, Page and Block Caching */
@@ -1000,7 +1030,7 @@ uint8_t const fs_ndrv = FS_NDRV;
                        (NAND1_BLOCK_CACHE + 2) * NAND1_PAGE_COUNT)
   #define NAND1_FSJBUF (NAND1_FAT_JOURNAL      * 512)
  
-  static uint32_t     nand1_cache[NAND1_CSZ/4 + NAND1_FSJBUF/4] __ALIGNED(32) __AT_NAND1;
+  static uint32_t     nand1_cache[NAND1_CSZ/4 + NAND1_FSJBUF/4] __ALIGNED(32) __SECTION_NAND1;
   static PAGE_CACHE   nand1_capg [NAND1_PAGE_CACHE  + 1];
   static BLOCK_CACHE  nand1_cabl [NAND1_BLOCK_CACHE + 2];
   static uint32_t     nand1_ttsn [NAND_TSN_SIZE(NAND1_BLOCK_COUNT, NAND1_PAGE_SIZE)];
@@ -1170,13 +1200,13 @@ uint8_t const fs_ndrv = FS_NDRV;
   #endif
 
   #if (RAM0_RELOC == 1)
-    #define __AT_RAM0  __MEMORY_AT(RAM0_BASE_ADDR)
+    #define __SECTION_RAM0  __IN_SECTION_USR (RAM0_SECTION)
   #else
-    #define __AT_RAM0
+    #define __SECTION_RAM0  __IN_SECTION_DEF (SECTION_RAM, 0)
   #endif
 
   /* RAM0 Device data buffer */
-  static uint32_t ram0_buf[256 + (RAM0_SIZE/4)] __AT_RAM0;
+  static uint32_t ram0_buf[256 + (RAM0_SIZE/4)] __SECTION_RAM0;
 
   /* RAM0 device info */
   #ifndef FS_DEBUG
@@ -1242,13 +1272,13 @@ uint8_t const fs_ndrv = FS_NDRV;
   #endif
 
   #if (RAM1_RELOC == 1)
-    #define __AT_RAM1  __MEMORY_AT(RAM1_BASE_ADDR)
+    #define __SECTION_RAM1  __IN_SECTION_USR (RAM1_SECTION)
   #else
-    #define __AT_RAM1
+    #define __SECTION_RAM1  __IN_SECTION_DEF (SECTION_RAM, 1)
   #endif
 
   /* RAM1 Device data buffer */
-  static uint32_t ram1_buf[256 + (RAM1_SIZE/4)] __AT_RAM1;
+  static uint32_t ram1_buf[256 + (RAM1_SIZE/4)] __SECTION_RAM1;
 
   /* RAM1 device info */
   #ifndef RTE_FileSystem_Debug
