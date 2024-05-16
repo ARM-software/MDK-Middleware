@@ -9,47 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "rl_fs_lib.h"
-#include "cmsis_compiler.h"
-
-#if defined(FS_RAM_0)
-#include "FS_Config_RAM_0.h"
-#endif
-#if defined(FS_RAM_1)
-#include "FS_Config_RAM_1.h"
-#endif
-
-#if defined(FS_NOR_FLASH_0)
-#include "FS_Config_NOR_0.h"
-#endif
-#if defined(FS_NOR_FLASH_1)
-#include "FS_Config_NOR_1.h"
-#endif
-
-#if defined(FS_NAND_FLASH_0)
-#include "FS_Config_NAND_0.h"
-#endif
-#if defined(FS_NAND_FLASH_1)
-#include "FS_Config_NAND_1.h"
-#endif
-
-#if defined(FS_MEMORY_CARD_0)
-#include "FS_Config_MC_0.h"
-#endif
-#if defined(FS_MEMORY_CARD_1)
-#include "FS_Config_MC_1.h"
-#endif
-
-#if defined(FS_USB_0)
-#include "FS_Config_USB_0.h"
-#endif
-#if defined(FS_USB_1)
-#include "FS_Config_USB_1.h"
-#endif
-
-#if defined (FS_RTOS_RTX5)
-  #include "rtx_os.h"
-#endif
+#include "fs_core.h"
 
 /* ---------------------------------------------------------------------------*/
 /* Reject MicroLib since it does not provide retargeting */
@@ -285,6 +245,20 @@
 #endif
 
 /* ---------------------------------------------------------------------------*/
+/* Extern definitions for media object */
+#ifdef FS_DEBUG
+extern MC_MCI       fs_mc0_mci;
+extern MC_SPI       fs_mc0_spi;
+extern MC_MCI       fs_mc1_mci;
+extern MC_SPI       fs_mc1_spi;
+extern NAND_FTL_DEV fs_nand0_handle;
+extern NAND_FTL_DEV fs_nand1_handle;
+extern NOR_MEDIA    fs_nor0;
+extern NOR_MEDIA    fs_nor1;
+extern RAM_DEV      fs_ram0_dev;
+#endif
+
+/* ---------------------------------------------------------------------------*/
 /* File Control Blocks for the FAT File System */
 #if (FAT_USE == 0 || FAT_MAX_OPEN_FILES == 0)
 fsFAT_Handle  fs_fat_fh[1];
@@ -319,20 +293,6 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive F0: NOR Flash device NOR0 configuration
  *---------------------------------------------------------------------------*/
 #if (NOR0_ENABLE)
-
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t  fs_nor0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t  fs_nor0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nor0_mtx_cb, sizeof(osRtxMutex_t) };
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t  fs_nor0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_nor0_mtx &fs_nor0_mtx_at
-
   static fsEFS_Volume  fs_nor0_vol;
 
   static FLASH_TIMEOUT fs_nor0_flash_tout = {
@@ -342,7 +302,7 @@ uint8_t const fs_ndrv = FS_NDRV;
     NOR0_TOUT_READ
   };
 
-  #ifndef RTE_FileSystem_Debug
+  #ifndef FS_DEBUG
   static
   #endif
   NOR_MEDIA fs_nor0;
@@ -398,19 +358,6 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive F1: NOR Flash device NOR1 configuration
  *---------------------------------------------------------------------------*/
 #if (NOR1_ENABLE)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t  fs_nor1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t  fs_nor1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nor1_mtx_cb, sizeof(osRtxMutex_t) };
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t  fs_nor1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_nor1_mtx &fs_nor1_mtx_at
-
   static fsEFS_Volume  fs_nor1_vol;
 
   static FLASH_TIMEOUT fs_nor1_flash_tout = {
@@ -420,7 +367,7 @@ uint8_t const fs_ndrv = FS_NDRV;
     NOR1_TOUT_READ
   };
 
-  #ifndef RTE_FileSystem_Debug
+  #ifndef FS_DEBUG
   static
   #endif
   NOR_MEDIA fs_nor1;
@@ -475,19 +422,6 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive M0: Memory Card device MC0 configuration
  *---------------------------------------------------------------------------*/
 #if (MC0_ENABLE)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t fs_mc0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t fs_mc0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_mc0_mtx_cb, sizeof(osRtxMutex_t) };
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t fs_mc0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_mc0_mtx &fs_mc0_mtx_at
-
   static fsFAT_Volume fs_mc0_vol;
 
   #if (MC0_FAT_JOURNAL)
@@ -501,7 +435,7 @@ uint8_t const fs_ndrv = FS_NDRV;
       #define __SECTION_MC0  __IN_SECTION_DEF (SECTION_MCI, MC0_MCI_DRIVER)
     #endif
 
-  #ifndef RTE_FileSystem_Debug
+  #ifndef FS_DEBUG
   static
   #endif
   MC_MCI fs_mc0_mci;
@@ -512,7 +446,7 @@ uint8_t const fs_ndrv = FS_NDRV;
       #define __SECTION_MC0  __IN_SECTION_DEF (SECTION_SPI, MC0_SPI_DRIVER)
     #endif
 
-  #ifndef RTE_FileSystem_Debug
+  #ifndef FS_DEBUG
   static
   #endif
   MC_SPI fs_mc0_spi;
@@ -605,19 +539,6 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive M1: Memory Card device MC1 configuration
  *---------------------------------------------------------------------------*/
 #if (MC1_ENABLE)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t fs_mc1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t fs_mc1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_mc1_mtx_cb, sizeof(osRtxMutex_t) };
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t fs_mc1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_mc1_mtx &fs_mc1_mtx_at
-
   static fsFAT_Volume fs_mc1_vol;
 
   #if (MC1_FAT_JOURNAL)
@@ -631,7 +552,7 @@ uint8_t const fs_ndrv = FS_NDRV;
       #define __SECTION_MC1  __IN_SECTION_DEF (SECTION_MCI, MC1_MCI_DRIVER)
     #endif
 
-  #ifndef RTE_FileSystem_Debug
+  #ifndef FS_DEBUG
   static
   #endif
   MC_MCI fs_mc1_mci;
@@ -642,7 +563,7 @@ uint8_t const fs_ndrv = FS_NDRV;
       #define __SECTION_MC1  __IN_SECTION_DEF (SECTION_SPI, MC1_SPI_DRIVER)
     #endif
 
-  #ifndef RTE_FileSystem_Debug
+  #ifndef FS_DEBUG
   static
   #endif
   MC_SPI fs_mc1_spi;
@@ -736,7 +657,7 @@ uint8_t const fs_ndrv = FS_NDRV;
  *---------------------------------------------------------------------------*/
 #if (NAND0_ENABLE)
   static NAND_MEDIA_HANDLE fs_nand0_media_handle;
-  #ifndef RTE_FileSystem_Debug
+  #ifndef FS_DEBUG
   static
   #endif
   NAND_FTL_DEV fs_nand0_handle;
@@ -750,7 +671,7 @@ uint8_t const fs_ndrv = FS_NDRV;
 
 #if (NAND1_ENABLE)
   static NAND_MEDIA_HANDLE fs_nand1_media_handle;
-  #ifndef RTE_FileSystem_Debug
+  #ifndef FS_DEBUG
   static
   #endif
   NAND_FTL_DEV fs_nand1_handle;
@@ -762,7 +683,7 @@ uint8_t const fs_ndrv = FS_NDRV;
   #endif
 #endif
 
-#ifdef RTE_FileSystem_Drive_NAND_0
+#ifdef FS_NAND_FLASH_0
   #if (NAND0_ENABLE)
   extern ARM_DRIVER_NAND   CREATE_SYMBOL (Driver_NAND, NAND0_DRIVER);
   
@@ -812,7 +733,7 @@ uint8_t const fs_ndrv = FS_NDRV;
   #endif
 #endif
 
-#ifdef RTE_FileSystem_Drive_NAND_1
+#ifdef FS_NAND_FLASH_1
   #if (((NAND0_ENABLE == 0) && NAND1_ENABLE) || ((NAND0_ENABLE && NAND1_ENABLE) && (NAND1_DRIVER != NAND0_DRIVER)))
   extern ARM_DRIVER_NAND  CREATE_SYMBOL (Driver_NAND, NAND1_DRIVER);
 
@@ -868,19 +789,6 @@ uint8_t const fs_ndrv = FS_NDRV;
   static PAGE_CACHE   nand0_capg [NAND0_PAGE_CACHE  + 1];
   static BLOCK_CACHE  nand0_cabl [NAND0_BLOCK_CACHE + 2];
   static uint32_t     nand0_ttsn [NAND_TSN_SIZE(NAND0_BLOCK_COUNT, NAND0_PAGE_SIZE)];
-
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t   fs_nand0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t   fs_nand0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nand0_mtx_cb, sizeof(osRtxMutex_t) };
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t   fs_nand0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-#define fs_nand0_mtx &fs_nand0_mtx_at
 
   static fsFAT_Volume fs_nand0_vol;
   #if (NAND0_FAT_JOURNAL)
@@ -1035,19 +943,6 @@ uint8_t const fs_ndrv = FS_NDRV;
   static BLOCK_CACHE  nand1_cabl [NAND1_BLOCK_CACHE + 2];
   static uint32_t     nand1_ttsn [NAND_TSN_SIZE(NAND1_BLOCK_COUNT, NAND1_PAGE_SIZE)];
 
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t   fs_nand1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t   fs_nand1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_nand1_mtx_cb, sizeof(osRtxMutex_t) };
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t   fs_nand1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_nand1_mtx &fs_nand1_mtx_at
-
   static fsFAT_Volume fs_nand1_vol;
   #if (NAND1_FAT_JOURNAL)
   static FSJOUR       fs_nand1_fsj;
@@ -1180,19 +1075,6 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive R0: RAM device RAM0 configuration
  *---------------------------------------------------------------------------*/
 #if (RAM0_ENABLE)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t  fs_ram0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t  fs_ram0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_ram0_mtx_cb, sizeof(osRtxMutex_t) };
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t  fs_ram0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_ram0_mtx &fs_ram0_mtx_at
-
   static fsFAT_Volume fs_ram0_vol;
 
   #if (RAM0_SIZE < 0x4A00)
@@ -1252,19 +1134,6 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive R1: RAM device RAM1 configuration
  *---------------------------------------------------------------------------*/
 #if (RAM1_ENABLE)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t  fs_ram1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t  fs_ram1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_ram1_mtx_cb, sizeof(osRtxMutex_t) };
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t  fs_ram1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_ram1_mtx &fs_ram1_mtx_at
-
   static fsFAT_Volume fs_ram1_vol;
 
   #if (RAM1_SIZE < 0x4A00)
@@ -1281,7 +1150,7 @@ uint8_t const fs_ndrv = FS_NDRV;
   static uint32_t ram1_buf[256 + (RAM1_SIZE/4)] __SECTION_RAM1;
 
   /* RAM1 device info */
-  #ifndef RTE_FileSystem_Debug
+  #ifndef FS_DEBUG
   static
   #endif
   RAM_DEV fs_ram1_dev = {
@@ -1324,19 +1193,6 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive U0: USB Flash device USB0 configuration
  *---------------------------------------------------------------------------*/
 #if (USB0_ENABLE)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t  fs_usb0_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t  fs_usb0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_usb0_mtx_cb, sizeof(osRtxMutex_t) };
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t  fs_usb0_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_usb0_mtx &fs_usb0_mtx_at
-
   static fsFAT_Volume fs_usb0_vol;
 
   #if (USB0_FAT_JOURNAL)
@@ -1395,19 +1251,6 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive U1: USB Flash device USB1 configuration
  *---------------------------------------------------------------------------*/
 #if (USB1_ENABLE)
-  #if defined (RTE_CMSIS_RTOS2_RTX5)
-  /* CMSIS RTOS2 RTX5 */
-  static osRtxMutex_t  fs_usb1_mtx_cb  __attribute__((section(".bss.os.mutex.cb")));
-  static
-  const osMutexAttr_t  fs_usb1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit|osMutexRobust, &fs_usb1_mtx_cb, sizeof(osRtxMutex_t) };
-  #else
-  /* CMSIS RTOS2 (dynamic memory allocation) */
-  static
-  const osMutexAttr_t  fs_usb1_mtx_at = { NULL, osMutexRecursive|osMutexPrioInherit, NULL, 0 };
-  #endif
-
-  #define fs_usb1_mtx &fs_usb1_mtx_at
-
   static fsFAT_Volume fs_usb1_vol;
 
   #if (USB1_FAT_JOURNAL)
@@ -1508,7 +1351,7 @@ __STATIC_INLINE void fs_config_flash (char num) {
   switch (num) {
 #if (NOR0_ENABLE)
     case '0':
-      fs_nor0_vol.Mutex       = fs_mutex_new ((const void *)fs_nor0_mtx);
+      fs_nor0_vol.Mutex       = fs_mutex_new ("F0");
       fs_nor0_vol.Drv         = &fs_nor0_drv;
 
       fs_nor0.Driver          = &CREATE_SYMBOL (Driver_Flash, NOR0_DRIVER);
@@ -1519,7 +1362,7 @@ __STATIC_INLINE void fs_config_flash (char num) {
     
 #if (NOR1_ENABLE)
     case '1':
-      fs_nor1_vol.Mutex       = fs_mutex_new ((const void *)fs_nor1_mtx);
+      fs_nor1_vol.Mutex       = fs_mutex_new ("F1");
       fs_nor1_vol.Drv         = &fs_nor1_drv;
 
       fs_nor1.Driver          = &CREATE_SYMBOL (Driver_Flash, NOR1_DRIVER);
@@ -1536,7 +1379,7 @@ __STATIC_INLINE void fs_config_mc (char num) {
   switch (num) {
 #if (MC0_ENABLE)
     case '0':
-      fs_mc0_vol.Mutex         = fs_mutex_new ((const void *)fs_mc0_mtx);
+      fs_mc0_vol.Mutex         = fs_mutex_new ("M0");
       fs_mc0_vol.Drv           = &fs_mc0_drv;
       fs_mc0_vol.CaBuf         = mc0_cache;
       fs_mc0_vol.CaSize        = MC0_CACHE_SIZE * 2;
@@ -1576,7 +1419,7 @@ __STATIC_INLINE void fs_config_mc (char num) {
 
 #if (MC1_ENABLE)
     case '1':
-      fs_mc1_vol.Mutex         = fs_mutex_new ((const void *)fs_mc1_mtx);
+      fs_mc1_vol.Mutex         = fs_mutex_new ("M1");
       fs_mc1_vol.Drv           = &fs_mc1_drv;
       fs_mc1_vol.CaBuf         = mc1_cache;
       fs_mc1_vol.CaSize        = MC1_CACHE_SIZE * 2;
@@ -1622,7 +1465,7 @@ __STATIC_INLINE void fs_config_nand (char num) {
   switch (num) {
 #if (NAND0_ENABLE)
     case '0':
-      fs_nand0_vol.Mutex             = fs_mutex_new ((const void *)fs_nand0_mtx);
+      fs_nand0_vol.Mutex             = fs_mutex_new ("N0");
       fs_nand0_vol.Drv               = &fs_nand0_drv;
       fs_nand0_vol.CaBuf             = nand0_cache;
       fs_nand0_vol.CaSize            = NAND0_CACHE_SIZE * 2;
@@ -1659,7 +1502,7 @@ __STATIC_INLINE void fs_config_nand (char num) {
 
 #if (NAND1_ENABLE)
     case '1':
-      fs_nand1_vol.Mutex             = fs_mutex_new ((const void *)fs_nand1_mtx);
+      fs_nand1_vol.Mutex             = fs_mutex_new ("N1");
       fs_nand1_vol.Drv               = &fs_nand1_drv;
       fs_nand1_vol.CaBuf             = nand1_cache;
       fs_nand1_vol.CaSize            = NAND1_CACHE_SIZE * 2;
@@ -1704,7 +1547,7 @@ __STATIC_INLINE void fs_config_ram (char num) {
   switch (num) {
 #if (RAM0_ENABLE)
     case '0':
-      fs_ram0_vol.Mutex    = fs_mutex_new ((const void *)fs_ram0_mtx);
+      fs_ram0_vol.Mutex    = fs_mutex_new ("R0");
       fs_ram0_vol.Drv      = &fs_ram0_drv;
       fs_ram0_vol.CaBuf    = ram0_buf;
       fs_ram0_vol.CaSize   = 0;
@@ -1715,7 +1558,7 @@ __STATIC_INLINE void fs_config_ram (char num) {
 
 #if (RAM1_ENABLE)
     case '1':
-      fs_ram1_vol.Mutex    = fs_mutex_new ((const void *)fs_ram1_mtx);
+      fs_ram1_vol.Mutex    = fs_mutex_new ("R1");
       fs_ram1_vol.Drv      = &fs_ram1_drv;
       fs_ram1_vol.CaBuf    = ram1_buf;
       fs_ram1_vol.CaSize   = 0;
@@ -1732,7 +1575,7 @@ __STATIC_INLINE void fs_config_usb (char num) {
   switch (num) {
 #if (USB0_ENABLE)
     case '0':
-      fs_usb0_vol.Mutex    = fs_mutex_new ((const void *)fs_usb0_mtx);
+      fs_usb0_vol.Mutex    = fs_mutex_new ("U0");
       fs_usb0_vol.Drv      = &fs_usb0_drv;
       fs_usb0_vol.CaBuf    = usb0_cache;
       fs_usb0_vol.CaSize   = USB0_CACHE_SIZE * 2;
@@ -1756,7 +1599,7 @@ __STATIC_INLINE void fs_config_usb (char num) {
 
 #if (USB1_ENABLE)
     case '1':
-      fs_usb1_vol.Mutex    = fs_mutex_new ((const void *)fs_usb1_mtx);
+      fs_usb1_vol.Mutex    = fs_mutex_new ("U1");
       fs_usb1_vol.Drv      = &fs_usb1_drv;
       fs_usb1_vol.CaSize   = USB1_CACHE_SIZE * 2;
       fs_usb1_vol.CaBuf    = usb1_cache;

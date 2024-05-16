@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2021 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_memory_card.h
  * Purpose: Memory Card Layer Definitions for File System
@@ -63,13 +63,5 @@ extern uint32_t mc_mci_WriteSector (uint32_t sect, const uint8_t *buf, uint32_t 
 extern uint32_t mc_mci_ReadInfo    (fsMediaInfo *info, MC_MCI *mc);
 extern fsStatus mc_mci_DevCtrl     (fsDevCtrlCode code, void *p, MC_MCI *mc);
 extern void     mc_mci_DrvEvent    (uint32_t event, MC_MCI *mc);
-
-#ifdef RTE_FileSystem_Debug
-/* Media objects */
-extern MC_MCI fs_mc0_mci;
-extern MC_SPI fs_mc0_spi;
-extern MC_MCI fs_mc1_mci;
-extern MC_SPI fs_mc1_spi;
-#endif
 
 #endif /* FS_MEMORY_CARD_H__ */

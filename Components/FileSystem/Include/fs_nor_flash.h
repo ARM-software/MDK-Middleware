@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_nor_flash.h
  * Purpose: NOR Flash Layer Definitions for File System
@@ -49,11 +49,5 @@ extern fsStatus nor_DataRead         (uint32_t addr,       void *buf, uint32_t c
 extern fsStatus nor_SectorErase      (uint32_t sector, NOR_MEDIA *nor);
 extern fsStatus nor_DevCtrl          (fsDevCtrlCode code, void *p, NOR_MEDIA *nor);
 extern void     nor_DrvEvent         (uint32_t event, NOR_MEDIA *nor);
-
-#ifdef RTE_FileSystem_Debug
-/* Media objects */
-extern NOR_MEDIA fs_nor0;
-extern NOR_MEDIA fs_nor1;
-#endif
 
 #endif /* FS_NOR_FLASH_H__ */

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_nand_flash.h
  * Purpose: NAND Flash Layer Definitions for File System
@@ -196,11 +196,5 @@ extern void     ftl_DrvEvent       (uint32_t event, NAND_FTL_DEV *ftl);
 
 /* NAND driver event handler */
 extern void     nand_DrvEvent      (uint32_t event, NAND_MEDIA_HANDLE *h);
-
-#ifdef RTE_FileSystem_Debug
-/* Media objects */
-extern NAND_FTL_DEV fs_nand0_handle;
-extern NAND_FTL_DEV fs_nand1_handle;
-#endif
 
 #endif /* FS_NAND_FLASH_H__ */

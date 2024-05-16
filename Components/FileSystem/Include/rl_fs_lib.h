@@ -381,11 +381,6 @@ extern uint8_t const fs_ndrv;
 /* FileSystem version */
 extern uint32_t const fs_lib_version;
 
-#ifdef FS_DEBUG
-/* Media objects */
-extern RAM_DEV fs_ram0_dev;
-#endif
-
 #ifdef __cplusplus
 }
 #endif
