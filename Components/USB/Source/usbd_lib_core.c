@@ -395,7 +395,7 @@ USBD_STATE USBD_GetState (uint8_t device) {
 usbStatus USBD_SetSerialNumber (uint8_t device, const char *string) {
   const usbd_dev_t            *ptr_dev_cfg;
         USB_STRING_DESCRIPTOR *ptr_str_desc;
-        uint16_t              *ptr_str_desc_str;
+        uint8_t               *ptr_str_desc_str;
         uint32_t               str_len, i;
         usbStatus              status;
 
@@ -416,20 +416,13 @@ usbStatus USBD_SetSerialNumber (uint8_t device, const char *string) {
     str_len = ptr_dev_cfg->ser_num_str_len;
   }
 
-#if defined ( __GNUC__ )
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Waddress-of-packed-member"
-#endif
-  ptr_str_desc_str = (uint16_t *)(&((USB_STRING_DESCRIPTOR *)ptr_str_desc)->bString);
-#if defined ( __GNUC__ )
-#pragma GCC diagnostic pop
-#endif
+  ptr_str_desc_str = ((uint8_t *)(&((USB_STRING_DESCRIPTOR *)ptr_str_desc)->bString));
 
   ptr_str_desc->bLength         = (uint8_t)((str_len * 2U) + 2U);
   ptr_str_desc->bDescriptorType = USB_STRING_DESCRIPTOR_TYPE;
   for (i = 0U; i < str_len; i++) {
-    *ptr_str_desc_str = (uint16_t)(string[i]);
-     ptr_str_desc_str++;
+    *ptr_str_desc_str = string[i];
+     ptr_str_desc_str += 2;
   }
 
 exit:
