@@ -756,7 +756,7 @@ uint8_t const fs_ndrv = FS_NDRV;
     (void)event;
     /* Event from "NAND Media Layer" to "NAND Flash Translation Layer" */
     switch (dev_num) {
-      case NAND1_DEV_NUM: nand_MediaEvent (event, &fs_nand1_handle); break;
+      case NAND1_DEV_NUM: ftl_DrvEvent (event, &fs_nand1_handle); break;
 
       default: return;
     }
