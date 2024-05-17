@@ -514,6 +514,17 @@
       <require condition="Network Core"/>
       <require Cclass="Network" Cgroup="Interface"/>
     </condition>
+    <condition id="Network LAN">
+      <description>Network LAN interface and CORE component</description>
+      <require condition="Network Core"/>
+      <accept  Cclass="Network" Cgroup="Interface" Csub="ETH"/>
+      <accept  Cclass="Network" Cgroup="Interface" Csub="WiFi"/>
+    </condition>
+    <condition id="Network LAN and UDP">
+      <description>Network LAN interface, UDP socket and CORE component</description>
+      <require condition="Network LAN"/>
+      <require Cclass="Network" Cgroup="Socket" Csub="UDP"/>
+    </condition>
     <condition id="Network UDP">
       <description>Network UDP and CORE component</description>
       <require condition="Network Core"/>
@@ -714,11 +725,19 @@
           <file category="source"  name="Components/Network/Source/net_ip6.c"/>
           <file category="source"  name="Components/Network/Source/net_ip6_frag.c"/>
           <file category="source"  name="Components/Network/Source/net_icmp6.c"/>
-          <file category="source"  name="Components/Network/Source/net_ping.c"   condition="Network DNS"/>
+          <file category="source"  name="Components/Network/Source/net_ping.c"         condition="Network DNS"/>
           <file category="source"  name="Components/Network/Source/net_ping_core.c"/>
           <file category="source"  name="Components/Network/Source/net_loopback.c"/>
           <file category="source"  name="Components/Network/Source/net_config.c"/>
           <file category="source"  name="Components/Network/Source/net_debug.c"/>
+          <!-- LAN interface -->
+          <file category="source"  name="Components/Network/Source/net_arp.c"          condition="Network LAN"/>
+          <file category="source"  name="Components/Network/Source/net_igmp.c"         condition="Network LAN"/>
+          <file category="source"  name="Components/Network/Source/net_dhcp_client.c"  condition="Network LAN and UDP"/>
+          <file category="source"  name="Components/Network/Source/net_nbns_client.c"  condition="Network LAN and UDP"/>
+          <file category="source"  name="Components/Network/Source/net_ndp.c"          condition="Network LAN"/>
+          <file category="source"  name="Components/Network/Source/net_mld.c"          condition="Network LAN"/>
+          <file category="source"  name="Components/Network/Source/net_dhcp6_client.c" condition="Network LAN and UDP"/>
           <!-- System -->
           <file category="source"  name="Components/Network/Source/net_sys.c"/>
           <file category="source"  name="Components/Network/Source/net_mem.c"/>
@@ -740,13 +759,6 @@
           <file category="header" name="Components/Network/Config/Net_Config_ETH.h" attr="config" version="7.5.0"/>
           <!-- Library source files -->
           <file category="source" name="Components/Network/Source/net_eth.c"/>
-          <file category="source" name="Components/Network/Source/net_arp.c"/>
-          <file category="source" name="Components/Network/Source/net_igmp.c"/>
-          <file category="source" name="Components/Network/Source/net_dhcp_client.c"  condition="Network UDP"/>
-          <file category="source" name="Components/Network/Source/net_nbns_client.c"  condition="Network UDP"/>
-          <file category="source" name="Components/Network/Source/net_ndp.c"/>
-          <file category="source" name="Components/Network/Source/net_mld.c"/>
-          <file category="source" name="Components/Network/Source/net_dhcp6_client.c" condition="Network UDP"/>
         </files>
       </component>
       <component Cgroup="Interface" Csub="WiFi" condition="Network Driver WiFi" maxInstances="2">
@@ -760,13 +772,6 @@
           <file category="header" name="Components/Network/Config/Net_Config_WiFi.h" attr="config" version="7.3.0"/>
           <!-- Library source files -->
           <file category="source" name="Components/Network/Source/net_wifi.c"/>
-          <file category="source" name="Components/Network/Source/net_arp.c"/>
-          <file category="source" name="Components/Network/Source/net_igmp.c"/>
-          <file category="source" name="Components/Network/Source/net_dhcp_client.c"  condition="Network UDP"/>
-          <file category="source" name="Components/Network/Source/net_nbns_client.c"  condition="Network UDP"/>
-          <file category="source" name="Components/Network/Source/net_ndp.c"/>
-          <file category="source" name="Components/Network/Source/net_mld.c"/>
-          <file category="source" name="Components/Network/Source/net_dhcp6_client.c" condition="Network UDP"/>
         </files>
       </component>
       <component Cgroup="Interface" Csub="PPP" Cvariant="Standard Modem" condition="Network Driver PPP">
