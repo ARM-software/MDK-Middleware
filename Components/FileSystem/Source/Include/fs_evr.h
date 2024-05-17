@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2016-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2016-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_evr.h
  * Purpose: Definition of debug events for FileSystem
@@ -9,9 +9,7 @@
 #ifndef __FS_EVR_H
 #define __FS_EVR_H
 
-#include <stddef.h>
-#include "rl_fs.h"
-#include "rl_fs_lib.h"
+#include "fs_core.h"
 
 /* Fs component number - available range: [0x80-0x9F] */
 #define EvtFsCore_No   (0x80 | 0)       /* FsCore component number */
@@ -24,9 +22,6 @@
 #define EvtFsMcSPI_No  (0x80 | 7)       /* FsMcSPI component number */
 
 #ifdef FS_DEBUG
-#include "EventRecorder.h"
-#include "cmsis_compiler.h"
-
 /* Fs component IDs */
 #define EvtFsCoreId(Level,  Msg_No)     EventID(Level, EvtFsCore_No,  Msg_No)
 #define EvtFsFATId(Level,   Msg_No)     EventID(Level, EvtFsFAT_No,   Msg_No)

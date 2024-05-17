@@ -11,9 +11,6 @@
 
 #include <stddef.h>
 
-#include "FS_Config.h"
-#include "FS_Debug.h"
-
 #include "rl_fs.h"
 #include "rl_fs_rte.h"
 
@@ -27,11 +24,6 @@
 
 #if defined(FS_NOR_FLASH_0) || defined(FS_NOR_FLASH_1)
   #include "fs_nor_flash.h"
-#endif
-
-/* Enable debug build */
-#if defined(FS_DEBUG_EVR) && (FS_DEBUG_EVR_ENABLE == 1)
-  #define FS_DEBUG
 #endif
 
 

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_sys.h 
  * Purpose: System Module Definitions
@@ -9,7 +9,7 @@
 #ifndef __FS_SYS_H
 #define __FS_SYS_H
 
-#include "rl_fs_lib.h"
+#include "fs_core.h"
 
 /* Mutex lock macros. */
 #define START_LOCK(x)   x return_value;                                 \

@@ -7,13 +7,9 @@
  *----------------------------------------------------------------------------*/
 
 #include <stdint.h>
-
-#include "rl_fs_lib.h"
 #include "fs_evr.h"
 
 #ifdef FS_DEBUG_EVR
-#include "EventRecorder.h"
-
 /*
   Debug Configuration values
 
@@ -33,7 +29,7 @@
                           FS_DEBUG_EVR_MC_SPI )
 
 #if (FS_DEBUG_EVR_CFG > 3)
-  #error "FS_Debug.h contains invalid Event Recorder filter configuration."
+  #error "FileSystem: FS_Debug.h contains invalid Event Recorder filter configuration."
 #endif
 
 #define Level_Msk(cfg)                             \

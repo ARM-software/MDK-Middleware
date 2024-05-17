@@ -62,4 +62,15 @@
 #endif
 #endif
 
+#if defined(FS_DEBUG_EVR)
+#include "EventRecorder.h"
+#endif
+
+#if (FS_DEBUG_EVR_ENABLE == 1)
+  #if !defined(FS_DEBUG_EVR)
+    #error "FileSystem: debug events require CMSIS-View:Event Recorder component."
+  #endif
+  #define FS_DEBUG
+#endif
+
 #endif /* _FS_CORE_H */

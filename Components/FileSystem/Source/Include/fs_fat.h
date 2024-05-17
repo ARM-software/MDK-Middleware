@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_fat.h 
  * Purpose: FAT File System Module Definitions
@@ -9,7 +9,7 @@
 #ifndef __FS_FAT_H
 #define __FS_FAT_H
 
-#include "rl_fs_lib.h"
+#include "fs_core.h"
 
 /* FAT Volume Status Flags */
 #define FAT_STATUS_INIT_IO    0x00000001U   /* Media driver initialized       */

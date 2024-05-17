@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_common.h
  * Purpose: Common file system function definitions
@@ -9,7 +9,7 @@
 #ifndef __FS_COMMON_H
 #define __FS_COMMON_H
 
-#include "rl_fs_lib.h"
+#include "fs_core.h"
 
 /* Functions */
 extern void         fs_init_cfg (void);

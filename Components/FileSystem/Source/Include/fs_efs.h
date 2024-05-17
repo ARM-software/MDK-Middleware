@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2020 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_efs.h 
  * Purpose: Embedded File System Module Definitions
@@ -9,7 +9,7 @@
 #ifndef __FS_EFS_H
 #define __FS_EFS_H
 
-#include "rl_fs_lib.h"
+#include "fs_core.h"
 
 /* EFS Volume Status Flags */
 #define EFS_STATUS_INIT_IO    0x00000001U   /* Media driver initialized       */
