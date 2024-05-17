@@ -938,7 +938,7 @@ INPUT                  = src/Network.txt \
                          ../../../Components/Network/Include/rl_net.h \
                          ../../../Components/Network/Include/net_modem.h \
                          src/net_function_overview.txt \
-                         ../../../Components/Network/Include/net_evr.h \
+                         ../../../Components/Network/Source\Include/net_evr.h \
                          src/net_evr.txt
 
 # This tag can be used to specify the character encoding of the source files
