@@ -15,6 +15,6 @@
 
 //   <o>Connect to hardware via Driver_Flash# <0-255>
 //   <i>Select driver control block for hardware interface
-#define NOR%Instance%_DRIVER             0
+#define NOR%Instance%_DRIVER             %Instance%
 
 // </h>

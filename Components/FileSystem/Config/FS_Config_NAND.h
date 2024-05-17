@@ -15,7 +15,7 @@
 
 //   <o>Connect to hardware via Driver_NAND# <0-255>
 //   <i>Select driver control block for hardware interface
-#define NAND%Instance%_DRIVER            0
+#define NAND%Instance%_DRIVER            %Instance%
 
 //   <o>Device Number <0-255>
 //   <i>Selects NAND device connected to selected driver
