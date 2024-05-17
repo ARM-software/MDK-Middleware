@@ -931,9 +931,9 @@
   uint32_t dwSize##idx;                                                                                       \
   uint32_t dwPropertyDataType##idx;                                                                           \
   uint16_t wPropertyNameLength##idx;                                                                          \
-  wchar_t  bPropertyName##idx[sizeof(USB_STR_RAW_TO_UTF16(USBD_CUSTOM_CLASS##n##_IF##x##_OS_EXT_PROP##idx##_NAME_RAW))/2];  \
+  uint16_t bPropertyName##idx[sizeof(USB_STR_RAW_TO_UTF16(USBD_CUSTOM_CLASS##n##_IF##x##_OS_EXT_PROP##idx##_NAME_RAW))/2];  \
   uint32_t dwPropertyDataLength##idx;                                                                         \
-  wchar_t  bPropertyData##idx[sizeof(USB_STR_RAW_TO_UTF16(USBD_CUSTOM_CLASS##n##_IF##x##_OS_EXT_PROP##idx##_DATA_STR_RAW))/2];
+  uint16_t bPropertyData##idx[sizeof(USB_STR_RAW_TO_UTF16(USBD_CUSTOM_CLASS##n##_IF##x##_OS_EXT_PROP##idx##_DATA_STR_RAW))/2];
 
   /* USB Device Microsoft OS Feature Descriptor: 
      Extended Properties - Custom Property Section containing Data as unicode string structure definition
@@ -977,7 +977,7 @@
   uint32_t dwSize##idx;                                                                                       \
   uint32_t dwPropertyDataType##idx;                                                                           \
   uint16_t wPropertyNameLength##idx;                                                                          \
-  wchar_t  bPropertyName##idx[sizeof(USB_STR_RAW_TO_UTF16(USBD_CUSTOM_CLASS##n##_IF##x##_OS_EXT_PROP##idx##_NAME_RAW))/2];  \
+  uint16_t bPropertyName##idx[sizeof(USB_STR_RAW_TO_UTF16(USBD_CUSTOM_CLASS##n##_IF##x##_OS_EXT_PROP##idx##_NAME_RAW))/2];  \
   uint32_t dwPropertyDataLength##idx;                                                                         \
   uint32_t bPropertyData##idx;
 
