@@ -927,12 +927,12 @@ INPUT                  = src/Network.txt \
                          src/certification.txt \
                          src/network_examples.txt \
                          src/Reference_Files.txt \
-                         src/ref_net_services_ds.txt \
-                         src/ref_net_socket_ds.txt \
-                         src/ref_net_interface_ds.txt \
+                         src/ref_net_services.txt \
+                         src/ref_net_socket.txt \
+                         src/ref_net_interface.txt \
                          src/net_structs.txt \
-                         src/rl_net_ds.txt \
-                         src/network_diffs_ds.txt \
+                         src/rl_net.txt \
+                         src/network_diffs.txt \
                          src/network_resource_requirements.txt \
                          src/net_modem.txt \
                          ../../../Components/Network/Include/rl_net.h \
