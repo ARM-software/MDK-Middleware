@@ -14,7 +14,7 @@
 
 //   <o>Connect to hardware via Driver_WiFi# <0-255>
 //   <i>Select driver control block for WiFi interface
-#define WIFI%Instance%_DRIVER             0
+#define WIFI%Instance%_DRIVER             %Instance%
 
 //   <o>WiFi Mode <0=>Station
 //                <1=>Access Point

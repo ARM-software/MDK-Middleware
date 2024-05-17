@@ -14,7 +14,7 @@
 
 //   <o>Connect to hardware via Driver_ETH# <0-255>
 //   <i>Select driver control block for MAC and PHY interface
-#define ETH%Instance%_DRIVER             0
+#define ETH%Instance%_DRIVER             %Instance%
 
 //   <s.17>MAC Address
 //   <i>Ethernet MAC Address in text representation
