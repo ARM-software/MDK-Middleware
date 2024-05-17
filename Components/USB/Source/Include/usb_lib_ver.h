@@ -3,7 +3,7 @@
  * Copyright (c) 2021 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usb_lib_ver.h
- * Purpose: USB Common Device/Host - Version header ifle
+ * Purpose: USB Common Device/Host - Version header file
  *----------------------------------------------------------------------------*/
 
 #ifndef __USB_LIB_VER_H__

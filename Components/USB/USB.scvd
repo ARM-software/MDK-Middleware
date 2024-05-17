@@ -4,13 +4,6 @@
   <component name="USB Device/Host" shortname="USBD/H" version="8.0.0"/>        <!-- name and version of the component  -->
 
   <typedefs>
-    <!-- USB Library Version -->
-    <typedef  name="lib_version_t"                info="USB Library Version"    size="4">
-      <member name="major"                        type="uint8_t"                offset="0"   info="Major"/>
-      <member name="minor"                        type="uint8_t"                offset="1"   info="Minor"/>
-      <member name="patch"                        type="uint16_t"               offset="2"   info="Patch"/>
-    </typedef>
-
     <!-- USB Generic Typedefs ************************************************************************************************ -->
     <!-- USB Device Descriptor -->
     <typedef  name="USB_DEVICE_DESCRIPTOR"        info="USB Device Descriptor"  size="18">
@@ -1002,7 +995,7 @@
       <!-- USB Global Variables ********************************************************************************************** -->
       <var  name="usb_lib_version_major"             type="uint32_t"            value="0"/>
       <var  name="usb_lib_version_minor"             type="uint32_t"            value="0"/>
-      <var  name="usb_lib_version_revision"          type="uint32_t"            value="0"/>
+      <var  name="usb_lib_version_patch"             type="uint32_t"            value="0"/>
       <var  name="debug_val"                         type="uint32_t"            value="0"/>
       <var  name="usb_i"                             type="uint32_t"            value="0"/>
       <var  name="usbh0_disp_i"                      type="uint32_t"            value="0"/>
@@ -1011,9 +1004,9 @@
       <var  name="usbh3_disp_i"                      type="uint32_t"            value="0"/>
 
       <read name="usb_lib_version"                   type="uint32_t"            symbol="usb_lib_version" const="1"/>
-      <calc>usb_lib_version_major    = ( usb_lib_version / 10000000U);</calc>
-      <calc>usb_lib_version_minor    = ((usb_lib_version / 10000U   ) % 1000U);</calc>
-      <calc>usb_lib_version_revision = ((usb_lib_version)             % 10000U);</calc>
+      <calc>usb_lib_version_major = ( usb_lib_version / 10000000U);</calc>
+      <calc>usb_lib_version_minor = ((usb_lib_version / 10000U   ) % 1000U);</calc>
+      <calc>usb_lib_version_patch = ((usb_lib_version)             % 10000U);</calc>
 
       <!-- USB Device Component variables ************************************************************************************ -->
       <!-- USB Device 0: if it exists read and prepare variables for display -->
@@ -1794,7 +1787,7 @@
 
 <!---   <item property="Debug Value" value="%x[debug_val]"/> -->
 
-        <item property="Library Version" value="%d[usb_lib_version_major].%d[usb_lib_version_minor].%d[usb_lib_version_revision]"/>
+        <item property="Library Version" value="%d[usb_lib_version_major].%d[usb_lib_version_minor].%d[usb_lib_version_patch]"/>
 
         <!-- USB Device Component display ************************************************************************************ -->
         <!-- USB Device 0: if it exists display it -->

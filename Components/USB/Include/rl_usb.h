@@ -9,13 +9,19 @@
 #ifndef __RL_USB_H__
 #define __RL_USB_H__
 
-
 #ifdef __cplusplus
 extern "C"  {
 #endif
 
 #include <stdint.h>
 #include <stdbool.h>
+
+#define MW_USB_VERSION_MAJOR           (8U)
+#define MW_USB_VERSION_MINOR           (0U)
+#define MW_USB_VERSION_PATCH           (0U)
+#define MW_USB_VERSION                ((MW_USB_VERSION_MAJOR * 10000000U) + \
+                                       (MW_USB_VERSION_MINOR * 10000U)    + \
+                                       (MW_USB_VERSION_PATCH))
 
 #include "usb_os.h"
 #include "usb_compiler.h"
@@ -168,7 +174,7 @@ typedef struct {
 //  ==== USB Device Functions ====
 
 /// \brief Get version of USB Device stack
-/// \return                             version (major.minor.revision : mmnnnrrrr decimal)
+/// \return                             version (major.minor.patch : mmnnnpppp decimal)
 extern uint32_t USBD_GetVersion (void);
 
 /// \brief Initialize USB Device stack and controller
@@ -1097,7 +1103,7 @@ extern usbStatus USBD_EndpointAbort (uint8_t device, uint8_t ep_addr);
 #define USBH_GetDeviceStatus            USBH_Device_GetStatus
 
 /// \brief Get version of USB Host stack
-/// \return                             version (major.minor.revision : mmnnnrrrr decimal)
+/// \return                             version (major.minor.patch : mmnnnpppp decimal)
 extern uint32_t USBH_GetVersion (void);
 
 /// \brief Initialize USB Host stack and controller
