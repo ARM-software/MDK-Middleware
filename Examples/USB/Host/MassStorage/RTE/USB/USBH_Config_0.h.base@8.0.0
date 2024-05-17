@@ -30,10 +30,14 @@
 //     <i>size of maximum expected packet + 128 bytes.
 #define USBH0_HC_MEM_POOL_SIZE          640
 
-//   <e>Relocated Memory Pool
+//   <e>Relocate Memory Pool
 //     <i>Specifies if the memory pool is located at a specific address
 //     <i>(via linker script).
 #define USBH0_HC_MEM_POOL_RELOC         0
+
+//     <s.128>Memory Pool section name
+//       <i>Specifies the section name of the Memory Pool
+#define USBH0_HC_MEM_POOL_SECTION_NAME  ".driver.usbh0"
 //   </e>
 
 //   <h>OS Resources Settings

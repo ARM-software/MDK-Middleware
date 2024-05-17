@@ -12,7 +12,7 @@
 // <h>USB Host 0
 //   <o>Connect to hardware via Driver_USBH# <0-255>
 //   <i>Specifies instance of the Host Controller hardware interface.
-#define USBH0_HC_NUM                    1
+#define USBH0_HC_NUM                    0
 
 //   <o>Maximum Port Power Consumption<2-500:2>
 //     <i>Specifies the maximum power consumption per port (in mA)
@@ -30,10 +30,14 @@
 //     <i>size of maximum expected packet + 128 bytes.
 #define USBH0_HC_MEM_POOL_SIZE          4224
 
-//   <e>Relocated Memory Pool
+//   <e>Relocate Memory Pool
 //     <i>Specifies if the memory pool is located at a specific address
 //     <i>(via linker script).
 #define USBH0_HC_MEM_POOL_RELOC         0
+
+//     <s.128>Memory Pool section name
+//       <i>Specifies the section name of the Memory Pool
+#define USBH0_HC_MEM_POOL_SECTION_NAME  ".driver.usbh0"
 //   </e>
 
 //   <h>OS Resources Settings
