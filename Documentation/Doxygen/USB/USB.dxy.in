@@ -932,9 +932,9 @@ INPUT                  = src/usb.txt \
                          src/rl_usb.txt \
                          ../../../Components/USB/Include/rl_usb.h \
                          src/template/USBD_MSC.h \
-                         ../../../Components/USB/Include/usbd_evr.h \
+                         ../../../Components/USB/Source/Include/usbd_evr.h \
                          src/usbd_evr.txt \
-                         ../../../Components/USB/Include/usbh_evr.h \
+                         ../../../Components/USB/Source/Include/usbh_evr.h \
                          src/usbh_evr.txt
 
 # This tag can be used to specify the character encoding of the source files

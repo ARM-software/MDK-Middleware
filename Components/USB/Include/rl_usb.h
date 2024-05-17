@@ -20,6 +20,7 @@ extern "C"  {
 #include "usb_os.h"
 #include "usb_compiler.h"
 #include "usb_def.h"
+#include "usb_adc.h"
 #include "usb_cdc.h"
 #include "usb_cdc_acm_rndis.h"
 #include "usb_hid.h"

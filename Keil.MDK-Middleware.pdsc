@@ -1296,8 +1296,8 @@
           <file category="source" name="Components/USB/Template/USBD_User_Device.c"        attr="template" select="USB Device"/>
           <file category="source" name="Components/USB/Template/USBD_User_Device_SerNum.c" attr="template" select="USB Device Serial Number"/>
           <!-- Source files -->
-          <file category="source" name="Components/USB/Include/usbd_debug.c"/>
-          <file category="source" name="Components/USB/Include/usbd_config.c"/>
+          <file category="source" name="Components/USB/Source/usbd_debug.c"/>
+          <file category="source" name="Components/USB/Source/usbd_config.c"/>
           <!-- Library source files -->
           <file category="source" name="Components/USB/Source/usbd_lib_core.c"/>
           <file category="source" name="Components/USB/Source/usbd_lib_drv.c"/>
@@ -1398,8 +1398,8 @@
           <file category="doc"    name="Documentation/html/USB/USB_Host.html"/>
           <file category="header" name="Components/USB/Config/USBH_Config.h" attr="config" version="8.0.0"/>
           <!-- Source files -->
-          <file category="source" name="Components/USB/Include/usbh_debug.c"/>
-          <file category="source" name="Components/USB/Include/usbh_config.c"/>
+          <file category="source" name="Components/USB/Source/usbh_debug.c"/>
+          <file category="source" name="Components/USB/Source/usbh_config.c"/>
           <!-- Library source files -->
           <file category="source" name="Components/USB/Source/usbh_lib_core.c"/>
           <file category="source" name="Components/USB/Source/usbh_lib_mem.c"/>
