@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    rl_usbd_lib.h
  * Purpose: USB Device header file
@@ -10,10 +10,41 @@
 #define __RL_USBD_LIB_H__
 
 #include <stdint.h>
-#include "usb_cdc.h"
-#include "usb_msc.h"
+#include <stdbool.h>
+
+#include "rl_usb.h"
 #include "Driver_USBD.h"
 
+//  ==== USB Device Constants and Defines ====
+
+/// Endianess handling macros
+#ifdef   __ARM_BIG_ENDIAN
+#ifndef  U32_LE
+#define  U32_LE(v)  (uint32_t)(__REV(v))
+#endif
+#ifndef  U16_LE
+#define  U16_LE(v)  (uint16_t)(__REV(v) >> 16)
+#endif
+#ifndef  U32_BE
+#define  U32_BE(v)  (uint32_t)(v)
+#endif
+#ifndef  U16_BE
+#define  U16_BE(v)  (uint16_t)(v)
+#endif
+#else
+#ifndef  U32_BE
+#define  U32_BE(v)  (uint32_t)(__REV(v))
+#endif
+#ifndef  U16_BE
+#define  U16_BE(v)  (uint16_t)(__REV(v) >> 16)
+#endif
+#ifndef  U32_LE
+#define  U32_LE(v)  (uint32_t)(v)
+#endif
+#ifndef  U16_LE
+#define  U16_LE(v)  (uint16_t)(v)
+#endif
+#endif
 
 //  ==== USB Device Internal Structures ====
 

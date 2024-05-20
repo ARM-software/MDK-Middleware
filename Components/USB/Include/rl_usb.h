@@ -62,19 +62,6 @@ typedef enum {
   usbUnknownError             = 0xFFU   ///< Unspecified USB error
 } usbStatus;
 
-/// Endianess handling macros
-#ifdef __BIG_ENDIAN
- #define U32_LE(v)  (uint32_t)(__REV(v))
- #define U16_LE(v)  (uint16_t)(__REV(v) >> 16)
- #define U32_BE(v)  (uint32_t)(v)
- #define U16_BE(v)  (uint16_t)(v)
-#else
- #define U32_BE(v)  (uint32_t)(__REV(v))
- #define U16_BE(v)  (uint16_t)(__REV(v) >> 16)
- #define U32_LE(v)  (uint32_t)(v)
- #define U16_LE(v)  (uint16_t)(v)
-#endif
-
 //  ==== USB Device Constants and Defines ====
 
 /// USB Device Custom Class API enumerated constants

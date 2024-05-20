@@ -1,20 +1,20 @@
-del ..\..\Source\Include\usbd_config_def_cc_0.h
-del ..\..\Source\Include\usbd_config_def_cc_1.h
-del ..\..\Source\Include\usbd_config_def_cc_2.h
-del ..\..\Source\Include\usbd_config_def_cc_3.h
-sed s/$x/0/g usbd_config_def_cc_x.h >> ..\..\Source\Include\usbd_config_def_cc_0.h
-sed s/$x/1/g usbd_config_def_cc_x.h >> ..\..\Source\Include\usbd_config_def_cc_1.h
-sed s/$x/2/g usbd_config_def_cc_x.h >> ..\..\Source\Include\usbd_config_def_cc_2.h
-sed s/$x/3/g usbd_config_def_cc_x.h >> ..\..\Source\Include\usbd_config_def_cc_3.h
+del ..\..\Source\usbd_config_def_cc_0.h
+del ..\..\Source\usbd_config_def_cc_1.h
+del ..\..\Source\usbd_config_def_cc_2.h
+del ..\..\Source\usbd_config_def_cc_3.h
+sed s/$x/0/g usbd_config_def_cc_x.h >> ..\..\Source\usbd_config_def_cc_0.h
+sed s/$x/1/g usbd_config_def_cc_x.h >> ..\..\Source\usbd_config_def_cc_1.h
+sed s/$x/2/g usbd_config_def_cc_x.h >> ..\..\Source\usbd_config_def_cc_2.h
+sed s/$x/3/g usbd_config_def_cc_x.h >> ..\..\Source\usbd_config_def_cc_3.h
 
-del ..\..\Source\Include\usbd_config_def_0.h
-del ..\..\Source\Include\usbd_config_def_1.h
-del ..\..\Source\Include\usbd_config_def_2.h
-del ..\..\Source\Include\usbd_config_def_3.h
-sed s/$x/0/g usbd_config_def_x.h >> ..\..\Source\Include\usbd_config_def_0.h
-sed s/$x/1/g usbd_config_def_x.h >> ..\..\Source\Include\usbd_config_def_1.h
-sed s/$x/2/g usbd_config_def_x.h >> ..\..\Source\Include\usbd_config_def_2.h
-sed s/$x/3/g usbd_config_def_x.h >> ..\..\Source\Include\usbd_config_def_3.h
+del ..\..\Source\usbd_config_def_0.h
+del ..\..\Source\usbd_config_def_1.h
+del ..\..\Source\usbd_config_def_2.h
+del ..\..\Source\usbd_config_def_3.h
+sed s/$x/0/g usbd_config_def_x.h >> ..\..\Source\usbd_config_def_0.h
+sed s/$x/1/g usbd_config_def_x.h >> ..\..\Source\usbd_config_def_1.h
+sed s/$x/2/g usbd_config_def_x.h >> ..\..\Source\usbd_config_def_2.h
+sed s/$x/3/g usbd_config_def_x.h >> ..\..\Source\usbd_config_def_3.h
 
 del ..\..\Source\usbd_config_desc_cc_0.c
 del ..\..\Source\usbd_config_desc_cc_1.c

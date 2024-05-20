@@ -17,7 +17,6 @@
 #include "usbd_lib_drv.h"
 #include "usbd_evr.h"
 
-
 /************************** Local function declarations ***********************/
 
 static usbStatus USBD_ADC_CheckInstance (uint8_t instance);
@@ -224,7 +223,7 @@ int32_t USBD_ADC_ReadSamples (uint8_t instance, void *buf, int32_t num) {
         usbd_adc_code_t      *ptr_out_cfg;
         uint8_t              *ptr_buf_8;
   const uint8_t              *ptr_src_8;
-#ifdef __BIG_ENDIAN
+#ifdef __ARM_BIG_ENDIAN
         uint8_t              *ptr_dest_8;
 #else
         uint32_t             *ptr_dest_32;
@@ -299,7 +298,7 @@ int32_t USBD_ADC_ReadSamples (uint8_t instance, void *buf, int32_t num) {
   }
 
   while (len_cur != 0U) {
-#ifdef __BIG_ENDIAN
+#ifdef __ARM_BIG_ENDIAN
     ptr_src_8  = ptr_adc_spkr_data->ptr_data_read;
     ptr_dest_8 = ptr_buf_8;
     if (convert_24_to_32) {
@@ -497,7 +496,7 @@ int32_t USBD_ADC_WriteSamples (uint8_t instance, const void *buf, int32_t num) {
   }
 
   while (len_cur != 0U) {
-#ifdef __BIG_ENDIAN
+#ifdef __ARM_BIG_ENDIAN
     ptr_src_8  = ptr_buf_8;
     ptr_dest_8 = ptr_adc_mic_data->ptr_data_to_send;
     if (convert_32_to_24) {

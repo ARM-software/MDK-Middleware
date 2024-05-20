@@ -19,6 +19,35 @@
 
 //  ==== USB Host Constants and Defines ====
 
+/// Endianess handling macros
+#ifdef   __ARM_BIG_ENDIAN
+#ifndef  U32_LE
+#define  U32_LE(v)  (uint32_t)(__REV(v))
+#endif
+#ifndef  U16_LE
+#define  U16_LE(v)  (uint16_t)(__REV(v) >> 16)
+#endif
+#ifndef  U32_BE
+#define  U32_BE(v)  (uint32_t)(v)
+#endif
+#ifndef  U16_BE
+#define  U16_BE(v)  (uint16_t)(v)
+#endif
+#else
+#ifndef  U32_BE
+#define  U32_BE(v)  (uint32_t)(__REV(v))
+#endif
+#ifndef  U16_BE
+#define  U16_BE(v)  (uint16_t)(__REV(v) >> 16)
+#endif
+#ifndef  U32_LE
+#define  U32_LE(v)  (uint32_t)(v)
+#endif
+#ifndef  U16_LE
+#define  U16_LE(v)  (uint16_t)(v)
+#endif
+#endif
+
 /// Macro for preparing URB to send Setup Packet
 #define PREPARE_SETUP_PACKET(ptr_urb, ptr_data)                                \
   ptr_urb->buf                    =  ptr_data;                                 \
