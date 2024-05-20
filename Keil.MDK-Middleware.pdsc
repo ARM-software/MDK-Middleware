@@ -1286,7 +1286,6 @@
           <file category="header"  name="Components/USB/Include/rl_usb.h"/>
           <file category="header"  name="Components/USB/Config/USB_Debug.h" attr="config" version="8.0.0"/>
           <!-- Library source files -->
-          <file category="include" name="Components/USB/Source/Include/"/>
           <file category="source"  name="Components/USB/Source/usb_lib_ver.c"/>
         </files>
       </component>
