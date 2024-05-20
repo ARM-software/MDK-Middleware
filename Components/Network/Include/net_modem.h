@@ -4,19 +4,7 @@
  *------------------------------------------------------------------------------
  * Name:    net_modem.h
  * Purpose: Network Modem Driver API
- * Rev.:    V6.3.0
  *----------------------------------------------------------------------------*/
-
-/* History:
- *  Version 6.3.0
- *    Added access to modem response string
- *  Version 6.2
- *    Compatible release
- *  Version 6.00
- *    Compatible release
- *  Version 5.10
- *    Initial release
- */
 
 #ifndef __NET_MODEM_H
 #define __NET_MODEM_H

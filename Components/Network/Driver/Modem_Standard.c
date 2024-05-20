@@ -4,17 +4,7 @@
  *------------------------------------------------------------------------------
  * Name:    Modem_Standard.c
  * Purpose: Modem Driver for Standard modem (HAYES compatible)
- * Rev.:    V6.2.0
  *----------------------------------------------------------------------------*/
-
-/* History:
- *  Version 6.2.0
- *    Updated for ARM compiler 6
- *  Version 6.1.0
- *    Added access to modem response string
- *  Version 6.0
- *    Initial release
- */
 
 #include "net_modem.h"
 
