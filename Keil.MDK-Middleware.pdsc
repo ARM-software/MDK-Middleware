@@ -1188,7 +1188,6 @@
           <file category="header"  name="Components/FileSystem/Include/rl_fs.h"/>
           <file category="header"  name="Components/FileSystem/Config/FS_Config.h" attr="config" version="8.0.0"/>
           <file category="header"  name="Components/FileSystem/Config/FS_Debug.h"  attr="config" version="8.0.0"/>
-          <file category="include" name="Components/FileSystem/Source/Include/"/>
           <file category="source"  name="Components/FileSystem/Source/fs_common.c"/>
           <file category="source"  name="Components/FileSystem/Source/fs_config.c"/>
           <file category="source"  name="Components/FileSystem/Source/fs_debug.c"/>
