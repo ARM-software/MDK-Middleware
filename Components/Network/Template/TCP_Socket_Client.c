@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------------
- * MDK Middleware - Component ::Network:Service
+ * MDK Middleware - Component ::Network:Socket
  * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    TCP_Socket_Client.c

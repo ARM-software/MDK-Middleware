@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------------
- * MDK Middleware - Component ::Network:Service
+ * MDK Middleware - Component ::Network
  * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_http_server_err.c

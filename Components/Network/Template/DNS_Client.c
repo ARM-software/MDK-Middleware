@@ -7,7 +7,7 @@
  * Rev.:    V7.0.1
  *----------------------------------------------------------------------------*/
 //! [code_DNS_Client]
-#include <rl_net.h>
+#include "rl_net.h"
  
 // Notify the user application about DNS client events.
 static void dns_cbfunc (netDNSc_Event event, const NET_ADDR *addr) {
