@@ -1,26 +1,19 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_version.c
  * Purpose: File System Component Version
  *----------------------------------------------------------------------------*/
-#include "rl_fs_lib.h"
+#include "fs_core.h"
 
 /* FileSystem Version */
-#define MAJOR    8
-#define MINOR    0
-#define BUILD    0
+#define MAJOR    (MW_FS_VERSION_MAJOR)
+#define MINOR    (MW_FS_VERSION_MINOR)
+#define PATCH    (MW_FS_VERSION_PATCH)
 
 /* BCD encoded version: 0xMMmmbbbb (MM:Major, mm:minor, bbbb:build) */
 const uint32_t fs_lib_version = ((MAJOR / 10)  << 28) | ((MAJOR % 10) << 24) | \
                                 ((MINOR / 10)  << 20) | ((MINOR % 10) << 16) | \
-                                ((BUILD /1000) << 12) | ((BUILD /100) <<  8) | \
-                                ((BUILD /  10) <<  4) |  (BUILD % 10);
-
-/* Macro to create symbol: prefix_MM_mm_bbbb */
-#define EXPAND_SYMBOL(prefix, MM, mm, bbbb) prefix##_##MM##_##mm##_##bbbb
-#define CREATE_SYMBOL(prefix, MM, mm, bbbb) EXPAND_SYMBOL(prefix, MM, mm, bbbb)
-
-/* Export a version number symbol for a version control */
-extern const uint32_t CREATE_SYMBOL (fs_lib_version, MAJOR, MINOR, BUILD) __attribute__((alias("fs_lib_version")));
+                                ((PATCH /1000) << 12) | ((PATCH /100) <<  8) | \
+                                ((PATCH /  10) <<  4) |  (PATCH % 10);
