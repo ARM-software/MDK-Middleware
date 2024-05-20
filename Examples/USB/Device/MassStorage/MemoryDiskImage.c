@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2023 ARM Germany GmbH. All rights reserved.
+ * Copyright (c) 2023 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    MemoryDiskImage.c
  * Purpose: Memory disk image file

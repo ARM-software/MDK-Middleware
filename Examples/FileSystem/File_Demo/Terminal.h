@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware
- * Copyright (c) 2004-2014 ARM Germany GmbH. All rights reserved.
+ * Copyright (c) 2004-2014 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    Terminal.h
  * Purpose: File manipulation example terminal definitions

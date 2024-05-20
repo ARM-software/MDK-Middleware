@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2017 ARM Germany GmbH. All rights reserved.
+ * Copyright (c) 2004-2017 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    rl_fs.h
  * Purpose: File System API
