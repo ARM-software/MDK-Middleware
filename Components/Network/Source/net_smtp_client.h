@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_smtp_client.h
  * Purpose: Mail Transfer Client Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_SMTP_CLIENT_H
 #define __NET_SMTP_CLIENT_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 #define SMTP_SERVER_PORT    25          // SMTP server standard port
 #define SMTP_MAX_RCPT       20          // Maximum number of recipients

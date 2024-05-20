@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ip6_frag.h
  * Purpose: IPv6 Fragmentation Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_IP6_FRAG_H
 #define __NET_IP6_FRAG_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* IPv6 Definitions */
 #define IP6_FRAG_HDR_LEN    8           // IPv6 fragment ext. length in bytes

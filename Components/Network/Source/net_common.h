@@ -9,7 +9,7 @@
 #ifndef __NET_COMMON_H
 #define __NET_COMMON_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* Compiler specific */
 #if defined(__clang__) || defined(__GNUC__)

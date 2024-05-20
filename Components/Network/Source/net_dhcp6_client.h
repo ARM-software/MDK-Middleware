@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_dhcp6_client.h
  * Purpose: Dynamic Host Configuration Client for IPv6 Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_DHCP6_CLIENT_H
 #define __NET_DHCP6_CLIENT_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 #define DHCP6_CLIENT_PORT   546         // DHCP6 Client standard port
 #define DHCP6_SERVER_PORT   547         // DHCP6 Server standard port

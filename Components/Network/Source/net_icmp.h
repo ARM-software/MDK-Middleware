@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_icmp.h
  * Purpose: Internet Control Message Protocol Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_ICMP_H
 #define __NET_ICMP_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 #define ICMP_HEADER_LEN     4           // ICMP Header Length in bytes
 

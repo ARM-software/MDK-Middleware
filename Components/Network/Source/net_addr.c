@@ -7,7 +7,7 @@
  *----------------------------------------------------------------------------*/
 
 #include <string.h>
-#include "rl_net_lib.h"
+#include "net_lib.h"
 #include "net_ip4.h"
 #ifdef Network_IPv6
 #include "net_ip6.h"

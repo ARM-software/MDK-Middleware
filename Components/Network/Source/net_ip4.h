@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ip4.h
  * Purpose: Internet Protocol Version 4 Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_IP4_H
 #define __NET_IP4_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* IPv4 Definitions */
 #define IP4_HEADER_LEN      20          // IP4 Header Length in bytes

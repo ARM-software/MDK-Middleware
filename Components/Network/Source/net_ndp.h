@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ndp.h
  * Purpose: Neighbor Discovery for IPv6 Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_NDP_H
 #define __NET_NDP_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* Message option offsets */
 #define NDP_OPT_OFFS_RS     4           // Router Solicitation options

@@ -2,12 +2,12 @@
  * MDK Middleware - Component ::Network
  * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    rl_net_lib.h
+ * Name:    net_lib.h
  * Purpose: Network Library Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __RL_NET_LIB_H
-#define __RL_NET_LIB_H
+#ifndef __NET_LIB_H
+#define __NET_LIB_H
 
 #include "rl_net.h"
 #include "Net_Config.h"
@@ -1678,4 +1678,4 @@ extern void net_evr_init (void);
 }
 #endif
 
-#endif /* __RL_NET_LIB_H */
+#endif /* __NET_LIB_H */

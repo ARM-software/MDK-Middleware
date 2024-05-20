@@ -9,7 +9,7 @@
 #ifndef __NET_ARP_H
 #define __NET_ARP_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* ARP Definitions */
 #define HW_TYPE_ETH         1           // Hardware type: Ethernet

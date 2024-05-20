@@ -9,7 +9,7 @@
 #ifndef __NET_IGMP_H
 #define __NET_IGMP_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* IGMP Definitions */
 #define IGMP_HEADER_LEN     8           // IGMP Header Length in bytes

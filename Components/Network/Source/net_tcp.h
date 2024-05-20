@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_tcp.h
  * Purpose: Transmission Control Protocol Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_TCP_H
 #define __NET_TCP_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 #ifndef Network_IPv6
 #define IP6_DATA_OFFS       (IP4_DATA_OFFS + 20)

@@ -7,7 +7,7 @@
  *----------------------------------------------------------------------------*/
 
 #include <string.h>
-#include "rl_net_lib.h"
+#include "net_lib.h"
 #include "net_mem.h"
 #include "net_common.h"
 #include "net_ip4.h"
@@ -582,7 +582,7 @@ static const char *opt_ascii (netIF_Option opt) {
   \brief       Convert network process ID to ascii string.
   \param[in]   proc  process id number.
   \return      pointer to null-terminated ascii string.
-  \note        Must be in sync with "rl_net_lib.h" definitions!!
+  \note        Must be in sync with "net_lib.h" definitions!!
 */
 const char *net_debug_proc (int32_t proc) {
   static const char proc_id[31][6] = {

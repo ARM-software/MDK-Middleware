@@ -1,12 +1,12 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_http_server_err.c
  * Purpose: HTTP Server Friendly Error Message Definitions
  *----------------------------------------------------------------------------*/
 
-#include "net_common.h"
+#include "net_lib.h"
 
 // Keep HTTP Error page size small
 __WEAK NET_HTTP_ERROR net_http_error = {
@@ -16,7 +16,7 @@ __WEAK NET_HTTP_ERROR net_http_error = {
 
   // HTTP Error page footer
   "<hr><br>"
-  "<i>Keil Embedded WEB Server V2.30, 2023<br>"
+  "<i>Keil Embedded WEB Server V2.30, 2024<br>"
   "<a href=https://www.keil.com>www.keil.com</a>"
   " - Embedded Development Tools</i>"
   "</body>",

@@ -7,7 +7,7 @@
  *----------------------------------------------------------------------------*/
 
 #include <string.h>
-#include "rl_net_lib.h"
+#include "net_lib.h"
 #include "net_mem.h"
 #include "net_common.h"
 #include "net_addr.h"

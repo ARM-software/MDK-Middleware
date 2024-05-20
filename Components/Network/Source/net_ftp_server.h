@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ftp_server.h
  * Purpose: File Transfer Server Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_FTP_SERVER_H
 #define __NET_FTP_SERVER_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 #define FTP_SERVER_PORT     21          // FTP Server standard port
 #define FTP_DEF_DPORT       20          // Default FTP data port

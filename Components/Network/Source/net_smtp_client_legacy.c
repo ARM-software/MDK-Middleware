@@ -6,7 +6,7 @@
  * Purpose: Mail Transfer Client legacy non-blocking mode
  *----------------------------------------------------------------------------*/
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 #include "net_sys.h"
 #include "net_addr.h"
 #include "net_smtp_client.h"

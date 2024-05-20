@@ -12,7 +12,7 @@
   #pragma clang diagnostic ignored "-Wmissing-noreturn"
 #endif
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* Interface configuration */
 #ifdef RTE_Network_Interface_ETH_0

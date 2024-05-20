@@ -6,7 +6,7 @@
  * Purpose: WiFi Interface
  *----------------------------------------------------------------------------*/
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 #include "Driver_WiFi.h"
 #include "net_mem.h"
 #include "net_sys.h"

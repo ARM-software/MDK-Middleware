@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_loopback.h
  * Purpose: Loopback Interface Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_LOOPBACK_H
 #define __NET_LOOPBACK_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* Loopback Control info */
 typedef struct net_loop_ctrl {

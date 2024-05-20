@@ -6,7 +6,7 @@
  * Purpose: Network Debug Configuration
  *----------------------------------------------------------------------------*/
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* Event Recorder debug */
 #ifdef Network_Debug_EVR

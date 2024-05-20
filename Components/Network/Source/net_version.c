@@ -6,7 +6,7 @@
  * Purpose: Network Component Version
  *----------------------------------------------------------------------------*/
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 #include "net_version.h"
 
 #define MAJOR       8

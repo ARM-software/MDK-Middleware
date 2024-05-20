@@ -1,23 +1,31 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network:Service
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    HTTP_Server_Error.c
  * Purpose: HTTP Server Friendly Error Message Definitions
  * Rev.:    V7.6.0
  *----------------------------------------------------------------------------*/
 //! [code_HTTP_Server_Error]
-#include "rl_net_lib.h"
+typedef struct net_http_error {
+  const char *header;                   ///< Common page header
+  const char *footer;                   ///< Common page footer
+  const char *e401;                     ///< 401 Unauthorized
+  const char *e403;                     ///< 403 Forbidden
+  const char *e404;                     ///< 404 Not Found
+  const char *e501;                     ///< 501 Not Implemented
+} const NET_HTTP_ERROR;
  
 // Keep HTTP Error page size small
-NET_HTTP_ERROR net_http_error = {
+extern NET_HTTP_ERROR net_http_error;
+       NET_HTTP_ERROR net_http_error = {
   // HTTP Error page header
   "<head><title>Server Error</title></head>"
   "<body>",
  
   // HTTP Error page footer
   "<hr><br>"
-  "<i>Keil Embedded WEB Server V2.30, 2023<br>"
+  "<i>Keil Embedded WEB Server V2.30, 2024<br>"
   "<a href=https://www.keil.com>www.keil.com</a>"
   " - Embedded Development Tools</i>"
   "</body>",

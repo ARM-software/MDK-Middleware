@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ppp_pap.h
  * Purpose: PPP Password Authentication Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_PPP_PAP_H
 #define __NET_PPP_PAP_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 #define PAP_HEADER_LEN      4           // PAP Header length
 

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_tftp_client.h
  * Purpose: Trivial File Transfer Client Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_TFTP_CLIENT_H
 #define __NET_TFTP_CLIENT_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 #define TFTPC_SERVER_PORT   69          // TFTP Server standard port
 

@@ -9,7 +9,7 @@
 #ifndef __NET_MLD_H
 #define __NET_MLD_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* MLD Definitions */
 #define MLD_HEADER_LEN      24          // MLD Header Length in bytes

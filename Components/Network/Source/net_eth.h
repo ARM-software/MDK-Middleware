@@ -9,7 +9,7 @@
 #ifndef __NET_ETH_H
 #define __NET_ETH_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* ETH Definitions */
 #define ETH_MTU             1500        // Ethernet maximum transmission unit

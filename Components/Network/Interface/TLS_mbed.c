@@ -20,7 +20,6 @@
 #include <stdio.h>
 #endif
 
-#include "rl_net_lib.h"
 #include "TLS_mbed.h"
 
 #ifndef TLS_THREAD_STACK_SIZE

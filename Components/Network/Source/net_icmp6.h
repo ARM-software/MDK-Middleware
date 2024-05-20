@@ -9,7 +9,7 @@
 #ifndef __NET_ICMP6_H
 #define __NET_ICMP6_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* ICMP6 message types */
 #define ICMP6_ECHO_REQ      128         // ICMPv6 Echo Request

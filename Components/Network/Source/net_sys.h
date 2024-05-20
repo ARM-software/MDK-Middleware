@@ -9,7 +9,7 @@
 #ifndef __NET_SYS_H
 #define __NET_SYS_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 #define SYS_TICK_INTERVAL   100U        // Tick interval in ms
 #define SYS_TICK_TSEC       10U         // Number of ticks for 1s

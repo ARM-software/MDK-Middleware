@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ip4_frag.h
  * Purpose: IPv4 Fragmentation Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_IP4_FRAG_H
 #define __NET_IP4_FRAG_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* IPv4 Definitions */
 #define IP4_QUE(frm)        ((NET_IP_FRAG_LIST *)(uint32_t)&(frm)->data[0])

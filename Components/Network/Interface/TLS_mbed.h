@@ -7,7 +7,7 @@
  *----------------------------------------------------------------------------*/
 
 #include <string.h>
-#include "rl_net_lib.h"
+#include "../Source/net_lib.h"
 
 /* Check TLS-Server endpoint type */
 #if defined(RTE_Network_Web_Server_RO_TLS) || \

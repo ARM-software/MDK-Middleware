@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_snmp_agent.h
  * Purpose: Simple Network Management Agent Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_SNMP_AGENT_H
 #define __NET_SNMP_AGENT_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 #define SNMP_GP_PORT        161         // SNMP General Purpose standard port
 #define SNMP_TRAP_PORT      162         // SNMP Trap standard port

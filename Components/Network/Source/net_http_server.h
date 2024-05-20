@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_http_server.h
  * Purpose: Web Server Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_HTTP_SERVER_H
 #define __NET_HTTP_SERVER_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 #define HTTP_SERVER_PORT    80          // HTTP Server standard port
 #define HTTP_CGI_MAXLINE    120         // HTTP CGI Script max. size of one line

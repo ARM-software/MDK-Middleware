@@ -7,7 +7,7 @@
  *----------------------------------------------------------------------------*/
 
 #include "cmsis_os2.h"
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* Avoid syntax-checker errors in editor */
 #ifndef NET_THREAD_STACK_SIZE

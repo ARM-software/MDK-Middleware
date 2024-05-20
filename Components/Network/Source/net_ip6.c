@@ -6,7 +6,7 @@
  * Purpose: Internet Protocol Version 6
  *----------------------------------------------------------------------------*/
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 #ifdef Network_IPv6
 #include <string.h>

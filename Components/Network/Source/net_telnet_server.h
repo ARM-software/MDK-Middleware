@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_telnet_server.h
  * Purpose: Telnet Server Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_TELNET_SERVER_H
 #define __NET_TELNET_SERVER_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 #define TELN_SERVER_PORT    23          // Telnet Server standard port
 #define TELN_FIFOMSK        (TELNET_FIFO_SZ-1)

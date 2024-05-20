@@ -1,13 +1,13 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2022 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    Net_Security.c
  * Purpose: Network Security Credentials
  * Rev.:    V7.2.0
  *----------------------------------------------------------------------------*/
 
-#include "rl_net_lib.h"
+#include "rl_net.h"
 
 
 #if defined(RTE_Network_Web_Server_RO_TLS) || \
@@ -16,7 +16,8 @@
 // Web Server (HTTPS)
 
 // Server CA certificate(s)
-const uint8_t NetSecurity_ServerCA[] =
+extern const uint8_t NetSecurity_ServerCA[];
+       const uint8_t NetSecurity_ServerCA[] =
 //NS_SERVER_CA_START
 #warning "Using a test Server CA certificate!"
 /*
@@ -54,7 +55,8 @@ const uint8_t NetSecurity_ServerCA[] =
 //NS_SERVER_CA_END
 
 // Server certificate
-const uint8_t NetSecurity_ServerCert[] =
+extern const uint8_t NetSecurity_ServerCert[];
+       const uint8_t NetSecurity_ServerCert[] =
 //NS_SERVER_CERT_START
 #warning "Using a test Server certificate!"
 /*
@@ -91,7 +93,8 @@ const uint8_t NetSecurity_ServerCert[] =
 //NS_SERVER_CERT_END
 
 // Server private key
-const uint8_t NetSecurity_ServerKey[] =
+extern const uint8_t NetSecurity_ServerKey[];
+       const uint8_t NetSecurity_ServerKey[] =
 //NS_SERVER_KEY_START
 #warning "Using a test Server private key!"
 /*
@@ -128,9 +131,12 @@ const uint8_t NetSecurity_ServerKey[] =
 "-----END RSA PRIVATE KEY-----\r\n";
 //NS_SERVER_KEY_END
 
-const uint32_t NetSecurity_ServerCA_Len   = sizeof(NetSecurity_ServerCA);
-const uint32_t NetSecurity_ServerCert_Len = sizeof(NetSecurity_ServerCert);
-const uint32_t NetSecurity_ServerKey_Len  = sizeof(NetSecurity_ServerKey);
+extern const uint32_t NetSecurity_ServerCA_Len;
+       const uint32_t NetSecurity_ServerCA_Len   = sizeof(NetSecurity_ServerCA);
+extern const uint32_t NetSecurity_ServerCert_Len;
+       const uint32_t NetSecurity_ServerCert_Len = sizeof(NetSecurity_ServerCert);
+extern const uint32_t NetSecurity_ServerKey_Len;
+       const uint32_t NetSecurity_ServerKey_Len  = sizeof(NetSecurity_ServerKey);
 
 #endif
 

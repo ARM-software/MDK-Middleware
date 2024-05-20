@@ -6,7 +6,7 @@
  * Purpose: Ethernet Interface
  *----------------------------------------------------------------------------*/
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 #include "Driver_ETH_MAC.h"
 #include "Driver_ETH_PHY.h"
 #include "net_mem.h"

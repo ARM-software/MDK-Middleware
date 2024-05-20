@@ -7,7 +7,7 @@
  *----------------------------------------------------------------------------*/
 
 #include <stdio.h>
-#include "rl_net_lib.h"
+#include "../Source/net_lib.h"
 #include "rl_fs.h"
 
 #ifdef __clang__

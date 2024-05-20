@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_wifi.h
  * Purpose: WIFI Interface Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_WIFI_H
 #define __NET_WIFI_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* WIFI Definitions */
 #define WIFI_MTU            1500        // WiFi maximum transmission unit

@@ -6,7 +6,7 @@
  * Purpose: Mail Transfer Client core
  *----------------------------------------------------------------------------*/
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 #include "net_sys.h"
 #include "net_common.h"
 #include "net_addr.h"

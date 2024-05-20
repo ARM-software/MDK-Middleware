@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_mem.h
  * Purpose: Memory Management Definitions
@@ -9,7 +9,7 @@
 #ifndef __NET_MEM_H
 #define __NET_MEM_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 #define MEM_HEADER_LEN      8           // Memory manager header size
 

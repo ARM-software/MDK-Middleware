@@ -9,7 +9,7 @@
 #ifndef __NET_IP6_H
 #define __NET_IP6_H
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 
 /* IPv6 Definitions */
 #define IP6_HEADER_LEN      40          // IPv6 Header Length in bytes

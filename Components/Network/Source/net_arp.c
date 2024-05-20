@@ -6,7 +6,7 @@
  * Purpose: Address Resolution for Ethernet
  *----------------------------------------------------------------------------*/
 
-#include "rl_net_lib.h"
+#include "net_lib.h"
 #include "net_sys.h"
 #include "net_eth.h"
 #include "net_ip4.h"
