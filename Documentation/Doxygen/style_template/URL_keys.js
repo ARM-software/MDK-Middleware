@@ -92,7 +92,6 @@ var arrurl = [];
  arrurl.push( new urlKey( "MW-Graphics",                    "https://www.keil.com/pack/doc/mw/Graphics/html/index.html",         "Graphics Component"));
  arrurl.push( new urlKey( "MW-Network",                     "../../html/Network/index.html",                                     "Network Component"));
  arrurl.push( new urlKey( "MW-USB",                         "../../html/USB/index.html",                                         "USB Component"));
- arrurl.push( new urlKey( "MW-Board",                       "../../html/Board/index.html",                                       "Board Support Component"));
 
  arrurl.push( new urlKey( "STM32Cube",                      "https://www.st.com/en/development-tools/stm32cubemx.html",          "STMicroelectronic's STM32CubeMX"));
  arrurl.push( new urlKey( "DAVE",                           "https://softwaretools.infineon.com/tools/com.ifx.tb.tool.daveide",  "Infineon's DAVE"));

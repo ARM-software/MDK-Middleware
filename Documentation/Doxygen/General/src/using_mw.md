@@ -2,24 +2,24 @@
 
 ## Generic Steps {#mw_using_generic_steps}
 
-There are a few generic steps that have to be done to include a middleware component in a µVision project:
+There are a few generic steps that have to be done to include a middleware component in a project:
 
-![Generic steps for adding Middleware to a µVision project](./images/generic_steps.png)
+![Generic steps for adding Middleware to a project](./images/generic_steps.png)
 
 ### Add Software Components {#add_sw_comp}
 
-Using the **Manage Run-Time Environment** window, you need to select the required software components for your application. The **Validation Output** helps you to identify dependencies to other software components and resolves them automatically, whenever possible.
+Using the **CMSIS Component Manager** window, you need to select the required software components for your application. The **Validation Output** helps you to identify dependencies to other software components and resolves them automatically, whenever possible.
 
-![Manage Run-Time Environment Window with Validation Errors](./images/manage_rte_window.png)
+![CMSIS Component Manager Window with Validation Errors](./images/manage_rte_window.png)
 
 ### Configure Middleware {#conf_mw}
 
-Every middleware component has specific configuration files that need to be adapted to the needs of the application. Depending on the component, more than one file might need to be adapted. For example, the **File System** component needs to be configured for the amount of files that can be opened simultaneously and the initial current drive in the **FS_Config.c** file.
+Every middleware component has specific configuration files that need to be adapted to the needs of the application. Depending on the component, more than one file might need to be adapted. For example, the **File System** component needs to be configured for the amount of files that can be opened simultaneously.
 
 In addition, you need to set drive specific settings in the **FS_Config_<i>Drive</i>_0.h** file, such as page and block sizes
 for Flash memories, general disk sizes for a RAM drive, and the hardware driver number for connecting the drive to the appropriate hardware peripheral driver.
 
-![File System Configuration Files FS_Config_MC_0.h and FS_Config.c](./images/file_system_conf.png)
+![File System Configuration Files FS_Config.H AND FS_Config_MC_0.h](./images/file_system_conf.png)
 
 ### Configure Drivers {#conf_drivers}
 
@@ -48,7 +48,7 @@ Every software component has resource requirements for stack, heap, and memory. 
 
 The **startup_device.s** file is provided by the device vendor in a [Device Family Pack](https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/index.html).
 
-The file will be copied into a µVision project automatically after selecting **Device:Startup** in the **Manage Run-Time Environment** window. It is used to configure the size of the stack that is used by exceptions and **interrupt service routines (ISR)** for the current project. The stack size requirements depend on the maximum nesting of exception and ISR execution and therefore on the priority settings of the various interrupt and exception sources. Also, the heap which is used by memory allocation functions is configured in this file.
+The file will be copied into a project automatically after selecting **Device:Startup** in the **Manage Run-Time Environment** window. It is used to configure the size of the stack that is used by exceptions and **interrupt service routines (ISR)** for the current project. The stack size requirements depend on the maximum nesting of exception and ISR execution and therefore on the priority settings of the various interrupt and exception sources. Also, the heap which is used by memory allocation functions is configured in this file.
 
 Most of the middleware components only require additional **stack** size, whereas the **File System** component also
 requires additional **heap** size. The memory requirements are stated in the \ref mw_using_mw "Resource Requirements" section
