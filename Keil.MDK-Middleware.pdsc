@@ -717,7 +717,6 @@
           <file category="header"  name="Components/Network/Include/rl_net.h"/>
           <file category="header"  name="Components/Network/Config/Net_Config.h" attr="config" version="8.0.0"/>
           <file category="header"  name="Components/Network/Config/Net_Debug.h"  attr="config" version="8.0.0"/>
-          <file category="include" name="Components/Network/Source/Include/"/>
           <!-- Core -->
           <file category="source"  name="Components/Network/Source/net_ip4.c"/>
           <file category="source"  name="Components/Network/Source/net_ip4_frag.c"/>
@@ -823,6 +822,7 @@
         <files>
           <file category="doc"    name="Documentation/html/Network/group__netPPP__Func.html"/>
           <file category="header" name="Components/Network/Config/Net_Config_PPP.h" attr="config" version="7.2.0"/>
+          <file category="header" name="Components/Network/Include/net_modem.h"/>
           <!-- Library source files -->
           <file category="source" name="Components/Network/Source/net_ppp.c"/>
           <file category="source" name="Components/Network/Source/net_ppp_lcp.c"/>
@@ -874,6 +874,7 @@
         <files>
           <file category="doc"    name="Documentation/html/Network/group__netSLIP__Func.html"/>
           <file category="header" name="Components/Network/Config/Net_Config_SLIP.h" attr="config" version="7.2.0"/>
+          <file category="header" name="Components/Network/Include/net_modem.h"/>
           <!-- Library source files -->
           <file category="source" name="Components/Network/Source/net_slip.c"/>
           <file category="source" name="Components/Network/Source/net_serial.c"/>
