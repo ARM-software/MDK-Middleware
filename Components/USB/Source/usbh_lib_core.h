@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2021 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_core.h
  * Purpose: USB Host - Core module header file
@@ -13,7 +13,7 @@
 #include <stdbool.h>
 
 #include "rl_usb.h"
-#include "rl_usbh_lib.h"
+#include "usbh_lib.h"
 
 #include "Driver_USBH.h"
 

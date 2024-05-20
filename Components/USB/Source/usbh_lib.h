@@ -2,20 +2,18 @@
  * MDK Middleware - Component ::USB:Host
  * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    rl_usbh_lib.h
+ * Name:    usbh_lib.h
  * Purpose: USB Host header file
  *----------------------------------------------------------------------------*/
 
-#ifndef __RL_USBH_LIB_H__
-#define __RL_USBH_LIB_H__
+#ifndef USBH_LIB_H_
+#define USBH_LIB_H_
 
 #include <stdint.h>
 #include <stdbool.h>
 
 #include "rl_usb.h"
-#include "usb_def.h"
 #include "Driver_USBH.h"
-
 
 //  ==== USB Host Constants and Defines ====
 
@@ -266,5 +264,4 @@ extern usbStatus USBH_MemoryAllocate (uint8_t ctrl, uint8_t **ptr, uint32_t size
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 extern usbStatus USBH_MemoryFree (uint8_t ctrl, uint8_t *ptr);
 
-
-#endif  // __RL_USBH_LIB_H__
+#endif  // USBH_LIB_H_

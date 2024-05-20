@@ -117,13 +117,8 @@
 #include "USBD_Config_ADC_3.h"
 #endif
 
-#include "usb_def.h"
-#include "usb_adc.h"
-#include "usb_cdc.h"
-#include "usb_hid.h"
-#include "usb_msc.h"
 #include "rl_usb.h"
-#include "rl_usbd_lib.h"
+#include "usbd_lib.h"
 
 #include "usbd_compatibility.h"
 

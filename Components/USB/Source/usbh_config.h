@@ -45,7 +45,7 @@
 #include "USBH_Config_CustomClass.h"
 #endif
 
-#include "rl_usbh_lib.h"
+#include "usbh_lib.h"
 #include "Driver_USBH.h"
 
 /*------------------------------------------------------------------------------

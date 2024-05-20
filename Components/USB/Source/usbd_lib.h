@@ -2,12 +2,12 @@
  * MDK Middleware - Component ::USB:Device
  * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    rl_usbd_lib.h
+ * Name:    usbd_lib.h
  * Purpose: USB Device header file
  *----------------------------------------------------------------------------*/
 
-#ifndef __RL_USBD_LIB_H__
-#define __RL_USBD_LIB_H__
+#ifndef USBD_LIB_H_
+#define USBD_LIB_H_
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -364,5 +364,4 @@ typedef struct {
   const uint8_t        *ms_os_ext_compat_id_descriptor;     ///< Microsoft Extended Compat ID OS Feature Descriptor 
 } usbd_desc_t;
 
-
-#endif  // __RL_USBD_LIB_H__
+#endif  // USBD_LIB_H_

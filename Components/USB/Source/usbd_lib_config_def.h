@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2021 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2021-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_config_def.h
  * Purpose: USB Device System Configuration header file (for USB Library)
@@ -13,7 +13,7 @@
 #include <stdbool.h>
 
 #include "rl_usb.h"
-#include "rl_usbd_lib.h"
+#include "usbd_lib.h"
 #include "Driver_USBD.h"
 
 /*------------------------------------------------------------------------------
