@@ -248,12 +248,12 @@ extern uint32_t ram_ReadInfo       (fsMediaInfo *info, RAM_DEV *ram);
 extern fsStatus ram_DevCtrl        (fsDevCtrlCode code, void *p, RAM_DEV *ram);
 
 /* USB Mass Storage interface functions */
-extern bool     FS_USBH_MSC_Initialize  (uint8_t instance, uint32_t mode);
-extern bool     FS_USBH_MSC_Uninitialize(uint8_t instance, uint32_t mode);
-extern bool     FS_USBH_MSC_ReadSectors (uint8_t instance, uint32_t sector_addr, uint32_t sector_num,       uint8_t *buf);
-extern bool     FS_USBH_MSC_WriteSectors(uint8_t instance, uint32_t sector_addr, uint32_t sector_num, const uint8_t *buf);
-extern bool     FS_USBH_MSC_ReadInfo    (uint8_t instance, fsMediaInfo *info);
-extern fsStatus FS_USBH_MSC_DeviceCtrl  (uint8_t instance, fsDevCtrlCode code, void *p);
+extern uint32_t usbh_msc_Init       (uint32_t mode, uint32_t instance);
+extern uint32_t usbh_msc_UnInit     (uint32_t mode, uint32_t instance);
+extern uint32_t usbh_msc_ReadSector (uint32_t sect, uint32_t cnt,       uint8_t *buf, uint32_t instance);
+extern uint32_t usbh_msc_WriteSector(uint32_t sect, uint32_t cnt, const uint8_t *buf, uint32_t instance);
+extern uint32_t usbh_msc_ReadInfo   (fsMediaInfo *info, uint32_t instance);
+extern fsStatus usbh_msc_DevCtrl    (fsDevCtrlCode code, void *p, uint32_t instance);
 
 /* File System Journal interface functions */
 extern uint32_t fsj_init      (FSJOUR *fsj, FAT_DRV *drv);

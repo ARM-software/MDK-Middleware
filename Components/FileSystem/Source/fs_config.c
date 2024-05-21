@@ -1217,22 +1217,22 @@ uint8_t const fs_ndrv = FS_NDRV;
 
   /* USB0 wrapper functions */
   static uint32_t usb0_Init (uint32_t mode) {
-    return (FS_USBH_MSC_Initialize (0, mode));
+    return (usbh_msc_Init (mode, 0));
   }
   static uint32_t usb0_UnInit (uint32_t mode) {
-    return (FS_USBH_MSC_Uninitialize (0, mode));
+    return (usbh_msc_UnInit (mode, 0));
   }
   static uint32_t usb0_RdSect (uint32_t sect, uint8_t *buf, uint32_t cnt) {
-    return (FS_USBH_MSC_ReadSectors (0, sect, cnt, buf));
+    return (usbh_msc_ReadSector (sect, cnt, buf, 0));
   }
   static uint32_t usb0_WrSect (uint32_t sect, const uint8_t *buf, uint32_t cnt) {
-    return (FS_USBH_MSC_WriteSectors (0, sect, cnt, (const uint8_t *)buf));
+    return (usbh_msc_WriteSector (sect, cnt, (const uint8_t *)buf, 0));
   }
   static uint32_t usb0_RdInfo (fsMediaInfo *info) {
-    return (FS_USBH_MSC_ReadInfo (0, info));
+    return (usbh_msc_ReadInfo (info, 0));
   }
   static fsStatus usb0_DevCtrl (fsDevCtrlCode code, void *p) {
-    return (FS_USBH_MSC_DeviceCtrl (0, code, p));
+    return (usbh_msc_DevCtrl (code, p, 0));
   }
 
   static FAT_DRV fs_usb0_drv = {
@@ -1275,22 +1275,22 @@ uint8_t const fs_ndrv = FS_NDRV;
 
   /* USB1 wrapper functions */
   static uint32_t usb1_Init (uint32_t mode) {
-    return (FS_USBH_MSC_Initialize (1, mode));
+    return (usbh_msc_Init (mode, 1));
   }
   static uint32_t usb1_UnInit (uint32_t mode) {
-    return (FS_USBH_MSC_Uninitialize (1, mode));
+    return (usbh_msc_UnInit (mode, 1));
   }
   static uint32_t usb1_RdSect (uint32_t sect, uint8_t *buf, uint32_t cnt) {
-    return (FS_USBH_MSC_ReadSectors (1, sect, cnt, buf));
+    return (usbh_msc_ReadSector (sect, cnt, buf, 1));
   }
   static uint32_t usb1_WrSect (uint32_t sect, const uint8_t *buf, uint32_t cnt) {
-    return (FS_USBH_MSC_WriteSectors (1, sect, cnt, (const uint8_t *)buf));
+    return (usbh_msc_WriteSector (sect, cnt, (const uint8_t *)buf, 1));
   }
   static uint32_t usb1_RdInfo (fsMediaInfo *info) {
-    return (FS_USBH_MSC_ReadInfo (1, info));
+    return (usbh_msc_ReadInfo (info, 1));
   }
   static fsStatus usb1_DevCtrl (fsDevCtrlCode code, void *p) {
-    return (FS_USBH_MSC_DeviceCtrl (1, code, p));
+    return (usbh_msc_DevCtrl (code, p, 1));
   }
 
   static FAT_DRV fs_usb1_drv = {

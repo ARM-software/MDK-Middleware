@@ -51,6 +51,10 @@
 #include "FS_Config_USB_1.h"
 #endif
 
+#if defined(FS_USB_0) || defined (FS_USB_1)
+#include "rl_usb.h"
+#endif
+
 #if defined(CMSIS_device_header)
 #include "cmsis_compiler.h"
 #endif
