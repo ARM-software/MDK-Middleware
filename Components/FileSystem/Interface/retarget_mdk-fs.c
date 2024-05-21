@@ -18,7 +18,6 @@
 
 #include <stddef.h>
 #include "retarget_fs.h"
-#include "rl_fs_lib.h"
 #include "rl_fs.h"
 
 #define fd_rval(fd) (((fd >> 8) & 0x0000FF00) | (fd & 0x000000FF))

@@ -96,6 +96,13 @@ it is not supported for non-FAT volumes.
 \details
 */
 
+/**
+\defgroup retarget_interface_routines Retarget Interface Routines 
+\brief Retarget interface provides routines that can be called by the standard C library
+retarget interface.
+\details
+*/
+
 //  ==== System Routines ====
 /**
 \addtogroup system_routines
@@ -1387,6 +1394,86 @@ void get_health_status (void) {
   else printf ("Specified drive doesn't exists!");
 }
 \endcode
+*/
+
+/**
+@}
+*/
+
+//  ==== Retarget Interface Routines ====
+
+/**
+\addtogroup retarget_interface_routines
+@{
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t fs_fopen (const char *path, int32_t mode)
+\details
+The function \b fs_fopen opens a file specified by the pathname.
+
+The mode parameter is a bitmap that specifies the file open mode.
+The following bits are exclusive:
+  - FS_FOPEN_RD:   open file for reading only
+  - FS_FOPEN_WR:   open file for writing only
+  - FS_FOPEN_RDWR: open file for reading and writing
+
+In addition, any combination of the values below can be set:
+  - FS_FOPEN_APPEND: if set, the file offset is set to the end of file prior to each write
+  - FS_FOPEN_CREATE: if set, the file is created if it does not exist
+  - FS_FOPEN_TRUNCATE: if set, the size of an existing file opened for writing is truncated to zero
+
+The file position offset shall be set to the beginning of the file unless append mode is specified.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t fs_fclose (int32_t handle)
+\details
+The function \b fs_fclose closes the file associated with the file descriptor 'handle'.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t fs_fwrite (int32_t handle, const void *buf, uint32_t cnt)
+\details
+The function \b fs_fwrite shall write cnt bytes from the buffer pointed to by buf to the file associated
+with the open file descriptor 'handle'.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t fs_fread (int32_t handle, void *buf, uint32_t cnt)
+\details
+The function \b fs_fread reads cnt bytes from the file associated with the file descriptor 'handle',
+into the buffer pointed to by buf. The actual number of bytes read can be less than cnt.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int32_t fs_fflush (int32_t handle)
+\details
+The function \b fs_fflush flushes internal buffers to the storage media and ensures consistent
+file system state.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int64_t fs_fseek (int32_t handle, int64_t offset, int32_t whence)
+\details
+The function \b fs_fseek moves the file position pointer as specified with parameters 'offset' and 'whence'.
+Parameter 'whence' can have the following possible values:
+  - FS_FSEEK_SET: set the file position pointer to offset bytes from the start of the file
+  - FS_FSEEK_CUR: set the file position pointer to offset bytes from the current location
+  - FS_FSEEK_END: set the file position pointer to offset bytes from the end of the file
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn int64_t fs_fsize (int32_t handle)
+\details
+The function \b fs_fsize retrieves the size of an opened file associated with the file descriptor 'handle'.
 */
 
 /**

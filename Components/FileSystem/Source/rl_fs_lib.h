@@ -26,21 +26,6 @@
   #include "fs_nor_flash.h"
 #endif
 
-
-/**** File Open Mode definitions ****/
-#define FS_FOPEN_RD            0x0000       ///< Open file for reading only
-#define FS_FOPEN_WR            0x0001       ///< Open file for writing only
-#define FS_FOPEN_RDWR          0x0002       ///< Open file for reading and writing
-#define FS_FOPEN_APPEND        0x0008       ///< Open file in append mode
-#define FS_FOPEN_CREATE        0x0100       ///< Create file if it does not exist
-#define FS_FOPEN_TRUNCATE      0x0200       ///< Truncate existing file
-
-/**** File Seek Operation definitions ****/
-#define FS_FSEEK_SET           0            ///< Seek from the start of the file
-#define FS_FSEEK_CUR           1            ///< Seek from the current location
-#define FS_FSEEK_END           2            ///< Seek from the end of the file
-
-
 /* Switch case statement fall through compiler attribute */
 #ifndef __FALLTHROUGH
   #define __FALLTHROUGH  __attribute__((fallthrough))
@@ -336,15 +321,6 @@ extern int      __sys_read    (int handle, uint8_t *buf, uint32_t len);
 extern int      __sys_ensure  (int handle);
 extern int      __sys_seek    (int handle, uint32_t pos);
 extern long     __sys_flen    (int handle);
-
-/* File Interface API */
-extern int32_t  fs_fopen      (const char *path, int32_t mode);
-extern int32_t  fs_fclose     (int32_t handle);
-extern int32_t  fs_fwrite     (int32_t handle, const void *buf, uint32_t cnt);
-extern int32_t  fs_fread      (int32_t handle, void *buf, uint32_t cnt);
-extern int32_t  fs_fflush     (int32_t handle);
-extern int64_t  fs_fseek      (int32_t handle, int64_t offset, int32_t whence);
-extern int64_t  fs_fsize      (int32_t handle);
 
 /* RTOS abstraction for FileSystem */
 extern FS_MUTEX fs_mutex_new     (const void *arg);

@@ -80,4 +80,13 @@ The following list provides a brief overview of all File System Component functi
   - \ref fs_ioc_write_sector : Writes data to one or more sectors of FAT formatted media.
   - \ref fs_ioc_read_info : Reads the media configuration.
   - \ref fs_ioc_device_ctrl : Sends control codes directly to the device driver.
+
+- \ref retarget_interface_routines
+  - \ref fs_fopen : Opens a file.
+  - \ref fs_fclose : Closes a file.
+  - \ref fs_fwrite : Writes to a file.
+  - \ref fs_fread : Reads from a file.
+  - \ref fs_fflush : Flushes the file buffers.
+  - \ref fs_fseek : Moves the file position pointer.
+  - \ref fs_fsize : Returns the file size.
 */

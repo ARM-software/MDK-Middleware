@@ -1474,7 +1474,7 @@
     </bundle>
 
     <!-- CMSIS-Compiler -->
-    <component Cvendor="Keil" Cclass="CMSIS-Compiler" Cgroup="File Interface" Csub="MDK-MW File System" Capiversion="1.0.0" Cversion="1.0.0" condition="File System and CMSIS Compiler">
+    <component Cvendor="Keil" Cclass="CMSIS-Compiler" Cgroup="File Interface" Csub="MDK-MW File System" Capiversion="1.0.0" Cversion="1.0.1" condition="File System and CMSIS Compiler">
       <description>File Interface implementation using Keil MDK-Middleware File System</description>
       <RTE_Components_h>
         #define RTE_CMSIS_Compiler_File_Interface        /* CMSIS-Compiler File Interface */

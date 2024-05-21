@@ -43,6 +43,19 @@
 #define FS_DEVICE_LOCK_UNLOCK    0x04   ///< Lock the device
 #define FS_DEVICE_ERASE          0x08   ///< Force erase operation
 
+/// File Open Mode bit masks.
+#define FS_FOPEN_RD            0x0000   ///< Open file for reading only
+#define FS_FOPEN_WR            0x0001   ///< Open file for writing only
+#define FS_FOPEN_RDWR          0x0002   ///< Open file for reading and writing
+#define FS_FOPEN_APPEND        0x0008   ///< Open file in append mode
+#define FS_FOPEN_CREATE        0x0100   ///< Create file if it does not exist
+#define FS_FOPEN_TRUNCATE      0x0200   ///< Truncate existing file
+
+/// File Seek Operation values.
+#define FS_FSEEK_SET           0        ///< Seek from the start of the file
+#define FS_FSEEK_CUR           1        ///< Seek from the current location
+#define FS_FSEEK_END           2        ///< Seek from the end of the file
+
 #ifdef __cplusplus
 extern "C"  {
 #endif
@@ -494,6 +507,58 @@ extern fsStatus fs_ioc_read_info (int32_t drv_id, fsMediaInfo *info);
 /// \param[in,out] p                     Generic pointer.
 /// \return     execution status \ref fsStatus
 extern fsStatus fs_ioc_device_ctrl (int32_t drv_id, fsDevCtrlCode code, void *p);
+
+
+//  ==== Retarget Interface Routines ====
+
+/// \brief Open a file.
+///  \param[in]  path                    String specifying the pathname of the file to be opened.
+///  \param[in]  mode                    Integer bitmap specifying the file open mode.
+///  \return     a non-negative integer representing the file handle on success,
+///              or negative \ref fsStatus return code on failure
+extern int32_t fs_fopen (const char *path, int32_t mode);
+
+/// \brief Close a file.
+/// \param[in]  handle                   File handle of an opened file.
+/// \return     zero if the file was successfully closed,
+///             or negative \ref fsStatus return code on failure
+extern int32_t fs_fclose (int32_t handle);
+
+/// \brief Write to a file.
+/// \param[in]  handle                   File handle of an opened file.
+/// \param[in]  buf                      Pointer to the buffer containing data to write.
+/// \param[in]  cnt                      Number of bytes to write.
+/// \return     number of bytes actually written,
+///             or negative \ref fsStatus return code on failure
+extern int32_t fs_fwrite (int32_t handle, const void *buf, uint32_t cnt);
+
+/// \brief Read from a file.
+/// \param[in]  handle                   File handle of an opened file.
+/// \param[out] buf                      Pointer to the buffer to store read data.
+/// \param[in]  cnt                      Number of bytes to read.
+/// \return     number of bytes actually read, 0 at the EOF,
+///             or negative \ref fsStatus return code on failure
+extern int32_t fs_fread (int32_t handle, void *buf, uint32_t cnt);
+
+/// \brief Flush file buffers.
+/// \param[in]  handle                   File handle of an opened file.
+/// \return     zero on success,
+///             or negative \ref fsStatus return code on failure
+extern int32_t fs_fflush (int32_t handle);
+
+/// \brief Move the file position pointer.
+/// \param[in]  handle                   File handle of an opened file.
+/// \param[in]  offset                   The number of bytes to move.
+/// \param[in]  whence                   File position location.
+/// \return     current file position from the beginning of the file,
+///             or negative \ref fsStatus return code on failure
+extern int64_t fs_fseek (int32_t handle, int64_t offset, int32_t whence);
+
+/// \brief Get file size.
+/// \param[in]  handle                   File handle of an opened file.
+/// \return     file size in bytes,
+///             or negative \ref fsStatus return code on failure
+extern int64_t fs_fsize (int32_t handle);
 
 #ifdef __cplusplus
 }
