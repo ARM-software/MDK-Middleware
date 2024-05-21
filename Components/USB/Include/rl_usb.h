@@ -9,10 +9,6 @@
 #ifndef RL_USB_H_
 #define RL_USB_H_
 
-#ifdef __cplusplus
-extern "C"  {
-#endif
-
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -38,6 +34,10 @@ extern "C"  {
 #endif
 #ifdef    RTE_CMSIS_RTOS2_RTX5
 #include "rtx_os.h"
+#endif
+
+#ifdef __cplusplus
+extern "C"  {
 #endif
 
 //  ==== USB Constants and Defines ====
