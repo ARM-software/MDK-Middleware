@@ -8,7 +8,12 @@
 
 #include "RTE_Components.h"
 
-#include "usb_os.h"
+#ifdef    RTE_CMSIS_RTOS2
+#include "cmsis_os2.h"
+#endif
+#ifdef    RTE_CMSIS_RTOS2_RTX5
+#include "rtx_os.h"
+#endif
 
 #include "usbd_compatibility.h"
 
@@ -293,7 +298,7 @@ static const char *usbd_cc_ep_thread_name          [USBD_CUSTOM_CLASS_NUM * USBD
 #endif
 };
 
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxThread_t      usbd_cc_ep_thread_cb_mem [USBD_CUSTOM_CLASS_NUM * USBD_EP_NUM] __attribute__((section(".bss.os.thread.cb")));
 static uint64_t           usbd_cc_ep_thread_stack_mem[
 #if   (USBD_CC_EP_THREAD_TOTAL_STACK_SIZE_IS_0 == 1U)
@@ -597,7 +602,7 @@ static const char *usbd_cdc_thread_name            [USBD_CDC_NUM * 2U] = {
 #endif
 };
 
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxThread_t      usbd_cdc_thread_cb_mem   [USBD_CDC_NUM * 2U] __attribute__((section(".bss.os.thread.cb")));
 static uint64_t           usbd_cdc_thread_stack_mem[
 #ifdef RTE_USB_Device_CDC_0
@@ -691,7 +696,7 @@ static const char *usbd_hid_thread_name            [USBD_HID_NUM] = {
 #endif
 };
 
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxThread_t      usbd_hid_thread_cb_mem   [USBD_HID_NUM] __attribute__((section(".bss.os.thread.cb")));
 static uint64_t           usbd_hid_thread_stack_mem[
 #ifdef RTE_USB_Device_HID_0
@@ -765,7 +770,7 @@ static const char *usbd_msc_thread_name            [USBD_MSC_NUM] = {
 #endif
 };
 
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxThread_t      usbd_msc_thread_cb_mem   [USBD_MSC_NUM] __attribute__((section(".bss.os.thread.cb")));
 static uint64_t           usbd_msc_thread_stack_mem[
 #ifdef RTE_USB_Device_MSC_0
@@ -801,13 +806,13 @@ static const thread_sp_t  usbd_msc_thread_sp       [USBD_MSC_NUM] = {
 
 
 // Create timer definitions
-#if ((USBD_HID_NUM > 0) && defined(USB_CMSIS_RTOS2_RTX5))
+#if ((USBD_HID_NUM > 0) && defined(RTE_CMSIS_RTOS2_RTX5))
 static osRtxTimer_t     usbd_hid_timer_cb_mem          [USBD_HID_NUM]                   __attribute__((section(".bss.os.timer.cb")));
 #endif
 
 
 // Create semaphore definitions
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxSemaphore_t usbd_driver_semaphore_cb_mem   [USBD_DEV_NUM]                   __attribute__((section(".bss.os.semaphore.cb")));
 static osRtxSemaphore_t usbd_driver_ep_semaphore_cb_mem[USBD_DEV_NUM][USBD_EP_NUM * 2U] __attribute__((section(".bss.os.semaphore.cb")));
 #if   (USBD_HID_NUM > 0)
@@ -831,7 +836,7 @@ void *USBD_ThreadCreate (usbdThread_t thread, uint8_t index) {
       (USBD_HID_NUM          > 0) || \
       (USBD_MSC_NUM          > 0)) )
   osThreadAttr_t thread_attr;
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
   uint32_t       i, sum;
 #endif
 
@@ -847,7 +852,7 @@ void *USBD_ThreadCreate (usbdThread_t thread, uint8_t index) {
 #if (USBD_CUSTOM_CLASS_NUM > 0)
       if (index >= (USBD_CUSTOM_CLASS_NUM * USBD_EP_NUM)) { return NULL; }
       thread_attr.name       = usbd_cc_ep_thread_name[index];
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
       thread_attr.cb_mem     = &usbd_cc_ep_thread_cb_mem[index];
       thread_attr.cb_size    =  sizeof(osRtxThread_t);
       sum = 0U;
@@ -867,7 +872,7 @@ void *USBD_ThreadCreate (usbdThread_t thread, uint8_t index) {
 #if (USBD_ADC_NUM > 0)
       if (index >= USBD_ADC_NUM) { return NULL; }
       thread_attr.name       = usbd_adc_thread_name[index];
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
       thread_attr.cb_mem     = &usbd_adc_thread_cb_mem[index];
       thread_attr.cb_size    =  sizeof(osRtxThread_t);
       sum = 0U;
@@ -887,7 +892,7 @@ void *USBD_ThreadCreate (usbdThread_t thread, uint8_t index) {
 #if (USBD_CDC_NUM > 0)
       if (index >= USBD_CDC_NUM) { return NULL; }
       thread_attr.name       = usbd_cdc_thread_name[index * 2U];
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
       thread_attr.cb_mem     = &usbd_cdc_thread_cb_mem[index * 2U];
       thread_attr.cb_size    =  sizeof(osRtxThread_t);
       sum = 0U;
@@ -906,7 +911,7 @@ void *USBD_ThreadCreate (usbdThread_t thread, uint8_t index) {
 #if (USBD_CDC_NUM > 0)
       if (index >= USBD_CDC_NUM) { return NULL; }
       thread_attr.name       = usbd_cdc_thread_name[(index * 2U) + 1U];
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
       thread_attr.cb_mem     = &usbd_cdc_thread_cb_mem[(index * 2U) + 1U];
       thread_attr.cb_size    =  sizeof(osRtxThread_t);
       sum = 0U;
@@ -926,7 +931,7 @@ void *USBD_ThreadCreate (usbdThread_t thread, uint8_t index) {
 #if (USBD_HID_NUM > 0)
       if (index >= USBD_HID_NUM) { return NULL; }
       thread_attr.name       = usbd_hid_thread_name[index];
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
       thread_attr.cb_mem     = &usbd_hid_thread_cb_mem[index];
       thread_attr.cb_size    =  sizeof(osRtxThread_t);
       sum = 0U;
@@ -946,7 +951,7 @@ void *USBD_ThreadCreate (usbdThread_t thread, uint8_t index) {
 #if (USBD_MSC_NUM > 0)
       if (index >= USBD_MSC_NUM) { return NULL; }
       thread_attr.name       = usbd_msc_thread_name[index];
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
       thread_attr.cb_mem     = &usbd_msc_thread_cb_mem[index];
       thread_attr.cb_size    =  sizeof(osRtxThread_t);
       sum = 0U;
@@ -1019,7 +1024,7 @@ void *USBD_TimerCreate (uint8_t instance) {
 
   if (instance >= USBD_HID_NUM) { return NULL; }
   memset(&timer_attr, 0U, sizeof(osTimerAttr_t));
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
   timer_attr.cb_mem  = &usbd_hid_timer_cb_mem[instance];
   timer_attr.cb_size =  sizeof(osRtxTimer_t);
 #endif
@@ -1108,7 +1113,7 @@ void *USBD_SemaphoreCreate (usbdSemaphore_t semaphore, uint8_t index1, uint8_t i
   switch (semaphore) {
     case usbdSemaphoreCore:
       if (index1 >= USBD_DEV_NUM) { return NULL; }
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
       semaphore_attr.cb_mem  = &usbd_driver_semaphore_cb_mem[index1];
       semaphore_attr.cb_size =  sizeof(osRtxSemaphore_t);
 #endif
@@ -1117,7 +1122,7 @@ void *USBD_SemaphoreCreate (usbdSemaphore_t semaphore, uint8_t index1, uint8_t i
     case usbdSemaphoreEndpoint:
       if (index1 >=  USBD_DEV_NUM)      { return NULL; }
       if (index2 >= (USBD_EP_NUM * 2U)) { return NULL; }
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
       semaphore_attr.cb_mem  = &usbd_driver_ep_semaphore_cb_mem[index1][index2];
       semaphore_attr.cb_size =  sizeof(osRtxSemaphore_t);
 #endif
@@ -1126,7 +1131,7 @@ void *USBD_SemaphoreCreate (usbdSemaphore_t semaphore, uint8_t index1, uint8_t i
     case usbdSemaphoreHID:
 #if (USBD_HID_NUM > 0)
       if (index1 >= USBD_HID_NUM) { return NULL; }
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
       semaphore_attr.cb_mem  = &usbd_hid_semaphore_cb_mem[index1];
       semaphore_attr.cb_size =  sizeof(osRtxSemaphore_t);
 #endif

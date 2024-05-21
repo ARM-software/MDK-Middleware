@@ -10,7 +10,12 @@
 
 #include "RTE_Components.h"
 
-#include "usb_os.h"
+#ifdef    RTE_CMSIS_RTOS2
+#include "cmsis_os2.h"
+#endif
+#ifdef    RTE_CMSIS_RTOS2_RTX5
+#include "rtx_os.h"
+#endif
 
 // Resources definition
 
@@ -61,7 +66,7 @@ static const char *usbh_cdc_thread_name        [USBH_CDC_NUM] = {
   , "USBH_CDC3_IntIn_Thread"
 #endif
 };
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxThread_t  usbh_cdc_thread_cb_mem   [USBH_CDC_NUM]                                                __attribute__((section(".bss.os.thread.cb")));
 static uint64_t       usbh_cdc_thread_stack_mem[USBH_CDC_NUM][(USBH_CDC_INT_IN_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
@@ -82,7 +87,7 @@ static const char *usbh_hid_thread_name        [USBH_HID_NUM] = {
   , "USBH_HID3_IntIn_Thread"
 #endif
 };
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxThread_t  usbh_hid_thread_cb_mem   [USBH_HID_NUM]                                                __attribute__((section(".bss.os.thread.cb")));
 static uint64_t       usbh_hid_thread_stack_mem[USBH_HID_NUM][(USBH_HID_INT_IN_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
@@ -90,19 +95,19 @@ static uint64_t       usbh_hid_thread_stack_mem[USBH_HID_NUM][(USBH_HID_INT_IN_T
 
 
 // Create timer definitions
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxTimer_t   usbh_debounce_timer_cb_mem[USBH_HC_NUM] __attribute__((section(".bss.os.timer.cb")));
 #endif
 
 
 // Create mutex definitions
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxMutex_t   usbh_def_pipe_mutex_cb_mem[USBH_HC_NUM] __attribute__((section(".bss.os.mutex.cb")));
 #endif
 static osMutexAttr_t  usbh_def_pipe_mutex_attr = {
   NULL,
   osMutexRecursive,
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
   &usbh_def_pipe_mutex_cb_mem,
   sizeof(osRtxMutex_t)
 #else
@@ -113,13 +118,13 @@ static osMutexAttr_t  usbh_def_pipe_mutex_attr = {
 
 
 // Create semaphore definitions
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxSemaphore_t usbh_driver_semaphore_cb_mem[USBH_HC_NUM] __attribute__((section(".bss.os.semaphore.cb")));
 #endif
 static osSemaphoreAttr_t usbh_driver_semaphore_attr = {
   NULL,
   0U,
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
   &usbh_driver_semaphore_cb_mem,
   sizeof(osRtxSemaphore_t)
 #else
@@ -154,7 +159,7 @@ void *USBH_ThreadCreate (usbhThread_t thread, uint8_t index) {
 #if (USBH_CDC_NUM > 0)
       if (index >= USBH_CDC_NUM) { return NULL; }
       thread_attr.name       =  usbh_cdc_thread_name[index];
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
       thread_attr.cb_mem     = &usbh_cdc_thread_cb_mem[index];
       thread_attr.cb_size    =  sizeof(osRtxThread_t);
       thread_attr.stack_mem  = &usbh_cdc_thread_stack_mem[index][0];
@@ -170,7 +175,7 @@ void *USBH_ThreadCreate (usbhThread_t thread, uint8_t index) {
 #if (USBH_HID_NUM > 0)
       if (index >= USBH_HID_NUM) { return NULL; }
       thread_attr.name       =  usbh_hid_thread_name[index];
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
       thread_attr.cb_mem     = &usbh_hid_thread_cb_mem[index];
       thread_attr.cb_size    =  sizeof(osRtxThread_t);
       thread_attr.stack_mem  = &usbh_hid_thread_stack_mem[index][0];
@@ -246,7 +251,7 @@ void *USBH_TimerCreate (uint8_t ctrl) {
 
   if (ctrl >= USBH_HC_NUM) { return NULL; }
   memset(&timer_attr, 0U, sizeof(osTimerAttr_t));
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
   timer_attr.cb_mem  = &usbh_debounce_timer_cb_mem[ctrl];
   timer_attr.cb_size =  sizeof(osRtxTimer_t);
 #endif
@@ -328,7 +333,7 @@ uint32_t USBH_ThreadFlagsWait (uint32_t millisec) {
 void *USBH_MutexCreate (usbhMutex_t mutex, uint8_t ctrl) {
   if (mutex == usbhMutexCore) {
     if (ctrl >= USBH_HC_NUM) { return NULL; }
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
     usbh_def_pipe_mutex_attr.cb_mem = &usbh_def_pipe_mutex_cb_mem[ctrl];
 #endif
     return ((void *)osMutexNew (&usbh_def_pipe_mutex_attr));
@@ -376,7 +381,7 @@ int32_t USBH_MutexDelete (void *mutex_hndl) {
 void *USBH_SemaphoreCreate (usbhSemaphore_t semaphore, uint8_t ctrl) {
   if (semaphore == usbhSemaphoreCore) {
     if (ctrl >= USBH_HC_NUM) { return NULL; }
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
     usbh_driver_semaphore_attr.cb_mem = &usbh_driver_semaphore_cb_mem[ctrl];
 #endif
     return ((void *)osSemaphoreNew (1U, 1U, &usbh_driver_semaphore_attr));

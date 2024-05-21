@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_compatibility.h
  * Purpose: USB Device (USBD) - Compatibility definitions
@@ -9,7 +9,14 @@
 #ifndef __USBD_COMPATIBILITY__
 #define __USBD_COMPATIBILITY__
 
-#include "usb_os.h"
+#include "RTE_Components.h"
+
+#ifdef    RTE_CMSIS_RTOS2
+#include "cmsis_os2.h"
+#endif
+#ifdef    RTE_CMSIS_RTOS2_RTX5
+#include "rtx_os.h"
+#endif
 
 /*------------------------------------------------------------------------------
  *      USB Device 0..3 compatibility defines

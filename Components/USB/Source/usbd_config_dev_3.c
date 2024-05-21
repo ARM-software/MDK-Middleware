@@ -6,7 +6,7 @@
  * Purpose: USB Device 3 Data and Settings
  *----------------------------------------------------------------------------*/
 
-#include "usb_os.h"
+#include "RTE_Components.h"
 
 extern  ARM_DRIVER_USBD  USBDn_DRIVER(USBD3_PORT);
 
@@ -39,8 +39,8 @@ usbd_dev_t  usbd3_dev      = {
 
 // Core Thread definitions
 
-#ifdef USB_CMSIS_RTOS2
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxThread_t  usbd3_core_thread_cb_mem                                              __attribute__((section(".bss.os.thread.cb")));
 static uint64_t       usbd3_core_thread_stack_mem[(USBD3_CORE_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
@@ -49,7 +49,7 @@ const  osThreadAttr_t usbd3_core_thread_attr;
 const  osThreadAttr_t usbd3_core_thread_attr = {
   "USBD3_Core_Thread",
   0U,
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
   &usbd3_core_thread_cb_mem,
   sizeof(usbd3_core_thread_cb_mem),
   &usbd3_core_thread_stack_mem,

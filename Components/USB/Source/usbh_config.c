@@ -96,15 +96,15 @@ static  ARM_DRIVER_USBH        *usbh0_hcd_ptr  =       &USBHn_DRIVER(USBH0_HC_NU
 
 // Core Thread definitions
 
-#ifdef USB_CMSIS_RTOS2
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxThread_t  usbh0_core_thread_cb_mem                                              __attribute__((section(".bss.os.thread.cb")));
 static uint64_t       usbh0_core_thread_stack_mem[(USBH0_CORE_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
 static const  osThreadAttr_t usbh0_core_thread_attr = {
   "USBH0_Core_Thread",
   0U,
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
   &usbh0_core_thread_cb_mem,
   sizeof(usbh0_core_thread_cb_mem),
   &usbh0_core_thread_stack_mem,
@@ -138,15 +138,15 @@ static  ARM_DRIVER_USBH        *usbh1_hcd_ptr  =       &USBHn_DRIVER(USBH1_HC_NU
 
 // Core Thread definitions
 
-#ifdef USB_CMSIS_RTOS2
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxThread_t  usbh1_core_thread_cb_mem                                              __attribute__((section(".bss.os.thread.cb")));
 static uint64_t       usbh1_core_thread_stack_mem[(USBH1_CORE_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
 static const  osThreadAttr_t usbh1_core_thread_attr = {
   "USBH1_Core_Thread",
   0U,
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
   &usbh1_core_thread_cb_mem,
   sizeof(usbh1_core_thread_cb_mem),
   &usbh1_core_thread_stack_mem,
@@ -180,15 +180,15 @@ static  ARM_DRIVER_USBH        *usbh2_hcd_ptr  =       &USBHn_DRIVER(USBH2_HC_NU
 
 // Core Thread definitions
 
-#ifdef USB_CMSIS_RTOS2
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxThread_t  usbh2_core_thread_cb_mem                                              __attribute__((section(".bss.os.thread.cb")));
 static uint64_t       usbh2_core_thread_stack_mem[(USBH2_CORE_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
 static const  osThreadAttr_t usbh2_core_thread_attr = {
   "USBH2_Core_Thread",
   0U,
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
   &usbh2_core_thread_cb_mem,
   sizeof(usbh2_core_thread_cb_mem),
   &usbh2_core_thread_stack_mem,
@@ -222,15 +222,15 @@ static  ARM_DRIVER_USBH        *usbh3_hcd_ptr  =       &USBHn_DRIVER(USBH3_HC_NU
 
 // Core Thread definitions
 
-#ifdef USB_CMSIS_RTOS2
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxThread_t  usbh3_core_thread_cb_mem                                              __attribute__((section(".bss.os.thread.cb")));
 static uint64_t       usbh3_core_thread_stack_mem[(USBH3_CORE_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
 static const  osThreadAttr_t usbh3_core_thread_attr = {
   "USBH3_Core_Thread",
   0U,
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
   &usbh3_core_thread_cb_mem,
   sizeof(usbh3_core_thread_cb_mem),
   &usbh3_core_thread_stack_mem,
@@ -252,7 +252,7 @@ static const  osThreadAttr_t usbh3_core_thread_attr = {
  *      USB Host OS abstraction
  *----------------------------------------------------------------------------*/
 
-#ifdef USB_CMSIS_RTOS2
+#ifdef RTE_CMSIS_RTOS2
   #include "usbh_cmsis_rtos2.c"
 #else
   #error USB Host component requires CMSIS-RTOS2!

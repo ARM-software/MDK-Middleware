@@ -122,8 +122,6 @@
 
 #include "usbd_compatibility.h"
 
-#include "usb_os.h"
-
 /*------------------------------------------------------------------------------
  *      USB Device Global Macros
  *----------------------------------------------------------------------------*/
@@ -3378,7 +3376,7 @@ extern usbd_msc_t * const usbd_msc_ptr[USBD_MSC_NUM];
  *      USB Device OS abstraction
  *----------------------------------------------------------------------------*/
 
-#ifdef USB_CMSIS_RTOS2
+#ifdef RTE_CMSIS_RTOS2
   #include "usbd_cmsis_rtos2.c"
 #else
   #error USB Device component requires CMSIS-RTOS2!

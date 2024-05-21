@@ -6,7 +6,7 @@
  * Purpose: USB Device 0 Data and Settings
  *----------------------------------------------------------------------------*/
 
-#include "usb_os.h"
+#include "RTE_Components.h"
 
 extern  ARM_DRIVER_USBD  USBDn_DRIVER(USBD0_PORT);
 
@@ -39,8 +39,8 @@ usbd_dev_t  usbd0_dev      = {
 
 // Core Thread definitions
 
-#ifdef USB_CMSIS_RTOS2
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2
+#ifdef RTE_CMSIS_RTOS2_RTX5
 static osRtxThread_t  usbd0_core_thread_cb_mem                                              __attribute__((section(".bss.os.thread.cb")));
 static uint64_t       usbd0_core_thread_stack_mem[(USBD0_CORE_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
@@ -49,7 +49,7 @@ const  osThreadAttr_t usbd0_core_thread_attr;
 const  osThreadAttr_t usbd0_core_thread_attr = {
   "USBD0_Core_Thread",
   0U,
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
   &usbd0_core_thread_cb_mem,
   sizeof(usbd0_core_thread_cb_mem),
   &usbd0_core_thread_stack_mem,

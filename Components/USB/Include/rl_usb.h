@@ -16,6 +16,8 @@ extern "C"  {
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "RTE_Components.h"
+
 #define MW_USB_VERSION_MAJOR           (8U)
 #define MW_USB_VERSION_MINOR           (0U)
 #define MW_USB_VERSION_PATCH           (0U)
@@ -23,7 +25,6 @@ extern "C"  {
                                        (MW_USB_VERSION_MINOR * 10000U)    + \
                                        (MW_USB_VERSION_PATCH))
 
-#include "usb_os.h"
 #include "usb_def.h"
 #include "usb_adc.h"
 #include "usb_cdc.h"
@@ -32,6 +33,12 @@ extern "C"  {
 #include "usb_msc.h"
 #include "usb_ms.h"
 
+#ifdef    RTE_CMSIS_RTOS2
+#include "cmsis_os2.h"
+#endif
+#ifdef    RTE_CMSIS_RTOS2_RTX5
+#include "rtx_os.h"
+#endif
 
 //  ==== USB Constants and Defines ====
 
