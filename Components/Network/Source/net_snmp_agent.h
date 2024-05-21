@@ -6,8 +6,8 @@
  * Purpose: Simple Network Management Agent Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_SNMP_AGENT_H
-#define __NET_SNMP_AGENT_H
+#ifndef NET_SNMP_AGENT_H_
+#define NET_SNMP_AGENT_H_
 
 #include "net_lib.h"
 
@@ -96,4 +96,4 @@ extern void net_snmp_agent_init (void);
 extern void net_snmp_agent_uninit (void);
 extern void net_snmp_agent_run (void);
 
-#endif /* __NET_SNMP_AGENT_H */
+#endif /* NET_SNMP_AGENT_H_ */

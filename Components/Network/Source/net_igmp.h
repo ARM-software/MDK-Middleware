@@ -6,8 +6,8 @@
  * Purpose: Internet Group Management Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_IGMP_H
-#define __NET_IGMP_H
+#ifndef NET_IGMP_H_
+#define NET_IGMP_H_
 
 #include "net_lib.h"
 
@@ -64,4 +64,4 @@ extern void net_igmp_process (NET_IF_CFG *net_if, NET_FRAME *frame);
 extern void net_igmp_host_run (void);
 extern uint32_t net_igmp_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf);
 
-#endif /* __NET_IGMP_H */
+#endif /* NET_IGMP_H_ */

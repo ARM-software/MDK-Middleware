@@ -6,8 +6,8 @@
  * Purpose: Internet Control Message Protocol Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_ICMP_H
-#define __NET_ICMP_H
+#ifndef NET_ICMP_H_
+#define NET_ICMP_H_
 
 #include "net_lib.h"
 
@@ -56,4 +56,4 @@ extern void net_icmp_init (void);
 extern bool net_icmp_process (NET_IF_CFG *net_if, NET_FRAME *frame);
 extern bool net_icmp_send_echo (NET_IF_CFG *net_if);
 
-#endif /* __NET_ICMP_H */
+#endif /* NET_ICMP_H_ */

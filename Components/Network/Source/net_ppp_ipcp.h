@@ -6,8 +6,8 @@
  * Purpose: PPP Internet Protocol Control Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_PPP_IPCP_H
-#define __NET_PPP_IPCP_H
+#ifndef NET_PPP_IPCP_H_
+#define NET_PPP_IPCP_H_
 
 #include "net_lib.h"
 
@@ -66,4 +66,4 @@ extern void net_ipcp_uninit (NET_PPP_CFG *ppp_if);
 extern void net_ipcp_process (NET_PPP_CFG *ppp_if, NET_FRAME *frame);
 extern void net_ipcp_run (NET_PPP_CFG *ppp_if);
 
-#endif /* __NET_PPP_IPCP_H */
+#endif /* NET_PPP_IPCP_H_ */

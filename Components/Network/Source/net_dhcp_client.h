@@ -6,8 +6,8 @@
  * Purpose: Dynamic Host Configuration Client Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_DHCP_CLIENT_H
-#define __NET_DHCP_CLIENT_H
+#ifndef NET_DHCP_CLIENT_H_
+#define NET_DHCP_CLIENT_H_
 
 #include "net_lib.h"
 
@@ -101,4 +101,4 @@ extern void net_dhcp_client_init (void);
 extern void net_dhcp_client_uninit (void);
 extern void net_dhcp_client_run (void);
 
-#endif /* __NET_DHCP_CLIENT_H */
+#endif /* NET_DHCP_CLIENT_H_ */

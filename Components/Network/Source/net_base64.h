@@ -6,8 +6,8 @@
  * Purpose: Base64 Encode and Decode Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_BASE64_H
-#define __NET_BASE64_H
+#ifndef NET_BASE64_H_
+#define NET_BASE64_H_
 
 #include "net_lib.h"
 
@@ -18,4 +18,4 @@
 extern uint32_t net_base64_encode (char *base64, const void *buf, uint32_t len);
 extern uint32_t net_base64_decode (void *buf, const char *base64, uint32_t len);
 
-#endif /* __NET_BASE64_H */
+#endif /* NET_BASE64_H_ */

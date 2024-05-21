@@ -6,8 +6,8 @@
  * Purpose: NetBIOS Name Service Client Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_NBNS_CLIENT_H
-#define __NET_NBNS_CLIENT_H
+#ifndef NET_NBNS_CLIENT_H_
+#define NET_NBNS_CLIENT_H_
 
 #include "net_lib.h"
 
@@ -77,4 +77,4 @@ extern void net_nbns_client_init (void);
 extern void net_nbns_client_uninit (void);
 extern void net_nbns_client_run (void);
 
-#endif /* __NET_NBNS_CLIENT_H */
+#endif /* NET_NBNS_CLIENT_H_ */

@@ -6,8 +6,8 @@
  * Purpose: Trivial File Transfer Server Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_TFTP_SERVER_H
-#define __NET_TFTP_SERVER_H
+#ifndef NET_TFTP_SERVER_H_
+#define NET_TFTP_SERVER_H_
 
 #include "net_lib.h"
 
@@ -52,4 +52,4 @@ extern void net_tftp_server_init (void);
 extern void net_tftp_server_uninit (void);
 extern void net_tftp_server_run (void);
 
-#endif /* __NET_TFTP_SERVER_H */
+#endif /* NET_TFTP_SERVER_H_ */

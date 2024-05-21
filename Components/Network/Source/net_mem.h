@@ -6,8 +6,8 @@
  * Purpose: Memory Management Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_MEM_H
-#define __NET_MEM_H
+#ifndef NET_MEM_H_
+#define NET_MEM_H_
 
 #include "net_lib.h"
 
@@ -40,4 +40,4 @@ extern bool       net_mem_avail (int32_t level);
 #define net_mem_avail_rx()  net_mem_avail(0)
 #define net_mem_avail_tx()  net_mem_avail(1)
 
-#endif /* __NET_MEM_H */
+#endif /* NET_MEM_H_ */

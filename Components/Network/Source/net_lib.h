@@ -6,8 +6,8 @@
  * Purpose: Network Library Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_LIB_H
-#define __NET_LIB_H
+#ifndef NET_LIB_H_
+#define NET_LIB_H_
 
 #include "rl_net.h"
 #include "Net_Config.h"
@@ -1678,4 +1678,4 @@ extern void net_evr_init (void);
 }
 #endif
 
-#endif /* __NET_LIB_H */
+#endif /* NET_LIB_H_ */

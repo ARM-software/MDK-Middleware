@@ -6,8 +6,8 @@
  * Purpose: Multicast Listener Discovery for IPv6 Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_MLD_H
-#define __NET_MLD_H
+#ifndef NET_MLD_H_
+#define NET_MLD_H_
 
 #include "net_lib.h"
 
@@ -52,4 +52,4 @@ extern void net_mld_process (NET_IF_CFG *net_if, NET_FRAME *frame);
 extern void net_mld_node_run (void);
 extern uint32_t net_mld_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf);
 
-#endif /* __NET_MLD_H */
+#endif /* NET_MLD_H_ */

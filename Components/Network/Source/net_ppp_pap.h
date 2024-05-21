@@ -6,8 +6,8 @@
  * Purpose: PPP Password Authentication Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_PPP_PAP_H
-#define __NET_PPP_PAP_H
+#ifndef NET_PPP_PAP_H_
+#define NET_PPP_PAP_H_
 
 #include "net_lib.h"
 
@@ -31,4 +31,4 @@ typedef struct net_pap_ctrl {
 /* Functions */
 extern NET_PPP_AUTH net_ppp_pap_func;
 
-#endif /* __NET_PPP_PAP_H */
+#endif /* NET_PPP_PAP_H_ */

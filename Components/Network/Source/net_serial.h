@@ -6,8 +6,8 @@
  * Purpose: Serial Driver Interface Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_SERIAL_H
-#define __NET_SERIAL_H
+#ifndef NET_SERIAL_H_
+#define NET_SERIAL_H_
 
 #include "net_lib.h"
 
@@ -34,4 +34,4 @@ extern int32_t net_com_recv_char (NET_COM_CFG *com);
 extern void net_com_flush_buf (NET_COM_CFG *com);
 extern bool net_com_tx_active (NET_COM_CFG *com);
 
-#endif /* __NET_SERIAL_H */
+#endif /* NET_SERIAL_H_ */

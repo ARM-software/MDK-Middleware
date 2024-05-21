@@ -6,8 +6,8 @@
  * Purpose: File Transfer Server Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_FTP_SERVER_H
-#define __NET_FTP_SERVER_H
+#ifndef NET_FTP_SERVER_H_
+#define NET_FTP_SERVER_H_
 
 #include "net_lib.h"
 
@@ -140,4 +140,4 @@ extern void net_ftp_server_init (void);
 extern void net_ftp_server_uninit (void);
 extern void net_ftp_server_run (void);
 
-#endif /* __NET_FTP_SERVER_H */
+#endif /* NET_FTP_SERVER_H_ */

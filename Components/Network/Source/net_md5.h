@@ -6,8 +6,8 @@
  * Purpose: MD5 Message-Digest Algorithm Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_MD5_H
-#define __NET_MD5_H
+#ifndef NET_MD5_H_
+#define NET_MD5_H_
 
 #include "net_lib.h"
 
@@ -28,4 +28,4 @@ void net_md5_init   (NET_MD5_CTX *md5);
 void net_md5_update (NET_MD5_CTX *md5, const char *inbuf, int32_t inlen);
 void net_md5_final  (NET_MD5_CTX *md5, uint8_t *digest);
 
-#endif /* __NET_MD5_H */
+#endif /* NET_MD5_H_ */

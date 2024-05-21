@@ -6,8 +6,8 @@
  * Purpose: PPP Challenge-Handshake Authentication Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_PPP_CHAP_H
-#define __NET_PPP_CHAP_H
+#ifndef NET_PPP_CHAP_H_
+#define NET_PPP_CHAP_H_
 
 #include "net_lib.h"
 
@@ -35,4 +35,4 @@ typedef struct net_chap_ctrl {
 /* Functions */
 extern NET_PPP_AUTH net_ppp_chap_func;
 
-#endif /* __NET_PPP_CHAP_H */
+#endif /* NET_PPP_CHAP_H_ */

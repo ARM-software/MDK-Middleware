@@ -6,8 +6,8 @@
  * Purpose: Address Handling Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_ADDR_H
-#define __NET_ADDR_H
+#ifndef NET_ADDR_H_
+#define NET_ADDR_H_
 
 #include <string.h>
 #include "net_common.h"
@@ -89,4 +89,4 @@ extern NET_IF_CFG    *net_addr_find_route (NET_IF_CFG *net_if, const __ADDR *dst
 extern const uint8_t *net_addr_get_local (NET_IF_CFG *net_if, const __ADDR *dst);
 extern void net_addr_get_lhost (int16_t addr_type, __ADDR *addr);
 
-#endif /* __NET_ADDR_H */
+#endif /* NET_ADDR_H_ */

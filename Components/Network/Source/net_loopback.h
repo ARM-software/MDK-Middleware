@@ -6,8 +6,8 @@
  * Purpose: Loopback Interface Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_LOOPBACK_H
-#define __NET_LOOPBACK_H
+#ifndef NET_LOOPBACK_H_
+#define NET_LOOPBACK_H_
 
 #include "net_lib.h"
 
@@ -42,4 +42,4 @@ extern void net_loop_iface_uninit (void);
 extern bool net_loop_send_frame (uint32_t if_num, NET_FRAME *frame, uint8_t ip_ver);
 extern void net_loop_iface_run (void);
 
-#endif /* __NET_LOOPBACK_H */
+#endif /* NET_LOOPBACK_H_ */

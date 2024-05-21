@@ -6,8 +6,8 @@
  * Purpose: Ping Client Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_PING_H
-#define __NET_PING_H
+#ifndef NET_PING_H_
+#define NET_PING_H_
 
 #include "net_lib.h"
 
@@ -56,4 +56,4 @@ extern void net_ping_client_uninit (void);
 extern void net_ping_client_run (void);
 extern netStatus net_ping_client_start (const __ADDR *addr, netPing_cb_t cb_func);
 
-#endif /* __NET_PING_H */
+#endif /* NET_PING_H_ */

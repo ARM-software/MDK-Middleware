@@ -6,8 +6,8 @@
  * Purpose: File Transfer Client Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_FTP_CLIENT_H
-#define __NET_FTP_CLIENT_H
+#ifndef NET_FTP_CLIENT_H_
+#define NET_FTP_CLIENT_H_
 
 #include "net_lib.h"
 
@@ -93,4 +93,4 @@ extern void net_ftp_client_init (void);
 extern void net_ftp_client_uninit (void);
 extern void net_ftp_client_run (void);
 
-#endif /* __NET_FTP_CLIENT_H */
+#endif /* NET_FTP_CLIENT_H_ */

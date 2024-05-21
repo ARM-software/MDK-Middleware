@@ -6,8 +6,8 @@
  * Purpose: Network Component Version Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_VERSION_H
-#define __NET_VERSION_H
+#ifndef NET_VERSION_H_
+#define NET_VERSION_H_
 
 #include <stdint.h>
 
@@ -18,4 +18,4 @@ extern const uint32_t net_lib_version;
   extern const char   net_ver_ascii[];
 #endif
 
-#endif /* __NET_VERSION_H */
+#endif /* NET_VERSION_H_ */

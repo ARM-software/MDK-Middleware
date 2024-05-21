@@ -6,8 +6,8 @@
  * Purpose: Network System Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_SYS_H
-#define __NET_SYS_H
+#ifndef NET_SYS_H_
+#define NET_SYS_H_
 
 #include "net_lib.h"
 
@@ -112,4 +112,4 @@ extern void net_sys_lock   (void);
 extern void net_sys_unlock (void);
 extern void net_sys_wakeup (void);
 
-#endif /* __NET_SYS_H */
+#endif /* NET_SYS_H_ */

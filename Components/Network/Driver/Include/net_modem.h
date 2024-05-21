@@ -1,13 +1,13 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_modem.h
  * Purpose: Network Modem Driver API
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_MODEM_H
-#define __NET_MODEM_H
+#ifndef NET_MODEM_H_
+#define NET_MODEM_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -101,4 +101,4 @@ typedef struct _DRIVER_MODEM {
                                  const char *response);          ///< Pointer to \ref Modem_Notify : Notify the driver of completion event.
 } const DRIVER_MODEM;
 
-#endif /* __NET_MODEM_H */
+#endif /* NET_MODEM_H_ */

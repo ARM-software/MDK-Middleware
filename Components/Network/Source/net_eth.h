@@ -6,8 +6,8 @@
  * Purpose: Ethernet Interface Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_ETH_H
-#define __NET_ETH_H
+#ifndef NET_ETH_H_
+#define NET_ETH_H_
 
 #include "net_lib.h"
 
@@ -80,4 +80,4 @@ extern netStatus net_eth_get_option (uint32_t if_num, netIF_Option option,
 extern netStatus net_eth_set_option (uint32_t if_num, netIF_Option option,
                                      const uint8_t *buf, uint32_t buf_len);
 
-#endif /* __NET_ETH_H */
+#endif /* NET_ETH_H_ */

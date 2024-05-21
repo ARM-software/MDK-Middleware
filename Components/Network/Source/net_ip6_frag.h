@@ -6,8 +6,8 @@
  * Purpose: IPv6 Fragmentation Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_IP6_FRAG_H
-#define __NET_IP6_FRAG_H
+#ifndef NET_IP6_FRAG_H_
+#define NET_IP6_FRAG_H_
 
 #include "net_lib.h"
 
@@ -38,4 +38,4 @@ extern void net_ip6_frag_uninit (void);
 extern NET_FRAME *net_ip6_frag_add (NET_FRAME *frame);
 extern NET_FRAME *net_ip6_frag_get (NET_FRAME *frame, uint16_t mtu);
 
-#endif /* __NET_IP6_FRAG_H */
+#endif /* NET_IP6_FRAG_H_ */

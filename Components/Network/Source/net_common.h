@@ -6,8 +6,8 @@
  * Purpose: Common Network Function Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_COMMON_H
-#define __NET_COMMON_H
+#ifndef NET_COMMON_H_
+#define NET_COMMON_H_
 
 #include "net_lib.h"
 
@@ -116,4 +116,4 @@ extern uint8_t  net_xtouc (const char *sp);
   extern void     net_wr_u32 (uint8_t *addr, uint32_t val);
 #endif
 
-#endif /* __NET_COMMON_H */
+#endif /* NET_COMMON_H_ */

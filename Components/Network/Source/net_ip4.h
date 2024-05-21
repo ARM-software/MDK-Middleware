@@ -6,8 +6,8 @@
  * Purpose: Internet Protocol Version 4 Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_IP4_H
-#define __NET_IP4_H
+#ifndef NET_IP4_H_
+#define NET_IP4_H_
 
 #include "net_lib.h"
 
@@ -74,4 +74,4 @@ extern uint16_t net_ip4_chksum (const uint8_t *src_addr, const uint8_t *dst_addr
 extern bool  net_ip4_set_netif (NET_IF_CFG *net_if);
 extern NET_LOCALM *net_ip4_def_localm (void);
 
-#endif /* __NET_IP4_H */
+#endif /* NET_IP4_H_ */

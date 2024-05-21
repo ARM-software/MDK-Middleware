@@ -6,8 +6,8 @@
  * Purpose: Address Resolution for Ethernet Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_ARP_H
-#define __NET_ARP_H
+#ifndef NET_ARP_H_
+#define NET_ARP_H_
 
 #include "net_lib.h"
 
@@ -96,4 +96,4 @@ extern void net_arp_cache_run (void);
 extern void net_arp_probe (NET_IF_CFG *net_if, uint8_t *ip4_addr);
 extern void net_arp_notify (NET_IF_CFG *net_if);
 
-#endif /* __NET_ARP_H */
+#endif /* NET_ARP_H_ */

@@ -6,8 +6,8 @@
  * Purpose: Network API
  *----------------------------------------------------------------------------*/
 
-#ifndef __RL_NET_H
-#define __RL_NET_H
+#ifndef RL_NET_H_
+#define RL_NET_H_
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -2600,4 +2600,4 @@ extern bool      netMAC_aton (const char *mac_string, uint8_t *mac_addr);
 }
 #endif
 
-#endif /* __RL_NET_H */
+#endif /* RL_NET_H_ */

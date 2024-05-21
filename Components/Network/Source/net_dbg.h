@@ -6,8 +6,8 @@
  * Purpose: Debug Variant Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_DBG_H
-#define __NET_DBG_H
+#ifndef NET_DBG_H_
+#define NET_DBG_H_
 
 #include <stdint.h>
 #include "net_evr.h"
@@ -78,4 +78,4 @@
   #define SNTP              NET_SNTP_CLIENT
 #endif
 
-#endif /* __NET_DBG_H */
+#endif /* NET_DBG_H_ */

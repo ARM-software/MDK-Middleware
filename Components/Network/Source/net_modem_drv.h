@@ -6,8 +6,8 @@
  * Purpose: Modem Driver Interface Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_MODEM_DRV_H
-#define __NET_MODEM_DRV_H
+#ifndef NET_MODEM_DRV_H_
+#define NET_MODEM_DRV_H_
 
 #include "net_lib.h"
 
@@ -37,4 +37,4 @@ extern bool net_modem_online (NET_COM_CFG *com);
 extern bool net_modem_process (NET_COM_CFG *com, int32_t ch);
 extern void net_modem_run (NET_COM_CFG *com);
 
-#endif /* __NET_MODEM_DRV_H */
+#endif /* NET_MODEM_DRV_H_ */

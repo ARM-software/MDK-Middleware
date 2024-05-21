@@ -6,8 +6,8 @@
  * Purpose: Transmission Control Protocol Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_TCP_H
-#define __NET_TCP_H
+#ifndef NET_TCP_H_
+#define NET_TCP_H_
 
 #include "net_lib.h"
 
@@ -130,4 +130,4 @@ extern uint16_t  net_tcp_alloc_port (void);
 extern void      net_tcp_socket_run (void);
 extern void      net_tcp_process (NET_IF_CFG *net_if, NET_FRAME *frame, uint8_t ip_ver);
 
-#endif /* __NET_TCP_H */
+#endif /* NET_TCP_H_ */

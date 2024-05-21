@@ -6,8 +6,8 @@
  * Purpose: Neighbor Discovery for IPv6 Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_NDP_H
-#define __NET_NDP_H
+#ifndef NET_NDP_H_
+#define NET_NDP_H_
 
 #include "net_lib.h"
 
@@ -108,4 +108,4 @@ extern const uint8_t *net_ndp_find_mac (NET_IF_CFG *net_if, const uint8_t *ip6_a
 extern bool net_ndp_enqueue (NET_IF_CFG *net_if, NET_NDP_INFO *ndp_t, NET_FRAME *frame);
 extern void net_ndp_cache_run (void);
 
-#endif /* __NET_NDP_H */
+#endif /* NET_NDP_H_ */

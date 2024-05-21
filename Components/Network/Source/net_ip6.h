@@ -6,8 +6,8 @@
  * Purpose: Internet Protocol Version 6 Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_IP6_H
-#define __NET_IP6_H
+#ifndef NET_IP6_H_
+#define NET_IP6_H_
 
 #include "net_lib.h"
 
@@ -86,4 +86,4 @@ extern uint16_t net_ip6_chksum (const uint8_t *src_addr, const uint8_t *dst_addr
                                 const void *payload, uint8_t next_hdr, int32_t len);
 extern bool  net_ip6_set_netif (NET_IF_CFG *net_if);
 extern NET_LOCALM6 *net_ip6_def_localm (void);
-#endif /* __NET_IP6_H */
+#endif /* NET_IP6_H_ */

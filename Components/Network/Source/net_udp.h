@@ -6,8 +6,8 @@
  * Purpose: User Datagram Protocol Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_UDP_H
-#define __NET_UDP_H
+#ifndef NET_UDP_H_
+#define NET_UDP_H_
 
 #include "net_lib.h"
 
@@ -75,4 +75,4 @@ extern void      net_udp_enable_lla (int32_t socket);
 extern void      net_udp_free_buf (uint8_t *buf);
 extern void      net_udp_process (NET_IF_CFG *net_if, NET_FRAME *frame, uint8_t ip_ver);
 
-#endif /* __NET_UDP_H */
+#endif /* NET_UDP_H_ */

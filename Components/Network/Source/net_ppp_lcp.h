@@ -6,8 +6,8 @@
  * Purpose: PPP Link Control Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_PPP_LCP_H
-#define __NET_PPP_LCP_H
+#ifndef NET_PPP_LCP_H_
+#define NET_PPP_LCP_H_
 
 #include "net_lib.h"
 
@@ -80,4 +80,4 @@ extern void net_lcp_terminate (NET_PPP_CFG *ppp_if);
 extern void net_lcp_process (NET_PPP_CFG *ppp_if, NET_FRAME *frame);
 extern void net_lcp_run (NET_PPP_CFG *ppp_if);
 
-#endif /* __NET_PPP_LCP_H */
+#endif /* NET_PPP_LCP_H_ */

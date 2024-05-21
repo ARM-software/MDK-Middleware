@@ -6,8 +6,8 @@
  * Purpose: Trivial File Transfer Client Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_TFTP_CLIENT_H
-#define __NET_TFTP_CLIENT_H
+#ifndef NET_TFTP_CLIENT_H_
+#define NET_TFTP_CLIENT_H_
 
 #include "net_lib.h"
 
@@ -68,4 +68,4 @@ extern void net_tftp_client_init (void);
 extern void net_tftp_client_uninit (void);
 extern void net_tftp_client_run (void);
 
-#endif /* __NET_TFTP_CLIENT_H */
+#endif /* NET_TFTP_CLIENT_H_ */

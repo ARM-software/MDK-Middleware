@@ -6,8 +6,8 @@
  * Purpose: WIFI Interface Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_WIFI_H
-#define __NET_WIFI_H
+#ifndef NET_WIFI_H_
+#define NET_WIFI_H_
 
 #include "net_lib.h"
 
@@ -61,4 +61,4 @@ extern netStatus net_wifi_get_option (uint32_t if_num, netIF_Option option,
 extern netStatus net_wifi_set_option (uint32_t if_num, netIF_Option option,
                                       const uint8_t *buf, uint32_t buf_len);
 
-#endif /* __NET_WIFI_H */
+#endif /* NET_WIFI_H_ */

@@ -6,8 +6,8 @@
  * Purpose: IP over Serial Line Interface Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_SLIP_H
-#define __NET_SLIP_H
+#ifndef NET_SLIP_H_
+#define NET_SLIP_H_
 
 #include "net_lib.h"
 
@@ -67,4 +67,4 @@ extern void net_slip_iface_run (void);
 extern netStatus net_slip_get_option (netIF_Option option, uint8_t *buf, uint32_t buf_len);
 extern netStatus net_slip_set_option (netIF_Option option, const uint8_t *buf, uint32_t buf_len);
 
-#endif /* __NET_SLIP_H */
+#endif /* NET_SLIP_H_ */

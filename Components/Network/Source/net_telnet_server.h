@@ -6,8 +6,8 @@
  * Purpose: Telnet Server Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_TELNET_SERVER_H
-#define __NET_TELNET_SERVER_H
+#ifndef NET_TELNET_SERVER_H_
+#define NET_TELNET_SERVER_H_
 
 #include "net_lib.h"
 
@@ -94,4 +94,4 @@ extern void net_telnet_server_init (void);
 extern void net_telnet_server_uninit (void);
 extern void net_telnet_server_run (void);
 
-#endif /* __NET_TELNET_SERVER_H */
+#endif /* NET_TELNET_SERVER_H_ */

@@ -6,8 +6,8 @@
  * Purpose: Web Server Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_HTTP_SERVER_H
-#define __NET_HTTP_SERVER_H
+#ifndef NET_HTTP_SERVER_H_
+#define NET_HTTP_SERVER_H_
 
 #include "net_lib.h"
 
@@ -169,4 +169,4 @@ extern void net_http_server_run (void);
 extern const uint32_t imageLastModified;
 extern uint32_t       imageFileInfo (const char *name, const uint8_t **data);
 
-#endif /* __NET_HTTP_SERVER_H */
+#endif /* NET_HTTP_SERVER_H_ */

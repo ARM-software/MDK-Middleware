@@ -6,8 +6,8 @@
  * Purpose: Berkeley Socket API Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_BSD_H
-#define __NET_BSD_H
+#ifndef NET_BSD_H_
+#define NET_BSD_H_
 
 #include "net_lib.h"
 
@@ -100,4 +100,4 @@ extern void net_bsd_host_uninit (void);
 extern void net_bsd_socket_run (void);
 extern void net_bsd_notify (int32_t sock, uint8_t event);
 
-#endif /* __NET_BSD_H */
+#endif /* NET_BSD_H_ */

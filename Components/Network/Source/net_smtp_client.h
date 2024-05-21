@@ -6,8 +6,8 @@
  * Purpose: Mail Transfer Client Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_SMTP_CLIENT_H
-#define __NET_SMTP_CLIENT_H
+#ifndef NET_SMTP_CLIENT_H_
+#define NET_SMTP_CLIENT_H_
 
 #include "net_lib.h"
 
@@ -128,4 +128,4 @@ extern void net_smtp_client_uninit (void);
 extern void net_smtp_client_run (void);
 extern void net_smtp_client_start (uint16_t use_tls);
 
-#endif /* __NET_SMTP_CLIENT_H */
+#endif /* NET_SMTP_CLIENT_H_ */

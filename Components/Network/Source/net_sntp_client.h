@@ -6,8 +6,8 @@
  * Purpose: Simple Network Time Protocol Client Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_SNTP_CLIENT_H
-#define __NET_SNTP_CLIENT_H
+#ifndef NET_SNTP_CLIENT_H_
+#define NET_SNTP_CLIENT_H_
 
 #include "net_lib.h"
 
@@ -73,4 +73,4 @@ extern void net_sntp_client_uninit (void);
 extern void net_sntp_client_run (void);
 extern netStatus net_sntp_client_start (const __ADDR *addr, netSNTPc_cb_t cb_func);
 
-#endif /* __NET_SNTP_CLIENT_H */
+#endif /* NET_SNTP_CLIENT_H_ */

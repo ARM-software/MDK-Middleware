@@ -6,8 +6,8 @@
  * Purpose: Domain Name Resolver Client Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_DNS_CLIENT_H
-#define __NET_DNS_CLIENT_H
+#ifndef NET_DNS_CLIENT_H_
+#define NET_DNS_CLIENT_H_
 
 #include "net_lib.h"
 
@@ -84,4 +84,4 @@ extern void      net_dns_client_run (void);
 extern netStatus net_dns_client_resolve (const char *name,
                                          int16_t addr_type, __ADDR *addr);
 
-#endif /* __NET_DNS_CLIENT_H */
+#endif /* NET_DNS_CLIENT_H_ */

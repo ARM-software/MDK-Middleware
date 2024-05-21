@@ -6,8 +6,8 @@
  * Purpose: Point to Point Interface Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_PPP_H
-#define __NET_PPP_H
+#ifndef NET_PPP_H_
+#define NET_PPP_H_
 
 #include "net_lib.h"
 
@@ -115,4 +115,4 @@ extern void net_ppp_iface_run (void);
 extern netStatus net_ppp_get_option (netIF_Option option, uint8_t *buf, uint32_t buf_len);
 extern netStatus net_ppp_set_option (netIF_Option option, const uint8_t *buf, uint32_t buf_len);
 
-#endif /* __NET_PPP_H */
+#endif /* NET_PPP_H_ */

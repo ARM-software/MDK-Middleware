@@ -6,8 +6,8 @@
  * Purpose: Internet Control Message Protocol Version 6 Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __NET_ICMP6_H
-#define __NET_ICMP6_H
+#ifndef NET_ICMP6_H_
+#define NET_ICMP6_H_
 
 #include "net_lib.h"
 
@@ -48,4 +48,4 @@ extern bool net_icmp6_send (NET_IF_CFG *net_if, NET_FRAME *frame,
               const uint8_t *src_addr, const uint8_t *dst_addr, uint8_t type);
 extern bool net_icmp6_send_echo (NET_IF_CFG *net_if);
 
-#endif /* __NET_ICMP6_H */
+#endif /* NET_ICMP6_H_ */
