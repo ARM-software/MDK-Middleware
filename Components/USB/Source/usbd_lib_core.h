@@ -1,18 +1,17 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_core.h
  * Purpose: USB Device - Core module header file
  *----------------------------------------------------------------------------*/
 
-#ifndef __USBD_LIB_CORE_H__
-#define __USBD_LIB_CORE_H__
+#ifndef USBD_LIB_CORE_H_
+#define USBD_LIB_CORE_H_
 
 #include <stdint.h>
 
 #include "rl_usb.h"
-
 
 /// \brief USB Device Request - Data In Stage
 /// \param[in]     device               index of USB Device.
@@ -44,4 +43,4 @@ extern usbStatus USBD_StatusOutStage (uint8_t device);
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 extern usbStatus USBD_StatusOutStageDone (uint8_t device);
 
-#endif  // __USBD_LIB_CORE_H__
+#endif  // USBD_LIB_CORE_H_

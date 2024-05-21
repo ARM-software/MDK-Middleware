@@ -6,8 +6,8 @@
  * Purpose: USB Device (USBD) - Compatibility definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __USBD_COMPATIBILITY__
-#define __USBD_COMPATIBILITY__
+#ifndef  USBD_COMPATIBILITY_
+#define  USBD_COMPATIBILITY_
 
 #include "RTE_Components.h"
 
@@ -2315,4 +2315,4 @@
 #endif
 #endif
 
-#endif // __USBD_COMPATIBILITY__
+#endif  // USBD_COMPATIBILITY_

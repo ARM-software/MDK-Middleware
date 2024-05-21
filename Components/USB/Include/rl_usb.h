@@ -6,8 +6,8 @@
  * Purpose: USB User API
  *----------------------------------------------------------------------------*/
 
-#ifndef __RL_USB_H__
-#define __RL_USB_H__
+#ifndef RL_USB_H_
+#define RL_USB_H_
 
 #ifdef __cplusplus
 extern "C"  {
@@ -2374,4 +2374,4 @@ extern void              USBH_ConnectDebounce               (void       *arg);
 }
 #endif
 
-#endif // __RL_USB_H__
+#endif  // RL_USB_H_

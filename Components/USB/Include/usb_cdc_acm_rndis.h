@@ -8,8 +8,8 @@
  *          Remote Network Driver Interface Specification (RNDIS) Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __USB_CDC_ACM_RNDIS_H
-#define __USB_CDC_ACM_RNDIS_H
+#ifndef USB_CDC_ACM_RNDIS_H_
+#define USB_CDC_ACM_RNDIS_H_
 
 #include <stdint.h>
 
@@ -59,7 +59,6 @@
 // RNDIS connection types
 #define RNDIS_DF_CONNECTIONLESS                 0x00000001UL
 #define RNDIS_DF_CONNECTION_ORIENTED            0x00000002UL
-
 
 /*------------------------------------------------------------------------------
  *  Definitions based on:
@@ -228,7 +227,6 @@ typedef enum {
 // MAC ADDRESS type definition
 typedef uint8_t MAC_ADDRESS_t[6];
 
-
 /*------------------------------------------------------------------------------
  *  Structures based on:
  *  [MS-RNDIS].pdf (https://msdn.microsoft.com/en-us/library/ee524902.aspx)
@@ -382,4 +380,4 @@ typedef __PACKED_STRUCT {
   uint32_t PerPacketData[1];
 } REMOTE_NDIS_PER_PACKET_INFO_DATA_t;
 
-#endif
+#endif  // USB_CDC_ACM_RNDIS_H_

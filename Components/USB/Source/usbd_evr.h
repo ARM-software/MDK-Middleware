@@ -6,8 +6,8 @@
  * Purpose: USB Device (USBD) - Event Recorder definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __USBD_EVR_H__
-#define __USBD_EVR_H__
+#ifndef USBD_EVR_H_
+#define USBD_EVR_H_
 
 #include "RTE_Components.h"
 
@@ -4677,4 +4677,4 @@
   #define              EvrUSBD_MSC_OnCheckMedia(...)
 #endif
 
-#endif // __USBD_EVR_H__
+#endif  // USBD_EVR_H_

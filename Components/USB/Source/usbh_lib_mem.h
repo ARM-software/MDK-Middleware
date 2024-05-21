@@ -1,17 +1,16 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_mem.h
  * Purpose: USB Host - Memory Management module header file
  *----------------------------------------------------------------------------*/
 
-#ifndef __USBH_LIB_MEM_H__
-#define __USBH_LIB_MEM_H__
+#ifndef USBH_LIB_MEM_H_
+#define USBH_LIB_MEM_H_
 
 #include <stdint.h>
 #include <stdbool.h>
-
 
 typedef struct  mem {                   // Memory Pool management structure
   struct mem   *next;                   // Next Memory Block in the list
@@ -59,4 +58,4 @@ extern uint8_t *USBH_MemoryAllocateLib (uint8_t idx, uint32_t sz);
 /// \return      false    memory deallocation failed
 extern bool USBH_MemoryFreeLib (uint8_t idx, uint8_t *ptr_mem);
 
-#endif  // __USBH_LIB_MEM_H__
+#endif  // USBH_LIB_MEM_H_

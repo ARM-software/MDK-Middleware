@@ -6,8 +6,8 @@
  * Purpose: USB Communication Device Class Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __USB_CDC_H
-#define __USB_CDC_H
+#ifndef USB_CDC_H_
+#define USB_CDC_H_
 
 #include <stdint.h>
 
@@ -208,7 +208,6 @@
 #define CDC_SERIAL_STATE_RX_CARRIER_Pos         (      0)
 #define CDC_SERIAL_STATE_RX_CARRIER_Msk         (1U << CDC_SERIAL_STATE_RX_CARRIER_Pos)
 
-
 /*------------------------------------------------------------------------------
  *      Structures based on: - usbcdc11.pdf  (www.usb.org)
  *                           - usbecm120.pdf (www.usb.org)
@@ -349,4 +348,4 @@ typedef struct {
   CDC_NCM_NTB_DATAGRAM32 datagram[1];
 } CDC_NCM_NTB_NDP32;
 
-#endif
+#endif  // USB_CDC_H_

@@ -1,20 +1,19 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_drv.h
  * Purpose: USB Device - Driver access module header file
  *----------------------------------------------------------------------------*/
 
-#ifndef __USBD_LIB_DRV_H__
-#define __USBD_LIB_DRV_H__
+#ifndef USBD_LIB_DRV_H_
+#define USBD_LIB_DRV_H_
 
 #include <stdint.h>
 #include <stdbool.h>
 
 #include "rl_usb.h"
 #include "Driver_USBD.h"
-
 
 /// \brief       Get driver version.
 /// \param       device Device Index
@@ -149,4 +148,4 @@ extern void USBD_SignalDeviceEvent(uint8_t device, uint32_t event);
 /// \param[in]   event \ref USBD_ep_events
 extern void USBD_SignalEndpointEvent(uint8_t device, uint8_t ep_addr, uint32_t event);
 
-#endif  // __USBD_LIB_DRV_H__
+#endif  // USBD_LIB_DRV_H_

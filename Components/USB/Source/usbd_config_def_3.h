@@ -1,13 +1,13 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_config_def_3.h
  * Purpose: USB Device (USBD) - Device 3 Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __USBD_CONFIG_DEF_3_H__
-#define __USBD_CONFIG_DEF_3_H__
+#ifndef USBD_CONFIG_DEF_3_H_
+#define USBD_CONFIG_DEF_3_H_
 
 #define USBD3_EP_MAX                       (0)
 
@@ -8209,4 +8209,4 @@
 #error Device 3 High-speed setting requires Maximum Endpoint 0 Packet Size of 64 bytes!
 #endif
 
-#endif
+#endif  // USBD_CONFIG_DEF_3_H_

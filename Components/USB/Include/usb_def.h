@@ -6,8 +6,8 @@
  * Purpose: USB Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __USB_DEF_H
-#define __USB_DEF_H
+#ifndef USB_DEF_H_
+#define USB_DEF_H_
 
 #include <stdint.h>
 
@@ -90,7 +90,6 @@ typedef struct {
   uint16_t         wIndex;              ///< Index or Offset according to request
   uint16_t         wLength;             ///< Number of bytes to transfer if there is a Data stage
 } USB_SETUP_PACKET;
-
 
 // USB Descriptor Types
 #define USB_DEVICE_DESCRIPTOR_TYPE                 1U
@@ -241,4 +240,4 @@ typedef struct {
   uint8_t  iFunction;
 } USB_INTERFACE_ASSOCIATION_DESCRIPTOR;
 
-#endif  // __USB_DEF_H
+#endif  // USB_DEF_H_

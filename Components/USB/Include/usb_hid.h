@@ -6,8 +6,8 @@
  * Purpose: USB Human Interface Device Class Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __USB_HID_H__
-#define __USB_HID_H__
+#ifndef USB_HID_H_
+#define USB_HID_H_
 
 #include <stdint.h>
 
@@ -24,7 +24,6 @@
 #define HID_PROTOCOL_KEYBOARD                   0x01U
 #define HID_PROTOCOL_REPORT                     0x01U
 #define HID_PROTOCOL_MOUSE                      0x02U
-
 
 // HID Descriptor Types
 #define HID_HID_DESCRIPTOR_TYPE                 0x21U
@@ -58,7 +57,6 @@ typedef __PACKED_STRUCT {
 #define HID_REPORT_OUTPUT                       0x02U
 #define HID_REPORT_FEATURE                      0x03U
 
-
 // Usage Pages
 #define HID_USAGE_PAGE_UNDEFINED                0x00U
 #define HID_USAGE_PAGE_GENERIC                  0x01U
@@ -77,7 +75,6 @@ typedef __PACKED_STRUCT {
 #define HID_USAGE_PAGE_UNICODE                  0x10U
 #define HID_USAGE_PAGE_ALPHANUMERIC             0x14U
 // ...
-
 
 // Generic Desktop Page (0x01)
 #define HID_USAGE_GENERIC_POINTER               0x01U
@@ -290,7 +287,6 @@ typedef __PACKED_STRUCT {
 
 // and others ...
 
-
 // HID Report Item Macros
 
 // Main Items
@@ -361,4 +357,4 @@ typedef __PACKED_STRUCT {
 #define HID_UsageMin(x)                         0x19U,x
 #define HID_UsageMax(x)                         0x29U,x
 
-#endif
+#endif  // USB_HID_H_

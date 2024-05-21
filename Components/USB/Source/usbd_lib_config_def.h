@@ -6,8 +6,8 @@
  * Purpose: USB Device System Configuration header file (for USB Library)
  *----------------------------------------------------------------------------*/
 
-#ifndef __USBD_LIB_CONFIG_DEF_H__
-#define __USBD_LIB_CONFIG_DEF_H__
+#ifndef USBD_LIB_CONFIG_DEF_H_
+#define USBD_LIB_CONFIG_DEF_H_
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -137,4 +137,4 @@ extern       bool                        (* const fpUSBD_MSC_LUN_Write          
 extern       bool                        (* const fpUSBD_MSC_LUN_StartStop                         []) (uint8_t lun, bool start);
 extern       uint32_t                    (* const fpUSBD_MSC_LUN_CheckMedia                        []) (uint8_t lun);
 
-#endif  // __USBD_LIB_CONFIG_DEF_H__
+#endif  // USBD_LIB_CONFIG_DEF_H_

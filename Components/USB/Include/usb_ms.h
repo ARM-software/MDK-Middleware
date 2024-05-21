@@ -6,8 +6,8 @@
  * Purpose: USB Microsoft Descriptors Specific Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __USB_MS_H
-#define __USB_MS_H
+#ifndef USB_MS_H_
+#define USB_MS_H_
 
 #include <stdint.h>
 
@@ -19,7 +19,6 @@
 // USB Microsoft OS Feature Descriptor Index
 #define USB_MS_OS_FEAT_EXT_COMPAT_ID_DESCRIPTOR_IDX     4U      // Extended Compat ID Descriptor Index
 #define USB_MS_OS_FEAT_EXT_PROP_DESCRIPTOR_IDX          5U      // Extended Properties Descriptor Index
-
 
 /// Microsoft OS String Descriptor
 typedef __PACKED_STRUCT {
@@ -56,4 +55,4 @@ typedef __PACKED_STRUCT {
   uint16_t wCount;
 } USB_MS_OS_FEAT_EXT_PROP_HEADER;
 
-#endif  // __USB_MS_H
+#endif  // USB_MS_H_

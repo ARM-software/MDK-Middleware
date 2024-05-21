@@ -1,17 +1,16 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_adc.h
  * Purpose: USB Device - Audio Device Class (ADC) module header file
  *----------------------------------------------------------------------------*/
 
-#ifndef __USBD_LIB_ADC_H__
-#define __USBD_LIB_ADC_H__
+#ifndef USBD_LIB_ADC_H_
+#define USBD_LIB_ADC_H_
 
 #include <stdint.h>
 #include <stdbool.h>
-
 
 /// \brief Audio Class (ADC) get current mute setting for out channel (speaker)
 /// \param[in]     instance      instance of ADC class.
@@ -119,4 +118,4 @@ extern bool USBD_ADC_MicrophoneVolumeGetMax (uint8_t instance, uint8_t ch);
 /// \return        false         fail
 extern bool USBD_ADC_MicrophoneVolumeGetRes (uint8_t instance, uint8_t ch);
 
-#endif  // __USBD_LIB_ADC_H__
+#endif  // USBD_LIB_ADC_H_

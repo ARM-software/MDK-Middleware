@@ -145,4 +145,4 @@ extern       USBH_MSC                             usbh_msc                [];
 extern       USBH_HID                             usbh_hid                [];
 extern       USBH_CDC                             usbh_cdc                [];
 
-#endif // USBH_CONFIG_H_
+#endif  // USBH_CONFIG_H_

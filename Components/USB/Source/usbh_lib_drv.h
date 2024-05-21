@@ -1,20 +1,19 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_drv.h
  * Purpose: USB Host - Driver access module header file
  *----------------------------------------------------------------------------*/
 
-#ifndef __USBH_LIB_DRV_H__
-#define __USBH_LIB_DRV_H__
+#ifndef USBH_LIB_DRV_H_
+#define USBH_LIB_DRV_H_
 
 #include <stdint.h>
 #include <stdbool.h>
 
 #include "rl_usb.h"
 #include "Driver_USBH.h"
-
 
 /// \brief       Get driver version
 /// \param[in]   ctrl  Controller Index
@@ -155,4 +154,4 @@ extern void USBH_SignalPortEvent (uint8_t ctrl, uint8_t port, uint32_t event);
 /// \return      none
 extern void USBH_SignalPipeEvent (uint8_t ctrl, ARM_USBH_PIPE_HANDLE pipe_hndl, uint32_t event);
 
-#endif  // __USBH_LIB_DRV_H__
+#endif  // USBH_LIB_DRV_H_

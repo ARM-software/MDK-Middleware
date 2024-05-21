@@ -1,13 +1,13 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_hid.h
  * Purpose: USB Host - Human Interface Device (HID) module header file
  *----------------------------------------------------------------------------*/
 
-#ifndef __USBH_LIB_HID_H__
-#define __USBH_LIB_HID_H__
+#ifndef USBH_LIB_HID_H_
+#define USBH_LIB_HID_H_
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -15,7 +15,6 @@
 #include "usb_def.h"
 
 #include "rl_usb.h"
-
 
 /// \brief Analyze device configuration and configure resources
 /// \param[in]     device               index of USB Device.
@@ -41,4 +40,4 @@ extern usbStatus USBH_HID_Initialize_Lib (uint8_t instance);
 /// \return                             status code that indicates the execution status of the function as defined with usbStatus.
 extern usbStatus USBH_HID_Uninitialize_Lib (uint8_t instance);
 
-#endif  // __USBH_LIB_HID_H__
+#endif  // USBH_LIB_HID_H_

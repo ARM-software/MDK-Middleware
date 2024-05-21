@@ -1,13 +1,13 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_config_desc_macros.h
  * Purpose: USB Device Descriptor Creation Macros
  *----------------------------------------------------------------------------*/
 
-#ifndef USBD_CONFIG_DESC_MACROS_H
-#define USBD_CONFIG_DESC_MACROS_H
+#ifndef USBD_CONFIG_DESC_MACROS_H_
+#define USBD_CONFIG_DESC_MACROS_H_
 
 #define WBVAL(x)                                        ((x) & 0xFF),(((x) >> 8) & 0xFF)
 #define B3VAL(x)                                        ((x) & 0xFF),(((x) >> 8) & 0xFF),(((x) >> 16) & 0xFF)
@@ -1006,4 +1006,4 @@
   4U,                                                                                        /* dwPropertyDataLength */ \
          USBD_CUSTOM_CLASS##n##_IF##x##_OS_EXT_PROP##idx##_DATA_INT                          /* bPropertyData */
 
-#endif
+#endif  // USBD_CONFIG_DESC_MACROS_H_

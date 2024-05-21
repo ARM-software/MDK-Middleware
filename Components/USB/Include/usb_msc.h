@@ -6,8 +6,8 @@
  * Purpose: USB Mass Storage Device Class Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __USB_MSC_H__
-#define __USB_MSC_H__
+#ifndef USB_MSC_H_
+#define USB_MSC_H_
 
 #include <stdint.h>
 
@@ -95,4 +95,4 @@ typedef __PACKED_STRUCT {
 #define SCSI_SERVICE_ACTION_OUT16       0x9FU
 #define SCSI_REPORT_ID_INFO             0xA3U
 
-#endif
+#endif  // USB_MSC_H_

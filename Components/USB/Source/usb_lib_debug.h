@@ -6,8 +6,8 @@
  * Purpose: Library debug definition
  *----------------------------------------------------------------------------*/
 
-#ifndef  __USB_LIB_DEBUG_H__
-#define  __USB_LIB_DEBUG_H__
+#ifndef USB_LIB_DEBUG_H_
+#define USB_LIB_DEBUG_H_
 
 #include "USB_Debug.h"
 
@@ -30,6 +30,6 @@
 #endif
 #endif
 
-#endif   // _RTE_
+#endif  // _RTE_
 
-#endif   // __USB_LIB_DEBUG_H__
+#endif  // USB_LIB_DEBUG_H_

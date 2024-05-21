@@ -1,19 +1,18 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_core_custom_class.h
  * Purpose: USB Device - Custom Class core module header file
  *----------------------------------------------------------------------------*/
 
-#ifndef __USBD_LIB_CORE_CUSTOM_CLASS_H__
-#define __USBD_LIB_CORE_CUSTOM_CLASS_H__
+#ifndef USBD_LIB_CORE_CUSTOM_CLASS_H_
+#define USBD_LIB_CORE_CUSTOM_CLASS_H_
 
 #include <stdint.h>
 #include <stdbool.h>
 
 #include "rl_usb.h"
-
 
 /// \brief USB Device Endpoint 0 Get Extended Properties OS Descriptor
 /// \param[in]   device                  device index.
@@ -52,4 +51,4 @@ extern usbdRequestStatus USBD_Class_Endpoint0_OutDataReceived (uint8_t device);
 /// \return      usbdRequestNAK:         request was processed but the device is busy (return NAK)
 extern usbdRequestStatus USBD_Class_Endpoint0_InDataSent (uint8_t device);
 
-#endif  // __USBD_LIB_CORE_CUSTOM_CLASS_H__
+#endif  // USBD_LIB_CORE_CUSTOM_CLASS_H_

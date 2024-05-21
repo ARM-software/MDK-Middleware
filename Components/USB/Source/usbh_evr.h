@@ -6,8 +6,8 @@
  * Purpose: USB Host (USBH) - Event Recorder definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __USBH_EVR_H__
-#define __USBH_EVR_H__
+#ifndef USBH_EVR_H_
+#define USBH_EVR_H_
 
 #include "RTE_Components.h"
 
@@ -3779,4 +3779,4 @@
   #define              EvrUSBH_MSC_RecoverFailed(...)
 #endif
 
-#endif // __USBH_EVR_H__
+#endif  // USBH_EVR_H_

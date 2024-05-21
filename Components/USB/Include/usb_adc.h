@@ -1,13 +1,13 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usb_adc.h
  * Purpose: USB Audio Device Class Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __USB_ADC_H__
-#define __USB_ADC_H__
+#ifndef USB_ADC_H_
+#define USB_ADC_H_
 
 /* Audio Device Class (ADC) */
 
@@ -351,4 +351,4 @@
 
 // Audio Terminal Types
 
-#endif
+#endif  // USB_ADC_H_

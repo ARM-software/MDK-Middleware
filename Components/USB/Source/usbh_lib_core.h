@@ -6,8 +6,8 @@
  * Purpose: USB Host - Core module header file
  *----------------------------------------------------------------------------*/
 
-#ifndef __USBH_LIB_CORE_H__
-#define __USBH_LIB_CORE_H__
+#ifndef USBH_LIB_CORE_H_
+#define USBH_LIB_CORE_H_
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -16,7 +16,6 @@
 #include "usbh_lib.h"
 
 #include "Driver_USBH.h"
-
 
 #define ARM_USBH_PIPE_EVENT_MASK              (0xFFU)
 
@@ -84,4 +83,4 @@ extern usbStatus USBH_RecoverDevice (USBH_DEV *ptr_dev);
 /// \return                             none.
 extern void USBH_ConnectDebounce (void * arg);
 
-#endif  // __USBH_LIB_CORE_H__
+#endif  // USBH_LIB_CORE_H_

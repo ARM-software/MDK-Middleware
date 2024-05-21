@@ -1,19 +1,18 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_cdc.h
  * Purpose: USB Device - Communication Device Class (CDC) module header file
  *----------------------------------------------------------------------------*/
 
-#ifndef __USBD_LIB_CDC_H__
-#define __USBD_LIB_CDC_H__
+#ifndef USBD_LIB_CDC_H_
+#define USBD_LIB_CDC_H_
 
 #include <stdint.h>
 #include <stdbool.h>
 
 #include "usb_cdc.h"
-
 
 /// \brief CDC class (ACM) send encapsulated command (calls USBD_CDC_ACM_SendEncapsulatedCommand function)
 /// \param[in]     instance      instance of CDC class.
@@ -74,4 +73,4 @@ extern bool USBD_CDC_NCM_CoreSetMaxDatagramSize                      (uint8_t in
 extern bool USBD_CDC_NCM_CoreGetCrcMode                              (uint8_t instance, uint16_t *crc_mode);
 extern bool USBD_CDC_NCM_CoreSetCrcMode                              (uint8_t instance, uint16_t crc_mode);
 
-#endif  // __USBD_LIB_CDC_H__
+#endif  // USBD_LIB_CDC_H_
