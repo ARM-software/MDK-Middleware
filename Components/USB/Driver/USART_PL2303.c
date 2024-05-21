@@ -16,6 +16,9 @@
 /* History:
  *  Version 1.11
  *    - Removed support for CMSIS-RTOS version 1
+ *    - Removed __SECTION macro usage
+ *    - Removed USB_CMSIS_RTOS2 and USB_CMSIS_RTOS2_RTX5 macros usage
+ *    - Removed U16_LE macro usage
  *  Version 1.10
  *    - Corrected compiler warnings
  *  Version 1.9
@@ -50,7 +53,7 @@
 
 #include "Driver_USART.h"
 
-#ifndef  USB_CMSIS_RTOS2
+#ifndef  RTE_CMSIS_RTOS2
 #error   This driver requires CMSIS-RTOS2!
 #else
 
@@ -181,14 +184,14 @@ static void USBH_PL2303_Send_Thread (void *arg) {
   usbh_send_thread_id = NULL;
   (void)osThreadTerminate (osThreadGetId());
 }
-#ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxThread_t        usbh_pl2303_send_thread_cb_mem                                                    __SECTION(.bss.os.thread.cb);
-static uint64_t             usbh_pl2303_send_thread_stack_mem[(USBH_PL2303_SEND_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
+#ifdef RTE_CMSIS_RTOS2_RTX5
+static osRtxThread_t        usbh_pl2303_send_thread_cb_mem                                                    __attribute__((section(".bss.os.thread.cb")));
+static uint64_t             usbh_pl2303_send_thread_stack_mem[(USBH_PL2303_SEND_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
 static const osThreadAttr_t usbh_pl2303_send_thread_attr = {
   "USBH_PL2303_Send_Thread",
   0U,
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
  &usbh_pl2303_send_thread_cb_mem,
   sizeof(osRtxThread_t),
  &usbh_pl2303_send_thread_stack_mem[0U],
@@ -286,14 +289,14 @@ static void USBH_PL2303_Receive_Thread (void *arg) {
   usbh_receive_thread_id = NULL;
   (void)osThreadTerminate (osThreadGetId());
 }
-#ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxThread_t        usbh_pl2303_receive_thread_cb_mem                                                       __SECTION(.bss.os.thread.cb);
-static uint64_t             usbh_pl2303_receive_thread_stack_mem[(USBH_PL2303_RECEIVE_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
+#ifdef RTE_CMSIS_RTOS2_RTX5
+static osRtxThread_t        usbh_pl2303_receive_thread_cb_mem                                                       __attribute__((section(".bss.os.thread.cb")));
+static uint64_t             usbh_pl2303_receive_thread_stack_mem[(USBH_PL2303_RECEIVE_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
 static const osThreadAttr_t usbh_pl2303_receive_thread_attr = {
   "USBH_PL2303_Receive_Thread",
   0U,
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
  &usbh_pl2303_receive_thread_cb_mem,
   sizeof(osRtxThread_t),
  &usbh_pl2303_receive_thread_stack_mem[0U],
@@ -342,14 +345,14 @@ static void USBH_PL2303_Status_Thread (void *arg) {
     }
   }
 }
-#ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxThread_t        usbh_pl2303_status_thread_cb_mem                                                      __SECTION(.bss.os.thread.cb);
-static uint64_t             usbh_pl2303_status_thread_stack_mem[(USBH_PL2303_STATUS_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
+#ifdef RTE_CMSIS_RTOS2_RTX5
+static osRtxThread_t        usbh_pl2303_status_thread_cb_mem                                                      __attribute__((section(".bss.os.thread.cb")));
+static uint64_t             usbh_pl2303_status_thread_stack_mem[(USBH_PL2303_STATUS_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
 static const osThreadAttr_t usbh_pl2303_status_thread_attr = {
   "USBH_PL2303_Status_Thread",
   0U,
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
  &usbh_pl2303_status_thread_cb_mem,
   sizeof(osRtxThread_t),
  &usbh_pl2303_status_thread_stack_mem[0U],
@@ -387,9 +390,9 @@ usbStatus USBH_PL2303_SetLineCoding (const CDC_LINE_CODING *line_coding) {
   setup_packet.bmRequestType.Type     = USB_REQUEST_CLASS;
   setup_packet.bmRequestType.Recipient= USB_REQUEST_TO_INTERFACE;
   setup_packet.bRequest               = CDC_SET_LINE_CODING;
-  setup_packet.wValue                 = U16_LE(0U);
-  setup_packet.wIndex                 = U16_LE(0U);
-  setup_packet.wLength                = U16_LE(sizeof(CDC_LINE_CODING));
+  setup_packet.wValue                 = 0U;
+  setup_packet.wIndex                 = 0U;
+  setup_packet.wLength                = (uint16_t)(sizeof(CDC_LINE_CODING));
 
   return (USBH_ControlTransfer (USBH_CC_Device, &setup_packet, (uint8_t *)((uint32_t)line_coding), sizeof(CDC_LINE_CODING)));
 }
@@ -416,9 +419,9 @@ usbStatus USBH_PL2303_SetControlLineState (uint16_t state) {
   setup_packet.bmRequestType.Type     = USB_REQUEST_CLASS;
   setup_packet.bmRequestType.Recipient= USB_REQUEST_TO_INTERFACE;
   setup_packet.bRequest               = CDC_SET_CONTROL_LINE_STATE;
-  setup_packet.wValue                 = U16_LE(state);
-  setup_packet.wIndex                 = U16_LE(0U);
-  setup_packet.wLength                = U16_LE(0U);
+  setup_packet.wValue                 = state;
+  setup_packet.wIndex                 = 0U;
+  setup_packet.wLength                = 0U;
 
   return (USBH_ControlTransfer (USBH_CC_Device, &setup_packet, NULL, 0U));
 }
@@ -448,9 +451,9 @@ usbStatus USBH_PL2303_SendBreak (uint16_t duration) {
   setup_packet.bmRequestType.Type     = USB_REQUEST_CLASS;
   setup_packet.bmRequestType.Recipient= USB_REQUEST_TO_INTERFACE;
   setup_packet.bRequest               = CDC_SEND_BREAK;
-  setup_packet.wValue                 = U16_LE(duration);
-  setup_packet.wIndex                 = U16_LE(0U);
-  setup_packet.wLength                = U16_LE(0U);
+  setup_packet.wValue                 = duration;
+  setup_packet.wIndex                 = 0U;
+  setup_packet.wLength                = 0U;
 
   return (USBH_ControlTransfer (USBH_CC_Device, &setup_packet, NULL, 0U));
 }
@@ -910,4 +913,4 @@ ARM_DRIVER_USART USART_PL2303_DRV(USART_PL2303_DRV_NUM) = {
     ARM_USART_GetModemStatus
 };
 
-#endif // USB_CMSIS_RTOS2
+#endif // RTE_CMSIS_RTOS2

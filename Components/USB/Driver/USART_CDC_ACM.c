@@ -23,6 +23,8 @@
 /* History:
  *  Version 1.11
  *    - Removed support for CMSIS-RTOS version 1
+ *    - Removed __SECTION macro usage
+ *    - Removed USB_CMSIS_RTOS2 and USB_CMSIS_RTOS2_RTX5 macros usage
  *  Version 1.10
  *    - Corrected compiler warnings
  *  Version 1.9
@@ -55,7 +57,7 @@
 
 #include "Driver_USART.h"
 
-#ifndef  USB_CMSIS_RTOS2
+#ifndef  RTE_CMSIS_RTOS2
 #error   This driver requires CMSIS-RTOS2!
 #else
 
@@ -201,9 +203,9 @@ static void USART_CDC_Send_Thread (void *arg) {
   ptr_usart_cdc->send_thread_id = NULL;
   (void)osThreadTerminate (osThreadGetId());
 }
-#ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxThread_t  usart_cdc_send_thread_cb_mem   [USART_CDC_DRV_INSTANCE_NUM]                                               __SECTION(.bss.os.thread.cb);
-static uint64_t       usart_cdc_send_thread_stack_mem[USART_CDC_DRV_INSTANCE_NUM][(USART_CDC_SEND_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
+#ifdef RTE_CMSIS_RTOS2_RTX5
+static osRtxThread_t  usart_cdc_send_thread_cb_mem   [USART_CDC_DRV_INSTANCE_NUM]                                               __attribute__((section(".bss.os.thread.cb")));
+static uint64_t       usart_cdc_send_thread_stack_mem[USART_CDC_DRV_INSTANCE_NUM][(USART_CDC_SEND_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
 static osThreadAttr_t usart_cdc_send_thread_attr = {
   NULL,
@@ -303,9 +305,9 @@ static void USART_CDC_Receive_Thread (void *arg) {
   ptr_usart_cdc->receive_thread_id = NULL;
   (void)osThreadTerminate (osThreadGetId());
 }
-#ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxThread_t  usart_cdc_receive_thread_cb_mem   [USART_CDC_DRV_INSTANCE_NUM]                                                  __SECTION(.bss.os.thread.cb);
-static uint64_t       usart_cdc_receive_thread_stack_mem[USART_CDC_DRV_INSTANCE_NUM][(USART_CDC_RECEIVE_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
+#ifdef RTE_CMSIS_RTOS2_RTX5
+static osRtxThread_t  usart_cdc_receive_thread_cb_mem   [USART_CDC_DRV_INSTANCE_NUM]                                                  __attribute__((section(".bss.os.thread.cb")));
+static uint64_t       usart_cdc_receive_thread_stack_mem[USART_CDC_DRV_INSTANCE_NUM][(USART_CDC_RECEIVE_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
 static osThreadAttr_t usart_cdc_receive_thread_attr = {
   NULL,
@@ -495,7 +497,7 @@ static int32_t ARM_USARTx_Send (uint8_t instance, const void *data, uint32_t num
 
   // Start send thread if it is not already running
   if (ptr_usart_cdc->send_thread_id == NULL) {
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
     usart_cdc_send_thread_attr.cb_mem    = &usart_cdc_send_thread_cb_mem   [instance];
     usart_cdc_send_thread_attr.cb_size   = sizeof(osRtxThread_t);
     usart_cdc_send_thread_attr.stack_mem = &usart_cdc_send_thread_stack_mem[instance][0];
@@ -557,7 +559,7 @@ static int32_t ARM_USARTx_Receive (uint8_t instance, void *data, uint32_t num) {
 
   // Start reception thread if it is not already running
   if (ptr_usart_cdc->receive_thread_id == NULL) {
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
     usart_cdc_receive_thread_attr.cb_mem    = &usart_cdc_receive_thread_cb_mem   [instance];
     usart_cdc_receive_thread_attr.cb_size   = sizeof(osRtxThread_t);
     usart_cdc_receive_thread_attr.stack_mem = &usart_cdc_receive_thread_stack_mem[instance][0];
@@ -1028,4 +1030,4 @@ ARM_DRIVER_USART USART_CDC_DRV(USART_CDC_DRV3_NUM) = {
 };
 #endif
 
-#endif // USB_CMSIS_RTOS2
+#endif // RTE_CMSIS_RTOS2
