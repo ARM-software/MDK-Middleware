@@ -1,11 +1,18 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System:Drive
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    FS_Config_MC_0.h
  * Purpose: File System Configuration for Memory Card Drive
  * Rev.:    V6.3.0
  *----------------------------------------------------------------------------*/
+
+#ifdef   CMSIS_target_header
+#include CMSIS_target_header
+#else
+#define CMSIS_DRIVER_MCI        0
+#define CMSIS_DRIVER_SPI        0
+#endif
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 
@@ -13,13 +20,13 @@
 // <i>Configuration for SD/SDHC/MMC Memory Card assigned to drive letter "M0:"
 #define MC0_ENABLE              1
 
-//   <o>Connect to hardware via Driver_MCI# <0-255>
+//   <y>Connect to hardware via Driver_MCI#
 //   <i>Select driver control block for hardware interface
-#define MC0_MCI_DRIVER          0
+#define MC0_MCI_DRIVER          CMSIS_DRIVER_MCI
 
-//   <o>Connect to hardware via Driver_SPI# <0-255>
+//   <y>Connect to hardware via Driver_SPI#
 //   <i>Select driver control block for hardware interface when in SPI mode
-#define MC0_SPI_DRIVER          0
+#define MC0_SPI_DRIVER          CMSIS_DRIVER_SPI
 
 //   <o>Memory Card Interface Mode <0=>Native <1=>SPI
 //   <i>Native uses a SD Bus with up to 8 data lines, CLK, and CMD

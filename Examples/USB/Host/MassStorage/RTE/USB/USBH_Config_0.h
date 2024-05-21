@@ -7,12 +7,18 @@
  * Rev.:    V8.0.0
  *----------------------------------------------------------------------------*/
 
+#ifdef   CMSIS_target_header
+#include CMSIS_target_header
+#else
+#define CMSIS_DRIVER_USBH               0
+#endif
+
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 
 // <h>USB Host 0
-//   <o>Connect to hardware via Driver_USBH# <0-255>
+//   <y>Connect to hardware via Driver_USBH#
 //   <i>Specifies instance of the Host Controller hardware interface.
-#define USBH0_HC_NUM                    0
+#define USBH0_HC_NUM                    CMSIS_DRIVER_USBH
 
 //   <o>Maximum Port Power Consumption<2-500:2>
 //     <i>Specifies the maximum power consumption per port (in mA)

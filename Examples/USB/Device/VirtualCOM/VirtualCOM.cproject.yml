@@ -11,7 +11,8 @@ project:
       provides:
         - CMSIS-RTOS2
       consumes:
-        - CMSIS_USB_Device: 0
+        - CMSIS_USB_Device
+        - CMSIS_USART
         - CMSIS_VIO
 
   groups:

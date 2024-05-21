@@ -12,8 +12,8 @@ project:
       provides:
         - CMSIS-RTOS2
       consumes:
-        - CMSIS_ETH: 0
-        - CMSIS_MCI: 0
+        - CMSIS_ETH
+        - CMSIS_MCI
         - CMSIS_VIO
         - STDOUT
 

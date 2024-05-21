@@ -11,7 +11,7 @@ project:
       provides:
         - CMSIS-RTOS2
       consumes:
-        - CMSIS_USB_Host: 0
+        - CMSIS_USB_Host
 
   groups:
     - group: Documentation

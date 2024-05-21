@@ -9,12 +9,18 @@
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 
+#ifdef   CMSIS_target_header
+#include CMSIS_target_header
+#else
+#define CMSIS_DRIVER_ETH        0
+#endif
+
 // <h>Ethernet Network Interface 0
 #define ETH0_ENABLE             1
 
-//   <o>Connect to hardware via Driver_ETH# <0-255>
+//   <y>Connect to hardware via Driver_ETH#
 //   <i>Select driver control block for MAC and PHY interface
-#define ETH0_DRIVER             0
+#define ETH0_DRIVER             CMSIS_DRIVER_ETH
 
 //   <s.17>MAC Address
 //   <i>Ethernet MAC Address in text representation

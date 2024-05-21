@@ -61,10 +61,16 @@
  
 #include "Driver_USART.h"
  
+#ifdef   CMSIS_target_header
+#include CMSIS_target_header
+#else
+#define CMSIS_DRIVER_USART      0
+#endif
+ 
 // UART Configuration ----------------------------------------------------------
  
-#define  UART_PORT              1       // UART Port number
-#define  UART_BUFFER_SIZE      (512)    // UART Buffer Size
+#define  UART_PORT              CMSIS_DRIVER_USART      // UART Port number
+#define  UART_BUFFER_SIZE      (512)                    // UART Buffer Size
  
 //------------------------------------------------------------------------------
  

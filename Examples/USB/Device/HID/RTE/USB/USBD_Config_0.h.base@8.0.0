@@ -17,7 +17,7 @@
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 
 // <h>USB Device 0
-//   <o>Connect to hardware via Driver_USBD# <0-255>
+//   <y>Connect to hardware via Driver_USBD#
 //   <i>Select driver control block for hardware interface.
 #define USBD0_PORT                      0
 

@@ -14,12 +14,18 @@
  * Assign Device Class to USB Device # = 0
  *----------------------------------------------------------------------------*/
 
+#ifdef   CMSIS_target_header
+#include CMSIS_target_header
+#else
+#define CMSIS_DRIVER_USBD               0
+#endif
+
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 
 // <h>USB Device 0
-//   <o>Connect to hardware via Driver_USBD# <0-255>
+//   <y>Connect to hardware via Driver_USBD#
 //   <i>Select driver control block for hardware interface.
-#define USBD0_PORT                      0
+#define USBD0_PORT                      CMSIS_DRIVER_USBD
 
 //   <o.0>High-speed
 //   <i>Enable High-speed functionality (if device supports it).
