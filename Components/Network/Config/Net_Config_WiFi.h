@@ -12,7 +12,7 @@
 // <h>WiFi Network Interface
 #define WIFI%Instance%_ENABLE             1
 
-//   <o>Connect to hardware via Driver_WiFi# <0-255>
+//   <y>Connect to hardware via Driver_WiFi#
 //   <i>Select driver control block for WiFi interface
 #define WIFI%Instance%_DRIVER             %Instance%
 

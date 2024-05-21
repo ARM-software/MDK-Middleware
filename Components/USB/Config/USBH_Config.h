@@ -10,7 +10,7 @@
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 
 // <h>USB Host %Instance%
-//   <o>Connect to hardware via Driver_USBH# <0-255>
+//   <y>Connect to hardware via Driver_USBH#
 //   <i>Specifies instance of the Host Controller hardware interface.
 #define USBH%Instance%_HC_NUM                    %Instance%
 

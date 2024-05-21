@@ -12,7 +12,7 @@
 // <h>Ethernet Network Interface %Instance%
 #define ETH%Instance%_ENABLE             1
 
-//   <o>Connect to hardware via Driver_ETH# <0-255>
+//   <y>Connect to hardware via Driver_ETH#
 //   <i>Select driver control block for MAC and PHY interface
 #define ETH%Instance%_DRIVER             %Instance%
 

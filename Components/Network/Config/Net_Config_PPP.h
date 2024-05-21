@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network:Interface
- * Copyright (c) 2004-2020 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    Net_Config_PPP.h
  * Purpose: Network Configuration for PPP Interface
- * Rev.:    V7.2.0
+ * Rev.:    V7.3.0
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -12,7 +12,7 @@
 // <h>PPP Network Interface
 #define PPP_ENABLE              1
 
-//   <o>Connect to hardware via Driver_USART# <0-255>
+//   <y>Connect to hardware via Driver_USART#
 //   <i>Select driver control block for hardware interface
 #define PPP_USART_DRIVER        0
 

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System:Drive
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    FS_Config_MC_%Instance%.h
  * Purpose: File System Configuration for Memory Card Drive
@@ -13,11 +13,11 @@
 // <i>Configuration for SD/SDHC/MMC Memory Card assigned to drive letter "M%Instance%:"
 #define MC%Instance%_ENABLE              1
 
-//   <o>Connect to hardware via Driver_MCI# <0-255>
+//   <y>Connect to hardware via Driver_MCI#
 //   <i>Select driver control block for hardware interface
 #define MC%Instance%_MCI_DRIVER          %Instance%
 
-//   <o>Connect to hardware via Driver_SPI# <0-255>
+//   <y>Connect to hardware via Driver_SPI#
 //   <i>Select driver control block for hardware interface when in SPI mode
 #define MC%Instance%_SPI_DRIVER          %Instance%
 

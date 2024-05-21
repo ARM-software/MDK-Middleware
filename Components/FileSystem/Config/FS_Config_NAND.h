@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System:Drive
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    FS_Config_NAND_%Instance%.h
  * Purpose: File System Configuration for NAND Flash Drive
@@ -13,7 +13,7 @@
 // <i>Configuration for NAND device assigned to drive letter "N%Instance%:"
 #define NAND%Instance%_ENABLE            1
 
-//   <o>Connect to hardware via Driver_NAND# <0-255>
+//   <y>Connect to hardware via Driver_NAND#
 //   <i>Select driver control block for hardware interface
 #define NAND%Instance%_DRIVER            %Instance%
 
