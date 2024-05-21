@@ -1003,7 +1003,7 @@ static void USBD_MSC_RequestSense (uint8_t instance) {
       break;
     case USBD_MSC_REQUEST_SENSE_ERR_ILLEGAL_PARAM:
       ptr_msc_cfg->bulk_buf[ 2] = 0x05U;        // ILLEGAL REQUEST
-      ptr_msc_cfg->bulk_buf[12] = 0x26U;        // Additional Sense Code: Invalid parm value
+      ptr_msc_cfg->bulk_buf[12] = 0x26U;        // Additional Sense Code: Invalid parameter value
       ptr_msc_cfg->bulk_buf[13] = 0x02U;        // Additional Sense Code Qualifier
 #if (defined(USBD_DEBUG) && (USBD_DEBUG == 1))
       status = USBD_MSC_REQUEST_SENSE_ERR_ILLEGAL_PARAM;

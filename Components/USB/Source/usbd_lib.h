@@ -215,7 +215,7 @@ typedef struct {
   uint32_t              ncm_in_datagram_index;              ///< NCM current datagram index in current NDP in IN NTB (for sending)
   uint32_t              ncm_in_datagram_num;                ///< NCM number of datagrams for current NDP in IN NTB (for sending)
   uint32_t              ncm_out_datagram_index;             ///< NCM current datagram index in current NDP in OUT NTB (received)
-  uint32_t              ncm_raw_out_len;                    ///< NCM number of data byutes to receive in RAW mode
+  uint32_t              ncm_raw_out_len;                    ///< NCM number of data bytes to receive in RAW mode
   uint32_t              ncm_ntb_in_len;                     ///< NCM current IN NTB data size (for sending)
   uint32_t              ncm_ntb_in_buf_len[2];              ///< NCM current IN NTB data size in respective buffer (for sending)
   uint32_t              ncm_ntb_out_buf_len[2];             ///< NCM current OUT NTB data size in respective buffer (received)

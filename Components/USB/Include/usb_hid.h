@@ -163,7 +163,7 @@ extern const unsigned char HID_KEYBOARD_ID_TO_ASCII[];
 #define HID_USAGE_KEYBOARD_ESCAPE               0x29U
 #define HID_USAGE_KEYBOARD_DELETE               0x2AU
 
-// Funtion Keys
+// Function Keys
 #define HID_USAGE_KEYBOARD_F1                   0x3AU
 #define HID_USAGE_KEYBOARD_F12                  0x45U
 
