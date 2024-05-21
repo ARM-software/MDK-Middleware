@@ -15,6 +15,11 @@
 #include "cmsis_compiler.h"
 #include "RTE_Components.h"
 
+/// Network component version
+#define MW_NET_VERSION_MAJOR    8
+#define MW_NET_VERSION_MINOR    0
+#define MW_NET_VERSION_PATCH    0
+
 #ifdef __cplusplus
 extern "C"  {
 #endif
