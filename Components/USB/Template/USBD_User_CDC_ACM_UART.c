@@ -61,7 +61,7 @@
  
 #include "Driver_USART.h"
 
-#ifndef  USB_CMSIS_RTOS2
+#ifndef  RTE_CMSIS_RTOS2
 #error   This user template requires CMSIS-RTOS2!
 #else
  
@@ -142,14 +142,14 @@ __NO_RETURN static void CDC%Instance%_ACM_UART_to_USB_Thread (void *arg) {
     (void)osDelay(10U);
   }
 }
-#ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxThread_t        cdc%Instance%_acm_uart_to_usb_thread_cb_mem               __SECTION(.bss.os.thread.cb);
-static uint64_t             cdc%Instance%_acm_uart_to_usb_thread_stack_mem[512U / 8U] __SECTION(.bss.os.thread.stack);
+#ifdef RTE_CMSIS_RTOS2_RTX5
+static osRtxThread_t        cdc%Instance%_acm_uart_to_usb_thread_cb_mem               __attribute__((section(".bss.os.thread.cb")));
+static uint64_t             cdc%Instance%_acm_uart_to_usb_thread_stack_mem[512U / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
 static const osThreadAttr_t cdc%Instance%_acm_uart_to_usb_thread_attr = {
   "CDC%Instance%_ACM_UART_to_USB_Thread",
   0U,
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
  &cdc%Instance%_acm_uart_to_usb_thread_cb_mem,
   sizeof(osRtxThread_t),
  &cdc%Instance%_acm_uart_to_usb_thread_stack_mem[0],
@@ -324,4 +324,4 @@ bool USBD_CDC%Instance%_ACM_SetControlLineState (uint16_t state) {
  
 //! [code_USBD_User_CDC_ACM]
 
-#endif // USB_CMSIS_RTOS2
+#endif // RTE_CMSIS_RTOS2

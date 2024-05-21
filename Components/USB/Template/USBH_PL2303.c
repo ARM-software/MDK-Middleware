@@ -1,11 +1,11 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host:Custom Class
- * Copyright (c) 2004-2020 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USBH_PL2303.c
  * Purpose: USB Host (USBH) - Custom Class - Prolific PL2303 USB to serial
  *          RS232 adapter driver
- * Rev.:    V6.3.2
+ * Rev.:    V6.3.3
  *----------------------------------------------------------------------------*/
 /*
  * USBH_PL2303.c is a Prolific PL2303 USB to serial RS232 adapter driver
@@ -147,52 +147,52 @@ usbStatus USBH_CustomClass_Initialize (uint8_t instance) {
   setup_packet.bmRequestType.Type     = USB_REQUEST_VENDOR;
   setup_packet.bmRequestType.Recipient= USB_REQUEST_TO_DEVICE;
   setup_packet.bRequest               = 1U;
-  setup_packet.wValue                 = U16_LE(0x8484U);
-  setup_packet.wIndex                 = U16_LE(0U);
-  setup_packet.wLength                = U16_LE(1U);
+  setup_packet.wValue                 = 0x8484U;
+  setup_packet.wIndex                 = 0U;
+  setup_packet.wLength                = 1U;
   if (USBH_ControlTransfer (USBH_CC_Device, &setup_packet, buf,  1U) != usbOK) { return usbClassErrorCustom; }
  
   setup_packet.bmRequestType.Dir      = USB_REQUEST_HOST_TO_DEVICE;
-  setup_packet.wValue                 = U16_LE(0x0404U);
+  setup_packet.wValue                 = 0x0404U;
   if (USBH_ControlTransfer (USBH_CC_Device, &setup_packet, buf,  1U) != usbOK) { return usbClassErrorCustom; }
  
   setup_packet.bmRequestType.Dir      = USB_REQUEST_DEVICE_TO_HOST;
-  setup_packet.wValue                 = U16_LE(0x8484U);
+  setup_packet.wValue                 = 0x8484U;
   if (USBH_ControlTransfer (USBH_CC_Device, &setup_packet, buf,  1U) != usbOK) { return usbClassErrorCustom; }
  
-  setup_packet.wValue                 = U16_LE(0x8383U);
+  setup_packet.wValue                 = 0x8383U;
   if (USBH_ControlTransfer (USBH_CC_Device, &setup_packet, buf,  1U) != usbOK) { return usbClassErrorCustom; }
  
-  setup_packet.wValue                 = U16_LE(0x8484U);
+  setup_packet.wValue                 = 0x8484U;
   if (USBH_ControlTransfer (USBH_CC_Device, &setup_packet, buf,  1U) != usbOK) { return usbClassErrorCustom; }
  
   setup_packet.bmRequestType.Dir      = USB_REQUEST_HOST_TO_DEVICE;
-  setup_packet.wValue                 = U16_LE(0x0404U);
-  setup_packet.wIndex                 = U16_LE(1U);
-  setup_packet.wLength                = U16_LE(0U);
+  setup_packet.wValue                 = 0x0404U;
+  setup_packet.wIndex                 = 1U;
+  setup_packet.wLength                = 0U;
   if (USBH_ControlTransfer (USBH_CC_Device, &setup_packet, NULL, 0U) != usbOK) { return usbClassErrorCustom; }
  
   setup_packet.bmRequestType.Dir      = USB_REQUEST_DEVICE_TO_HOST;
-  setup_packet.wValue                 = U16_LE(0x8484U);
-  setup_packet.wIndex                 = U16_LE(0U);
-  setup_packet.wLength                = U16_LE(1U);
+  setup_packet.wValue                 = 0x8484U;
+  setup_packet.wIndex                 = 0U;
+  setup_packet.wLength                = 1U;
   if (USBH_ControlTransfer (USBH_CC_Device, &setup_packet, buf,  1U) != usbOK) { return usbClassErrorCustom; }
  
-  setup_packet.wValue                 = U16_LE(0x8383U);
+  setup_packet.wValue                 = 0x8383U;
   if (USBH_ControlTransfer (USBH_CC_Device, &setup_packet, buf,  1U) != usbOK) { return usbClassErrorCustom; }
  
   setup_packet.bmRequestType.Dir      = USB_REQUEST_HOST_TO_DEVICE;
-  setup_packet.wValue                 = U16_LE(0U);
-  setup_packet.wIndex                 = U16_LE(1U);
-  setup_packet.wLength                = U16_LE(0U);
+  setup_packet.wValue                 = 0U;
+  setup_packet.wIndex                 = 1U;
+  setup_packet.wLength                = 0U;
   if (USBH_ControlTransfer (USBH_CC_Device, &setup_packet, NULL, 0U) != usbOK) { return usbClassErrorCustom; }
  
-  setup_packet.wValue                 = U16_LE(1U);
-  setup_packet.wIndex                 = U16_LE(0U);
+  setup_packet.wValue                 = 1U;
+  setup_packet.wIndex                 = 0U;
   if (USBH_ControlTransfer (USBH_CC_Device, &setup_packet, NULL, 0U) != usbOK) { return usbClassErrorCustom; }
  
-  setup_packet.wValue                 = U16_LE(2U);
-  setup_packet.wIndex                 = U16_LE(0x44U);
+  setup_packet.wValue                 = 2U;
+  setup_packet.wIndex                 = 0x44U;
   if (USBH_ControlTransfer (USBH_CC_Device, &setup_packet, NULL, 0U) != usbOK) { return usbClassErrorCustom; }
  
   // Initial CDC SetLineCoding request: Set 9600 baud, 8 data bits, 1 stop bit, no parity
@@ -200,10 +200,10 @@ usbStatus USBH_CustomClass_Initialize (uint8_t instance) {
   setup_packet.bmRequestType.Type     = USB_REQUEST_CLASS;
   setup_packet.bmRequestType.Recipient= USB_REQUEST_TO_INTERFACE;
   setup_packet.bRequest               = 0x20U;
-  setup_packet.wValue                 = U16_LE(0U);
-  setup_packet.wIndex                 = U16_LE(0U);
-  setup_packet.wLength                = U16_LE(7U);
-  br                                  = U32_LE(9600U);  // Data terminal rate in bits per second = 9600 baud
+  setup_packet.wValue                 = 0U;
+  setup_packet.wIndex                 = 0U;
+  setup_packet.wLength                = 7U;
+  br                                  = 9600U;          // Data terminal rate in bits per second = 9600 baud
   buf[0]                              = (uint8_t)( br        & 0xFFU);
   buf[1]                              = (uint8_t)((br >>  8) & 0xFFU);
   buf[2]                              = (uint8_t)((br >> 16) & 0xFFU);

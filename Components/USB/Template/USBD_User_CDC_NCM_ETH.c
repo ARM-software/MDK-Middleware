@@ -31,7 +31,7 @@
 #include "Driver_ETH_PHY.h"             // ::CMSIS Driver:Ethernet PHY
 #include "USBD_Config_CDC_%Instance%.h"
  
-#ifndef  USB_CMSIS_RTOS2
+#ifndef  RTE_CMSIS_RTOS2
 #error   This user template requires CMSIS-RTOS2!
 #else
  
@@ -94,19 +94,19 @@ static void Connection_Thread (void *arg);
 static void DataIN_Thread     (void *arg);
 static void DataOUT_Thread    (void *arg);
  
-#ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxThread_t        connection_thread_cb_mem           __SECTION(.bss.os.thread.cb);
-static uint64_t             connection_thread_stack_mem[512/8] __SECTION(.bss.os.thread.stack);
-static osRtxThread_t        data_in_thread_cb_mem              __SECTION(.bss.os.thread.cb);
-static uint64_t             data_in_thread_stack_mem   [512/8] __SECTION(.bss.os.thread.stack);
-static osRtxThread_t        data_out_thread_cb_mem             __SECTION(.bss.os.thread.cb);
-static uint64_t             data_out_thread_stack_mem  [512/8] __SECTION(.bss.os.thread.stack);
+#ifdef RTE_CMSIS_RTOS2_RTX5
+static osRtxThread_t        connection_thread_cb_mem           __attribute__((section(".bss.os.thread.cb")));
+static uint64_t             connection_thread_stack_mem[512/8] __attribute__((section(".bss.os.thread.stack")));
+static osRtxThread_t        data_in_thread_cb_mem              __attribute__((section(".bss.os.thread.cb")));
+static uint64_t             data_in_thread_stack_mem   [512/8] __attribute__((section(".bss.os.thread.stack")));
+static osRtxThread_t        data_out_thread_cb_mem             __attribute__((section(".bss.os.thread.cb")));
+static uint64_t             data_out_thread_stack_mem  [512/8] __attribute__((section(".bss.os.thread.stack")));
 #endif
  
 static const osThreadAttr_t connection_thread_attr = {
   "Connection_Thread",
   0U,
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
  &connection_thread_cb_mem,
   sizeof(osRtxThread_t),
  &connection_thread_stack_mem[0],
@@ -124,7 +124,7 @@ static const osThreadAttr_t connection_thread_attr = {
 static const osThreadAttr_t data_in_thread_attr = {
   "DataIN_Thread",
   0U,
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
  &data_in_thread_cb_mem,
   sizeof(osRtxThread_t),
  &data_in_thread_stack_mem[0],
@@ -142,7 +142,7 @@ static const osThreadAttr_t data_in_thread_attr = {
 static const osThreadAttr_t data_out_thread_attr = {
   "DataOUT_Thread",
   0U,
-#ifdef USB_CMSIS_RTOS2_RTX5
+#ifdef RTE_CMSIS_RTOS2_RTX5
  &data_out_thread_cb_mem,
   sizeof(osRtxThread_t),
  &data_out_thread_stack_mem[0],
@@ -766,4 +766,4 @@ __NO_RETURN static void DataOUT_Thread (void *arg) {
   }
 }
 
-#endif // USB_CMSIS_RTOS2
+#endif // RTE_CMSIS_RTOS2

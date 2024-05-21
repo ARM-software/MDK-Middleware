@@ -26,7 +26,7 @@
 #include "USBD_MSC_%Instance%.h"                 // Media ownership control for USB Device
 #include "USBD_Config_MSC_%Instance%.h"
  
-#ifndef  USB_CMSIS_RTOS2
+#ifndef  RTE_CMSIS_RTOS2
 #error   This user template requires CMSIS-RTOS2!
 #else
  
@@ -76,4 +76,4 @@ int32_t USBD_MSC%Instance%_SetMediaOwnerFS (void) {
 }
 //! [usbd_msc_setmediaownerfs]
 
-#endif // USB_CMSIS_RTOS2
+#endif // RTE_CMSIS_RTOS2
