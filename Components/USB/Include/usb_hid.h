@@ -142,9 +142,6 @@ typedef __PACKED_STRUCT {
 
 // Keyboard/Keypad Page (0x07)
 
-// Keyboard Usage Keys
-extern const unsigned char HID_KEYBOARD_ID_TO_ASCII[];
-
 // Error "Keys"
 #define HID_USAGE_KEYBOARD_NOEVENT              0x00U
 #define HID_USAGE_KEYBOARD_ROLLOVER             0x01U
