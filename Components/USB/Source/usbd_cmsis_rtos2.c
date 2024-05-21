@@ -1,12 +1,13 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_cmsis_rtos2.c
  * Purpose: USB Device (USBD) - RTOS abstraction implemented on CMSIS-RTOS2
  *----------------------------------------------------------------------------*/
 
 #include "RTE_Components.h"
+
 #include "usb_os.h"
 
 #include "usbd_compatibility.h"
@@ -293,7 +294,7 @@ static const char *usbd_cc_ep_thread_name          [USBD_CUSTOM_CLASS_NUM * USBD
 };
 
 #ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxThread_t      usbd_cc_ep_thread_cb_mem [USBD_CUSTOM_CLASS_NUM * USBD_EP_NUM] __SECTION(.bss.os.thread.cb);
+static osRtxThread_t      usbd_cc_ep_thread_cb_mem [USBD_CUSTOM_CLASS_NUM * USBD_EP_NUM] __attribute__((section(".bss.os.thread.cb")));
 static uint64_t           usbd_cc_ep_thread_stack_mem[
 #if   (USBD_CC_EP_THREAD_TOTAL_STACK_SIZE_IS_0 == 1U)
                                                       1U
@@ -311,7 +312,7 @@ static uint64_t           usbd_cc_ep_thread_stack_mem[
                                                     + (USBD_CCn_EP_THREAD_TOTAL_STACK_SIZE(3) / 8U) 
 #endif
 #endif
-] __SECTION(.bss.os.thread.stack);
+] __attribute__((section(".bss.os.thread.stack")));
 #endif
 
 static const thread_sp_t usbd_cc_ep_thread_sp      [USBD_CUSTOM_CLASS_NUM * USBD_EP_NUM] = {
@@ -527,7 +528,7 @@ static const char *usbd_adc_thread_name            [USBD_ADC_NUM] = {
 };
 
 #ifdef RTE_USB_Device_ADC_0
-static osRtxThread_t      usbd_adc_thread_cb_mem   [USBD_ADC_NUM] __SECTION(.bss.os.thread.cb);
+static osRtxThread_t      usbd_adc_thread_cb_mem   [USBD_ADC_NUM] __attribute__((section(".bss.os.thread.cb")));
 static uint64_t           usbd_adc_thread_stack_mem[
 #ifdef RTE_USB_Device_ADC_0
                                                    ((USBD_ADC0_THREAD_STACK_SIZE + 7U) / 8U)
@@ -541,7 +542,7 @@ static uint64_t           usbd_adc_thread_stack_mem[
 #ifdef RTE_USB_Device_ADC_3
                                                  + ((USBD_ADC3_THREAD_STACK_SIZE + 7U) / 8U)
 #endif
-] __SECTION(.bss.os.thread.stack);
+] __attribute__((section(".bss.os.thread.stack")));
 #endif
 
 static const thread_sp_t  usbd_adc_thread_sp       [USBD_ADC_NUM] = {
@@ -597,7 +598,7 @@ static const char *usbd_cdc_thread_name            [USBD_CDC_NUM * 2U] = {
 };
 
 #ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxThread_t      usbd_cdc_thread_cb_mem   [USBD_CDC_NUM * 2U] __SECTION(.bss.os.thread.cb);
+static osRtxThread_t      usbd_cdc_thread_cb_mem   [USBD_CDC_NUM * 2U] __attribute__((section(".bss.os.thread.cb")));
 static uint64_t           usbd_cdc_thread_stack_mem[
 #ifdef RTE_USB_Device_CDC_0
                                                    ((USBD_CDC0_INT_THREAD_STACK_SIZE  + 7U) / 8U) + ((USBD_CDC0_BULK_THREAD_STACK_SIZE + 7U) / 8U)
@@ -623,7 +624,7 @@ static uint64_t           usbd_cdc_thread_stack_mem[
 #ifdef RTE_USB_Device_CDC_7
                                                  + ((USBD_CDC7_INT_THREAD_STACK_SIZE  + 7U) / 8U) + ((USBD_CDC7_BULK_THREAD_STACK_SIZE + 7U) / 8U)
 #endif
-] __SECTION(.bss.os.thread.stack);
+] __attribute__((section(".bss.os.thread.stack")));
 #endif
 
 static const thread_sp_t  usbd_cdc_thread_sp       [USBD_CDC_NUM * 2U] = {
@@ -691,7 +692,7 @@ static const char *usbd_hid_thread_name            [USBD_HID_NUM] = {
 };
 
 #ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxThread_t      usbd_hid_thread_cb_mem   [USBD_HID_NUM] __SECTION(.bss.os.thread.cb);
+static osRtxThread_t      usbd_hid_thread_cb_mem   [USBD_HID_NUM] __attribute__((section(".bss.os.thread.cb")));
 static uint64_t           usbd_hid_thread_stack_mem[
 #ifdef RTE_USB_Device_HID_0
                                                    ((USBD_HID0_THREAD_STACK_SIZE + 7U) / 8U)
@@ -717,7 +718,7 @@ static uint64_t           usbd_hid_thread_stack_mem[
 #ifdef RTE_USB_Device_HID_7
                                                  + ((USBD_HID7_THREAD_STACK_SIZE + 7U) / 8U)
 #endif
-] __SECTION(.bss.os.thread.stack);
+] __attribute__((section(".bss.os.thread.stack")));
 #endif
 
 static const thread_sp_t  usbd_hid_thread_sp       [USBD_HID_NUM] = {
@@ -765,7 +766,7 @@ static const char *usbd_msc_thread_name            [USBD_MSC_NUM] = {
 };
 
 #ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxThread_t      usbd_msc_thread_cb_mem   [USBD_MSC_NUM] __SECTION(.bss.os.thread.cb);
+static osRtxThread_t      usbd_msc_thread_cb_mem   [USBD_MSC_NUM] __attribute__((section(".bss.os.thread.cb")));
 static uint64_t           usbd_msc_thread_stack_mem[
 #ifdef RTE_USB_Device_MSC_0
                                                    ((USBD_MSC0_THREAD_STACK_SIZE + 7U) / 8U)
@@ -779,7 +780,7 @@ static uint64_t           usbd_msc_thread_stack_mem[
 #ifdef RTE_USB_Device_MSC_3
                                                  + ((USBD_MSC3_THREAD_STACK_SIZE + 7U) / 8U)
 #endif
-] __SECTION(.bss.os.thread.stack);
+] __attribute__((section(".bss.os.thread.stack")));
 #endif
 
 static const thread_sp_t  usbd_msc_thread_sp       [USBD_MSC_NUM] = {
@@ -801,16 +802,16 @@ static const thread_sp_t  usbd_msc_thread_sp       [USBD_MSC_NUM] = {
 
 // Create timer definitions
 #if ((USBD_HID_NUM > 0) && defined(USB_CMSIS_RTOS2_RTX5))
-static osRtxTimer_t     usbd_hid_timer_cb_mem          [USBD_HID_NUM]                   __SECTION(.bss.os.timer.cb);
+static osRtxTimer_t     usbd_hid_timer_cb_mem          [USBD_HID_NUM]                   __attribute__((section(".bss.os.timer.cb")));
 #endif
 
 
 // Create semaphore definitions
 #ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxSemaphore_t usbd_driver_semaphore_cb_mem   [USBD_DEV_NUM]                   __SECTION(.bss.os.semaphore.cb);
-static osRtxSemaphore_t usbd_driver_ep_semaphore_cb_mem[USBD_DEV_NUM][USBD_EP_NUM * 2U] __SECTION(.bss.os.semaphore.cb);
+static osRtxSemaphore_t usbd_driver_semaphore_cb_mem   [USBD_DEV_NUM]                   __attribute__((section(".bss.os.semaphore.cb")));
+static osRtxSemaphore_t usbd_driver_ep_semaphore_cb_mem[USBD_DEV_NUM][USBD_EP_NUM * 2U] __attribute__((section(".bss.os.semaphore.cb")));
 #if   (USBD_HID_NUM > 0)
-static osRtxSemaphore_t usbd_hid_semaphore_cb_mem      [USBD_HID_NUM]                   __SECTION(.bss.os.semaphore.cb);
+static osRtxSemaphore_t usbd_hid_semaphore_cb_mem      [USBD_HID_NUM]                   __attribute__((section(".bss.os.semaphore.cb")));
 #endif
 #endif
 

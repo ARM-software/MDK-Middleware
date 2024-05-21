@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "RTE_Components.h"
+
 #include "usb_os.h"
 
 // Resources definition
@@ -61,8 +62,8 @@ static const char *usbh_cdc_thread_name        [USBH_CDC_NUM] = {
 #endif
 };
 #ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxThread_t  usbh_cdc_thread_cb_mem   [USBH_CDC_NUM]                                                __SECTION(.bss.os.thread.cb);
-static uint64_t       usbh_cdc_thread_stack_mem[USBH_CDC_NUM][(USBH_CDC_INT_IN_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
+static osRtxThread_t  usbh_cdc_thread_cb_mem   [USBH_CDC_NUM]                                                __attribute__((section(".bss.os.thread.cb")));
+static uint64_t       usbh_cdc_thread_stack_mem[USBH_CDC_NUM][(USBH_CDC_INT_IN_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
 #endif
 
@@ -82,21 +83,21 @@ static const char *usbh_hid_thread_name        [USBH_HID_NUM] = {
 #endif
 };
 #ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxThread_t  usbh_hid_thread_cb_mem   [USBH_HID_NUM]                                                __SECTION(.bss.os.thread.cb);
-static uint64_t       usbh_hid_thread_stack_mem[USBH_HID_NUM][(USBH_HID_INT_IN_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
+static osRtxThread_t  usbh_hid_thread_cb_mem   [USBH_HID_NUM]                                                __attribute__((section(".bss.os.thread.cb")));
+static uint64_t       usbh_hid_thread_stack_mem[USBH_HID_NUM][(USBH_HID_INT_IN_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
 #endif
 
 
 // Create timer definitions
 #ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxTimer_t   usbh_debounce_timer_cb_mem[USBH_HC_NUM] __SECTION(.bss.os.timer.cb);
+static osRtxTimer_t   usbh_debounce_timer_cb_mem[USBH_HC_NUM] __attribute__((section(".bss.os.timer.cb")));
 #endif
 
 
 // Create mutex definitions
 #ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxMutex_t   usbh_def_pipe_mutex_cb_mem[USBH_HC_NUM] __SECTION(.bss.os.mutex.cb);
+static osRtxMutex_t   usbh_def_pipe_mutex_cb_mem[USBH_HC_NUM] __attribute__((section(".bss.os.mutex.cb")));
 #endif
 static osMutexAttr_t  usbh_def_pipe_mutex_attr = {
   NULL,
@@ -113,7 +114,7 @@ static osMutexAttr_t  usbh_def_pipe_mutex_attr = {
 
 // Create semaphore definitions
 #ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxSemaphore_t usbh_driver_semaphore_cb_mem[USBH_HC_NUM] __SECTION(.bss.os.semaphore.cb);
+static osRtxSemaphore_t usbh_driver_semaphore_cb_mem[USBH_HC_NUM] __attribute__((section(".bss.os.semaphore.cb")));
 #endif
 static osSemaphoreAttr_t usbh_driver_semaphore_attr = {
   NULL,

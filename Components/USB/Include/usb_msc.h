@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usb_msc.h
  * Purpose: USB Mass Storage Device Class Definitions
@@ -11,8 +11,7 @@
 
 #include <stdint.h>
 
-#include "usb_compiler.h"
-
+#include "cmsis_compiler.h"
 
 // MSC Subclass Codes
 #define MSC_SUBCLASS_RBC                0x01U

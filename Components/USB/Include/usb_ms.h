@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usb_ms.h
  * Purpose: USB Microsoft Descriptors Specific Definitions
@@ -11,8 +11,7 @@
 
 #include <stdint.h>
 
-#include "usb_compiler.h"
-
+#include "cmsis_compiler.h"
 
 // USB Microsoft String Descriptor Index
 #define USB_MS_OS_STRING_DESCRIPTOR_IDX                 0xEEU

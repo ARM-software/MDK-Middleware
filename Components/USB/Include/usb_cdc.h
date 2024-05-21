@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usb_cdc.h
  * Purpose: USB Communication Device Class Definitions
@@ -11,9 +11,8 @@
 
 #include <stdint.h>
 
-#include "usb_compiler.h"
+#include "cmsis_compiler.h"
 #include "usb_def.h"
-
 
 /*------------------------------------------------------------------------------
  *      Definitions  based on: - usbcdc11.pdf  (www.usb.org)

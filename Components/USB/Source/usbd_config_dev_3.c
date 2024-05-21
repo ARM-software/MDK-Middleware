@@ -41,8 +41,8 @@ usbd_dev_t  usbd3_dev      = {
 
 #ifdef USB_CMSIS_RTOS2
 #ifdef USB_CMSIS_RTOS2_RTX5
-static osRtxThread_t  usbd3_core_thread_cb_mem                                              __SECTION(.bss.os.thread.cb);
-static uint64_t       usbd3_core_thread_stack_mem[(USBD3_CORE_THREAD_STACK_SIZE + 7U) / 8U] __SECTION(.bss.os.thread.stack);
+static osRtxThread_t  usbd3_core_thread_cb_mem                                              __attribute__((section(".bss.os.thread.cb")));
+static uint64_t       usbd3_core_thread_stack_mem[(USBD3_CORE_THREAD_STACK_SIZE + 7U) / 8U] __attribute__((section(".bss.os.thread.stack")));
 #endif
 extern 
 const  osThreadAttr_t usbd3_core_thread_attr;

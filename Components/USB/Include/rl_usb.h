@@ -24,7 +24,6 @@ extern "C"  {
                                        (MW_USB_VERSION_PATCH))
 
 #include "usb_os.h"
-#include "usb_compiler.h"
 #include "usb_def.h"
 #include "usb_adc.h"
 #include "usb_cdc.h"
@@ -2368,4 +2367,4 @@ extern void              USBH_ConnectDebounce               (void       *arg);
 }
 #endif
 
-#endif
+#endif // __RL_USB_H__

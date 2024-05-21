@@ -10,7 +10,6 @@
 
 #include <string.h>
 
-#include "usb_compiler.h"
 #include "usb_lib_debug.h"
 #include "usbd_lib.h"
 #include "usbd_lib_config_def.h"

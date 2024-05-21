@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usb_def.h
  * Purpose: USB Definitions
@@ -11,8 +11,7 @@
 
 #include <stdint.h>
 
-#include "usb_compiler.h"
-
+#include "cmsis_compiler.h"
 
 // USB Speed
 #define USB_SPEED_LOW                    0U
