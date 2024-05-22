@@ -126,7 +126,7 @@ bits: \b FAT12, \b FAT16, and \b FAT32. Each of these variants is is supported b
 \section fat_layout Layout
 The actual FAT file system is made up of four different sections:
 |Section              |Description                                                                                        |
-|---------------------|:--------------------------------------------------------------------------------------------------|
+|:--------------------|:--------------------------------------------------------------------------------------------------|
 |Boot sector          |Contains machine startup code                                                                      |
 |File Allocation Table|Contains the data region map; multiple entries might exist for redundancy purposes                 |
 |Root Directory       |Stores information about the files and directories located in the root directory (FAT12/FAT16 only)|
@@ -134,8 +134,8 @@ The actual FAT file system is made up of four different sections:
 
 \section fat_volume_label Volume name
 
-Volume label for FAT12, FAT16 or FAT32 volume must be maximum 11 characters long and cannot contain the
-* ? / \ | , ; : + = < > [ ] " characters.
+Volume label for FAT12, FAT16 or FAT32 volume must be maximum 11 characters long and cannot contain
+the * ? / \ | , ; : + = < > [ ] \" characters.
 
 \section fat_path_handling Path name handling
 
@@ -148,21 +148,22 @@ Depending on the usage case, each specifier can be optional:
  - path can consist of multiple directory names and a file name
 
 
-Absolute and relative path
---------------------------
+\subsection fat_abs_rel_path Absolute and relative path
+
 The table below explains how to specify either absolute or relative path.
 
-Path name       | Type     | Description
-:-------------- | :--------| :----------------
-\               | Absolute | Root directory
-\\ ..           | Absolute | Root directory
-.               | Relative | Current directory
-..              | Relative | Parent directory
-M:\\file.txt    | Absolute | A file in root directory of the drive M0
-M:file.txt      | Relative | A file in current directory of the drive M0
-\\file.txt      | Absolute | A file in the root directory  of the current drive
-file.txt        | Relative | A file in the current directory of the current drive
-folder1\\ ..    | Relative | Current directory
+|Path name       | Type     | Description                                          |
+|:---------------|:---------|:-----------------------------------------------------|
+|\               | Absolute | Root directory                                       |
+|\\ ..           | Absolute | Root directory                                       |
+|.               | Relative | Current directory                                    |
+|..              | Relative | Parent directory                                     |
+|M:\\file.txt    | Absolute | A file in root directory of the drive M0             |
+|M:file.txt      | Relative | A file in current directory of the drive M0          |
+|\\file.txt      | Absolute | A file in the root directory  of the current drive   |
+|file.txt        | Relative | A file in the current directory of the current drive |
+|folder1\\ ..    | Relative | Current directory                                    |
+
 
 \section lfn_sfn_handling Long and Short File Name handling
 
