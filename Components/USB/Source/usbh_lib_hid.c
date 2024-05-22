@@ -17,7 +17,7 @@
 #include "usbh_lib_core.h"
 #include "usbh_lib_hid_idtoascii.h"
 #include "usbh_evr.h"
-
+#include "usbh_cmsis_rtos2.h"
 
 /************************** Local function declarations ***********************/
 

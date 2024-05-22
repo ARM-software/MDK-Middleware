@@ -6,14 +6,9 @@
  * Purpose: USB Device (USBD) - RTOS abstraction implemented on CMSIS-RTOS2
  *----------------------------------------------------------------------------*/
 
-#include "RTE_Components.h"
+#include "usbd_cmsis_rtos2.h"
 
-#ifdef    RTE_CMSIS_RTOS2
-#include "cmsis_os2.h"
-#endif
-#ifdef    RTE_CMSIS_RTOS2_RTX5
-#include "rtx_os.h"
-#endif
+#include <string.h>
 
 #include "usbd_compatibility.h"
 
@@ -22,7 +17,6 @@ typedef struct {
   uint32_t       stack_size;    // size of thread stack
   osPriority_t   priority;      // thread priority
 } thread_sp_t;
-
 
 // Resources definition
 
@@ -55,7 +49,6 @@ static const osThreadAttr_t * const usbd_core_thread_attr[USBD_DEV_NUM] = {
   , &usbd3_core_thread_attr
 #endif
 };
-
 
 // Create thread definitions for classes requiring threads
 #if   (USBD_CUSTOM_CLASS_NUM > 0)
@@ -819,7 +812,6 @@ static osRtxSemaphore_t usbd_driver_ep_semaphore_cb_mem[USBD_DEV_NUM][USBD_EP_NU
 static osRtxSemaphore_t usbd_hid_semaphore_cb_mem      [USBD_HID_NUM]                   __attribute__((section(".bss.os.semaphore.cb")));
 #endif
 #endif
-
 
 // Functions definition
 

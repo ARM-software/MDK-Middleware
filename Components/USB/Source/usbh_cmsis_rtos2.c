@@ -6,16 +6,9 @@
  * Purpose: USB Host (USBH) - RTOS abstraction implemented on CMSIS-RTOS2
  *----------------------------------------------------------------------------*/
 
+#include "usbh_cmsis_rtos2.h"
+
 #include <string.h>
-
-#include "RTE_Components.h"
-
-#ifdef    RTE_CMSIS_RTOS2
-#include "cmsis_os2.h"
-#endif
-#ifdef    RTE_CMSIS_RTOS2_RTX5
-#include "rtx_os.h"
-#endif
 
 // Resources definition
 

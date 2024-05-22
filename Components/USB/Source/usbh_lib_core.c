@@ -21,7 +21,7 @@
 #include "usbh_lib_msc.h"
 #include "usbh_lib_mem.h"
 #include "usbh_evr.h"
-
+#include "usbh_cmsis_rtos2.h"
 
 /************************** Constant definitions ******************************/
 

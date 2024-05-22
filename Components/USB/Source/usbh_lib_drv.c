@@ -13,7 +13,7 @@
 #include "usbh_config.h"
 #include "usbh_lib_core.h"
 #include "usbh_evr.h"
-
+#include "usbh_cmsis_rtos2.h"
 
 /// \brief       Get driver version
 /// \param[in]   ctrl  Controller Index

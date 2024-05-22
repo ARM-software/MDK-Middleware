@@ -15,6 +15,7 @@
 #include "usbd_lib_config_def.h"
 #include "usbd_lib_drv.h"
 #include "usbd_evr.h"
+#include "usbd_cmsis_rtos2.h"
 
 /************************** Local function declarations ***********************/
 

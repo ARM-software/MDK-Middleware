@@ -21,7 +21,7 @@
 #include "usbd_lib_core_hid.h"
 #include "usbd_lib_core_msc.h"
 #include "usbd_evr.h"
-
+#include "usbd_cmsis_rtos2.h"
 
 /************************** Constant definitions ******************************/
 

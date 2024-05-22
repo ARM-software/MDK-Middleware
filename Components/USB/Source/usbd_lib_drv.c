@@ -11,6 +11,7 @@
 #include "usb_lib_debug.h"
 #include "usbd_lib_config_def.h"
 #include "usbd_evr.h"
+#include "usbd_cmsis_rtos2.h"
 
 // Driver Access Settings
 #define USBD_DRIVER_RETRY_COUNT         3U      // Maximum number of retries

@@ -3507,21 +3507,21 @@ __WEAK  usbdRequestStatus USBD_CustomClass0_Endpoint0_SetupPacketReceived (const
 __WEAK  void              USBD_CustomClass0_Endpoint0_SetupPacketProcessed(const USB_SETUP_PACKET *setup_packet)                               { (void)setup_packet;                                                       }
 __WEAK  usbdRequestStatus USBD_CustomClass0_Endpoint0_OutDataReceived     (uint32_t len)                                                       { (void)len; return usbdRequestNotProcessed; }
 __WEAK  usbdRequestStatus USBD_CustomClass0_Endpoint0_InDataSent          (uint32_t len)                                                       { (void)len; return usbdRequestNotProcessed; }
-__WEAK  void              USBD_CustomClass0_Endpoint1_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass0_Endpoint2_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass0_Endpoint3_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass0_Endpoint4_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass0_Endpoint5_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass0_Endpoint6_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass0_Endpoint7_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass0_Endpoint8_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass0_Endpoint9_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass0_Endpoint10_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass0_Endpoint11_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass0_Endpoint12_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass0_Endpoint13_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass0_Endpoint14_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass0_Endpoint15_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
+__WEAK  void              USBD_CustomClass0_Endpoint1_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass0_Endpoint2_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass0_Endpoint3_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass0_Endpoint4_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass0_Endpoint5_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass0_Endpoint6_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass0_Endpoint7_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass0_Endpoint8_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass0_Endpoint9_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass0_Endpoint10_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass0_Endpoint11_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass0_Endpoint12_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass0_Endpoint13_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass0_Endpoint14_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass0_Endpoint15_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
 #ifdef  RTE_USB_Device_CustomClass_1
 __WEAK  void              USBD_CustomClass1_Initialize                    (void)                                                               { }
 __WEAK  void              USBD_CustomClass1_Uninitialize                  (void)                                                               { }
@@ -3538,21 +3538,21 @@ __WEAK  usbdRequestStatus USBD_CustomClass1_Endpoint0_SetupPacketReceived (const
 __WEAK  void              USBD_CustomClass1_Endpoint0_SetupPacketProcessed(const USB_SETUP_PACKET *setup_packet)                               { (void)setup_packet;                                                       }
 __WEAK  usbdRequestStatus USBD_CustomClass1_Endpoint0_OutDataReceived     (uint32_t len)                                                       { (void)len; return usbdRequestNotProcessed; }
 __WEAK  usbdRequestStatus USBD_CustomClass1_Endpoint0_InDataSent          (uint32_t len)                                                       { (void)len; return usbdRequestNotProcessed; }
-__WEAK  void              USBD_CustomClass1_Endpoint1_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass1_Endpoint2_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass1_Endpoint3_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass1_Endpoint4_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass1_Endpoint5_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass1_Endpoint6_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass1_Endpoint7_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass1_Endpoint8_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass1_Endpoint9_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass1_Endpoint10_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass1_Endpoint11_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass1_Endpoint12_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass1_Endpoint13_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass1_Endpoint14_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass1_Endpoint15_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
+__WEAK  void              USBD_CustomClass1_Endpoint1_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass1_Endpoint2_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass1_Endpoint3_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass1_Endpoint4_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass1_Endpoint5_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass1_Endpoint6_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass1_Endpoint7_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass1_Endpoint8_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass1_Endpoint9_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass1_Endpoint10_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass1_Endpoint11_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass1_Endpoint12_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass1_Endpoint13_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass1_Endpoint14_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass1_Endpoint15_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
 #endif
 #ifdef  RTE_USB_Device_CustomClass_2
 __WEAK  void              USBD_CustomClass2_Initialize                    (void)                                                               { }
@@ -3570,21 +3570,21 @@ __WEAK  usbdRequestStatus USBD_CustomClass2_Endpoint0_SetupPacketReceived (const
 __WEAK  void              USBD_CustomClass2_Endpoint0_SetupPacketProcessed(const USB_SETUP_PACKET *setup_packet)                               { (void)setup_packet;                                                       }
 __WEAK  usbdRequestStatus USBD_CustomClass2_Endpoint0_OutDataReceived     (uint32_t len)                                                       { (void)len; return usbdRequestNotProcessed; }
 __WEAK  usbdRequestStatus USBD_CustomClass2_Endpoint0_InDataSent          (uint32_t len)                                                       { (void)len; return usbdRequestNotProcessed; }
-__WEAK  void              USBD_CustomClass2_Endpoint1_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass2_Endpoint2_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass2_Endpoint3_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass2_Endpoint4_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass2_Endpoint5_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass2_Endpoint6_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass2_Endpoint7_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass2_Endpoint8_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass2_Endpoint9_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass2_Endpoint10_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass2_Endpoint11_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass2_Endpoint12_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass2_Endpoint13_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass2_Endpoint14_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass2_Endpoint15_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
+__WEAK  void              USBD_CustomClass2_Endpoint1_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass2_Endpoint2_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass2_Endpoint3_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass2_Endpoint4_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass2_Endpoint5_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass2_Endpoint6_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass2_Endpoint7_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass2_Endpoint8_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass2_Endpoint9_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass2_Endpoint10_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass2_Endpoint11_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass2_Endpoint12_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass2_Endpoint13_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass2_Endpoint14_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass2_Endpoint15_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
 #endif
 #ifdef  RTE_USB_Device_CustomClass_3
 __WEAK  void              USBD_CustomClass3_Initialize                    (void)                                                               { }
@@ -3602,21 +3602,21 @@ __WEAK  usbdRequestStatus USBD_CustomClass3_Endpoint0_SetupPacketReceived (const
 __WEAK  void              USBD_CustomClass3_Endpoint0_SetupPacketProcessed(const USB_SETUP_PACKET *setup_packet)                               { (void)setup_packet;                                                       }
 __WEAK  usbdRequestStatus USBD_CustomClass3_Endpoint0_OutDataReceived     (uint32_t len)                                                       { (void)len; return usbdRequestNotProcessed; }
 __WEAK  usbdRequestStatus USBD_CustomClass3_Endpoint0_InDataSent          (uint32_t len)                                                       { (void)len; return usbdRequestNotProcessed; }
-__WEAK  void              USBD_CustomClass3_Endpoint1_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass3_Endpoint2_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass3_Endpoint3_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass3_Endpoint4_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass3_Endpoint5_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass3_Endpoint6_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass3_Endpoint7_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass3_Endpoint8_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass3_Endpoint9_Event               (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass3_Endpoint10_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass3_Endpoint11_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass3_Endpoint12_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass3_Endpoint13_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass3_Endpoint14_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
-__WEAK  void              USBD_CustomClass3_Endpoint15_Event              (uint32_t event)                                                     { (void)event; USBD_ThreadFlagsWait(0xFFFFFFFFU); }
+__WEAK  void              USBD_CustomClass3_Endpoint1_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass3_Endpoint2_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass3_Endpoint3_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass3_Endpoint4_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass3_Endpoint5_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass3_Endpoint6_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass3_Endpoint7_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass3_Endpoint8_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass3_Endpoint9_Event               (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass3_Endpoint10_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass3_Endpoint11_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass3_Endpoint12_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass3_Endpoint13_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass3_Endpoint14_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
+__WEAK  void              USBD_CustomClass3_Endpoint15_Event              (uint32_t event)                                                     { (void)event; osThreadFlagsWait(0xFFFFU, osFlagsWaitAny, osWaitForever); }
 #endif
 
 extern 

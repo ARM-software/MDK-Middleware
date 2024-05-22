@@ -451,7 +451,6 @@ extern int32_t USBD_ADC_ReadSamples (uint8_t instance, void *buf, int32_t num);
 ///                                       - value < 0 :  error occurred, -value is execution status as defined with \ref usbStatus
 extern int32_t USBD_ADC_WriteSamples (uint8_t instance, const void *buf, int32_t num);
 
-
 //  ==== USB Device Communication Device (Abstract Control Model) Functions ====
 
 #ifdef __DOXYGEN__
@@ -889,7 +888,6 @@ bool USBD_HIDn_SetReport (uint8_t rtype, uint8_t req, uint8_t rid, const uint8_t
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 extern usbStatus USBD_HID_GetReportTrigger (uint8_t instance, uint8_t rid, const uint8_t *buf, uint32_t len);
 
-
 #ifdef __DOXYGEN__
 
 //  ==== USB Device Mass Storage Device Functions ====
@@ -994,7 +992,6 @@ bool USBD_MSCn_LUN_Write (uint8_t lun, uint32_t lba, uint32_t cnt, const uint8_t
 uint32_t USBD_MSCn_LUN_CheckMedia (uint8_t lun);
 
 #endif // __DOXYGEN
-
 
 //  ==== USB Device Custom Class Functions ====
 
@@ -1133,7 +1130,6 @@ extern usbStatus USBD_EndpointStall (uint8_t device, uint8_t ep_addr, bool stall
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 extern usbStatus USBD_EndpointAbort (uint8_t device, uint8_t ep_addr);
 
-
 //  ==== USB Host Functions ====
 
 // Rename deprecated functions
@@ -1236,7 +1232,6 @@ extern usbStatus USBH_Device_GetStringDescriptor (uint8_t device, uint8_t index,
 ///                                       - USBH_NOTIFY_INITIALIZATION_FAILED = Device was not successfully initialized
 extern void USBH_Notify (uint8_t ctrl, uint8_t port, uint8_t device, USBH_NOTIFY notify);
 
-
 //  ==== USB Host Mass Storage Functions ====
 
 // Rename deprecated functions
@@ -1284,7 +1279,6 @@ extern usbStatus USBH_MSC_Write (uint8_t instance, uint32_t lba, uint32_t cnt, c
 /// \param[out]    block_size           pointer to where block size will be read.
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 extern usbStatus USBH_MSC_ReadCapacity (uint8_t instance, uint32_t *block_count, uint32_t *block_size);
-
 
 //  ==== USB Host Human Interface Device Functions ====
 
@@ -1352,7 +1346,6 @@ extern void USBH_HID_ParseReportDescriptor (uint8_t instance, const uint8_t *ptr
 /// \param[in]     instance             instance index.
 /// \param[in]     len                  length of received data.
 extern void USBH_HID_DataReceived (uint8_t instance, uint32_t len);
-
 
 //  ==== USB Host Communication Device Class (Abstract Control Model) Functions ====
 
@@ -1453,7 +1446,6 @@ extern void USBH_CDC_ACM_Notify (uint8_t instance, uint16_t status);
 ///                                       - value     0 : immediate
 /// \return                             status code that indicates the execution status of the function as defined with usbStatus.
 extern usbStatus USBH_CDC_ACM_SendBreak (uint8_t instance, uint16_t duration);
-
 
 //  ==== USB Host Custom Class Functions ====
 
@@ -1657,27 +1649,6 @@ extern usbStatus USBH_DeviceRequest_SetInterface (uint8_t device, uint8_t index,
 /// \param[out]    ptr_frame_number     pointer to where frame number data will be read.
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 extern usbStatus USBH_DeviceRequest_SynchFrame (uint8_t device, uint8_t index, uint8_t *ptr_frame_number);
-
-
-// USB Device OS abstraction functions
-extern void             *USBD_ThreadCreate                  (usbdThread_t thread, uint8_t index);
-extern int32_t           USBD_ThreadTerminate               (void *thread_hndl);
-
-extern int32_t           USBD_Delay                         (uint32_t millisec);
-
-extern void             *USBD_TimerCreate                   (uint8_t instance);
-extern int32_t           USBD_TimerStart                    (void *timer_hndl, uint32_t millisec);
-extern int32_t           USBD_TimerStop                     (void *timer_hndl);
-extern int32_t           USBD_TimerDelete                   (void *timer_hndl);
-
-extern uint32_t          USBD_ThreadFlagsSet                (void *thread_hndl, uint32_t flags);
-extern uint32_t          USBD_ThreadFlagsWait               (uint32_t millisec);
-
-extern void             *USBD_SemaphoreCreate               (usbdSemaphore_t semaphore, uint8_t index1, uint8_t index2);
-extern int32_t           USBD_SemaphoreAcquire              (void *semaphore_hndl, uint32_t millisec);
-extern int32_t           USBD_SemaphoreRelease              (void *semaphore_hndl);
-extern int32_t           USBD_SemaphoreDelete               (void *semaphore_hndl);
-
 
 // USB Device user callback function prototypes
 extern void              USBD_Device0_Initialize            (void);
@@ -2260,7 +2231,6 @@ extern void              USBD_CustomClass3_Endpoint13_Event (uint32_t event);
 extern void              USBD_CustomClass3_Endpoint14_Event (uint32_t event);
 extern void              USBD_CustomClass3_Endpoint15_Event (uint32_t event);
 
-
 // USB Device library function prototypes for configuration generation
 extern usbStatus         USBD_CustomClass_Initialize        (uint8_t instance);
 extern usbStatus         USBD_CustomClass_Uninitialize      (uint8_t instance);
@@ -2287,12 +2257,10 @@ extern void              USBD_HID_SetConfiguration          (uint8_t instance);
 extern void              USBD_HID_EndpointStart             (uint8_t instance, uint8_t ep_addr);
 extern void              USBD_HID_Timer                     (void const *argument);
 
-
 extern usbStatus         USBD_MSC_Initialize                (uint8_t instance);
 extern usbStatus         USBD_MSC_Uninitialize              (uint8_t instance);
 extern void              USBD_MSC_Reset                     (uint8_t instance);
 extern void              USBD_MSC_EndpointStart             (uint8_t instance, uint8_t ep_addr);
-
 
 // USB Device library configuration generated function prototypes
 extern void              USBD_Debug_Initialize              (uint8_t device);
@@ -2303,7 +2271,6 @@ extern void              USBD_Reset                         (uint8_t device);
 extern void              USBD_SetConfiguration              (uint8_t device, uint8_t configuration);
 extern void              USBD_EndpointStart                 (uint8_t device, uint8_t ep_addr);
 extern void              USBD_EndpointStop                  (uint8_t device, uint8_t ep_addr);
-
 
 // USB Device thread function prototypes
 extern void              USBD_Core_Thread                   (void       *arg);
@@ -2355,31 +2322,6 @@ extern void              USBD_MSC2_Thread                   (void const *arg);
 extern void              USBD_MSC3_Thread                   (void const *arg);
 
 extern void              USBD_CustomClass_EP_Thread         (void       *arg);
-
-// USB Host OS abstraction functions
-extern void             *USBH_ThreadCreate                  (usbhThread_t thread, uint8_t index);
-extern void             *USBH_ThreadGetHandle               (void);
-extern int32_t           USBH_ThreadTerminate               (void *thread_hndl);
-
-extern int32_t           USBH_Delay                         (uint32_t millisec);
-
-extern void             *USBH_TimerCreate                   (uint8_t ctrl);
-extern int32_t           USBH_TimerStart                    (void *timer_hndl, uint32_t millisec);
-extern int32_t           USBH_TimerStop                     (void *timer_hndl);
-extern int32_t           USBH_TimerDelete                   (void *timer_hndl);
-
-extern uint32_t          USBH_ThreadFlagsSet                (void *thread_hndl, uint32_t flags);
-extern uint32_t          USBH_ThreadFlagsWait               (uint32_t millisec);
-
-extern void             *USBH_MutexCreate                   (usbhMutex_t mutex, uint8_t ctrl);
-extern int32_t           USBH_MutexAcquire                  (void *mutex_hndl, uint32_t millisec);
-extern int32_t           USBH_MutexRelease                  (void *mutex_hndl);
-extern int32_t           USBH_MutexDelete                   (void *mutex_hndl);
-
-extern void             *USBH_SemaphoreCreate               (usbhSemaphore_t semaphore, uint8_t ctrl);
-extern int32_t           USBH_SemaphoreAcquire              (void *semaphore_hndl, uint32_t millisec);
-extern int32_t           USBH_SemaphoreRelease              (void *semaphore_hndl);
-extern int32_t           USBH_SemaphoreDelete               (void *semaphore_hndl);
 
 // USB Host library function prototypes
 extern void              USBH_Debug_Initialize              (uint8_t ctrl);
