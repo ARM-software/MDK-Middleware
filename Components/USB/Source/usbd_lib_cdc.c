@@ -2266,15 +2266,6 @@ void USBD_CDC_Int_Thread (void *arg) {
   }
 }
 
-void USBD_CDC0_Int_Thread (void const *arg) { (void)arg; USBD_CDC_Int_Thread ((void *)0U); }
-void USBD_CDC1_Int_Thread (void const *arg) { (void)arg; USBD_CDC_Int_Thread ((void *)1U); }
-void USBD_CDC2_Int_Thread (void const *arg) { (void)arg; USBD_CDC_Int_Thread ((void *)2U); }
-void USBD_CDC3_Int_Thread (void const *arg) { (void)arg; USBD_CDC_Int_Thread ((void *)3U); }
-void USBD_CDC4_Int_Thread (void const *arg) { (void)arg; USBD_CDC_Int_Thread ((void *)4U); }
-void USBD_CDC5_Int_Thread (void const *arg) { (void)arg; USBD_CDC_Int_Thread ((void *)5U); }
-void USBD_CDC6_Int_Thread (void const *arg) { (void)arg; USBD_CDC_Int_Thread ((void *)6U); }
-void USBD_CDC7_Int_Thread (void const *arg) { (void)arg; USBD_CDC_Int_Thread ((void *)7U); }
-
 /// \brief Thread Function: CDC Bulk Endpoints events handling
 /// \param[in]     arg                  index of CDC instance
 void USBD_CDC_Bulk_Thread (void *arg) {
@@ -2298,12 +2289,3 @@ void USBD_CDC_Bulk_Thread (void *arg) {
     }
   }
 }
-
-void USBD_CDC0_Bulk_Thread (void const *arg) { (void)arg; USBD_CDC_Bulk_Thread ((void *)0U); }
-void USBD_CDC1_Bulk_Thread (void const *arg) { (void)arg; USBD_CDC_Bulk_Thread ((void *)1U); }
-void USBD_CDC2_Bulk_Thread (void const *arg) { (void)arg; USBD_CDC_Bulk_Thread ((void *)2U); }
-void USBD_CDC3_Bulk_Thread (void const *arg) { (void)arg; USBD_CDC_Bulk_Thread ((void *)3U); }
-void USBD_CDC4_Bulk_Thread (void const *arg) { (void)arg; USBD_CDC_Bulk_Thread ((void *)4U); }
-void USBD_CDC5_Bulk_Thread (void const *arg) { (void)arg; USBD_CDC_Bulk_Thread ((void *)5U); }
-void USBD_CDC6_Bulk_Thread (void const *arg) { (void)arg; USBD_CDC_Bulk_Thread ((void *)6U); }
-void USBD_CDC7_Bulk_Thread (void const *arg) { (void)arg; USBD_CDC_Bulk_Thread ((void *)7U); }

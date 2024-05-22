@@ -1697,8 +1697,3 @@ void USBD_MSC_Thread (void *arg) {
     }
   }
 }
-
-void USBD_MSC0_Thread (void const *arg) { (void)arg; USBD_MSC_Thread ((void *)0U); }
-void USBD_MSC1_Thread (void const *arg) { (void)arg; USBD_MSC_Thread ((void *)1U); }
-void USBD_MSC2_Thread (void const *arg) { (void)arg; USBD_MSC_Thread ((void *)2U); }
-void USBD_MSC3_Thread (void const *arg) { (void)arg; USBD_MSC_Thread ((void *)3U); }

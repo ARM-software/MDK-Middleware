@@ -1283,8 +1283,3 @@ void USBD_ADC_Thread (void *arg) {
     }
   }
 }
-
-void USBD_ADC0_Thread (void const *arg) { (void)arg; USBD_ADC_Thread ((void *)0U); }
-void USBD_ADC1_Thread (void const *arg) { (void)arg; USBD_ADC_Thread ((void *)1U); }
-void USBD_ADC2_Thread (void const *arg) { (void)arg; USBD_ADC_Thread ((void *)2U); }
-void USBD_ADC3_Thread (void const *arg) { (void)arg; USBD_ADC_Thread ((void *)3U); }

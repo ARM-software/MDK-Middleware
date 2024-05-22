@@ -749,12 +749,3 @@ void USBD_HID_Thread (void *arg) {
     }
   }
 }
-
-void USBD_HID0_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)0U); }
-void USBD_HID1_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)1U); }
-void USBD_HID2_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)2U); }
-void USBD_HID3_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)3U); }
-void USBD_HID4_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)4U); }
-void USBD_HID5_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)5U); }
-void USBD_HID6_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)6U); }
-void USBD_HID7_Thread (void const *arg) { (void)arg; USBD_HID_Thread ((void *)7U); }

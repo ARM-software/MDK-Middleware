@@ -1948,8 +1948,3 @@ void USBD_Core_Thread (void *arg) {
     }
   }
 }
-
-void USBD0_Core_Thread (void const *arg) { (void)arg; USBD_Core_Thread ((void *)0U); }
-void USBD1_Core_Thread (void const *arg) { (void)arg; USBD_Core_Thread ((void *)1U); }
-void USBD2_Core_Thread (void const *arg) { (void)arg; USBD_Core_Thread ((void *)2U); }
-void USBD3_Core_Thread (void const *arg) { (void)arg; USBD_Core_Thread ((void *)3U); }

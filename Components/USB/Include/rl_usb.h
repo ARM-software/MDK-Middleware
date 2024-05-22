@@ -2272,57 +2272,6 @@ extern void              USBD_SetConfiguration              (uint8_t device, uin
 extern void              USBD_EndpointStart                 (uint8_t device, uint8_t ep_addr);
 extern void              USBD_EndpointStop                  (uint8_t device, uint8_t ep_addr);
 
-// USB Device thread function prototypes
-extern void              USBD_Core_Thread                   (void       *arg);
-extern void              USBD0_Core_Thread                  (void const *arg);
-extern void              USBD1_Core_Thread                  (void const *arg);
-extern void              USBD2_Core_Thread                  (void const *arg);
-extern void              USBD3_Core_Thread                  (void const *arg);
-
-extern void              USBD_ADC_Thread                    (void       *arg);
-extern void              USBD_ADC0_Thread                   (void const *arg);
-extern void              USBD_ADC1_Thread                   (void const *arg);
-extern void              USBD_ADC2_Thread                   (void const *arg);
-extern void              USBD_ADC3_Thread                   (void const *arg);
-
-extern void              USBD_CDC_Int_Thread                (void       *arg);
-extern void              USBD_CDC0_Int_Thread               (void const *arg);
-extern void              USBD_CDC1_Int_Thread               (void const *arg);
-extern void              USBD_CDC2_Int_Thread               (void const *arg);
-extern void              USBD_CDC3_Int_Thread               (void const *arg);
-extern void              USBD_CDC4_Int_Thread               (void const *arg);
-extern void              USBD_CDC5_Int_Thread               (void const *arg);
-extern void              USBD_CDC6_Int_Thread               (void const *arg);
-extern void              USBD_CDC7_Int_Thread               (void const *arg);
-
-extern void              USBD_CDC_Bulk_Thread               (void       *arg);
-extern void              USBD_CDC0_Bulk_Thread              (void const *arg);
-extern void              USBD_CDC1_Bulk_Thread              (void const *arg);
-extern void              USBD_CDC2_Bulk_Thread              (void const *arg);
-extern void              USBD_CDC3_Bulk_Thread              (void const *arg);
-extern void              USBD_CDC4_Bulk_Thread              (void const *arg);
-extern void              USBD_CDC5_Bulk_Thread              (void const *arg);
-extern void              USBD_CDC6_Bulk_Thread              (void const *arg);
-extern void              USBD_CDC7_Bulk_Thread              (void const *arg);
-
-extern void              USBD_HID_Thread                    (void       *arg);
-extern void              USBD_HID0_Thread                   (void const *arg);
-extern void              USBD_HID1_Thread                   (void const *arg);
-extern void              USBD_HID2_Thread                   (void const *arg);
-extern void              USBD_HID3_Thread                   (void const *arg);
-extern void              USBD_HID4_Thread                   (void const *arg);
-extern void              USBD_HID5_Thread                   (void const *arg);
-extern void              USBD_HID6_Thread                   (void const *arg);
-extern void              USBD_HID7_Thread                   (void const *arg);
-
-extern void              USBD_MSC_Thread                    (void       *arg);
-extern void              USBD_MSC0_Thread                   (void const *arg);
-extern void              USBD_MSC1_Thread                   (void const *arg);
-extern void              USBD_MSC2_Thread                   (void const *arg);
-extern void              USBD_MSC3_Thread                   (void const *arg);
-
-extern void              USBD_CustomClass_EP_Thread         (void       *arg);
-
 // USB Host library function prototypes
 extern void              USBH_Debug_Initialize              (uint8_t ctrl);
 
@@ -2346,15 +2295,8 @@ extern usbStatus         USBH_CustomClass_Unconfigure       (uint8_t instance);
 extern usbStatus         USBH_CustomClass_Initialize        (uint8_t instance);
 extern usbStatus         USBH_CustomClass_Uninitialize      (uint8_t instance);
 
-// USB Host thread function prototypes
-extern void              USBH_Core_Thread                   (void       *arg);
-
-extern void              USBH_CDC_IntIn_Thread              (void       *arg);
-
-extern void              USBH_HID_IntIn_Thread              (void       *arg);
-
 // USB Host timer function prototypes
-extern void              USBH_ConnectDebounce               (void       *arg);
+extern void              USBH_ConnectDebounce               (void *arg);
 
 #ifdef __cplusplus
 }
