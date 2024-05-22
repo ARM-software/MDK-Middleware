@@ -19,9 +19,7 @@ The steps to create a microcontroller application that uses TCP/IP communication
 Only a few steps are necessary to complete the RTE Component selection: 
  
  -# From the \b Network Component:
-   - Select <b>Network:CORE</b> that provides the basic functionality required for TCP/IP communication. Note that users
-     of MDK-Professional can select between an IPv4/IPv6 dual-stack and an IPv4-only implementation, while users of MDK-Plus
-     can only select the IPv4 implementation.
+   - Select <b>Network:CORE</b> that provides the basic functionality required for TCP/IP communication.
    - Select your desired <b>Network:Interface</b>. For example, set <b>Network:Interface:Ethernet</b> to '1' for enabling
      Ethernet communication.
    - Select the desired Network Services. For example, select <b>Network:Service:Web Server Compact</b> to create a simple
@@ -37,7 +35,7 @@ Only a few steps are necessary to complete the RTE Component selection:
    - Additional device specific drivers may be required according to the validation output.
  -# From the \b CMSIS Component:
    - Select the <b>CMSIS:CORE</b> to provide the core interface to the processor.
-   - Select a suitable <b>CMSIS:RTOS</b> or <b>CMSIS:RTOS2</b> that is required for the Networking Component.
+   - Select the <b>CMSIS:RTOS2</b> that is required for the Networking Component.
  -# If you need to \ref secure_communication "secure the communication", select from the \b Security Component:
    - \b mbed \b TLS
    
@@ -82,18 +80,23 @@ All configuration files for the Network Component are listed in the Project wind
 Network Core
 ------------
 
-\image html net_config_c.png "Net_Config.c Configuration File"
+\image html net_config_h.png "Net_Config.h Configuration File"
 
-The Network Core configuration file \b %Net_Config.c contains the setting for the <b>Local Host Name</b>. This is a name
-under which the network device can be accessed on a local area network (\b LAN). This requires a
-\ref using_ethernet_interfaces_conf "NetBIOS Name Service" to be enabled in the configuration. This name is very useful if
-you don't know the IP address that has been assigned to your device by the DHCP server.
+The configuration file Network Core \b Net_Config.h contains the setting for the library version to be used in the application.
+
+The following \b Variant options are available:
+- <b>IPv4 only</b> is a pure IPv4 implementation. This choice saves some system resources if no IPv6 networking is used in the application.  
+- <b>IPv4/IPv6 dual stack</b> implements both IPv4 and IPv6 internet protocols.
+
+The <b>Local Host Name</b> specifies a name under which the network device can be accessed on a local area network (\b LAN).
+This requires a \ref using_ethernet_interfaces_conf "NetBIOS Name Service" to be enabled in the configuration. This name is
+very useful if you don't know the IP address that has been assigned to your device by the DHCP server.
 
 The <b>Memory Pool Size</b> specifies the amount of RAM in bytes allocated for the memory pool. The buffers for the network
 packets are allocated from this memory pool. Usually, the default value of 12000 bytes is sufficient.
 
 Many \ref netServices "Network Services" are started by the Network Core automatically. If you disable
-<b>Start System Service</b>, you need to enable/start them at runtime using the dedicated functions for that.
+<b>Start System Services</b>, you need to enable/start them at runtime using the dedicated functions for that.
 
 To change the default OS resource settings for the Network Core, use <b>Core Thread Stack Size</b>. The default value is 2048 bytes.
 The default Core Thread priority is <b>osPriorityNormal</b>. You can change this priority by changing the \b NET_THREAD_PRIORITY
@@ -150,11 +153,6 @@ For proper operation, the Network Component requires some system configuration s
 - Additional \b stack size of <b>512 bytes</b>. This can be configured in the device's \b startup_device.s file (\c Stack_Size).
 - Additional two \b threads when Ethernet Interface is enabled (\c netCore_Thread and \c netETH_Thread).
   - If you use <b>RTX v5</b>, you do not need to change the <b>RTX settings</b>, because all resources are statically allocated.
-  - If you use <b>RTX v4</b>, you must change the following settings in the \urlout{RTX-Conf-CM4} file: 
-    - Increase the <b>Number of concurrent running user threads</b> by \b 2
-    - Increase the <b>Number of threads with user-provided stack size</b> by \b 2
-    - Increase <b>Total stack size [bytes] for threads with user-provided stack size</b> by <b>1536 bytes</b>
-    - Enable <b>User Timers</b>
  
 For more information, check the Network Component's \ref nw_resource_requirements section.
 
@@ -169,21 +167,20 @@ The initialization process is different depending on which network interface is 
 
 - \b Ethernet \b interface
 \code
-__NO_RETURN static void app_main (void *arg) {
-  (void)arg;
+__NO_RETURN void app_main_thread (void *argument) {
+  (void)argument;
  
   netInitialize ();
  
-  osThreadTerminate(osThreadGetId());
-  for(;;);
+  osThreadExit();
 }
 \endcode
 
 - \b WiFi \b interface
 \code
-__NO_RETURN static void app_main (void *arg) {
+__NO_RETURN void app_main_thread (void *argument) {
   NET_WIFI_CONFIG wifi_config;
-  (void)arg;
+  (void)argument;
  
   netInitialize ();
  
@@ -197,23 +194,21 @@ __NO_RETURN static void app_main (void *arg) {
   // Connect to wireless network
   netWiFi_Activate (0, &wifi_config);
  
-  osThreadTerminate(osThreadGetId());
-  for(;;);
+  osThreadExit();
 }
 \endcode
 
 - \b PPP \b interface
 \code
-__NO_RETURN static void app_main (void *arg) {
-  (void)arg;
+__NO_RETURN void app_main_thread (void *argument) {
+  (void)argument;
  
   netInitialize ();
  
   // Connect to remote PPP server
   netPPP_Connect ("04213372", "Guest", "test")
  
-  osThreadTerminate(osThreadGetId());
-  for(;;);
+  osThreadExit();
 }
 \endcode
 
@@ -251,30 +246,55 @@ The following templates are available for the Network component:
 
 \section nw_debugging Debugging 
 
-The Network Component is distributed in library form and doesn't allow direct code debug.
-However, it can be configured to generate debug events and provide dynamic visibility to the component operation.
+Network Component can be easily configured to generate debug events and provide dynamic visibility to the component operation.
 
-The following variants can be selected for the <b>Network:Core</b> component in the <b>Manage Run-Time Environment</b> window:
- - \ref netEvrSupport "Debug": this variant supports event annotations for the \urlout{Event-Recorder-About}
-and makes it very easy to analyze the internal operation of the Network Component during application debug.
- - \subpage netDebugStdio "Debug STDIO": this is a legacy debug variant that prints event information as ASCII messages. 
- - <b>Release</b>: this variant does not include additional debugging code. Use this variant when deploying the application.
+Network supports event annotations for the \urlout{Event-Recorder-About} and makes it very easy to analyze the internal operation
+of the Network Component during application debugging. The old \subpage netDebugStdio "STDIO" debug, which outputs event information
+as ASCII messages on the standard output device, is also supported. 
 
-The figure below shows selection of <b>IPv4/IPv6 Debug</b> variant as an example.
-\image html "nw_debug_variant.png"  
+\anchor netDebugConfig
+Debug Configuration
+-------------------
 
-The \ref net_evr describes the events implemented in Network Services.
+The Network Component debug is configured using the \b Net_Debug.h file. The options are set in the file directly or using the 
+<a class=el href="https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard" target="_blank">Configuration Wizard</a>.
 
-\note
-Users of MDK-Plus edition can only access <b> IPv4 Debug/Debug STDIO/Release</b> variants.
+\image html net_debug_h.png "Net_Debug.h Configuration File"
+
+The following settings are available:
+ - <b>Network Debug</b> enables or disables the debug mode. 
+ - <b>Output Channel</b> selects where the diagnostic messages are to be sent:
+  - \urlout{Event-Recorder-About} outputs event messages to event recorder.
+  - \subpage netDebugStdio "STDIO" outputs diagnostic messages on the standard output device.
+  - \subpage netDebugStdio "STDIO + Timestamp" additionally prints the time information with debug messages. 
+
+The debugging configuration settings are divided into groups that can be activated separately:
+  - \b System enables memory allocation and interface diagnostics.
+  - \b IPv4 enables IP version 4 network layer diagnostics.
+  - \b IPv6 enables IP version 6 network layer diagnostics.
+  - \b Socket enables socket layer diagnostics.
+  - \b Service enables service layer diagnostics.
+
+\anchor netDebugLevels
+Debug Levels
+------------
+
+The system is made up of several modules that output diagnostic messages. It is possible to configure the debug output
+for each module separately. The <b>Debug level</b> for each module defines what kind of debug messages are printed:
+|Level |Description                                                            |
+|------|-----------------------------------------------------------------------|
+|Off   |The debug messages for the selected module are \b disabled.            |
+|Errors|Only error messages are output. This mode is useful for error tracking.|
+|All   |In this mode, \b all debug messages are output.                        |
 
 \subsection netEvrSupport Event Recorder Support
 
 \urlout{Event-Recorder-About} is a powerful tool that provides visibility to the dynamic execution of the program.
-The Network Component generates \ref net_evr "a broad set of Debug Events" for the Event Recorder and implements required infrastructure to interface with it.
+The Network Component generates a broad set of  \ref net_evr "Debug Events" for the Event Recorder and implements
+required infrastructure to interface with it.
 
 To use the Event Recorder together with Network Component, it is required to create an image with event generation support. The necessary steps are:
-  1. \urlout{Debug-Variant-Select}: in the RTE management dialog select the \b Debug variant for the target <b>Network:Core</b> software component. 
+  1. \ref netDebugConfig "Select Debug mode": in the \b Net_Config.h enable the <b>Network Debug</b> for the component. 
   2. \urlout{Event-Recorder-Enable}: in the RTE management dialog enable the software component <b>CMSIS-View:Event Recorder</b>.
   3. \urlout{Event-Recorder-Initialize}: in the application code, call the function <b>EventRecorderInitialize</b>.  
   4. \urlout{Event-Recorder-Configure}: if necessary, adjust default Event Recorder configuration.
@@ -286,7 +306,7 @@ Event filtering
 ---------------
 The Network debug variant generates lots of debug events. This might have an impact on the operation of the Network library.
 It is a good idea to disable debug for modules, which are not used, or at least to reduce the number of messages, that
-are generated. Therefore, enable \b Error events for such modules and enable \b Debug events only for the modules you are
+are generated. Therefore, enable \b Error events for such modules and enable \b All debug events only for the modules you are
 focused on.
 
 Event IDs

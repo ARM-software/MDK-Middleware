@@ -691,7 +691,7 @@ pages.
 \brief Functions to work with the HTTP server.
 \details
 Like all services, the HTTP server is normally started automatically if \c NET_START_SERVICE is set to \token{1} in the
-\b %Net_Config.c configuration file. If it is set to \token{0}, the HTTP server needs to be started manually in the user
+\b Net_Config.h configuration file. If it is set to \token{0}, the HTTP server needs to be started manually in the user
 application using \ref netHTTPs_Start. At runtime, it is always possible to stop the HTTP server using the function
 \ref netHTTPs_Stop. The user application can check for a running server using the \ref netHTTPs_Running function.
 
@@ -1085,7 +1085,7 @@ This documentation is separated as follows:
 \brief Functions to work with the FTP server.
 \details
 Like all services, the FTP server is normally started automatically if \c NET_START_SERVICE is set to \token{1} in the
-\b %Net_Config.c configuration file. If it is disabled, the FTP server needs to be started manually in the user
+\b Net_Config.h configuration file. If it is disabled, the FTP server needs to be started manually in the user
 application using \ref netFTPs_Start. At runtime, it is always possible to stop the FTP server using the function
 \ref netFTPs_Stop. The user application can check for a running server using the \ref netFTPs_Running function.
 
@@ -1401,7 +1401,7 @@ This documentation is separated as follows:
 \brief Functions to work with the TFTP server.
 \details
 Like all services, the TFTP server is normally started automatically if \c NET_START_SERVICE is set to \token{1} in the
-\b %Net_Config.c configuration file. If it is disabled, the TFTP server needs to be started manually in the user
+\b Net_Config.h configuration file. If it is disabled, the TFTP server needs to be started manually in the user
 application using \ref netTFTPs_Start. At runtime, it is always possible to stop the TFTP server using the function
 \ref netTFTPs_Stop. The user application can check for a running server using the \ref netTFTPs_Running function.
 
@@ -1585,7 +1585,7 @@ This documentation is separated as follows:
 \brief Functions to work with the Telnet server.
 \details
 Like all services, the Telnet server is normally started automatically if \c NET_START_SERVICE is set to \token{1} in the
-\b %Net_Config.c configuration file. If it is disabled, the Telnet server needs to be started manually in the user
+\b Net_Config.h configuration file. If it is disabled, the Telnet server needs to be started manually in the user
 application using \ref netTELNETs_Start. At runtime, it is always possible to stop the Telnet server using the function
 \ref netTELNETs_Stop. The user application can check for a running server using the \ref netTELNETs_Running function.
 

@@ -125,25 +125,11 @@ required to achieve this:
    in the \b Template folder):
 \code
 /*
- *  Configuration template for HTTPS
- *
- * Copyright (C) 2006-2022, Arm Limited, All Rights Reserved
- * SPDX-License-Identifier: Apache-2.0
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Copyright The Mbed TLS Contributors
+ *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
  */
 
-#define MBEDTLS_CONFIG_VERSION 0x03010000
+#define MBEDTLS_CONFIG_VERSION 0x03060000
 
 /* System support */
 
@@ -229,16 +215,11 @@ required to achieve this:
    or more, depending on your application.
 -# Configure the RTX threads
    - If you use <b>RTX v5</b>, you do not need to change the <b>RTX settings</b>, because all resources are statically allocated.
-   - If you use <b>RTX v4</b>, you must change the following settings in the \urlout{RTX-Conf-CM4} file: 
-     - Increase the <b>Number of concurrent running user threads</b> by \b 1
-     - Increase the <b>Number of threads with user-provided stack size</b> by \b 1
-     - Increase <b>Total stack size [bytes] for threads with user-provided stack size</b> by the value set for the macro 
-       \c TLS_THREAD_STACK_SIZE in TLS_mbed.c (default is 4096)
 -# Update the HTTP Server configuration file (\c Net_Config_HTTP_Server.h):
    - Change the \b Port \b Number to \a 443 or to \a 0 (auto-selects 443 for HTTPS or 80 for HTTP)
 -# Build the example and download to Flash. If it fails, please check your "Read/Write Memory Areas" in your target options.
 -# You can test the example from a browser by connecting to "https://board_name" or "https://ip_address" (depending on your
-   settings in \c Net_Config.c file.
+   settings in \c Net_Config.h file.
 
 \note
 - The first connection might take a while (a few seconds up to 10s) and depends on the browser and how many sockets/sessions
@@ -345,28 +326,13 @@ required to achieve this:
    in the \b Template folder):
 \code
 /*
- *  Configuration template for SMTPS
- *
- * Copyright (C) 2006-2022, Arm Limited, All Rights Reserved
- * SPDX-License-Identifier: Apache-2.0
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Copyright The Mbed TLS Contributors
+ *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
  */
 
-#define MBEDTLS_CONFIG_VERSION 0x03010000
+#define MBEDTLS_CONFIG_VERSION 0x03060000
 
 /* System support */
-
 
 /* mbed TLS feature support */
 #define MBEDTLS_ENTROPY_HARDWARE_ALT
@@ -411,7 +377,6 @@ required to achieve this:
 #define MBEDTLS_ECDSA_C
 #define MBEDTLS_ECP_C
 #define MBEDTLS_ENTROPY_C
-#define MBEDTLS_ERROR_C
 #define MBEDTLS_GCM_C
 #define MBEDTLS_HMAC_DRBG_C
 #define MBEDTLS_MD_C
@@ -446,11 +411,6 @@ required to achieve this:
    or more, depending on your application.
 -# Configure the RTX threads
    - If you use <b>RTX v5</b>, you do not need to change the <b>RTX settings</b>, because all recources are statically allocated.
-   - If you use <b>RTX v4</b>, you must change the following settings in the \urlout{RTX-Conf-CM4} file: 
-     - Increase the <b>Number of concurrent running user threads</b> by \b 1
-     - Increase the <b>Number of threads with user-provided stack size</b> by \b 1
-     - Increase <b>Total stack size [bytes] for threads with user-provided stack size</b> by the value set for the macro
-       \c TLS_THREAD_STACK_SIZE in TLS_mbed.c (default is 4096)
 -# Build the example and download to Flash. If it fails, please check your "Read/Write Memory Areas" in your target options.
 -# You can test the example by sending an e-mail to your e-mail account, for example to Gmail or Yahoo.
 

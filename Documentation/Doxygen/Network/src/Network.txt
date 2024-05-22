@@ -4,7 +4,7 @@
 \anchor netDSOverview
 
 \section net_overview Overview
-The \b Network \b Component v7 contains services, protocol sockets, and physical communication interfaces for creating IPv4
+The \b Network \b Component contains services, protocol sockets, and physical communication interfaces for creating IPv4
 and IPv6 networking applications.
 
 \image html "Network.png" "Network Overview"
@@ -66,22 +66,6 @@ that is produced. Unique identifiers are required for proper network operation.
 
 A \ref RFC_list "list of implemented RFCs" is also available.
 
-\subsection net_mdk_editions MDK Editions
-
-MDK Middleware is available to all users of
-<a href="https://developer.arm.com/Tools%20and%20Software/Keil%20MDK/MDK-Middleware#Editions" target="_blank">MDK-Professional</a> and
-<a href="https://developer.arm.com/Tools%20and%20Software/Keil%20MDK/MDK-Middleware#Editions" target="_blank">MDK-Plus</a>. The following table shows the differences in
-Network component availability:
-
-|                       | MDK-Professional | MDK-Plus  |
-|-----------------------|:----------------:|:---------:|
-| Network (IPv4)        | Available        | Available |
-| Network (IPv4/IPv6)   | Available        |           |
-| Network (SSL/TLS)     | Available        |           |
-
-\note A \ref nw_diffs_compatibility_mode "compatibility mode" is available that enables you to use the old v6 API with only
-      minor modifications in a v7 project.
-
 
 \subsection net_docs_structure Documentation Structure
 
@@ -94,7 +78,7 @@ This user's guide contains the following chapters:
   vulnerabilities.
 - \ref nw_examples are a good starting point for implementing your own networking device.
 - The \ref network_diffs compares "migration guide" contains information how to migrate from previous versions to the
-  Network Component v7.
+  Network Component v8.
 
 \page netw_revhist Revision History
 

@@ -227,7 +227,7 @@ need to configure these settings manually (refer to \ref using_ethernet_interfac
 DHCP is specified for IPv4 and IPv6 networks, the Network Component is only supporting IPv4 networks at the moment.
 
 Like all services, the DHCP is normally started automatically if \c NET_START_SERVICE is set to \token{1} in the
-\b %Net_Config.c configuration file. If it is disabled, DHCP needs to be started manually in the user
+\b Net_Config.h configuration file. If it is disabled, DHCP needs to be started manually in the user
 application using \ref netDHCP_Enable. At runtime, it is always possible to stop DHCP using the function
 \ref netDHCP_Disable. In this case, the Network Core will revert the IP address of the node to the static IP address
 specified in the \b %Net_Config_ETH_<i>n</i>.h file.
@@ -566,10 +566,19 @@ The Ethernet configuration file contains the following settings:
     - <b>MTU size</b> lets you specify the
       <a class="el" target="_blank" href="https://en.wikipedia.org/wiki/Maximum_transmission_unit">maximum transmission unit</a>
       in bytes if required.
-  - The \b Cache \b Table \b Size of the \b Neighbor \b Discovery sets the number of cached neighbor node addresses.
-  - The \b Cache \b Timeout \b in \b seconds specifies the timeout for cached node addresses.
-  - The \b Number \b of \b Retries is used to resolve an IP address before the NDP module gives up and stops the resolution.
-  - The \b Resend \b Timeout \b in \b seconds specifies the timeout for resending Neighbor Solicitation.
+  - <b>Neighbor Discovery</b> configures various parameters of the
+    <a class=el href="https://en.wikipedia.org/wiki/Neighbor_Discovery_Protocol" target="_blank">Neighbor Discovery Protocol</a>
+    that is used to cache the IPv6 addresses of neighbor nodes.
+    - The \b Cache \b Table \b Size sets the number of cached neighbor node addresses. Increase this value when using multiple
+      simultaneous IPv6 connections.
+    - The \b Cache \b Timeout \b in \b seconds specifies the timeout for cached node addresses.
+    - The \b Number \b of \b Retries is used to resolve an IP address before the NDP module gives up and stops the resolution.
+    - The \b Resend \b Timeout \b in \b seconds specifies the timeout for resending Neighbor Solicitation.
+  - <b>Multicast Listener Discovery</b> enables or disables sending or receiving
+    <a class=el href="https://en.wikipedia.org/wiki/IP_multicast" target="_blank">IPv6 Multicast</a> packets. In order to
+    receive Multicast packets, a host must first join a Host Group with a specified Host Group IPv6 address.
+    - <b>Membership Table size</b> specifies the size of MLD Host Group table. It defines how many Host Groups a host can
+      join.
   - If <b>Dynamic Host Configuration</b> is enabled, the device obtains all network parameters like IP address and
     primary/secondary DNS servers automatically from the DHCPv6 server on the LAN.
     - Two \b DHCPv6 \b Client \b Modes are used to connect to a DHCPv6 server: in \b stateless \b mode, the client obtains
@@ -721,10 +730,19 @@ The WiFi configuration file contains the following settings:
     - <b>MTU size</b> lets you specify the
       <a class="el" target="_blank" href="https://en.wikipedia.org/wiki/Maximum_transmission_unit">maximum transmission unit</a>
       in bytes if required.
-  - The \b Cache \b Table \b Size of the \b Neighbor \b Discovery sets the number of cached neighbor node addresses.
-  - The \b Cache \b Timeout \b in \b seconds specifies the timeout for cached node addresses.
-  - The \b Number \b of \b Retries is used to resolve an IP address before the NDP module gives up and stops the resolution.
-  - The \b Resend \b Timeout \b in \b seconds specifies the timeout for resending Neighbor Solicitation.
+  - <b>Neighbor Discovery</b> configures various parameters of the
+    <a class=el href="https://en.wikipedia.org/wiki/Neighbor_Discovery_Protocol" target="_blank">Neighbor Discovery Protocol</a>
+    that is used to cache the IPv6 addresses of neighbor nodes.
+    - The \b Cache \b Table \b Size sets the number of cached neighbor node addresses. Increase this value when using multiple
+      simultaneous IPv6 connections.
+    - The \b Cache \b Timeout \b in \b seconds specifies the timeout for cached node addresses.
+    - The \b Number \b of \b Retries is used to resolve an IP address before the NDP module gives up and stops the resolution.
+    - The \b Resend \b Timeout \b in \b seconds specifies the timeout for resending Neighbor Solicitation.
+  - <b>Multicast Listener Discovery</b> enables or disables sending or receiving
+    <a class=el href="https://en.wikipedia.org/wiki/IP_multicast" target="_blank">IPv6 Multicast</a> packets. In order to
+    receive Multicast packets, a host must first join a Host Group with a specified Host Group IPv6 address.
+    - <b>Membership Table size</b> specifies the size of MLD Host Group table. It defines how many Host Groups a host can
+      join.
   - If <b>Dynamic Host Configuration</b> is enabled, the device obtains all network parameters like IP address and
     primary/secondary DNS servers automatically from the DHCPv6 server on the LAN.
     - Two \b DHCPv6 \b Client \b Modes are used to connect to a DHCPv6 server: in \b stateless \b mode, the client obtains

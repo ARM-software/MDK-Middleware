@@ -87,7 +87,7 @@ The setup of the Evaluation Board hardware is described in the \b Abstract.txt f
 PC Software
 -----------
 The web server can be tested on any PC using any browser available. Simply, type in the <b>Local Host Name</b> that is
-defined in the \b %Net_Config.c file. The default name is \b my_host. If you have a DCHP server in your network, you will be
+defined in the \b Net_Config.h file. The default name is \b my_host. If you have a DCHP server in your network, you will be
 automatically connected. You need to log in. As for all network examples, use "admin" (without the quotes) for the user and
 no password (you can change the defaults in the \b %Net_Config_HTTP_Server.h file). The following (or a similar) page will
 come up in your browser:
@@ -158,7 +158,7 @@ The setup of the Evaluation Board hardware is described in the \b Abstract.txt f
 PC Software
 -----------
 The web server can be tested on any PC using any browser available. Simply, type in the <b>Local Host Name</b> that is
-defined in the \b %Net_Config.c file. The default name is \b my_host. If you have a DCHP server in your network, you will be
+defined in the \b Net_Config.h file. The default name is \b my_host. If you have a DCHP server in your network, you will be
 automatically connected. You need to log in. As for all network examples, use "admin" (without the quotes) for the user and
 no password (you can change the defaults in the \b %Net_Config_HTTP_Server.h file). The following (or a similar) page will
 come up in your browser:
@@ -219,7 +219,7 @@ The setup of the Evaluation Board hardware is described in the \b Abstract.txt f
 PC Software
 -----------
 The web server can be tested on any PC using any browser available. Simply, type in the <b>Local Host Name</b> that is
-defined in the \b %Net_Config.c file. If you have a DCHP server in your network, you will be automatically connected. You
+defined in the \b Net_Config.h file. If you have a DCHP server in your network, you will be automatically connected. You
 need to log in. As for all network examples, use "admin" (without the quotes) for the user and no password (you can change
 the defaults in the \b %Net_Config_HTTP_Server.h file). The following (or a similar) page will come up in your browser:
 
@@ -277,7 +277,7 @@ The setup of the Evaluation Board hardware is described in the \b Abstract.txt f
 PC Software
 -----------
 To connect to the FTP server, all you need is a FTP client. On a Windows PC you can use the Command Prompt. Simply type
-\c ftp \c my_host (or the respective hostname that you have chosen in the \b %Net_Config.c file). If you have a DCHP server
+\c ftp \c my_host (or the respective hostname that you have chosen in the \b Net_Config.h file). If you have a DCHP server
 in your network, it will automatically connect to the FTP server. You will be asked for a username and password combination.
 As for all network examples, this is "admin" (without the quotes) for the user and no password (you can change the defaults
 in the \b %Net_Config_FTP_Server.h file). After a successful log in, you should see something like this:
@@ -334,7 +334,7 @@ PC Software
 -----------
 For opening a Telnet session, you need a Telnet client. As this is not an integral part of Windows any more, please look for
 an alternative on the Internet. PuTTY has a good feature set and is easy to install and use. When you connect to your board
-using a Telnet client, please enter \c my_host (or the respective hostname that you have chosen in the \b %Net_Config.c file)
+using a Telnet client, please enter \c my_host (or the respective hostname that you have chosen in the \b Net_Config.h file)
 in the hostname field and use the standard Telnet port 23. You will be asked for log-in credentials. Like for all other
 tutorials, the default is \c admin for the username without any password (you can change the defaults in the
 \b %Net_Config_Telnet_Server.h file). Using the \c help command, you can see the list of available CLI commands:

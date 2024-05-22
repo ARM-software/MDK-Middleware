@@ -700,7 +700,7 @@ int main (void) {
 \fn const char *netSYS_GetHostName (void)
 \details
 The function \b netSYS_GetHostName returns the name of the local host. The name is set with \c NET_HOST_NAME in the 
-\b Net_Config.c, and can be changed at \ref nw_runtime_config "runtime". 
+\b Net_Config.h, and can be changed at \ref nw_runtime_config "runtime". 
 
 \b Code \b Example
 \code
@@ -713,7 +713,7 @@ printf ("Localhost name is %s\n", netSYS_GetHostName ());
 \fn netStatus netSYS_SetHostName (const char *hostname)
 \details
 The function \b netSYS_SetHostName sets the name of the local host. Default name is set with \c NET_HOST_NAME in the 
-\b Net_Config.c, and can be changed at \ref nw_runtime_config "runtime". 
+\b Net_Config.h, and can be changed at \ref nw_runtime_config "runtime". 
 
 The argument \a hostname is a pointer to the localhost name that is to be set, which is a \token{null}-terminated string.
 The function copies the content of the \a hostname to the localhost name. The maximum length of the \a hostname string is
@@ -3400,7 +3400,7 @@ Possible \ref netStatus return values:
 - \em netError: DHCP client internal error.
 
 \note
-- If you set the \c NET_START_SERVICE to \token{1} in \b %Net_Config.c, all selected services will be started automatically.
+- If you set the \c NET_START_SERVICE to \token{1} in \b Net_Config.h, all selected services will be started automatically.
   Thus, you only need to call this function, if you have either stopped the DHCP service previously using
   \ref netDHCP_Disable or have set \c NET_START_SERVICE to \token{0}.
 - The DHCP service works for IPv4 only.
@@ -3879,7 +3879,7 @@ Possible \ref netStatus return values:
 - \em netError: DHCPv6 client internal error.
 
 \note
-- If you set the \c NET_START_SERVICE to \token{1} in \b %Net_Config.c, all selected services will be started automatically.
+- If you set the \c NET_START_SERVICE to \token{1} in \b Net_Config.h, all selected services will be started automatically.
   Thus, you only need to call this function, if you have either stopped the DHCPv6 service previously using
   \ref netDHCP6_Disable or have set \c NET_START_SERVICE to \token{0}.
 - The DHCPv6 service works for IPv6 only.
@@ -4984,7 +4984,7 @@ Possible \ref netStatus return values:
 - \em netOK: FTP server started successfully.
 
 \note
-  If you set the \c NET_START_SERVICE to \token{1} in \b %Net_Config.c, all selected services will be started automatically.
+  If you set the \c NET_START_SERVICE to \token{1} in \b Net_Config.h, all selected services will be started automatically.
   Thus, you only need to call this function, if you have either stopped the FTP server previously using
   \ref netFTPs_Stop or have set \c NET_START_SERVICE to \token{0}.
 
@@ -5952,7 +5952,7 @@ Possible \ref netStatus return values:
 - \em netOK: TFTP server started successfully.
 
 \note
-  If you set the \c NET_START_SERVICE to \token{1} in \b %Net_Config.c, all selected services will be started automatically.
+  If you set the \c NET_START_SERVICE to \token{1} in \b Net_Config.h, all selected services will be started automatically.
   Thus, you only need to call this function, if you have either stopped the TFTP server previously using
   \ref netTFTPs_Stop or have set \c NET_START_SERVICE to \token{0}.
 
@@ -6438,7 +6438,7 @@ Possible \ref netStatus return values:
 - \em netOK: Telnet server started successfully.
 
 \note
-  If you set the \c NET_START_SERVICE to \token{1} in \b %Net_Config.c, all selected services will be started automatically.
+  If you set the \c NET_START_SERVICE to \token{1} in \b Net_Config.h, all selected services will be started automatically.
   Thus, you only need to call this function, if you have either stopped the Telnet server previously using
   \ref netTELNETs_Stop or have set \c NET_START_SERVICE to \token{0}.
 
@@ -7081,7 +7081,7 @@ Possible \ref netStatus return values:
 - \em netOK: HTTP server started successfully.
 
 \note
-  If you set the \c NET_START_SERVICE to \token{1} in \b %Net_Config.c, all selected services will be started automatically.
+  If you set the \c NET_START_SERVICE to \token{1} in \b Net_Config.h, all selected services will be started automatically.
   Thus, you only need to call this function, if you have either stopped the HTTP server previously using
   \ref netHTTPs_Stop or have set \c NET_START_SERVICE to \token{0}.
 

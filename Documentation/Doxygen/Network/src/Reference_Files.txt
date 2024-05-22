@@ -4,10 +4,10 @@
 
 /**
 \defgroup function_categories Overview
-\brief Network Component v7 Function Overview.
+\brief Network Component Function Overview.
 \details
 This reference section is divided into the following subsections:
-- The Network Component v7 implements API functions for the various \ref netServices, \ref netSockets, and \ref netInterfaces
+- The Network Component implements API functions for the various \ref netServices, \ref netSockets, and \ref netInterfaces
   as described in the \ref netDSOverview "overview".
 - \ref netGen_Func functions allow IP address conversion and describes the related data format.
 - \ref netSys_Func initialize the Network Component and allow for hostname management.
@@ -17,7 +17,7 @@ This reference section is divided into the following subsections:
 
 Function Categories
 -------------------
-Each API function of the Network Component v7 indicates a category:
+Each API function of the Network Component indicates a category:
 
 \anchor thread-safe
   - <b>[thread-safe]</b> functions can be called from different threads without any harm. They are either \b re-entrant or
@@ -50,68 +50,26 @@ Directories and Files
 
 \b Directories
 
-The table below provides a complete overview of the folders that contain the files related to the Network Component v7.
+The table below provides a complete overview of the folders that contain the files related to the Network Component.
 
 Directory           | Description
 :------------------ | :---------------------
 ./Network/Config    | Configuration Files that are copied to the project when components are selected.
-./Network/Driver    | Driver implementations for external MAC and PHY devices available as Driver Components.
+./Network/Driver    | Driver implementations for standard and null modem network drivers.
 ./Network/Include   | Include files; once a component is select an Include Path is set for the C/C++ compiler to this directory.
 ./Network/Interface | Interface files to other Middleware Components. Files are included when a related component is selected (\b read-only).
-./Network/Lib/ARM   | Library files for Network. The linker includes the library for the selected processor from this directory.
+./Network/Source    | Source files for the Network component.
 ./Network/Template  | \urlout{uv4_ca_sourcefiles} simplify creating application specific functionality. Adapt the template functions to the application's needs.
+./Network/Tool      | Utilities for creating your own secure certificates and keys.
 
 
 \b Header \b Files
 
-The API interface of the Network Component v7 is provided using different header files:
+The API interface of the Network Component is provided using the header file:
 
 Header File         | Used by            | Description
 :------------------ | :----------------- | :------------------------------------
-\b rl_net.h         | Application Code   | API for the Network Component v7
-\b rl_net_ds.h      | %rl_net.h          | Network Component v7 API header file included from \b %rl_net.h 
-\b rl_net_legacy.h  | %rl_net.h          | Legacy IPv4-only API Header file included from \b %rl_net.h 
-\b rl_net_lib.h     | Internal Library   | The functions in this header file are for <b>internal use only</b>. They should no be called by user applications.
-\b net_config.h     | %Net_Config.c      | Resource definitions for the Network component
-\b net_rtos.h       | %Net_Config.c      | Network CMSIS-RTOS abstraction layer
-\b net_rtos2.h      | %Net_Config.c      | Network CMSIS-RTOS2 abstraction layer
-\b net_debug.h      | %Net_Debug.c       | Definitions for Network Debug Configuration
-\b net_evr.h        | Internal Library   | Network debug definitions for Event Recorder
-\b net_modem.h      | %Modem_*.c         | API for the Network Modem Driver
-
-
-\b Library \b Files
-
-The Network Component is provided in the following library files:
-
-Library                | Description
-:--------------------- | :---------------------
-\b %Net_CM0_B.lib      | IPv4/IPv6 library for devices based on \b Cortex-M0 and \b Cortex-M0+ in big-endian configuration.
-\b %Net_CM0_L.lib      | IPv4/IPv6 library for devices based on \b Cortex-M0 and \b Cortex-M0+ in little-endian configuration.
-\b %Net_CM3_B.lib      | IPv4/IPv6 library for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in big-endian configuration.
-\b %Net_CM3_L.lib      | IPv4/IPv6 library for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in little-endian configuration.
-\b %Net_Dbg_CM0_B.lib  | IPv4/IPv6 library with Event Recorder Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in big-endian configuration.
-\b %Net_Dbg_CM0_L.lib  | IPv4/IPv6 library with Event Recorder Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in little-endian configuration.
-\b %Net_Dbg_CM3_B.lib  | IPv4/IPv6 library with Event Recorder Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in big-endian configuration.
-\b %Net_Dbg_CM3_L.lib  | IPv4/IPv6 library with Event Recorder Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in little-endian configuration.
-\b %Net_D_CM0_B.lib    | IPv4/IPv6 library with Standard output Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in big-endian configuration.
-\b %Net_D_CM0_L.lib    | IPv4/IPv6 library with Standard output Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in little-endian configuration.
-\b %Net_D_CM3_B.lib    | IPv4/IPv6 library with Standard output Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in big-endian configuration.
-\b %Net_D_CM3_L.lib    | IPv4/IPv6 library with Standard output Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in little-endian configuration.
-\b %Net4_CM0_B.lib     | IPv4 only library for devices based on \b Cortex-M0 and \b Cortex-M0+ in big-endian configuration.
-\b %Net4_CM0_L.lib     | IPv4 only library for devices based on \b Cortex-M0 and \b Cortex-M0+ in little-endian configuration.
-\b %Net4_CM3_B.lib     | IPv4 only library for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in big-endian configuration.
-\b %Net4_CM3_L.lib     | IPv4 only library for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in little-endian configuration.
-\b %Net4_Dbg_CM0_B.lib | IPv4 only library with Event Recorder Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in big-endian configuration.
-\b %Net4_Dbg_CM0_L.lib | IPv4 only library with Event Recorder Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in little-endian configuration.
-\b %Net4_Dbg_CM3_B.lib | IPv4 only library with Event Recorder Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in big-endian configuration.
-\b %Net4_Dbg_CM3_L.lib | IPv4 only library with Event Recorder Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in little-endian configuration.
-\b %Net4_D_CM0_B.lib   | IPv4 only library with Standard output Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in big-endian configuration.
-\b %Net4_D_CM0_L.lib   | IPv4 only library with Standard output Debug for devices based on \b Cortex-M0 and \b Cortex-M0+ in little-endian configuration.
-\b %Net4_D_CM3_B.lib   | IPv4 only library with Standard output Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in big-endian configuration.
-\b %Net4_D_CM3_L.lib   | IPv4 only library with Standard output Debug for devices based on \b Cortex-M3, \b Cortex-M4, and \b Cortex-M7 in little-endian configuration.
-
-\note The Run-Time Environment Manager automatically selects the correct library required for a certain device.
+\b rl_net.h         | Application Code   | API for the Network Component
 */
 
 /**
