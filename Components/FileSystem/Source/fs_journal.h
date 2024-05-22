@@ -6,8 +6,8 @@
  * Purpose: File System Journaling Module Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __FS_JOURNAL_H
-#define __FS_JOURNAL_H
+#ifndef FS_JOURNAL_H__
+#define FS_JOURNAL_H__
 
 #include "fs_core.h"
 
@@ -50,4 +50,4 @@ extern uint32_t fsj_set_space (FSJOUR *fsj, uint32_t start_sect, uint32_t cnt);
 extern uint32_t fsj_write     (FSJOUR *fsj, uint32_t sect, uint32_t rsec, uint8_t *buf);
 extern uint32_t fsj_init      (FSJOUR *fsj, FAT_DRV *drv);
 
-#endif /* __FS_JOURNAL_H */
+#endif /* FS_JOURNAL_H__ */

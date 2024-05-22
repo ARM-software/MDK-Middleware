@@ -6,8 +6,8 @@
  * Purpose: Common file system function definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __FS_COMMON_H
-#define __FS_COMMON_H
+#ifndef FS_COMMON_H__
+#define FS_COMMON_H__
 
 #include "fs_core.h"
 
@@ -24,4 +24,4 @@ extern void         set_u16 (uint8_t *p16, uint16_t val);
 extern uint32_t     get_u32 (const uint8_t *p32);
 extern void         set_u32 (uint8_t *p32, uint32_t val);
 
-#endif /* _FS_COMMON_H */
+#endif /* FS_COMMON_H__ */

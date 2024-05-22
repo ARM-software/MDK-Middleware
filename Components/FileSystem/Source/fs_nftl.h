@@ -6,8 +6,8 @@
  * Purpose: NAND FTL Implementation Module Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __FS_NFTL_H
-#define __FS_NFTL_H
+#ifndef FS_NFTL_H__
+#define FS_NFTL_H__
 
 #include "fs_core.h"
 
@@ -155,4 +155,4 @@ extern void    fs_nand_setup_layout  (uint32_t drive_num, NAND_PAGE_LAYOUT *layo
 extern int32_t fs_nand_feature_addr  (uint32_t drive_num, int32_t addr);
 extern int32_t fs_nand_feature_param (uint32_t drive_num, int32_t addr, NAND_FEATURE_PARAMETER *fp);
 
-#endif /* __FS_NFTL_H */
+#endif /* FS_NFTL_H__ */

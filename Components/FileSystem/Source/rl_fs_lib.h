@@ -6,8 +6,8 @@
  * Purpose: File System Library Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __RL_FS_LIB_H
-#define __RL_FS_LIB_H
+#ifndef RL_FS_LIB_H__
+#define RL_FS_LIB_H__
 
 #include <stddef.h>
 
@@ -353,4 +353,4 @@ extern uint32_t const fs_lib_version;
 }
 #endif
 
-#endif /* __RL_FS_LIB_H */
+#endif /* RL_FS_LIB_H__ */

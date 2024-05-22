@@ -6,8 +6,8 @@
  * Purpose: Definition of debug events for FileSystem
  *----------------------------------------------------------------------------*/
 
-#ifndef __FS_EVR_H
-#define __FS_EVR_H
+#ifndef FS_EVR_H__
+#define FS_EVR_H__
 
 #include "fs_core.h"
 
@@ -5899,4 +5899,4 @@
   #define EvrFsMcSPI_MediaPasswordEnabled(instance)
 #endif
 
-#endif /* __FS_EVR_H */
+#endif /* FS_EVR_H__ */

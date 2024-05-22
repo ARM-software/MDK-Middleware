@@ -6,8 +6,8 @@
  * Purpose: SD/MMC Card definition header
  *----------------------------------------------------------------------------*/
 
-#ifndef __FS_MC_H
-#define __FS_MC_H
+#ifndef FS_MC_H__
+#define FS_MC_H__
 
 #include "fs_core.h"
 
@@ -295,4 +295,4 @@ typedef struct _fsCSD_Register {
   uint16_t Rsvd;
 } fsCSD_Register;
 
-#endif /* __FS_MC_H */
+#endif /* FS_MC_H__ */

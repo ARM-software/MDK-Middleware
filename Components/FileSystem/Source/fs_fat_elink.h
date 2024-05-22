@@ -6,8 +6,8 @@
  * Purpose: FAT File System Entry Link Cache definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __FS_FAT_ELINK_H
-#define __FS_FAT_ELINK_H
+#ifndef FS_FAT_ELINK_H__
+#define FS_FAT_ELINK_H__
 
 #include "fs_core.h"
 
@@ -88,4 +88,4 @@ uint32_t elink_delete    (ELINK *el, NCACHE *p);
 uint32_t elink_scan      (uint32_t nameH, ELINK **el, NCACHE *p);
 ELINK   *elink_cmd       (uint32_t cmd, NCACHE *p);
 
-#endif /* _FS_FAT_ELINK_H */
+#endif /* FS_FAT_ELINK_H__ */

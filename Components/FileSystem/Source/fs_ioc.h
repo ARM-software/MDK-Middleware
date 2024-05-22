@@ -6,9 +6,9 @@
  * Purpose: Media IO Control API Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __FS_IOC_H
-#define __FS_IOC_H
+#ifndef FS_IOC_H__
+#define FS_IOC_H__
 
 #include "fs_core.h"
 
-#endif /* __FS_IOC_H */
+#endif /* FS_IOC_H__ */

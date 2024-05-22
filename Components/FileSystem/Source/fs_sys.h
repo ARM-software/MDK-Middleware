@@ -6,8 +6,8 @@
  * Purpose: System Module Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __FS_SYS_H
-#define __FS_SYS_H
+#ifndef FS_SYS_H__
+#define FS_SYS_H__
 
 #include "fs_core.h"
 
@@ -48,4 +48,4 @@
 #define OPEN_PLUS 2
 #endif
 
-#endif /* __FS_SYS_H */
+#endif /* FS_SYS_H__ */

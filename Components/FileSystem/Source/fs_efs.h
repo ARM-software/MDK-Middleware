@@ -6,8 +6,8 @@
  * Purpose: Embedded File System Module Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __FS_EFS_H
-#define __FS_EFS_H
+#ifndef FS_EFS_H__
+#define FS_EFS_H__
 
 #include "fs_core.h"
 
@@ -81,4 +81,4 @@ extern uint8_t const fs_efs_fh_cnt;     /* Number of EFS file handles         */
 /* Function prototypes */
 extern int32_t efs_handle_get (fsEFS_Volume *vol);
 
-#endif /* __FS_EFS_H */
+#endif /* FS_EFS_H__ */

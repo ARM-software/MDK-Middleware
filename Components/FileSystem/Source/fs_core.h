@@ -6,8 +6,8 @@
  * Purpose: File system core definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __FS_CORE_H
-#define __FS_CORE_H
+#ifndef FS_CORE_H__
+#define FS_CORE_H__
 
 #include "rl_fs.h"
 #include "rl_fs_lib.h"
@@ -77,4 +77,4 @@
   #define FS_DEBUG
 #endif
 
-#endif /* _FS_CORE_H */
+#endif /* FS_CORE_H__ */

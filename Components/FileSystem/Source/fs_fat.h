@@ -6,8 +6,8 @@
  * Purpose: FAT File System Module Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __FS_FAT_H
-#define __FS_FAT_H
+#ifndef FS_FAT_H__
+#define FS_FAT_H__
 
 #include "fs_core.h"
 
@@ -197,4 +197,4 @@ extern uint8_t const fs_fat_fh_cnt;     /* Number of FAT file handles         */
 extern int32_t  fat_handle_get  (fsFAT_Volume *vol);
 extern fsStatus fat_attrib      (fsFAT_Volume *vol, const char *fn, uint32_t attrib);
 
-#endif /* __FS_FAT_H */
+#endif /* FS_FAT_H__ */

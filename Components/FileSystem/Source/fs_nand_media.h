@@ -6,8 +6,8 @@
  * Purpose: NAND Media Driver Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef __FS_NAND_MEDIA_H
-#define __FS_NAND_MEDIA_H
+#ifndef FS_NAND_MEDIA_H__
+#define FS_NAND_MEDIA_H__
 
 #include "fs_core.h"
 
@@ -165,4 +165,5 @@ extern NAND_MEDIA_DRIVER NAND_MediaDriver;
 
 extern int32_t NAND_SetupLayout (NAND_MEDIA_HANDLE *h);
 extern int32_t NAND_EccToLayout (NAND_PAGE_LAYOUT *layout, ARM_NAND_ECC_INFO const *ecc);
-#endif /* __FS_NAND_MEDIA_H */
+
+#endif /* FS_NAND_MEDIA_H__ */

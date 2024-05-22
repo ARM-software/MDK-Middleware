@@ -6,8 +6,8 @@
  * Purpose: File System API
  *----------------------------------------------------------------------------*/
 
-#ifndef __RL_FS_H
-#define __RL_FS_H
+#ifndef RL_FS_H__
+#define RL_FS_H__
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -564,4 +564,4 @@ extern int64_t fs_fsize (int32_t handle);
 }
 #endif
 
-#endif /* __RL_FS_H */
+#endif /* RL_FS_H__ */
