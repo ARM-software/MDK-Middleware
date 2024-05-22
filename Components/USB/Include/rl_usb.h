@@ -36,6 +36,50 @@
 #include "rtx_os.h"
 #endif
 
+#ifndef   MW_USB_DISABLE_DEPRECATED
+
+// Compiler macros
+#define   USB_SECTION_NAME_(x)          __attribute__((section(#x)))
+#define   __SECTION(x)                  USB_SECTION_NAME_(x)
+
+// RTOS macros
+#ifdef    RTE_CMSIS_RTOS2
+#define   USB_CMSIS_RTOS2              (1U)
+#endif
+#ifdef    RTE_CMSIS_RTOS2_RTX5
+#define   USB_CMSIS_RTOS2_RTX5         (1U)
+#endif
+
+// Endianess macros
+#ifdef   __ARM_BIG_ENDIAN
+#ifndef   U32_LE
+#define   U32_LE(v)  (uint32_t)(__REV(v))
+#endif
+#ifndef   U16_LE
+#define   U16_LE(v)  (uint16_t)(__REV(v) >> 16)
+#endif
+#ifndef   U32_BE
+#define   U32_BE(v)  (uint32_t)(v)
+#endif
+#ifndef   U16_BE
+#define   U16_BE(v)  (uint16_t)(v)
+#endif
+#else
+#ifndef   U32_BE
+#define   U32_BE(v)  (uint32_t)(__REV(v))
+#endif
+#ifndef   U16_BE
+#define   U16_BE(v)  (uint16_t)(__REV(v) >> 16)
+#endif
+#ifndef   U32_LE
+#define   U32_LE(v)  (uint32_t)(v)
+#endif
+#ifndef   U16_LE
+#define   U16_LE(v)  (uint16_t)(v)
+#endif
+#endif
+#endif
+
 #ifdef __cplusplus
 extern "C"  {
 #endif
