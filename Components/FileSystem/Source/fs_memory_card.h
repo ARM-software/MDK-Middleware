@@ -9,7 +9,7 @@
 #ifndef FS_MEMORY_CARD_H__
 #define FS_MEMORY_CARD_H__
 
-#include "rl_fs_lib.h"
+#include "fs_core_lib.h"
 #include "Driver_MCI.h"
 #include "Driver_SPI.h"
 

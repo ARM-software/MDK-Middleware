@@ -10,7 +10,7 @@
       <member name="end"   type="uint32_t" offset="4" info="Sector end address (start+size-1)"/>
     </typedef> 
 
-    <!-- FS_DEV volume mapping structure (rl_fs_lib.h line 71) -->
+    <!-- FS_DEV volume mapping structure (fs_core_lib.h line 61) -->
     <typedef name="FS_DEV" info="File System volume mapping descriptor" size="8">
       <member name="dcb"  type="uint32_t" offset="0"  info="Pointer to volume description structure"/>
       <member name="id0"  type="uint8_t"  offset="4"  info="Drive letter"/>
@@ -56,7 +56,7 @@
       <var name="sidx"   type="uint32_t"          info="Index in sector array"/>
     </typedef>
 
-    <!-- MC_MCI structure (rl_fs_lib.h line 83) -->
+    <!-- MC_MCI structure (fs_memory_card.h line 17) -->
     <typedef name="MC_MCI" info="Memory Card (MCI) layer control block" size="35">
       <member name="Driver"       type="uint32_t" offset="0"  info="Pointer to registered MCI driver"/>
       <member name="Capabilities" type="uint32_t" offset="8"  info="Driver capabilities"/>
@@ -70,7 +70,7 @@
       <var name="drvLet" type="uint8_t"  size="3" info="Associated drive letter as string"/>
     </typedef>
 
-    <!-- MC_SPI structure (rl_fs_lib.h line 99) -->
+    <!-- MC_SPI structure (fs_memory_card.h line 34) -->
     <typedef name="MC_SPI" info="Memory Card (SPI) layer control block" size="35">
       <member name="Driver"       type="uint32_t" offset="0"  info="Pointer to registered SPI driver"/>
 
@@ -84,7 +84,7 @@
       <var name="drvLet" type="uint8_t"  size="3" info="Associated drive letter as string"/>
     </typedef>
 
-    <!-- NAND_FTL_DEV structure (rl_fs_lib.h line 224) -->
+    <!-- NAND_FTL_DEV structure (fs_nand_flash.h line 155) -->
     <typedef name="NAND_FTL_DEV" info="NAND Flash Translation Layer (NFTL) layer control block" size="80">
 
 <!--  <member name="PgLay"     type="NAND_PAGE_LAYOUT"   offset="28" info="Page layout definition"/> -->
@@ -106,7 +106,7 @@
       <var name="drvLet" type="uint8_t"  size="3" info="Drive letter as string"/>
     </typedef>
     
-    <!-- RAM_DEV structure (rl_fs_lib.h line 77) -->
+    <!-- RAM_DEV structure (fs_core_lib.h line 64) -->
     <typedef name="RAM_DEV" info="RAM memory control block" size="8">
       <member name="Base" type="uint32_t" offset="0" info="Memory buffer base address"/>
       <member name="Size" type="uint32_t" offset="4" info="Memory buffer size"/>
@@ -114,7 +114,7 @@
       <var name="drvLet" type="uint8_t"  size="3" info="Drive letter as string"/>
     </typedef>
 
-    <!-- FAT Volume Description (rl_fs_lib.h line 340) -->
+    <!-- FAT Volume Description (fs_core_lib.h line 152) -->
     <typedef name="fsFAT_Volume" info="FAT Volume" size="132">
       <member name="DrvLet"         type="uint32_t"  offset="0"  info="4-byte encoded drive letter string"/>
       <member name="Mutex"          type="uint32_t"  offset="4"  info="Volume mutex"/>
@@ -146,7 +146,7 @@
       <var name="free_space" type="uint64_t"          info="Free space on drive"/>
     </typedef>
 
-    <!-- EFS Volume Description (rl_fs_lib.h line 374) -->
+    <!-- EFS Volume Description (fs_core_lib.h line 199) -->
     <typedef name="fsEFS_Volume" info="EFS Volume" size="32">
       <member name="DrvLet"      type="uint32_t"  offset="0"  info="4-byte encoded drive letter string"/>
       <member name="Mutex"       type="uint32_t"  offset="4"  info="Volume mutex"/>
@@ -162,7 +162,7 @@
       <var name="vidx"   type="uint32_t"          info="Index in volume array"/>
     </typedef>
 
-    <!-- FAT File Handle (rl_fs_lib.h line 358) -->
+    <!-- FAT File Handle (fs_core_lib.h line 172) -->
     <typedef name="fsFAT_Handle" info="FAT File Handle" size="36">
       <member name="vol"            type="*fsFAT_Volume" offset="0"  info="Associated FAT volume"/>
       <member name="fsize"          type="uint32_t"      offset="4"  info="File size (registered)"/>
@@ -178,7 +178,7 @@
       <var name="vidx" type="uint32_t" info="Volume index in FAT volume array"/>
     </typedef>
 
-    <!-- EFS File Handle (rl_fs_lib.h line 389) -->
+    <!-- EFS File Handle (fs_core_lib.h line 211) -->
     <typedef name="fsEFS_Handle" info="EFS File Handle" size="28">
       <member name="vol"    type="*fsEFS_Volume" offset="0"  info="Associated EFS volume"/>
       <member name="fsize"  type="uint32_t"      offset="4"  info="File size"/>

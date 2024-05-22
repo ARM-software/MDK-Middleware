@@ -2,12 +2,12 @@
  * MDK Middleware - Component ::File System
  * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    rl_fs_rte.h
+ * Name:    fs_core_rte.h
  * Purpose: File System Run Time Environment Configuration
  *----------------------------------------------------------------------------*/
 
-#ifndef RL_FS_RTE_H__
-#define RL_FS_RTE_H__
+#ifndef FS_CORE_RTE_H__
+#define FS_CORE_RTE_H__
 
 #ifdef _RTE_
 #include "RTE_Components.h"
@@ -60,4 +60,4 @@
   #endif
 #endif
 
-#endif /* RL_FS_RTE_H__ */
+#endif /* FS_CORE_RTE_H__ */

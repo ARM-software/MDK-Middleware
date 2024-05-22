@@ -10,8 +10,8 @@
 #define FS_CORE_H__
 
 #include "rl_fs.h"
-#include "rl_fs_lib.h"
-#include "rl_fs_rte.h"
+#include "fs_core_lib.h"
+#include "fs_core_rte.h"
 
 #include "FS_Config.h"
 #include "FS_Debug.h"

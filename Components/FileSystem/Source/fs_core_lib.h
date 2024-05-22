@@ -2,17 +2,17 @@
  * MDK Middleware - Component ::File System
  * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    rl_fs_lib.h
+ * Name:    fs_core_lib.h
  * Purpose: File System Library Definitions
  *----------------------------------------------------------------------------*/
 
-#ifndef RL_FS_LIB_H__
-#define RL_FS_LIB_H__
+#ifndef FS_CORE_LIB_H__
+#define FS_CORE_LIB_H__
 
 #include <stddef.h>
 
 #include "rl_fs.h"
-#include "rl_fs_rte.h"
+#include "fs_core_rte.h"
 
 #if defined(FS_MEMORY_CARD_0) || defined(FS_MEMORY_CARD_1)
   #include "fs_memory_card.h"
@@ -353,4 +353,4 @@ extern uint32_t const fs_lib_version;
 }
 #endif
 
-#endif /* RL_FS_LIB_H__ */
+#endif /* FS_CORE_LIB_H__ */

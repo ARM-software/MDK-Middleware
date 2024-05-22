@@ -9,7 +9,7 @@
 #ifndef FS_NOR_FLASH_H__
 #define FS_NOR_FLASH_H__
 
-#include "rl_fs_lib.h"
+#include "fs_core_lib.h"
 #include "Driver_Flash.h"
 
 /* Flash Device Timeouts */
