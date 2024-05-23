@@ -1267,7 +1267,7 @@ static void mc_parse_cid (fsCID_Register *cid, const uint8_t *b, bool mmc) {
   \param[in]   mc     Memory card instance object
 */
 static fsStatus mc_control_lock (fsLockUnlock *lu, MC_SPI *mc) {
-  __ALIGNED(4) uint8_t buf[18];
+  __ALIGNED(32) static uint8_t buf[18];
   uint32_t cnt;
   fsStatus status;
 

@@ -1324,7 +1324,7 @@ static uint32_t mc_select_tran_state (MC_MCI *mc) {
   \param[in]   mc     Memory card instance object
 */
 static fsStatus mc_control_lock (fsLockUnlock *lu, MC_MCI *mc) {
-  __ALIGNED(32) uint8_t buf[32];
+  __ALIGNED(32) static uint8_t buf[32];
   int32_t rval;
   uint32_t err, cnt, events, r1;
   fsStatus status;
