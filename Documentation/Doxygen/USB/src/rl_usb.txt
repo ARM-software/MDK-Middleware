@@ -66,7 +66,7 @@ These settings are used to create \ref USB_Device_Descriptor, \ref USB_Configura
 
 The USB Device component is an easy-to-use software collection providing a common API for a broad range of USB device
 controllers. The USB Device component uses standard device driver classes that are available already on most computers
-systems, avoiding driver development. The component requires a CMSIS-RTOS compatible RTOS.
+systems, avoiding driver development. The component requires a CMSIS-RTOS2 compatible RTOS.
 
 The component supports the following classes, which can also be used in various combinations for building composite devices.
 - A <b>Human Interface Device</b> (HID) is typically used to implement a keyboard, joystick or mouse. However, the HID class
@@ -102,7 +102,7 @@ for mass-production it is often required to be able to configure some USB Device
 number which needs to be unique for every single device). To achieve this, the following device configuration functions are
 part of the \ref USBD_User_Device_UCT "USBD_User_Device_n.c" user code template. They enable user specific
 \ref endpoints "USB Control Endpoint 0" request handling. This allows the user to intercept all Control Endpoint 0 requests
-and handle them overriding the default USB Library handling:
+and handle them overriding the default USB Component handling:
 - \ref USBD_Devicen_Initialize is used to add device specific initialization code.
 - \ref USBD_Devicen_Uninitialize is used to uninitialize the USB device.
 - \ref USBD_Devicen_Reset is used to implement custom USB Device reset event handling.
@@ -113,7 +113,7 @@ and handle them overriding the default USB Library handling:
 - The callback function \ref USBD_Devicen_Endpoint0_SetupPacketReceived is called when the USB Device Instance n received a
   SETUP PACKET on Control Endpoint 0.
 - The callback function \ref USBD_Devicen_Endpoint0_SetupPacketProcessed is called when a SETUP PACKET was processed by the
-  USB library.
+  USB Component.
 
   
 ### Setup Packets on Control Endpoint 0 ###
@@ -230,7 +230,7 @@ For a general function overview refer to the section \ref usbd_coreFunctions.
 \fn uint32_t USBD_GetVersion (void)
 
 \details
-The function \b USBD_GetVersion retrieves version of the USB Device library.
+The function \b USBD_GetVersion retrieves version of the USB Device Component.
 
 Version is encoded as follows:
  - decimal digits 9..7: major
@@ -542,7 +542,7 @@ usbdRequestStatus USBD_Device0_Endpoint0_SetupPacketReceived (const USB_SETUP_PA
 \fn void USBD_Devicen_Endpoint0_SetupPacketProcessed (const USB_SETUP_PACKET *setup_packet)
 \details
 The callback function \b USBD_Devicen_Endpoint0_SetupPacketProcessed is called when a SETUP PACKET was processed by the USB
-library.
+Component.
 
 The argument \a setup_packet is a pointer to the processed setup packet.
 
@@ -608,11 +608,11 @@ configuration files (\ref usbd_adcFunctions_conf "USBD_Config_ADC.h", \ref usbd_
 \ref usbd_classFunctions_conf "USBD_Config_CustomClass.h", \ref usbd_hidFunctions_conf "USBD_Config_HID.h" and
 \ref usbd_mscFunctions_conf "USBD_Config_MSC.h").
 
-\image html "usbd_config_0_c.png" "USB Device Core Configuration File"
+\image html "usbd_config_0_h.png" "USB Device Core Configuration File"
 
 The configuration file <b>USBD_Config_<i>n</i>.h</b> contains the following settings:
 - <b>Connect to hardware via Driver_USBD# </b> sets the \b CMSIS-Driver \b Number to be used (according to the selected USB
-  controller). For single USB Device Controllers it will be '0'.
+  controller). For devices with single USB Device Controller it will typically be '0'.
 - \b High-Speed may be selected if supported by the USB controller.
 - <b>Device Settings</b> are used to create the \ref USB_Device_Descriptor.
   - <b>Max Endpoint 0 Packet Size</b> sets the maximum packet size for Endpoint 0.
@@ -1107,7 +1107,7 @@ The following source code can be used to implement the application specific beha
 /**
 \defgroup usbd_adcFunctions_conf Configuration
 \ingroup usbd_adcFunctions
-\brief Configuration of the USB Device ADC Class in µVision.
+\brief Configuration of the USB Device ADC Class.
 \details
 This configuration file defines:
 - The assignment of the ADC class to the USB Device instance.
@@ -1605,7 +1605,7 @@ The argument \a instance specifies the CDC device that is to be used with \b USB
 /**
 \defgroup usbd_cdcFunctions_acm_conf Configuration
 \ingroup usbd_cdcFunctions_acm
-\brief Configuration of the USB Device CDC (ACM) Class in µVision.
+\brief Configuration of the USB Device CDC (ACM) Class.
 \details
 This configuration file defines:
 - The assignment of the CDC class to the USB Device instance.
@@ -2642,7 +2642,7 @@ void USBD_CDCn_NCM_NTB_OUT_Received (void) {
 /**
 \defgroup usbd_cdcFunctions_ncm_conf Configuration
 \ingroup usbd_cdcFunctions_ncm
-\brief Configuration of the USB Device CDC (NCM) Class in µVision.
+\brief Configuration of the USB Device CDC (NCM) Class.
 \details
 This configuration file defines:
 - The assignment of the CDC class to the USB Device instance.
@@ -2864,7 +2864,7 @@ Two \urlout{uv4_ca_sourcefiles} files are available to implement the application
    class.
  - \ref USBD_User_Device_Cust_UCT "USBD_User_Device_n.c" is used for custom handling of any request coming to the USB Device. Its
    primary use is to allow for custom handling of standard and vendor requests, for example overriding the serial number
-   string. It allows to intercept all incoming requests and to override the default library handling.
+   string. It allows to intercept all incoming requests and to override the default USB Component handling.
    
 Both user code templates contain example code that can be used to demonstrate the features of the templates. Uncomment this
 code to see how it works on your target hardware. 
@@ -3360,7 +3360,7 @@ The argument \a ep_addr specifies the endpoint address.
 /**
 \defgroup usbd_classFunctions_conf Configuration
 \ingroup usbd_classFunctions
-\brief Configuration of the USB Device Custom Class in µVision.
+\brief Configuration of the USB Device Custom Class.
 \details
 This configuration file defines:
   - The assignment of the Custom Class to the USB Device instance.
@@ -3480,7 +3480,7 @@ which calls the data exchange functions \ref USBD_HIDn_GetReport and \ref USBD_H
 \ref USBD_HID_GetReportTrigger cannot be called from interrupt service routines (ISR) as it may wait for previous data to be
 sent.
 
-The HID class uses a CMSIS-RTOS osTimer set to a 4ms interval to handle polling reports. 
+The HID class uses a CMSIS-RTOS2 timer set to a 4ms interval to handle polling reports. 
 The polling timing is defined with \ref USB_Endpoint_Descriptor "Endpoint Descriptor".
 For more information refer to "Set_Idle Request" in 
 <a class=el href="https://www.usb.org/hid" target="_blank">Device Class Definition HID</a> specification which
@@ -3792,7 +3792,7 @@ __NO_RETURN void app_main (void *arg) {
 /**
 \defgroup usbd_hidFunctions_conf Configuration
 \ingroup usbd_hidFunctions
-\brief Configuration of the USB Device HID Class in µVision.
+\brief Configuration of the USB Device HID Class.
 \details
 This configuration file defines:
   - The assignment of the HID class to the USB Device instance.
@@ -3840,7 +3840,7 @@ The USB Device HID Class configuration file <b>USBD_Config_HID_n.h</b> contains 
  - <b>Use User Provided HID Report Descriptor</b>: if checked, you need to provide HID Report Descriptor in an array: const
    uint8_t usbd_hid0_report_descriptor[]
   - <b>User Provided HID Report Descriptor Size (in bytes) </b>: is used for memory allocation in the USB component.
-- <b>OS Resources Settings</b> .
+- <b>OS Resources Settings</b>
  - <b>Human Interface Device Class Thread Stack Size</b> is used for memory allocation in the USB component.
  - The default Human Interface Device Class Thread priority is <b>osPriorityAboveNormal</b>.
    This priority can be changed by changing USBD_HID<i>n</i>_THREAD_PRIORITY define in this configuration file.
@@ -4478,7 +4478,7 @@ This function can be modified in the user code template file <b>USBD_MSC_<i>n</i
 /**
 \defgroup usbd_mscFunctions_conf Configuration
 \ingroup usbd_mscFunctions
-\brief Configuration of the USB Device MSC Class in µVision.
+\brief Configuration of the USB Device MSC Class.
 \details
 This configuration file defines:
   - The assignment of the MSC class to the USB Device instance.
@@ -4512,7 +4512,7 @@ The USB Device MSC Class configuration file <b>USBD_Config_MSC_n.h</b> contains 
   - <b>Product Identification</b> specifies the MSC device.
   - <b>Product Revision Level</b> specifies the product revision of the MSC device.
  - <b>Maximum Mass Storage Device Bulk Buffer Size</b> is used to create \ref USB_Descriptors.
-- <b>OS Resources Settings</b> .
+- <b>OS Resources Settings</b>
  - <b>Mass Storage Class Thread Stack Size</b> is used for memory allocation in the USB component.
  - The default Mass Storage Device Class Thread priority is <b>osPriorityAboveNormal</b>.
    This priority can be changed by changing USBD_MSC<i>n</i>_THREAD_PRIORITY define in this configuration file.
@@ -4563,7 +4563,7 @@ The USB Device MSC Class configuration file <b>USBD_Config_MSC_n.h</b> contains 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \defgroup usbh USB Host
-\brief    Functions for the USB Host Component. This component is available to MDK-Professional users only.
+\brief    Functions for the USB Host Component.
 \details
 
 Refer to \ref USB_Host for more information of the USB Host Component.
@@ -4583,14 +4583,7 @@ It is Interface between the USB Host Controller Driver and the USB Host Classes.
   - USBH_Initialize() which initializes the USB Host.
   - USBHn_Core_Thread is started which enables reacting to USB bus events.
   - The USB Host Controller Driver is the layer between the USB Host Controller Hardware and the USB Host Core. This layer
-    handles hardware specific interfaces. Following types of USB Host Controller Drivers are available:
-    - The USB Host Controller Driver for EHCI (with internal transaction translator) is packed in the library, whereas the USB Host EHCI Controller
-    Hardware Driver is delivered as a source module. However, the two parts are used as an entity by devices having
-    EHCI USB Host Controllers.
-    - The USB Host Controller Driver for OHCI is packed in the library, whereas the USB Host OHCI Controller Hardware Driver is
-    delivered as a source module. However, the two parts are used as an entity by devices having OHCI USB Host Controllers.
-    - The USB Host Controller Driver and Hardware Driver for Custom USB Host Controller is delivered as source module and is
-    included for devices that do not support the USB OHCI/EHCI standard.
+    handles hardware specific interfaces.
 */
 
 
@@ -4613,7 +4606,7 @@ It is Interface between the USB Host Controller Driver and the USB Host Classes.
 \fn uint32_t USBH_GetVersion (void)
 
 \details
-The function \b USBH_GetVersion retrieves version of the USB Host library.
+The function \b USBH_GetVersion retrieves version of the USB Host Component.
 
 Version is encoded as follows:
  - decimal digits 9..7: major
@@ -4854,7 +4847,7 @@ int main (void)  {
 /**
 \defgroup usbh_coreFunctions_conf Configuration
 \ingroup usbh_coreFunctions
-\brief Configuration of the USB Host Core in µVision.
+\brief Configuration of the USB Host Core.
 \details
 The configuration file <b>USBH_Config_<i>n</i>.h</b> contains generic settings for the USB Host. Support for certain USB
 Classes is configured in the respective device class configuration files (\ref usbh_cdcacmFunctions_conf "USBH_Config_CDC.h",
@@ -4862,19 +4855,23 @@ Classes is configured in the respective device class configuration files (\ref u
 \ref usbh_mscFunctions_conf "USBH_Config_MSC.h").
 
 
-\image html "usbh_config_0_c.png" "USB Host Configuration File"
+\image html "usbh_config_0_h.png" "USB Host Configuration File"
 
 The USB Host configuration file <b>USBH_Config_<i>n</i>.h</b> contains the following settings:
 - <b>Connect to hardware via Driver_USBH# </b> specifies the hardware driver number to use in case the microcontroller device
-  contains more than one USB Host interface. Default value of \a 0 is used for devices with a single interface.
-  - <b>Controller Interface</b> selects the USB Host Controller Interface to be used. Refer to the technical reference manual
-    (TRM) of the microcontroller device for the correct option to be used.
-    - For all <b>Host Controller Interfaces</b> you need to specify the <b>Maximum Port Power Consumption</b>, 
-      <b>Maximum Pipes</b> and the <b>Memory Pool Size</b> 
-      used by the USB Host Controller. These values should be taken from the TRM. 
-      Also, specify the <b>Memory Pool Address</b> if the memory pool needs to be relocated.
-    - For \b OHCI and \b EHCI you need to specify the memory-mapped host controller registers base address.
-- <b>OS Resources Settings</b> are used to optimize usage of OS resources.
+  contains more than one USB Host interface. For device with single USB Host Controller it will typically be '0'.
+- <b>Maximum Port Power Consumption</b> specifies maximum current that a port can source (in mA).
+  USB Devices exceeding this requirement will not be usable by the USB Host.
+- <b>Maximum Pipes in system</b> specifies the maximum number of active pipes (pipe is a communication channel to an USB Device endpoint).
+- <b>Memory Pool Size</b> specifies the size of the memory pool used by the USB Host Component.
+  It has to be larger than maximum packet size on any endpoint for typically 128 bytes, making this a default size of 640 bytes to
+  cover 512 bytes bulk endpoint maximum packet size.
+- <b>Relocate Memory Pool</b> specifies if the memory pool is relocated to a specific memory address (via the linker script).
+  This is usually necessary in case that USB Controller has some specific requirements regarding memory for transfers.
+  For example if USB Controller can only access specific memory, or if this memory needs to be non-cacheable.
+- <b>Memory Pool section name</b> specifies the section name for the memory pool that is used by the linker script to position it in memory.
+  Default section name is <c>.driver.usbh<instance></c>, for example for USB Controller 0 the default section name is <c>.driver.usbh0</c>.
+- Use the <b>OS Resources Settings</b> to optimize the usage of OS resources.
   - The default <b>Core Thread Stack Size</b> is \a 2048 bytes.
   - The default Core Thread priority is <b>osPriorityAboveNormal</b>.
     This priority can be changed by changing USBH<i>n</i>_CORE_THREAD_PRIORITY define in this configuration file.
@@ -5313,7 +5310,7 @@ static int32_t ARM_USARTx_Control (uint8_t instance, uint32_t control, uint32_t 
 /**
 \defgroup usbh_cdcacmFunctions_conf Configuration
 \ingroup usbh_cdcacmFunctions
-\brief Configuration of the USB Host CDC Class in µVision.
+\brief Configuration of the USB Host CDC Class.
 \details
 \image html "usbh_config_cdc_h.png" "CDC Class Configuration File"
 
@@ -6072,7 +6069,7 @@ The argument \a ptr_frame_number is a pointer to where frame number data will be
 /**
 \defgroup usbh_customFunctions_conf Configuration
 \ingroup usbh_customFunctions
-\brief Configuration of the USB Host Custom Class in µVision.
+\brief Configuration of the USB Host Custom Class.
 \details
 \image html "usbh_config_customclass_h.png" "Custom Class Configuration File"
 
@@ -6481,7 +6478,7 @@ This is useful if the default HID functionality needs to be changed to support s
 \fn void USBH_HID_DataReceived (uint8_t instance, uint32_t len)
 \details
 The \b USBH_HID_DataReceived function enables programmers to analyze received data coming from an USB HID device.
-Implementing this function in user code overrides the library function that handles boot protocol device data reception. This
+Implementing this function in user code overrides the USB Component function that handles boot protocol device data reception. This
 is useful if the default HID functionality needs to be changed to support special HID devices.
 */
 
@@ -6494,7 +6491,7 @@ is useful if the default HID functionality needs to be changed to support specia
 /**
 \defgroup usbh_hidFunctions_conf Configuration
 \ingroup usbh_hidFunctions
-\brief Configuration of the USB Host HID Class in µVision.
+\brief Configuration of the USB Host HID Class.
 \details
 \image html "usbh_config_hid_h.png" "HID Class Configuration File"
 
@@ -6764,7 +6761,7 @@ uint64_t USBH_MSC_DriveGetCapacity (const char *drive_name) {
 /**
 \defgroup usbh_mscFunctions_conf Configuration
 \ingroup usbh_mscFunctions
-\brief Configuration of the USB Host MSC Class in µVision.
+\brief Configuration of the USB Host MSC Class.
 \details
 \image html "usbh_config_msc_h.png" "MSC Class Configuration File"
 

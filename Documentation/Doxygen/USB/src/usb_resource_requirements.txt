@@ -14,35 +14,28 @@ components used in the application and the configuration of these components.
 The USB Device Core receives events sent from the interrupt service routine (ISR) of the <b>USB Device Driver</b>. 
 The stack requirements for the ISR are typically less than 512 Bytes. The total stack space required for ISR depends
 on the interrupt nesting and therefore on the priority settings of these ISR.
-The stack requirements for ISR are configured in the \b startup_device.s file located under the \b Device component class.
 
 | Option (under section Stack Configuration)                        | Increase Value by
 | :---------------------------------------------------------------- | :----------------------
 | Stack Size (in Bytes)                                             | + 512 for USB Device Driver
+
 \note
-When using a CMSIS-RTOS, the Stack Size in the startup_<i>device</i>.s file configures only the 
-stack space that is used by exception and interrupt service routines of the drivers. The stack size requirements
-depend on the maximum nesting of exception and ISR execution and therefore on the priority settings 
+The stack size requirements depend on the maximum nesting of exception and ISR execution and therefore on the priority settings 
 of the various interrupt and exception sources.
 
 User code that calls API functions of the USB Device Component should have a minimum of 512 Bytes of stack space available.
 Since API functions are frequently called from threads, the thread stack size should be at least 512 Bytes (see below).
 
 
-\subsection usbd_rtos_req CMSIS-RTOS Requirements
+\subsection usbd_rtos_req CMSIS-RTOS2 Requirements
 
-Currently, the USB Device component works in four different RTOS configurations:
+Currently, the USB Device component works in two different RTOS configurations:
 -# <b>CMSIS-RTOS2 RTX5</b>: This mode uses Keil RTX5 natively. In the Manage Run-Time Environment window, the component
    <b>CMSIS:RTOS2 (API):Keil RTX5</b> must be selected. The RTOS resources are static, configured by the system. There is
    <b>no need for additional user configuration</b>. This is the suggested option for new development.
--# <b>CMSIS-RTOS RTX5</b>: this mode uses RTX5 under a compatibility layer, which uses CMSIS-RTOS v1.
-   In the Manage Run-Time Environment window, the components <b>CMSIS:RTOS (API):Keil RTX5</b> and
-   <b>CMSIS:RTOS2 (API):Keil RTX5</b> must be selected.
--# <b>CMSIS-RTOS RTX</b>: In the Manage Run-Time Environment window, the component
-   <b>CMSIS:RTOS (API):Keil RTX</b> must be selected. For the RTOS configuration, please refer to section \ref usbd_req_rtx4.
 -# <b>CMSIS-RTOS2 with a generic RTOS</b>: this mode uses a generic RTOS (such as FreeRTOS). The RTOS
    resources (thread, mutex and semaphore control blocks and thread stacks) are dynamically allocated. The user needs to
-   provide memory pools big enough for the allocations in RTOS configuration.
+   provide memory pools big enough for the allocations in the specific RTOS configuration.
 
 The USB Device component uses threads. Each instance of a component starts its own threads, for example two HID
 instances start two threads with the name: <i>USBD_HID0_Thread</i>, <i>USBD_HID1_Thread</i>. The thread execution starts with
@@ -54,15 +47,15 @@ and the configuration file with <b>OS Resource Settings</b> for stack size adjus
 | Component                         | Number of Threads | Thread Name                                               | Default Priority         | Default Stack Size | Configuration File
 | :---------------------------------| :-----------------| :---------------------------------------------------------| :----------------------: | :----------------: | :------------------------
 | <b>\::USB:Device</b>              | 1                 | USBD<i>n</i>_Core_Thread                                  | \c osPriorityAboveNormal | 1024 Bytes         | USBD_Config_<i>n</i>.h
-| <b>\::USB:Device:ADC</b>          | 1                 | USBD_ADC<i>n</i>_Thread                                   | \c osPriorityAboveNormal | 512 Bytes          | USBD_Config_ADC_<i>n</i>.c
-| <b>\::USB:Device:CDC</b>          | 2                 | USBD_CDC<i>n</i>_Bulk_Thread, USBD_CDC<i>n</i>_Int_Thread | \c osPriorityAboveNormal | 512 Bytes          | USBD_Config_CDC_<i>n</i>.c
-| <b>\::USB:Device:Custom Class</b> | 1...15            | USBD_CustomClass<i>n</i>_EP<i>m</i>_Thread                | \c osPriorityAboveNormal | 512 Bytes          | USBD_Config_CustomClass_<i>n</i>.c
-| <b>\::USB:Device:HID</b>          | 1                 | USBD_HID<i>n</i>_Thread                                   | \c osPriorityAboveNormal | 512 Bytes          | USBD_Config_HID_<i>n</i>.c
-| <b>\::USB:Device:MSC</b>          | 1                 | USBD_MSC<i>n</i>_Thread                                   | \c osPriorityAboveNormal | 512 Bytes          | USBD_Config_MSC_<i>n</i>.c
+| <b>\::USB:Device:ADC</b>          | 1                 | USBD_ADC<i>n</i>_Thread                                   | \c osPriorityAboveNormal | 512 Bytes          | USBD_Config_ADC_<i>n</i>.h
+| <b>\::USB:Device:CDC</b>          | 2                 | USBD_CDC<i>n</i>_Bulk_Thread, USBD_CDC<i>n</i>_Int_Thread | \c osPriorityAboveNormal | 512 Bytes          | USBD_Config_CDC_<i>n</i>.h
+| <b>\::USB:Device:Custom Class</b> | 1...15            | USBD_CustomClass<i>n</i>_EP<i>m</i>_Thread                | \c osPriorityAboveNormal | 512 Bytes          | USBD_Config_CustomClass_<i>n</i>.h
+| <b>\::USB:Device:HID</b>          | 1                 | USBD_HID<i>n</i>_Thread                                   | \c osPriorityAboveNormal | 512 Bytes          | USBD_Config_HID_<i>n</i>.h
+| <b>\::USB:Device:MSC</b>          | 1                 | USBD_MSC<i>n</i>_Thread                                   | \c osPriorityAboveNormal | 512 Bytes          | USBD_Config_MSC_<i>n</i>.h
 <i>n</i> is instance number, <i>m</i> is Endpoint number 1...15
 
 \note
-- For <b>\::USB:Device:Custom Class</b> each endpoint In/Out pair executes in separate thread. The number of threads depends on
+- For <b>\::USB:Device:Custom Class</b> each endpoint In/Out pair executes in a separate thread. The number of threads depends on
   the number of endpoints enabled in the configuration file USBD_Config_CustomClass_<i>n</i>.c.
 - The <b>Default Stack Size</b> in the table above can be changed in the USB configuration files (for example
   USBD_Config_<i>n</i>.h and USBD_Config_<i>DeviceClass_n</i>.h). At the end of each configuration file, you will find
@@ -71,57 +64,6 @@ and the configuration file with <b>OS Resource Settings</b> for stack size adjus
 \subsection usbd_req_rtx5 RTX v5 Requirements
 
 The USB Device component allocates all necessary resources statically so no changes to RTX settings are necessary.
-
-\subsection usbd_req_rtx4 RTX v4 Requirements
-
-For the USB Device component, the number of threads and thread stack size requirements are calculated as follows:
- - <b>Number of Threads</b>: add all threads of enabled components listed above.
- - <b>Total stack size</b>: add the stack sizes of the related threads.
-
-With default Core thread stack size of 1024 Bytes and default Class related threads stack sizes of 512 Bytes,
-the <b>Total stack size</b> is equal to <b>Number of Core Threads</b> * 1024 Bytes + <b>Number of Class Threads</b> * 512 Bytes.
-When the default <b>OS Resource Settings</b> are modified, the changes need to be considered for the calculation of 
-the <b>Total stack size</b>.
-
-\b Examples (with default Core thread stack size of 1024 Bytes and default Class related threads stack sizes of 512 Bytes):
- - USB Device with HID uses 2 threads (1 for USB Device Core + 1 for HID) and 1536 Bytes of stack.
- - Composite USB Device with HID <i>and</i> MSC uses 3 threads (1 for USB Device Core + 1 for HID + 1 for MSC) and 2048 Bytes of stack.
- - USB Device with CDC uses 3 threads (1 for USB Device Core + 2 for CDC) and 2048 Bytes of stack.
- - USB Device with Custom Class that has 3 endpoints uses 4 threads (1 for USB Device Core + 3 for Custom Class) and 2560 Bytes of stack.
-
-Requirements are configured in the \urlout{RTX-Conf-CM4} file located under the \b CMSIS component class:
- - Thread Configuration
- | Option                                                             | Value
- | :----------------------------------------------------------------- | :----------------------
- | Number of concurrent running user threads                          | + <b>Number of Threads</b>
- | Number of threads with user-provided stack size                    | + <b>Number of Threads</b>
- | Total stack size [bytes] for threads with user-provided stack size | + <b>Total stack size</b>
-
- - System Configuration (if HID class is used)
- | Option          | Value
- | :-------------- | :----------------------
- | User Timers     | Enable
- 
-
-\b Timers
-
-The <b>\::USB:Device:HID</b> component requires timers which need to be enabled in RTOS.
-
-\b Semaphores
-
-Number of semaphores used by the USB Device components:
-
-| Component                         | Number of Semaphores per instance
-| :---------------------------------| :------------------------------------
-| <b>\::USB:Device</b>              | 3                    
-| <b>\::USB:Device:ADC</b>          | 1..2                    
-| <b>\::USB:Device:CDC</b>          | 3                    
-| <b>\::USB:Device:Custom Class</b> | 1..30               
-| <b>\::USB:Device:HID</b>          | 1 + 1..2
-| <b>\::USB:Device:MSC</b>          | 2                  
-
-\note For values specified as range (..) one semaphore per endpoint is used.
-\note For example if custom class uses one Endpoint In and one Endpoint Out two additional semaphores are allocated and used.
 
 \subsection usbd_mem_req Memory Requirements
 
@@ -151,34 +93,27 @@ components used in the application and the configuration of these components.
 The USB Host Core receives events sent from the interrupt service routine (ISR) of the USB Host Driver. 
 The stack requirements for the ISR are typically less than 512 Bytes. The total stack space required for ISR depends
 on the interrupt nesting and therefore on the priority settings of these ISR.
-The stack requirements for ISR is configured in the startup_<i>device</i>.s file located in the \b Device components.
 
 | Option (under section Stack Configuration)                        | Increase Value by
 | :---------------------------------------------------------------- | :----------------------
 | Stack Size (in Bytes)                                             | + 512 for USB Host Driver
+
 \note
-When using a CMSIS-RTOS, the Stack Size in the startup_<i>device</i>.s file configures only the 
-stack space that is used by exception and interrupt service routines. The stack size requirements
-depend on the maximum nesting of exception and ISR execution and therefore on the priority settings 
+The stack size requirements depend on the maximum nesting of exception and ISR execution and therefore on the priority settings 
 of the various interrupt and exception sources.
 
 User code that calls API functions of the USB Host Component should have a minimum of 512 Bytes of stack space available.
 Since API functions are frequently called from threads, the thread stack size should be at least 512 Bytes.
 
-\subsection usbh_rtos_req CMSIS-RTOS Requirements
+\subsection usbh_rtos_req CMSIS-RTOS2 Requirements
 
-Currently, the USB Host component works in four different RTOS configurations:
+Currently, the USB Host component works in two different RTOS configurations:
 -# <b>CMSIS-RTOS2 RTX5</b>: This mode uses Keil RTX5 natively. In the Manage Run-Time Environment window, the component
    <b>CMSIS:RTOS2 (API):Keil RTX5</b> must be selected. The RTOS resources are static, configured by the system. There is
    <b>no need for additional user configuration</b>. This is the suggested option for new development.
--# <b>CMSIS-RTOS RTX5</b>: this mode uses RTX5 under a compatibility layer, which uses CMSIS-RTOS v1.
-   In the Manage Run-Time Environment window, the components <b>CMSIS:RTOS (API):Keil RTX5</b> and
-   <b>CMSIS:RTOS2 (API):Keil RTX5</b> must be selected.
--# <b>CMSIS-RTOS RTX</b>: In the Manage Run-Time Environment window, the component
-   <b>CMSIS:RTOS (API):Keil RTX</b> must be selected. For the RTOS configuration, please refer to section \ref usbh_req_rtx4.
 -# <b>CMSIS-RTOS2 with a generic RTOS</b>: this mode uses a generic RTOS (such as FreeRTOS). The RTOS
    resources (thread, mutex and semaphore control blocks and thread stacks) are dynamically allocated. The user needs to
-   provide memory pools big enough for the allocations in RTOS configuration.
+   provide memory pools big enough for the allocations in the specific RTOS configuration.
 
 The USB Host component uses threads. Each USB Host instance starts its own thread (USBH<i>n</i>_Core_Thread).
 The thread execution starts with \ref USBH_Initialize. Additionally each instance of HID and CDC class also start their own 
@@ -204,55 +139,6 @@ and the configuration file with <b>OS Resource Settings</b> for stack size adjus
 \subsection usbh_req_rtx5 RTX v5 Requirements
 
 The USB Host component allocates all necessary resources statically so no changes to RTX settings are necessary.
-
-\subsection usbh_req_rtx4 RTX v4 Requirements
-
-For the USB Host component, the number of threads and thread stack size requirements are calculated as follows:
- - <b>Number of Threads</b>: add all threads of enabled components listed above.
- - <b>Total stack size</b>: add the stack sizes of the related threads.
-
-With default stack sizes as defined above the <b>Total stack size</b> is sum of <b>Default Stack Sizes</b>.
-When the default <b>OS Resource Settings</b> are modified, the changes need to be considered for the  calculation of 
-the <b>Total stack size</b>.
-
-\b Examples (with default stack sizes):
- - Single USB Host with MSC uses 1 thread (for USB Host) and 1024 Bytes stack.
- - Single USB Host with MSC and single HID instance uses 2 threads (1 for USB Host + 1 for HID) and 1536 Bytes stack.
- - Dual USB Host with MSC and two HID instances uses 4 threads (2 for USB Host + 2 for HID) and 3072 Bytes stack.
-
-Requirements are configured in the \urlout{RTX-Conf-CM4} file located under the \b CMSIS component class:
- - Thread Configuration
- | Option                                                             | Value
- | :----------------------------------------------------------------- | :----------------------
- | Number of concurrent running user threads                          | + <b>Number of Threads</b>
- | Number of threads with user-provided stack size                    | + <b>Number of Threads</b>
- | Total stack size [bytes] for threads with user-provided stack size | + <b>Total stack size</b>
-
- - System Configuration
- | Option          | Value
- | :-------------- | :----------------------
- | User Timers     | Enable
- 
-
-\b Timers
-
-The <b>\::USB:Host</b> component requires timers which need to be enabled in RTOS.
-
-\b Semaphores
-
-The <b>\::USB:Host</b> component uses one semaphore per instance.
-
-\b Mutexes
-
-The <b>\::USB:Host</b> component uses one mutex per instance.
-
-\note If custom class component is used, user must insure pipe operations on the same pipe are not interrupted.
-
-\b Signals
-
-Any user thread using USB Host transfer functions is blocked internally in the library by waiting on signals.
-<b>Signals (bits 0. to 12.) are reserved for the USB Host communication and must not be used by the user application in that thread</b>.
-
 
 \subsection usbh_mem_req Memory Requirements
 

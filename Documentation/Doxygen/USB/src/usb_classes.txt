@@ -135,7 +135,7 @@ provides more information on the topic.
 \page HID HID: Human Interface Device Class
 
 The <b>Human Interface Device Class (HID)</b> is mainly used for devices that allow human control over a PC. Using these
-devices, the host is able to react on human input (e.g. movements of a mouse or keypresses). This response has to happen
+devices, the host is able to react on human input (e.g. movements of a mouse or key presses). This response has to happen
 quickly, so that the computer user does not notice a significant delay between his action and the expected feedback. Typical
 examples for HID class devices are:
 - Keyboards and pointing devices (such as mouse devices, joysticks and trackballs)

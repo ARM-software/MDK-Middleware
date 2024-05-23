@@ -2,7 +2,7 @@
 /**
 \page USB_Device_Tutorial Examples
 
-MDK Professional contains multiple example projects that show how to implement an USB Device. The following examples are available
+MDK contains multiple example projects that show how to implement an USB Device. The following examples are available
 for most of the development boards:
 
 - The \subpage dev_hid_tutorial example provides access from the USB Host to the development board's LEDs and push buttons
@@ -258,7 +258,7 @@ Open the example project in MDK. The µVision \b Project window should display a
 Source Files
 ------------
 - \b Audio.c contains the main C function that initializes the board hardware and the USB Device Component.
-- The file <b>USBD_User_ADC_0.c</b> is an adapted code template that implements all necessary functions. Refer to
+- The file <b>USBD_User_ADC_0.c</b> is an code template that needs to be adapted to board audio hardware. Refer to
   \ref usbd_adcFunctions for details about these template functions.
 
 If you are using RTOS other than CMSIS-RTOS2 RTX5 for your project please make sure to satisfy \ref usbd_res_req.
@@ -1602,10 +1602,6 @@ Create the "USB Web Server" project
      - Maximum Communication Device Send Buffer Size = 2048
      - Maximum Communication Device Receive Buffer Size = 2048
 - If <b>RTX v5</b> is used <b>no changes to RTX settings</b> are necessary as all resources are allocated statically.
-  If <b>RTX v4</b> is used you need to change following settings in \urlout{RTX-Conf-CM4} file: 
-  - Increase Number of concurrent running user threads by 3
-  - Increase Number of threads with user-provided stack size by 3
-  - Increase Total stack size [bytes] for threads with user-provided stack size by 2048
 - Add this include to the main module:
   \code
   #include "rl_usb.h"
@@ -1756,9 +1752,7 @@ Hardware Setup
 The setup of the Evaluation Board hardware is described in the \b Abstract.txt file.
 - Verify all jumper settings on the target hardware.
 - Simply connect an USB memory stick to one of the development board's USB connectors and run the program.
-- Detach the USB memory stick again and check the availability of the Test.txt file.
-- A terminal interface can be shown via <b>Debug(printf) Viewer</b> if ITM trace is supported and enabled, or via serial interface.
-  \image html "usbh_msc_tutorial_printf.png" "USB Host Mass Storage - Terminal Interface"
+- Detach the USB memory stick and attach it to a PC to check the availability of the \b Test.txt file.
 */
 
 
@@ -1789,7 +1783,7 @@ In the <b>Manage Run-Time Environment</b> window, select the following component
 - <b>CMSIS Driver:USART (API):PL2303</b>
 - <b>CMSIS Driver:USB Host (API):Full-speed</b>
 - <b>Device:STM32Cube Framework (API):Classic</b>
-- <b>USB</b> (Variant \b MDK-Pro)
+- <b>USB</b> (Variant \b MDK)
 - <b>USB:Host: 1</b>
 - <b>USB:Host:Custom Class</b>
 
@@ -2220,9 +2214,8 @@ Before building the project, you need to edit these configuration files (in Conf
     - enable <b>Host [Driver_USBH0]</b>
     - disable <b>Host [Driver_USBH0]:Overcurrent Detection Pin</b>
 
-- Double-click <b>USB:USBH_Config_0.h</b> and under <b>USB Host 0:Controller Interface Settings</b> change:
-  - set <b>Controller Interface</b> to \b Custom and under <b>Custom Host Controller Interface</b> change:
-    - set <b>Maximum Pipes in system</b> to \b 4
+- Double-click <b>USB:USBH_Config_0.h</b> and under <b>USB Host 0</b> change:
+  - set <b>Maximum Pipes in system</b> to \b 4
 
 Before building and downloading the project to the target, make sure that the correct debugger is set in the <b>Options for
 Target</b> dialog (ALT + F7). You may then build and download the example project to the evaluation board using the µVision
@@ -2272,7 +2265,7 @@ In the <b>Manage Run-Time Environment</b> window, select the following component
 - <b>CMSIS Driver:USART (API):CDC</b>
 - <b>CMSIS Driver:USB Host (API):Full-speed</b>
 - <b>Device:STM32Cube Framework (API):Classic</b>
-- <b>USB</b> (Variant \b MDK-Pro)
+- <b>USB</b> (Variant \b MDK)
 - <b>USB:Host: 1</b>
 - <b>USB:Host:CDC</b>
 
@@ -2697,9 +2690,8 @@ Before building the project, you need to edit these configuration files (in Conf
     - enable <b>Host [Driver_USBH0]</b>
     - disable <b>Host [Driver_USBH0]:Overcurrent Detection Pin</b>
 
-- Double-click <b>USB:USBH_Config_0.h</b> and under <b>USB Host 0:Controller Interface Settings</b> change:
-  - set <b>Controller Interface</b> to \b Custom and under <b>Custom Host Controller Interface</b> change:
-    - set <b>Maximum Pipes in system</b> to \b 4
+- Double-click <b>USB:USBH_Config_0.h</b> and under <b>USB Host 0</b> change:
+  - set <b>Maximum Pipes in system</b> to \b 4
 
 Before building and downloading the project to the target, make sure that the correct debugger is set in the <b>Options for
 Target</b> dialog (ALT + F7). You may then build and download the example project to the evaluation board using the µVision

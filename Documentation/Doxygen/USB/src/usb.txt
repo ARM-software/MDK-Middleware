@@ -10,8 +10,8 @@ The USB Protocol is handled by the USB Component, so that developers can focus o
 \image html "usbmiddleware.png" "Structure of the USB Component"
 
 The <b>USB Component</b> is structured as follows:
+- \ref USB_Device implements an USB Device peripheral that can be connected to an USB Host.
 - \ref USB_Host is used to communicate to other USB Device peripherals over the USB bus.
-- \ref USB_Device implements a device peripheral that can be connected to an USB Host.
 - The following USB Classes are supported:
   - \ref HID "Human Interface Device (HID)"
   - \ref MSC "Mass Storage Class (MSC)"
@@ -19,27 +19,18 @@ The <b>USB Component</b> is structured as follows:
   - \ref ADC "Audio Device Class (ADC)" (USB Device only)
   - \ref CustomClass "Custom Class" (for implementing new or unsupported USB Classes)
   - <b>Composite USB Devices</b> supporting multiple device classes can be implemented.
-- \urlout{USB-API} for USB Host and USB Device provide the interface to the microcontroller peripherals.
-
-\subsection usb_mdk_editions MDK Editions
-
-MDK Middleware is available to all users of \urlout{MDK-Pro-Editions} and \urlout{MDK-Plus-Editions}. 
-The following table shows the differences in USB component availability:
-
-| Middleware Component | MDK-Professional | MDK-Plus  |
-|----------------------|:----------------:|:---------:|
-| USB Device           | Available        | Available |
-| USB Host             | Available        |           |
+- \urlout{USB-API} for USB Device and USB Host provide the interface to the microcontroller peripherals.
 
 \subsection usb_doc_structure Documentation Structure
 
 This user's guide contains the following chapters:
 - \ref USB_Device explains how to implement a <b>USB Device</b> with a microcontroller.
-- \ref USB_Host explains how to implement a <b>USB Host</b> with a microcontroller (MDK-Professional only).
-- \ref USB_Concepts contains general information about USB.
+- \ref USB_Host explains how to implement a <b>USB Host</b> with a microcontroller.
+- \ref USB_Concepts contains general information about the USB.
 - \ref USB_Classes provides details about the supported USB Device Classes.
 - \ref usb_function_reference lists the complete API of the USB Component.
-- \ref usb_resource_requirements shows the configuration of system resources for USB in detail.
+- \ref usb_resource_requirements shows the configuration of system resources for USB Component in detail.
+- [**API Reference**](./modules.html) shows the directory and file organization and contains the detailed API description.
 
 The <a class="el" href="https://www.usb.org/developers" target="_blank">USB-IF Developers Area</a> contains the complete
 <b>USB 2.0 Specification</b> and additional information that is referenced in this user's guide.
@@ -508,7 +499,7 @@ The <a class="el" href="https://www.usb.org/developers" target="_blank">USB-IF D
 \page USB_Device USB Device
 
 This chapter describes the software structure of the USB Device Component and its use for creating applications.
-The USB Device Component simplifies the software development of microcontroller systems that interface to a 
+The USB Device Component simplifies the software development of microcontroller systems that interface to an 
 USB Host. 
 
 <b>Attributes of the USB Device Component:</b>
@@ -523,17 +514,17 @@ USB Host.
   - Provides \subpage USB_Device_Tutorial to show the use of the software stack.
   
 For interfacing to an USB Host Computer, additional software may be required. Page \subpage usb_sw_utilities shows an example
-for such a software running on Windows PCs.
+for such a software running on PCs with Microsoft Windows.
 
 \section usbd_rte_components RTE Components
 
 The picture shows the relationship between RTE Components and the microcontroller's USB Device peripheral (USB Controller).
 RTE Components provide configuration files and user code templates.
 <b>Configuration files</b> configure the RTE Components, hardware interfaces, memory resources and USB Device driver parameters. They
-can have an impact on multiple RTE Components (for example RTE_Device.h configures the USB Controller 0 \e and Driver_USBD0).
+can have an impact on multiple RTE Components.
 <b>User code templates</b> provide the skeleton for implementing the USB Device functionality.
 
-The grey area around the RTE Components USB Device 1 and Driver_USBD1, as well as USB Controller 1 means that these components are optional
+The gray area around the RTE Components USB Device 1 and Driver_USBD1, as well as USB Controller 1 means that these components are optional
 and can only be used if a microcontroller device has multiple USB controllers present. If this is the case, an USB Device
 Class can be connected to any of the USB Device Instances.
 
@@ -594,10 +585,10 @@ Only a few steps are necessary to complete the RTE Component selection:
    - Additional device specific drivers may be required according to the validation output.
  -# From the CMSIS Component:
    - Select the <b>CMSIS:CORE</b> to provide the core interface to the processor.
-   - Select a suitable <b>CMSIS:RTOS</b> or <b>CMSIS:RTOS2</b> that is a required for the application.
+   - Select a suitable <b>CMSIS:RTOS2</b> that is a required for the application.
 
 
-\image html "rteusbx.png" "RTE Component Selection"
+\image html "rteusbx.png" "RTE Component Selection" width=90%
 
 \note 
  - Most microcontrollers have only one USB Controller implemented in hardware and only one driver \b Driver_USBD0
@@ -610,8 +601,7 @@ Only a few steps are necessary to complete the RTE Component selection:
 
 The USB Device Driver and the USB Controller of the microcontroller need to be correctly configured. In particular this means:
 
- - The USB Device Driver selected under the Drivers Component is typically configured with the \b RTE_Device.h configuration file.
-   While this file provides multiple options, it is typically sufficient to enable the USB Device peripheral related to this driver.
+ - The USB Device Driver selected under the Drivers Component is typically configured with a driver specific configuration header file.
    Some microcontrollers may require settings that are related to a physical layer interface \b (PHY). The picture below shows two possible
    variants. Either, the USB PHY is integrated into the controller, or an external chip is used for providing the USB signal lines:
    
@@ -626,12 +616,12 @@ The USB Device Driver and the USB Controller of the microcontroller need to be c
 The configuration file <b>USBD_Config_<i>n</i>.h</b> is listed in the Project Windows under the Component USB and 
 contains a number of important settings for the specific USB Device.
 - The \b Driver_USBD# number is set according to the selected USB Controller. This specifies which driver will be used for
-  the USB Device determining the pin-out as well. For single USB Device Controllers it will be '0'.
+  the USB Device determining the pin-out as well. For devices with single USB Device Controller it will typically be '0'.
 - \b High-Speed may be selected if supported by the USB Controller.
 - The \b Vendor \b ID (VID) needs to be set to a private VID. The default Vendor ID is owned by Keil and must not be used
   for actual products. Please visit <a class="el" href="https://www.usb.org/getting-vendor-id" target="_blank">USB-IF</a>
   for more information on how to apply for a valid Vendor ID.
-- Every device variant needs an unique \b Product \b ID. Together with the \b VID, it is used by the Host computer's operating system
+- Every device variant needs an unique \b Product \b ID. Together with the \b Vendor \b ID, it is used by the Host computer's operating system
   to find a driver for your device.
 - The <b>Device Release Number</b> will be shown in Windows and Linux systems as “Firmware Revision”. The number will
   be interpreted as “binary coded decimal”, meaning that 0x0101 will be shown as firmware revision 1.01.
@@ -664,14 +654,9 @@ The remaining parameters are specific settings that configure parameters for USB
 \subsection usbd_system_resources System Resource Configuration
 
 For proper operation, the USB Device Component requires some system configuration settings. The requirements are:
-- Additional \b stack size of <b>512 bytes</b>. This can be configured in the device's \b startup_device.s file (\c Stack_Size).
-- The USB Device Component uses CMSIS-RTOS threads.
+- Additional <b>main stack size</b> of <b>512 bytes</b>.
+- The USB Device Component uses CMSIS-RTOS2 threads.
   In case <b>RTX v5</b> is used <b>no changes to RTX settings</b> are necessary as all resources are allocated statically.
-  In case <b>RTX v4</b> is used you need to change following settings in \urlout{RTX-Conf-CM4} file: 
-  - Increase the <b>Number of concurrent running user threads</b> by number of threads required by USB Device
-  - Increase the <b>Number of threads with user-provided stack size</b> by number of threads required by USB Device
-  - Increase <b>Total stack size [bytes] for threads with user-provided stack size</b> by size of threads required by USB Device
-  - Enable <b>User Timers</b> if HID class is used
 
 For more information, check the USB Device component's \ref usbd_res_req "Resource Requirements" section.
 
@@ -695,8 +680,8 @@ The following templates are available for the USB Device component:
 |\ref USBD_User_Device_UCT "USBD_User_Device_n.c"                          | Required functions for run-time configuration of the USB Device.|
 |\ref USBD_User_Device_SerNum_UCT "USBD_User_SerNum_n.c"                   | Example for run-time configuration: Changing the serial number of the USB Device.|
 |\ref USBD_User_HID_UCT "USBD_User_HID_n.c"                                | Required functions to create a HID device.|
-|\ref USBD_User_HID_Mouse_UCT "USBD_User_HID_Mouse_n.c"                    | Implements functions to create a USB HID device acting as a mouse pointer input device.|
-|\ref USBD_User_MSC_UCT "USBD_User_MSC_n.c"                                | Required functions to create a MSC device.|
+|\ref USBD_User_HID_Mouse_UCT "USBD_User_HID_Mouse_n.c"                    | Implements functions to create a USB HID device acting as a mouse input device.|
+|\ref USBD_User_MSC_UCT "USBD_User_MSC_n.c"                                | Required functions to create a mass storage device.|
 |\ref USBD_MSC_UCT "USBD_MSC_n.c"                                          | Shows how to get access to storage media either from the application/File System or from the USB host.|
 
 
@@ -733,7 +718,7 @@ can be easily overridden by user code by creating descriptors with the same name
 \code
 // Statically change USB Device 0 Device Descriptor
 const uint8_t usbd0_device_descriptor[] = { 
-  18U,         // bLength = 7 bytes
+  18U,         // bLength = 18 bytes
   1U,          // bDescriptorType = 1 = Device Descriptor Type
   0U,2U,       // bcdUSB = 2.00 (little-endian)
   0U,          // bDeviceClass = 0 = Defined in interface
@@ -763,7 +748,7 @@ The following code example shows how to override the device descriptor for the <
 \code
 // Dynamically change USB Device 0 Device Descriptor
 const uint8_t dev0_device_descriptor[] = { 
-  18U,         // bLength = 7 bytes
+  18U,         // bLength = 18 bytes
   1U,          // bDescriptorType = 1 = Device Descriptor Type
   0U,2U,       // bcdUSB = 2.00 (little-endian)
   0U,          // bDeviceClass = 0 = Defined in interface
@@ -791,7 +776,7 @@ usbd0_desc.device_descriptor = (uint8_t *)dev0_device_descriptor;
 }
 \endcode
 
-\note For changing just serial number string use function \ref USBD_SetSerialNumber!
+\note For changing just serial number string use the \ref USBD_SetSerialNumber function!
 
 \note For non high-speed capable device following descriptors are not important:
 - \ref USB_Device_Qualifier_Descriptor for low/full-speed
@@ -803,10 +788,12 @@ usbd0_desc.device_descriptor = (uint8_t *)dev0_device_descriptor;
 
 \subsection usbd_debugging Debugging
 
-USB Device Component is distributed in library form and doesn't allow direct code debug.
-However it can be easily configured to generate debug events and provide dynamic visibility to the component operation.
+USB Device Component is distributed in a source form and it allows direct code debug.
+However, with breakpoint stopping the program execution the USB Device will usually malfunction as USB Host 
+will not be able to properly enumerate the device or communicate with it thus causing communication timeouts and failures.
+For such usage case a non-intrusive debug via the debug events is also provided (via Event Recorder).
 
-USB_Debug.h configuration file is used to configure the level of debug events.
+\b USB_Debug.h configuration file is used to configure the level of debug events.
 
 The \ref usbd_evr "USB Device:Debug Events" describes the events implemented in the USB Device Component.
 
@@ -829,15 +816,14 @@ Now, when the USB Device generates event information, it can be viewed in the \u
 \anchor usbDevEvrConfig
 Event Recorder Configuration
 ----------------------
-This section describes the configuration settings for the Event Recorder. The usage requires the debug variant of the
-<b>USB:CORE</b> software component; refer to \ref usbDevEvrSupport "Event Recorder Support" for more information.
+This section describes the configuration settings for the Event Recorder; refer to \ref usbDevEvrSupport "Event Recorder Support" for more information.
 
 <b>USB Event Generation Configuration</b>
 
 Selecting the <b>USB:CORE</b> will add the file \c USB_Debug.h to your project. Use this file to set the event
 generation configuration for USB core, drivers, and device classes separately. The file is available for USB Device and Host components.
 
-\image html USBD_USB_Debug_c.png "USB_Debug.h file for event generation configuration"
+\image html USBD_USB_Debug_h.png "USB_Debug.h file for event generation configuration"
 
 The following settings are available for event generation configuration of each module:
 - \b Off means no events will be generated by the module
@@ -863,8 +849,8 @@ The USB Device component uses the following event IDs:
 /**
 \page USB_Host USB Host
 
-This chapter describes the software structure of the USB Host Component and explains its use for creating a USB Host
-application. This software component is available to users of MDK-Professional only.
+This chapter describes the software structure of the USB Host Component and explains its use for creating an USB Host
+application.
 
 The USB Host Component simplifies software development of microcontroller systems that allow to connect USB Devices.
 The attributes of the USB Host Component are:
@@ -914,16 +900,15 @@ The RTE Component selection is done in a few steps:
    - Additional device specific drivers may be required according to the validation output.
  -# From the CMSIS Component:
    - Select the <b>CMSIS:CORE</b> to provide the core interface to the processor.
-   - Select a suitable <b>CMSIS:RTOS</b> or <b>CMSIS:RTOS2</b> that is a required for the application.
+   - Select a suitable <b>CMSIS:RTOS2</b> that is a required for the application.
 
-\image html "USBH_RTE.png" RTE Component Selection
+\image html "USBH_RTE.png" RTE Component Selection width=90%
 
 \subsection USB_Driver_Configuration_USBH USB Driver and Controller
 
 The USB Host Driver and the USB Controller of the microcontroller need to be correctly configured. In particular this means:
 
- - The USB Host Driver selected under the Drivers Component is typically configured with the \b RTE_Device.h configuration file.
-   While this file provides multiple options, it is typically sufficient to enable the USB Host peripheral related to this driver.
+ - The USB Host Driver selected under the Drivers Component is typically configured with a driver specific configuration header file.
    Some microcontrollers may require settings that related to a physical layer interface \b (PHY), the USB \b VBUS power and
    \b Overcurrent protection.
  - The USB Controller of the microcontroller needs typically specific clock settings. Consult the user's guide of the microcontroller
@@ -934,9 +919,11 @@ The USB Host Driver and the USB Controller of the microcontroller need to be cor
 \subsection USB_Host_Configuration_USBH USB Host Configuration
 
 The <b>USBH_Config_<i>n</i>.h</b> file contains additional settings for the specific USB Host:
-- The \b Driver \b Number is set according to the selected USB Controller. For single USB Device Controllers it will be '0'.
-- Some microcontrollers can make use of different hardware \b Controller \b Interfaces. Consult the user's guide of the selected
-  microcontroller to choose the correct setting.
+- The \b Driver_USBH# is set according to the selected USB Controller. For device with single USB Host Controller it will typically be '0'.
+- <b>Power Consumption</b> can be configured according to hardware capability of the USB Host Controller.
+- <b>Maximum Pipes</b> can be specified according to expected USB Device classes that are expected to be used by the USB Host.
+- <b>Memory Pool</b> parameters can be configured that are necessary for USB Host operation.
+  This memory pool can also be relocated to specific memory via the linker script.
 
 Refer to \ref usbh_coreFunctions_conf for a detailed list of all available settings.
 
@@ -944,14 +931,9 @@ Refer to \ref usbh_coreFunctions_conf for a detailed list of all available setti
 \subsection usbh_system_resources System Resource Configuration
 
 For proper operation, the USB Host Component requires some system configuration settings. The requirements are:
-- Additional \b stack size of <b>512 bytes</b>. This can be configured in the device's \b startup_device.s file (\c Stack_Size).
-- The USB Device Component uses CMSIS-RTOS threads.
+- Additional <b>main stack size</b> of <b>512 bytes</b>.
+- The USB Host Component uses CMSIS-RTOS2 threads.
   In case <b>RTX v5</b> is used <b>no changes to RTX settings</b> are necessary as all resources are allocated statically.
-  In case <b>RTX v4</b> is used you need to change following settings in \urlout{RTX-Conf-CM4} file: 
-  - Increase the <b>Number of concurrent running user threads</b> by number of threads required by USB Host
-  - Increase the <b>Number of threads with user-provided stack size</b> by number of threads required by USB Host
-  - Increase <b>Total stack size [bytes] for threads with user-provided stack size</b> by size of threads required by USB Host
-  - Enable <b>User Timers</b>
 
 For more information, check the USB Host component's \ref usbh_res_req "Resource Requirements" section.
   
@@ -977,17 +959,10 @@ The following templates are available for the USB Host component:
 
 \subsection usbh_debugging Debugging
 
-USB Host Component is distributed in library form and doesn't allow its direct code debug.
-However it can be easily configured to generate debug events and provide dynamic visibility to the component operation.
+USB Host Component is distributed in a source form and it allows direct code debug.
+Also debug events are available (via Event Recorder) which provide non-intrusive debugging during runtime.
 
-Following variants can be selected for the <b>USB:CORE</b> software component in the <b>Manage Run-Time Environment</b> window:
- - <b>Debug</b>: this variant supports event annotations for the \urlout{Event-Recorder-About}
-and makes it very easy to analyze the internal operation of the USB Host Component during application debug.
-\ref usbHostEvrSupport "Event Recorder Support" below explains how to configure and use this variant.
- - <b>Release</b>: this variant does not include additional debugging code. Use this variant when deploying the application.
-
-The figure below shows selection of the <b>Debug</b> variant.
-\image html "usbh_debug_variant.png"
+\b USB_Debug.h configuration file is used to configure the level of debug events.
 
 The \ref usbh_evr "USB Host:Debug Events" describes the events implemented in the USB Device Component.
 
@@ -1010,15 +985,14 @@ Now, when the USB Host generates event information, it can be viewed in the \url
 \anchor usbHostEvrConfig
 Event Recorder Configuration
 ----------------------
-This section describes the configuration settings for the Event Recorder. The usage requires the debug variant of the
-<b>USB:CORE</b> software component; refer to \ref usbHostEvrSupport "Event Recorder Support" for more information.
+This section describes the configuration settings for the Event Recorder; refer to \ref usbHostEvrSupport "Event Recorder Support" for more information.
 
 <b>USB Event Generation Configuration</b>
 
 Selecting the <b>USB:CORE</b> will add the file \c USB_Debug.h to your project. Use this file to set the event
-generation configuration for USB core, drivers, and device classes separately. The file is available for USB Device and Host components.
+generation configuration for USB core, drivers, and device classes separately. The file is common for USB Device and Host components.
 
-\image html USBH_USB_Debug_c.png "USB_Debug.h file for event generation configuration"
+\image html USBH_USB_Debug_h.png "USB_Debug.h file for event generation configuration"
 
 The following settings are available for event generation configuration of each module:
 - \b Off means no events will be generated by the module
