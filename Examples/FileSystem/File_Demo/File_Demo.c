@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    File_Demo.c
  * Purpose: File manipulation example program
@@ -16,7 +16,14 @@
 
 #include "rl_fs.h"                      // Keil::File System&MDK:CORE
 
-#include "Terminal.h"
+/* Some ASCII control characters */
+#define ASCII_BS        0x08
+#define ASCII_LF        0x0A
+#define ASCII_CR        0x0D
+#define ASCII_CNTLQ     0x11
+#define ASCII_CNTLS     0x13
+#define ASCII_ESC       0x1B
+#define ASCII_DEL       0x7F
 
 // Main stack size must be multiple of 8 Bytes
 #define APP_MAIN_STK_SZ (1200U)
@@ -42,10 +49,7 @@ static void cmd_dir     (char *par);
 static void cmd_format  (char *par);
 static void cmd_help    (char *par);
 static void cmd_fill    (char *par);
-static void cmd_attrib  (char *par);
-static void cmd_cid     (char *par);
 
-/* Local constants */
 static const char intro[] =
   "\n\n\n\n\n\n\n\n"
   "+-----------------------------------------------------------------------+\n"
@@ -64,8 +68,6 @@ static const char help[] =
   "| DIR [\"mask\"]              | displays a list of files in the directory |\n"
   "| FORMAT \"drive\" [options]  | formats the drive                         |\n"
   "|                           | [/FAT32 option selects FAT32 file system] |\n"
-  "| ATTRIB \"fname\" [attr]     | change file attributes                    |\n"
-  "| CID                       | read CID register from the memory card    |\n"
   "| HELP  or  ?               | displays this help                        |\n"
   "+---------------------------+-------------------------------------------+\n";
 
@@ -79,21 +81,66 @@ static const SCMD cmd[] = {
   { "FORMAT", cmd_format  },
   { "HELP",   cmd_help    },
   { "FILL",   cmd_fill    },
-  { "ATTRIB", cmd_attrib  },
-  { "CID",    cmd_cid     },
   { "?",      cmd_help    }
 };
 
 #define CMD_COUNT   (sizeof (cmd) / sizeof (cmd[0]))
 
-/* Local variables */
-static char in_line[160];
+/* Line buffer */
+static char line_buf[160];
 
-/* Local Function Prototypes */
-static void dot_format (uint64_t val, char *sp);
-static char *get_entry (char *cp, char **pNext);
+static uint32_t fs_getline (char *line, int32_t n)  {
+  int32_t cnt = 0;
+  char ch;
 
+  do {
+    ch = (char)getchar();
 
+    if ((ch == ASCII_BS) || (ch == ASCII_DEL)) {
+      /* Remove previous character from the line buffer */
+      if (cnt == 0) {
+        /* Line empty, nothing to do */
+        break;
+      }
+      /* Decrement number of characters and line pointer */
+      cnt--;
+      line--;
+      /* Echo backspace */
+      putchar(ASCII_BS);
+      putchar(' ');
+      putchar(ASCII_BS);
+      fflush(stdout);
+    }
+    else if (ch == ASCII_ESC) {
+      /* ESC - stop editing line */
+      cnt = 0;
+      break;
+    }
+    else {
+      if ((ch != ASCII_CNTLQ) && (ch != ASCII_CNTLS)) {
+        if (ch == ASCII_CR) {
+          /* CR - stop editing line */
+          *line = ch;
+          /* Increment line pointer and number of characters */
+          line++;
+          cnt++;
+          /* Add LF */
+          ch = ASCII_LF;
+        }
+        /* Echo and store character */
+        putchar(*line = ch);
+        fflush(stdout);
+        /* Increment line pointer and number of characters */
+        line++;
+        cnt++;
+      }
+    }
+  } while ((cnt < (n - 2)) && (ch != ASCII_LF));
+  /* Add NUL terminator */
+  *line = 0;
+
+  return (cnt);
+}
 /*-----------------------------------------------------------------------------
  *        Extract drive specification from the input string
  *----------------------------------------------------------------------------*/
@@ -134,12 +181,12 @@ static char *get_entry (char *cp, char **pNext) {
     *cp = 0;
   }
  
-  for (sp = cp; *sp != CR && *sp != LF && *sp != 0; sp++) {
+  for (sp = cp; *sp != ASCII_CR && *sp != ASCII_LF && *sp != 0; sp++) {
     if ( lfn && *sp == '\"') break;
     if (!lfn && *sp == ' ' ) break;
   }
 
-  for ( ; *sp == sep_ch || *sp == CR || *sp == LF; sp++) {
+  for ( ; *sp == sep_ch || *sp == ASCII_CR || *sp == ASCII_LF; sp++) {
     *sp = 0;
     if ( lfn && *sp == sep_ch) { sp ++; break; }
   }
@@ -189,7 +236,8 @@ static void dot_format (uint64_t val, char *sp) {
  *----------------------------------------------------------------------------*/
 static void cmd_capture (char *par) {
   char *fname, *next;
-  bool  append, retv;
+  bool  append;
+  uint32_t cnt;
   FILE *f;
 
   fname = get_entry(par, &next);
@@ -217,9 +265,9 @@ static void cmd_capture (char *par) {
     return;
   }
   do {
-    retv = getline(in_line, sizeof (in_line));
-    fputs(in_line, f);
-  } while (retv == true);
+    cnt = fs_getline(line_buf, sizeof (line_buf));
+    fputs(line_buf, f);
+  } while (cnt > 0U);
   fclose(f);                            /* close the output file              */
   printf("\nFile closed.\n");
 }
@@ -546,67 +594,6 @@ static void cmd_format (char *par) {
 }
 
 /*-----------------------------------------------------------------------------
- *        Change file attributes
- *----------------------------------------------------------------------------*/
-static void cmd_attrib (char *par) {
-  char *arg, *path, *next, *sp;
-
-  path = get_entry(par, &next);
-  arg  = next;
-
-  /* Parse input string for parameters */
-  do {
-    sp = get_entry(next, &next);
-
-    if (sp == 0 && next == 0) {
-      printf("\nCommand error.\n");
-      return;
-    }
-
-    if (next) {
-      if (*next == '+' || *next == '-') {
-        *(next - 1) = ' ';
-      }
-    }
-  }
-  while (sp && next);
-
-  if (fattrib(path, arg) != fsOK) {
-    printf("Failed to change file attributes.\n");
-  }
-  else {
-    printf("File attributes changed.\n");
-  }
-}
-
-/*-----------------------------------------------------------------------------
- *        Read and output SD card CID register
- *----------------------------------------------------------------------------*/
-static void cmd_cid (char *par) {
-  char drive[4];
-  int32_t id;
-  fsCID_Register cid;
-
-  par = get_drive(par, drive, 4);
-  id  = fs_ioc_get_id(drive);
-  if (id >= 0 && (fs_ioc_lock(id) == fsOK)) {
-    if (fs_ioc_device_ctrl(id, fsDevCtrlCodeGetCID, &cid) == fsOK) {
-      printf("Manufacturer ID: %d (0x%.2X)\n",  cid.MID, cid.MID);
-      printf("OEM/Application ID: %c%c\n",    cid.OID >> 8, cid.OID & 0xFF);
-      printf("Product name: %c%c%c%c%c\n", cid.PNM[0], cid.PNM[1], cid.PNM[2],
-                                           cid.PNM[3], cid.PNM[4]);
-      printf("Product revision: %d.%d\n",     cid.PRV >> 4, cid.PRV & 0x0F);
-      printf("Product serial number: 0x%X\n", cid.PSN);
-      printf("Manufacturing date: %d/%.2d\n", cid.MDT & 0x0F, cid.MDT >> 4);
-    }
-    else printf("CID register read failed.\n");
-
-    fs_ioc_unlock(id);
-  }
-  else printf("Specified drive doesn't exists!");
-}
-
-/*-----------------------------------------------------------------------------
  *        Display Command Syntax help
  *----------------------------------------------------------------------------*/
 static void cmd_help (char *par) {
@@ -621,14 +608,15 @@ static void cmd_help (char *par) {
 static void init_filesystem (void) {
   fsStatus stat;
 
-  printf("Initializing and mounting enabled drives...\n\n");
+  printf("Initializing and mounting drive M0...\n\n");
 
-  /* Initialize and mount drive "M0" */
   stat = finit("M0:");
   if (stat == fsOK) {
     stat = fmount("M0:");
     if (stat == fsOK) {
       printf("Drive M0 ready!\n");
+      /* Set it as current drive */
+      fchdrive("M0:");
     }
     else if (stat == fsNoFileSystem) {
       /* Format the drive */
@@ -655,35 +643,41 @@ __NO_RETURN void app_main_thread (void *argument) {
 
   (void)argument;
 
-  printf(intro);                                /* display example info       */
+  /* Display example intro */
+  printf(intro);
   printf(help);
 
   init_filesystem();
 
   while (1) {
-    printf("\nCmd> ");                          /* display prompt             */
+    /* Display command prompt */
+    printf("\nCmd> ");
     fflush(stdout);
-                                                /* get command line input     */
-    if (getline(in_line, sizeof (in_line)) == false) {
-      continue;
-    }
 
-    sp = get_entry(&in_line[0], &next);
-    if (*sp == 0) {
-      continue;
-    }
-    for (cp = sp; *cp && *cp != ' '; cp++) {
-      *cp = (char)toupper(*cp);               /* command to upper-case      */
-    }
-    for (i = 0; i < CMD_COUNT; i++) {
-      if (strcmp(sp, (const char *)&cmd[i].val)) {
-        continue;
+    /* Get input from the stdin */
+    if (fs_getline(line_buf, sizeof (line_buf)) > 0U) {
+      /* Read the line content */
+      sp = get_entry(&line_buf[0], &next);
+
+      if (*sp != 0) {
+        /* Convert command to upper case */
+        for (cp = sp; *cp && *cp != ' '; cp++) {
+          *cp = (char)toupper(*cp);
+        }
+
+        /* Check if command exists */
+        for (i = 0; i < CMD_COUNT; i++) {
+          if (strcmp(sp, (const char *)&cmd[i].val) == 0) {
+            /* Execute command */
+            cmd[i].func(next);
+            break;
+          }
+        }
+        if (i == CMD_COUNT) {
+          /* Command not found */
+          printf("\nCommand error\n");
+        }
       }
-      cmd[i].func(next);                      /* execute command function   */
-      break;
-    }
-    if (i == CMD_COUNT) {
-      printf("\nCommand error\n");
     }
   }
 }

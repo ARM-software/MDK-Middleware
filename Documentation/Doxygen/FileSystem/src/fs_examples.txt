@@ -258,7 +258,6 @@ project structure:
 
 - \b File_Demo.c contains the main C function that initializes the board hardware and the File System Component. It also
   defines the functions for the accessing the data on the hardware.
-- The <b>Getline.c</b> file contains the function for getting formatted input from stdio.
   
 You may now build and download the example project to the evaluation board using the µVision commands:
  - \b Project --> \b Build target

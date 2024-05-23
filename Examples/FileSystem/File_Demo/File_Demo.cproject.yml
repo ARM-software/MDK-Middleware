@@ -24,7 +24,6 @@ project:
     - group: File System
       files:
         - file: File_Demo.c
-        - file: Getline.c
 
   components:
     - component: ARM::CMSIS:OS Tick:SysTick
