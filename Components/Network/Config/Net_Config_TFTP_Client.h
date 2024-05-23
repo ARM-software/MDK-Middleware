@@ -32,5 +32,3 @@
 #define TFTP_CLIENT_RETRY_TOUT  5
 
 // </h>
-
-//------------- <<< end of configuration section >>> ---------------------------

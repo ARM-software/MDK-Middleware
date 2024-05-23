@@ -25,5 +25,3 @@
 #define SNTP_CLIENT_NTP_SERVER  "217.79.179.106"
 
 // </h>
-
-//------------- <<< end of configuration section >>> ---------------------------

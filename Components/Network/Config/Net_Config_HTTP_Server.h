@@ -79,5 +79,3 @@
 
 // Nonce cache timeout in seconds
 #define HTTP_SERVER_NONCE_CACHE_TOUT 60
-
-//------------- <<< end of configuration section >>> ---------------------------

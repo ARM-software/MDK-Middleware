@@ -24,5 +24,3 @@
 #define FTP_CLIENT_PASSIVE_MODE 0
 
 // </h>
-
-//------------- <<< end of configuration section >>> ---------------------------

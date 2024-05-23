@@ -24,5 +24,3 @@
 #define SMTP_CLIENT_ATTACH_ENABLE   0
 
 // </h>
-
-//------------- <<< end of configuration section >>> ---------------------------
