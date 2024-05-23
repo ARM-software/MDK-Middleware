@@ -18,5 +18,3 @@
 #define DNS_CLIENT_TAB_SIZE     10
 
 // </h>
-
-//------------- <<< end of configuration section >>> ---------------------------

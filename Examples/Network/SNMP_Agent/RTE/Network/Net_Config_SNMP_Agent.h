@@ -33,5 +33,3 @@
 #define SNMP_AGENT_TRAP_IP      "192.168.0.100"
 
 // </h>
-
-//------------- <<< end of configuration section >>> ---------------------------

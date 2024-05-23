@@ -43,5 +43,3 @@
 #define NET_THREAD_PRIORITY     osPriorityNormal
 //   </h>
 // </h>
-
-//------------- <<< end of configuration section >>> ---------------------------

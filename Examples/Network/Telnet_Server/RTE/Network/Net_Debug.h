@@ -164,5 +164,3 @@
 #define NET_DEBUG_SNTP_CLIENT   1
 //   </e>
 // </e>
-
-//------------- <<< end of configuration section >>> ---------------------------

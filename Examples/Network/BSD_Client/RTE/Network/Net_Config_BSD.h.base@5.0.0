@@ -34,5 +34,3 @@
 #define BSD_HOSTNAME_ENABLE     0
 
 // </h>
-
-//------------- <<< end of configuration section >>> ---------------------------
