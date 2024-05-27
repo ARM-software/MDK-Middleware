@@ -139,11 +139,6 @@ static ARM_USART_MODEM_STATUS ARM_USART_GetModemStatus(void)
   return modem_status;
 }
 
-static void ARM_USART_SignalEvent(uint32_t event)
-{
-    // function body
-}
-
 // End USART Interface
 
 extern \
