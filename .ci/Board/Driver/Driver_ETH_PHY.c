@@ -111,7 +111,7 @@ static int32_t ARM_ETH_PHY_SetMode(uint32_t mode)
 
 static ARM_ETH_LINK_STATE ARM_ETH_PHY_GetLinkState(void)
 {
-  ARM_ETH_LINK_STATE link_state = { 0 };
+  ARM_ETH_LINK_STATE link_state = { ARM_ETH_LINK_DOWN };
   return link_state;
 }
 
