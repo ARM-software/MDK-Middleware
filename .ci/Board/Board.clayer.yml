@@ -1,0 +1,55 @@
+layer:
+  type: Board
+  description: Board setup with dummy drivers
+
+  connections:
+    - connect: Board with dummy drivers
+      provides:
+        - CMSIS_ETH
+        - CMSIS_MCI
+        - CMSIS_USART
+        - CMSIS_USB_Device
+        - CMSIS_USB_Host
+        - CMSIS_WiFi
+        - CMSIS_VIO
+        - STDIN
+        - STDOUT
+        - STDERR
+
+  packs:
+    - pack: ARM::CMSIS@>=6.0.0
+    - pack: ARM::CMSIS-Compiler@>=2.1.0
+
+  components:
+    - component: Device:Startup
+
+    - component: ARM::CMSIS:CORE
+
+    - component: ARM::CMSIS Driver:Ethernet:Custom
+    - component: ARM::CMSIS Driver:MCI:Custom
+    - component: ARM::CMSIS Driver:USART:Custom
+    - component: ARM::CMSIS Driver:USB Device:Custom
+    - component: ARM::CMSIS Driver:USB Host:Custom
+    - component: ARM::CMSIS Driver:WiFi:Custom
+    - component: ARM::CMSIS Driver:VIO:Custom
+
+    - component: ARM::CMSIS-Compiler:CORE
+    - component: ARM::CMSIS-Compiler:STDERR:Breakpoint
+    - component: ARM::CMSIS-Compiler:STDOUT:Breakpoint
+    - component: ARM::CMSIS-Compiler:STDIN:Breakpoint
+
+  groups:
+    - group: Board
+      files:
+        - file: main.h
+        - file: main.c
+    - group: Driver
+      files:
+        - file: vio.c
+        - file: Driver/Driver_ETH_MAC.c
+        - file: Driver/Driver_ETH_PHY.c
+        - file: Driver/Driver_MCI.c
+        - file: Driver/Driver_USART.c
+        - file: Driver/Driver_USBD.c
+        - file: Driver/Driver_USBH.c
+        - file: Driver/Driver_WiFi.c
