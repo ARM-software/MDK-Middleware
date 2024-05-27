@@ -51,17 +51,18 @@ jobs:
         working-directory: ./MDK-Middleware/.ci/USB/
         run: |
           # Create list of used packs - keep pack specification only (remove path/URL)
-          csolution list packs ./Device/USB_Device.csolution.yml | sed 's/ .*//' > packs_usbd.txt
-          csolution list packs ./Host/USB_Host.csolution.yml | sed 's/ .*//' > packs_usbh.txt
+          csolution list packs ./Device/Library/Library.csolution.yml   2>/dev/null | sed 's/ .*//' >  packs.txt
+          csolution list packs ./Device/Examples/Examples.csolution.yml 2>/dev/null | sed 's/ .*//' >> packs.txt
+          csolution list packs ./Host/Library/Library.csolution.yml     2>/dev/null | sed 's/ .*//' >> packs.txt
+          csolution list packs ./Host/Examples/Examples.csolution.yml   2>/dev/null | sed 's/ .*//' >> packs.txt
           # Remove MDK-Middleware from the list
-          sed -i '/.*MDK-Middleware.*/d' packs_usbd.txt
-          sed -i '/.*MDK-Middleware.*/d' packs_usbh.txt
+          sed -i '/.*MDK-Middleware.*/d' packs.txt
           # Keep only leters, numbers, ':', '@', '.', '_' and '-'
-          sed -i 's/[^a-zA-Z0-9:@._-]//g' packs_usbd.txt
-          sed -i 's/[^a-zA-Z0-9:@._-]//g' packs_usbh.txt
+          sed -i 's/[^a-zA-Z0-9:@._-]//g' packs.txt
+          # Remove duplicates from the list and create final list
+          awk '!seen[$0]++' packs.txt | tee pack_list.txt
           # Install required packs
-          cpackget add -a -n -f packs_usbd.txt
-          cpackget add -a -n -f packs_usbh.txt
+          cpackget add -a -n -f pack_list.txt
 
       - name: Use local MDK-Middleware pack
         working-directory: ./MDK-Middleware/
@@ -78,12 +79,22 @@ jobs:
       - name: Build USB Device sources
         working-directory: ./MDK-Middleware/.ci/USB/Device
         run: |
-          cbuild USB_Device.csolution.yml --update-rte --toolchain ${{ matrix.compiler }} 2>&1 | tee build_usbd_${{ matrix.compiler }}.log || true
+          cbuild ./Library/Library.csolution.yml --update-rte --toolchain ${{ matrix.compiler }} 2>&1 | tee build_usbd_${{ matrix.compiler }}.log || true
+
+      - name: Build USB Device examples
+        working-directory: ./MDK-Middleware/.ci/USB/Device
+        run: |
+          cbuild ./Examples/Examples.csolution.yml --update-rte --toolchain ${{ matrix.compiler }} 2>&1 | tee -a build_usbd_${{ matrix.compiler }}.log || true
 
       - name: Build USB Host sources
         working-directory: ./MDK-Middleware/.ci/USB/Host
         run: |
-          cbuild USB_Host.csolution.yml --update-rte --toolchain ${{ matrix.compiler }} 2>&1 | tee build_usbh_${{ matrix.compiler }}.log || true
+          cbuild ./Library/Library.csolution.yml --update-rte --toolchain ${{ matrix.compiler }} 2>&1 | tee build_usbh_${{ matrix.compiler }}.log || true
+
+      - name: Build USB Host examples
+        working-directory: ./MDK-Middleware/.ci/USB/Host
+        run: |
+          cbuild ./Examples/Examples.csolution.yml --update-rte --toolchain ${{ matrix.compiler }} 2>&1 | tee -a build_usbh_${{ matrix.compiler }}.log || true
 
       - name: Create build summary
         working-directory: ./MDK-Middleware/.ci/USB

@@ -51,13 +51,16 @@ jobs:
         working-directory: ./MDK-Middleware/.ci/Network/
         run: |
           # Create list of used packs - keep pack specification only (remove path/URL)
-          csolution list packs ./Network.csolution.yml | sed 's/ .*//' > packs.txt
+          csolution list packs ./Library/Library.csolution.yml   2>/dev/null | sed 's/ .*//' >  packs.txt
+          csolution list packs ./Examples/Examples.csolution.yml 2>/dev/null | sed 's/ .*//' >> packs.txt
           # Remove MDK-Middleware from the list
           sed -i '/.*MDK-Middleware.*/d' packs.txt
           # Keep only leters, numbers, ':', '@', '.', '_' and '-'
           sed -i 's/[^a-zA-Z0-9:@._-]//g' packs.txt
+          # Remove duplicates from the list and create final list
+          awk '!seen[$0]++' packs.txt | tee pack_list.txt
           # Install required packs
-          cpackget add -a -n -f packs.txt
+          cpackget add -a -n -f pack_list.txt
 
       - name: Use local MDK-Middleware pack
         working-directory: ./MDK-Middleware/
@@ -74,7 +77,12 @@ jobs:
       - name: Build Network sources
         working-directory: ./MDK-Middleware/.ci/Network
         run: |
-          cbuild Network.csolution.yml --update-rte --toolchain ${{ matrix.compiler }} 2>&1 | tee build_${{ matrix.compiler }}.log || true
+          cbuild ./Library/Library.csolution.yml --update-rte --toolchain ${{ matrix.compiler }} 2>&1 | tee build_${{ matrix.compiler }}.log || true
+
+      - name: Build Network examples
+        working-directory: ./MDK-Middleware/.ci/Network
+        run: |
+          cbuild ./Examples/Examples.csolution.yml --update-rte --toolchain ${{ matrix.compiler }} 2>&1 | tee -a build_${{ matrix.compiler }}.log || true
 
       - name: Create build summary
         working-directory: ./MDK-Middleware/.ci/Network
