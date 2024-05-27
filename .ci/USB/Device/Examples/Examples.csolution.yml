@@ -1,0 +1,26 @@
+solution:
+  created-for: CMSIS-Toolbox@2.0.0
+
+  cdefault:
+
+  packs:
+    - pack: ARM::Cortex_DFP
+
+  target-types:
+    - type: CM4
+      device: ARMCM4
+      variables:
+        - Board-Layer: ../../../../.ci//Board/Board.clayer.yml
+
+  build-types:
+    - type: Debug
+      debug: on
+      optimize: debug
+    - type: Release
+      debug: off
+      optimize: balanced
+
+  projects:
+    - project: ../../../../Examples/USB/Device/HID/HID.cproject.yml
+    - project: ../../../../Examples/USB/Device/MassStorage/MassStorage.cproject.yml
+    - project: ../../../../Examples/USB/Device/VirtualCOM/VirtualCOM.cproject.yml

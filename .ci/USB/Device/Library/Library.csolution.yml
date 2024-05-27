@@ -10,18 +10,17 @@ solution:
     - type: CM4
       device: ARMCM4
       variables:
-        - Board-Layer: ../../../.ci//Board/Board.clayer.yml
+        - Board-Layer: ../../../../.ci//Board/Board.clayer.yml
 
   build-types:
     - type: Debug
       debug: on
       optimize: debug
       define:
-        - FS_DEBUG_EVR_ENABLE : 1
+        - USBD_DEBUG_EVR : 1
     - type: Release
       debug: off
       optimize: balanced
 
   projects:
-    - project: Library/Library.cproject.yml
-    - project: ../../Examples/FileSystem/File_Demo/File_Demo.cproject.yml
+    - project: ./Library.cproject.yml

@@ -17,13 +17,10 @@ solution:
       debug: on
       optimize: debug
       define:
-        - USBD_DEBUG_EVR : 1
+        - USBH_DEBUG_EVR : 1
     - type: Release
       debug: off
       optimize: balanced
 
   projects:
-    - project: Library/Library.cproject.yml
-    - project: ../../../Examples/USB/Device/HID/HID.cproject.yml
-    - project: ../../../Examples/USB/Device/MassStorage/MassStorage.cproject.yml
-    - project: ../../../Examples/USB/Device/VirtualCOM/VirtualCOM.cproject.yml
+    - project: ./Library.cproject.yml
