@@ -209,11 +209,6 @@ static ARM_MCI_STATUS ARM_MCI_GetStatus(void)
   return mci_status;
 }
 
-static void ARM_MCI_SignalEvent(uint32_t event)
-{
-    // function body
-}
-
 // End MCI Interface
 
 extern \

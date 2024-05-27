@@ -44,7 +44,9 @@
 
 // <e>USB Host Debug
 // <i>Enable USB Host debugging with Event Recorder
+#ifndef USBH_DEBUG_EVR
 #define USBH_DEBUG_EVR                  0
+#endif
 
 //   <o>Core <0=>Off <1=>Errors <2=>Errors + API <3=>All
 //   <i>Configure USB Host Core event recording

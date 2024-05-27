@@ -114,7 +114,7 @@ static ARM_USBH_PIPE_HANDLE ARM_USBH_PipeCreate(uint8_t  dev_addr,
                                                 uint16_t ep_max_packet_size,
                                                 uint8_t  ep_interval)
 {
-  return NULL;
+  return (ARM_USBH_PIPE_HANDLE)NULL;
 }
 
 static int32_t ARM_USBH_PipeModify(ARM_USBH_PIPE_HANDLE pipe_hndl,
@@ -158,16 +158,6 @@ static int32_t ARM_USBH_PipeTransferAbort(ARM_USBH_PIPE_HANDLE pipe_hndl)
 static uint16_t ARM_USBH_GetFrameNumber(void)
 {
   return 0U;
-}
-
-static void ARM_USBH_SignalPortEvent(uint8_t port, uint32_t event)
-{
-    // function body
-}
-
-static void ARM_USBH_SignalPipeEvent(ARM_USBH_PIPE_HANDLE pipe_hndl, uint32_t event)
-{
-    // function body
 }
 
 // End USBH Interface

@@ -215,10 +215,6 @@ static int32_t ARM_ETH_MAC_PHY_Write(uint8_t phy_addr, uint8_t reg_addr, uint16_
   return 0;
 }
 
-static void ARM_ETH_MAC_SignalEvent(uint32_t event)
-{
-}
-
 // End ETH MAC Interface
 
 extern \

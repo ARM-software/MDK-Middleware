@@ -143,16 +143,6 @@ static uint16_t ARM_USBD_GetFrameNumber(void)
   return 0U;
 }
 
-static void ARM_USBD_SignalDeviceEvent(uint32_t event)
-{
-    // function body
-}
-
-static void ARM_USBD_SignalEndpointEvent(uint8_t ep_addr, uint32_t ep_event)
-{
-    // function body
-}
-
 // End USBD Interface
 
 extern \
