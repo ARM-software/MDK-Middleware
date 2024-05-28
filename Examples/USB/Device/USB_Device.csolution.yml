@@ -1,6 +1,6 @@
 solution:
   description: USB Device examples
-  created-for: CMSIS-Toolbox@2.0.0
+  created-for: CMSIS-Toolbox@2.4.0
 
   cdefault:
 

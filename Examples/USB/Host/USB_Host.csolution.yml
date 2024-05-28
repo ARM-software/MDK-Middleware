@@ -1,6 +1,6 @@
 solution:
   description: USB Host examples
-  created-for: CMSIS-Toolbox@2.0.0
+  created-for: CMSIS-Toolbox@2.4.0
 
   cdefault:
 
