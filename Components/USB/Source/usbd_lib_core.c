@@ -8,6 +8,7 @@
 
 #include "usbd_lib_core.h"
 
+#include <stddef.h>
 #include <string.h>
 
 #include "usb_lib_debug.h"
@@ -416,7 +417,7 @@ usbStatus USBD_SetSerialNumber (uint8_t device, const char *string) {
     str_len = ptr_dev_cfg->ser_num_str_len;
   }
 
-  ptr_str_desc_str = ((uint8_t *)(&((USB_STRING_DESCRIPTOR *)ptr_str_desc)->bString));
+  ptr_str_desc_str = (uint8_t *)ptr_str_desc + offsetof(USB_STRING_DESCRIPTOR, bString);
 
   ptr_str_desc->bLength         = (uint8_t)((str_len * 2U) + 2U);
   ptr_str_desc->bDescriptorType = USB_STRING_DESCRIPTOR_TYPE;
