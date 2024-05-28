@@ -17,6 +17,7 @@ layer:
         - STDERR
 
   packs:
+    - pack: ARM::Cortex_DFP
     - pack: ARM::CMSIS@>=6.0.0
     - pack: ARM::CMSIS-Compiler@>=2.1.0
 
