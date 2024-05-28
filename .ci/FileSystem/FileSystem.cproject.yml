@@ -9,7 +9,7 @@ project:
     - pack: ARM::CMSIS-RTX@>=5.8.0
 
   add-path:
-    - ../../../Components/USB/Include
+    - ../../Components/USB/Include
 
   components:
     - component: ARM::CMSIS:CORE

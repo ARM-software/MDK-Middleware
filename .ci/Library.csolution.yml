@@ -1,0 +1,31 @@
+solution:
+  description: MDK-Middleware Build Test
+  created-for: CMSIS-Toolbox@2.4.0
+
+  cdefault:
+
+  packs:
+    - pack: ARM::Cortex_DFP
+
+  target-types:
+    - type: CM4
+      device: ARMCM4
+
+  build-types:
+    - type: Debug
+      debug: on
+      optimize: debug
+      define:
+        - FS_DEBUG_EVR_ENABLE : 1
+        - NET_DEBUG_ENABLE : 1
+        - USBD_DEBUG_EVR : 1
+        - USBH_DEBUG_EVR : 1
+    - type: Release
+      debug: off
+      optimize: balanced
+
+  projects:
+    - project: FileSystem/FileSystem.cproject.yml
+    - project: Network/Network.cproject.yml
+    - project: USB/Device/USB_Device.cproject.yml
+    - project: USB/Host/USB_Host.cproject.yml

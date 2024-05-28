@@ -7,9 +7,6 @@ project:
     - pack: ARM::CMSIS-View@>=1.1.0
     - pack: ARM::CMSIS-RTX@>=5.8.0
 
-  add-path:
-    - ../../../../Components/FileSystem/Include
-
   components:
     - component: ARM::CMSIS:CORE
     - component: ARM::CMSIS-View:Event Recorder&DAP
