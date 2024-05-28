@@ -2,7 +2,7 @@
 <package schemaVersion="1.7.36" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.36/schema/PACK.xsd">
   <vendor>Keil</vendor>
   <name>MDK-Middleware</name>
-  <description overview="Documentation/Overview.md">Middleware for Arm based processors</description>
+  <description overview="Documentation/README.md">Middleware for Arm based processors</description>
   <url>https://www.keil.com/pack/</url>
   <license>license_terms/license_agreement.txt</license>
   <licenseSets>
