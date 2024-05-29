@@ -1,0 +1,102 @@
+name: Build - Network
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '.ci/Network/**'
+      - .github/workflows/build_net.yml
+      - 'Examples/Network/**'
+      - 'Components/Network/**'
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TARGET_TYPE: CM4
+  TARGET_DEVICE: ARMCM4
+  TARGET_LAYER: $SolutionDir()$/../../.ci/Board/Board.clayer.yml
+
+jobs:
+  Build:
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [AC6, GCC]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout MDK-Middleware
+        uses: actions/checkout@v4
+        with:
+          path: ./MDK-Middleware
+
+      - name: Setup board layer
+        working-directory: ./MDK-Middleware
+        run: |
+          sed -i "s|target-types:|&\n    - type: $TARGET_TYPE\n      device: $TARGET_DEVICE\n      variables:\n      - Board-Layer: $TARGET_LAYER|" ./Examples/Network/Network.csolution.yml
+
+      - name: Cache packs
+        uses: actions/cache@v4
+        with:
+          key: cmsis-packs-${{ hashFiles('**/*.csolution.yml', '**/*.cproject.yml', '**/*.clayer.yml') }}
+          restore-keys: |
+            cmsis-packs-
+          path: /home/runner/.cache/arm/packs
+
+      - name: Prepare vcpkg env
+        uses: JonatanAntoni/actions/vcpkg@main
+        with:
+          config: ./MDK-Middleware/.ci/vcpkg-configuration.json
+
+      - name: Initialize CMSIS pack root folder
+        run: |
+          cpackget init https://www.keil.com/pack/index.pidx
+          cpackget update-index
+
+      - name: Use local MDK-Middleware pack
+        working-directory: ./MDK-Middleware/
+        run: |
+          cpackget rm Keil.MDK-Middleware || true
+          cpackget add ./Keil.MDK-Middleware.pdsc
+
+      - name: Activate Arm tool license
+        run: |
+          armlm activate --server https://mdk-preview.keil.arm.com --product KEMDK-COM0
+
+      - uses: ammaraskar/gcc-problem-matcher@master
+
+      - name: Build Network sources
+        working-directory: ./MDK-Middleware
+        run: |
+          cbuild ./.ci/Library.csolution.yml --packs --update-rte --context Network --toolchain ${{ matrix.compiler }} 2>&1 | tee build_${{ matrix.compiler }}.log || true
+      - name: Build Network examples
+        working-directory: ./MDK-Middleware/
+        run: |
+          cbuild ./Examples/Network/Network.csolution.yml --packs --update-rte --toolchain ${{ matrix.compiler }} 2>&1 | tee -a build_${{ matrix.compiler }}.log || true
+
+      - name: Create build summary
+        working-directory: ./MDK-Middleware
+        run: |
+          # Parse build log:
+          # 1. keep only lines that contain text:
+          #    - "Building context:" or
+          #    - "error csolution:" or
+          #    - "error cbuild: error building" or
+          #    - "error cbuild: exit status" or
+          #    - "cbuild: build finished"
+          # 2. replace all lines that contain text "error cbuild" with word "ERROR"
+          # 3. replace all lines that contain text "successfully" with word "OK"
+          # 4. to all lines that contain text "info", append the next line
+          sed -n '/Building context:\|error csolution:\|error cbuild: error building\|error cbuild: exit status\|cbuild: build finished/p' build_${{ matrix.compiler }}.log | sed '/error cbuild/s/.*/ERROR/' | sed '/successfully/s/.*/OK/' | sed '/info/ {N;s/\n/ /}' 2>&1 | tee summary_${{ matrix.compiler }}.log
+
+          # Return error if text "ERROR" is found in the summary
+          awk '/ERROR/{print "Build FAILED."; exit 1}' summary_${{ matrix.compiler }}.log
+
+      - name: Deactivate Arm tool license
+        if: always()
+        run: |
+          armlm deactivate --product KEMDK-COM0
