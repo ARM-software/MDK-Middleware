@@ -1832,7 +1832,7 @@
     <event id="10 + 0xCA00" level="Op"     property="T2Expired"                 value="netif=%E[val1, NetIf:id], state=%E[val2, DHCP_State:id]" info="Timer T2 expired"/>
     <event id="11 + 0xCA00" level="Error"  property="LeaseExpired"              value="netif=%E[val1, NetIf:id], state=%E[val2, DHCP_State:id]" info="Address lease time expired"/>
     <event id="12 + 0xCA00" level="Op"     property="SendDhcpMessage"           value="netif=%E[val1, NetIf:id], type=%E[val2 &amp; 0xFF, DHCP_Type:id], bcast=%t[val2 >> 16 ? &quot;Yes&quot; : &quot;No&quot;]" info="Send a DHCP message"/>
-    <event id="13 + 0xCA00" level="Op"     property="ReceiveFrame"              value="netif=%E[val1, NetIf:id], server=%I[val2], len=%d[val1, NetVal:high]" info="DHCP frame received"/>
+    <event id="13 + 0xCA00" level="Op"     property="ReceiveFrame"              value="netif=%E[val1, NetIf:id], addr=%I[val2], len=%d[val1, NetVal:high]" info="DHCP frame received"/>
     <event id="14 + 0xCA00" level="Error"  property="WrongServerPort"           value="netif=%E[val1, NetIf:id], port=%d[val2, NetVal:low] (valid=%d[val2, NetVal:high])" info="Wrong server port number received"/>
     <event id="15 + 0xCA00" level="Error"  property="FrameTooShort"             value="netif=%E[val1, NetIf:id], len=%d[val2, NetVal:low] (min=%d[val2, NetVal:high])" info="Discard, frame length too short"/>
     <event id="16 + 0xCA00" level="Error"  property="MisformedReply"            value="netif=%E[val1, NetIf:id]" info="Misformed DHCP reply received"/>
@@ -1848,7 +1848,7 @@
     <event id="26 + 0xCA00" level="Error"  property="OfferedAddressInvalid"     value="netif=%E[val1, NetIf:id], ip=%I[val2]" info="Offered IP address verification failed"/>
     <event id="27 + 0xCA00" level="Detail" property="ViewRelayAgentAddress"     value="netif=%E[val1, NetIf:id], relay=%I[val2]" info="Display IP address of relay agent"/>
     <event id="28 + 0xCA00" level="Op"     property="ViewOfferedAddress"        value="netif=%E[val1, NetIf:id], ip=%I[val2]" info="Display offered IP address"/>
-    <event id="29 + 0xCA00" level="Op"     property="ServerAddressNotSelected"  value="netif=%E[val1, NetIf:id], server=%I[val2]" info="Message from not-selected DHCP server"/>
+    <event id="29 + 0xCA00" level="Op"     property="ServerAddressNotSelected"  value="netif=%E[val1, NetIf:id], addr=%I[val2]" info="Message from not-selected DHCP server"/>
     <event id="30 + 0xCA00" level="Op"     property="AssignedAddrNotRequested"  value="netif=%E[val1, NetIf:id], ip=%I[val2]" info="Assigned IP address different from requested"/>
     <event id="31 + 0xCA00" level="Op"     property="ViewAssignedAddress"       value="netif=%E[val1, NetIf:id], ip=%I[val2]" info="Display assigned IP address"/>
     <event id="32 + 0xCA00" level="Op"     property="ViewServerId"              value="netif=%E[val1, NetIf:id], server_id=%I[val2]" info="Display server identifier (IP address)"/>

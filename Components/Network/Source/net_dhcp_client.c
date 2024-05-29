@@ -869,6 +869,10 @@ static uint32_t dhcp_listener (int32_t socket, const NET_ADDR *addr,
         EvrNetDHCP_ForwardedMessage (h->If->Id, DHCP_OFFER);
         /* giaddr, Relay agent IP address */
         net_addr4_copy (ctrl->RelayAddr, &buf[24]);
+        if (get_u32 (ctrl->RelayAddr) == 0) {
+          /* Unspecified, save IP address of the sender */
+          net_addr4_copy (ctrl->RelayAddr, addr->addr);
+        }
         DEBUG_INF2 ("RelayAgent",ctrl->RelayAddr);
         EvrNetDHCP_ViewRelayAgentAddress (h->If->Id, ctrl->RelayAddr);
       }

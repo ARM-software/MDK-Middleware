@@ -96,6 +96,7 @@ This user's guide contains the following chapters:
         - removed support for CMSIS-RTOS version 1
         - removed legacy API interface version 6
         - corrected handling of a half-closed TCP socket, data delivery added
+        - fixed DHCP client issue with relay agent causing "ServerAddressNotSelected" error
         - added function \ref netARP_AddCache to manually add an entry to the ARP cache table
         - added option for updating mbedTLS certificates at runtime
         - added IPv6 Multicasting with MLD, Multicast Listener Discovery Protocol
