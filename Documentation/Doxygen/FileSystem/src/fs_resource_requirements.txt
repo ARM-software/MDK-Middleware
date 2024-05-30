@@ -44,14 +44,10 @@ Although the File System component requires a CMSIS-RTOS to be present, it is no
 
 <b>Using CMSIS-RTOS RTX v5</b>
 
-The calling thread can no longer be \c main but can be a thread with a default stack size (dynamic memory) or a thread with
+The calling thread can be a thread with a default stack size (dynamic memory) or a thread with
 a complete stack or only stack size provided using \c osThreadAttr_t structure (static or dynamic memory).
 
-<b>Using CMSIS-RTOS RTX v4</b>
-
-For proper operation, you need to add a certain amount of thread stack size to the calling thread. This calling thread
-can be the \c main thread, a thread with a default stack size or a thread with a user provided stack size. For the additional
-required stack size, please refer to the following table:
+For the additional required stack size, please refer to the following table:
 
 <table class="doxtable" summary="Memory Requirements">
     <tr>
@@ -84,11 +80,10 @@ required stack size, please refer to the following table:
  - The stack in bytes stated is required to work with the files from top level functions like fopen, fclose, …, fdelete,
    frename and so on.
  - The drivers for the different types of drives require additional stack. This differs from device to device, but in general
-   the stack usage for MCI, NAND, and Flash should not exceed additional 100 bytes. Refer to \urlout{USB-Resource-Req} for details.
+   the stack usage for MCI, NAND, and Flash should not exceed additional 100 bytes. For USB drive, refer to \urlout{USB-Resource-Req}
+   for details.
  - If your application supports a combination of multiple drives, you need to configure your system to the the combined stack
    size for the sum of all drives. 
-   
-The thread requirements need to be reflected in the CMSIS-RTOS configuration. Refer to the \b Reference section of \urlout{CMSIS-RTOS1} for further details.
 
 For \urlout{CMSIS-RTX5}, the threads requirements are configured in the \urlout{RTX-Conf-CM5} file located
 under the \b CMSIS component class:
@@ -121,9 +116,11 @@ under the \b CMSIS component class:
 Mutex Requirements
 ------------------
 
-Additionally, you may also need to adjust the number of mutex objects required by the C stdio library. Total number of mutex
-objects required for proper operation is as follows:
- - 2 (internal stdio operations) + 3 (stdin, stdout and stderr file streams) + 1 for each active file stream
+Additionally, you may also need to adjust the memory used to allocate mutex objects required by the C stdio library.
+Depending on the toolchain used, the total number of mutex objects required for proper operation may differ, but in
+general every active file stream requires a mutex object.
+
+\note Arm Standard C Library requires the following mutexes: 2 (internal stdio operations) + 3 (stdin, stdout and stderr file streams) + 1 for each active file stream
 
 <b>Using CMSIS-RTOS RTX v5</b>
 
@@ -132,19 +129,6 @@ Memory size [bytes]). The size of dynamic memory pool must be configured so that
 above fit inside. The size of a control block for a mutex depends on the RTOS2 implementation. For RTX5 can be found in
 rtx_os.h and is equal to the size of \c osRtxMutex_t.
 
-<b>Using CMSIS-RTOS RTX v4</b>
-
-The number of mutex objects required by stdio library is configured in the \urlout{RTX-Conf-CM4} file located under the \b CMSIS component class.
-
-\note
- - This configuration option is not available from the Configuration Wizard, it must be modified manually.
- - Default setting allows three concurrent open files and must be adjusted if this is below application requirement.
- - If you have not enough mutexes available for your application, \ref fopen will end up blocking in function _mutex_initialize(), supplied by \urlout{CMSIS-RTX5}.
-
-
-| Definition (under section Standard library system mutexes) | Set value to
-| :------------------------------------------------------------| :----------------------
-| OS_MUTEXCNT                                                  | 5 + 1 for each open file
 
 \section fs_spec_mem_req Memory Requirements
 
