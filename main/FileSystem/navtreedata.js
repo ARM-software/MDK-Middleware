@@ -77,7 +77,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "emb_fs.html",
-"group__evr__fsnftl.html#ga12cda3188834efbd7107dba2af8b42ed"
+"group__evr__fsmcmci.html#ga2b8bbc21109b6bdb1ab3abfbaaeff023",
+"group__utility__routines.html#gaa8923f6394ef735392d95d966dca49cb"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
