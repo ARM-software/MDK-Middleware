@@ -25,7 +25,7 @@ The MDK-Middleware examples use the *csolution project* format of the [CMSIS-Too
 
 This development repository of the MDK-Middleware can be used in a local directory and [mapped as software pack](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-tools.md#install-a-repository) using for example `cpackget` with:
 
-    packget add <path>/Keil.MDK-Middleware.pdsc
+    cpackget add <path>/Keil.MDK-Middleware.pdsc
 
 ### Generate software pack
 
