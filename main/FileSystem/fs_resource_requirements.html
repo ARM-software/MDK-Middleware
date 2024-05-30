@@ -158,9 +158,8 @@ CMSIS-RTOS Requirements</h1>
 Thread Stack Requirements</h2>
 <p>Although the File System component requires a CMSIS-RTOS to be present, it is not creating any additional threads.</p>
 <p><b>Using CMSIS-RTOS RTX v5</b></p>
-<p>The calling thread can no longer be <code>main</code> but can be a thread with a default stack size (dynamic memory) or a thread with a complete stack or only stack size provided using <code>osThreadAttr_t</code> structure (static or dynamic memory).</p>
-<p><b>Using CMSIS-RTOS RTX v4</b></p>
-<p>For proper operation, you need to add a certain amount of thread stack size to the calling thread. This calling thread can be the <code>main</code> thread, a thread with a default stack size or a thread with a user provided stack size. For the additional required stack size, please refer to the following table:</p>
+<p>The calling thread can be a thread with a default stack size (dynamic memory) or a thread with a complete stack or only stack size provided using <code>osThreadAttr_t</code> structure (static or dynamic memory).</p>
+<p>For the additional required stack size, please refer to the following table:</p>
 <table class="doxtable" summary="Memory Requirements">
 <tr>
 <th>Drive Type </th><th align="left">Value  </th></tr>
@@ -177,11 +176,10 @@ Thread Stack Requirements</h2>
 </table>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>The stack in bytes stated is required to work with the files from top level functions like fopen, fclose, …, fdelete, frename and so on.</li>
-<li>The drivers for the different types of drives require additional stack. This differs from device to device, but in general the stack usage for MCI, NAND, and Flash should not exceed additional 100 bytes. Refer to  <script>link_ext('USB-Resource-Req');</script> for details.</li>
+<li>The drivers for the different types of drives require additional stack. This differs from device to device, but in general the stack usage for MCI, NAND, and Flash should not exceed additional 100 bytes. For USB drive, refer to  <script>link_ext('USB-Resource-Req');</script> for details.</li>
 <li>If your application supports a combination of multiple drives, you need to configure your system to the the combined stack size for the sum of all drives.</li>
 </ul>
 </dd></dl>
-<p>The thread requirements need to be reflected in the CMSIS-RTOS configuration. Refer to the <b>Reference</b> section of  <script>link_ext('CMSIS-RTOS1');</script> for further details.</p>
 <p>For  <script>link_ext('CMSIS-RTX5');</script>, the threads requirements are configured in the  <script>link_ext('RTX-Conf-CM5');</script> file located under the <b>CMSIS</b> component class:</p>
 <table class="doxtable" summary="CMSIS-RTOS Configuration">
 <tr>
@@ -199,25 +197,10 @@ Thread Stack Requirements</h2>
 </table>
 <h2><a class="anchor" id="autotoc_md20"></a>
 Mutex Requirements</h2>
-<p>Additionally, you may also need to adjust the number of mutex objects required by the C stdio library. Total number of mutex objects required for proper operation is as follows:</p><ul>
-<li>2 (internal stdio operations) + 3 (stdin, stdout and stderr file streams) + 1 for each active file stream</li>
-</ul>
+<p>Additionally, you may also need to adjust the memory used to allocate mutex objects required by the C stdio library. Depending on the toolchain used, the total number of mutex objects required for proper operation may differ, but in general every active file stream requires a mutex object.</p>
+<dl class="section note"><dt>Note</dt><dd>Arm Standard C Library requires the following mutexes: 2 (internal stdio operations) + 3 (stdin, stdout and stderr file streams) + 1 for each active file stream</dd></dl>
 <p><b>Using CMSIS-RTOS RTX v5</b></p>
 <p>Memory for mutex objects is allocated from the dynamic memory pool (RTX_Config.h - System Configuration - Global Dynamic Memory size [bytes]). The size of dynamic memory pool must be configured so that the control blocks for the mutexes mentioned above fit inside. The size of a control block for a mutex depends on the RTOS2 implementation. For RTX5 can be found in rtx_os.h and is equal to the size of <code>osRtxMutex_t</code>.</p>
-<p><b>Using CMSIS-RTOS RTX v4</b></p>
-<p>The number of mutex objects required by stdio library is configured in the  <script>link_ext('RTX-Conf-CM4');</script> file located under the <b>CMSIS</b> component class.</p>
-<dl class="section note"><dt>Note</dt><dd><ul>
-<li>This configuration option is not available from the Configuration Wizard, it must be modified manually.</li>
-<li>Default setting allows three concurrent open files and must be adjusted if this is below application requirement.</li>
-<li>If you have not enough mutexes available for your application, <a class="el" href="group__stdio__routines.html#ga76a21223ed39a2692fdfc854aab93b2c">fopen</a> will end up blocking in function _mutex_initialize(), supplied by  <script>link_ext('CMSIS-RTX5');</script>.</li>
-</ul>
-</dd></dl>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Definition (under section Standard library system mutexes)   </th><th class="markdownTableHeadLeft">Set value to    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">OS_MUTEXCNT   </td><td class="markdownTableBodyLeft">5 + 1 for each open file   </td></tr>
-</table>
 <h1><a class="anchor" id="fs_spec_mem_req"></a>
 Memory Requirements</h1>
 <p>The following table shows the memory requirements for read-only (Flash) and read-write (RAM) memory. These numbers may be used to estimate the total size requirements of the application, but the actual numbers depend on compiler optimizations and target processor and may be therefore slightly different.</p>
