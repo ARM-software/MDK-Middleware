@@ -48,7 +48,7 @@ jobs:
           path: /home/runner/.cache/arm/packs
 
       - name: Prepare vcpkg env
-        uses: JonatanAntoni/actions/vcpkg@main
+        uses: ARM-software/cmsis-actions/vcpkg@main
         with:
           config: ./MDK-Middleware/.ci/vcpkg-configuration.json
 
