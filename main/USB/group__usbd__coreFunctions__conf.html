@@ -171,6 +171,11 @@ USB Device Core Configuration File</div></div>
 </ul>
 </li>
 <li><b>Control Transfer Buffer Size</b> specifies the maximum size of control transfer.</li>
+<li><b>Data Buffers</b> specifies the relocation of the USB data buffers in memory.<ul>
+<li><b>Relocate</b> specifies if the USB data buffers are relocated to a specific memory address (via the linker script).</li>
+<li><b>Section Name</b> specifies the section name for the USB data buffers that is used by the linker script to position it in memory. Default section name is <code>.driver.usbd&lt;instance&gt;</code>, for example for USB Device 0 the default section name is <code>.driver.usbd0</code>.</li>
+</ul>
+</li>
 <li>Use the <b>OS Resources Settings</b> to optimize the usage of OS resources.<ul>
 <li>The default <b>Core Thread Stack Size </b> is <em>1024</em> bytes.</li>
 <li>The default Core Thread priority is <b>osPriorityAboveNormal</b>. This priority can be changed by changing USBD<em>n</em>_CORE_THREAD_PRIORITY define in this configuration file. This priority needs to be high enough so that USB Stack can react to USB events in a timely manner. Due to this requirement it is recommended to keep this setting at default. </li>
