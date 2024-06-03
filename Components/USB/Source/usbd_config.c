@@ -122,6 +122,8 @@
 
 #include "usbd_compatibility.h"
 
+#include "usbd_section.h"
+
 /*------------------------------------------------------------------------------
  *      USB Device Global Macros
  *----------------------------------------------------------------------------*/
@@ -1292,12 +1294,12 @@ void                       *usbd_adc_thread_id     [USBD_ADC_NUM];
 #if    (USBD_ADC0_EP_ISO_OUT_EN)
 extern 
 uint8_t usbd_adc0_out_data_buf [RUP32(USBD_ADC0_OUT_BUF_SIZE*USBD_ADC0_OUT_BSUBFRAMESIZE)];
-uint8_t usbd_adc0_out_data_buf [RUP32(USBD_ADC0_OUT_BUF_SIZE*USBD_ADC0_OUT_BSUBFRAMESIZE)] __ALIGNED(32);
+uint8_t usbd_adc0_out_data_buf [RUP32(USBD_ADC0_OUT_BUF_SIZE*USBD_ADC0_OUT_BSUBFRAMESIZE)] __ALIGNED(32) USBD_ADC0_BUF_MEM_SECTION;
 #endif
 #if    (USBD_ADC0_EP_ISO_IN_EN)
 extern 
 uint8_t usbd_adc0_in_data_buf  [USBD_ADC0_IN_BUF_SIZE*USBD_ADC0_IN_BSUBFRAMESIZE];
-uint8_t usbd_adc0_in_data_buf  [USBD_ADC0_IN_BUF_SIZE*USBD_ADC0_IN_BSUBFRAMESIZE]          __ALIGNED(4);
+uint8_t usbd_adc0_in_data_buf  [USBD_ADC0_IN_BUF_SIZE*USBD_ADC0_IN_BSUBFRAMESIZE]          __ALIGNED(4)  USBD_ADC0_BUF_MEM_SECTION;
 #endif
 #endif
 
@@ -1305,12 +1307,12 @@ uint8_t usbd_adc0_in_data_buf  [USBD_ADC0_IN_BUF_SIZE*USBD_ADC0_IN_BSUBFRAMESIZE
 #if    (USBD_ADC1_EP_ISO_OUT_EN)
 extern 
 uint8_t usbd_adc1_out_data_buf [RUP32(USBD_ADC1_OUT_BUF_SIZE*USBD_ADC1_OUT_BSUBFRAMESIZE)];
-uint8_t usbd_adc1_out_data_buf [RUP32(USBD_ADC1_OUT_BUF_SIZE*USBD_ADC1_OUT_BSUBFRAMESIZE)] __ALIGNED(32);
+uint8_t usbd_adc1_out_data_buf [RUP32(USBD_ADC1_OUT_BUF_SIZE*USBD_ADC1_OUT_BSUBFRAMESIZE)] __ALIGNED(32) USBD_ADC1_BUF_MEM_SECTION;
 #endif
 #if    (USBD_ADC1_EP_ISO_IN_EN)
 extern 
 uint8_t usbd_adc1_in_data_buf  [USBD_ADC1_IN_BUF_SIZE*USBD_ADC1_IN_BSUBFRAMESIZE];
-uint8_t usbd_adc1_in_data_buf  [USBD_ADC1_IN_BUF_SIZE*USBD_ADC1_IN_BSUBFRAMESIZE]          __ALIGNED(4);
+uint8_t usbd_adc1_in_data_buf  [USBD_ADC1_IN_BUF_SIZE*USBD_ADC1_IN_BSUBFRAMESIZE]          __ALIGNED(4)  USBD_ADC1_BUF_MEM_SECTION;
 #endif
 #endif
 
@@ -1318,12 +1320,12 @@ uint8_t usbd_adc1_in_data_buf  [USBD_ADC1_IN_BUF_SIZE*USBD_ADC1_IN_BSUBFRAMESIZE
 #if    (USBD_ADC2_EP_ISO_OUT_EN)
 extern 
 uint8_t usbd_adc2_out_data_buf [RUP32(USBD_ADC2_OUT_BUF_SIZE*USBD_ADC2_OUT_BSUBFRAMESIZE)];
-uint8_t usbd_adc2_out_data_buf [RUP32(USBD_ADC2_OUT_BUF_SIZE*USBD_ADC2_OUT_BSUBFRAMESIZE)] __ALIGNED(32);
+uint8_t usbd_adc2_out_data_buf [RUP32(USBD_ADC2_OUT_BUF_SIZE*USBD_ADC2_OUT_BSUBFRAMESIZE)] __ALIGNED(32) USBD_ADC2_BUF_MEM_SECTION;
 #endif
 #if    (USBD_ADC2_EP_ISO_IN_EN)
 extern 
 uint8_t usbd_adc2_in_data_buf  [USBD_ADC2_IN_BUF_SIZE*USBD_ADC2_IN_BSUBFRAMESIZE];
-uint8_t usbd_adc2_in_data_buf  [USBD_ADC2_IN_BUF_SIZE*USBD_ADC2_IN_BSUBFRAMESIZE]          __ALIGNED(4);
+uint8_t usbd_adc2_in_data_buf  [USBD_ADC2_IN_BUF_SIZE*USBD_ADC2_IN_BSUBFRAMESIZE]          __ALIGNED(4)  USBD_ADC2_BUF_MEM_SECTION;
 #endif
 #endif
 
@@ -1331,12 +1333,12 @@ uint8_t usbd_adc2_in_data_buf  [USBD_ADC2_IN_BUF_SIZE*USBD_ADC2_IN_BSUBFRAMESIZE
 #if    (USBD_ADC3_EP_ISO_OUT_EN)
 extern 
 uint8_t usbd_adc3_out_data_buf [RUP32(USBD_ADC3_OUT_BUF_SIZE*USBD_ADC3_OUT_BSUBFRAMESIZE)];
-uint8_t usbd_adc3_out_data_buf [RUP32(USBD_ADC3_OUT_BUF_SIZE*USBD_ADC3_OUT_BSUBFRAMESIZE)] __ALIGNED(32);
+uint8_t usbd_adc3_out_data_buf [RUP32(USBD_ADC3_OUT_BUF_SIZE*USBD_ADC3_OUT_BSUBFRAMESIZE)] __ALIGNED(32) USBD_ADC3_BUF_MEM_SECTION;
 #endif
 #if    (USBD_ADC3_EP_ISO_IN_EN)
 extern 
 uint8_t usbd_adc3_in_data_buf  [USBD_ADC3_IN_BUF_SIZE*USBD_ADC3_IN_BSUBFRAMESIZE];
-uint8_t usbd_adc3_in_data_buf  [USBD_ADC3_IN_BUF_SIZE*USBD_ADC3_IN_BSUBFRAMESIZE]          __ALIGNED(4);
+uint8_t usbd_adc3_in_data_buf  [USBD_ADC3_IN_BUF_SIZE*USBD_ADC3_IN_BSUBFRAMESIZE]          __ALIGNED(4)  USBD_ADC3_BUF_MEM_SECTION;
 #endif
 #endif
 
@@ -1702,19 +1704,19 @@ void                             *usbd_cdc_bulk_thread_id     [USBD_CDC_NUM];
 #if     USBD_CDC0_ACM
 extern 
 uint8_t usbd_cdc0_send_buf       [USBD_CDC0_ACM_SEND_BUF_SIZE];
-uint8_t usbd_cdc0_send_buf       [USBD_CDC0_ACM_SEND_BUF_SIZE]           __ALIGNED(4);
+uint8_t usbd_cdc0_send_buf       [USBD_CDC0_ACM_SEND_BUF_SIZE]           __ALIGNED(4)  USBD_CDC0_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc0_receive_buf    [USBD_CDC0_ACM_RECEIVE_BUF_SIZE];
-uint8_t usbd_cdc0_receive_buf    [USBD_CDC0_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4);
+uint8_t usbd_cdc0_receive_buf    [USBD_CDC0_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4)  USBD_CDC0_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc0_notify_buf     [10];
-uint8_t usbd_cdc0_notify_buf     [10]                                    __ALIGNED(4);
+uint8_t usbd_cdc0_notify_buf     [10]                                    __ALIGNED(4)  USBD_CDC0_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc0_send_mps_buf   [USBD_CDC0_MAX_PACKET1];
-uint8_t usbd_cdc0_send_mps_buf   [USBD_CDC0_MAX_PACKET1]                 __ALIGNED(4);
+uint8_t usbd_cdc0_send_mps_buf   [USBD_CDC0_MAX_PACKET1]                 __ALIGNED(4)  USBD_CDC0_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc0_receive_mps_buf[RUP32(USBD_CDC0_MAX_PACKET1)];
-uint8_t usbd_cdc0_receive_mps_buf[RUP32(USBD_CDC0_MAX_PACKET1)]          __ALIGNED(32);
+uint8_t usbd_cdc0_receive_mps_buf[RUP32(USBD_CDC0_MAX_PACKET1)]          __ALIGNED(32) USBD_CDC0_BUF_MEM_SECTION;
 #elif   USBD_CDC0_NCM
 #if    (USBD_CDC0_NCM_RAW_ENABLE == 0)
 #if    (USBD_CDC0_NCM_NTB_IN_BUF_CNT == 0)
@@ -1731,17 +1733,17 @@ uint8_t usbd_cdc0_receive_mps_buf[RUP32(USBD_CDC0_MAX_PACKET1)]          __ALIGN
 #define USBD_CDC0_NCM_NTB_OUT_BUF_SIZE   (USBD_CDC0_NCM_NTB_OUT_BUF_CNT*USBD_CDC0_NCM_DW_NTB_OUT_MAX_SIZE)
 extern 
 uint8_t usbd_cdc0_send_buf       [USBD_CDC0_NCM_NTB_IN_BUF_SIZE];
-uint8_t usbd_cdc0_send_buf       [USBD_CDC0_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4);
+uint8_t usbd_cdc0_send_buf       [USBD_CDC0_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4)  USBD_CDC0_BUF_MEM_SECTION;
 extern
 uint8_t usbd_cdc0_receive_buf    [RUP32(USBD_CDC0_NCM_NTB_OUT_BUF_SIZE)];
-uint8_t usbd_cdc0_receive_buf    [RUP32(USBD_CDC0_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32);
+uint8_t usbd_cdc0_receive_buf    [RUP32(USBD_CDC0_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32) USBD_CDC0_BUF_MEM_SECTION;
 #else
 #define USBD_CDC0_NCM_NTB_IN_BUF_SIZE    (0)
 #define USBD_CDC0_NCM_NTB_OUT_BUF_SIZE   (0)
 #endif
 extern 
 uint8_t usbd_cdc0_notify_buf     [16];
-uint8_t usbd_cdc0_notify_buf     [16]                                    __ALIGNED(4);
+uint8_t usbd_cdc0_notify_buf     [16]                                    __ALIGNED(4)  USBD_CDC0_BUF_MEM_SECTION;
 #endif
 #endif
 
@@ -1749,19 +1751,19 @@ uint8_t usbd_cdc0_notify_buf     [16]                                    __ALIGN
 #if     USBD_CDC1_ACM
 extern 
 uint8_t usbd_cdc1_send_buf       [USBD_CDC1_ACM_SEND_BUF_SIZE];
-uint8_t usbd_cdc1_send_buf       [USBD_CDC1_ACM_SEND_BUF_SIZE]           __ALIGNED(4);
+uint8_t usbd_cdc1_send_buf       [USBD_CDC1_ACM_SEND_BUF_SIZE]           __ALIGNED(4)  USBD_CDC1_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc1_receive_buf    [USBD_CDC1_ACM_RECEIVE_BUF_SIZE];
-uint8_t usbd_cdc1_receive_buf    [USBD_CDC1_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4);
+uint8_t usbd_cdc1_receive_buf    [USBD_CDC1_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4)  USBD_CDC1_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc1_notify_buf     [10];
-uint8_t usbd_cdc1_notify_buf     [10]                                    __ALIGNED(4);
+uint8_t usbd_cdc1_notify_buf     [10]                                    __ALIGNED(4)  USBD_CDC1_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc1_send_mps_buf   [USBD_CDC1_MAX_PACKET1];
-uint8_t usbd_cdc1_send_mps_buf   [USBD_CDC1_MAX_PACKET1]                 __ALIGNED(4);
+uint8_t usbd_cdc1_send_mps_buf   [USBD_CDC1_MAX_PACKET1]                 __ALIGNED(4)  USBD_CDC1_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc1_receive_mps_buf[RUP32(USBD_CDC1_MAX_PACKET1)];
-uint8_t usbd_cdc1_receive_mps_buf[RUP32(USBD_CDC1_MAX_PACKET1)]          __ALIGNED(32);
+uint8_t usbd_cdc1_receive_mps_buf[RUP32(USBD_CDC1_MAX_PACKET1)]          __ALIGNED(32) USBD_CDC1_BUF_MEM_SECTION;
 #elif   USBD_CDC1_NCM
 #if    (USBD_CDC1_NCM_RAW_ENABLE == 0)
 #if    (USBD_CDC1_NCM_NTB_IN_BUF_CNT == 0)
@@ -1778,17 +1780,17 @@ uint8_t usbd_cdc1_receive_mps_buf[RUP32(USBD_CDC1_MAX_PACKET1)]          __ALIGN
 #define USBD_CDC1_NCM_NTB_OUT_BUF_SIZE   (USBD_CDC1_NCM_NTB_OUT_BUF_CNT*USBD_CDC1_NCM_DW_NTB_OUT_MAX_SIZE)
 extern 
 uint8_t usbd_cdc1_send_buf       [USBD_CDC1_NCM_NTB_IN_BUF_SIZE];
-uint8_t usbd_cdc1_send_buf       [USBD_CDC1_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4);
+uint8_t usbd_cdc1_send_buf       [USBD_CDC1_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4)  USBD_CDC1_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc1_receive_buf    [RUP32(USBD_CDC1_NCM_NTB_OUT_BUF_SIZE)];
-uint8_t usbd_cdc1_receive_buf    [RUP32(USBD_CDC1_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32);
+uint8_t usbd_cdc1_receive_buf    [RUP32(USBD_CDC1_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32) USBD_CDC1_BUF_MEM_SECTION;
 #else
 #define USBD_CDC1_NCM_NTB_IN_BUF_SIZE    (0)
 #define USBD_CDC1_NCM_NTB_OUT_BUF_SIZE   (0)
 #endif
 extern 
 uint8_t usbd_cdc1_notify_buf     [16];
-uint8_t usbd_cdc1_notify_buf     [16]                                    __ALIGNED(4);
+uint8_t usbd_cdc1_notify_buf     [16]                                    __ALIGNED(4)  USBD_CDC1_BUF_MEM_SECTION;
 #endif
 #endif
 
@@ -1796,19 +1798,19 @@ uint8_t usbd_cdc1_notify_buf     [16]                                    __ALIGN
 #if     USBD_CDC2_ACM
 extern 
 uint8_t usbd_cdc2_send_buf       [USBD_CDC2_ACM_SEND_BUF_SIZE];
-uint8_t usbd_cdc2_send_buf       [USBD_CDC2_ACM_SEND_BUF_SIZE]           __ALIGNED(4);
+uint8_t usbd_cdc2_send_buf       [USBD_CDC2_ACM_SEND_BUF_SIZE]           __ALIGNED(4)  USBD_CDC2_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc2_receive_buf    [USBD_CDC2_ACM_RECEIVE_BUF_SIZE];
-uint8_t usbd_cdc2_receive_buf    [USBD_CDC2_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4);
+uint8_t usbd_cdc2_receive_buf    [USBD_CDC2_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4)  USBD_CDC2_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc2_notify_buf     [10];
-uint8_t usbd_cdc2_notify_buf     [10]                                    __ALIGNED(4);
+uint8_t usbd_cdc2_notify_buf     [10]                                    __ALIGNED(4)  USBD_CDC2_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc2_send_mps_buf   [USBD_CDC2_MAX_PACKET1];
-uint8_t usbd_cdc2_send_mps_buf   [USBD_CDC2_MAX_PACKET1]                 __ALIGNED(4);
+uint8_t usbd_cdc2_send_mps_buf   [USBD_CDC2_MAX_PACKET1]                 __ALIGNED(4)  USBD_CDC2_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc2_receive_mps_buf[RUP32(USBD_CDC2_MAX_PACKET1)];
-uint8_t usbd_cdc2_receive_mps_buf[RUP32(USBD_CDC2_MAX_PACKET1)]          __ALIGNED(32);
+uint8_t usbd_cdc2_receive_mps_buf[RUP32(USBD_CDC2_MAX_PACKET1)]          __ALIGNED(32) USBD_CDC2_BUF_MEM_SECTION;
 #elif   USBD_CDC2_NCM
 #if    (USBD_CDC2_NCM_RAW_ENABLE == 0)
 #if    (USBD_CDC2_NCM_NTB_IN_BUF_CNT == 0)
@@ -1825,17 +1827,17 @@ uint8_t usbd_cdc2_receive_mps_buf[RUP32(USBD_CDC2_MAX_PACKET1)]          __ALIGN
 #define USBD_CDC2_NCM_NTB_OUT_BUF_SIZE   (USBD_CDC2_NCM_NTB_OUT_BUF_CNT*USBD_CDC2_NCM_DW_NTB_OUT_MAX_SIZE)
 extern 
 uint8_t usbd_cdc2_send_buf       [USBD_CDC2_NCM_NTB_IN_BUF_SIZE];
-uint8_t usbd_cdc2_send_buf       [USBD_CDC2_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4);
+uint8_t usbd_cdc2_send_buf       [USBD_CDC2_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4)  USBD_CDC2_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc2_receive_buf    [RUP32(USBD_CDC2_NCM_NTB_OUT_BUF_SIZE)];
-uint8_t usbd_cdc2_receive_buf    [RUP32(USBD_CDC2_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32);
+uint8_t usbd_cdc2_receive_buf    [RUP32(USBD_CDC2_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32) USBD_CDC2_BUF_MEM_SECTION;
 #else
 #define USBD_CDC2_NCM_NTB_IN_BUF_SIZE    (0)
 #define USBD_CDC2_NCM_NTB_OUT_BUF_SIZE   (0)
 #endif
 extern 
 uint8_t usbd_cdc2_notify_buf     [16];
-uint8_t usbd_cdc2_notify_buf     [16]                                    __ALIGNED(4);
+uint8_t usbd_cdc2_notify_buf     [16]                                    __ALIGNED(4)  USBD_CDC2_BUF_MEM_SECTION;
 #endif
 #endif
 
@@ -1843,19 +1845,19 @@ uint8_t usbd_cdc2_notify_buf     [16]                                    __ALIGN
 #if     USBD_CDC3_ACM
 extern 
 uint8_t usbd_cdc3_send_buf       [USBD_CDC3_ACM_SEND_BUF_SIZE];
-uint8_t usbd_cdc3_send_buf       [USBD_CDC3_ACM_SEND_BUF_SIZE]           __ALIGNED(4);
+uint8_t usbd_cdc3_send_buf       [USBD_CDC3_ACM_SEND_BUF_SIZE]           __ALIGNED(4)  USBD_CDC3_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc3_receive_buf    [USBD_CDC3_ACM_RECEIVE_BUF_SIZE];
-uint8_t usbd_cdc3_receive_buf    [USBD_CDC3_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4);
+uint8_t usbd_cdc3_receive_buf    [USBD_CDC3_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4)  USBD_CDC3_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc3_notify_buf     [10];
-uint8_t usbd_cdc3_notify_buf     [10]                                    __ALIGNED(4);
+uint8_t usbd_cdc3_notify_buf     [10]                                    __ALIGNED(4)  USBD_CDC3_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc3_send_mps_buf   [USBD_CDC3_MAX_PACKET1];
-uint8_t usbd_cdc3_send_mps_buf   [USBD_CDC3_MAX_PACKET1]                 __ALIGNED(4);
+uint8_t usbd_cdc3_send_mps_buf   [USBD_CDC3_MAX_PACKET1]                 __ALIGNED(4)  USBD_CDC3_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc3_receive_mps_buf[RUP32(USBD_CDC3_MAX_PACKET1)];
-uint8_t usbd_cdc3_receive_mps_buf[RUP32(USBD_CDC3_MAX_PACKET1)]          __ALIGNED(32);
+uint8_t usbd_cdc3_receive_mps_buf[RUP32(USBD_CDC3_MAX_PACKET1)]          __ALIGNED(32) USBD_CDC3_BUF_MEM_SECTION;
 #elif   USBD_CDC3_NCM
 #if    (USBD_CDC3_NCM_RAW_ENABLE == 0)
 #if    (USBD_CDC3_NCM_NTB_IN_BUF_CNT == 0)
@@ -1872,17 +1874,17 @@ uint8_t usbd_cdc3_receive_mps_buf[RUP32(USBD_CDC3_MAX_PACKET1)]          __ALIGN
 #define USBD_CDC3_NCM_NTB_OUT_BUF_SIZE   (USBD_CDC3_NCM_NTB_OUT_BUF_CNT*USBD_CDC3_NCM_DW_NTB_OUT_MAX_SIZE)
 extern 
 uint8_t usbd_cdc3_send_buf       [USBD_CDC3_NCM_NTB_IN_BUF_SIZE];
-uint8_t usbd_cdc3_send_buf       [USBD_CDC3_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4);
+uint8_t usbd_cdc3_send_buf       [USBD_CDC3_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4)  USBD_CDC3_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc3_receive_buf    [RUP32(USBD_CDC3_NCM_NTB_OUT_BUF_SIZE)];
-uint8_t usbd_cdc3_receive_buf    [RUP32(USBD_CDC3_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32);
+uint8_t usbd_cdc3_receive_buf    [RUP32(USBD_CDC3_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32) USBD_CDC3_BUF_MEM_SECTION;
 #else
 #define USBD_CDC3_NCM_NTB_IN_BUF_SIZE    (0)
 #define USBD_CDC3_NCM_NTB_OUT_BUF_SIZE   (0)
 #endif
 extern 
 uint8_t usbd_cdc3_notify_buf     [16];
-uint8_t usbd_cdc3_notify_buf     [16]                                    __ALIGNED(4);
+uint8_t usbd_cdc3_notify_buf     [16]                                    __ALIGNED(4)  USBD_CDC3_BUF_MEM_SECTION;
 #endif
 #endif
 
@@ -1890,19 +1892,19 @@ uint8_t usbd_cdc3_notify_buf     [16]                                    __ALIGN
 #if     USBD_CDC4_ACM
 extern 
 uint8_t usbd_cdc4_send_buf       [USBD_CDC4_ACM_SEND_BUF_SIZE];
-uint8_t usbd_cdc4_send_buf       [USBD_CDC4_ACM_SEND_BUF_SIZE]           __ALIGNED(4);
+uint8_t usbd_cdc4_send_buf       [USBD_CDC4_ACM_SEND_BUF_SIZE]           __ALIGNED(4)  USBD_CDC4_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc4_receive_buf    [USBD_CDC4_ACM_RECEIVE_BUF_SIZE];
-uint8_t usbd_cdc4_receive_buf    [USBD_CDC4_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4);
+uint8_t usbd_cdc4_receive_buf    [USBD_CDC4_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4)  USBD_CDC4_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc4_notify_buf     [10];
-uint8_t usbd_cdc4_notify_buf     [10]                                    __ALIGNED(4);
+uint8_t usbd_cdc4_notify_buf     [10]                                    __ALIGNED(4)  USBD_CDC4_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc4_send_mps_buf   [USBD_CDC4_MAX_PACKET1];
-uint8_t usbd_cdc4_send_mps_buf   [USBD_CDC4_MAX_PACKET1]                 __ALIGNED(4);
+uint8_t usbd_cdc4_send_mps_buf   [USBD_CDC4_MAX_PACKET1]                 __ALIGNED(4)  USBD_CDC4_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc4_receive_mps_buf[RUP32(USBD_CDC4_MAX_PACKET1)];
-uint8_t usbd_cdc4_receive_mps_buf[RUP32(USBD_CDC4_MAX_PACKET1)]          __ALIGNED(32);
+uint8_t usbd_cdc4_receive_mps_buf[RUP32(USBD_CDC4_MAX_PACKET1)]          __ALIGNED(32) USBD_CDC4_BUF_MEM_SECTION;
 #elif   USBD_CDC4_NCM
 #if    (USBD_CDC4_NCM_RAW_ENABLE == 0)
 #if    (USBD_CDC4_NCM_NTB_IN_BUF_CNT == 0)
@@ -1919,17 +1921,17 @@ uint8_t usbd_cdc4_receive_mps_buf[RUP32(USBD_CDC4_MAX_PACKET1)]          __ALIGN
 #define USBD_CDC4_NCM_NTB_OUT_BUF_SIZE   (USBD_CDC4_NCM_NTB_OUT_BUF_CNT*USBD_CDC4_NCM_DW_NTB_OUT_MAX_SIZE)
 extern 
 uint8_t usbd_cdc4_send_buf       [USBD_CDC4_NCM_NTB_IN_BUF_SIZE];
-uint8_t usbd_cdc4_send_buf       [USBD_CDC4_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4);
+uint8_t usbd_cdc4_send_buf       [USBD_CDC4_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4)  USBD_CDC4_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc4_receive_buf    [RUP32(USBD_CDC4_NCM_NTB_OUT_BUF_SIZE)];
-uint8_t usbd_cdc4_receive_buf    [RUP32(USBD_CDC4_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32);
+uint8_t usbd_cdc4_receive_buf    [RUP32(USBD_CDC4_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32) USBD_CDC4_BUF_MEM_SECTION;
 #else
 #define USBD_CDC4_NCM_NTB_IN_BUF_SIZE    (0)
 #define USBD_CDC4_NCM_NTB_OUT_BUF_SIZE   (0)
 #endif
 extern 
 uint8_t usbd_cdc4_notify_buf     [16];
-uint8_t usbd_cdc4_notify_buf     [16]                                    __ALIGNED(4);
+uint8_t usbd_cdc4_notify_buf     [16]                                    __ALIGNED(4)  USBD_CDC4_BUF_MEM_SECTION;
 #endif
 #endif
 
@@ -1937,19 +1939,19 @@ uint8_t usbd_cdc4_notify_buf     [16]                                    __ALIGN
 #if     USBD_CDC5_ACM
 extern 
 uint8_t usbd_cdc5_send_buf       [USBD_CDC5_ACM_SEND_BUF_SIZE];
-uint8_t usbd_cdc5_send_buf       [USBD_CDC5_ACM_SEND_BUF_SIZE]           __ALIGNED(4);
+uint8_t usbd_cdc5_send_buf       [USBD_CDC5_ACM_SEND_BUF_SIZE]           __ALIGNED(4)  USBD_CDC5_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc5_receive_buf    [USBD_CDC5_ACM_RECEIVE_BUF_SIZE];
-uint8_t usbd_cdc5_receive_buf    [USBD_CDC5_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4);
+uint8_t usbd_cdc5_receive_buf    [USBD_CDC5_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4)  USBD_CDC5_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc5_notify_buf     [10];
-uint8_t usbd_cdc5_notify_buf     [10]                                    __ALIGNED(4);
+uint8_t usbd_cdc5_notify_buf     [10]                                    __ALIGNED(4)  USBD_CDC5_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc5_send_mps_buf   [USBD_CDC5_MAX_PACKET1];
-uint8_t usbd_cdc5_send_mps_buf   [USBD_CDC5_MAX_PACKET1]                 __ALIGNED(4);
+uint8_t usbd_cdc5_send_mps_buf   [USBD_CDC5_MAX_PACKET1]                 __ALIGNED(4)  USBD_CDC5_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc5_receive_mps_buf[RUP32(USBD_CDC5_MAX_PACKET1)];
-uint8_t usbd_cdc5_receive_mps_buf[RUP32(USBD_CDC5_MAX_PACKET1)]          __ALIGNED(32);
+uint8_t usbd_cdc5_receive_mps_buf[RUP32(USBD_CDC5_MAX_PACKET1)]          __ALIGNED(32) USBD_CDC5_BUF_MEM_SECTION;
 #elif   USBD_CDC5_NCM
 #if    (USBD_CDC5_NCM_RAW_ENABLE == 0)
 #if    (USBD_CDC5_NCM_NTB_IN_BUF_CNT == 0)
@@ -1966,17 +1968,17 @@ uint8_t usbd_cdc5_receive_mps_buf[RUP32(USBD_CDC5_MAX_PACKET1)]          __ALIGN
 #define USBD_CDC5_NCM_NTB_OUT_BUF_SIZE   (USBD_CDC5_NCM_NTB_OUT_BUF_CNT*USBD_CDC5_NCM_DW_NTB_OUT_MAX_SIZE)
 extern 
 uint8_t usbd_cdc5_send_buf       [USBD_CDC5_NCM_NTB_IN_BUF_SIZE];
-uint8_t usbd_cdc5_send_buf       [USBD_CDC5_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4);
+uint8_t usbd_cdc5_send_buf       [USBD_CDC5_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4)  USBD_CDC5_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc5_receive_buf    [RUP32(USBD_CDC5_NCM_NTB_OUT_BUF_SIZE)];
-uint8_t usbd_cdc5_receive_buf    [RUP32(USBD_CDC5_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32);
+uint8_t usbd_cdc5_receive_buf    [RUP32(USBD_CDC5_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32) USBD_CDC5_BUF_MEM_SECTION;
 #else
 #define USBD_CDC5_NCM_NTB_IN_BUF_SIZE    (0)
 #define USBD_CDC5_NCM_NTB_OUT_BUF_SIZE   (0)
 #endif
 extern 
 uint8_t usbd_cdc5_notify_buf     [16];
-uint8_t usbd_cdc5_notify_buf     [16]                                    __ALIGNED(4);
+uint8_t usbd_cdc5_notify_buf     [16]                                    __ALIGNED(4)  USBD_CDC5_BUF_MEM_SECTION;
 #endif
 #endif
 
@@ -1984,19 +1986,19 @@ uint8_t usbd_cdc5_notify_buf     [16]                                    __ALIGN
 #if     USBD_CDC6_ACM
 extern 
 uint8_t usbd_cdc6_send_buf       [USBD_CDC6_ACM_SEND_BUF_SIZE];
-uint8_t usbd_cdc6_send_buf       [USBD_CDC6_ACM_SEND_BUF_SIZE]           __ALIGNED(4);
+uint8_t usbd_cdc6_send_buf       [USBD_CDC6_ACM_SEND_BUF_SIZE]           __ALIGNED(4)  USBD_CDC6_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc6_receive_buf    [USBD_CDC6_ACM_RECEIVE_BUF_SIZE];
-uint8_t usbd_cdc6_receive_buf    [USBD_CDC6_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4);
+uint8_t usbd_cdc6_receive_buf    [USBD_CDC6_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4)  USBD_CDC6_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc6_notify_buf     [10];
-uint8_t usbd_cdc6_notify_buf     [10]                                    __ALIGNED(4);
+uint8_t usbd_cdc6_notify_buf     [10]                                    __ALIGNED(4)  USBD_CDC6_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc6_send_mps_buf   [USBD_CDC6_MAX_PACKET1];
-uint8_t usbd_cdc6_send_mps_buf   [USBD_CDC6_MAX_PACKET1]                 __ALIGNED(4);
+uint8_t usbd_cdc6_send_mps_buf   [USBD_CDC6_MAX_PACKET1]                 __ALIGNED(4)  USBD_CDC6_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc6_receive_mps_buf[RUP32(USBD_CDC6_MAX_PACKET1)];
-uint8_t usbd_cdc6_receive_mps_buf[RUP32(USBD_CDC6_MAX_PACKET1)]          __ALIGNED(32);
+uint8_t usbd_cdc6_receive_mps_buf[RUP32(USBD_CDC6_MAX_PACKET1)]          __ALIGNED(32) USBD_CDC6_BUF_MEM_SECTION;
 #elif   USBD_CDC6_NCM
 #if    (USBD_CDC6_NCM_RAW_ENABLE == 0)
 #if    (USBD_CDC6_NCM_NTB_IN_BUF_CNT == 0)
@@ -2013,17 +2015,17 @@ uint8_t usbd_cdc6_receive_mps_buf[RUP32(USBD_CDC6_MAX_PACKET1)]          __ALIGN
 #define USBD_CDC6_NCM_NTB_OUT_BUF_SIZE   (USBD_CDC6_NCM_NTB_OUT_BUF_CNT*USBD_CDC6_NCM_DW_NTB_OUT_MAX_SIZE)
 extern 
 uint8_t usbd_cdc6_send_buf       [USBD_CDC6_NCM_NTB_IN_BUF_SIZE];
-uint8_t usbd_cdc6_send_buf       [USBD_CDC6_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4);
+uint8_t usbd_cdc6_send_buf       [USBD_CDC6_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4)  USBD_CDC6_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc6_receive_buf    [RUP32(USBD_CDC6_NCM_NTB_OUT_BUF_SIZE)];
-uint8_t usbd_cdc6_receive_buf    [RUP32(USBD_CDC6_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32);
+uint8_t usbd_cdc6_receive_buf    [RUP32(USBD_CDC6_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32) USBD_CDC6_BUF_MEM_SECTION;
 #else
 #define USBD_CDC6_NCM_NTB_IN_BUF_SIZE    (0)
 #define USBD_CDC6_NCM_NTB_OUT_BUF_SIZE   (0)
 #endif
 extern 
 uint8_t usbd_cdc6_notify_buf     [16];
-uint8_t usbd_cdc6_notify_buf     [16]                                    __ALIGNED(4);
+uint8_t usbd_cdc6_notify_buf     [16]                                    __ALIGNED(4)  USBD_CDC6_BUF_MEM_SECTION;
 #endif
 #endif
 
@@ -2031,19 +2033,19 @@ uint8_t usbd_cdc6_notify_buf     [16]                                    __ALIGN
 #if     USBD_CDC7_ACM
 extern 
 uint8_t usbd_cdc7_send_buf       [USBD_CDC7_ACM_SEND_BUF_SIZE];
-uint8_t usbd_cdc7_send_buf       [USBD_CDC7_ACM_SEND_BUF_SIZE]           __ALIGNED(4);
+uint8_t usbd_cdc7_send_buf       [USBD_CDC7_ACM_SEND_BUF_SIZE]           __ALIGNED(4)  USBD_CDC7_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc7_receive_buf    [USBD_CDC7_ACM_RECEIVE_BUF_SIZE];
-uint8_t usbd_cdc7_receive_buf    [USBD_CDC7_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4);
+uint8_t usbd_cdc7_receive_buf    [USBD_CDC7_ACM_RECEIVE_BUF_SIZE]        __ALIGNED(4)  USBD_CDC7_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc7_notify_buf     [10];
-uint8_t usbd_cdc7_notify_buf     [10]                                    __ALIGNED(4);
+uint8_t usbd_cdc7_notify_buf     [10]                                    __ALIGNED(4)  USBD_CDC7_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc7_send_mps_buf   [USBD_CDC7_MAX_PACKET1];
-uint8_t usbd_cdc7_send_mps_buf   [USBD_CDC7_MAX_PACKET1]                 __ALIGNED(4);
+uint8_t usbd_cdc7_send_mps_buf   [USBD_CDC7_MAX_PACKET1]                 __ALIGNED(4)  USBD_CDC7_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc7_receive_mps_buf[RUP32(USBD_CDC7_MAX_PACKET1)];
-uint8_t usbd_cdc7_receive_mps_buf[RUP32(USBD_CDC7_MAX_PACKET1)]          __ALIGNED(32);
+uint8_t usbd_cdc7_receive_mps_buf[RUP32(USBD_CDC7_MAX_PACKET1)]          __ALIGNED(32) USBD_CDC7_BUF_MEM_SECTION;
 #elif   USBD_CDC7_NCM
 #if    (USBD_CDC7_NCM_RAW_ENABLE == 0)
 #if    (USBD_CDC7_NCM_NTB_IN_BUF_CNT == 0)
@@ -2060,17 +2062,17 @@ uint8_t usbd_cdc7_receive_mps_buf[RUP32(USBD_CDC7_MAX_PACKET1)]          __ALIGN
 #define USBD_CDC7_NCM_NTB_OUT_BUF_SIZE   (USBD_CDC7_NCM_NTB_OUT_BUF_CNT*USBD_CDC7_NCM_DW_NTB_OUT_MAX_SIZE)
 extern 
 uint8_t usbd_cdc7_send_buf       [USBD_CDC7_NCM_NTB_IN_BUF_SIZE];
-uint8_t usbd_cdc7_send_buf       [USBD_CDC7_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4);
+uint8_t usbd_cdc7_send_buf       [USBD_CDC7_NCM_NTB_IN_BUF_SIZE]         __ALIGNED(4)  USBD_CDC7_BUF_MEM_SECTION;
 extern 
 uint8_t usbd_cdc7_receive_buf    [RUP32(USBD_CDC7_NCM_NTB_OUT_BUF_SIZE)];
-uint8_t usbd_cdc7_receive_buf    [RUP32(USBD_CDC7_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32);
+uint8_t usbd_cdc7_receive_buf    [RUP32(USBD_CDC7_NCM_NTB_OUT_BUF_SIZE)] __ALIGNED(32) USBD_CDC7_BUF_MEM_SECTION;
 #else
 #define USBD_CDC7_NCM_NTB_IN_BUF_SIZE    (0)
 #define USBD_CDC7_NCM_NTB_OUT_BUF_SIZE   (0)
 #endif
 extern 
 uint8_t usbd_cdc7_notify_buf     [16];
-uint8_t usbd_cdc7_notify_buf     [16]                                    __ALIGNED(4);
+uint8_t usbd_cdc7_notify_buf     [16]                                    __ALIGNED(4)  USBD_CDC7_BUF_MEM_SECTION;
 #endif
 #endif
 
@@ -2738,13 +2740,13 @@ uint8_t  usbd_hid0_idle_set   [USBD_HID0_IN_REPORT_NUM];
 uint8_t  usbd_hid0_idle_set   [USBD_HID0_IN_REPORT_NUM];
 extern 
 uint8_t  usbd_hid0_in_report  [USBD_HID0_IN_REPORT_MAX_SZ  +(USBD_HID0_IN_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid0_in_report  [USBD_HID0_IN_REPORT_MAX_SZ  +(USBD_HID0_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4);
+uint8_t  usbd_hid0_in_report  [USBD_HID0_IN_REPORT_MAX_SZ  +(USBD_HID0_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4)  USBD_HID0_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid0_out_report [RUP32(USBD_HID0_OUT_REPORT_MAX_SZ +(USBD_HID0_OUT_REPORT_MAX_SZ>1))];
-uint8_t  usbd_hid0_out_report [RUP32(USBD_HID0_OUT_REPORT_MAX_SZ +(USBD_HID0_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32);
+uint8_t  usbd_hid0_out_report [RUP32(USBD_HID0_OUT_REPORT_MAX_SZ +(USBD_HID0_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32) USBD_HID0_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid0_feat_report[USBD_HID0_FEAT_REPORT_MAX_SZ+(USBD_HID0_FEAT_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid0_feat_report[USBD_HID0_FEAT_REPORT_MAX_SZ+(USBD_HID0_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4);
+uint8_t  usbd_hid0_feat_report[USBD_HID0_FEAT_REPORT_MAX_SZ+(USBD_HID0_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4)  USBD_HID0_BUF_MEM_SECTION;
 #endif
 
 #ifdef  RTE_USB_Device_HID_1
@@ -2759,13 +2761,13 @@ uint8_t  usbd_hid1_idle_set   [USBD_HID1_IN_REPORT_NUM];
 uint8_t  usbd_hid1_idle_set   [USBD_HID1_IN_REPORT_NUM];
 extern 
 uint8_t  usbd_hid1_in_report  [USBD_HID1_IN_REPORT_MAX_SZ  +(USBD_HID1_IN_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid1_in_report  [USBD_HID1_IN_REPORT_MAX_SZ  +(USBD_HID1_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4);
+uint8_t  usbd_hid1_in_report  [USBD_HID1_IN_REPORT_MAX_SZ  +(USBD_HID1_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4)  USBD_HID1_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid1_out_report [RUP32(USBD_HID1_OUT_REPORT_MAX_SZ +(USBD_HID1_OUT_REPORT_MAX_SZ>1))];
-uint8_t  usbd_hid1_out_report [RUP32(USBD_HID1_OUT_REPORT_MAX_SZ +(USBD_HID1_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32);
+uint8_t  usbd_hid1_out_report [RUP32(USBD_HID1_OUT_REPORT_MAX_SZ +(USBD_HID1_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32) USBD_HID1_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid1_feat_report[USBD_HID1_FEAT_REPORT_MAX_SZ+(USBD_HID1_FEAT_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid1_feat_report[USBD_HID1_FEAT_REPORT_MAX_SZ+(USBD_HID1_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4);
+uint8_t  usbd_hid1_feat_report[USBD_HID1_FEAT_REPORT_MAX_SZ+(USBD_HID1_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4)  USBD_HID1_BUF_MEM_SECTION;
 #endif
 
 #ifdef  RTE_USB_Device_HID_2
@@ -2780,13 +2782,13 @@ uint8_t  usbd_hid2_idle_set   [USBD_HID2_IN_REPORT_NUM];
 uint8_t  usbd_hid2_idle_set   [USBD_HID2_IN_REPORT_NUM];
 extern 
 uint8_t  usbd_hid2_in_report  [USBD_HID2_IN_REPORT_MAX_SZ  +(USBD_HID2_IN_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid2_in_report  [USBD_HID2_IN_REPORT_MAX_SZ  +(USBD_HID2_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4);
+uint8_t  usbd_hid2_in_report  [USBD_HID2_IN_REPORT_MAX_SZ  +(USBD_HID2_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4)  USBD_HID2_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid2_out_report [RUP32(USBD_HID2_OUT_REPORT_MAX_SZ +(USBD_HID2_OUT_REPORT_MAX_SZ>1))];
-uint8_t  usbd_hid2_out_report [RUP32(USBD_HID2_OUT_REPORT_MAX_SZ +(USBD_HID2_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32);
+uint8_t  usbd_hid2_out_report [RUP32(USBD_HID2_OUT_REPORT_MAX_SZ +(USBD_HID2_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32) USBD_HID2_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid2_feat_report[USBD_HID2_FEAT_REPORT_MAX_SZ+(USBD_HID2_FEAT_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid2_feat_report[USBD_HID2_FEAT_REPORT_MAX_SZ+(USBD_HID2_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4);
+uint8_t  usbd_hid2_feat_report[USBD_HID2_FEAT_REPORT_MAX_SZ+(USBD_HID2_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4)  USBD_HID2_BUF_MEM_SECTION;
 #endif
 
 #ifdef  RTE_USB_Device_HID_3
@@ -2801,13 +2803,13 @@ uint8_t  usbd_hid3_idle_set   [USBD_HID3_IN_REPORT_NUM];
 uint8_t  usbd_hid3_idle_set   [USBD_HID3_IN_REPORT_NUM];
 extern 
 uint8_t  usbd_hid3_in_report  [USBD_HID3_IN_REPORT_MAX_SZ  +(USBD_HID3_IN_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid3_in_report  [USBD_HID3_IN_REPORT_MAX_SZ  +(USBD_HID3_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4);
+uint8_t  usbd_hid3_in_report  [USBD_HID3_IN_REPORT_MAX_SZ  +(USBD_HID3_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4)  USBD_HID3_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid3_out_report [RUP32(USBD_HID3_OUT_REPORT_MAX_SZ +(USBD_HID3_OUT_REPORT_MAX_SZ>1))];
-uint8_t  usbd_hid3_out_report [RUP32(USBD_HID3_OUT_REPORT_MAX_SZ +(USBD_HID3_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32);
+uint8_t  usbd_hid3_out_report [RUP32(USBD_HID3_OUT_REPORT_MAX_SZ +(USBD_HID3_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32) USBD_HID3_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid3_feat_report[USBD_HID3_FEAT_REPORT_MAX_SZ+(USBD_HID3_FEAT_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid3_feat_report[USBD_HID3_FEAT_REPORT_MAX_SZ+(USBD_HID3_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4);
+uint8_t  usbd_hid3_feat_report[USBD_HID3_FEAT_REPORT_MAX_SZ+(USBD_HID3_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4)  USBD_HID3_BUF_MEM_SECTION;
 #endif
 
 #ifdef  RTE_USB_Device_HID_4
@@ -2822,13 +2824,13 @@ uint8_t  usbd_hid4_idle_set   [USBD_HID4_IN_REPORT_NUM];
 uint8_t  usbd_hid4_idle_set   [USBD_HID4_IN_REPORT_NUM];
 extern 
 uint8_t  usbd_hid4_in_report  [USBD_HID4_IN_REPORT_MAX_SZ  +(USBD_HID4_IN_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid4_in_report  [USBD_HID4_IN_REPORT_MAX_SZ  +(USBD_HID4_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4);
+uint8_t  usbd_hid4_in_report  [USBD_HID4_IN_REPORT_MAX_SZ  +(USBD_HID4_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4)  USBD_HID4_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid4_out_report [RUP32(USBD_HID4_OUT_REPORT_MAX_SZ +(USBD_HID4_OUT_REPORT_MAX_SZ>1))];
-uint8_t  usbd_hid4_out_report [RUP32(USBD_HID4_OUT_REPORT_MAX_SZ +(USBD_HID4_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32);
+uint8_t  usbd_hid4_out_report [RUP32(USBD_HID4_OUT_REPORT_MAX_SZ +(USBD_HID4_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32) USBD_HID4_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid4_feat_report[USBD_HID4_FEAT_REPORT_MAX_SZ+(USBD_HID4_FEAT_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid4_feat_report[USBD_HID4_FEAT_REPORT_MAX_SZ+(USBD_HID4_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4);
+uint8_t  usbd_hid4_feat_report[USBD_HID4_FEAT_REPORT_MAX_SZ+(USBD_HID4_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4)  USBD_HID4_BUF_MEM_SECTION;
 #endif
 
 #ifdef  RTE_USB_Device_HID_5
@@ -2843,13 +2845,13 @@ uint8_t  usbd_hid5_idle_set   [USBD_HID5_IN_REPORT_NUM];
 uint8_t  usbd_hid5_idle_set   [USBD_HID5_IN_REPORT_NUM];
 extern 
 uint8_t  usbd_hid5_in_report  [USBD_HID5_IN_REPORT_MAX_SZ  +(USBD_HID5_IN_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid5_in_report  [USBD_HID5_IN_REPORT_MAX_SZ  +(USBD_HID5_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4);
+uint8_t  usbd_hid5_in_report  [USBD_HID5_IN_REPORT_MAX_SZ  +(USBD_HID5_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4)  USBD_HID5_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid5_out_report [RUP32(USBD_HID5_OUT_REPORT_MAX_SZ +(USBD_HID5_OUT_REPORT_MAX_SZ>1))];
-uint8_t  usbd_hid5_out_report [RUP32(USBD_HID5_OUT_REPORT_MAX_SZ +(USBD_HID5_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32);
+uint8_t  usbd_hid5_out_report [RUP32(USBD_HID5_OUT_REPORT_MAX_SZ +(USBD_HID5_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32) USBD_HID5_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid5_feat_report[USBD_HID5_FEAT_REPORT_MAX_SZ+(USBD_HID5_FEAT_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid5_feat_report[USBD_HID5_FEAT_REPORT_MAX_SZ+(USBD_HID5_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4);
+uint8_t  usbd_hid5_feat_report[USBD_HID5_FEAT_REPORT_MAX_SZ+(USBD_HID5_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4)  USBD_HID5_BUF_MEM_SECTION;
 #endif
 
 #ifdef  RTE_USB_Device_HID_6
@@ -2864,13 +2866,13 @@ uint8_t  usbd_hid6_idle_set   [USBD_HID6_IN_REPORT_NUM];
 uint8_t  usbd_hid6_idle_set   [USBD_HID6_IN_REPORT_NUM];
 extern 
 uint8_t  usbd_hid6_in_report  [USBD_HID6_IN_REPORT_MAX_SZ  +(USBD_HID6_IN_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid6_in_report  [USBD_HID6_IN_REPORT_MAX_SZ  +(USBD_HID6_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4);
+uint8_t  usbd_hid6_in_report  [USBD_HID6_IN_REPORT_MAX_SZ  +(USBD_HID6_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4)  USBD_HID6_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid6_out_report [RUP32(USBD_HID6_OUT_REPORT_MAX_SZ +(USBD_HID6_OUT_REPORT_MAX_SZ>1))];
-uint8_t  usbd_hid6_out_report [RUP32(USBD_HID6_OUT_REPORT_MAX_SZ +(USBD_HID6_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32);
+uint8_t  usbd_hid6_out_report [RUP32(USBD_HID6_OUT_REPORT_MAX_SZ +(USBD_HID6_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32) USBD_HID6_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid6_feat_report[USBD_HID6_FEAT_REPORT_MAX_SZ+(USBD_HID6_FEAT_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid6_feat_report[USBD_HID6_FEAT_REPORT_MAX_SZ+(USBD_HID6_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4);
+uint8_t  usbd_hid6_feat_report[USBD_HID6_FEAT_REPORT_MAX_SZ+(USBD_HID6_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4)  USBD_HID6_BUF_MEM_SECTION;
 #endif
 
 #ifdef  RTE_USB_Device_HID_7
@@ -2885,13 +2887,13 @@ uint8_t  usbd_hid7_idle_set   [USBD_HID7_IN_REPORT_NUM];
 uint8_t  usbd_hid7_idle_set   [USBD_HID7_IN_REPORT_NUM];
 extern 
 uint8_t  usbd_hid7_in_report  [USBD_HID7_IN_REPORT_MAX_SZ  +(USBD_HID7_IN_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid7_in_report  [USBD_HID7_IN_REPORT_MAX_SZ  +(USBD_HID7_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4);
+uint8_t  usbd_hid7_in_report  [USBD_HID7_IN_REPORT_MAX_SZ  +(USBD_HID7_IN_REPORT_MAX_SZ>1)]         __ALIGNED(4)  USBD_HID7_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid7_out_report [RUP32(USBD_HID7_OUT_REPORT_MAX_SZ +(USBD_HID7_OUT_REPORT_MAX_SZ>1))];
-uint8_t  usbd_hid7_out_report [RUP32(USBD_HID7_OUT_REPORT_MAX_SZ +(USBD_HID7_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32);
+uint8_t  usbd_hid7_out_report [RUP32(USBD_HID7_OUT_REPORT_MAX_SZ +(USBD_HID7_OUT_REPORT_MAX_SZ>1))] __ALIGNED(32) USBD_HID7_BUF_MEM_SECTION;
 extern 
 uint8_t  usbd_hid7_feat_report[USBD_HID7_FEAT_REPORT_MAX_SZ+(USBD_HID7_FEAT_REPORT_MAX_SZ>1)];
-uint8_t  usbd_hid7_feat_report[USBD_HID7_FEAT_REPORT_MAX_SZ+(USBD_HID7_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4);
+uint8_t  usbd_hid7_feat_report[USBD_HID7_FEAT_REPORT_MAX_SZ+(USBD_HID7_FEAT_REPORT_MAX_SZ>1)]       __ALIGNED(4)  USBD_HID7_BUF_MEM_SECTION;
 #endif
 
 extern 
@@ -3194,28 +3196,28 @@ void                       *usbd_msc_thread_id     [USBD_MSC_NUM];
 extern  void USBD_MSC0_Thread (void const *arg);
 extern 
 uint8_t usbd_msc0_bulk_buf [RUP32(USBD_MSC0_BULK_BUF_SIZE)];
-uint8_t usbd_msc0_bulk_buf [RUP32(USBD_MSC0_BULK_BUF_SIZE)] __ALIGNED(32);
+uint8_t usbd_msc0_bulk_buf [RUP32(USBD_MSC0_BULK_BUF_SIZE)] __ALIGNED(32) USBD_MSC0_BUF_MEM_SECTION;
 #endif
 
 #ifdef  RTE_USB_Device_MSC_1
 extern  void USBD_MSC1_Thread (void const *arg);
 extern 
 uint8_t usbd_msc1_bulk_buf [RUP32(USBD_MSC1_BULK_BUF_SIZE)];
-uint8_t usbd_msc1_bulk_buf [RUP32(USBD_MSC1_BULK_BUF_SIZE)] __ALIGNED(32);
+uint8_t usbd_msc1_bulk_buf [RUP32(USBD_MSC1_BULK_BUF_SIZE)] __ALIGNED(32) USBD_MSC1_BUF_MEM_SECTION;
 #endif
 
 #ifdef  RTE_USB_Device_MSC_2
 extern  void USBD_MSC2_Thread (void const *arg);
 extern 
 uint8_t usbd_msc2_bulk_buf [RUP32(USBD_MSC2_BULK_BUF_SIZE)];
-uint8_t usbd_msc2_bulk_buf [RUP32(USBD_MSC2_BULK_BUF_SIZE)] __ALIGNED(32);
+uint8_t usbd_msc2_bulk_buf [RUP32(USBD_MSC2_BULK_BUF_SIZE)] __ALIGNED(32) USBD_MSC2_BUF_MEM_SECTION;
 #endif
 
 #ifdef  RTE_USB_Device_MSC_3
 extern  void USBD_MSC3_Thread (void const *arg);
 extern 
 uint8_t usbd_msc3_bulk_buf [RUP32(USBD_MSC3_BULK_BUF_SIZE)];
-uint8_t usbd_msc3_bulk_buf [RUP32(USBD_MSC3_BULK_BUF_SIZE)] __ALIGNED(32);
+uint8_t usbd_msc3_bulk_buf [RUP32(USBD_MSC3_BULK_BUF_SIZE)] __ALIGNED(32) USBD_MSC3_BUF_MEM_SECTION;
 #endif
 
 extern 

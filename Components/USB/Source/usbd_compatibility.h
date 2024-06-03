@@ -40,6 +40,9 @@
 #ifndef USBD0_EP0_BUF_SIZE
 #define USBD0_EP0_BUF_SIZE                      (USBD0_MAX_PACKET0)
 #endif
+#ifndef USBD0_BUF_MEM_RELOC
+#define USBD0_BUF_MEM_RELOC                     (0)
+#endif
 
 #ifndef USBD1_CORE_THREAD_STACK_SIZE
 #define USBD1_CORE_THREAD_STACK_SIZE            (0U)
@@ -58,6 +61,9 @@
 #endif
 #ifndef USBD1_EP0_BUF_SIZE
 #define USBD1_EP0_BUF_SIZE                      (USBD1_MAX_PACKET0)
+#endif
+#ifndef USBD1_BUF_MEM_RELOC
+#define USBD1_BUF_MEM_RELOC                     (0)
 #endif
 
 #ifndef USBD2_CORE_THREAD_STACK_SIZE
@@ -78,6 +84,9 @@
 #ifndef USBD2_EP0_BUF_SIZE
 #define USBD2_EP0_BUF_SIZE                      (USBD2_MAX_PACKET0)
 #endif
+#ifndef USBD2_BUF_MEM_RELOC
+#define USBD2_BUF_MEM_RELOC                     (0)
+#endif
 
 #ifndef USBD3_CORE_THREAD_STACK_SIZE
 #define USBD3_CORE_THREAD_STACK_SIZE            (0U)
@@ -96,6 +105,9 @@
 #endif
 #ifndef USBD3_EP0_BUF_SIZE
 #define USBD3_EP0_BUF_SIZE                      (USBD3_MAX_PACKET0)
+#endif
+#ifndef USBD3_BUF_MEM_RELOC
+#define USBD3_BUF_MEM_RELOC                     (0)
 #endif
 
 

@@ -8209,4 +8209,4 @@
 #error Device $x High-speed setting requires Maximum Endpoint 0 Packet Size of 64 bytes!
 #endif
 
-#endif // USBD_CONFIG_DEF_$x_H_
+#endif  // USBD_CONFIG_DEF_$x_H_

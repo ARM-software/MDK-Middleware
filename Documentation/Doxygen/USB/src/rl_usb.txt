@@ -638,6 +638,10 @@ The configuration file <b>USBD_Config_<i>n</i>.h</b> contains the following sett
   - Enable <b>OS String</b> for device to contain Microsoft OS string descriptor.
     - <b>Vendor Code</b> specifies the vendor code used to retrieve associated feature descriptors.
 - <b>Control Transfer Buffer Size</b> specifies the maximum size of control transfer.
+- <b>Data Buffers</b> specifies the relocation of the USB data buffers in memory.
+  - <b>Relocate</b> specifies if the USB data buffers are relocated to a specific memory address (via the linker script).
+  - <b>Section Name</b> specifies the section name for the USB data buffers that is used by the linker script to position it in memory.
+    Default section name is <c>.driver.usbd<instance></c>, for example for USB Device 0 the default section name is <c>.driver.usbd0</c>.
 - Use the <b>OS Resources Settings</b> to optimize the usage of OS resources.
   - The default <b>Core Thread Stack Size </b> is \a 1024 bytes.
   - The default Core Thread priority is <b>osPriorityAboveNormal</b>.
