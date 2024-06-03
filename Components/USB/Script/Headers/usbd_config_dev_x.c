@@ -15,7 +15,7 @@ uint8_t     usbd$x_alt_setting  [USBD$x_IF_CNT];
 uint8_t     usbd$x_alt_setting  [USBD$x_IF_CNT];
 extern 
 uint8_t     usbd$x_ep0_buf      [((USBD$x_EP0_BUF_SIZE+31)/32)*32];
-uint8_t     usbd$x_ep0_buf      [((USBD$x_EP0_BUF_SIZE+31)/32)*32] __ALIGNED(32);
+uint8_t     usbd$x_ep0_buf      [((USBD$x_EP0_BUF_SIZE+31)/32)*32] __ALIGNED(32) USBD$x_DEV_BUF_MEM_SECTION;
 extern 
 usbd_data_t usbd$x_data;
 usbd_data_t usbd$x_data;

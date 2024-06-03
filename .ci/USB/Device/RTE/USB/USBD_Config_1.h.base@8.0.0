@@ -112,6 +112,19 @@
 //   <i>It should be at least as big as maximum packet size for Endpoint 0.
 #define USBD1_EP0_BUF_SIZE              128
 
+//   <h>Data Buffers
+//     <e>Relocate
+//       <i>Specifies if the USB data buffers are located at a specific memory address
+//       <i>(via the linker script).
+#define USBD1_BUF_MEM_RELOC             0
+
+//       <s.128>Section Name
+//         <i>Specifies the section name for the USB data buffers
+//         <i>(for positioning via the linker script).
+#define USBD1_BUF_MEM_SECTION_NAME      ".driver.usbd1"
+//     </e>
+//   </h>
+
 //   <h>OS Resources Settings
 //   <i>These settings are used to optimize usage of OS resources.
 //     <o>Core Thread Stack Size <64-65536>
