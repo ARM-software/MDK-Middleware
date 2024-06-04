@@ -35,7 +35,7 @@
 //       <i>the USB Host controller will use for the USB communication data.
 //       <i>This size should be at least equal to the size
 //       <i>of the maximum expected packet + 128 bytes.
-#define USBH0_HC_MEM_POOL_SIZE          640
+#define USBH0_HC_MEM_POOL_SIZE          4224
 
 //     <e>Locate
 //       <i>Specifies if the USB memory pool is located in a specific memory
