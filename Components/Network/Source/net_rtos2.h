@@ -9,12 +9,6 @@
 #include "cmsis_os2.h"
 #include "net_lib.h"
 
-/* Avoid syntax-checker errors in editor */
-#ifndef NET_THREAD_STACK_SIZE
-  #define NET_THREAD_STACK_SIZE 1024
-  #define NET_THREAD_PRIORITY   osPriorityNormal
-#endif
-
 /* Network core resources */
 #ifdef RTE_CMSIS_RTOS2_RTX5
   #include "rtx_os.h"

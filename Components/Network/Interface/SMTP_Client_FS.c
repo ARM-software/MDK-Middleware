@@ -10,16 +10,16 @@
 #include "rl_net.h"
 
 // Open a file for reading in SMTP client.
-__WEAK void *netSMTPc_fopen (const char *fname) {
+void *netSMTPc_fopen (const char *fname) {
   return (fopen (fname, "r"));
 }
 
 // Close a file previously open in SMTP client.
-__WEAK void netSMTPc_fclose (void *file) {
+void netSMTPc_fclose (void *file) {
   fclose (file);
 }
 
 // Read block of data from a file in SMTP client.
-__WEAK uint32_t netSMTPc_fread (void *file, uint8_t *buf, uint32_t len) {
+uint32_t netSMTPc_fread (void *file, uint8_t *buf, uint32_t len) {
   return (fread (buf, 1, len, file));
 }
