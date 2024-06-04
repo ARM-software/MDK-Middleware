@@ -923,7 +923,7 @@ The <b>USBH_Config_<i>n</i>.h</b> file contains additional settings for the spec
 - <b>Power Consumption</b> can be configured according to hardware capability of the USB Host Controller.
 - <b>Maximum Pipes</b> can be specified according to expected USB Device classes that are expected to be used by the USB Host.
 - <b>Memory Pool</b> parameters can be configured that are necessary for USB Host operation.
-  This memory pool can also be relocated to specific memory via the linker script.
+  This memory pool can also be located to specific memory via the linker script.
 
 Refer to \ref usbh_coreFunctions_conf for a detailed list of all available settings.
 

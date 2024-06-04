@@ -833,7 +833,7 @@ usbStatus USBH_PipeReceive (USBH_PIPE_HANDLE pipe_hndl, uint8_t *buf, uint32_t l
 
   remain_len   = len;
   max_data_len = len;
-  if (*usbh_mem_pool_reloc_ptr[ctrl] != 0U) {                           // If memory relocation is enabled
+  if (*usbh_mem_pool_locate_ptr[ctrl] != 0U) {                          // If memory pool location is enabled
     if (remain_len == 0U) {                                             // If ZLP is requested
       alloc_mem = false;
     } else {
@@ -1106,7 +1106,7 @@ usbStatus USBH_PipeSend (USBH_PIPE_HANDLE pipe_hndl, const uint8_t *buf, uint32_
 
   remain_len   = len;
   max_data_len = len;
-  if (*usbh_mem_pool_reloc_ptr[ctrl] != 0U) {                           // If memory relocation is enabled
+  if (*usbh_mem_pool_locate_ptr[ctrl] != 0U) {                          // If memory pool location is enabled
     if (len == 0U) {                                                    // If ZLP is requested
       alloc_mem = false;
     } else {
@@ -2552,7 +2552,7 @@ static usbStatus USBH_PipeSendSetup (USBH_PIPE_HANDLE pipe_hndl, const USB_SETUP
 
   ptr_pipe->locked = 1U;
 
-  if (*usbh_mem_pool_reloc_ptr[ctrl] != 0U) {                           // If memory relocation is enabled
+  if (*usbh_mem_pool_locate_ptr[ctrl] != 0U) {                          // If memory pool location is enabled
     alloc_mem = !USBH_MemoryIsInPool (ctrl, (const uint8_t *)setup_packet);
     if (alloc_mem) {
       // If memory for USB must be relocated, allocate 8 bytes for SETUP packet

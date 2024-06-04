@@ -4867,14 +4867,14 @@ The USB Host configuration file <b>USBH_Config_<i>n</i>.h</b> contains the follo
 - <b>Maximum Port Power Consumption</b> specifies maximum current that a port can source (in mA).
   USB Devices exceeding this requirement will not be usable by the USB Host.
 - <b>Maximum Pipes in system</b> specifies the maximum number of active pipes (pipe is a communication channel to an USB Device endpoint).
-- <b>Memory Pool Size</b> specifies the size of the memory pool used by the USB Host Component.
-  It has to be larger than maximum packet size on any endpoint for typically 128 bytes, making this a default size of 640 bytes to
-  cover 512 bytes bulk endpoint maximum packet size.
-- <b>Relocate Memory Pool</b> specifies if the memory pool is relocated to a specific memory address (via the linker script).
-  This is usually necessary in case that USB Controller has some specific requirements regarding memory for transfers.
-  For example if USB Controller can only access specific memory, or if this memory needs to be non-cacheable.
-- <b>Memory Pool section name</b> specifies the section name for the memory pool that is used by the linker script to position it in memory.
-  Default section name is <c>.driver.usbh<instance></c>, for example for USB Controller 0 the default section name is <c>.driver.usbh0</c>.
+- <b>Memory Pool</b> specifies the size of the USB memory pool and is also used for locating the USB memory pool in specific memory.
+  - <b>Size</b> specifies the size of the USB memory pool (in bytes) that the USB Host controller will use for the USB communication data.
+    This size should be at least equal to the size of the maximum expected packet + 128 bytes.
+  - <b>Locate</b> specifies if the USB memory pool is located in a specific memory (via the linker script).
+    This is usually necessary in case that USB Controller has some specific requirements regarding memory for USB transfers.
+    For example if USB Controller can only access specific memory, or if this memory needs to be non-cacheable.
+  - <b>Section Name</b> specifies the section name for the USB memory pool that is used by the linker script to position it in memory.
+    Default section name is <c>.driver.usbh<instance></c>, for example for USB Controller 0 the default section name is <c>.driver.usbh0</c>.
 - Use the <b>OS Resources Settings</b> to optimize the usage of OS resources.
   - The default <b>Core Thread Stack Size</b> is \a 2048 bytes.
   - The default Core Thread priority is <b>osPriorityAboveNormal</b>.

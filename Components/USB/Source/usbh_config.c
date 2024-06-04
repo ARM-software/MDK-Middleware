@@ -57,7 +57,7 @@ extern  void USBH_SignalPipeEvent (uint8_t ctrl, ARM_USBH_EP_HANDLE ep_hndl, uin
 static  const uint8_t           usbh0_power =          (uint8_t)(USBH0_HC_POWER / 2);
 static  const uint32_t          usbh0_pipe_num =        USBH0_HC_PIPE_NUM;
 static  const uint32_t          usbh0_mem_pool_size =   USBH0_HC_MEM_POOL_SIZE;
-static  const uint8_t           usbh0_mem_pool_reloc =  USBH0_HC_MEM_POOL_RELOC;
+static  const uint8_t           usbh0_mem_pool_locate = USBH0_HC_MEM_POOL_LOCATE;
         USBH_PIPE               usbh0_pipe             [USBH0_HC_PIPE_NUM];
 static  uint32_t                usbh0_mem_pool         [USBH0_HC_MEM_POOL_SIZE / 4] USBH0_HC_MEM_POOL_SECTION;
 static  ARM_DRIVER_USBH        *usbh0_hcd_ptr  =       &USBHn_DRIVER(USBH0_HC_NUM);
@@ -99,7 +99,7 @@ static const  osThreadAttr_t usbh0_core_thread_attr = {
 static  const uint8_t           usbh1_power =          (uint8_t)(USBH1_HC_POWER / 2);
 static  const uint32_t          usbh1_pipe_num =        USBH1_HC_PIPE_NUM;
 static  const uint32_t          usbh1_mem_pool_size =   USBH1_HC_MEM_POOL_SIZE;
-static  const uint8_t           usbh1_mem_pool_reloc =  USBH1_HC_MEM_POOL_RELOC;
+static  const uint8_t           usbh1_mem_pool_locate = USBH1_HC_MEM_POOL_LOCATE;
         USBH_PIPE               usbh1_pipe             [USBH1_HC_PIPE_NUM];
 static  uint32_t                usbh1_mem_pool         [USBH1_HC_MEM_POOL_SIZE / 4] USBH1_HC_MEM_POOL_SECTION;
 static  ARM_DRIVER_USBH        *usbh1_hcd_ptr  =       &USBHn_DRIVER(USBH1_HC_NUM);
@@ -141,7 +141,7 @@ static const  osThreadAttr_t usbh1_core_thread_attr = {
 static  const uint8_t           usbh2_power =          (uint8_t)(USBH2_HC_POWER / 2);
 static  const uint32_t          usbh2_pipe_num =        USBH2_HC_PIPE_NUM;
 static  const uint32_t          usbh2_mem_pool_size =   USBH2_HC_MEM_POOL_SIZE;
-static  const uint8_t           usbh2_mem_pool_reloc =  USBH2_HC_MEM_POOL_RELOC;
+static  const uint8_t           usbh2_mem_pool_locate = USBH2_HC_MEM_POOL_LOCATE;
         USBH_PIPE               usbh2_pipe             [USBH2_HC_PIPE_NUM];
 static  uint32_t                usbh2_mem_pool         [USBH2_HC_MEM_POOL_SIZE / 4] USBH2_HC_MEM_POOL_SECTION;
 static  ARM_DRIVER_USBH        *usbh2_hcd_ptr  =       &USBHn_DRIVER(USBH2_HC_NUM);
@@ -183,7 +183,7 @@ static const  osThreadAttr_t usbh2_core_thread_attr = {
 static  const uint8_t           usbh3_power =          (uint8_t)(USBH3_HC_POWER / 2);
 static  const uint32_t          usbh3_pipe_num =        USBH3_HC_PIPE_NUM;
 static  const uint32_t          usbh3_mem_pool_size =   USBH3_HC_MEM_POOL_SIZE;
-static  const uint8_t           usbh3_mem_pool_reloc =  USBH3_HC_MEM_POOL_RELOC;
+static  const uint8_t           usbh3_mem_pool_locate = USBH3_HC_MEM_POOL_LOCATE;
         USBH_PIPE               usbh3_pipe             [USBH3_HC_PIPE_NUM];
 static  uint32_t                usbh3_mem_pool         [USBH3_HC_MEM_POOL_SIZE / 4] USBH3_HC_MEM_POOL_SECTION;
 static  ARM_DRIVER_USBH        *usbh3_hcd_ptr  =       &USBHn_DRIVER(USBH3_HC_NUM);
@@ -254,18 +254,18 @@ const   uint8_t          * const usbh_power_ptr [USBH_HC_NUM] = {
 #endif
 };
 
-const   uint8_t          * const usbh_mem_pool_reloc_ptr [USBH_HC_NUM] = {
+const   uint8_t          * const usbh_mem_pool_locate_ptr [USBH_HC_NUM] = {
 #ifdef  RTE_USB_Host_0
-       &usbh0_mem_pool_reloc
+       &usbh0_mem_pool_locate
 #endif
 #ifdef  RTE_USB_Host_1
-     , &usbh1_mem_pool_reloc
+     , &usbh1_mem_pool_locate
 #endif
 #ifdef  RTE_USB_Host_2
-     , &usbh2_mem_pool_reloc
+     , &usbh2_mem_pool_locate
 #endif
 #ifdef  RTE_USB_Host_3
-     , &usbh3_mem_pool_reloc
+     , &usbh3_mem_pool_locate
 #endif
 };
 

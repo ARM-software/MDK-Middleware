@@ -119,7 +119,7 @@ extern USBH_PIPE                                  usbh3_pipe[];
 #endif
 
 extern const uint8_t                      * const usbh_power_ptr          [];
-extern const uint8_t                      * const usbh_mem_pool_reloc_ptr [];
+extern const uint8_t                      * const usbh_mem_pool_locate_ptr[];
 extern       uint32_t                     * const usbh_mem_pool_ptr       [];
 extern const uint32_t                     * const usbh_mem_pool_size_ptr  [];
 extern       USBH_PIPE                    * const usbh_pipe_ptr           [];
