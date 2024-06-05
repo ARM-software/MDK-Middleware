@@ -27,10 +27,6 @@
  #endif
 #endif
 
-#ifdef __clang__
-  #pragma clang diagnostic ignored "-Wpadded"
-#endif
-
 /// General definitions
 #define NET_HEADER_LEN      4           ///< Network frame header length
 #define PHY_HEADER_LEN      14          ///< Physical/ethernet header length

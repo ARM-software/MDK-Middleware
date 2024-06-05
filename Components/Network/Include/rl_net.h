@@ -234,11 +234,6 @@ typedef struct sockaddr {
   int8_t   sa_data[14];                 ///< Direct address (up to 14 bytes)
 } SOCKADDR;
 
-#if defined(__clang__)
-  #pragma clang diagnostic push
-  #pragma clang diagnostic ignored "-Wc11-extensions"
-#endif
-
 #ifndef __DOXYGEN__
 
 /// Generic IPv4 Address structure.
@@ -263,10 +258,6 @@ typedef struct in6_addr {
 } IN6_ADDR;
 #define s6_addr     s6_b
 
-#endif
-
-#if defined(__clang__)
-  #pragma clang diagnostic pop
 #endif
 
 /// BSD Internet Addresses IPv6.
@@ -722,11 +713,6 @@ typedef struct net_snmp_byte_str {
   uint8_t data[];                       ///< String content
 } NET_SNMP_BYTE_STR;
 
-#if defined(__clang__)
-  #pragma clang diagnostic push
-  #pragma clang diagnostic ignored "-Wpadded"
-#endif
-
 /// FS Interface Time info
 typedef struct net_fs_time {
   uint8_t  hr;                          ///< Hours    [0..23]
@@ -736,10 +722,6 @@ typedef struct net_fs_time {
   uint8_t  mon;                         ///< Month    [1..12]
   uint16_t year;                        ///< Year     [1980..2107]
 } NET_FS_TIME;
-
-#if defined(__clang__)
-  #pragma clang diagnostic pop
-#endif
 
 /// FS Interface Attributes
 #define NET_FS_ATTR_FILE        1       ///< File entry

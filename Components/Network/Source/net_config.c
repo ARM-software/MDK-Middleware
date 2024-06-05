@@ -6,12 +6,6 @@
  * Purpose: Network Core Configuration
  *----------------------------------------------------------------------------*/
 
-#if defined(__clang__)
-  #pragma clang diagnostic ignored "-Wundef"
-  #pragma clang diagnostic ignored "-Wpadded"
-  #pragma clang diagnostic ignored "-Wmissing-noreturn"
-#endif
-
 #include "net_lib.h"
 
 /* Interface configuration */
@@ -118,10 +112,6 @@
 #endif
 
 /* Check configuration integrity */
-#if (!defined(NET_THREAD_STACK_SIZE))
-  #error "::Network:CORE: Configuration update required"
-#endif
-
 #if (ETH0_ENABLE && !defined(ETH0_THREAD_STACK_SIZE))
   #error "::Network:Interface:ETH0: Configuration update required"
 #endif
@@ -362,11 +352,6 @@
 /* Check Block Size of TFTP Client */
 #if (TFTP_CLIENT_ENABLE && ((TFTP_CLIENT_BLOCK_SIZE < 128) || (TFTP_CLIENT_BLOCK_SIZE > 1428)))
   #error "::Network:Service:TFTP Client: Block Size out of range"
-#endif
-
-/* Check SMTP client attachments */
-#if (SMTP_CLIENT_ENABLE && SMTP_CLIENT_ATTACH_ENABLE && !defined(RTE_FileSystem_Core))
-  #error "::Network:Service:SMTP Client: File System component required"
 #endif
 
 /* Check SMTP advanced client */
