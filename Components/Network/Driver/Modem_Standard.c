@@ -8,10 +8,6 @@
 
 #include "net_modem.h"
 
-#ifdef __clang__
-  #pragma clang diagnostic ignored "-Wpadded"
-#endif
-
 /* Modem driver states */
 enum Modem_State {
   Modem_Idle,

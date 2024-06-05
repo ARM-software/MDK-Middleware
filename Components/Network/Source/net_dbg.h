@@ -16,13 +16,6 @@
   #define __DEBUG_ENABLED
 #endif
 
-#if defined(__clang__)
-  #pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
-#elif (defined(__GNUC__) && defined(Network_Debug_EVR))
-  #pragma GCC diagnostic ignored "-Warray-bounds"
-  #pragma GCC diagnostic ignored "-Wstringop-overread"
-#endif
-
 #ifdef Network_Debug_STDIO
   #define DEBUGF(id,fmt,...) net_debug_info(id,fmt,##__VA_ARGS__)
   #define ERRORF(id,fmt,...) net_debug_error(id,fmt,##__VA_ARGS__)

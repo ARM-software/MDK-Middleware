@@ -76,10 +76,6 @@ void net_evr_init (void) {
 #include <stdio.h>
 #include <stdarg.h>
 
-#if defined(__clang__)
-  #pragma clang diagnostic ignored "-Wformat-nonliteral"
-#endif
-
 #if (NET_DEBUG_CHANNEL == 2)
   #define __DEBUG_TIME  net_debug_time()
 #else
