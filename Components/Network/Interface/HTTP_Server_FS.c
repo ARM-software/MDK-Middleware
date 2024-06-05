@@ -7,8 +7,11 @@
  *----------------------------------------------------------------------------*/
 
 #include <stdio.h>
-#include "../Source/net_lib.h"
+#include "rl_net.h"
 #include "rl_fs.h"
+
+extern uint32_t net_http_time (uint8_t hr, uint8_t min, uint8_t sec,
+                               uint8_t day, uint8_t mon, uint16_t year);
 
 // Open a file for reading on HTTP server.
 void *netHTTPs_fopen (const char *fname) {
