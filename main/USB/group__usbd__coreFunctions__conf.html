@@ -171,8 +171,8 @@ USB Device Core Configuration File</div></div>
 </ul>
 </li>
 <li><b>Control Transfer Buffer Size</b> specifies the maximum size of control transfer.</li>
-<li><b>Data Buffers</b> specifies the relocation of the USB data buffers in memory.<ul>
-<li><b>Relocate</b> specifies if the USB data buffers are relocated to a specific memory address (via the linker script).</li>
+<li><b>Data Buffers</b> is used for locating the USB data buffers in memory.<ul>
+<li><b>Locate</b> specifies if the USB data buffers are located in a specific memory (via the linker script). This is usually necessary in case that USB Controller has some specific requirements regarding memory for USB transfers. For example if USB Controller can only access specific memory, or if this memory needs to be non-cacheable.</li>
 <li><b>Section Name</b> specifies the section name for the USB data buffers that is used by the linker script to position it in memory. Default section name is <code>.driver.usbd&lt;instance&gt;</code>, for example for USB Device 0 the default section name is <code>.driver.usbd0</code>.</li>
 </ul>
 </li>
