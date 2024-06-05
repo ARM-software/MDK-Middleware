@@ -36,13 +36,10 @@ file located under the \b Device component class.
 
 \section nw_rtos_req CMSIS-RTOS Requirements
 
-Currently, the Network component works in three different RTOS configurations:
+Currently, the Network component works in two different RTOS configurations:
 -# <b>CMSIS-RTOS2 RTX5</b>: This mode uses Keil RTX5 natively. In the Manage Run-Time Environment window, the component
    <b>CMSIS:RTOS2 (API):Keil RTX5</b> must be selected. The RTOS resources are static, configured by the system. There is
    <b>no need for additional user configuration</b>. This is the suggested option for new development.
--# <b>CMSIS-RTOS RTX5</b>: this mode uses RTX5 under a compatibility layer, which uses CMSIS-RTOS v1.
-   In the Manage Run-Time Environment window, the components <b>CMSIS:RTOS (API):Keil RTX5</b> and
-   <b>CMSIS:RTOS2 (API):Keil RTX5</b> must be selected.
 -# <b>CMSIS-RTOS2 with a generic RTOS</b>: this mode uses a generic RTOS (such as FreeRTOS). The RTOS
    resources (thread, mutex and semaphore control blocks and thread stacks) are dynamically allocated. The user needs to
    provide memory pools big enough for the allocations in RTOS configuration.
