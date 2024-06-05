@@ -1,30 +1,30 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
- * Name:    USBD_Config_CDC_4.h
+ * Name:    USBD_Config_CDC_7.h
  * Purpose: USB Device Communication Device Class (CDC) Configuration
- * Rev.:    V5.3.0
+ * Rev.:    V5.3.1
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 
-// <h>USB Device: Communication Device Class (CDC) 4
+// <h>USB Device: Communication Device Class (CDC) 7
 //   <o>Assign Device Class to USB Device # <0-3>
 //   <i>Select USB Device that is used for this Device Class instance
-#define USBD_CDC4_DEV                    4
+#define USBD_CDC7_DEV                    7
 
 //   <o>Communication Class Subclass
 //   <i>Specifies the model used by the CDC class.
 //     <2=>Abstract Control Model (ACM)
 //     <13=>Network Control Model (NCM)
-#define USBD_CDC4_SUBCLASS               2
+#define USBD_CDC7_SUBCLASS               2
 
 //   <o>Communication Class Protocol
 //   <i>Specifies the protocol used by the CDC class.
 //     <0=>No protocol (Virtual COM)
 //     <255=>Vendor-specific (RNDIS)
-#define USBD_CDC4_PROTOCOL               0
+#define USBD_CDC7_PROTOCOL               0
 
 //   <h>Interrupt Endpoint Settings
 //   <i>By default, the settings match the first USB Class instance in a USB Device.
@@ -33,7 +33,7 @@
 //     <o.0..3>Interrupt IN Endpoint Number
 //               <1=>1   <2=>2   <3=>3   <4=>4   <5=>5   <6=>6   <7=>7
 //       <8=>8   <9=>9   <10=>10 <11=>11 <12=>12 <13=>13 <14=>14 <15=>15
-#define USBD_CDC4_EP_INT_IN              1
+#define USBD_CDC7_EP_INT_IN              1
 
 
 //     <h>Endpoint Settings
@@ -41,21 +41,21 @@
 //       <i>and for memory allocation in the USB component.
 
 //       <h>Full/Low-speed (High-speed disabled)
-//       <i>Parameters apply when High-speed is disabled in USBD_Config_n.c
+//       <i>Parameters apply when High-speed is disabled in USBD_Config_n.h
 //         <o.0..6>Maximum Endpoint Packet Size (in bytes) <0-64>
 //         <i>Specifies the physical packet size used for information exchange.
 //         <i>Maximum value is 64.
-#define USBD_CDC4_WMAXPACKETSIZE         16
+#define USBD_CDC7_WMAXPACKETSIZE         16
 
 //         <o.0..7>Endpoint polling Interval (in ms) <1-255>
 //         <i>Specifies the frequency of requests initiated by USB Host for
 //         <i>getting the notification.
-#define USBD_CDC4_BINTERVAL              2
+#define USBD_CDC7_BINTERVAL              2
 
 //       </h>
 
 //       <h>High-speed
-//       <i>Parameters apply when High-speed is enabled in USBD_Config_n.c
+//       <i>Parameters apply when High-speed is enabled in USBD_Config_n.h
 //
 //         <o.0..10>Maximum Endpoint Packet Size (in bytes) <0-1024>
 //         <i>Specifies the physical packet size used for information exchange.
@@ -63,7 +63,7 @@
 //         <o.11..12>Additional transactions per microframe
 //         <i>Additional transactions improve communication performance.
 //           <0=>None <1=>1 additional <2=>2 additional
-#define USBD_CDC4_HS_WMAXPACKETSIZE      16
+#define USBD_CDC7_HS_WMAXPACKETSIZE      16
 
 //         <o.0..4>Endpoint polling Interval (in 125 us intervals)
 //         <i>Specifies the frequency of requests initiated by USB Host for
@@ -72,7 +72,7 @@
 //           <5=>   16 <6=>   32 <7=>    64 <8=>   128
 //           <9=>  256 <10=> 512 <11=> 1024 <12=> 2048
 //           <13=>4096 <14=>8192 <15=>16384 <16=>32768
-#define USBD_CDC4_HS_BINTERVAL           2
+#define USBD_CDC7_HS_BINTERVAL           2
 
 //       </h>
 //     </h>
@@ -86,12 +86,12 @@
 //     <o.0..3>Bulk IN Endpoint Number
 //               <1=>1   <2=>2   <3=>3   <4=>4   <5=>5   <6=>6   <7=>7
 //       <8=>8   <9=>9   <10=>10 <11=>11 <12=>12 <13=>13 <14=>14 <15=>15
-#define USBD_CDC4_EP_BULK_IN             2
+#define USBD_CDC7_EP_BULK_IN             2
 
 //     <o.0..3>Bulk OUT Endpoint Number
 //               <1=>1   <2=>2   <3=>3   <4=>4   <5=>5   <6=>6   <7=>7
 //       <8=>8   <9=>9   <10=>10 <11=>11 <12=>12 <13=>13 <14=>14 <15=>15
-#define USBD_CDC4_EP_BULK_OUT            2
+#define USBD_CDC7_EP_BULK_OUT            2
 
 
 //     <h>Endpoint Settings
@@ -99,26 +99,26 @@
 //       <i>allocation in the USB component.
 //
 //       <h>Full/Low-speed (High-speed disabled)
-//       <i>Parameters apply when High-speed is disabled in USBD_Config_n.c
+//       <i>Parameters apply when High-speed is disabled in USBD_Config_n.h
 //         <o.0..6>Maximum Endpoint Packet Size (in bytes) <8=>8 <16=>16 <32=>32 <64=>64
 //         <i>Specifies the physical packet size used for information exchange.
 //         <i>Maximum value is 64.
-#define USBD_CDC4_WMAXPACKETSIZE1        64
+#define USBD_CDC7_WMAXPACKETSIZE1        64
 
 //       </h>
 
 //       <h>High-speed
-//       <i>Parameters apply when High-speed is enabled in USBD_Config_n.c
+//       <i>Parameters apply when High-speed is enabled in USBD_Config_n.h
 //
 //         <o.0..9>Maximum Endpoint Packet Size (in bytes) <512=>512
 //         <i>Specifies the physical packet size used for information exchange.
 //         <i>Only available value is 512.
-#define USBD_CDC4_HS_WMAXPACKETSIZE1     512
+#define USBD_CDC7_HS_WMAXPACKETSIZE1     512
 
 //         <o.0..7>Maximum NAK Rate <0-255>
 //         <i>Specifies the interval in which Bulk Endpoint can NAK.
 //         <i>Value of 0 indicates that Bulk Endpoint never NAKs.
-#define USBD_CDC4_HS_BINTERVAL1          0
+#define USBD_CDC7_HS_BINTERVAL1          0
 
 //       </h>
 //     </h>
@@ -129,10 +129,10 @@
 //   <i>in the USB component.
 //
 //     <s.126>Communication Class Interface String
-#define USBD_CDC4_CIF_STR_DESC_RAW       "USB_CDC4_0"
+#define USBD_CDC7_CIF_STR_DESC_RAW       "USB_CDC7_0"
 
 //     <s.126>Data Class Interface String
-#define USBD_CDC4_DIF_STR_DESC_RAW       "USB_CDC4_1"
+#define USBD_CDC7_DIF_STR_DESC_RAW       "USB_CDC7_1"
 
 //     <h>Abstract Control Model Settings
 
@@ -145,7 +145,7 @@
 //           <0=>None
 //           <1=>All
 //       </h>
-#define USBD_CDC4_ACM_CM_BM_CAPABILITIES 0x03
+#define USBD_CDC7_ACM_CM_BM_CAPABILITIES 0x03
 
 //       <h>Abstract Control Management Capabilities
 //       <i>Specifies which abstract control management functionality is supported.
@@ -159,14 +159,14 @@
 //         <o.0>D0 bit
 //           <i>Enabled = Supports the following requests: Set_Comm_Feature, Clear_Comm_Feature and Get_Comm_Feature
 //       </h>
-#define USBD_CDC4_ACM_ACM_BM_CAPABILITIES 0x06
+#define USBD_CDC7_ACM_ACM_BM_CAPABILITIES 0x06
 
 //       <o>Maximum Communication Device Send Buffer Size
 //       <i>Specifies size of buffer used for sending of data to USB Host.
 //         <8=>      8 Bytes <16=>    16 Bytes <32=>    32 Bytes <64=>      64 Bytes
 //         <128=>  128 Bytes <256=>  256 Bytes <512=>  512 Bytes <1024=>  1024 Bytes
 //         <2048=>2048 Bytes <4096=>4096 Bytes <8192=>8192 Bytes <16384=>16384 Bytes
-#define USBD_CDC4_ACM_SEND_BUF_SIZE      1024
+#define USBD_CDC7_ACM_SEND_BUF_SIZE      1024
 
 //       <o>Maximum Communication Device Receive Buffer Size
 //       <i>Specifies size of buffer used for receiving of data from USB Host.
@@ -175,7 +175,7 @@
 //         <8=>      8 Bytes <16=>    16 Bytes <32=>    32 Bytes <64=>      64 Bytes
 //         <128=>  128 Bytes <256=>  256 Bytes <512=>  512 Bytes <1024=>  1024 Bytes
 //         <2048=>2048 Bytes <4096=>4096 Bytes <8192=>8192 Bytes <16384=>16384 Bytes
-#define USBD_CDC4_ACM_RECEIVE_BUF_SIZE   2048
+#define USBD_CDC7_ACM_RECEIVE_BUF_SIZE   2048
 
 //     </h>
 
@@ -183,7 +183,7 @@
 
 //       <s.12>MAC Address String
 //       <i>Specifies 48-bit Ethernet MAC address.
-#define USBD_CDC4_NCM_MAC_ADDRESS_RAW    "1E306CA2455E"
+#define USBD_CDC7_NCM_MAC_ADDRESS_RAW    "1E306CA2455E"
 
 //       <h>Ethernet Statistics
 //       <i>Specifies Ethernet statistic functions supported.
@@ -246,22 +246,22 @@
 //         <o.28>XMIT_LATE_COLLISIONS
 //         <i>Late collisions detected
 //       </h>
-#define USBD_CDC4_NCM_BM_ETHERNET_STATISTICS     0x00000003
+#define USBD_CDC7_NCM_BM_ETHERNET_STATISTICS     0x00000003
 
 //       <o>Maximum Segment Size
 //       <i>Specifies maximum segment size that Ethernet device is capable of supporting.
 //       <i>Typically 1514 bytes.
-#define USBD_CDC4_NCM_W_MAX_SEGMENT_SIZE         1514
+#define USBD_CDC7_NCM_W_MAX_SEGMENT_SIZE         1514
 
 //       <o.15>Multicast Filtering <0=>Perfect (no hashing) <1=>Imperfect (hashing)
 //       <i>Specifies multicast filtering type.
 //       <o.0..14>Number of Multicast Filters
 //       <i>Specifies number of multicast filters that can be configured by the USB Host.
-#define USBD_CDC4_NCM_W_NUMBER_MC_FILTERS        1
+#define USBD_CDC7_NCM_W_NUMBER_MC_FILTERS        1
 
 //       <o.0..7>Number of Power Filters
 //       <i>Specifies number of pattern filters that are available for causing wake-up of the USB Host.
-#define USBD_CDC4_NCM_B_NUMBER_POWER_FILTERS     0
+#define USBD_CDC7_NCM_B_NUMBER_POWER_FILTERS     0
 
 //       <h>Network Capabilities
 //       <i>Specifies which functions are supported.
@@ -270,7 +270,7 @@
 //         <o.1>SetNetAddress/GetNetAddress
 //         <o.0>SetEthernetPacketFilter
 //       </h>
-#define USBD_CDC4_NCM_BM_NETWORK_CAPABILITIES    0x1B
+#define USBD_CDC7_NCM_BM_NETWORK_CAPABILITIES    0x1B
 
 //       <h>NTB Parameters
 //       <i>Specifies NTB parameters reported by GetNtbParameters function.
@@ -280,27 +280,27 @@
 //           <o.0>16-bit NTB (always supported)
 //           <o.1>32-bit NTB
 //         </h>
-#define USBD_CDC4_NCM_BM_NTB_FORMATS_SUPPORTED   0x0001
+#define USBD_CDC7_NCM_BM_NTB_FORMATS_SUPPORTED   0x0001
 
 //         <h>IN Data Pipe
 //
 //           <o>Maximum NTB Size (dwNtbInMaxSize)
 //           <i>Specifies maximum IN NTB size in bytes.
-#define USBD_CDC4_NCM_DW_NTB_IN_MAX_SIZE         4096
+#define USBD_CDC7_NCM_DW_NTB_IN_MAX_SIZE         4096
 
 //           <o.0..15>NTB Datagram Payload Alignment Divisor (wNdpInDivisor)
 //           <i>Specifies divisor used for IN NTB Datagram payload alignment.
-#define USBD_CDC4_NCM_W_NDP_IN_DIVISOR           4
+#define USBD_CDC7_NCM_W_NDP_IN_DIVISOR           4
 
 //           <o.0..15>NTB Datagram Payload Alignment Remainder (wNdpInPayloadRemainder)
 //           <i>Specifies remainder used to align input datagram payload within the NTB.
 //           <i>(Payload Offset) % (wNdpInDivisor) = wNdpInPayloadRemainder
-#define USBD_CDC4_NCM_W_NDP_IN_PAYLOAD_REMINDER  0
+#define USBD_CDC7_NCM_W_NDP_IN_PAYLOAD_REMINDER  0
 
 //           <o.0..15>NDP Alignment Modulus in NTB (wNdpInAlignment)
 //           <i>Specifies NDP alignment modulus for NTBs on the IN pipe.
 //           <i>Shall be power of 2, and shall be at least 4.
-#define USBD_CDC4_NCM_W_NDP_IN_ALIGNMENT         4
+#define USBD_CDC7_NCM_W_NDP_IN_ALIGNMENT         4
 
 //         </h>
 
@@ -308,21 +308,21 @@
 //
 //           <o>Maximum NTB Size (dwNtbOutMaxSize)
 //           <i>Specifies maximum OUT NTB size in bytes.
-#define USBD_CDC4_NCM_DW_NTB_OUT_MAX_SIZE        4096
+#define USBD_CDC7_NCM_DW_NTB_OUT_MAX_SIZE        4096
 
 //           <o.0..15>NTB Datagram Payload Alignment Divisor (wNdpOutDivisor)
 //           <i>Specifies divisor used for OUT NTB Datagram payload alignment.
-#define USBD_CDC4_NCM_W_NDP_OUT_DIVISOR          4
+#define USBD_CDC7_NCM_W_NDP_OUT_DIVISOR          4
 
 //           <o.0..15>NTB Datagram Payload Alignment Remainder (wNdpOutPayloadRemainder)
 //           <i>Specifies remainder used to align output datagram payload within the NTB.
 //           <i>(Payload Offset) % (wNdpOutDivisor) = wNdpOutPayloadRemainder
-#define USBD_CDC4_NCM_W_NDP_OUT_PAYLOAD_REMINDER 0
+#define USBD_CDC7_NCM_W_NDP_OUT_PAYLOAD_REMINDER 0
 
 //           <o.0..15>NDP Alignment Modulus in NTB (wNdpOutAlignment)
 //           <i>Specifies NDP alignment modulus for NTBs on the IN pipe.
 //           <i>Shall be power of 2, and shall be at least 4.
-#define USBD_CDC4_NCM_W_NDP_OUT_ALIGNMENT        4
+#define USBD_CDC7_NCM_W_NDP_OUT_ALIGNMENT        4
 
 //         </h>
 
@@ -330,17 +330,17 @@
 
 //       <o.0>Raw Data Access API
 //       <i>Enables or disables Raw Data Access API.
-#define USBD_CDC4_NCM_RAW_ENABLE         0
+#define USBD_CDC7_NCM_RAW_ENABLE         0
 
 //       <o>IN NTB Data Buffering <1=>Single Buffer <2=>Double Buffer
 //       <i>Specifies buffering used for sending data to USB Host.
 //       <i>Not used when RAW Data Access API is enabled.
-#define USBD_CDC4_NCM_NTB_IN_BUF_CNT     1
+#define USBD_CDC7_NCM_NTB_IN_BUF_CNT     1
 
 //       <o>OUT NTB Data Buffering <1=>Single Buffer <2=>Double Buffer
 //       <i>Specifies buffering used for receiving data from USB Host.
 //       <i>Not used when RAW Data Access API is enabled.
-#define USBD_CDC4_NCM_NTB_OUT_BUF_CNT    1
+#define USBD_CDC7_NCM_NTB_OUT_BUF_CNT    1
 
 //     </h>
 
@@ -349,16 +349,16 @@
 //   <h>OS Resources Settings
 //   <i>These settings are used to optimize usage of OS resources.
 //     <o>Communication Device Class Interrupt Endpoint Thread Stack Size <64-65536>
-#define USBD_CDC4_INT_THREAD_STACK_SIZE  512
+#define USBD_CDC7_INT_THREAD_STACK_SIZE  512
 
 //        Communication Device Class Interrupt Endpoint Thread Priority
-#define USBD_CDC4_INT_THREAD_PRIORITY    osPriorityAboveNormal
+#define USBD_CDC7_INT_THREAD_PRIORITY    osPriorityAboveNormal
 
 //     <o>Communication Device Class Bulk Endpoints Thread Stack Size <64-65536>
-#define USBD_CDC4_BULK_THREAD_STACK_SIZE 512
+#define USBD_CDC7_BULK_THREAD_STACK_SIZE 512
 
 //        Communication Device Class Bulk Endpoints Thread Priority
-#define USBD_CDC4_BULK_THREAD_PRIORITY   osPriorityAboveNormal
+#define USBD_CDC7_BULK_THREAD_PRIORITY   osPriorityAboveNormal
 
 //   </h>
 // </h>

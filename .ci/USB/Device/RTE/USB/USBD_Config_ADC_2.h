@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USBD_Config_ADC_2.h
  * Purpose: USB Device Audio Device Class (ADC) Configuration
- * Rev.:    V5.3.0
+ * Rev.:    V5.3.1
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -31,7 +31,7 @@
 //         <i>and for memory allocation in the USB component.
 //
 //         <h>Full/Low-speed (High-speed disabled)
-//         <i>Parameters apply when High-speed is disabled in USBD_Config_n.c
+//         <i>Parameters apply when High-speed is disabled in USBD_Config_n.h
 //           <o.0..9>Maximum Endpoint Packet Size (in bytes) <0-1023>
 //           <i>Specifies the physical packet size used for information exchange.
 //           <i>Maximum value is 1023.
@@ -63,7 +63,7 @@
 //         <i>allocation in the USB component.
 //
 //         <h>Full/Low-speed (High-speed disabled)
-//         <i>Parameters apply when High-speed is disabled in USBD_Config_n.c
+//         <i>Parameters apply when High-speed is disabled in USBD_Config_n.h
 //           <o.0..9>Maximum Endpoint Packet Size (in bytes) <0-1023>
 //           <i>Specifies the physical packet size used for information exchange.
 //           <i>Maximum value is 1023.

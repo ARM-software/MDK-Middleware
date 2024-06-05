@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USBD_Config_CustomClass_%Instance%.h
  * Purpose: USB Device Custom Class Configuration
- * Rev.:    V5.3.0
+ * Rev.:    V5.3.1
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -178,7 +178,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -263,7 +263,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -348,7 +348,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -433,7 +433,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -518,7 +518,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -603,7 +603,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -688,7 +688,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -773,7 +773,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -1078,7 +1078,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -1163,7 +1163,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -1248,7 +1248,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -1333,7 +1333,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -1418,7 +1418,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -1503,7 +1503,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -1588,7 +1588,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -1673,7 +1673,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -1978,7 +1978,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -2063,7 +2063,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -2148,7 +2148,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -2233,7 +2233,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -2318,7 +2318,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -2403,7 +2403,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -2488,7 +2488,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -2573,7 +2573,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -2878,7 +2878,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -2963,7 +2963,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -3048,7 +3048,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -3133,7 +3133,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -3218,7 +3218,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -3303,7 +3303,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -3388,7 +3388,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //
@@ -3473,7 +3473,7 @@
 //           </h>
 
 //           <h>High-speed
-//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.c
+//             <i>Parameters apply when High-speed is enabled in corresponding USBD_Config_n.h
 //             <i>(n is the index of device on which this interface will be used) and when
 //             <i>device operates in High-speed.
 //

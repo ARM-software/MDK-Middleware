@@ -1,16 +1,16 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USBD_User_Device_SerNum_%Instance%.c
  * Purpose: USB Device User module
- * Rev.:    V1.2.0
+ * Rev.:    V1.2.1
  *----------------------------------------------------------------------------*/
 /*
  * USBD_User_Device_SerNum_%Instance%.c is a code template for the user specific 
  * Device events and Control Endpoint 0 requests handling. It demonstrates how 
  * to specify serial number at runtime instead of fixed one specified in 
- * USBD_Config_%Instance%.c file.
+ * USBD_Config_%Instance%.h file.
  */
  
 /**
