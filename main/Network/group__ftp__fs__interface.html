@@ -169,7 +169,7 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>FTP server functions that work with a File System. </p>
-<p>All File System Interface functions are located in <b>FTP_Server_FS.c</b>, which will be automatically added to your project's <b>Network</b> folder. The file is preconfigured for the  <script>link_loc('MW-FileSystem');</script> component, so no modifications are required. If you wish to use another type of file system, you need to override these weak procedures with your required functionality.</p>
+<p>All functions of the File System Interface are located in <b>FTP_Server_FS.c</b>, which is automatically added to the <b>Network</b> folder of your project. The file is preconfigured for the  <script>link_loc('MW-FileSystem');</script>, so no changes are required. If you want to use a different type of file system, you must add a similar file to your project and implement the interface functions yourself.</p>
 <p>The following functions are implemented in this module:</p><ul>
 <li><a class="el" href="group__ftp__fs__interface.html#gadba422459d2cd790bfbceba3ee88728e">netFTPs_fopen</a> - open a file for reading or writing.</li>
 <li><a class="el" href="group__ftp__fs__interface.html#ga548f8a80d43cfc29d117cf93b4165942">netFTPs_fclose</a> - close a file that was previously opened.</li>
