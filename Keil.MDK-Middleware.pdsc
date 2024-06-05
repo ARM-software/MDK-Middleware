@@ -982,7 +982,7 @@
         <files>
           <file category="doc"    name="Documentation/html/Network/group__netHTTP__Func.html"/>
           <file category="header" name="Components/Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
-          <file category="source" name="Components/Network/Interface/HTTP_Server_FS.c"/>
+          <file category="source" name="Components/Network/Interface/HTTP_Server_FS.c" condition="File System Drive"/>
           <file category="source" name="Components/Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
           <file category="source" name="Components/Network/Template/HTTP_Server_Access.c" attr="template" select="HTTP Server Access"/>
           <file category="source" name="Components/Network/Template/HTTP_Server_Multiuser.c" attr="template" select="HTTP Server Multi-user"/>
@@ -1007,7 +1007,7 @@
           <file category="source" name="Components/Network/Config/Net_Security.c" attr="config" version="7.2.0"/>
           <file category="header" name="Components/Network/Config/Net_Config_HTTP_Server.h" attr="config" version="7.2.0"/>
           <file category="source" name="Components/Network/Interface/TLS_mbed.c"/>
-          <file category="source" name="Components/Network/Interface/HTTP_Server_FS.c"/>
+          <file category="source" name="Components/Network/Interface/HTTP_Server_FS.c" condition="File System Drive"/>
           <file category="source" name="Components/Network/Template/HTTP_Server_CGI.c" attr="template" select="HTTP Server CGI"/>
           <file category="source" name="Components/Network/Template/HTTP_Server_Access.c" attr="template" select="HTTP Server Access"/>
           <file category="source" name="Components/Network/Template/HTTP_Server_Multiuser.c" attr="template" select="HTTP Server Multi-user"/>
@@ -1044,7 +1044,7 @@
         <files>
           <file category="doc"    name="Documentation/html/Network/group__netTFTPc__Func.html"/>
           <file category="header" name="Components/Network/Config/Net_Config_TFTP_Server.h" attr="config" version="7.0.0"/>
-          <file category="source" name="Components/Network/Interface/TFTP_Server_FS.c"/>
+          <file category="source" name="Components/Network/Interface/TFTP_Server_FS.c" condition="File System Drive"/>
           <file category="source" name="Components/Network/Template/TFTP_Server_Access.c" attr="template" select="TFTP Server Access"/>
           <!-- Library source files -->
           <file category="source" name="Components/Network/Source/net_tftp_server.c"/>
@@ -1059,7 +1059,7 @@
         <files>
           <file category="doc"    name="Documentation/html/Network/group__netTFTPc__Func.html"/>
           <file category="header" name="Components/Network/Config/Net_Config_TFTP_Client.h" attr="config" version="5.0.0"/>
-          <file category="source" name="Components/Network/Interface/TFTP_Client_FS.c"/>
+          <file category="source" name="Components/Network/Interface/TFTP_Client_FS.c" condition="File System Drive"/>
           <file category="source" name="Components/Network/Template/TFTP_Client_UIF.c" attr="template" select="TFTP Client"/>
           <!-- Library source files -->
           <file category="source" name="Components/Network/Source/net_tftp_client.c"/>
@@ -1074,7 +1074,7 @@
         <files>
           <file category="doc"    name="Documentation/html/Network/group__netFTPs__Func.html"/>
           <file category="header" name="Components/Network/Config/Net_Config_FTP_Server.h" attr="config" version="7.0.0"/>
-          <file category="source" name="Components/Network/Interface/FTP_Server_FS.c"/>
+          <file category="source" name="Components/Network/Interface/FTP_Server_FS.c" condition="File System Drive"/>
           <file category="source" name="Components/Network/Template/FTP_Server_Event.c" attr="template" select="FTP Server Notification Events"/>
           <file category="source" name="Components/Network/Template/FTP_Server_Access.c" attr="template" select="FTP Server Access"/>
           <file category="source" name="Components/Network/Template/FTP_Server_Multiuser.c" attr="template" select="FTP Server Multi-user"/>
@@ -1091,7 +1091,7 @@
         <files>
           <file category="doc"    name="Documentation/html/Network/group__netFTPc__Func.html"/>
           <file category="header" name="Components/Network/Config/Net_Config_FTP_Client.h" attr="config" version="5.0.0"/>
-          <file category="source" name="Components/Network/Interface/FTP_Client_FS.c"/>
+          <file category="source" name="Components/Network/Interface/FTP_Client_FS.c" condition="File System Drive"/>
           <file category="source" name="Components/Network/Template/FTP_Client_UIF.c" attr="template" select="FTP Client"/>
           <!-- Library source files -->
           <file category="source" name="Components/Network/Source/net_ftp_client.c"/>
@@ -1120,7 +1120,7 @@
         <files>
           <file category="doc"    name="Documentation/html/Network/group__netSMTPc__Func.html"/>
           <file category="header" name="Components/Network/Config/Net_Config_SMTP_Client.h" attr="config" version="5.1.0"/>
-          <file category="source" name="Components/Network/Interface/SMTP_Client_FS.c"/>
+          <file category="source" name="Components/Network/Interface/SMTP_Client_FS.c" condition="File System Drive"/>
           <file category="source" name="Components/Network/Template/SMTP_Client_UIF.c" attr="template" select="SMTP Client"/>
           <!-- Library source files -->
           <file category="source" name="Components/Network/Source/net_smtp_client.c"   condition="Network DNS"/>
@@ -1139,7 +1139,7 @@
           <file category="doc"    name="Documentation/html/Network/group__netSMTPc__Func.html"/>
           <file category="source" name="Components/Network/Config/Net_Security.c" attr="config" version="7.2.0"/>
           <file category="header" name="Components/Network/Config/Net_Config_SMTP_Client.h" attr="config" version="5.1.0"/>
-          <file category="source" name="Components/Network/Interface/SMTP_Client_FS.c"/>
+          <file category="source" name="Components/Network/Interface/SMTP_Client_FS.c" condition="File System Drive"/>
           <file category="source" name="Components/Network/Interface/TLS_mbed.c"/>
           <file category="source" name="Components/Network/Template/SMTP_Client_UIF.c" attr="template" select="SMTP Client"/>
           <!-- Library source files -->
