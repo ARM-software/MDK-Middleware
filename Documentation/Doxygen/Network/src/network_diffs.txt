@@ -14,16 +14,15 @@ to be migrated in µVision. The IDE will show an error message that a software c
 
 \image html mig_project_open.png "Error message opening a legacy project"
 
-This message is shown because the previous variants \b Debug/Release have been changed to IPv4/IPv6 Debug and IPv4/IPv6
-Release. Open the \b Manage \b Run-Time \b Environment window. It will show the same error message in a different way:
+This message is shown because the previous variants <b>IPv4 Release</b>/<b>IPv4 Debug</b> have been removed.
+Open the \b Manage \b Run-Time \b Environment window. It will show the same error message in a different way:
 
 \image html mig_rte_open.png "Error message in the Run-Time Environment"
 
 
-\subsection nw_diffs_select_variant Select a New Core Variant
-Select the variant \b IPv4/IPv6 \b Release to get rid of this validation message:
+Select a New Component variant \b MDK to get rid of this validation message:
 
-\image html mig_rte_choose_ipv4ipv6_release.png "Manually resolve the error message"
+\image html mig_rte_choose_mdk.png "Manually resolve the error message"
 
 
 \subsection nw_diffs_update_configs Update Configuration Files
