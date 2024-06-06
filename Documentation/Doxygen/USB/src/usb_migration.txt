@@ -24,7 +24,6 @@
 The following sections show how to migrate projects from previous version of the MDK-Middleware (v7):
   - \ref usb_migration_component describes how to migrate the USB Component selection.
   - \ref usb_migration_config describes how to migrate the USB Component configuration.
-  - \ref usb_migration_uv describes how to migrate the µVision project.
 
 \section usb_migration_component Component migration
 
@@ -66,47 +65,4 @@ USB Host:
 
 \note <b>OHCI</b> and <b>EHCI</b> drivers are not a part of the <b>MDK-Middleware</b> anymore but are distributed separately
       via the <b>CMSIS-Driver</b> pack, so please consult CMSIS-Driver documentation on configuring and using those drivers.
-
-\section usb_migration_uv µVision project migration
-
-First follow the previous procedures for \ref usb_migration_component and \ref usb_migration_config.
-
-After that, open the <b>.uvprojx</b> file with text editor and remove sections describing: 
- - <b>USB_Debug.c</b>
- - <b>USBD_Config_0..3.c</b>
- - <b>USBH_Config_0..3.c</b>
-
-Remove sections such as below:
-\code
-  <file attr="config" category="source" name="USB\Config\USBD_Config.c" version="5.2.0">
-    <instance index="0">RTE\USB\USBD_Config_0.c</instance>
-    <component Cbundle="MDK-Plus" Cclass="USB" Cgroup="Device" Cvendor="Keil" Cversion="6.17.0" condition="USB Core and Device Driver and Class Instance" maxInstances="4"/>
-    <package name="MDK-Middleware" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="7.17.0"/>
-    <targetInfos>
-      <targetInfo name="Release"/>
-    </targetInfos>
-  </file>
-\endcode
-
-\code
-  <file attr="config" category="source" name="USB\Config\USBH_Config.c" version="5.2.1">
-    <instance index="0">RTE\USB\USBH_Config_0.c</instance>
-    <component Cbundle="MDK-Pro" Cclass="USB" Cgroup="Host" Cvendor="Keil" Cversion="6.17.0" condition="USB Core and Host Driver and Class Instance" maxInstances="4"/>
-    <package name="MDK-Middleware" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="7.17.0"/>
-    <targetInfos>
-      <targetInfo name="Release"/>
-    </targetInfos>
-  </file>
-\endcode
-
-\code
-  <file attr="config" category="source" name="USB\Config\USB_Debug.c" version="1.0.0">
-    <instance index="0" removed="1">RTE\USB\USB_Debug.c</instance>
-    <component Cbundle="MDK-Plus" Cclass="USB" Cgroup="CORE" Cvariant="Debug" Cvendor="Keil" Cversion="6.17.0" condition="CMSIS Core with RTOS and Event Recorder"/>
-    <package name="MDK-Middleware" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="7.17.0"/>
-    <targetInfos/>
-  </file>
-\endcode
-
-After that you can open the project file in the µVision and continue your work with the new MDK-Middleware.
 */
