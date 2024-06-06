@@ -37,9 +37,7 @@ information on the general setup and the available I/O of the development board.
 Build the "USB Device HID" Project
 ==================================
 
-Open the example project in MDK. The µVision \b Project window should display a similar project structure:
-
-\image html "usb_hid_example_proj_window.png" Typical Project Structure of an USB HID Example
+Open the example project in MDK.
 
 Source Files
 ------------
@@ -102,9 +100,7 @@ information on the general setup and the available storage device on the develop
 Build the "USB Device Mass Storage" Project
 ===========================================
 
-Open the example project in MDK. The µVision \b Project window should display a similar project structure:
-
-\image html "usbd_msc_example_proj_window.png" Typical Project Structure of an USB MSC Example
+Open the example project in MDK.
 
 Source Files
 ------------
@@ -165,9 +161,7 @@ information on the general setup and the available I/O on the development board.
 Build the "USB Device Virtual COM" Project
 ==========================================
 
-Open the example project in MDK. The µVision \b Project window should display a similar project structure:
-
-\image html "usb_cdc_example_proj_window.png" Typical Project Structure of an USB VCOM Example
+Open the example project in MDK.
 
 Source Files
 ------------
@@ -251,9 +245,7 @@ general setup and the available I/O on the development board.
 Build the "USB Device Audio" Project
 ====================================
 
-Open the example project in MDK. The µVision \b Project window should display a similar project structure:
-
-\image html "usb_adc_example_proj_window.png" Typical Project Structure of a USB Device Audio Example
+Open the example project in MDK.
 
 Source Files
 ------------
@@ -307,9 +299,7 @@ The \b Abstract.txt file contained in the \b Documentation group of the \b Proje
 Build the "WinUSB_Echo" Project
 ===============================
 
-Open the example project in MDK. The µVision \b Project window should display a similar project structure:
-
-\image html "usb_cc_example_proj_window.png" Typical project structure of WinUSB_Test example
+Open the example project in MDK.
 
 Source Files
 ------------
@@ -467,10 +457,7 @@ Open the \ref dev_msc_tutorial "MSC example project" in MDK. From the \ref dev_h
 and USBD_User_HID.c and add them to the project. Open the <b>Manage Run-Time Environment</b> window. Add one USB:Device:HID component to the
 project. After clicking OK, you will see that the USB Component in the Project window will have an additional entry:
 USBD_Config_HID_0.h. As the HID example uses LEDs and push-buttons, you might need to add these <b>Board Support</b> related
-items as well. Check the RTE Component selection of the HID example for further detail. In total, it should display now a
-similar project structure:
-
-\image html "usbd_comp_proj_structure.png" "USB Composite Device Project Structure"
+items as well. Check the RTE Component selection of the HID example for further detail.
 
 Source Files
 ------------
@@ -576,10 +563,6 @@ Before continuing to add the required source code, you need to add a template fi
 - Right-click on <b>Source Group 1</b> and select <b>Add New Item to Group 'Source Group 1'...</b>.
 - Click on <b>User Code Template</b> and select the <b>USB Device HID Mouse</b> template.
 - Click <b>Add</b> to copy the file <b>USBD_User_HID_Mouse_0.c</b> to the project.
-
-Your Project should look like this:
-
-\image html "usb_mouse_example_proj_window.png" "USB Mouse Project Structure"
 
 Source Files
 ------------
@@ -1031,10 +1014,6 @@ Before continuing to add the required source code, you need to add a template fi
 - Click on <b>User Code Template</b> and select the <b>USB Device CDC NCM Ethernet Bridge</b> template.
 - Click <b>Add</b> to copy the file <b>USBD_User_CDC_NCM_ETH_0.c</b> to the project.
 
-Your Project should look like this:
-
-\image html "usb_eth_usb_proj_window.png" "Ethernet-over-USB Project Structure"
-
 Source Files
 ------------
 - Click on <b>New (Ctrl + N)</b> to create a new file.
@@ -1471,9 +1450,7 @@ general setup.
 Build the "RNDIS to Ethernet Bridge" project
 ===============================
 
-Open the example project in MDK. The µVision \b Project window should display a similar project structure:
-
-\image html "usb_dev_rndis_eth_bridge_proj_win.png" Typical project structure of the RNDIS bridge example
+Open the example project in MDK.
 
 Source Files
 ------------
@@ -1672,10 +1649,7 @@ general setup and the available I/O of the development board.
 
 Build the "USB Host Keyboard" Project
 ======================================
-Open the example project in MDK (\urlout{uv4_ca_packinstaller} web page explains this). The µVision Project window should display a similar
-project structure:
-
-\image html "usbh_hid_proj_structure.png" "USB Host Keyboard Project Structure"
+Open the example project in MDK (\urlout{uv4_ca_packinstaller} web page explains this).
 
 Source Files
 ------------
@@ -1723,10 +1697,7 @@ general setup and the available I/O of the development board.
 
 Build the "USB Host Mass Storage" Project
 =========================================
-Open the example project in MDK (the \urlout{uv4_ca_packinstaller} web page explains this). The µVision Project window should display a similar
-project structure:
-
-\image html "usbh_msc_proj_structure.png" "USB Host Mass Storage Project Structure"
+Open the example project in MDK (the \urlout{uv4_ca_packinstaller} web page explains this).
 
 Source Files
 ------------
@@ -1794,10 +1765,6 @@ Before continuing to add the required source code, you need to add a template fi
 - Click on <b>User Code Template</b> and scroll down on  the left side, until you see the \b USB component template files.
 - Choose <b>USB Host Prolific 2303</b>
 - Click on <b>Add</b>.
-
-Your Project should now look like this:
-
-\image html "usbh_cust_example_proj_window.png" "USB Host Custom Class PL2303 Project Structure"
 
 Source Files
 ------------
@@ -2270,10 +2237,6 @@ In the <b>Manage Run-Time Environment</b> window, select the following component
 - <b>USB:Host:CDC</b>
 
 Click the <b>Resolve</b> button and then <b>OK</b>.
-
-Your Project should look like this:
-
-\image html "usbh_cdc_example_proj_window.png" "USB Host CDC Project Structure"
 
 Source Files
 ------------
