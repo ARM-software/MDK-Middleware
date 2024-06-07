@@ -6,685 +6,648 @@
  * Purpose: File manipulation example program
  *----------------------------------------------------------------------------*/
 
-#include <stdio.h>                      // Standard I/O .h-file
-#include <ctype.h>                      // Character functions
-#include <string.h>                     // String and memory functions
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
-#include "main.h"
+#include "cmsis_os2.h"
+#include "rl_fs.h"
 
-#include "cmsis_os2.h"                  // ::CMSIS:RTOS2
-
-#include "rl_fs.h"                      // Keil::File System&MDK:CORE
+/* Use current drive if drive is not specified */
+#ifndef FILE_DEMO_DRIVE
+  #define FILE_DEMO_DRIVE ""
+#endif
 
 /* Some ASCII control characters */
 #define ASCII_BS        0x08
 #define ASCII_LF        0x0A
 #define ASCII_CR        0x0D
-#define ASCII_CNTLQ     0x11
-#define ASCII_CNTLS     0x13
-#define ASCII_ESC       0x1B
-#define ASCII_DEL       0x7F
 
 // Main stack size must be multiple of 8 Bytes
 #define APP_MAIN_STK_SZ (1200U)
-uint64_t app_main_stk[APP_MAIN_STK_SZ / 8];
 const osThreadAttr_t app_main_attr = {
-  .stack_mem  = &app_main_stk[0],
-  .stack_size = sizeof(app_main_stk)
+  .stack_size = APP_MAIN_STK_SZ
 };
 
 /* Command definitions structure. */
-typedef struct scmd {
-  char val[8];
-  void (*func)(char *par);
-} SCMD;
+typedef struct {
+  void (*func)(void);
+  const char *cmd;
+  const char *args;
+  const char *info;
+} CMD_t;
 
 /* Command function prototypes */
-static void cmd_capture (char *par);
-static void cmd_type    (char *par);
-static void cmd_rename  (char *par);
-static void cmd_copy    (char *par);
-static void cmd_delete  (char *par);
-static void cmd_dir     (char *par);
-static void cmd_format  (char *par);
-static void cmd_help    (char *par);
-static void cmd_fill    (char *par);
+static void cmd_mount   (void);
+static void cmd_unmount (void);
+static void cmd_format  (void);
+static void cmd_write   (void);
+static void cmd_read    (void);
+static void cmd_delete  (void);
+static void cmd_rename  (void);
+static void cmd_mkdir   (void);
+static void cmd_rmdir   (void);
+static void cmd_find    (void);
+static void cmd_pwd     (void);
+static void cmd_chdir   (void);
+static void cmd_chdrive (void);
+static void cmd_help    (void);
 
-static const char intro[] =
-  "\n\n\n\n\n\n\n\n"
-  "+-----------------------------------------------------------------------+\n"
-  "|                 FileSystem File Manipulation example                  |\n";
-static const char help[] =
-  "+ command ------------------+ function ---------------------------------+\n"
-  "| CAP \"fname\" [/A]          | captures serial data to a file            |\n"
-  "|                           |  [/A option appends data to a file]       |\n"
-  "| FILL \"fname\" [nnnn]       | create a file filled with text            |\n"
-  "|                           |  [nnnn - number of lines, default=1000]   |\n"
-  "| TYPE \"fname\"              | displays the content of a text file       |\n"
-  "| REN \"fname1\" \"fname2\"     | renames a file 'fname1' to 'fname2'       |\n"
-  "| COPY \"fin\" [\"fin2\"] \"fout\"| copies a file 'fin' to 'fout' file        |\n"
-  "|                           |  ['fin2' option merges 'fin' and 'fin2']  |\n"
-  "| DEL \"fname\"               | deletes a file                            |\n"
-  "| DIR [\"mask\"]              | displays a list of files in the directory |\n"
-  "| FORMAT \"drive\" [options]  | formats the drive                         |\n"
-  "|                           | [/FAT32 option selects FAT32 file system] |\n"
-  "| HELP  or  ?               | displays this help                        |\n"
-  "+---------------------------+-------------------------------------------+\n";
-
-static const SCMD cmd[] = {
-  { "CAP",    cmd_capture },
-  { "TYPE",   cmd_type    },
-  { "REN",    cmd_rename  },
-  { "COPY",   cmd_copy    },
-  { "DEL",    cmd_delete  },
-  { "DIR",    cmd_dir     },
-  { "FORMAT", cmd_format  },
-  { "HELP",   cmd_help    },
-  { "FILL",   cmd_fill    },
-  { "?",      cmd_help    }
+static const CMD_t cmd_list[] = {
+  { cmd_mount,   "MOUNT",   "drive",          "Mount the drive."},
+  { cmd_unmount, "UNMOUNT", "drive",          "Unmount the drive."},
+  { cmd_format,  "FORMAT",  "drive [options]","Format the drive."},
+  { cmd_write,   "WRITE",   "file [n]",       "Write n lines to a file."},
+  { cmd_read,    "READ",    "file [n]",       "Read n lines from a file."},
+  { cmd_delete,  "DELETE",  "file [options]", "Delete a file."},
+  { cmd_rename,  "RENAME",  "file",           "Rename a file."},
+  { cmd_mkdir,   "MKDIR",   "path",           "Create a directory."},
+  { cmd_rmdir,   "RMDIR",   "path [options]", "Remove a directory."},
+  { cmd_find,    "FIND",    "pattern",        "Find a file or directory matching search pattern."},
+  { cmd_pwd,     "PWD",     "drive",          "Print working directory."},
+  { cmd_chdir,   "CHDIR",   "path",           "Change working directory."},
+  { cmd_chdrive, "CHDRIVE", "drive",          "Change current drive."},
+  { cmd_help,    "HELP",    "",               "Display help." }
 };
 
-#define CMD_COUNT   (sizeof (cmd) / sizeof (cmd[0]))
+#define CMD_LIST_SIZE   (sizeof(cmd_list) / sizeof(cmd_list[0]))
 
-/* Line buffer */
-static char line_buf[160];
+const char *fs_status[] = {
+  "fsOK",
+  "fsError",
+  "fsUnsupported",
+  "fsAccessDenied",
+  "fsInvalidParameter",
+  "fsInvalidDrive",
+  "fsInvalidPath",
+  "fsUninitializedDrive",
+  "fsDriverError",
+  "fsMediaError",
+  "fsNoMedia",
+  "fsNoFileSystem",
+  "fsNoFreeSpace",
+  "fsFileNotFound",
+  "fsDirNotEmpty",
+  "fsTooManyOpenFiles",
+  "fsAlreadyExists",
+  "fsNotDirectory"
+};
 
-static uint32_t fs_getline (char *line, int32_t n)  {
+/* Line and path buffers */
+static char cmd_line[300];
+static char pwd_path[260];
+
+/**
+  \brief Get a command line input from the stdin.
+  \param[in]  buf       Pointer to buffer to store input command
+  \param[in]  buf_size  The size of buffer
+  \return     number of characters read
+*/
+static uint32_t fs_terminal (char *buf, int32_t buf_size)  {
   int32_t cnt = 0;
   char ch;
 
-  do {
+  while (cnt < (buf_size - 2)) {
+    /* Read character from stdin (blocking) */
     ch = (char)getchar();
 
-    if ((ch == ASCII_BS) || (ch == ASCII_DEL)) {
-      /* Remove previous character from the line buffer */
-      if (cnt == 0) {
-        /* Line empty, nothing to do */
-        break;
+    if (ch == ASCII_BS) {
+      /* Backspace: remove previous character from the line buffer */
+      if (cnt != 0) {
+        /* Decrement number of characters */
+        cnt--;
+
+        /* Echo backspace */
+        putchar(ASCII_BS);
+        putchar(' ');
+        putchar(ASCII_BS);
+        fflush(stdout);
       }
-      /* Decrement number of characters and line pointer */
-      cnt--;
-      line--;
-      /* Echo backspace */
-      putchar(ASCII_BS);
-      putchar(' ');
-      putchar(ASCII_BS);
-      fflush(stdout);
     }
-    else if (ch == ASCII_ESC) {
-      /* ESC - stop editing line */
-      cnt = 0;
+    else if ((ch == ASCII_CR) || (ch == ASCII_LF)) {
+      /* Carriage return or new line: End of line */
       break;
     }
-    else {
-      if ((ch != ASCII_CNTLQ) && (ch != ASCII_CNTLS)) {
-        if (ch == ASCII_CR) {
-          /* CR - stop editing line */
-          *line = ch;
-          /* Increment line pointer and number of characters */
-          line++;
-          cnt++;
-          /* Add LF */
-          ch = ASCII_LF;
-        }
-        /* Echo and store character */
-        putchar(*line = ch);
-        fflush(stdout);
-        /* Increment line pointer and number of characters */
-        line++;
-        cnt++;
-      }
+    else if ((ch >= ' ') && (ch <= '~')) {
+      /* Allowed characters: echo and store character */
+      putchar(buf[cnt] = ch);
+      fflush(stdout);
+
+      /* Increment number of characters */
+      cnt++;
     }
-  } while ((cnt < (n - 2)) && (ch != ASCII_LF));
+    else {
+      /* Ignored characters */
+    }
+  }
+
   /* Add NUL terminator */
-  *line = 0;
+  buf[cnt] = 0;
 
   return (cnt);
 }
-/*-----------------------------------------------------------------------------
- *        Extract drive specification from the input string
- *----------------------------------------------------------------------------*/
-static char *get_drive (char *src, char *dst, uint32_t dst_sz) {
-  uint32_t i, n;
 
-  i = 0;
-  n = 0;
-  while (!n && src && src[i] && (i < dst_sz)) {
-    dst[i] = src[i];
+/**
+  \brief Mount a drive.
+*/
+static void cmd_mount (void) {
+  fsStatus status;
+  char *drive;
 
-    if (dst[i] == ':') {
-      n = i + 1;
-    }
-    i++;
+  /* Extract function argument */
+  drive = strtok(NULL, " ");
+
+  status = finit(drive);
+
+  if (status != fsOK) {
+    printf("\nDrive initialization failed!");
   }
-  if (n == dst_sz) {
-    n = 0;
+  else {
+    status = fmount (drive);
   }
-  dst[n] = '\0';
 
-  return (src + n);
+  if (status != fsOK) {
+    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+  } else {
+    printf ("\nDrive mounted.");
+  }
 }
 
-/*-----------------------------------------------------------------------------
- *        Process input string for long or short name entry
- *----------------------------------------------------------------------------*/
-static char *get_entry (char *cp, char **pNext) {
-  char *sp, lfn = 0, sep_ch = ' ';
+/**
+  \brief Unmount a drive.
+*/
+static void cmd_unmount (void) {
+  fsStatus status;
+  char *drive;
 
-  if (cp == NULL) {                           /* skip NULL pointers           */
-    *pNext = cp;
-    return (cp);
-  }
+  /* Extract function argument */
+  drive = strtok(NULL, " ");
 
-  for ( ; *cp == ' ' || *cp == '\"'; cp++) {  /* skip blanks and starting  "  */
-    if (*cp == '\"') { sep_ch = '\"'; lfn = 1; }
-    *cp = 0;
-  }
- 
-  for (sp = cp; *sp != ASCII_CR && *sp != ASCII_LF && *sp != 0; sp++) {
-    if ( lfn && *sp == '\"') break;
-    if (!lfn && *sp == ' ' ) break;
-  }
+  status = funmount (drive);
 
-  for ( ; *sp == sep_ch || *sp == ASCII_CR || *sp == ASCII_LF; sp++) {
-    *sp = 0;
-    if ( lfn && *sp == sep_ch) { sp ++; break; }
+  if (status != fsOK) {
+    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+  } else {
+    printf ("\nDrive unmounted.");
   }
-
-  *pNext = (*sp) ? sp : NULL;                 /* next entry                   */
-  return (cp);
 }
 
-/*-----------------------------------------------------------------------------
- *        Print size in dotted format
- *----------------------------------------------------------------------------*/
-static void dot_format (uint64_t val, char *sp) {
+/**
+  \brief Format a drive.
+*/
+static void cmd_format (void) {
+  fsStatus status;
+  char *drive;
+  char *options;
 
-  if (val >= (uint64_t)1e12) {
-    sp += sprintf(sp,"%d.",(uint32_t)(val/(uint64_t)1e12));
-    val %= (uint64_t)1e12;
-    sp += sprintf(sp,"%03d.",(uint32_t)(val/(uint64_t)1e9));
-    val %= (uint64_t)1e9;
-    sp += sprintf(sp,"%03d.",(uint32_t)(val/(uint64_t)1e6));
-    val %= (uint64_t)1e6;
-    sprintf(sp,"%03d.%03d",(uint32_t)(val/1000),(uint32_t)(val%1000));
-    return;
+  /* Extract function arguments */
+  drive   = strtok(NULL, " ");
+  options = strtok(NULL, " ");
+
+  status = fformat (drive, options);
+
+  if (status != fsOK) {
+    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+  } else {
+    printf ("\nDrive formatted.");
   }
-  if (val >= (uint64_t)1e9) {
-    sp += sprintf(sp,"%d.",(uint32_t)(val/(uint64_t)1e9));
-    val %= (uint64_t)1e9;
-    sp += sprintf(sp,"%03d.",(uint32_t)(val/(uint64_t)1e6));
-    val %= (uint64_t)1e6;
-    sprintf(sp,"%03d.%03d",(uint32_t)(val/1000),(uint32_t)(val%1000));
-    return;
-  }
-  if (val >= (uint64_t)1e6) {
-    sp += sprintf(sp,"%d.",(uint32_t)(val/(uint64_t)1e6));
-    val %= (uint64_t)1e6;
-    sprintf(sp,"%03d.%03d",(uint32_t)(val/1000),(uint32_t)(val%1000));
-    return;
-  }
-  if (val >= 1000) {
-    sprintf(sp,"%d.%03d",(uint32_t)(val/1000),(uint32_t)(val%1000));
-    return;
-  }
-  sprintf(sp,"%d",(uint32_t)(val));
 }
 
-/*-----------------------------------------------------------------------------
- *        Capture serial data to file
- *----------------------------------------------------------------------------*/
-static void cmd_capture (char *par) {
-  char *fname, *next;
-  bool  append;
-  uint32_t cnt;
+/**
+  \brief Write a file.
+*/
+static void cmd_write (void) {
   FILE *f;
+  char *file;
+  char *n;
+  uint32_t i, cnt;
 
-  fname = get_entry(par, &next);
-  if (fname == NULL) {
-    printf("\nFilename missing.\n");
-    return;
+  /* Extract function arguments */
+  file = strtok(NULL, " ");
+  n    = strtok(NULL, " ");
+
+  if (n != NULL) {
+    /* Convert number of lines from string to integer */
+    cnt = (uint32_t)atoi(n);
+  } else {
+    /* Default: write 1000 lines */
+    cnt = 1000U;
   }
-  append = false;
-  if (next) {
-    par = get_entry(next, &next);
-    if ((strcmp(par, "/A") == 0) ||(strcmp(par, "/a") == 0)) {
-      append = true;
-    }
-    else {
-      printf("\nCommand error.\n");
-      return;
-    }
-  }
-  printf((append) ? "\nAppend data to file %s" :
-                    "\nCapture data to file %s", fname);
-  printf("\nPress ESC to stop.\n");
-  f = fopen(fname,append ? "a" : "w");  /* open a file for writing            */
+
+  f = fopen(file, "w");
+
   if (f == NULL) {
-    printf("\nCan not open file!\n");   /* error when trying to open file     */
-    return;
+    printf("\nCan not open file!");
   }
-  do {
-    cnt = fs_getline(line_buf, sizeof (line_buf));
-    fputs(line_buf, f);
-  } while (cnt > 0U);
-  fclose(f);                            /* close the output file              */
-  printf("\nFile closed.\n");
-}
+  else {
+    for (i = 0; i < cnt; i++)  {
+      fprintf(f, "This is line # %d in file %s\n", i, file);
 
-/*-----------------------------------------------------------------------------
- *        Create a file and fill it with some text
- *----------------------------------------------------------------------------*/
-static void cmd_fill (char *par) {
-  char *fname, *next;
-  FILE *f;
-  int i,cnt = 1000;
-
-  fname = get_entry(par, &next);
-  if (fname == NULL) {
-    printf("\nFilename missing.\n");
-    return;
-  }
-  if (next) {
-    par = get_entry(next, &next);
-    if (sscanf(par,"%d", &cnt) == 0) {
-      printf("\nCommand error.\n");
-      return;
+      /* Display dot after every 1000th line during the write progress */
+      if ((i % 1000) == 0) {
+        printf(".");
+        fflush(stdout);
+      }
     }
-  }
 
-  f = fopen(fname, "w");                /* open a file for writing            */
-  if (f == NULL) {
-    printf("\nCan not open file!\n");   /* error when trying to open file     */
-    return;
-  } 
-  for (i = 0; i < cnt; i++)  {
-    fprintf(f, "This is line # %d in file %s\n", i, fname);
-    if (!(i & 0x3FF)) printf("."); fflush(stdout);
+    fclose(f);
+    printf("\nFile closed.");
   }
-  fclose(f);                            /* close the output file              */
-  printf("\nFile closed.\n");
 }
 
-/*-----------------------------------------------------------------------------
- *        Read file and dump it to serial window
- *----------------------------------------------------------------------------*/
-static void cmd_type (char *par) {
-  char *fname,*next;
+/**
+  \brief Read a file.
+*/
+static void cmd_read (void) {
   FILE *f;
+  char *file;
+  char *n;
+  uint32_t n_cnt, n_lim;
   int ch;
 
-  fname = get_entry(par, &next);
-  if (fname == NULL) {
-    printf("\nFilename missing.\n");
-    return;
+  /* Extract function arguments */
+  file = strtok(NULL, " ");
+  n    = strtok(NULL, " ");
+
+  if (n != NULL) {
+    /* Convert number of lines from string to integer */
+    n_lim = (uint32_t)atoi(n);
+  } else {
+    /* Default: read until EOF */
+    n_lim = 0U;
   }
-  printf("\nRead data from file %s\n",fname);
-  f = fopen(fname,"r");                 /* open the file for reading          */
+
+  f = fopen(file, "r");
+
   if (f == NULL) {
-    printf("\nFile not found!\n");
-    return;
-  }
- 
-  while ((ch = fgetc(f)) != EOF) {      /* read the characters from the file  */
-    putchar(ch);                        /* and write them on the screen       */
-  }
-  fclose(f);                            /* close the input file when done     */
-  printf("\nFile closed.\n");
-}
-
-/*-----------------------------------------------------------------------------
- *        Rename a File
- *----------------------------------------------------------------------------*/
-static void cmd_rename (char *par) {
-  char *fname,*fnew,*next,dir;
-
-  fname = get_entry(par, &next);
-  if (fname == NULL) {
-    printf("\nFilename missing.\n");
-    return;
-  }
-  fnew = get_entry(next, &next);
-  if (fnew == NULL) {
-    printf("\nNew Filename missing.\n");
-    return;
-  }
-  if (strcmp(fname,fnew) == 0) {
-    printf("\nNew name is the same.\n");
-    return;
-  }
-
-  dir = 0;
-  if (*(fname + strlen(fname) - 1) == '\\') {
-    dir = 1;
-  }
-
-  if (frename(fname, fnew) == fsOK) {
-    if (dir) {
-      printf("\nDirectory %s renamed to %s\n",fname,fnew);
-    }
-    else {
-      printf("\nFile %s renamed to %s\n",fname,fnew);
-    }
+    printf("\nCan not open file!");
   }
   else {
-    if (dir) {
-      printf("\nDirectory rename error.\n");
-    }
-    else {
-      printf("\nFile rename error.\n");
-    }
-  }
-}
+    n_cnt = 0U;
+    /* Start printing to a new line */
+    putchar ('\n');
 
-/*-----------------------------------------------------------------------------
- *        Copy a File
- *----------------------------------------------------------------------------*/
-static void cmd_copy (char *par) {
-  char *fname,*fnew,*fmer,*next;
-  FILE *fin,*fout;
-  uint32_t cnt,total;
-  static char buf[512];
-  bool merge;
+    while ((ch = fgetc(f)) != EOF) {
+      /* Write character to the console */
+      putchar(ch);
 
-  fname = get_entry(par, &next);
-  if (fname == NULL) {
-    printf("\nFilename missing.\n");
-    return;
-  }
-  fmer = get_entry(next, &next);
-  if (fmer == NULL) {
-    printf("\nNew Filename missing.\n");
-    return;
-  }
-  fnew = get_entry(next, &next);
-  if (fnew != NULL) {
-    merge = true;
-  }
-  else {
-    merge = false;
-    fnew = fmer;
-  }
-  if ((strcmp(fname,fnew) == 0) || (merge && strcmp(fmer,fnew) == 0)) {
-    printf("\nNew name is the same.\n");
-    return;
-  }
+      if (ch == '\n') {
+        /* Increment number of read lines */
+        n_cnt++;
 
-  fin = fopen(fname,"r");               /* open the file for reading          */
-  if (fin == NULL) {
-    printf("\nFile %s not found!\n",fname);
-    return;
-  }
-
-  if (merge == false) {
-    printf("\nCopy file %s to %s\n",fname,fnew);
-  }
-  else {
-    printf("\nCopy file %s, %s to %s\n",fname,fmer,fnew);
-  }
-  fout = fopen(fnew,"w");               /* open the file for writing          */
-  if (fout == NULL) {
-    printf("\nFailed to open %s for writing!\n",fnew);
-    fclose(fin);
-    return;
-  }
-
-  total = 0;
-  while ((cnt = fread(&buf, 1, 512, fin)) != 0) {
-    fwrite(&buf, 1, cnt, fout);
-    total += cnt;
-  }
-  fclose(fin);                          /* close input file when done         */
-
-  if (merge == true) {
-    fin = fopen(fmer,"r");              /* open the file for reading          */
-    if (fin == NULL) {
-      printf("\nFile %s not found!\n",fmer);
-    }
-    else {
-      while ((cnt = fread(&buf, 1, 512, fin)) != 0) {
-        fwrite(&buf, 1, cnt, fout);
-        total += cnt;
+        if ((n_cnt - n_lim) == 0) {
+          /* All of the requested lines were read out */
+          break;
+        }
       }
-      fclose(fin);
     }
+
+    fclose(f);
+    printf("\nFile closed.");
   }
-  fclose(fout);
-  dot_format(total, &buf[0]);
-  printf("\n%s bytes copied.\n", &buf[0]);
 }
 
-/*-----------------------------------------------------------------------------
- *        Delete a File
- *----------------------------------------------------------------------------*/
-static void cmd_delete (char *par) {
-  char *fname, *next;
+/**
+  \brief Delete a drive.
+*/
+static void cmd_delete (void) {
+  fsStatus status;
+  char *file;
+  char *options;
+
+  /* Extract function arguments */
+  file    = strtok(NULL, " ");
+  options = strtok(NULL, " ");
+
+  status = fdelete (file, options);
+
+  if (status != fsOK) {
+    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+  }
+}
+
+/**
+  \brief Rename a drive.
+*/
+static void cmd_rename (void) {
+  fsStatus status;
+  char *file;
+  char *file_new;
+
+  /* Extract function arguments */
+  file     = strtok(NULL, " ");
+  file_new = strtok(NULL, " ");
+
+  status = frename (file, file_new);
+
+  if (status != fsOK) {
+    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+  }
+}
+
+/**
+  \brief Create a directory.
+*/
+static void cmd_mkdir (void) {
+  fsStatus status;
+  char *path;
+
+  /* Extract function arguments */
+  path = strtok(NULL, " ");
+
+  status = fmkdir (path);
+
+  if (status != fsOK) {
+    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+  }
+}
+
+/**
+  \brief Remove a directory.
+*/
+static void cmd_rmdir (void) {
+  fsStatus status;
+  char *path;
+  char *options;
+
+  /* Extract function arguments */
+  path    = strtok(NULL, " ");
+  options = strtok(NULL, " ");
+
+  status = frmdir (path, options);
+
+  if (status != fsOK) {
+    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+  }
+}
+
+/**
+  \brief Find a file or directory matching search pattern.
+*/
+static void cmd_find (void) {
+  fsStatus status;
+  char *pattern;
+  fsFileInfo info;
+  uint32_t cnt = 0U;
+
+  /* Extract function argument */
+  pattern = strtok(NULL, " ");
+
+  /* Member fileID must be set to 0 */
+  info.fileID = 0;
+
+  do {
+    status = ffind(pattern, &info);
+    if (status == fsOK) {
+
+      if (cnt == 0U) {
+        /* Print search output header */
+        printf("\n%-5s %-12s %-17s %s", "type", "size", "date", "name");
+        printf("\n%-5s %-12s %-17s %s", "----", "----", "----", "----");
+      }
+
+      /* Print type of entry and its size */
+      if (info.attrib & FS_FAT_ATTR_DIRECTORY) {
+        printf("\n%-5s %-12s ", "DIR", " ");
+      }
+      else {
+        printf("\n%-5s %-12d ", "FILE", info.size);
+      }
+      /* Print date and time */
+      printf("%02d.%02d.%04d  %02d:%02d ", info.time.day,
+                                           info.time.mon,
+                                           info.time.year,
+                                           info.time.hr,
+                                           info.time.min);
+      /* Print file or directory name */
+      printf("%s", info.name);
+
+      /* Increment number of entries found */
+      cnt++;
+    }
+  } while (status == fsOK);
+
+  if (status == fsFileNotFound) {
+    if (info.fileID == 0) {
+      printf("\nNo files...");
+    }
+  }
+  else {
+    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+  }
+}
+
+/**
+  \brief Print working directory.
+*/
+static void cmd_pwd (void) {
+  fsStatus status;
+  char *drive;
+
+  /* Extract function argument */
+  drive = strtok(NULL, " ");
+
+  status = fpwd (drive, pwd_path, sizeof(pwd_path));
+
+  if (status != fsOK) {
+    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+  } else {
+    printf ("\n%s", pwd_path);
+  }
+}
+
+/**
+  \brief Change working directory.
+*/
+static void cmd_chdir (void) {
+  fsStatus status;
+  char *path;
+
+  /* Extract function argument */
+  path = strtok(NULL, " ");
+
+  status = fchdir (path);
+
+  if (status != fsOK) {
+    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+  }
+}
+
+/**
+  \brief Change current drive.
+*/
+static void cmd_chdrive (void) {
+  fsStatus status;
+  char *drive;
+
+  /* Extract function argument */
+  drive = strtok(NULL, " ");
+
+  status = fchdrive (drive);
+
+  if (status != fsOK) {
+    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+  }
+}
+
+/**
+  \brief Display help.
+*/
+static void cmd_help (void) {
+  uint32_t i;
+
+  printf("\nThe following commands are defined:");
+  printf("\n%-8s %-16s %s", "cmd", "args", "info");
+  printf("\n%-8s %-16s %s", "---", "----", "----");
+
+  /* List all commands together with arguments and info */
+  for (i = 0; i < CMD_LIST_SIZE; i++) {
+    printf("\n%-8s %-16s %s", cmd_list[i].cmd, cmd_list[i].args, cmd_list[i].info);
+  }
+}
+
+/**
+  \brief Print out the command prompt.
+*/
+static void print_prompt (void) {
   fsStatus status;
 
-  fname = get_entry(par, &next);
-  if (fname == NULL) {
-    printf("\nFilename missing.\n");
-    return;
-  }
-  status = fdelete(fname, next);
+  status = fpwd ("", pwd_path, sizeof(pwd_path));
 
   if (status == fsOK) {
-    printf("\nDelete successful.\n");
-  }
-  else if (status == fsFileNotFound) {
-    printf("\nFile %s not found.\n",fname);
+    printf("\n\n%s $ ", pwd_path);
   }
   else {
-    printf("\nDelete failed.\n");
+    printf ("\n\n$ ");
   }
+  fflush(stdout);
 }
 
-/*-----------------------------------------------------------------------------
- *        Print a Directory
- *----------------------------------------------------------------------------*/
-static void cmd_dir (char *par) {
-  int64_t  free;
-  uint64_t fsize;
-  uint32_t files,dirs,i;
-  char temp[32],*mask,*next,ch;
-  fsFileInfo info;
+/**
+  \brief Print out the FileSystem component version.
+*/
+static void print_version (void) {
+  uint32_t fs_ver;
 
-  mask = get_entry(par, &next);
-  if (mask == NULL) {
-    mask = "*.*";
-  } else if ((mask[1] == ':') && (mask[2] == 0)) {
-    mask[2] = '*'; 
-    mask[3] = '.'; 
-    mask[4] = '*'; 
-    mask[5] = 0; 
-  } else if ((mask[2] == ':') && (mask[3] == 0)) {
-    mask[3] = '*'; 
-    mask[4] = '.'; 
-    mask[5] = '*'; 
-    mask[6] = 0; 
-  }
+  fs_ver = fversion();
 
-  printf("\nFile System Directory...");
-  files = 0;
-  dirs  = 0;
-  fsize = 0;
-  info.fileID  = 0;
-  while (ffind(mask,&info) == fsOK) {
-    if (info.attrib & FS_FAT_ATTR_DIRECTORY) {
-      i = 0;
-      while (strlen((const char *)info.name+i) > 41) {
-        ch = info.name[i+41];
-        info.name[i+41] = 0;
-        printf("\n%-41s", &info.name[i]);
-        info.name[i+41] = ch;
-        i += 41;
-      }
-      printf("\n%-41s    <DIR>       ", &info.name[i]);
-      printf("  %02d.%02d.%04d  %02d:%02d",
-              info.time.day, info.time.mon, info.time.year,
-              info.time.hr, info.time.min);
-      dirs++;
-    }
-    else {
-      dot_format(info.size, &temp[0]);
-      i = 0;
-      while (strlen((const char *)info.name+i) > 41) {
-        ch = info.name[i+41];
-        info.name[i+41] = 0;
-        printf("\n%-41s", &info.name[i]);
-        info.name[i+41] = ch;
-        i += 41;
-      }
-      printf("\n%-41s %14s ", &info.name[i], temp);
-      printf("  %02d.%02d.%04d  %02d:%02d",
-              info.time.day, info.time.mon, info.time.year,
-              info.time.hr, info.time.min);
-      fsize += info.size;
-      files++;
-    }
-  }
-  if (info.fileID == 0) {
-    printf("\nNo files...");
+  printf ("\nMDK-Middleware FileSystem V%d.%d.%d\n", \
+          ((fs_ver >> 28) & 0xF)*  10U + ((fs_ver >> 24) & 0xF), \
+          ((fs_ver >> 20) & 0xF)*  10U + ((fs_ver >> 16) & 0xF), \
+          ((fs_ver >> 12) & 0xF)*1000U +                         \
+          ((fs_ver >>  8) & 0xF)* 100U +                         \
+          ((fs_ver >>  4) & 0xF)*  10U + (fs_ver & 0xF));
+}
+
+/**
+  \brief Initialize and mount current drive
+*/
+static void init_filesystem (void) {
+  fsStatus stat;
+  char *drive;
+  char ch;
+  
+  print_version();
+
+  printf("\nInitializing and mounting current drive...");
+
+  /* Set the drive to initialize and mount */
+  drive = FILE_DEMO_DRIVE;
+
+  stat = finit(drive);
+
+  if (stat != fsOK) {
+    printf("\nError: initialization failed (fsStatus = %s).", fs_status[stat]);
   }
   else {
-    dot_format(fsize, &temp[0]);
-    printf("\n              %9d File(s)    %21s bytes", files, temp);
-  }
-  free = ffree(mask);
-  if (free >= 0) {
-    dot_format((uint64_t)free, &temp[0]);
-    if (dirs) {
-      printf("\n              %9d Dir(s)     %21s bytes free.\n", dirs, temp);
-    }
-    else {
-      printf("\n%56s bytes free.\n",temp);
-    }
-  }
-}
+    stat = fmount(drive);
 
-/*-----------------------------------------------------------------------------
- *        Format Device
- *----------------------------------------------------------------------------*/
-static void cmd_format (char *par) {
-  char  label[12];
-  char  drive[4];
-  int   retv;
+    if (stat == fsNoFileSystem) {
+      /* Format the drive */
+      printf ("\nDrive not formatted! Proceed with Format [Y/N]");
 
-  par = get_drive(par, drive, 4);
+      ch = (char) getchar();
 
-  printf("\nProceed with Format [Y/N]\n");
-  retv = getchar();
-  if (retv == 'y' || retv == 'Y') {
-    /* Format the drive */
-    if (fformat(drive, par) == fsOK) {
-      printf("Format completed.\n");
-      if (fvol(drive, label, NULL) == 0) {
-        if (label[0] != '\0') {
-          printf("Volume label is \"%s\"\n", label);
+      if (ch == 'y' || ch == 'Y') {
+        /* Format the drive */
+        stat = fformat (drive, NULL);
+
+        if (stat == fsOK) {
+          printf ("\nDrive formatted!");
+        }
+        else {
+          printf ("\nError: format failed (fsStatus = %s).", fs_status[stat]);
         }
       }
     }
     else {
-      printf("Formatting failed.\n");
+      if (stat != fsOK) {
+        printf ("\nError: mount failed (fsStatus = %s).", fs_status[stat]);
+      }
     }
-  }
-  else {
-    printf("Formatting canceled.\n");
-  }
-}
 
-/*-----------------------------------------------------------------------------
- *        Display Command Syntax help
- *----------------------------------------------------------------------------*/
-static void cmd_help (char *par) {
-  (void)par;
-
-  printf(help);
-}
-
-/*-----------------------------------------------------------------------------
- *        Initialize a Flash Memory Card
- *----------------------------------------------------------------------------*/
-static void init_filesystem (void) {
-  fsStatus stat;
-
-  printf("Initializing and mounting drive M0...\n\n");
-
-  stat = finit("M0:");
-  if (stat == fsOK) {
-    stat = fmount("M0:");
     if (stat == fsOK) {
-      printf("Drive M0 ready!\n");
-      /* Set it as current drive */
-      fchdrive("M0:");
-    }
-    else if (stat == fsNoFileSystem) {
-      /* Format the drive */
-      printf("Drive M0 not formatted!\n");
-      cmd_format("M0:");
-    }
-    else {
-      printf("Drive M0 mount failed with error code %d\n", stat);
-    }
-  }
-  else {
-    printf("Drive M0 initialization failed!\n");
-  }
+      /* Drive mounted */
+      printf("\nDrive ready!");
 
-  printf("\nDone!\n");
+      if (drive[0] != '\0') {
+        /* Make the specified drive the current drive */
+        fchdrive(drive);
+      }
+    }
+  }
 }
 
-/*-----------------------------------------------------------------------------
- *        Application main thread 
- *----------------------------------------------------------------------------*/
+/**
+  \brief File Demo application main thread
+  \details
+
+  This thread initializes drive specified using FILE_DEMO_DRIVE define.
+  By default this is the current drive.
+
+  The threads main loop is executing a simple CLI using a small list of
+  predefined commands that execute FileSystem API function. Type 'help'
+  in the terminal to display the list of supported commands.
+
+  \param[in]  arg      thread argument (unused)
+*/
 __NO_RETURN void app_main_thread (void *argument) {
-  char *sp,*cp,*next;
+  char *cmd;
   uint32_t i;
 
   (void)argument;
-
-  /* Display example intro */
-  printf(intro);
-  printf(help);
 
   init_filesystem();
 
   while (1) {
     /* Display command prompt */
-    printf("\nCmd> ");
-    fflush(stdout);
+    print_prompt();
 
-    /* Get input from the stdin */
-    if (fs_getline(line_buf, sizeof (line_buf)) > 0U) {
-      /* Read the line content */
-      sp = get_entry(&line_buf[0], &next);
+    /* Get command line input from the stdin */
+    if (fs_terminal(cmd_line, sizeof (cmd_line)) > 0U) {
+      /* Extract command name from the input */
+      cmd = strtok(cmd_line, " ");
 
-      if (*sp != 0) {
-        /* Convert command to upper case */
-        for (cp = sp; *cp && *cp != ' '; cp++) {
-          *cp = (char)toupper(*cp);
+      /* Check the list if command exists */
+      for (i = 0; i < CMD_LIST_SIZE; i++) {
+        /* Compare command strings case-insensitively */
+        if (strncasecmp(cmd, cmd_list[i].cmd, strlen(cmd)) == 0) {
+          /* Got valid command, execute it */
+          cmd_list[i].func();
+          break;
         }
-
-        /* Check if command exists */
-        for (i = 0; i < CMD_COUNT; i++) {
-          if (strcmp(sp, (const char *)&cmd[i].val) == 0) {
-            /* Execute command */
-            cmd[i].func(next);
-            break;
-          }
-        }
-        if (i == CMD_COUNT) {
-          /* Command not found */
-          printf("\nCommand error\n");
-        }
+      }
+      if (i == CMD_LIST_SIZE) {
+        /* Command not found */
+        printf("\nCommand error\n");
       }
     }
   }
 }
 
-/*-----------------------------------------------------------------------------
- *        Application main function
- *----------------------------------------------------------------------------*/
+/**
+  \brief Application main function
+*/
 int app_main (void) {
   osKernelInitialize();
   osThreadNew(app_main_thread, NULL, &app_main_attr);
