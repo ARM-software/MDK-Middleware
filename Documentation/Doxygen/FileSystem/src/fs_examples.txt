@@ -237,51 +237,51 @@ These examples are available through the \urlout{uv4_ca_packinstaller}; select t
 
 \section fs_standalone_example File System Example
 
-This example shows how to manipulate files on a given drive using the File System Component. You can create, read, copy, and
-delete files on any enabled drive (memory Card, NOR/NAND Flash) and format each drive.  To keep it simple, the \urlout{uv4_db_dbg_serialwin}
-in MDK interacts and connect with the storage devices and your stdio. The following picture shows an exemplary
-connection of the development board and a computer:
+This example shows how to manipulate files on a given drive using the File System Component. You can mount and format the drive
+and then perform operations like write, read, rename and delete to manage files and directories on any enabled drive. Example
+uses serial terminal connection to interact with the user.
+
+Typically one connects the development board to a computer via debug connection that also provides virtual COM port, downloads
+example application to a board and starts terminal application on computer. The following picture shows an exemplary connection
+of the development board and a computer:
 
 \image html "fs_setup.png"
 
-The Abstract.txt file contained in the Documentation group of the Project window gives you more information on the general setup
-and the available I/O of the development board.
-
 \subsection fs_example_build Build the "File System" Project
 
-Open the example project in MDK (the \urlout{uv4_ca_packinstaller} web page explains how to do this). The µVision Project window should display a similar
-project structure:
+Open the example project in MDK (the \urlout{uv4_ca_packinstaller} web page explains how to do this). The project tree should have
+a similar structure:
 
 \image html "fs_proj_structure.png" "File System Project Structure"
 
 \subsubsection fs_example_sources Source Files
 
-- \b File_Demo.c contains the main C function that initializes the board hardware and the File System Component. It also
-  defines the functions for the accessing the data on the hardware.
-  
-You may now build and download the example project to the evaluation board using the µVision commands:
- - \b Project --> \b Build target
- - \b Flash --> \b Download
+- \b File_Demo.c contains the main application thread and implementation of commands for user interaction.
 
-After these steps, the project should start executing on your evaluation kit.
-In case of errors, refer to the Evaluation Board User's Guide for configuration information.
+You may now build and download the example project to the evaluation board.
+
+After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board
+User's Guide for configuration information.
 
 \subsection fs_example_using Using the "File System" Project
 
 \subsubsection fs_example_using_hw Hardware Setup
 
-The setup of the Evaluation Board hardware is described in the \b Abstract.txt file.
-- Verify all jumper settings on the target hardware.
-- Connect all supported devices to the development board (for example SD card).
-- You need to have a ULINK connection to the development board as the command line is sent to the <b>Debug (printf) Viewer</b>
-  window of an active \b Debug session.
+One you have example application executing on the Evaluation Board hardware you need to have serial (virtual COM) port
+connected to the computer.
 
 \subsubsection fs_example_using_pc PC Software
 
-After building the program, download the code into Flash and start a \b Debug session. Open the <b>Debug (printf) Viewer</b>
-window and start the code execution by either pressing F5 or using the \b Run button. You should now see something similar like this:
+Open any software terminal emulator application to start interacting with the example running on the Evaluation Board.
+After resetting the board, you should see something similar like this:
 
-\image html "fs_printf.png"
+\image html "fs_example_intro.png"
 
+Now you can type \b help to the command prompt and press enter (make sure that the new line character is also sent after
+pressing enter). Now something similar to the below image should be printed:
+
+\image html "fs_example_help.png"
+
+You can now type the listed commands and send arguments directly to the FileSystem API functions.
 */
 

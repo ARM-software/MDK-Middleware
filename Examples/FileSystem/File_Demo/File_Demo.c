@@ -142,13 +142,18 @@ static uint32_t fs_terminal (char *buf, int32_t buf_size)  {
   }
 
   /* Add NUL terminator */
-  buf[cnt] = 0;
+  buf[cnt] = '\0';
 
   return (cnt);
 }
 
 /**
   \brief Mount a drive.
+  \details
+  Command 'mount' mounts the drive specified with the 'drive' argument.
+  Argument 'drive' is mandatory and specifies the drive to unmount.
+  The specified drive is first initialized and after successful initialization
+  also mounted.
 */
 static void cmd_mount (void) {
   fsStatus status;
@@ -175,6 +180,11 @@ static void cmd_mount (void) {
 
 /**
   \brief Unmount a drive.
+  \details
+  Command 'unmount' unmounts the drive specified with the 'drive' argument.
+  Argument 'drive' is mandatory and specifies the drive to unmount.
+  The specified drive is first unmounted and after successful unmount
+  also uninitialized.
 */
 static void cmd_unmount (void) {
   fsStatus status;
@@ -186,6 +196,13 @@ static void cmd_unmount (void) {
   status = funmount (drive);
 
   if (status != fsOK) {
+    printf("\nDrive unmount failed!");
+  }
+  else {
+    status = funinit(drive);
+  }
+
+  if (status != fsOK) {
     printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
   } else {
     printf ("\nDrive unmounted.");
@@ -194,6 +211,11 @@ static void cmd_unmount (void) {
 
 /**
   \brief Format a drive.
+  \details
+  Command 'format' formats the drive specified with the 'drive' argument.
+  Argument 'drive' is mandatory and specifies the drive to format.
+  Argument 'options' is optional and specifies format options such as
+  FAT drive label.
 */
 static void cmd_format (void) {
   fsStatus status;
@@ -215,6 +237,13 @@ static void cmd_format (void) {
 
 /**
   \brief Write a file.
+  \details
+  Command 'write' writes 'n' lines to a file specified with the 'path' argument.
+  Argument 'path' is mandatory and specifies a file to write.
+  Argument 'n' is optional and specifies the number of lines to write to a file.
+  If argument 'n' is not specified, 1000 lines are written to a file.
+  The file specified with 'path' is opened in write mode and written line by line
+  until 'n' lines are written.
 */
 static void cmd_write (void) {
   FILE *f;
@@ -257,16 +286,24 @@ static void cmd_write (void) {
 
 /**
   \brief Read a file.
+  \details
+  Command 'read' reads 'n' lines from a file specified with the 'path' argument.
+  Argument 'path' is mandatory and specifies a file to be read.
+  Argument 'n' is optional and specifies the number of lines to read from a file.
+  If argument 'n' is not specified command reads until the end of file.
+  The file specified with 'path' is opened in read mode and each line is read out
+  character by character and output to the console. The file is closed after 'n'
+  lines has been read or if end of file is reached.
 */
 static void cmd_read (void) {
   FILE *f;
-  char *file;
+  char *path;
   char *n;
   uint32_t n_cnt, n_lim;
   int ch;
 
   /* Extract function arguments */
-  file = strtok(NULL, " ");
+  path = strtok(NULL, " ");
   n    = strtok(NULL, " ");
 
   if (n != NULL) {
@@ -277,7 +314,7 @@ static void cmd_read (void) {
     n_lim = 0U;
   }
 
-  f = fopen(file, "r");
+  f = fopen(path, "r");
 
   if (f == NULL) {
     printf("\nCan not open file!");
@@ -308,18 +345,23 @@ static void cmd_read (void) {
 }
 
 /**
-  \brief Delete a drive.
+  \brief Delete one or more files.
+  \details
+  Command 'delete' calls function fdelete with the 'path' and 'options' arguments.
+  Argument 'path' is mandatory and specifies an existing file or directory.
+  Argument 'options' is optional and may specify option '/S' to remove all
+  files within the specified directory including the subdirectories.
 */
 static void cmd_delete (void) {
   fsStatus status;
-  char *file;
+  char *path;
   char *options;
 
   /* Extract function arguments */
-  file    = strtok(NULL, " ");
+  path    = strtok(NULL, " ");
   options = strtok(NULL, " ");
 
-  status = fdelete (file, options);
+  status = fdelete (path, options);
 
   if (status != fsOK) {
     printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
@@ -327,18 +369,23 @@ static void cmd_delete (void) {
 }
 
 /**
-  \brief Rename a drive.
+  \brief Rename a file or directory.
+  \details
+  Command 'rename' calls function frename with the 'path' and 'newname' arguments which must
+  be specified.
+  Argument 'path' specifies file or directory to be renamed.
+  Argument 'newname' specifies the new name of the file or directory specified with 'path'.
 */
 static void cmd_rename (void) {
   fsStatus status;
-  char *file;
-  char *file_new;
+  char *path;
+  char *newname;
 
   /* Extract function arguments */
-  file     = strtok(NULL, " ");
-  file_new = strtok(NULL, " ");
+  path    = strtok(NULL, " ");
+  newname = strtok(NULL, " ");
 
-  status = frename (file, file_new);
+  status = frename (path, newname);
 
   if (status != fsOK) {
     printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
@@ -347,6 +394,10 @@ static void cmd_rename (void) {
 
 /**
   \brief Create a directory.
+  \details
+  Command 'mkdir' calls function fmkdir with the 'path' argument which must
+  be specified.
+  Argument 'path' may specify directory and its subdirectories.
 */
 static void cmd_mkdir (void) {
   fsStatus status;
@@ -364,6 +415,13 @@ static void cmd_mkdir (void) {
 
 /**
   \brief Remove a directory.
+  \details
+  Command 'rmdir' calls function frmdir with the 'path' and 'options' arguments.
+  Argument 'path' is mandatory and must be specified and may specify directory
+  and subdirectories.
+  Argument 'options' is optional and may specify option '/S' to remove all
+  directories and files within the specified directory including the directory
+  itself.
 */
 static void cmd_rmdir (void) {
   fsStatus status;
@@ -383,6 +441,14 @@ static void cmd_rmdir (void) {
 
 /**
   \brief Find a file or directory matching search pattern.
+  \details
+  Command 'find' calls function ffind with the 'pattern' argument which must
+  be specified.
+  Argument 'pattern' can specify file or directory path or use the wildcard
+  character to find the files and directories that match the specified pattern.
+  After successful execution the information about file or directory that
+  matches the pattern is returned into the 'info' structure and partially
+  printed to the console.
 */
 static void cmd_find (void) {
   fsStatus status;
@@ -411,7 +477,7 @@ static void cmd_find (void) {
         printf("\n%-5s %-12s ", "DIR", " ");
       }
       else {
-        printf("\n%-5s %-12d ", "FILE", info.size);
+        printf("\n%-5s %-12u ", "FILE", info.size);
       }
       /* Print date and time */
       printf("%02d.%02d.%04d  %02d:%02d ", info.time.day,
@@ -439,6 +505,13 @@ static void cmd_find (void) {
 
 /**
   \brief Print working directory.
+  \details
+  Command 'pwd' calls function fpwd with the 'drive' argument which must be
+  specified.
+  Argument 'drive' can either specify a drive or be an empty string ("") to
+  specify the current drive.
+  After successful execution the current working directory path is written
+  into variable 'pwd_path' and printed to the console.
 */
 static void cmd_pwd (void) {
   fsStatus status;
@@ -458,6 +531,12 @@ static void cmd_pwd (void) {
 
 /**
   \brief Change working directory.
+  \details
+  Command 'chdir' calls function fchdir with the 'path' argument which must
+  be specified.
+  Argument 'path' can specify directory and its subdirectories.
+  After successful execution the directory specified by 'path' becomes the
+  current working directory.
 */
 static void cmd_chdir (void) {
   fsStatus status;
@@ -475,6 +554,12 @@ static void cmd_chdir (void) {
 
 /**
   \brief Change current drive.
+  \details
+  Command 'chdrive' calls function fchdrive with the 'drive' argument which must
+  be specified.
+  Argument 'drive' can either specify a drive or be an empty string ("") to
+  specify the current drive.
+  After successful execution the drive specified by 'drive' becomes the current drive.
 */
 static void cmd_chdrive (void) {
   fsStatus status;
@@ -491,7 +576,7 @@ static void cmd_chdrive (void) {
 }
 
 /**
-  \brief Display help.
+  \brief Display the list of available commands.
 */
 static void cmd_help (void) {
   uint32_t i;
@@ -541,12 +626,16 @@ static void print_version (void) {
 
 /**
   \brief Initialize and mount current drive
+  \details
+  This function initializes, mounts and formats (if unformatted) the drive
+  specified by the FILE_DEMO_DRIVE define. By default, this is the current
+  drive.
 */
 static void init_filesystem (void) {
   fsStatus stat;
   char *drive;
   char ch;
-  
+
   print_version();
 
   printf("\nInitializing and mounting current drive...");
@@ -601,13 +690,10 @@ static void init_filesystem (void) {
 /**
   \brief File Demo application main thread
   \details
-
-  This thread initializes drive specified using FILE_DEMO_DRIVE define.
-  By default this is the current drive.
-
-  The threads main loop is executing a simple CLI using a small list of
-  predefined commands that execute FileSystem API function. Type 'help'
-  in the terminal to display the list of supported commands.
+  This thread initializes the first FileSystem drive and enters the main loop
+  which is executing a simple CLI using a small list of predefined commands that
+  call FileSystem API functions. Type 'help' in the terminal to display the list
+  of supported commands.
 
   \param[in]  arg      thread argument (unused)
 */
@@ -647,6 +733,9 @@ __NO_RETURN void app_main_thread (void *argument) {
 
 /**
   \brief Application main function
+  \details
+  This function initializes CMSIS-RTOS2 kernel, creates application main thread
+  and starts the kernel.
 */
 int app_main (void) {
   osKernelInitialize();
