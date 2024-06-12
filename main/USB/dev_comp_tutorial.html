@@ -135,11 +135,7 @@ $(document).ready(function(){initNavTree('dev_comp_tutorial.html',''); initResiz
 </div>
 <h1><a class="anchor" id="autotoc_md32"></a>
 Build the "USB Composite" Project</h1>
-<p>Open the <a class="el" href="dev_msc_tutorial.html">MSC example project</a> in MDK. From the <a class="el" href="dev_hid_tutorial.html">HID example project</a>, copy HID.c and USBD_User_HID.c and add them to the project. Open the <b>Manage Run-Time Environment</b> window. Add one USB:Device:HID component to the project. After clicking OK, you will see that the USB Component in the Project window will have an additional entry: USBD_Config_HID_0.h. As the HID example uses LEDs and push-buttons, you might need to add these <b>Board Support</b> related items as well. Check the RTE Component selection of the HID example for further detail. In total, it should display now a similar project structure:</p>
-<div class="image">
-<img src="usbd_comp_proj_structure.png" alt=""/>
-<div class="caption">
-USB Composite Device Project Structure</div></div>
+<p>Open the <a class="el" href="dev_msc_tutorial.html">MSC example project</a> in MDK. From the <a class="el" href="dev_hid_tutorial.html">HID example project</a>, copy HID.c and USBD_User_HID.c and add them to the project. Open the <b>Manage Run-Time Environment</b> window. Add one USB:Device:HID component to the project. After clicking OK, you will see that the USB Component in the Project window will have an additional entry: USBD_Config_HID_0.h. As the HID example uses LEDs and push-buttons, you might need to add these <b>Board Support</b> related items as well. Check the RTE Component selection of the HID example for further detail.</p>
 <h2><a class="anchor" id="autotoc_md33"></a>
 Source Files</h2>
 <p>Now we have two main functions in the project. We need to delete one of them. Open the MassStorage.c file. Copy the lines </p><div class="fragment"><div class="line">finit (<span class="stringliteral">&quot;M0:&quot;</span>);           <span class="comment">/* Initialize SD Card 0 */</span></div>
