@@ -1,11 +1,14 @@
 var NAVTREEINDEX4 =
 {
-"rl__usb_8h.html#gaefad6fdbbf674f7d85f203e24732ca7ea6b1574557d08fd6edd2c129acd4d3b9d":[8,3,0,0],
-"rl__usb_8h.html#gaefad6fdbbf674f7d85f203e24732ca7eab2a90632702edc200eed8321881ddbbc":[8,3,0,1],
-"rl__usb_8h.html#gaefad6fdbbf674f7d85f203e24732ca7eae794a9dd0c9c8420b9609e1b4b12bed8":[8,3,0,2],
+"rl__usb_8h.html#gaefad6fdbbf674f7d85f203e24732ca7ea6b1574557d08fd6edd2c129acd4d3b9d":[9,3,0,0],
+"rl__usb_8h.html#gaefad6fdbbf674f7d85f203e24732ca7eab2a90632702edc200eed8321881ddbbc":[9,3,0,1],
+"rl__usb_8h.html#gaefad6fdbbf674f7d85f203e24732ca7eae794a9dd0c9c8420b9609e1b4b12bed8":[9,3,0,2],
 "usb_function_reference.html":[6],
 "usb_function_reference.html#usb_fo_usbd":[6,0],
 "usb_function_reference.html#usb_fo_usbh":[6,1],
+"usb_migration.html":[8],
+"usb_migration.html#usb_migration_component":[8,0],
+"usb_migration.html#usb_migration_config":[8,1],
 "usb_resource_requirements.html":[7],
 "usb_resource_requirements.html#usbd_mem_req":[7,0,3],
 "usb_resource_requirements.html#usbd_req_rtx5":[7,0,2],

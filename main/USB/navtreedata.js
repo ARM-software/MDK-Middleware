@@ -51,6 +51,10 @@ var NAVTREE =
         [ "Memory Requirements", "usb_resource_requirements.html#usbh_mem_req", null ]
       ] ]
     ] ],
+    [ "Migration Guide", "usb_migration.html", [
+      [ "Component migration", "usb_migration.html#usb_migration_component", null ],
+      [ "Configuration migration", "usb_migration.html#usb_migration_config", null ]
+    ] ],
     [ "API Reference", "modules.html", "modules" ]
   ] ]
 ];
