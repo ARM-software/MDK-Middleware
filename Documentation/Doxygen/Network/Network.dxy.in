@@ -283,7 +283,6 @@ TAB_SIZE               = 2
 # @} or use a double escape (\\{ and \\})
 
 ALIASES                = "token{1}=<span class=\"XML-Token\">\1</span>" \
-                         "refrlarm{1}= <a href=\"https://www.keil.com/support/man/docs/rlarm/rlarm_\1.htm\" target=\"_blank\">\1</a>" \
                          "url{1}=\htmlonly<script>link_loc('\1');</script>\endhtmlonly" \
                          "url{2}=\htmlonly<script>link_loc2('\1','\2');</script>\endhtmlonly" \
                          "urlout{1}=\htmlonly<script>link_ext('\1');</script>\endhtmlonly" \
