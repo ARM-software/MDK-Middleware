@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USBD_Config_HID_6.h
  * Purpose: USB Device Human Interface Device class (HID) Configuration
- * Rev.:    V5.1.0
+ * Rev.:    V5.1.1
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
@@ -29,7 +29,7 @@
 //         <i>and for memory allocation in the USB component.
 //
 //         <h>Full/Low-speed (High-speed disabled)
-//         <i>Parameters apply when High-speed is disabled in USBD_Config_n.c
+//         <i>Parameters apply when High-speed is disabled in USBD_Config_n.h
 //           <o.0..6>Maximum Endpoint Packet Size (in bytes) <0-64>
 //           <i>Specifies the physical packet size used for information exchange.
 //           <i>Maximum value is 64.
@@ -42,7 +42,7 @@
 //         </h>
 
 //         <h>High-speed
-//         <i>Parameters apply when High-speed is enabled in USBD_Config_n.c
+//         <i>Parameters apply when High-speed is enabled in USBD_Config_n.h
 //
 //           <o.0..10>Maximum Endpoint Packet Size (in bytes) <0-1024>
 //           <i>Specifies the physical packet size used for information exchange.
@@ -78,7 +78,7 @@
 //         <i>and for memory allocation in the USB component.
 //
 //         <h>Full/Low-speed (High-speed disabled)
-//         <i>Parameters apply when High-speed is disabled in USBD_Config_n.c
+//         <i>Parameters apply when High-speed is disabled in USBD_Config_n.h
 //           <o.0..6>Maximum Endpoint Packet Size (in bytes) <0-64>
 //           <i>Specifies the physical packet size used for information exchange.
 //           <i>Maximum value is 64.
@@ -91,7 +91,7 @@
 //         </h>
 
 //         <h>High-speed
-//         <i>Parameters apply when High-speed is enabled in USBD_Config_n.c
+//         <i>Parameters apply when High-speed is enabled in USBD_Config_n.h
 //
 //           <o.0..10>Maximum Endpoint Packet Size (in bytes) <0-1024>
 //           <i>Specifies the physical packet size used for information exchange.

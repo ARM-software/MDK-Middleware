@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2020 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USBD_User_Device_%Instance%.c
  * Purpose: USB Device User module
- * Rev.:    V6.8.2
+ * Rev.:    V6.8.3
  *----------------------------------------------------------------------------*/
 /*
  * USBD_User_Device_%Instance%.c is a code template for the user specific 
@@ -40,7 +40,7 @@
 //  0x00,                                 /* bDeviceClass       = Defined in IF */
 //  0x00,                                 /* bDeviceSubClass    = Defined in IF */
 //  0x00,                                 /* bDeviceProtocol    = Defined in IF */
-//  64,                                   /* bMaxPacketSize0    = 64 bytes !!! Must be same as USBD%Instance%_MAX_PACKET0 in USBD_Config_%Instance%.c */
+//  64,                                   /* bMaxPacketSize0    = 64 bytes !!! Must be same as USBD%Instance%_MAX_PACKET0 in USBD_Config_%Instance%.h */
 //  0x51, 0xC2,                           /* idVendor           = 0xC251        */
 //  0x01, 0x00,                           /* idProduct          = 1             */
 //  0x00, 0x01,                           /* bcdDevice          = 1.00          */

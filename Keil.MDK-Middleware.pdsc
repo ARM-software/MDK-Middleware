@@ -1323,7 +1323,7 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/HID.html"/>
-          <file category="header" name="Components/USB/Config/USBD_Config_HID.h"       attr="config"   version="5.1.0"/>
+          <file category="header" name="Components/USB/Config/USBD_Config_HID.h"       attr="config"   version="5.1.1"/>
           <file category="source" name="Components/USB/Template/USBD_User_HID.c"       attr="template" select="USB Device HID (Human Interface Device)"/>
           <file category="source" name="Components/USB/Template/USBD_User_HID_Mouse.c" attr="template" select="USB Device HID Mouse"/>
           <!-- Library source files -->
@@ -1339,7 +1339,7 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/MSC.html"/>
-          <file category="header" name="Components/USB/Config/USBD_Config_MSC.h"     attr="config"   version="5.2.0"/>
+          <file category="header" name="Components/USB/Config/USBD_Config_MSC.h"     attr="config"   version="5.2.1"/>
           <file category="source" name="Components/USB/Template/USBD_User_MSC.c"     attr="template" select="USB Device MSC (Mass Storage Class)"/>
           <file category="source" name="Components/USB/Template/USBD_User_MSC_LUN.c" attr="template" select="USB Device MSC multiple Logical Units (Mass Storage Class)"/>
           <file category="source" name="Components/USB/Template/USBD_MSC.c"          attr="template" select="USB Device MSC Media Ownership Control"/>
@@ -1357,7 +1357,7 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/CDC.html"/>
-          <file category="header" name="Components/USB/Config/USBD_Config_CDC.h"                attr="config"   version="5.3.0"/>
+          <file category="header" name="Components/USB/Config/USBD_Config_CDC.h"                attr="config"   version="5.3.1"/>
           <file category="source" name="Components/USB/Template/USBD_User_CDC_ACM.c"            attr="template" select="USB Device CDC ACM (Abstract Control Model)"/>
           <file category="source" name="Components/USB/Template/USBD_User_CDC_ACM_RNDIS_ETH.c"  attr="template" select="USB Device CDC ACM RNDIS and Ethernet Bridge"/>
           <file category="source" name="Components/USB/Template/USBD_User_CDC_ACM_RNDIS_VETH.c" attr="template" select="USB Device CDC ACM RNDIS Virtual Ethernet"/>
@@ -1377,7 +1377,7 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/ADC.html"/>
-          <file category="header" name="Components/USB/Config/USBD_Config_ADC.h"       attr="config"   version="5.3.0"/>
+          <file category="header" name="Components/USB/Config/USBD_Config_ADC.h"       attr="config"   version="5.3.1"/>
           <file category="source" name="Components/USB/Template/USBD_User_ADC_Audio.c" attr="template" select="USB Device ADC (Audio Interface)"/>
           <!-- Library source files -->
           <file category="source" name="Components/USB/Source/usbd_lib_core_adc.c"/>
@@ -1392,7 +1392,7 @@
         </RTE_Components_h>
         <files>
           <file category="doc"    name="Documentation/html/USB/CustomClass.html"/>
-          <file category="header" name="Components/USB/Config/USBD_Config_CustomClass.h" attr="config"   version="5.3.0"/>
+          <file category="header" name="Components/USB/Config/USBD_Config_CustomClass.h" attr="config"   version="5.3.1"/>
           <file category="source" name="Components/USB/Template/USBD_User_CustomClass.c" attr="template" select="USB Device Custom Class"/>
           <!-- Library source files -->
           <file category="source" name="Components/USB/Source/usbd_lib_core_custom_class.c"/>
