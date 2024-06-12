@@ -66,7 +66,6 @@ var NAVTREE =
     [ "Network Examples", "nw_examples.html", "nw_examples" ],
     [ "Migration", "network_diffs.html", [
       [ "Project Migration", "network_diffs.html#nw_diffs_project_migration", [
-        [ "Select a New Core Variant", "network_diffs.html#nw_diffs_select_variant", null ],
         [ "Update Configuration Files", "network_diffs.html#nw_diffs_update_configs", null ],
         [ "Configure Keil RTX", "network_diffs.html#nw_diffs_rtx_configuration", null ],
         [ "Build and Run the Network Project", "network_diffs.html#nw_diffs_build_and_run", null ]
