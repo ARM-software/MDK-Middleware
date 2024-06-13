@@ -1,10 +1,26 @@
 # Using Middleware {#mw_using}
 
+## Driver Interface {#DriverInterface}
+
+The interface to the microcontroller peripherals is done using drivers complying with the \urlout{CMSIS-Driver} standard. These drivers are not limited to MDK-Middleware and may be used by other middleware stacks to utilize the peripherals.
+
+For each enabled peripheral of the microcontroller, a control or access struct is provided that is the interface for the middleware. Drivers for most of the communication peripherals are part of a \urlout{SW-Pack} that provides device support.
+
+![Drivers are connected to Middleware using configuration files](./images/mw_driver.png)
+
+The drivers are typically configured using the RTE_device.h configuration file. This file maps I/O pins, interrupts and DMA channels to the available microcontroller resources. Silicon vendors may supply their own configuration tools for peripheral access (for example, \urlout{STM32Cube} or \urlout{MCUXpresso}).
+
+The access struct of the various drivers is connected to the middleware using the configuration files of each middleware component.
+
 ## Generic Steps {#mw_using_generic_steps}
 
 There are a few generic steps that have to be done to include a middleware component in a project:
 
-![Generic steps for adding Middleware to a project](./images/generic_steps.png)
+- \ref add_sw_comp : Select the required middleware components for your application in your component manager.
+- \ref conf_mw : Adjust the parameters of the middleware components in their related configuration files.
+- \ref conf_drivers : Configure the peripheral interfaces that connect the middleware components with physical I/O pins of the device.
+- \ref conf_sys_req : Configure RTOS, memory, and stack resources to the requirements of the middleware components.
+- \ref implement_feat : Use the API functions of the middleware components to implement the application specific behavior. Code templates help you create the related source code.
 
 ### Add Software Components {#add_sw_comp}
 

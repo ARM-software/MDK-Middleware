@@ -9,3 +9,12 @@
 # Pack build files
 /build/
 /output/
+.clangd**
+*.cbuild.yml**
+*.cprj**
+*.cbuild-idx.yml**
+*.cbuild-pack.yml**
+*.cbuild-set.yml**
+
+# macOS Files
+.DS_STORE**

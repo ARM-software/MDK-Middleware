@@ -41,7 +41,7 @@ For using a NOR Flash drive, a \urlout{Flash-API} driver is required, which enca
 
 If your NOR Flash device is not listed, use one of the examples as a reference to implement a driver for your specific
 device:
-- AM29x800BB/<a href="https://media-www.micron.com/-/media/client/global/documents/products/data-sheet/nor-flash/parallel/m29w/m29w640f.pdf" target="_blank">M29W640FB</a>
+- AM29x800BB/<a href="https://www.farnell.com/datasheets/40281.pdf" target="_blank">M29W640FB</a>
 (Flash with 16-bit memory bus interface)
 - <a href="https://www.infineon.com/dgdl/Infineon-S29GL064N_S29GL032N_64_Mbit_32_Mbit_3_V_Page_Mode_MirrorBit_Flash-DataSheet-v03_00-EN.pdf?fileId=8ac78c8c7d0d8da4017d0ed556fd548b" target="_blank">S29GL064Nx2</a> (Flash with 32-bit
 memory bus interface)
