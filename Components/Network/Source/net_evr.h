@@ -10990,7 +10990,6 @@ typedef struct evr_addr {
 #define EvtNetBSD_BindSocketConnected       EventID (EventLevelError, EvtNetBSD,  9)
 #define EvtNetBSD_BindPortInUse             EventID (EventLevelError, EvtNetBSD, 10)
 #define EvtNetBSD_ViewNetAddress            EventID (EventLevelOp,    EvtNetBSD, 11)
-// Gap
 #define EvtNetBSD_ListenSocket              EventID (EventLevelAPI,   EvtNetBSD, 13)
 #define EvtNetBSD_ListenSocketNotValid      EventID (EventLevelError, EvtNetBSD, 14)
 #define EvtNetBSD_ListenInvalidParameter    EventID (EventLevelError, EvtNetBSD, 15)
@@ -11096,6 +11095,7 @@ typedef struct evr_addr {
 #define EvtNetBSD_SetoptKeepAlive           EventID (EventLevelOp,    EvtNetBSD,107)
 #define EvtNetBSD_SetoptRecvTimeout         EventID (EventLevelOp,    EvtNetBSD,108)
 #define EvtNetBSD_SetoptSendTimeout         EventID (EventLevelOp,    EvtNetBSD,109)
+#define EvtNetBSD_SetoptBindToDevice        EventID (EventLevelOp,    EvtNetBSD, 12)
 #define EvtNetBSD_SetoptIp4Tos              EventID (EventLevelOp,    EvtNetBSD,110)
 #define EvtNetBSD_SetoptIp4Ttl              EventID (EventLevelOp,    EvtNetBSD,111)
 #define EvtNetBSD_SetoptIp4RecvDstAddr      EventID (EventLevelOp,    EvtNetBSD,112)
@@ -12577,6 +12577,19 @@ typedef struct evr_addr {
   }
 #else
   #define EvrNetBSD_SetoptSendTimeout(sock, timeout)
+#endif
+
+/**
+  \brief  Event on BSD \ref setsockopt bind to device (Op)
+  \param  sock          socket descriptor
+  \param  if_id         network interface identifier
+ */
+#ifdef Network_Debug_EVR
+  __STATIC_INLINE void EvrNetBSD_SetoptBindToDevice(int32_t sock, uint16_t if_id) {
+    EventRecord2 (EvtNetBSD_SetoptBindToDevice, (uint32_t)sock, if_id);
+  }
+#else
+  #define EvrNetBSD_SetoptBindToDevice(sock, if_id)
 #endif
 
 /**

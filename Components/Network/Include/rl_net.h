@@ -99,7 +99,7 @@ typedef enum {
   netUDP_OptionTTL,                     ///< IPv4 Multi-cast Time to Live; val=TTL
   netUDP_OptionTrafficClass,            ///< IPv6 Traffic Class; val=TrafficClass
   netUDP_OptionHopLimit,                ///< IPv6 Multi-cast Hop Limit; val=HopLimit
-  netUDP_OptionInterface,               ///< IPv4 Broadcast Interface; val=if_id (class and number)
+  netUDP_OptionInterface,               ///< Network interface to bind; val=if_id (class and number)
   netUDP_OptionChecksum                 ///< UDP Checksum Options
 } netUDP_Option;
 
@@ -193,6 +193,7 @@ typedef uint32_t (*netTCP_cb_t)(int32_t socket, netTCP_Event event, const NET_AD
 #define SO_RCVTIMEO             2       ///< Timeout for blocking receive (in milliseconds)
 #define SO_SNDTIMEO             3       ///< Timeout for blocking send (in milliseconds)
 #define SO_TYPE                 4       ///< Socket type (read only)
+#define SO_BINDTODEVICE         5       ///< Bind to network interface
 
 /// BSD Socket IPv4 options.
 #define IP_TOS                  1       ///< Type of Service (TOS)
@@ -1156,6 +1157,7 @@ extern int32_t getsockname (int32_t sock, SOCKADDR *name, int32_t *namelen);
 ///                              - SO_KEEPALIVE        = Keep Alive.
 ///                              - SO_RCVTIMEO         = Timeout for blocking receive (in ms).
 ///                              - SO_SNDTIMEO         = Timeout for blocking send (in ms).
+///                              - SO_BINDTODEVICE     = Bound network interface (class and number).
 ///                              - IP_RECVDSTADDR      = Receive Destination IP Address.
 ///                              - IP_TOS              = Type of Service (TOS).
 ///                              - IP_TTL              = Time to Live (TTL).
@@ -1182,6 +1184,7 @@ extern int32_t getsockopt (int32_t sock, int32_t level, int32_t optname, char *o
 ///                              - SO_KEEPALIVE        = Keep Alive.
 ///                              - SO_RCVTIMEO         = Timeout for blocking receive (in ms).
 ///                              - SO_SNDTIMEO         = Timeout for blocking send (in ms).
+///                              - SO_BINDTODEVICE     = Network interface to bind (class and number).
 ///                              - IP_TOS              = Type of Service (TOS).
 ///                              - IP_TTL              = Time to Live (TTL).
 ///                              - IP_RECVDSTADDR      = Receive Destination IP Address.
