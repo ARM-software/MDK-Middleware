@@ -10,3 +10,5 @@ ignoreerrors=
 [filtering]
 ignorewarnings=
     http-redirected
+ignore=
+    ^http://mcb1700
