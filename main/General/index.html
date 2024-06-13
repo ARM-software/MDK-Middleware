@@ -128,61 +128,62 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
   <div class="headertitle"><div class="title">Overview </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="mainpage"></a>  <script>link_loc('MDK');</script> is a development environment for Arm Cortex-M series microcontrollers which contains everything for creating and testing applications in assembly, C or C++. MDK is split into  <script>link_loc('MDK-Core');</script> and  <script>link_loc('SW-Pack');</script> making new device support and middleware updates independent from the tools.</p>
+<div class="textblock"><p><a class="anchor" id="mainpage"></a> The free-to-use <b>MDK-Middleware</b> contains software components for IPv4 and IPv6 networking, USB Host and Device communication, and file system for data storage. The components can for example be used by the user's application, IoT connectors for cloud connectivity, or the  <script>link_ext('SDS');</script>.</p>
 <div class="image">
-<img src="mdk_v526.png" alt=""/>
+<img src="MDK-Middleware.png" alt=""/>
 <div class="caption">
 MDK Software Packs</div></div>
-    <p>The <b>MDK-Middleware</b> software pack contains components for IPv4 and IPv6 networking, USB Host and Device communication, file system for data storage, and a graphical user interface. The real-time operating system Keil RTX5 is used by all middleware components for task scheduling.</p>
-<p>This documentation describes:</p>
+    <p>This documentation describes:</p>
 <ul>
 <li> <script>link_loc('MW-FileSystem');</script>: create, save, read, and modify files in storage devices such as RAM, Flash, SD/SDHC/MMC memory cards, or USB memory devices.</li>
-<li> <script>link_loc('MW-Graphics');</script>: create flexible graphical user interfaces (GUIs) for LCD displays (separately available in the  <script>link_ext('Keil-Graphics-Pack');</script> software pack).</li>
 <li> <script>link_loc('MW-Network');</script>: services, protocol sockets, and physical communication interfaces for creating networking applications.</li>
 <li> <script>link_loc('MW-USB');</script>: create USB Device and USB Host applications with standard USB device classes.</li>
 </ul>
-<p>Software components outside the scope of this documentation are:</p>
+<p>Software components or APIs outside the scope of this documentation are:</p>
 <ul>
-<li> <script>link_ext('CMSIS-RTX5');</script>: the real-time operating system used by all middleware components. RTX is available as a separate  <script>link_ext('ARM-SW-Pack');</script> software pack.</li>
-<li> <script>link_ext('mbedTLS');</script>: a software component providing encryption and secure communication for network components. mbed TLS is available as a separate  <script>link_ext('mbedTLS-Pack');</script> software pack.</li>
+<li> <script>link_ext('CMSIS-RTOS2');</script>: the real-time operating system API used by all middleware components (required).</li>
+<li> <script>link_ext('mbedTLS');</script>: provides encryption and secure communication for network components (optional).</li>
+<li> <script>link_ext('CMSIS-Compiler');</script>: simplifies retargeting of the standard C run-time library (optional).</li>
+<li> <script>link_ext('CMSIS-View');</script>: equips software developers with software components, utilities and methodologies that provide visibility into internal operation of embedded applications and software components (optional).</li>
+<li> <script>link_ext('CMSIS-Driver');</script>: required <a class="el" href="mw_using.html#DriverInterface">driver interface</a> for the MDK-Middleware software components (required).</li>
 </ul>
-<p>Each component is configurable for a wide range of applications and requires the <a class="el" href="DriverInterface.html">driver interface</a> as described by the  <script>link_ext('CMSIS-Driver');</script> standard.</p>
 <blockquote class="doxtable">
-<p>&zwj;<b>Note</b></p><ul>
-<li>Before using MDK-Middleware, please make sure that your selected microcontroller device offers CMSIS-Driver support. </li>
+<p>&zwj;<b>Notes</b></p><ul>
+<li>Before using MDK-Middleware, please make sure that your selected microcontroller device offers  <script>link_ext('CMSIS-Driver');</script> support.</li>
+<li>The middleware components require a  <script>link_ext('CMSIS-RTOS2');</script> compliant real-time operating system for task scheduling.</li>
+<li>MDK-Middleware uses software components from the new  <script>link_ext('CMSIS-View');</script> and  <script>link_ext('CMSIS-Compiler');</script> CMSIS-Packs. </li>
 </ul>
 </blockquote>
-<h1><a class="anchor" id="gen_mw_component_select"></a>
-Middleware Component Selection</h1>
-<p>To add the MDK-Middleware components to your project, you need to select required components in the <b>CMSIS Component Manager</b>:</p>
-<div class="image">
-<img src="mw_selected.png" alt=""/>
-</div>
-    <h1><a class="anchor" id="gen_supported_toolchains"></a>
+<h1><a class="anchor" id="gen_supported_toolchains"></a>
 Supported toolchains</h1>
-<p>MDK-Middleware libraries are available as source code and will work with all major toolchains including Arm Compiler 6, GCC and IAR.</p>
-<h1><a class="anchor" id="migrating_cmsis_v6"></a>
-Migrating to CMSIS v6</h1>
-<p>Starting from version v7.17.0, the MDK-Middleware uses software components from the new CMSIS-Packs <b>ARM:CMSIS-View</b> and <b>ARM:CMSIS-Compiler</b>. They replace the previous pack <b>Keil:ARM_Compiler</b> with its components. Opening middleware projects and updating to the latest MDK-Middleware, you might see the following messages in the Build Output window:</p>
-<div class="image">
-<img src="view_only.png" alt=""/>
-<div class="caption">
-CMSIS-View missing</div></div>
-    <div class="image">
-<img src="view_and_compiler.png" alt=""/>
-<div class="caption">
-CMSIS-Compiler and CMSIS-View missing</div></div>
-    <p>In the Manage Run-Time Environment window you will see similar messages:</p>
-<div class="image">
-<img src="rte_validation.png" alt=""/>
-<div class="caption">
-Manage Run-Time Environment Window with Validation Problems</div></div>
-    <p>Refer to the <a href="https://learn.arm.com/learning-paths/microcontrollers/project-migration-cmsis-v6/troubleshooting/">project migration guide</a> on how to migrate these components to the new ones.</p>
-<blockquote class="doxtable">
-<p>&zwj;<b>Note</b></p><ul>
-<li>Component migration is not mandatory and you can continue using the old components. In that case, you need to ignore the validation and build output messages. </li>
+<p>MDK-Middleware components are available as source code and will work with all major toolchains including Arm Compiler 6, GCC and IAR.</p>
+<h1><a class="anchor" id="mw_using_mw"></a>
+Documentation</h1>
+<p>This user's guide contains the following chapters:</p>
+<ul>
+<li><a class="el" href="mw_using.html#mw_using_generic_steps">Generic Steps</a> explains the necessary steps to create from scratch a project containing a Middleware component.</li>
+<li><a class="el" href="mw_using.html#mw_using_stack_and_heap">Stack, Heap and RTOS Configuration</a> describes how to configure a project to meet the resource requirements of the Middleware.</li>
 </ul>
-</blockquote>
+<p>Every middleware component has a section on the following topics to explain how to create an application:</p>
+<ul>
+<li><b>Create an Application</b> contains step-by-step instructions for using the components in an embedded application.</li>
+<li><b>Example projects</b> outline key product features of the software components. They are tested, implemented, and proven on several evaluation boards and can be used as a starting point for application development.</li>
+<li><b>Resource Requirements</b> state the stack, thread and memory resource requirements for every component.</li>
+<li><b>Reference</b> documents the files of a component and each API function.</li>
+</ul>
+<p>The following table gives you links to the respective sections of each middleware component:</p>
+<p><a class="anchor" id="doc_mw"></a></p><table class="doxtable">
+<tr>
+<th>Topic </th><th colspan="5" style="text-align:center;">Links to Documentation  </th></tr>
+<tr>
+<td><b>Create an Application</b> </td><td><a href="../FileSystem/fs_create_app.html"><b>File System</b></a> </td><td><a href="../Network/network_create_app.html"><b>Network</b></a> </td><td><a href="../USB/USB_Device.html#Creation_Steps"><b>USB Device</b></a> </td><td><a href="../USB/USB_Host.html#Create_a_USB_Host_Application"><b>USB Host</b></a>  </td></tr>
+<tr>
+<td><b>Example projects</b> </td><td><a href="../FileSystem/fs_examples.html"><b>File System</b></a> </td><td><a href="../Network/nw_examples.html"><b>Network</b></a> </td><td><a href="../USB/USB_Device_tutorial.html"><b>USB Device</b></a> </td><td><a href="../USB/USB_Host_tutorial.html"><b>USB Host</b></a>  </td></tr>
+<tr>
+<td><b>Resource Requirements</b> </td><td><a href="../FileSystem/fs_resource_requirements.html"><b>File System</b></a> </td><td><a href="../Network/nw_resource_requirements.html"><b>Network</b></a> </td><td><a href="../USB/usb_resource_requirements.html#usbd_res_req"><b>USB Device</b></a> </td><td><a href="../USB/usb_resource_requirements.html#usbh_res_req"><b>USB Host</b></a>  </td></tr>
+<tr>
+<td><b>Reference</b> </td><td><a href="../FileSystem/modules.html"><b>File System</b></a> </td><td><a href="../Network/modules.html"><b>Network</b></a> </td><td><a href="../USB/group__usbd.html"><b>USB Device</b></a> </td><td><a href="../USB/group__usbh.html"><b>USB Host</b></a>  </td></tr>
+</table>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

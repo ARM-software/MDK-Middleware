@@ -26,9 +26,8 @@ var NAVTREE =
 [
   [ "MDK-Middleware", "index.html", [
     [ "Overview", "index.html", "index" ],
-    [ "Driver Interface", "DriverInterface.html", null ],
-    [ "Middleware Documentation", "mw_using_mw.html", null ],
     [ "Using Middleware", "mw_using.html", [
+      [ "Driver Interface", "mw_using.html#DriverInterface", null ],
       [ "Generic Steps", "mw_using.html#mw_using_generic_steps", [
         [ "Add Software Components", "mw_using.html#add_sw_comp", null ],
         [ "Configure Middleware", "mw_using.html#conf_mw", null ],
@@ -46,7 +45,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"DriverInterface.html"
+"index.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
