@@ -4,7 +4,7 @@ The free-to-use **MDK-Middleware** contains software components for IPv4 and IPv
 communication, and file system for data storage. The components can for example be used by the user's application, IoT
 connectors for cloud connectivity, or the \urlout{SDS}.
 
-![MDK Software Packs](./images/MDK-Middleware.png)
+![Application stack with MDK-Middleware](./images/MDK-Middleware.svg)
 
 This documentation describes:
 
@@ -31,7 +31,7 @@ Software components or APIs outside the scope of this documentation are:
 
 MDK-Middleware components are available as source code and will work with all major toolchains including Arm Compiler 6, GCC and IAR.
 
-## Documentation {#mw_using_mw}
+## Documentation structure {#mw_using_mw}
 
 This user's guide contains the following chapters:
 

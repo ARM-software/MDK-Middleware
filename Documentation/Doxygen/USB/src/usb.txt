@@ -7,7 +7,7 @@
 The <b>USB Component</b> enables you to create <b>USB Device</b> and <b>USB Host</b> applications and is part of \url{MW-General}.
 The USB Protocol is handled by the USB Component, so that developers can focus on their application needs.
 
-\image html "usbmiddleware.png" "Structure of the USB Component"
+\image html "usbmiddleware.svg" "USB Component Structure"
 
 The <b>USB Component</b> is structured as follows:
 - \ref USB_Device implements an USB Device peripheral that can be connected to an USB Host.
@@ -1042,10 +1042,97 @@ A pipe originates from a \b data \b buffer within the host \b client and termina
 \section transfers Transfers
 
 <b>Transfers</b> (data flow types) can consist of one or more transactions. A pipe supports only one of the following transfer types:
-- \subpage USB_Control_Transfers are typically used to setup an USB device. They always use IN/OUT Endpoint 0.
-- \subpage USB_Interrupt_Transfers can be used where data is sent regularly, for example for status updates.
-- \subpage USB_Isochronous_Transfers transmit real-time data such as audio and video. They have a guaranteed, fixed bandwidth, but no error detection.
-- \subpage USB_Bulk_Transfers can be used to send data where timing is not important, for example to a printer.
+- \ref USB_Control_Transfers are typically used to setup an USB device. They always use IN/OUT Endpoint 0.
+- \ref USB_Interrupt_Transfers can be used where data is sent regularly, for example for status updates.
+- \ref USB_Isochronous_Transfers transmit real-time data such as audio and video. They have a guaranteed, fixed bandwidth, but no error detection.
+- \ref USB_Bulk_Transfers can be used to send data where timing is not important, for example to a printer.
+
+
+\subsection USB_Control_Transfers Control Transfers
+
+<b>Control Transfers</b> are bi-directional transfers reserved for the host to send and request configuration information to 
+and from the device using the IN and OUT Endpoint 0. 
+
+Each Control Transfer consists of 2 to several transactions. The maximum packet size for the control endpoint data is: 
+- 8 bytes for low-speed
+- 8, 16, 32, or 64 bytes for full-speed 
+- 64 bytes for high-speed 
+
+In general, the application software does not use this type of transfer.
+
+Control Transfers have three stages:
+-# The <b>SETUP</b> stage carries 8 bytes called the Setup packet, defining the request, and specifying how many data should be
+  transferred in the DATA stage.
+\image html "ctrlTransferSetup.png" "Control SETUP Transaction Format"
+\n
+-# The <b>DATA</b> stage is optional. If present, it always starts with a transaction containing a DATA1 packet. 
+  Then, the transaction type alternates between DATA0 and DATA1 until all required data have been transferred.
+-# The <b>STATUS</b> stage is a transaction containing a zero-length DATA1 packet. If the DATA stage was IN, then the STATUS
+  stage is OUT, and vice-versa.
+\image html "ctrlTransferRedWriteSeq.png" "Control Read and Write Sequences"
+
+
+\subsection USB_Interrupt_Transfers Interrupt Transfers
+
+<b>Interrupt Transfers</b> have a limited latency to or from a device. In USB, an Interrupt Transfer, or Interrupt Pipe, has a
+defined polling rate between: 
+- 1ms and 255ms for full and low-speed
+- 125&mu;s to 4096ms for high-speed endpoints.
+
+The maximum packet size for the interrupt endpoint data is: 
+- 64 or less bytes for full-speed 
+- 1024 or less bytes for high-speed 
+
+The developer can define how often the host can request a data transfer from the device.
+
+For example, for a mouse, a data transfer rate at every 10 ms can be guaranteed. However, defining the polling rate does not guarantee
+that data will be transferred every 10 ms, but rather that the transaction will occur somewhere within the tenth frame. For this
+reason, a certain amount of timing jitter is inherent in an USB transaction.
+
+Typically, Interrupt Transfer data consists of event notifications, characters, or coordinates from a pointing device.
+
+\image html "interruptTransfer.png" "Interrupt Transfer Format"
+
+
+\subsection USB_Isochronous_Transfers Isochronous Transfers
+
+<b>Isochronous Transfers</b> are used for transmitting real-time information such as audio and video data, and must be sent at 
+a constant rate. USB isochronous data streams are allocated a dedicated portion of USB bandwidth to ensure that data can be 
+delivered at the desired rate. An Isochronous pipe sends a new data packet in every frame, regardless of the success or failure 
+of the last packet.
+
+The maximum packet size for the isochronous endpoint data is: 
+- 1023 or less bytes for full-speed 
+- 1024 or less bytes for high-speed 
+
+Isochronous Transfers have no error detection. Any error in electrical transmission is not corrected.
+
+Isochronous Transfers are also subject to timing jitters as described for \ref USB_Interrupt_Transfers.
+
+\image html "isochronousTransfer.png" "Isochronous Transfer Format"
+
+
+\subsection USB_Bulk_Transfers Bulk Transfers
+
+<b>Bulk Transfers</b> are used for data which are not of the type Control, Interrupt, or Isochronous. Reliable exchange of data 
+is ensured at the hardware level using error detection.
+
+Data are transferred in the same manner as in \ref USB_Interrupt_Transfers, but have no defined 
+polling rate. Bulk Transfers take up all the bandwidth that is available after the other transfers have finished. If the bus is 
+very busy, then a Bulk Transfer may be delayed. 
+
+The maximum packet size for the bulk endpoint data is: 
+- 8, 16, 32 or 64 bytes for full-speed 
+- 512 bytes for high-speed 
+
+For low-speed and full-speed endpoints the following is valid: If the bus is idle, multiple Bulk Transfers can take place 
+in a single 1ms frame (Interrupt and Isochronous Transfers are limited to a maximum of one packet per frame).
+
+For example, Bulk Transfers send data to a printer. As long as the data is printed in a reasonable time frame, the exact transfer 
+rate is not important.
+
+\image html "bulkTransfer.png" "Bulk Transfer Read and Writes"
+
 
 \section endpoints Endpoints
 
@@ -1180,107 +1267,6 @@ A special packet is the <b>Start-of-Frame</b> packet (SOF) that splits the USB b
 a slot in each frame. The Start-of-Frame packet is sent every 1ms on full speed links. At high speed, the 1ms frame is divided 
 into 8 microframes of 125&mu;s each. A Start-of-Frame packet is sent at the beginning of each microframe using the same 
 frame number. The frame number increments every 1ms.
-*/
-
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page USB_Control_Transfers Control Transfers
-
-<b>Control Transfers</b> are bi-directional transfers reserved for the host to send and request configuration information to 
-and from the device using the IN and OUT Endpoint 0. 
-
-Each Control Transfer consists of 2 to several transactions. The maximum packet size for the control endpoint data is: 
-- 8 bytes for low-speed
-- 8, 16, 32, or 64 bytes for full-speed 
-- 64 bytes for high-speed 
-
-In general, the application software does not use this type of transfer.
-
-Control Transfers have three stages:
--# The <b>SETUP</b> stage carries 8 bytes called the Setup packet, defining the request, and specifying how many data should be
-  transferred in the DATA stage.
-\image html "ctrlTransferSetup.png" "Control SETUP Transaction Format"
-\n
--# The <b>DATA</b> stage is optional. If present, it always starts with a transaction containing a DATA1 packet. 
-  Then, the transaction type alternates between DATA0 and DATA1 until all required data have been transferred.
--# The <b>STATUS</b> stage is a transaction containing a zero-length DATA1 packet. If the DATA stage was IN, then the STATUS
-  stage is OUT, and vice-versa.
-\image html "ctrlTransferRedWriteSeq.png" "Control Read and Write Sequences"
-*/
-
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page USB_Interrupt_Transfers Interrupt Transfers
-
-<b>Interrupt Transfers</b> have a limited latency to or from a device. In USB, an Interrupt Transfer, or Interrupt Pipe, has a
-defined polling rate between: 
-- 1ms and 255ms for full and low-speed
-- 125&mu;s to 4096ms for high-speed endpoints.
-
-The maximum packet size for the interrupt endpoint data is: 
-- 64 or less bytes for full-speed 
-- 1024 or less bytes for high-speed 
-
-The developer can define how often the host can request a data transfer from the device.
-
-For example, for a mouse, a data transfer rate at every 10 ms can be guaranteed. However, defining the polling rate does not guarantee
-that data will be transferred every 10 ms, but rather that the transaction will occur somewhere within the tenth frame. For this
-reason, a certain amount of timing jitter is inherent in an USB transaction.
-
-Typically, Interrupt Transfer data consists of event notifications, characters, or coordinates from a pointing device.
-
-\image html "interruptTransfer.png" "Interrupt Transfer Format"
-
-*/
-
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page USB_Isochronous_Transfers Isochronous Transfers
-
-<b>Isochronous Transfers</b> are used for transmitting real-time information such as audio and video data, and must be sent at 
-a constant rate. USB isochronous data streams are allocated a dedicated portion of USB bandwidth to ensure that data can be 
-delivered at the desired rate. An Isochronous pipe sends a new data packet in every frame, regardless of the success or failure 
-of the last packet.
-
-The maximum packet size for the isochronous endpoint data is: 
-- 1023 or less bytes for full-speed 
-- 1024 or less bytes for high-speed 
-
-Isochronous Transfers have no error detection. Any error in electrical transmission is not corrected.
-
-Isochronous Transfers are also subject to timing jitters as described for \ref USB_Interrupt_Transfers.
-
-\image html "isochronousTransfer.png" "Isochronous Transfer Format"
-
-*/
-
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page USB_Bulk_Transfers Bulk Transfers
-
-<b>Bulk Transfers</b> are used for data which are not of the type Control, Interrupt, or Isochronous. Reliable exchange of data 
-is ensured at the hardware level using error detection.
-
-Data are transferred in the same manner as in \ref USB_Interrupt_Transfers, but have no defined 
-polling rate. Bulk Transfers take up all the bandwidth that is available after the other transfers have finished. If the bus is 
-very busy, then a Bulk Transfer may be delayed. 
-
-The maximum packet size for the bulk endpoint data is: 
-- 8, 16, 32 or 64 bytes for full-speed 
-- 512 bytes for high-speed 
-
-For low-speed and full-speed endpoints the following is valid: If the bus is idle, multiple Bulk Transfers can take place 
-in a single 1ms frame (Interrupt and Isochronous Transfers are limited to a maximum of one packet per frame).
-
-For example, Bulk Transfers send data to a printer. As long as the data is printed in a reasonable time frame, the exact transfer 
-rate is not important.
-
-\image html "bulkTransfer.png" "Bulk Transfer Read and Writes"
-
 */
 
 

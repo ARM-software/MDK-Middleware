@@ -200,36 +200,7 @@ To be able to use the time information provided by an on-chip RTC, the user appl
 stamps are used.
 
 
-\section fat_sys_design_limitations FAT System Design Limitations
-
-By design, FAT carries a few limitations:
-- Maximum file size is limited to 4,294,967,295 bytes
-- Maximum files within folder is 65,536 (i.e. a directory must not be larger than 2,097,152 bytes).
-- A root directory on FAT12 and FAT16 can hold max 512 files/folders (there is no such limitation for FAT32)
-- FAT type depends on maximum and minimum number of clusters:
-  - FAT12 maximum clusters: 4,084
-  - FAT16 minimum clusters: 4,085
-  - FAT16 maximum clusters: 65,524
-  - FAT32 minimum clusters: 65,525
-- Maximum volume size depends on FAT type:
-  - FAT12: 256MB (for 64kB clusters)
-  - FAT16: 4GB (for 64kB clusters)
-  - FAT32: 2TB (4G of 512B sectors)
-       
-
-\section fat_imp_limitations FAT Implementation Limitations
-
-The actual FAT implementation of the File System Component has the following limitations:
-- Multiple partitions are not supported and will not be detected
-- Multiple active file handles per file are allowed only for files opened in read mode.
-- Maximum path length is 260 bytes for FAT with LFN support and 80 bytes for FAT without LFN support.
-- Seeking within files is limited to the area of two gigabytes due to the \ref fseek and \ref ftell limitation set by ANSI C Standard library
-- UTF-16 and UTF-8 character encoding is not supported
-*/
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page journaling_fat Journaling for the FAT File System
+\section journaling_fat Journaling for the FAT File System
 
 The File System Component supports a proprietary
 <a class="el" href="https://en.wikipedia.org/wiki/Journaling_file_system" target="_blank">journaling</a> mechanism for FAT
@@ -279,6 +250,32 @@ When File System Component experiences a power loss or crashes before a file ope
 successfully closed the content of that file is lost. This results in lost data clusters which 
 can be restored using a file system repair utility tool such as chkdsk on Windows or fsck on Linux.
 
+
+\section fat_sys_design_limitations FAT System Design Limitations
+
+By design, FAT carries a few limitations:
+- Maximum file size is limited to 4,294,967,295 bytes
+- Maximum files within folder is 65,536 (i.e. a directory must not be larger than 2,097,152 bytes).
+- A root directory on FAT12 and FAT16 can hold max 512 files/folders (there is no such limitation for FAT32)
+- FAT type depends on maximum and minimum number of clusters:
+  - FAT12 maximum clusters: 4,084
+  - FAT16 minimum clusters: 4,085
+  - FAT16 maximum clusters: 65,524
+  - FAT32 minimum clusters: 65,525
+- Maximum volume size depends on FAT type:
+  - FAT12: 256MB (for 64kB clusters)
+  - FAT16: 4GB (for 64kB clusters)
+  - FAT32: 2TB (4G of 512B sectors)
+       
+
+\section fat_imp_limitations FAT Implementation Limitations
+
+The actual FAT implementation of the File System Component has the following limitations:
+- Multiple partitions are not supported and will not be detected
+- Multiple active file handles per file are allowed only for files opened in read mode.
+- Maximum path length is 260 bytes for FAT with LFN support and 80 bytes for FAT without LFN support.
+- Seeking within files is limited to the area of two gigabytes due to the \ref fseek and \ref ftell limitation set by ANSI C Standard library
+- UTF-16 and UTF-8 character encoding is not supported
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/

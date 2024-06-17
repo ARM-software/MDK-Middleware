@@ -6,7 +6,7 @@
 The <b>File System Component</b> allows your embedded applications to create, save, read, and modify files in storage devices
 such as \b RAM, \b Flash, <b>memory cards</b>, or <b>USB memory devices</b>.
 
-\image html "filesystem.png" "File System Overview"
+\image html "FileSystem.svg" "File System Component Structure"
 
 The File System Component is structured as follows:
 - Storage devices are referenced as \ref drive "drives" which can be accessed by the user.

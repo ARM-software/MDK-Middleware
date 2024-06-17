@@ -7,7 +7,7 @@
 The \b Network \b Component contains services, protocol sockets, and physical communication interfaces for creating IPv4
 and IPv6 networking applications.
 
-\image html "Network.png" "Network Overview"
+\image html "Network.svg" "Network Component Structure"
 
 The various \ref netServices "services" provide program templates for common networking tasks:
 - The \ref netHTTP_Func supports static and dynamic page content using \ref ws_script_langugage "scripting",
