@@ -12,6 +12,10 @@ var fs_operation =
       ] ],
       [ "Long and Short File Name handling", "fat_fs.html#lfn_sfn_handling", null ],
       [ "Time Stamping Support", "fat_fs.html#fat_time_stamping", null ],
+      [ "Journaling for the FAT File System", "fat_fs.html#journaling_fat", [
+        [ "System Initialization and Drive Formatting", "fat_fs.html#autotoc_md4", null ],
+        [ "System failure behavior", "fat_fs.html#autotoc_md5", null ]
+      ] ],
       [ "FAT System Design Limitations", "fat_fs.html#fat_sys_design_limitations", null ],
       [ "FAT Implementation Limitations", "fat_fs.html#fat_imp_limitations", null ]
     ] ],
@@ -27,7 +31,6 @@ var fs_operation =
       ] ],
       [ "Limitations", "emb_fs.html#efs_limits", null ]
     ] ],
-    [ "Journaling for the FAT File System", "journaling_fat.html", null ],
     [ "Memory Card Control Layer", "mc_control_layer.html", [
       [ "List of Supported Devices", "mc_control_layer.html#mci_list_of_devices", null ],
       [ "List of Supported MCI Driver Capabilities", "mc_control_layer.html#mci_list_of_mci_capabilities", null ],

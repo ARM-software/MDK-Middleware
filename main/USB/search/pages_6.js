@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hid_3a_20human_20interface_20device_20class_0',['HID: Human Interface Device Class',['../HID.html',1,'USB_Classes']]]
+  ['interface_20descriptor_0',['Interface Descriptor',['../USB_Interface_Descriptor.html',1,'USB_Descriptors']]]
 ];

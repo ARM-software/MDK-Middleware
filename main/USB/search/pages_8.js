@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['migration_20guide_0',['Migration Guide',['../usb_migration.html',1,'']]],
-  ['msc_3a_20mass_20storage_20class_1',['MSC: Mass Storage Class',['../MSC.html',1,'USB_Classes']]]
+  ['resource_20requirements_0',['Resource Requirements',['../usb_resource_requirements.html',1,'']]],
+  ['revision_20history_1',['Revision History',['../usb_revhist.html',1,'']]]
 ];

@@ -211,6 +211,29 @@ Time Stamping Support</h1>
 <li>Write date</li>
 </ul>
 <p>To be able to use the time information provided by an on-chip RTC, the user application needs to implement the function <a class="el" href="group__file__time__routines.html#gafe26294de82a7597b98e3ff45ea2004e">fs_get_time()</a>. The <a class="el" href="rl__fs_8h.html#structfsTime">fsTime</a> structure must be filled with the data returned from the RTC driver. If the <a class="el" href="group__file__time__routines.html#gafe26294de82a7597b98e3ff45ea2004e">fs_get_time()</a> function is not implemented in the user application (which is the default), predefined time and date stamps are used.</p>
+<h1><a class="anchor" id="journaling_fat"></a>
+Journaling for the FAT File System</h1>
+<p>The File System Component supports a proprietary <a href="https://en.wikipedia.org/wiki/Journaling_file_system" class="el" target="_blank">journaling</a> mechanism for FAT which makes file I/O functions robust against system crashes or power failures. When FAT Journaling is enabled, the file allocation table and directory entries are protected.</p>
+<p><b>FAT Journaling</b> keeps track of the changes in the file system using a <b>journal</b> before committing them to the main file system. In the event of a system failure, file system does not become corrupted. Only content of files that are opened in writing mode may be lost. Other files are not affected.</p>
+<p>Journaling can be enabled individually for each drive that is using the FAT File System. For information on how to enable Journaling refer to:</p><ul>
+<li><a class="el" href="fs_create_app.html#mc_usage">Memory Card Drive</a></li>
+<li><a class="el" href="fs_create_app.html#usb_usage">USB Flash Drive</a></li>
+<li><a class="el" href="fs_create_app.html#nand_usage">NAND Flash Drive</a></li>
+</ul>
+<h2><a class="anchor" id="autotoc_md4"></a>
+System Initialization and Drive Formatting</h2>
+<p>There requirements for creating a <b>journal</b> are:</p><ul>
+<li>the drive must be formatted with two FAT tables (two consecutive tables in the FAT section of the drive)</li>
+<li>the drive must have at least 64 sectors (= 32kB) of contiguous free space at the end of a partition (in the last 1% space).</li>
+</ul>
+<p>If journaling is enabled, mounting a drive triggers the File System to search for the journal.</p>
+<p>When journal is found the journaling system is initialized and the journal content is checked for any incomplete data transactions that may be the result of a system crash. When incomplete data transactions are found the file system restores the drive to the last known valid state.</p>
+<p>When no journal is found, the journal is automatically created. The required space (32kB) for journal is reserved by marking the adequate amount of clusters in the last 1% of the drive partition. This reduces the reported amount of free space on the drive accordingly.</p>
+<p>No special drive formatting is required. When a drive is formatted on a different computer (running Window or Linux) free space is typical available at the end of a partition. Creation of a journal may fail on removable media when above requirements are not meet. This may happen if the drive is fragmented or there is not enough space. In this case the drive should be defragmented or some files should be deleted.</p>
+<p>When using the <a class="el" href="group__utility__routines.html#gaea20173a589e298b86791f1cc661731b">fformat</a> function of the File System Component, the journal is automatically created on drives with enabled option "Use FAT Journal".</p>
+<h2><a class="anchor" id="autotoc_md5"></a>
+System failure behavior</h2>
+<p>When File System Component experiences a power loss or crashes before a file opened for writing is successfully closed the content of that file is lost. This results in lost data clusters which can be restored using a file system repair utility tool such as chkdsk on Windows or fsck on Linux.</p>
 <h1><a class="anchor" id="fat_sys_design_limitations"></a>
 FAT System Design Limitations</h1>
 <p>By design, FAT carries a few limitations:</p><ul>

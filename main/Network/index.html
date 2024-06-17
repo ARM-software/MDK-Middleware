@@ -133,9 +133,9 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 Overview</h1>
 <p>The <b>Network</b> <b>Component</b> contains services, protocol sockets, and physical communication interfaces for creating IPv4 and IPv6 networking applications.</p>
 <div class="image">
-<img src="Network.png" alt=""/>
+<object type="image/svg+xml" data="Network.svg" style="pointer-events: none;"></object>
 <div class="caption">
-Network Overview</div></div>
+Network Component Structure</div></div>
 <p>The various <a class="el" href="group__netServices.html">services</a> provide program templates for common networking tasks:</p><ul>
 <li>The <a class="el" href="group__netHTTP__Func.html">HTTP Server</a> supports static and dynamic page content using <a class="el" href="group__ws__script__langugage.html">scripting</a>, <a class="el" href="group__ws__ajax.html">AJAX</a> and <a class="el" href="group__ws__soap.html">SOAP</a> technologies. Web resource files are accessed either via the File System (for component <b>Web Server</b>) or are directly stored in ROM (for component <b>Web Server Compact</b>). Using the <a class="el" href="secure_communication.html">ARM mbed TLS</a> component, you can enable secure communication for both web servers using HTTPS.</li>
 <li><b>FTP</b> <a class="el" href="group__netFTPs__Func.html">server</a>/<a class="el" href="group__netFTPc__Func.html">client</a> and <b>TFTP</b> <a class="el" href="group__netTFTPs__Func.html">server</a>/<a class="el" href="group__netTFTPc__Func.html">client</a> are used for file transfer. TFTP supports only file upload and download and is typically used for boot-loading remote devices in a closed LAN. It has very low memory requirements. FTP provides full file access including sub-directories, log-in and a set of manipulation commands.</li>

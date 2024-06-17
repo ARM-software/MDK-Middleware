@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['theory_20of_20operation_0',['Theory of Operation',['../fs_operation.html',1,'']]],
-  ['time_1',['time',['../rl__fs_8h.html#a5f4595f711d98fbe732c9d23c37af547',1,'fsFileInfo']]]
+  ['ungetc_0',['ungetc',['../group__stdio__routines.html#ga54efa95b6d5b41adec98e5b8a1a9f27b',1,'stdio.h']]],
+  ['utility_20routines_1',['Utility Routines',['../group__utility__routines.html',1,'']]]
 ];

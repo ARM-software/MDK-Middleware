@@ -19,6 +19,5 @@ var searchData=
   ['bnuminterfaces_16',['bNumInterfaces',['../group__usbh__data__types.html#a1ad144333e75b0d867e72f8a337cd510',1,'USB_CONFIGURATION_DESCRIPTOR']]],
   ['bparitytype_17',['bParityType',['../group__usbd__data__types.html#a47f5ab7fcc915dedd560214e61438bc3',1,'CDC_LINE_CODING']]],
   ['brequest_18',['bRequest',['../group__usbd__data__types.html#a1e7be110861bd4ff75c86d5214f31543',1,'USB_SETUP_PACKET']]],
-  ['bulk_20transfers_19',['Bulk Transfers',['../USB_Bulk_Transfers.html',1,'USB_Endpoints']]],
-  ['button_20',['button',['../group__usbh__data__types.html#a8273db344fd3a2b068599f6cadba12f4',1,'usbHID_MouseState']]]
+  ['button_19',['button',['../group__usbh__data__types.html#a8273db344fd3a2b068599f6cadba12f4',1,'usbHID_MouseState']]]
 ];

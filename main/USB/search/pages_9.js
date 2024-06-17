@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['resource_20requirements_0',['Resource Requirements',['../usb_resource_requirements.html',1,'']]],
-  ['revision_20history_1',['Revision History',['../usb_revhist.html',1,'']]]
+  ['string_20descriptors_0',['String Descriptors',['../USB_String_Descriptor.html',1,'USB_Descriptors']]],
+  ['supported_20usb_20classes_1',['Supported USB Classes',['../USB_Classes.html',1,'']]]
 ];

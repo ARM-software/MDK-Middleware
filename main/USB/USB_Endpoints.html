@@ -136,21 +136,88 @@ Logical Connections Between USB Host Clients and USB Device Endpoints</div></div
 <h1><a class="anchor" id="pipe_types"></a>
 Pipes</h1>
 <p>Basically, two types of <b>pipes</b> exist:</p><ul>
-<li><b>Message pipes</b> have a defined USB format and are host controlled. Message pipes allow data to flow in both directions and support <a class="el" href="USB_Control_Transfers.html">Control Transfers</a> only.</li>
-<li><b>Stream pipes</b> have no defined USB format and can either be controlled by the host or by the device. The data stream has a predefined direction, either <b>IN</b> or <b>OUT</b>. Stream pipes support <a class="el" href="USB_Interrupt_Transfers.html">Interrupt Transfers</a>, <a class="el" href="USB_Isochronous_Transfers.html">Isochronous Transfers</a>, and <a class="el" href="USB_Bulk_Transfers.html">Bulk Transfers</a>.</li>
+<li><b>Message pipes</b> have a defined USB format and are host controlled. Message pipes allow data to flow in both directions and support <a class="el" href="USB_Endpoints.html#USB_Control_Transfers">Control Transfers</a> only.</li>
+<li><b>Stream pipes</b> have no defined USB format and can either be controlled by the host or by the device. The data stream has a predefined direction, either <b>IN</b> or <b>OUT</b>. Stream pipes support <a class="el" href="USB_Endpoints.html#USB_Interrupt_Transfers">Interrupt Transfers</a>, <a class="el" href="USB_Endpoints.html#USB_Isochronous_Transfers">Isochronous Transfers</a>, and <a class="el" href="USB_Endpoints.html#USB_Bulk_Transfers">Bulk Transfers</a>.</li>
 </ul>
 <p>Most pipes come into existence when an USB Device has been connected to the USB Bus and configured by the USB Host. A pipe originates from a <b>data</b> <b>buffer</b> within the host <b>client</b> and terminates inside the USB Device at an <a class="el" href="USB_Endpoints.html#endpoints">Endpoint</a>.</p>
 <h1><a class="anchor" id="transfers"></a>
 Transfers</h1>
 <p><b>Transfers</b> (data flow types) can consist of one or more transactions. A pipe supports only one of the following transfer types:</p><ul>
-<li><a class="el" href="USB_Control_Transfers.html">Control Transfers</a> are typically used to setup an USB device. They always use IN/OUT Endpoint 0.</li>
-<li><a class="el" href="USB_Interrupt_Transfers.html">Interrupt Transfers</a> can be used where data is sent regularly, for example for status updates.</li>
-<li><a class="el" href="USB_Isochronous_Transfers.html">Isochronous Transfers</a> transmit real-time data such as audio and video. They have a guaranteed, fixed bandwidth, but no error detection.</li>
-<li><a class="el" href="USB_Bulk_Transfers.html">Bulk Transfers</a> can be used to send data where timing is not important, for example to a printer.</li>
+<li><a class="el" href="USB_Endpoints.html#USB_Control_Transfers">Control Transfers</a> are typically used to setup an USB device. They always use IN/OUT Endpoint 0.</li>
+<li><a class="el" href="USB_Endpoints.html#USB_Interrupt_Transfers">Interrupt Transfers</a> can be used where data is sent regularly, for example for status updates.</li>
+<li><a class="el" href="USB_Endpoints.html#USB_Isochronous_Transfers">Isochronous Transfers</a> transmit real-time data such as audio and video. They have a guaranteed, fixed bandwidth, but no error detection.</li>
+<li><a class="el" href="USB_Endpoints.html#USB_Bulk_Transfers">Bulk Transfers</a> can be used to send data where timing is not important, for example to a printer.</li>
 </ul>
+<h2><a class="anchor" id="USB_Control_Transfers"></a>
+Control Transfers</h2>
+<p><b>Control Transfers</b> are bi-directional transfers reserved for the host to send and request configuration information to and from the device using the IN and OUT Endpoint 0.</p>
+<p>Each Control Transfer consists of 2 to several transactions. The maximum packet size for the control endpoint data is:</p><ul>
+<li>8 bytes for low-speed</li>
+<li>8, 16, 32, or 64 bytes for full-speed</li>
+<li>64 bytes for high-speed</li>
+</ul>
+<p>In general, the application software does not use this type of transfer.</p>
+<p>Control Transfers have three stages:</p><ol type="1">
+<li>The <b>SETUP</b> stage carries 8 bytes called the Setup packet, defining the request, and specifying how many data should be transferred in the DATA stage. <div class="image">
+<img src="ctrlTransferSetup.png" alt=""/>
+<div class="caption">
+Control SETUP Transaction Format</div></div>
+ <br  />
+</li>
+<li>The <b>DATA</b> stage is optional. If present, it always starts with a transaction containing a DATA1 packet. Then, the transaction type alternates between DATA0 and DATA1 until all required data have been transferred.</li>
+<li>The <b>STATUS</b> stage is a transaction containing a zero-length DATA1 packet. If the DATA stage was IN, then the STATUS stage is OUT, and vice-versa. <div class="image">
+<img src="ctrlTransferRedWriteSeq.png" alt=""/>
+<div class="caption">
+Control Read and Write Sequences</div></div>
+</li>
+</ol>
+<h2><a class="anchor" id="USB_Interrupt_Transfers"></a>
+Interrupt Transfers</h2>
+<p><b>Interrupt Transfers</b> have a limited latency to or from a device. In USB, an Interrupt Transfer, or Interrupt Pipe, has a defined polling rate between:</p><ul>
+<li>1ms and 255ms for full and low-speed</li>
+<li>125&mu;s to 4096ms for high-speed endpoints.</li>
+</ul>
+<p>The maximum packet size for the interrupt endpoint data is:</p><ul>
+<li>64 or less bytes for full-speed</li>
+<li>1024 or less bytes for high-speed</li>
+</ul>
+<p>The developer can define how often the host can request a data transfer from the device.</p>
+<p>For example, for a mouse, a data transfer rate at every 10 ms can be guaranteed. However, defining the polling rate does not guarantee that data will be transferred every 10 ms, but rather that the transaction will occur somewhere within the tenth frame. For this reason, a certain amount of timing jitter is inherent in an USB transaction.</p>
+<p>Typically, Interrupt Transfer data consists of event notifications, characters, or coordinates from a pointing device.</p>
+<div class="image">
+<img src="interruptTransfer.png" alt=""/>
+<div class="caption">
+Interrupt Transfer Format</div></div>
+<h2><a class="anchor" id="USB_Isochronous_Transfers"></a>
+Isochronous Transfers</h2>
+<p><b>Isochronous Transfers</b> are used for transmitting real-time information such as audio and video data, and must be sent at a constant rate. USB isochronous data streams are allocated a dedicated portion of USB bandwidth to ensure that data can be delivered at the desired rate. An Isochronous pipe sends a new data packet in every frame, regardless of the success or failure of the last packet.</p>
+<p>The maximum packet size for the isochronous endpoint data is:</p><ul>
+<li>1023 or less bytes for full-speed</li>
+<li>1024 or less bytes for high-speed</li>
+</ul>
+<p>Isochronous Transfers have no error detection. Any error in electrical transmission is not corrected.</p>
+<p>Isochronous Transfers are also subject to timing jitters as described for <a class="el" href="USB_Endpoints.html#USB_Interrupt_Transfers">Interrupt Transfers</a>.</p>
+<div class="image">
+<img src="isochronousTransfer.png" alt=""/>
+<div class="caption">
+Isochronous Transfer Format</div></div>
+<h2><a class="anchor" id="USB_Bulk_Transfers"></a>
+Bulk Transfers</h2>
+<p><b>Bulk Transfers</b> are used for data which are not of the type Control, Interrupt, or Isochronous. Reliable exchange of data is ensured at the hardware level using error detection.</p>
+<p>Data are transferred in the same manner as in <a class="el" href="USB_Endpoints.html#USB_Interrupt_Transfers">Interrupt Transfers</a>, but have no defined polling rate. Bulk Transfers take up all the bandwidth that is available after the other transfers have finished. If the bus is very busy, then a Bulk Transfer may be delayed.</p>
+<p>The maximum packet size for the bulk endpoint data is:</p><ul>
+<li>8, 16, 32 or 64 bytes for full-speed</li>
+<li>512 bytes for high-speed</li>
+</ul>
+<p>For low-speed and full-speed endpoints the following is valid: If the bus is idle, multiple Bulk Transfers can take place in a single 1ms frame (Interrupt and Isochronous Transfers are limited to a maximum of one packet per frame).</p>
+<p>For example, Bulk Transfers send data to a printer. As long as the data is printed in a reasonable time frame, the exact transfer rate is not important.</p>
+<div class="image">
+<img src="bulkTransfer.png" alt=""/>
+<div class="caption">
+Bulk Transfer Read and Writes</div></div>
 <h1><a class="anchor" id="endpoints"></a>
 Endpoints</h1>
-<p><b>Endpoints</b> can be described as data sources or sinks and exists in USB Devices only. The data stored at an endpoint may either be received from or waiting for being sent to the USB Host. An endpoint can be configured to support four <a class="el" href="USB_Endpoints.html#transfers">transfer types</a> defined in the USB specification (<a class="el" href="USB_Control_Transfers.html">Control Transfers</a>, <a class="el" href="USB_Interrupt_Transfers.html">Interrupt Transfers</a>, <a class="el" href="USB_Isochronous_Transfers.html">Isochronous Transfers</a>, and <a class="el" href="USB_Bulk_Transfers.html">Bulk Transfers</a>). Within the limits of the hardware, endpoints can be configured using the USB Middleware (e.g. limit an endpoint to a certain transfer type). <br  />
+<p><b>Endpoints</b> can be described as data sources or sinks and exists in USB Devices only. The data stored at an endpoint may either be received from or waiting for being sent to the USB Host. An endpoint can be configured to support four <a class="el" href="USB_Endpoints.html#transfers">transfer types</a> defined in the USB specification (<a class="el" href="USB_Endpoints.html#USB_Control_Transfers">Control Transfers</a>, <a class="el" href="USB_Endpoints.html#USB_Interrupt_Transfers">Interrupt Transfers</a>, <a class="el" href="USB_Endpoints.html#USB_Isochronous_Transfers">Isochronous Transfers</a>, and <a class="el" href="USB_Endpoints.html#USB_Bulk_Transfers">Bulk Transfers</a>). Within the limits of the hardware, endpoints can be configured using the USB Middleware (e.g. limit an endpoint to a certain transfer type). <br  />
  An endpoint acts as a kind of buffer. A USB Host's client may send data to Endpoint 1 for example. Coming from the USB Host, the data will be sent to the <b>OUT Endpoint 1</b>. The program on the microcontroller will then read the data as soon as it is ready to do so. Returning data has to be written to the <b>IN Endpoint 1</b>, as the program cannot access the USB bus freely (the USB bus being controlled by the USB Host). The data in IN Endpoint 1 stays there until the host sends an IN packet to Endpoint 1 requesting the data. <br  />
 </p>
 <p>These rules apply to all microcontroller devices:</p><ul>

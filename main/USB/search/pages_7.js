@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['interface_20descriptor_0',['Interface Descriptor',['../USB_Interface_Descriptor.html',1,'USB_Descriptors']]],
-  ['interrupt_20transfers_1',['Interrupt Transfers',['../USB_Interrupt_Transfers.html',1,'USB_Endpoints']]],
-  ['isochronous_20transfers_2',['Isochronous Transfers',['../USB_Isochronous_Transfers.html',1,'USB_Endpoints']]]
+  ['migration_20guide_0',['Migration Guide',['../usb_migration.html',1,'']]],
+  ['msc_3a_20mass_20storage_20class_1',['MSC: Mass Storage Class',['../MSC.html',1,'USB_Classes']]]
 ];

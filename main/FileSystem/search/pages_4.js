@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['memory_20card_20control_20layer_0',['Memory Card Control Layer',['../mc_control_layer.html',1,'fs_operation']]]
+  ['nand_20flash_20translation_20layer_0',['NAND Flash Translation Layer',['../nand_flash_TL.html',1,'fs_operation']]]
 ];
