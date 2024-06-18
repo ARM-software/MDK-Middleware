@@ -1,5 +1,6 @@
 var NAVTREEINDEX5 =
 {
+"group__net__evr__slip__func.html#gabf93866afdff60cc53d22c8ac574de98":[10,8,5,14],
 "group__net__evr__slip__func.html#gac8f0d6ae51c50855bfe86de6608491e1":[10,8,5,10],
 "group__net__evr__slip__func.html#gad4c8af7433752cc2fb5bc75ff1480048":[10,8,5,15],
 "group__net__evr__slip__func.html#gad9bcd4992bef004ad93d89584fefd68d":[10,8,5,5],
@@ -248,6 +249,5 @@ var NAVTREEINDEX5 =
 "group__net__evr__teln__func.html":[10,8,24],
 "group__net__evr__teln__func.html#ga0599b51d9d85916cfe95b7cdef7631cc":[10,8,24,4],
 "group__net__evr__teln__func.html#ga0d7496df9e228e141d6acb21646b1b2e":[10,8,24,9],
-"group__net__evr__teln__func.html#ga1bb7e8aa25af6beebd37d29950c7a709":[10,8,24,5],
-"group__net__evr__teln__func.html#ga1c16316fa353a00eb5efa42f87e47a7a":[10,8,24,18]
+"group__net__evr__teln__func.html#ga1bb7e8aa25af6beebd37d29950c7a709":[10,8,24,5]
 };

@@ -1,5 +1,6 @@
 var NAVTREEINDEX6 =
 {
+"group__net__evr__teln__func.html#ga1c16316fa353a00eb5efa42f87e47a7a":[10,8,24,18],
 "group__net__evr__teln__func.html#ga29b9d3c52351ac314251110479367e52":[10,8,24,28],
 "group__net__evr__teln__func.html#ga2dedea4bcb786942c5a3cb194c0fc7a7":[10,8,24,24],
 "group__net__evr__teln__func.html#ga321dfa8c123f809232bba3645c3cb108":[10,8,24,6],
@@ -248,6 +249,5 @@ var NAVTREEINDEX6 =
 "group__smtpc__fs__interface.html#ga410c403438fa041b547d4af833aee4df":[10,1,9,2,2],
 "group__smtpc__fs__interface.html#ga483fcb55cfcc925168851ff4fa1167c0":[10,1,9,2,1],
 "group__smtpc__fs__interface.html#ga6b7289766a9e36aa7dedf70ddaf72540":[10,1,9,2,0],
-"group__smtpc__operation.html":[10,1,9,1],
-"group__smtpc__operation.html#ga5240c89a181c1ddb07bbe888a6a8657f":[10,1,9,1,1]
+"group__smtpc__operation.html":[10,1,9,1]
 };

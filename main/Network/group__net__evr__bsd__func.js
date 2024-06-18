@@ -134,6 +134,7 @@ var group__net__evr__bsd__func =
     [ "EvrNetBSD_SendtoInvalidParameter", "group__net__evr__bsd__func.html#ga85282510f1643898737c31dc035c4738", null ],
     [ "EvrNetBSD_SendtoMsgTooLarge", "group__net__evr__bsd__func.html#ga7381236c3181dbd41b384cc0c9db9f17", null ],
     [ "EvrNetBSD_SendtoNoMemory", "group__net__evr__bsd__func.html#ga74ed765b12faa590df5aaa1cb3a68c45", null ],
+    [ "EvrNetBSD_SetoptBindToDevice", "group__net__evr__bsd__func.html#ga6885f30e49a867a6c47f20b0b49526cb", null ],
     [ "EvrNetBSD_SetoptInvalidParameter", "group__net__evr__bsd__func.html#ga67985075026dd359b043f6c54294b393", null ],
     [ "EvrNetBSD_SetoptIp4RecvDstAddr", "group__net__evr__bsd__func.html#ga8ad9c884534cd117d01287da893a9ee3", null ],
     [ "EvrNetBSD_SetoptIp4Tos", "group__net__evr__bsd__func.html#ga59393e08982aa30bcdeab9912fe5ff40", null ],

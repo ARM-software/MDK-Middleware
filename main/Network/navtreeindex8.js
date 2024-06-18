@@ -1,5 +1,6 @@
 var NAVTREEINDEX8 =
 {
+"network_create_app.html#nw_RTE_Software_Component_Selection":[2,0],
 "network_create_app.html#nw_User_Code_Implementation":[2,6],
 "network_create_app.html#nw_debugging":[2,7],
 "network_create_app.html#nw_runtime_config":[2,8],

@@ -2001,6 +2001,8 @@ Macros</h2></td></tr>
 <tr class="separator:a4fef26b9f6fd0541ef31b42d50ee481f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2cdb42124e2c6f72da3608ea65c88cd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="net__evr_8h.html#aa2cdb42124e2c6f72da3608ea65c88cd">EvtNetBSD_SetoptSendTimeout</a>&#160;&#160;&#160;EventID (EventLevelOp,    <a class="el" href="net__evr_8h.html#afbd4506f2aa7f0c2b5600c7c4fd12185">EvtNetBSD</a>,109)</td></tr>
 <tr class="separator:aa2cdb42124e2c6f72da3608ea65c88cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3f4395b7695622376678cba14a5d732"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="net__evr_8h.html#aa3f4395b7695622376678cba14a5d732">EvtNetBSD_SetoptBindToDevice</a>&#160;&#160;&#160;EventID (EventLevelOp,    <a class="el" href="net__evr_8h.html#afbd4506f2aa7f0c2b5600c7c4fd12185">EvtNetBSD</a>, 12)</td></tr>
+<tr class="separator:aa3f4395b7695622376678cba14a5d732"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76dfb5461edff8f00fbf59b28a78b3a3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="net__evr_8h.html#a76dfb5461edff8f00fbf59b28a78b3a3">EvtNetBSD_SetoptIp4Tos</a>&#160;&#160;&#160;EventID (EventLevelOp,    <a class="el" href="net__evr_8h.html#afbd4506f2aa7f0c2b5600c7c4fd12185">EvtNetBSD</a>,110)</td></tr>
 <tr class="separator:a76dfb5461edff8f00fbf59b28a78b3a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa49c8a9c3e7dba1f90c8fe118051245c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="net__evr_8h.html#aa49c8a9c3e7dba1f90c8fe118051245c">EvtNetBSD_SetoptIp4Ttl</a>&#160;&#160;&#160;EventID (EventLevelOp,    <a class="el" href="net__evr_8h.html#afbd4506f2aa7f0c2b5600c7c4fd12185">EvtNetBSD</a>,111)</td></tr>
@@ -5530,6 +5532,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga87008fef50a48633002bbf1168d8c07a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__bsd__func.html#ga87008fef50a48633002bbf1168d8c07a">EvrNetBSD_SetoptSendTimeout</a> (int32_t sock, uint32_t timeout)</td></tr>
 <tr class="memdesc:ga87008fef50a48633002bbf1168d8c07a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on BSD <a class="el" href="group__using__network__sockets__bsd__func.html#ga7a19e669b6bf6f4f82b68d01ff6d4be7">setsockopt</a> send timeout (Op)  <br /></td></tr>
 <tr class="separator:ga87008fef50a48633002bbf1168d8c07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6885f30e49a867a6c47f20b0b49526cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__bsd__func.html#ga6885f30e49a867a6c47f20b0b49526cb">EvrNetBSD_SetoptBindToDevice</a> (int32_t sock, uint16_t if_id)</td></tr>
+<tr class="memdesc:ga6885f30e49a867a6c47f20b0b49526cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on BSD <a class="el" href="group__using__network__sockets__bsd__func.html#ga7a19e669b6bf6f4f82b68d01ff6d4be7">setsockopt</a> bind to device (Op)  <br /></td></tr>
+<tr class="separator:ga6885f30e49a867a6c47f20b0b49526cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga59393e08982aa30bcdeab9912fe5ff40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__bsd__func.html#ga59393e08982aa30bcdeab9912fe5ff40">EvrNetBSD_SetoptIp4Tos</a> (int32_t sock, uint8_t ip4_tos)</td></tr>
 <tr class="memdesc:ga59393e08982aa30bcdeab9912fe5ff40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on BSD <a class="el" href="group__using__network__sockets__bsd__func.html#ga7a19e669b6bf6f4f82b68d01ff6d4be7">setsockopt</a> TOS for IPv4 (Op)  <br /></td></tr>
 <tr class="separator:ga59393e08982aa30bcdeab9912fe5ff40"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -9629,6 +9634,20 @@ type</td>
       <table class="memname">
         <tr>
           <td class="memname">#define EvtNetBSD_SendtoNoMemory&#160;&#160;&#160;EventID (EventLevelError, <a class="el" href="net__evr_8h.html#afbd4506f2aa7f0c2b5600c7c4fd12185">EvtNetBSD</a>,153)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa3f4395b7695622376678cba14a5d732" name="aa3f4395b7695622376678cba14a5d732"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3f4395b7695622376678cba14a5d732">&#9670;&#160;</a></span>EvtNetBSD_SetoptBindToDevice</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define EvtNetBSD_SetoptBindToDevice&#160;&#160;&#160;EventID (EventLevelOp,    <a class="el" href="net__evr_8h.html#afbd4506f2aa7f0c2b5600c7c4fd12185">EvtNetBSD</a>, 12)</td>
         </tr>
       </table>
 </div><div class="memdoc">

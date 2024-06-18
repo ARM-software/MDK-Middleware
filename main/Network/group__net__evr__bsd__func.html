@@ -487,6 +487,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga87008fef50a48633002bbf1168d8c07a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__bsd__func.html#ga87008fef50a48633002bbf1168d8c07a">EvrNetBSD_SetoptSendTimeout</a> (int32_t sock, uint32_t timeout)</td></tr>
 <tr class="memdesc:ga87008fef50a48633002bbf1168d8c07a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on BSD <a class="el" href="group__using__network__sockets__bsd__func.html#ga7a19e669b6bf6f4f82b68d01ff6d4be7">setsockopt</a> send timeout (Op)  <br /></td></tr>
 <tr class="separator:ga87008fef50a48633002bbf1168d8c07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6885f30e49a867a6c47f20b0b49526cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__bsd__func.html#ga6885f30e49a867a6c47f20b0b49526cb">EvrNetBSD_SetoptBindToDevice</a> (int32_t sock, uint16_t if_id)</td></tr>
+<tr class="memdesc:ga6885f30e49a867a6c47f20b0b49526cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on BSD <a class="el" href="group__using__network__sockets__bsd__func.html#ga7a19e669b6bf6f4f82b68d01ff6d4be7">setsockopt</a> bind to device (Op)  <br /></td></tr>
+<tr class="separator:ga6885f30e49a867a6c47f20b0b49526cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga59393e08982aa30bcdeab9912fe5ff40"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__bsd__func.html#ga59393e08982aa30bcdeab9912fe5ff40">EvrNetBSD_SetoptIp4Tos</a> (int32_t sock, uint8_t ip4_tos)</td></tr>
 <tr class="memdesc:ga59393e08982aa30bcdeab9912fe5ff40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on BSD <a class="el" href="group__using__network__sockets__bsd__func.html#ga7a19e669b6bf6f4f82b68d01ff6d4be7">setsockopt</a> TOS for IPv4 (Op)  <br /></td></tr>
 <tr class="separator:ga59393e08982aa30bcdeab9912fe5ff40"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -4939,6 +4942,48 @@ Functions</h2></td></tr>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>sock:</b> BSD socket descriptor for sending.</li>
 <li><b>len:</b> length of the message to send. </li>
+</ul>
+
+</div>
+</div>
+<a id="ga6885f30e49a867a6c47f20b0b49526cb" name="ga6885f30e49a867a6c47f20b0b49526cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6885f30e49a867a6c47f20b0b49526cb">&#9670;&#160;</a></span>EvrNetBSD_SetoptBindToDevice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void EvrNetBSD_SetoptBindToDevice </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>sock</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>if_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event on BSD <a class="el" href="group__using__network__sockets__bsd__func.html#ga7a19e669b6bf6f4f82b68d01ff6d4be7">setsockopt</a> bind to device (Op) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sock</td><td>socket descriptor </td></tr>
+    <tr><td class="paramname">if_id</td><td>network interface identifier</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The event <b>SetoptBindToDevice</b> is created, when the function <a class="el" href="group__using__network__sockets__bsd__func.html#ga7a19e669b6bf6f4f82b68d01ff6d4be7">setsockopt</a> sets the operating option for the BSD socket. This option binds the network interface to the datagram socket. The socket can then only send and receive data on the bound interface. Data from other interfaces is discarded.</p>
+<p><b>Value</b> in the Event Recorder shows:</p><ul>
+<li><b>sock:</b> BSD socket descriptor for setting the option.</li>
+<li><b>netif:</b> network interface identifier. </li>
 </ul>
 
 </div>

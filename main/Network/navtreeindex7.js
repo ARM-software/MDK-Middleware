@@ -1,5 +1,6 @@
 var NAVTREEINDEX7 =
 {
+"group__smtpc__operation.html#ga5240c89a181c1ddb07bbe888a6a8657f":[10,1,9,1,1],
 "group__smtpc__operation.html#ga58a7a56c6bda480e21591ee33c028aa5":[10,1,9,1,0],
 "group__smtpc__operation.html#ga9f299f586e428d9a005c1ca9668fd7b3":[10,1,9,1,2],
 "group__smtpc__user__api.html":[10,1,9,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX7 =
 "network_create_app.html#netEvrSupport":[2,7,2],
 "network_create_app.html#nw_Device_Configuration":[2,3],
 "network_create_app.html#nw_Driver_Configuration":[2,1],
-"network_create_app.html#nw_PHY_Configuration":[2,2],
-"network_create_app.html#nw_RTE_Software_Component_Selection":[2,0]
+"network_create_app.html#nw_PHY_Configuration":[2,2]
 };
