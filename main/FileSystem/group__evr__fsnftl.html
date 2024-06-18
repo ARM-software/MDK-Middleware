@@ -385,7 +385,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>AllocateBlock</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> attempts to allocate free block.</p>
+<p>The event <b>AllocateBlock</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> attempts to allocate free block.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>area</b> : allocation area (0=translation table, 1=data area). </li>
@@ -427,7 +427,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>AllocatedBlock</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> successfully allocates an empty physical block.</p>
+<p>The event <b>AllocatedBlock</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> successfully allocates an empty physical block.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>pbn</b> : allocated physical block number </li>
@@ -511,7 +511,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>BadBlockMark</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> formatting function detects unreliable block and attempts to mark it as bad.</p>
+<p>The event <b>BadBlockMark</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> formatting function detects unreliable block and attempts to mark it as bad.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>block</b> : physical block number. </li>
@@ -637,7 +637,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>BlockErase</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> erases NAND device block.</p>
+<p>The event <b>BlockErase</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> erases NAND device block.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>pbn</b> : physical block number </li>
@@ -794,7 +794,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>BootSignatureValid</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> detects invalid signature in its boot information block.</p>
+<p>The event <b>BootSignatureValid</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> detects invalid signature in its boot information block.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -824,7 +824,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>BootSignatureValid</b> is generated when valid signature of the <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> boot information block is detected.</p>
+<p>The event <b>BootSignatureValid</b> is generated when valid signature of the <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> boot information block is detected.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -879,7 +879,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>CacheRead</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> reads a page using page cache.</p>
+<p>The event <b>CacheRead</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> reads a page using page cache.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>pbn</b> : physical block number</li>
@@ -930,7 +930,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>CacheWrite</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> writes a page using page cache.</p>
+<p>The event <b>CacheWrite</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> writes a page using page cache.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>pbn</b> : physical block number</li>
@@ -973,7 +973,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>DataBlockCapacity</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> determines number of data blocks available to setup the file system.</p>
+<p>The event <b>DataBlockCapacity</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> determines number of data blocks available to setup the file system.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>capacity</b> : number of data blocks (size of block equals to device block size). </li>
@@ -1022,7 +1022,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>DevCtrl</b> is generated when <a class="el" href="rl__fs_8h.html#a46f72ffa53d0379ea0bf5e51373d1a37">control code</a> is sent directly to <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a>.</p>
+<p>The event <b>DevCtrl</b> is generated when <a class="el" href="rl__fs_8h.html#a46f72ffa53d0379ea0bf5e51373d1a37">control code</a> is sent directly to <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a>.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>code</b> : string specifying the key name of the <a class="el" href="rl__fs_8h.html#a46f72ffa53d0379ea0bf5e51373d1a37">control code</a>.</li>
@@ -1126,7 +1126,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>Format</b> is generated when the function <a class="el" href="group__utility__routines.html#gaea20173a589e298b86791f1cc661731b">fformat</a> attempts to format <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a>.</p>
+<p>The event <b>Format</b> is generated when the function <a class="el" href="group__utility__routines.html#gaea20173a589e298b86791f1cc661731b">fformat</a> attempts to format <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a>.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -1156,7 +1156,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>FormatLLEB</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> enables erase of blocks marked as bad.</p>
+<p>The event <b>FormatLLEB</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> enables erase of blocks marked as bad.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -1186,7 +1186,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>FormatSuccess</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> formatting is successfully executed.</p>
+<p>The event <b>FormatSuccess</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> formatting is successfully executed.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -1274,7 +1274,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>Init</b> is generated on attempt to initialize the <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a>.</p>
+<p>The event <b>Init</b> is generated on attempt to initialize the <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a>.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -1352,7 +1352,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>LbnOutOfRange</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> detect logical block number which is higher than total number of logical blocks.</p>
+<p>The event <b>LbnOutOfRange</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> detect logical block number which is higher than total number of logical blocks.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>lbn</b> : detected logical block number.</li>
@@ -1409,7 +1409,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>LbnToPbn</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> determines the physical locations of a logical block.</p>
+<p>The event <b>LbnToPbn</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> determines the physical locations of a logical block.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>lbn</b> : logical block number.</li>
@@ -1460,7 +1460,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>LoadDataLayout</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> reads file data area configuration from the NAND configuration structure.</p>
+<p>The event <b>LoadDataLayout</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> reads file data area configuration from the NAND configuration structure.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>pbn_0</b> : physical block number of the first file data block</li>
@@ -1517,7 +1517,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>LoadSector</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> loads sector data from/to the NAND page buffer.</p>
+<p>The event <b>LoadSector</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> loads sector data from/to the NAND page buffer.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>lsn</b> : logical sector number to be loaded</li>
@@ -1568,7 +1568,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>LoadTableLayout</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> reads translation table area configuration from the NAND configuration structure.</p>
+<p>The event <b>LoadTableLayout</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> reads translation table area configuration from the NAND configuration structure.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>pbn_0</b> : physical block number of the first translation table block</li>
@@ -1618,7 +1618,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>LsnFind</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> attempts to find logical sector within physical block.</p>
+<p>The event <b>LsnFind</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> attempts to find logical sector within physical block.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>lsn</b> : logical sector number.</li>
@@ -1675,7 +1675,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>LsnFound</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> logical sector is found within physical block.</p>
+<p>The event <b>LsnFound</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> logical sector is found within physical block.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>lsn</b> : logical sector number.</li>
@@ -1726,7 +1726,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>LsnNotFound</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> logical sector is found within physical block.</p>
+<p>The event <b>LsnNotFound</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> logical sector is found within physical block.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>lsn</b> : logical sector number.</li>
@@ -1808,7 +1808,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>Mount</b> is generated on attempt to mount the <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a>.</p>
+<p>The event <b>Mount</b> is generated on attempt to mount the <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a>.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -1838,7 +1838,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>MountSuccess</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> is successfully mounted.</p>
+<p>The event <b>MountSuccess</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> is successfully mounted.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -2062,7 +2062,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>PageRead</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> reads a page from NAND device.</p>
+<p>The event <b>PageRead</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> reads a page from NAND device.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>pbn</b> : physical block number</li>
@@ -2154,7 +2154,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>PageWrite</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> writes a page to NAND device.</p>
+<p>The event <b>PageWrite</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> writes a page to NAND device.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>pbn</b> : physical block number</li>
@@ -2186,7 +2186,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>ParameterInvalid</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> detects invalid function parameter.</p>
+<p>The event <b>ParameterInvalid</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> detects invalid function parameter.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -2234,7 +2234,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>PbnOutOfRange</b> is generated <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> detect physical block number which is higher than total number of physical blocks.</p>
+<p>The event <b>PbnOutOfRange</b> is generated <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> detect physical block number which is higher than total number of physical blocks.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>pbn</b> : detected physical block number.</li>
@@ -2266,7 +2266,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>ReadBootBlock</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> attempts to read its boot information block.</p>
+<p>The event <b>ReadBootBlock</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> attempts to read its boot information block.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -2296,7 +2296,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>ReadBootBlock</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> fails to read its boot information block.</p>
+<p>The event <b>ReadBootBlock</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> fails to read its boot information block.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -2435,7 +2435,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>ReadSector</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> attempts to read data from the flash.</p>
+<p>The event <b>ReadSector</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> attempts to read data from the flash.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>sector</b> : sector number to read.</li>
@@ -2468,7 +2468,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>ReadSectorSuccess</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> successfully reads data from the flash.</p>
+<p>The event <b>ReadSectorSuccess</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> successfully reads data from the flash.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>sector</b> : sector number to read.</li>
@@ -2501,7 +2501,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>DataBlockCapacity</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> attempts to load the block translation table.</p>
+<p>The event <b>DataBlockCapacity</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> attempts to load the block translation table.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -2572,7 +2572,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>RelocateBlock</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> attempts to relocate content from a bad block.</p>
+<p>The event <b>RelocateBlock</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> attempts to relocate content from a bad block.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>pbn</b> : physical block number. </li>
@@ -2614,7 +2614,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>RelocateBlockFailed</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> fails to relocate content from a bad block.</p>
+<p>The event <b>RelocateBlockFailed</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> fails to relocate content from a bad block.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>pbn</b> : physical block number. </li>
@@ -2802,7 +2802,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>SetupPageLayout</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> sets NAND page layout configuration.</p>
+<p>The event <b>SetupPageLayout</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> sets NAND page layout configuration.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>sector_inc</b> : column increment till next sector - first sector starts at byte zero, second at sect_inc, third at (sect_inc + sect_inc) etc.</li>
@@ -2867,7 +2867,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>SetupSpareLayout</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> sets spare area layout configuration.</p>
+<p>The event <b>SetupSpareLayout</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> sets spare area layout configuration.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>ofs_lsn</b> : LSN position, offset within spare area where logical sector number (LSN) is placed.</li>
@@ -2912,7 +2912,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>SkipBadBlock</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> detects bad block and skips the operation till next valid block.</p>
+<p>The event <b>SkipBadBlock</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> detects bad block and skips the operation till next valid block.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>pbn</b> : physical block number. </li>
@@ -2954,7 +2954,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>StatusRead</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> retrieves NAND device status.</p>
+<p>The event <b>StatusRead</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> retrieves NAND device status.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>status</b> : NAND device status byte </li>
@@ -3038,7 +3038,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>TableLookup</b> is generated <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> attempts to read translation table in order to retrieve translation information for specified logical block.</p>
+<p>The event <b>TableLookup</b> is generated <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> attempts to read translation table in order to retrieve translation information for specified logical block.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>lbn</b> : logical block number. </li>
@@ -3094,7 +3094,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>TableUpdate</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> updates logical to physical block translation info.</p>
+<p>The event <b>TableUpdate</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> updates logical to physical block translation info.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>lbn</b> : logical block number</li>
@@ -3127,7 +3127,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>Uninit</b> is generated when the function <a class="el" href="group__system__routines.html#gaba8e0aa837faf575c639efb1167af20f">funinit</a> executes and attempts to de-initialize the <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a>.</p>
+<p>The event <b>Uninit</b> is generated when the function <a class="el" href="group__system__routines.html#gaba8e0aa837faf575c639efb1167af20f">funinit</a> executes and attempts to de-initialize the <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a>.</p>
 <p><b>Value</b> of the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -3242,7 +3242,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>WriteSector</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> attempts to write data to the flash.</p>
+<p>The event <b>WriteSector</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> attempts to write data to the flash.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>sector</b> : sector number to write.</li>
@@ -3275,7 +3275,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>WriteSectorSuccess</b> is generated when <a class="el" href="nand_flash_TL.html">NAND Flash Translation Layer</a> successfully writes data to the flash.</p>
+<p>The event <b>WriteSectorSuccess</b> is generated when <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> successfully writes data to the flash.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>sector</b> : sector number to write.</li>

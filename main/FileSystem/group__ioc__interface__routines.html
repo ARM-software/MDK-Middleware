@@ -289,7 +289,7 @@ Structure <a class="el" href="rl__fs_8h.html#structfsLockUnlock">fsLockUnlock</a
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">FS_DEVICE_ERASE   </td><td class="markdownTableBodyNone">Force device erase operation.   </td></tr>
 </table>
-<p>For detailed functionality description refer to Memory Card Control Layer section <a class="el" href="mc_control_layer.html#mci_device_specifics">Device Specific Features</a>.</p>
+<p>For detailed functionality description refer to Memory Card Control Layer section <a class="el" href="fs_operation.html#mci_device_specifics">Device Specific Features</a>.</p>
 <p>When <b>fsDevCtrlCodeHealthStatus</b> is specified, argument <em>p</em> is used to specify the location of <a class="el" href="rl__fs_8h.html#structfsHealthStatus">fsHealthStatus</a> structure. A NULL pointer is not allowed and will be rejected.<br  />
  Structure <a class="el" href="rl__fs_8h.html#structfsHealthStatus">fsHealthStatus</a> consists of the following members:</p>
 <table class="markdownTable">
@@ -302,7 +302,7 @@ Structure <a class="el" href="rl__fs_8h.html#structfsLockUnlock">fsLockUnlock</a
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">buf_sz   </td><td class="markdownTableBodyNone">Defines buffer size in bytes.   </td></tr>
 </table>
-<p>The behavior of fsDevCtrlCodeHealthStatus is device specific and only supported for eMMC and SD devices. See Memory Card Control Layer section <a class="el" href="mc_control_layer.html#mci_device_specifics">Device Specific Features</a> for more information.</p>
+<p>The behavior of fsDevCtrlCodeHealthStatus is device specific and only supported for eMMC and SD devices. See Memory Card Control Layer section <a class="el" href="fs_operation.html#mci_device_specifics">Device Specific Features</a> for more information.</p>
 <p><b>Code Examples</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> tst_device_status (<span class="keywordtype">void</span>) {</div>
 <div class="line">  int32_t  id;</div>
 <div class="line">  uint32_t status;</div>

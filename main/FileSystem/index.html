@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>File System Component: File System Component</title>
+<title>File System Component: Overview</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -125,20 +125,21 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">File System Component </div></div>
+  <div class="headertitle"><div class="title">Overview </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="fs_overview"></a>
-Overview</h1>
-<p>The <b>File System Component</b> allows your embedded applications to create, save, read, and modify files in storage devices such as <b>RAM</b>, <b>Flash</b>, <b>memory cards</b>, or <b>USB memory devices</b>.</p>
+<div class="textblock"><p><a class="anchor" id="mainpage"></a> The <b>File System Component</b> allows your embedded applications to create, save, read, and modify files in storage devices such as <b>RAM</b>, <b>Flash</b>, <b>memory cards</b>, or <b>USB memory devices</b>.</p>
 <div class="image">
 <object type="image/svg+xml" data="FileSystem.svg" style="pointer-events: none;"></object>
 <div class="caption">
 File System Component Structure</div></div>
-<p>The File System Component is structured as follows:</p><ul>
-<li>Storage devices are referenced as <a class="el" href="fs_operation.html#drive">drives</a> which can be accessed by the user.</li>
+<p>The File System Component is structured as follows:</p>
+<ul>
+<li>Storage devices are referenced as <a class="el" href="fs_operation.html#drive">drives</a> which can be accessed by the user</li>
+</ul>
+<ul>
 <li><b>Multiple instances</b> of the same storage device can be implemented (for example you might want to have two SD cards attached to your system).</li>
-<li>The File System <b>CORE</b> supports thread-safe operation and uses an <a class="el" href="emb_fs.html">Embedded File System (EFS)</a> (for NOR and SPI Flashes) or a <a class="el" href="fat_fs.html">FAT File System</a> (for RAM, NAND, SD/eMMC and USB devices).</li>
+<li>The File System <b>CORE</b> supports thread-safe operation and uses an <a class="el" href="fs_operation.html#emb_fs">Embedded File System (EFS)</a> (for NOR and SPI Flashes) or a <a class="el" href="fs_operation.html#fat_fs">FAT File System</a> (for RAM, NAND, SD/eMMC and USB devices).</li>
 <li>The Core allows <b>simultaneous access</b> to multiple storage devices (for example backing up data from internal flash to an external USB device).</li>
 <li>For accessing the drives appropriate <b>drivers</b> are in place to support<ul>
 <li>Flash chips (<a class="el" href="fs_create_app.html#nand_usage">NAND</a>, <a class="el" href="fs_create_app.html#nor_usage">NOR, and SPI</a>)</li>
@@ -148,9 +149,10 @@ File System Component Structure</div></div>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="fs_docs_structure"></a>
-Documentation Structure</h2>
-<p>This user's guide contains the following chapters:</p><ul>
+<h1><a class="anchor" id="fs_docs_structure"></a>
+Documentation Structure</h1>
+<p>This user's guide contains the following chapters:</p>
+<ul>
 <li><a class="el" href="fs_create_app.html">Create a File System Application</a> explains the necessary steps to develop a project containing a file system from scratch.</li>
 <li><a class="el" href="fs_examples.html">File System Examples</a> are a good starting point for implementing your own storage device.</li>
 <li><a class="el" href="fs_operation.html">Theory of Operation</a> gives more detail on the basics of the File System Component.</li>

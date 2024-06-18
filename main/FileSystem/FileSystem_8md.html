@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>File System Component: File System Examples</title>
+<title>File System Component: FileSystem.md File Reference</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('fs_examples.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('FileSystem_8md.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -124,60 +124,16 @@ $(document).ready(function(){initNavTree('fs_examples.html',''); initResizable()
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">File System Examples </div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">FileSystem.md File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_src_fs_examples"></a> The File System Component is used in many different applications and examples. One stand-alone example is available to demonstrate the usage of the File System. Other examples use the File System Component in conjunction with other Components (such as USB or Network for example).</p><ul>
-<li>The <a class="el" href="fs_examples.html#fs_standalone_example">File System Example</a> shows the basic functionality of the File System.</li>
-<li>The  <script>link_loc('USBD-MSC-Ex');</script> shows how to create an USB MSC Device that is recognized by an USB Host controller.</li>
-<li>The  <script>link_loc('USBH-MSC-Ex');</script> explains how to access file system data from an attached USB memory device.</li>
-<li>The  <script>link_loc('FTP-Server-Ex');</script> accesses the device's file system via a network connection.</li>
-</ul>
-<p>These examples are available through the  <script>link_ext('uv4_ca_packinstaller');</script>; select the related board and copy the example.</p>
-<h1><a class="anchor" id="fs_standalone_example"></a>
-File System Example</h1>
-<p>This example shows how to manipulate files on a given drive using the File System Component. You can mount and format the drive and then perform operations like write, read, rename and delete to manage files and directories on any enabled drive. Example uses serial terminal connection to interact with the user.</p>
-<p>Typically one connects the development board to a computer via debug connection that also provides virtual COM port, downloads example application to a board and starts terminal application on computer. The following picture shows an exemplary connection of the development board and a computer:</p>
-<div class="image">
-<img src="fs_setup.png" alt=""/>
-</div>
-<h2><a class="anchor" id="fs_example_build"></a>
-Build the "File System" Project</h2>
-<p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The project tree should have a similar structure:</p>
-<div class="image">
-<img src="fs_proj_structure.png" alt=""/>
-<div class="caption">
-File System Project Structure</div></div>
-<h3><a class="anchor" id="fs_example_sources"></a>
-Source Files</h3>
-<ul>
-<li><code>File_Demo.c</code> contains the main application thread and implementation of commands for user interaction.</li>
-</ul>
-<p>You may now build and download the example project to the evaluation board.</p>
-<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
-<h2><a class="anchor" id="fs_example_using"></a>
-Using the "File System" Project</h2>
-<h3><a class="anchor" id="fs_example_using_hw"></a>
-Hardware Setup</h3>
-<p>One you have example application executing on the Evaluation Board hardware you need to have serial (virtual COM) port connected to the computer.</p>
-<h3><a class="anchor" id="fs_example_using_pc"></a>
-PC Software</h3>
-<p>Open any software terminal emulator application to start interacting with the example running on the Evaluation Board. After resetting the board, you should see something similar like this:</p>
-<div class="image">
-<img src="fs_example_intro.png" alt=""/>
-</div>
-<p>Now you can type <b>help</b> to the command prompt and press enter (make sure that the new line character is also sent after pressing enter). Now something similar to the below image should be printed:</p>
-<div class="image">
-<img src="fs_example_help.png" alt=""/>
-</div>
-<p>You can now type the listed commands and send arguments directly to the FileSystem API functions. </p>
-</div></div><!-- contents -->
-</div><!-- PageDoc -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="FileSystem_8md.html">FileSystem.md</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--

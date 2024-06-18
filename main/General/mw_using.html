@@ -134,7 +134,7 @@ Driver Interface</h1>
 <p>The interface to the microcontroller peripherals is done using drivers complying with the  <script>link_ext('CMSIS-Driver');</script> standard. These drivers are not limited to MDK-Middleware and may be used by other middleware stacks to utilize the peripherals.</p>
 <p>For each enabled peripheral of the microcontroller, a control or access struct is provided that is the interface for the middleware. Drivers for most of the communication peripherals are part of a  <script>link_ext('SW-Pack');</script> that provides device support.</p>
 <div class="image">
-<img src="mw_driver.png" alt=""/>
+<object type="image/svg+xml" data="mw_driver.svg" style="pointer-events: none;"></object>
 <div class="caption">
 Drivers are connected to Middleware using configuration files</div></div>
     <p>The drivers are typically configured using the RTE_device.h configuration file. This file maps I/O pins, interrupts and DMA channels to the available microcontroller resources. Silicon vendors may supply their own configuration tools for peripheral access (for example,  <script>link_ext('STM32Cube');</script> or  <script>link_ext('MCUXpresso');</script>).</p>

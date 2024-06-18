@@ -128,7 +128,7 @@ $(document).ready(function(){initNavTree('fs_revhist.html',''); initResizable();
   <div class="headertitle"><div class="title">Revision History </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><table class="cmtable" summary="Revision History">
+<div class="textblock"><p><a class="anchor" id="md_src_fs_rev_hist"></a> </p><table class="cmtable" summary="Revision History">
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
@@ -172,7 +172,7 @@ $(document).ready(function(){initNavTree('fs_revhist.html',''); initResizable();
 </td></tr>
 <tr>
 <td>V6.14.1 </td><td><ul>
-<li>added health status (S.M.A.R.T.) access support for industrial grade eMMC and SD devices (see <a class="el" href="mc_control_layer.html#mci_device_specifics">Device Specific Features</a>)</li>
+<li>added health status (S.M.A.R.T.) access support for industrial grade eMMC and SD devices (see <a class="el" href="fs_operation.html#mci_device_specifics">Device Specific Features</a>)</li>
 <li>enhanced error handling and return status propagation in EFS</li>
 <li>corrected bug in <a class="el" href="group__file__time__routines.html#gad2a88dec23feacfe5a0ba9e4b29dcedd">ftime_set</a> which could cause long file name entry overwrite</li>
 <li>corrected bug in FAT name cache which could cause a cache miss situation when switching directories using <a class="el" href="group__directory__maintenance__routines.html#ga8ad16f7f9ecd5093bdf07e36d01ce847">fchdir</a>   </li>
@@ -236,7 +236,7 @@ $(document).ready(function(){initNavTree('fs_revhist.html',''); initResizable();
 </td></tr>
 <tr>
 <td>V6.9.8 </td><td><ul>
-<li>added <a class="el" href="mc_control_layer.html#mc_spi_bus_freq_setting">bus frequency adaptation algorithm</a> for memory cards using SPI bus</li>
+<li>added <a class="el" href="fs_operation.html#mc_spi_bus_freq_setting">bus frequency adaptation algorithm</a> for memory cards using SPI bus</li>
 <li>corrected bug in EFS triggered by multiple file append or small file create operation.</li>
 <li>corrected error reporting in <a class="el" href="group__stdio__routines.html#ga4a98383bb54291c2abede7aa28acf597">ferror</a> when removable FAT drive was removed during read operation</li>
 <li>corrected file access bug in FAT which could be triggered when an empty file was created within a subfolder</li>
@@ -285,7 +285,7 @@ $(document).ready(function(){initNavTree('fs_revhist.html',''); initResizable();
 </td></tr>
 <tr>
 <td>V6.6.0 </td><td><ul>
-<li>added support for memory card lock/unlock command (CMD42), please see <a class="el" href="group__ioc__interface__routines.html#ga3036c7dbc536ec052c41056245df407e">fs_ioc_device_ctrl</a> for control codes and <a class="el" href="mc_control_layer.html#mci_device_specifics">Device Specific Features</a> for description of password management operations.</li>
+<li>added support for memory card lock/unlock command (CMD42), please see <a class="el" href="group__ioc__interface__routines.html#ga3036c7dbc536ec052c41056245df407e">fs_ioc_device_ctrl</a> for control codes and <a class="el" href="fs_operation.html#mci_device_specifics">Device Specific Features</a> for description of password management operations.</li>
 <li>enhanced handling of Memory Cards when in SPI mode</li>
 <li>corrected initialization process for SD cards in SPI mode</li>
 <li>corrected end of file condition check in <a class="el" href="group__stdio__routines.html#ga035ff3f250bb8d87973f9fb1c3c76f9c">fread</a> for files sized near 4GB</li>

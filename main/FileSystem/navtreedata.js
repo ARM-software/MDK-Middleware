@@ -25,9 +25,7 @@
 var NAVTREE =
 [
   [ "File System Component", "index.html", [
-    [ "Overview", "index.html#fs_overview", [
-      [ "Documentation Structure", "index.html#fs_docs_structure", null ]
-    ] ],
+    [ "Overview", "index.html", "index" ],
     [ "Revision History", "fs_revhist.html", null ],
     [ "Create a File System Application", "fs_create_app.html", [
       [ "RTE Component Selection", "fs_create_app.html#fs_RTE_Software_Component_Selection", null ],
@@ -43,9 +41,10 @@ var NAVTREE =
       [ "System Resource Configuration", "fs_create_app.html#fs_sys_req", null ],
       [ "User Code Implementation", "fs_create_app.html#fs_User_Code_Implementation", null ],
       [ "Debugging", "fs_create_app.html#fs_debugging", [
-        [ "Event Recorder Support", "fs_create_app.html#autotoc_md0", null ],
-        [ "Event Recorder Configuration", "fs_create_app.html#autotoc_md1", null ],
-        [ "Event IDs", "fs_create_app.html#autotoc_md2", null ]
+        [ "Event Recorder Support", "fs_create_app.html#fsEvrSupport", [
+          [ "Event Recorder Configuration", "fs_create_app.html#fsEvrConfig", null ],
+          [ "Event IDs", "fs_create_app.html#autotoc_md0", null ]
+        ] ]
       ] ]
     ] ],
     [ "File System Examples", "fs_examples.html", [
@@ -59,15 +58,64 @@ var NAVTREE =
         ] ]
       ] ]
     ] ],
-    [ "Theory of Operation", "fs_operation.html", "fs_operation" ],
+    [ "Theory of Operation", "fs_operation.html", [
+      [ "Using the File System", "fs_operation.html#fs_usage", null ],
+      [ "Drives, Memory Devices and Drivers", "fs_operation.html#drive", [
+        [ "Current Drive", "fs_operation.html#cur_sys_drive", null ]
+      ] ],
+      [ "FAT File System", "fs_operation.html#fat_fs", [
+        [ "Layout", "fs_operation.html#fat_layout", null ],
+        [ "Volume name", "fs_operation.html#fat_volume_label", null ],
+        [ "Path name handling", "fs_operation.html#fat_path_handling", [
+          [ "Absolute and relative path", "fs_operation.html#fat_abs_rel_path", null ]
+        ] ],
+        [ "Long and Short File Name handling", "fs_operation.html#lfn_sfn_handling", null ],
+        [ "Time Stamping Support", "fs_operation.html#fat_time_stamping", null ],
+        [ "Journaling for the FAT File System", "fs_operation.html#journaling_fat", [
+          [ "System Initialization and Drive Formatting", "fs_operation.html#sys_init_drv_format", null ],
+          [ "System failure behavior", "fs_operation.html#sys_fail_beh", null ]
+        ] ],
+        [ "FAT System Design Limitations", "fs_operation.html#fat_sys_design_limitations", null ],
+        [ "FAT Implementation Limitations", "fs_operation.html#fat_imp_limitations", null ]
+      ] ],
+      [ "Memory Card Control Layer", "fs_operation.html#mc_control_layer", [
+        [ "List of Supported Devices", "fs_operation.html#mci_list_of_devices", null ],
+        [ "List of Supported MCI Driver Capabilities", "fs_operation.html#mci_list_of_mci_capabilities", null ],
+        [ "Device Specific Features", "fs_operation.html#mci_device_specifics", [
+          [ "Power Supply Voltage Control", "fs_operation.html#autotoc_md1", null ],
+          [ "Data Bus Width", "fs_operation.html#autotoc_md2", null ],
+          [ "High Speed Mode", "fs_operation.html#autotoc_md3", null ],
+          [ "Password protection", "fs_operation.html#autotoc_md4", null ],
+          [ "Health Status (S.M.A.R.T)", "fs_operation.html#autotoc_md5", null ]
+        ] ],
+        [ "Power Saving Features", "fs_operation.html#mci_power_save", null ],
+        [ "SPI Mode Support", "fs_operation.html#mc_spi_mode_support", [
+          [ "SPI bus frequency setting", "fs_operation.html#mc_spi_bus_freq_setting", null ]
+        ] ]
+      ] ],
+      [ "NAND Flash Translation Layer", "fs_operation.html#nand_flash_TL", [
+        [ "Wear Leveling", "fs_operation.html#wear_leveling", null ],
+        [ "Bad Block Management", "fs_operation.html#bad_block_management", null ],
+        [ "Error Correction Codes (ECC)", "fs_operation.html#slc_ecc", null ]
+      ] ],
+      [ "Embedded File System (EFS)", "fs_operation.html#emb_fs", [
+        [ "Memory Organization", "fs_operation.html#efs_mem_org", null ],
+        [ "Allocation Information", "fs_operation.html#efs_alloc_info", [
+          [ "Block Signature", "fs_operation.html#autotoc_md6", null ],
+          [ "Allocation Information Record", "fs_operation.html#autotoc_md7", null ]
+        ] ],
+        [ "File Names & Content", "fs_operation.html#efs_file_content", [
+          [ "File Names", "fs_operation.html#autotoc_md8", null ],
+          [ "File Content", "fs_operation.html#autotoc_md9", null ]
+        ] ],
+        [ "Limitations", "fs_operation.html#efs_limits", null ]
+      ] ]
+    ] ],
     [ "Function Overview", "fs_function_reference.html", null ],
     [ "Resource Requirements", "fs_resource_requirements.html", [
       [ "Stack Requirements", "fs_resource_requirements.html#fs_stack_req", null ],
       [ "Heap Requirements", "fs_resource_requirements.html#fs_heap_req", null ],
-      [ "CMSIS-RTOS Requirements", "fs_resource_requirements.html#fs_rtos_req", [
-        [ "Thread Stack Requirements", "fs_resource_requirements.html#autotoc_md19", null ],
-        [ "Mutex Requirements", "fs_resource_requirements.html#autotoc_md20", null ]
-      ] ],
+      [ "CMSIS-RTOS Requirements", "fs_resource_requirements.html#fs_rtos_req", null ],
       [ "Memory Requirements", "fs_resource_requirements.html#fs_spec_mem_req", null ]
     ] ],
     [ "API Reference", "modules.html", "modules" ]
@@ -76,9 +124,9 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"emb_fs.html",
-"group__evr__fsmcmci.html#ga239276198a5f1328d66386c117d97907",
-"group__utility__routines.html#ga660963ea80d7075eb5a80d075bd42cae"
+"fs_create_app.html",
+"group__evr__fsfat.html#gaf882722c399a877ae31d6b68b1534c7a",
+"group__stdio__routines.html#gad9291335f34e874c8431285d705bc3aa"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
