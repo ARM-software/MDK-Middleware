@@ -6,7 +6,7 @@ The interface to the microcontroller peripherals is done using drivers complying
 
 For each enabled peripheral of the microcontroller, a control or access struct is provided that is the interface for the middleware. Drivers for most of the communication peripherals are part of a \urlout{SW-Pack} that provides device support.
 
-![Drivers are connected to Middleware using configuration files](./images/mw_driver.png)
+![Drivers are connected to Middleware using configuration files](./images/mw_driver.svg)
 
 The drivers are typically configured using the RTE_device.h configuration file. This file maps I/O pins, interrupts and DMA channels to the available microcontroller resources. Silicon vendors may supply their own configuration tools for peripheral access (for example, \urlout{STM32Cube} or \urlout{MCUXpresso}).
 

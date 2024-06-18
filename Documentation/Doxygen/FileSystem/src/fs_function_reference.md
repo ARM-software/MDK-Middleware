@@ -1,6 +1,4 @@
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page fs_function_reference Function Overview
+# Function Overview {#fs_function_reference}
 
 The following list provides a brief overview of all File System Component functions.
 
@@ -89,4 +87,3 @@ The following list provides a brief overview of all File System Component functi
   - \ref fs_fflush : Flushes the file buffers.
   - \ref fs_fseek : Moves the file position pointer.
   - \ref fs_fsize : Returns the file size.
-*/

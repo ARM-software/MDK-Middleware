@@ -31,7 +31,7 @@ Software components or APIs outside the scope of this documentation are:
 
 MDK-Middleware components are available as source code and will work with all major toolchains including Arm Compiler 6, GCC and IAR.
 
-## Documentation structure {#mw_using_mw}
+## Documentation Structure {#mw_using_mw}
 
 This user's guide contains the following chapters:
 
