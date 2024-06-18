@@ -1895,6 +1895,19 @@ not_supp:   ERRORF (BSD,"Setsockopt, Socket %d opt not supported\n",sock);
           EvrNetBSD_SetoptSendTimeout (sock, bval*SYS_TICK_INTERVAL);
           break;
 
+        case SO_BINDTODEVICE:
+          /* Bind a socket to network interface */
+          if (bsd_s->Type != SOCK_DGRAM) {
+            goto not_supp;
+          }
+          if (net_udp_set_option (bsd_s->Socket, netUDP_OptionInterface, bval) != netOK) {
+            /* Invalid interface id */
+            goto inv_arg;
+          }
+          DEBUGF (BSD," Bind to %s\n", net_if_map_lan(bval)->Name);
+          EvrNetBSD_SetoptBindToDevice (sock, bval);
+          break;
+
         default:
           goto inv_arg;
       }
@@ -2099,6 +2112,14 @@ not_supp:   ERRORF (BSD,"Getsockopt, Socket %d opt not supported\n",sock);
         case SO_TYPE:
           /* Socket type */
           retv = bsd_s->Type;
+          break;
+
+        case SO_BINDTODEVICE:
+          /* Bound network interface */
+          if (bsd_s->Type != SOCK_DGRAM) {
+            goto not_supp;
+          }
+          retv = net_udp_get_option (bsd_s->Socket, netUDP_OptionInterface);
           break;
 
         default:

@@ -27,6 +27,7 @@
       - added function netARP_AddCache to manually add an entry to the ARP cache table
       - added option for updating mbedTLS certificates at runtime
       - added IPv6 Multicasting with MLD, Multicast Listener Discovery Protocol
+      - added BSD socket option SO_BINDTODEVICE to bind socket to a network interface
       FileSystem Component Version 8.0.0
       - removed CORE component variants
       - changed source config files to headers

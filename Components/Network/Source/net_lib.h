@@ -231,7 +231,7 @@ typedef struct net_udp_info {
   uint8_t  TClass;                      ///< Traffic class/packet priority for IPv6
   uint8_t  McastTtl;                    ///< Multicast time to live for IPv4
   uint8_t  HopLimit;                    ///< Multicast hop limit for IPv6
-  const struct net_if_cfg *net_if;      ///< Network interface for broadcast frames
+  const struct net_if_cfg *net_if;      ///< Bound network interface
   netUDP_cb_t cb_func;                  ///< Event callback function
 } NET_UDP_INFO;
 

@@ -838,6 +838,7 @@
         <enum name="SO_RCVTIMEO"         value="0x12"  info="Receive timeout"/>
         <enum name="SO_SNDTIMEO"         value="0x13"  info="Send timeout"/>
         <enum name="SO_TYPE"             value="0x14"  info="Socket Type"/>
+        <enum name="SO_BINDTODEVICE"     value="0x15"  info="Bind to network interface"/>
         <enum name="IP_TOS"              value="0x21"  info="Type of Service"/>
         <enum name="IP_TTL"              value="0x22"  info="Time to Live"/>
         <enum name="IP_RECVDSTADDR"      value="0x23"  info="Receive destination IPv4 address"/>
@@ -2371,6 +2372,7 @@
     <event id="107+ 0xD200" level="Op"     property="SetoptKeepAlive"           value="sock=%d[val1], enable=%d[val2]" info="Set socket option: keep-alive"/>
     <event id="108+ 0xD200" level="Op"     property="SetoptRecvTimeout"         value="sock=%d[val1], tout=%d[val2]ms" info="Set socket option: receive-timeout in blocking mode"/>
     <event id="109+ 0xD200" level="Op"     property="SetoptSendTimeout"         value="sock=%d[val1], tout=%d[val2]ms" info="Set socket option: send-timeout in blocking mode"/>
+    <event id="12 + 0xD200" level="Op"     property="SetoptBindToDevice"        value="sock=%d[val1], netif=%E[val2, NetIf:id]" info="Set socket option: bind to network interface"/>
     <event id="110+ 0xD200" level="Op"     property="SetoptIp4Tos"              value="sock=%d[val1], tos=%d[val2]" info="Set socket option: type-of-service for IPv4"/>
     <event id="111+ 0xD200" level="Op"     property="SetoptIp4Ttl"              value="sock=%d[val1], ttl=%d[val2]" info="Set socket option: multicast time-to-live for IPv4"/>
     <event id="112+ 0xD200" level="Op"     property="SetoptIp4RecvDstAddr"      value="sock=%d[val1], enable=%d[val2]" info="Set socket option: receive-destination-address for IPv4"/>

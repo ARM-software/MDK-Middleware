@@ -335,6 +335,10 @@ uint32_t net_udp_get_option (int32_t socket, netUDP_Option option) {
 #endif
 
     case netUDP_OptionInterface:
+      if (!udp_s->net_if) {
+        /* Network interface not assigned */
+        return (0);
+      }
       return (udp_s->net_if->Id);
 
     case netUDP_OptionChecksum:
@@ -428,6 +432,7 @@ netStatus net_udp_send_if (NET_IF_CFG *net_if, int32_t socket,
                            const __ADDR *addr, uint8_t *buf, uint32_t len) {
   NET_UDP_INFO *udp_s;
   NET_UDP_HEADER *udp_hdr;
+  NET_IF_CFG *out_if;
   NET_FRAME *frame;
   const uint8_t *src_addr;
   netStatus retv;
@@ -450,6 +455,10 @@ netStatus net_udp_send_if (NET_IF_CFG *net_if, int32_t socket,
   }
 
   udp_s = &udp->Scb[socket-1];
+  if (net_if == NULL) {
+    /* Interface not defined, use bound */
+    net_if = udp_s->net_if;
+  }
   if (net_addr_is_unspec (addr)) {
     /* Destination IP address not specified */
     ERRORF (UDP,"Send, Socket %d IpAddr unspecified\n",socket);
@@ -488,28 +497,10 @@ retf:
     return (retv);
   }
 
-  /* Check local scope address */
-  if (net_if == NULL) {
-    if (addr->addr_type == NET_ADDR_IP4) {
-      if (net_addr4_comp (addr->addr, net_addr_bcast)) {
-        /* Broadcast address */
-        net_if = udp_s->net_if;
-      }
-    }
-#ifdef Network_IPv6
-    else {
-      if (addr->addr[0] >= 0xFE) {
-        /* Link-local address */
-        net_if = udp_s->net_if;
-      }   
-    }
-#endif
-  }
-
-  /* Confirm the route interface or find a new one */
-  net_if = net_addr_find_route (net_if, addr);
-  if (net_if == NULL) {
-    /* No route to destination */
+  /* Check the interface routing */
+  out_if = net_addr_find_route (net_if, addr);
+  if (!out_if || (net_if && (out_if != net_if))) {
+    /* No route or the route differs from the requested */
     ERRORF (UDP,"Send, Socket %d no route found\n",socket);
     EvrNetUDP_SendNoRouteFound (socket);
     retv = netError;
@@ -571,11 +562,11 @@ retf:
       /* This is a Multicast UDP datagram */
       ttl = udp_s->McastTtl;
     }
-    /* IPv4 header is shorter than IPv6, so the start of frame is  */
-    /* moved to 20 byte offset within the original frame. This new */
-    /* origin is used only temporary in IPv4 and ethernet layer to */
-    /* construct headers and send the frame. With this concept, we */
-    /* avoid large memcpy() of UDP data !!!                        */
+    /* The IPv4 header is shorter than the IPv6 header, so the start */
+    /* of the frame is shifted by 20 bytes within the original frame.*/
+    /* This new origin is only used temporarily in IPv4 and ethernet */
+    /* layer to create headers and to send the frame. With this      */
+    /* concept we avoid a big memcpy() of the UDP data !!!           */
     NET_WI4(frame)->length = frame->length;
     if (!net_ip4_send_frame (net_if, NET_WI4(frame), addr->addr,
                              IP4_PROT_UDP, udp_s->Tos, ttl)) {
@@ -713,6 +704,12 @@ not_mapped:
     EvrNetUDP_FrameNotMapped (frame->length);
     return;
   }
+  /* Check the interface binding */
+  if (udp_s->net_if && (net_if != udp_s->net_if)) {
+    /* Bound but receiving interface wrong */
+    goto not_mapped;
+  }
+
   /* Check if link-layer addressed */
   if (!(udp_s->Flags & UDP_FLAG_RECV_LLA) && (sys->Flags & SYS_FLAG_LLA_UDP)) {
     /* Link-layer addressing not enabled for the socket  */
@@ -750,7 +747,7 @@ not_mapped:
 #endif
     }
   }
-  /* Build source net address structure */
+  /* Build the source network address structure */
   addr.net_if = net_if;
   addr.port   = ntohs(udp_hdr->SrcPort);
   if (ip_ver == IP_VER4) {

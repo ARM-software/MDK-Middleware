@@ -357,7 +357,7 @@ static uint16_t ip4_get_mtu (NET_IF_CFG *net_if) {
                - false = error.
 */
 bool net_ip4_set_netif (NET_IF_CFG *net_if) {
-  if (net_if->Ip4Cfg == NULL) {
+  if (!net_if->Ip4Cfg) {
     return (false);
   }
   DEBUGF (IP4,"Set Default %s\n",net_if->Name);
@@ -371,7 +371,7 @@ bool net_ip4_set_netif (NET_IF_CFG *net_if) {
   \return      pointer to local machine info.
 */
 NET_LOCALM *net_ip4_def_localm (void) {
-  if (ip4->DefNetIf != NULL) {
+  if (ip4->DefNetIf) {
     return (ip4->DefNetIf->localm);
   }
   return (NULL);
@@ -440,7 +440,7 @@ bool net_ip4_tx_offl_hl (NET_IF_CFG *net_if, uint8_t flag, uint32_t len) {
 
 /**
   \brief       Find route to destination IPv4 address.
-  \param[in]   net_if    proposed network interface.
+  \param[in]   net_if    desired network interface.
   \param[in]   dst_addr  destination IPv4 address.
   \return      assigned network interface for the route.
 */
@@ -457,21 +457,21 @@ NET_IF_CFG *net_ip4_find_route (NET_IF_CFG *net_if, const uint8_t *dst_addr) {
     /* Ignore other loopback addresses */
     return (NULL);
   }
-  /* Check broadcast address */
-  if (net_addr4_comp (dst_addr, net_addr_bcast)) {
+  /* Check broadcast or multicast address */
+  if ((dst_addr[0] & 0xF0) >= 0xE0) {
     if (net_if == NULL) {
       /* Use default link interface */
       return (net_if_link_def[0]);
     }
-    if ((net_if->Ip4Cfg != NULL) && (net_if->output_lan != NULL)) {
-      /* Use proposed LAN interface */
+    if (net_if->Ip4Cfg && net_if->output_lan) {
+      /* Use desired LAN interface */
       return (net_if);
     }
     /* Ignore for non-LAN interfaces */
     return (NULL);
   }
-  /* Check proposed network interface */
-  if ((net_if != NULL) && net_ip4_is_onlink (net_if, dst_addr)) {
+  /* Check desired network interface */
+  if (net_if && net_ip4_is_onlink (net_if, dst_addr)) {
     /* Ok, address is on this link */
     return (net_if);
   }

@@ -331,7 +331,7 @@ static uint16_t ip6_get_mtu (NET_IF_CFG *net_if) {
                - false = error.
 */
 bool net_ip6_set_netif (NET_IF_CFG *net_if) {
-  if (net_if->Ip6Cfg == NULL) {
+  if (!net_if->Ip6Cfg) {
     return (false);
   }
   DEBUGF (IP6,"Set Default %s\n",net_if->Name);
@@ -345,7 +345,7 @@ bool net_ip6_set_netif (NET_IF_CFG *net_if) {
   \return      pointer to local machine info.
 */
 NET_LOCALM6 *net_ip6_def_localm (void) {
-  if (ip6->DefNetIf != NULL) {
+  if (ip6->DefNetIf) {
     return (ip6->DefNetIf->localm6);
   }
   return (NULL);
@@ -455,7 +455,7 @@ uint32_t net_ip6_collect_mcast (NET_IF_CFG *net_if, uint8_t *buf) {
 
 /**
   \brief       Find route to destination IPv6 address.
-  \param[in]   net_if    proposed network interface.
+  \param[in]   net_if    desired network interface.
   \param[in]   dst_addr  destination IPv6 address.
   \return      assigned network interface for the route.
 */
@@ -474,13 +474,13 @@ NET_IF_CFG *net_ip6_find_route (NET_IF_CFG *net_if, const uint8_t *dst_addr) {
     return (NULL);
   }
   /* Check link-local or multicast address */
-  if (dst_addr[0] >= 0xFC) {
+  if (dst_addr[0] >= 0xFE) {
     if (net_if == NULL) {
       /* Use default link interface */
       return (net_if_link_def[1]);
     }
-    if ((net_if->Ip6Cfg != NULL) && (net_if->output_lan != NULL)) {
-      /* Use proposed LAN interface */
+    if (net_if->Ip6Cfg && net_if->output_lan) {
+      /* Use desired LAN interface */
       return (net_if);
     }
     /* Ignore for non-LAN interfaces */

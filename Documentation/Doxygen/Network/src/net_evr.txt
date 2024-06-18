@@ -10051,6 +10051,19 @@ value to the socket, which is used when the socket is in blocking mode.
 */
 
 /**
+\fn __STATIC_INLINE void EvrNetBSD_SetoptBindToDevice(int32_t sock, uint16_t if_id)
+\details
+The event \b SetoptBindToDevice is created, when the function \ref setsockopt sets
+the operating option for the BSD socket. This option binds the network interface
+to the datagram socket. The socket can then only send and receive data on the bound
+interface. Data from other interfaces is discarded.
+
+\b Value in the Event Recorder shows:
+  - \b sock: BSD socket descriptor for setting the option.
+  - \b netif: network interface identifier.
+*/
+
+/**
 \fn __STATIC_INLINE void EvrNetBSD_SetoptIp4Tos(int32_t sock, uint8_t ip4_tos)
 \details
 The event \b SetoptIp4Tos is created, when the function \ref setsockopt sets
