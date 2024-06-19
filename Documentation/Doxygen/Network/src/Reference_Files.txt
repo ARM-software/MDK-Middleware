@@ -8,7 +8,7 @@
 \details
 This reference section is divided into the following subsections:
 - The Network Component implements API functions for the various \ref netServices, \ref netSockets, and \ref netInterfaces
-  as described in the \ref netDSOverview "overview".
+  as described in the \ref mainpage "overview".
 - \ref netGen_Func functions allow IP address conversion and describes the related data format.
 - \ref netSys_Func initialize the Network Component and allow for hostname management.
 - \ref netStatusErrorCodes are described that are returned by the API functions.

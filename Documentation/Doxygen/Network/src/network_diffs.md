@@ -1,31 +1,30 @@
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page network_diffs Migration
+# Migration {#network_diffs}
 
 The following sections show how to migrate projects from previous versions of the Middleware:
+
 - \ref nw_diffs_project_migration describes how to migrate an MDK project from the previous
   Middleware to the latest version.
 - \ref mig_nw_configuration describes the differences in the configuration files of the Network Component.
 - \ref netDebugStdio explains how to use the legacy debug features.
 
-\section nw_diffs_project_migration Project Migration
+## Project Migration {#nw_diffs_project_migration}
+
 There is an easy migration path available for users of the Network Component v7. Simply open the project that is about
 to be migrated in µVision. The IDE will show an error message that a software component is not available:
 
 \image html mig_project_open.png "Error message opening a legacy project"
 
-This message is shown because the previous variants <b>IPv4 Release</b>/<b>IPv4 Debug</b> have been removed.
-Open the \b Manage \b Run-Time \b Environment window. It will show the same error message in a different way:
+This message is shown because the previous variants **IPv4 Release**/**IPv4 Debug** have been removed.
+Open the **Manage Run-Time Environment** window. It will show the same error message in a different way:
 
 \image html mig_rte_open.png "Error message in the Run-Time Environment"
 
-
-Select a New Component variant \b MDK to get rid of this validation message:
+Select a New Component variant **MDK** to get rid of this validation message:
 
 \image html mig_rte_choose_mdk.png "Manually resolve the error message"
 
+### Update Configuration Files {#nw_diffs_update_configs}
 
-\subsection nw_diffs_update_configs Update Configuration Files
 After pressing OK, the Project window will look like this:
 
 \image html mig_project_required_changes_new_items.png "Updated Project window"
@@ -34,60 +33,60 @@ Right-clicking each file will give you the update options:
 
 \image html mig_config_update_merge.png "Update options for configuration files"
 
-\b Update \b Config \b File will simply copy the new configuration file into your project containing the default settings.
+**Update Config File** will simply copy the new configuration file into your project containing the default settings.
 The old file with your project's settings will be renamed to Net_Config.h.0000 for example. If you want to manually merge the
 two files, you can open this backup file (located in the folder RTE\\Network) and compare it with the new file line by line.
 
-A better way is to use the option \b Update \b Config \b File \b and \b Launch \b Merge. This option is available for µVision
+A better way is to use the option **Update Config File and Launch Merge**. This option is available for µVision
 users with version 5.15 and above. Refer to the µVision help \urlout{uv4_dg_mergetoolmnu} for details.
 
 Not all configuration files require a merge, as many of them are compatible. The section \ref mig_nw_configuration describes
 the differences in more detail.
 
+### Configure Keil RTX {#nw_diffs_rtx_configuration}
 
-\subsection nw_diffs_rtx_configuration Configure Keil RTX
-If you use <b>RTX v5</b>, you do not need to change the <b>RTX settings</b>, because all resources are statically allocated.
+If you use **RTX v5**, you do not need to change the **RTX settings**, because all resources are statically allocated.
 Refer to the section \ref nw_resource_requirements for more information.
 
+### Build and Run the Network Project {#nw_diffs_build_and_run}
 
-\subsection nw_diffs_build_and_run Build and Run the Network Project
 Finally, after merging the configuration files, you should be able to compile the project and run it on your target hardware:
 
 \image html mig_build_ok.png "Error-free build output"
 
-\section mig_nw_configuration Network Configuration
+## Network Configuration {#mig_nw_configuration}
 
 The following screenshots show the previous settings on the left-hand side, while the new settings
 can be seen on the right-hand side.
 
-\subsection mig_nw_configuration_net_config_c Net_Config.c
+### Net_Config.c {#mig_nw_configuration_net_config_c}
 
-The network core configuration file has been changed from \b Net_Config.c to \b Net_Config.h.
+The network core configuration file has been changed from `Net_Config.c` to `Net_Config.h`.
 
 \image html diff_net_config_c.png "Old Net_Config.c vs. new Net_Config.h"
 
-- <b>Variant</b> selection added:
- - IPv4 only
- - IPv4/IPv6 dual stack 
-- <b>net_sys_error()</b> handler function removed
+- **Variant** selection added:
+  - IPv4 only
+  - IPv4/IPv6 dual stack
+- **net_sys_error()** handler function removed
 
-\subsection mig_nw_configuration_net_debug Net_Debug.c
+### Net_Debug.c {#mig_nw_configuration_net_debug}
 
-The network debug configuration file has been changed from \b Net_Debug.c to \b Net_Debug.h.
+The network debug configuration file has been changed from `Net_Debug.c` to `Net_Debug.h`.
 
 \image html diff_net_debug_c.png "Old Net_Debug.c vs. new Net_Debug.h"
 
-- <b>Network Debug</b> enable switch added
-- <b>Output Channel</b> selection added:
- - Event Recorder
- - STDIO
- - STDIO + Timestamp
-- <b>Print Time Stamps</b> option integrated into the <b>Output Channel</b> option
-- <b>Multicast Listener Discovery (MLD)</b> option added
-- <b>net_debug_init()</b> function removed
+- **Network Debug** enable switch added
+- **Output Channel** selection added:
+  - Event Recorder
+  - STDIO
+  - STDIO + Timestamp
+- **Print Time Stamps** option integrated into the **Output Channel** option
+- **Multicast Listener Discovery (MLD)** option added
+- **net_debug_init()** function removed
 - \c DBG_XXX prefix changed to \c NET_DEBUG_XXX
   
-\section netDebugStdio STDIO Debug
+## STDIO Debug {#netDebugStdio}
 
 STDIO Debug is a legacy debug variant that prints event information as ASCII messages to a standard IO port.
 It is generally less feature-rich and slower than the debug with \ref net_evr "Event Recorder" and is not
@@ -95,17 +94,18 @@ recommended for new projects.
 
 To enable STDIO debugging together with the Network Component, it is required to create an image
 that generates event information. The necessary steps are:
-  1. \ref netDebugConfig "Select Debug mode": in the \b Net_Config.h enable the <b>Network Debug</b> for the component. 
-  2. In the RTE management dialog enable <b>CMSIS-Compiler:CORE</b> and <b>CMSIS-Compiler:STDOUT</b> components and
-     select its \b ITM variant.   
-  3. Configure the \ref netDebugLevels "Debug Levels".
-  4. Build the application code and download it to the target hardware.
 
-Module IDs
-----------
+1. \ref netDebugConfig "Select Debug mode": in the `Net_Config.h` enable the **Network Debug** for the component. 
+2. In the RTE management dialog enable **CMSIS-Compiler:CORE** and **CMSIS-Compiler:STDOUT** components and
+   select its **ITM** variant.
+3. Configure the \ref netDebugLevels "Debug Levels".
+4. Build the application code and download it to the target hardware.
+
+### Module IDs
 
 The owner module of the displayed debug message is identified by the message prefix. The following system and application
 modules are configurable for debugging:
+
 |ID    |Module                            |Description|
 |------|----------------------------------|-----------|
 |SYS   |System Core                       |Handles Network system operation.|
@@ -141,7 +141,8 @@ modules are configurable for debugging:
 |SNTP  |SNTP Client                       |Manages clock synchronization over the network.|
 
 An example of the debug output is:
-\code
+
+```txt
 015.0 ETH:*** Processing frame ***
 015.0 ETH: DstMAC 1E-30-6C-A2-45-5E
 015.0 ETH: SrcMAC 00-11-43-A4-FE-40
@@ -161,8 +162,10 @@ An example of the debug output is:
 015.0 TCP: SendWin: 8192
 015.0 TCP: RTO=4000ms (sa=0, sv=40)
 015.0 TCP: Next state SYN_REC
-\endcode
+```
+
 In the above example, Ethernet, IP and TCP debug messages are enabled:
+
 - Received Ethernet packets are processed by the Ethernet layer and a debug message containing Ethernet header information is
   printed out. Ethernet debug information contains source and destination MAC address, Ethernet frame length and Ethernet
   protocol type.
@@ -174,8 +177,7 @@ In the above example, Ethernet, IP and TCP debug messages are enabled:
 
 \note
 - If the debug mode is used on a high traffic LAN, the system might block. Reduce the amount of printed debug messages
-  in \b Net_Debug.h configuration or disable the debug mode completely.
+  in `Net_Debug.h` configuration or disable the debug mode completely.
 - Printing debug messages blocks out the system task scheduler during the time when the message is being sent from the serial
-  port. The incoming IP packets accumulate in the memory. This soon causes an <b>out of memory </b>error. Any further
+  port. The incoming IP packets accumulate in the memory. This soon causes an **out of memory** error. Any further
   incoming packets are lost until some memory is released.
-*/

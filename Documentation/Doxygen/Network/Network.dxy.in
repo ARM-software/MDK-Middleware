@@ -920,23 +920,25 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = src/Network.txt \
-                         src/create_network_app.txt \
-                         src/securing_communication.txt \
-                         src/certification.txt \
-                         src/network_examples.txt \
+INPUT                  = src/Network.md \
+                         src/network_revhist.md \
+                         src/create_network_app.md \
+                         src/network_trbl_shoot.md \
+                         src/securing_communication.md \
+                         src/certification.md \
+                         src/network_examples.md \
+                         src/network_resource_requirements.md \
+                         src/net_function_overview.md \
+                         src/network_diffs.md \
                          src/Reference_Files.txt \
                          src/ref_net_services.txt \
                          src/ref_net_socket.txt \
                          src/ref_net_interface.txt \
                          src/net_structs.txt \
                          src/rl_net.txt \
-                         src/network_diffs.txt \
-                         src/network_resource_requirements.txt \
                          src/net_modem.txt \
                          ../../../Components/Network/Include/rl_net.h \
                          ../../../Components/Network/Driver/Include/net_modem.h \
-                         src/net_function_overview.txt \
                          ../../../Components/Network/Source/net_evr.h \
                          src/net_evr.txt
 
