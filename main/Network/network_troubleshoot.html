@@ -128,7 +128,8 @@ $(document).ready(function(){initNavTree('network_troubleshoot.html',''); initRe
   <div class="headertitle"><div class="title">Troubleshooting a Network Application </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="trbl_nw_hierachry"></a>
+<div class="textblock"><p><a class="anchor" id="md_src_network_trbl_shoot"></a> </p>
+<h1><a class="anchor" id="trbl_nw_hierachry"></a>
 Network library hierarchy</h1>
 <p><b>BSD sockets</b> represent the Session layer in the OSI model. They are using the native TCP and UDP sockets of the Network library. The debug messages from the BSD module are very compact and provide as less information as possible. You can see how the BSD functions are called and their return values. Most of the time this is sufficient. If not, enable the underlying layers as well.</p>
 <p><b>TCP, UDP sockets</b> implement the TCP/UDP protocol, which is then used by BSD sockets. Their debug messages show the details of the TCP/UDP protocol in the communication stream. Information about error recovery, flow control and re-transmissions is displayed. In case the BSD socket communication fails, this can point to the underlying problem.</p>
@@ -149,7 +150,8 @@ Check the Ethernet interface</h2>
 <img src="trbl_cv_nw.png" alt=""/>
 <div class="caption">
 Component Viewer for the Network library</div></div>
-<p>This indicates the following: </p><table class="markdownTable">
+<p>This indicates the following:</p>
+<table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Property   </th><th class="markdownTableHeadNone">Description    </th></tr>
 <tr class="markdownTableRowOdd">
@@ -162,23 +164,23 @@ Component Viewer for the Network library</div></div>
 <h2><a class="anchor" id="trbl_verify_sock"></a>
 Verify Socket Communication</h2>
 <p>Event Recorder shows the sequence of events for the connection. The following example shows the BSD event log of a successful communication:</p>
-<pre class="fragment">10  13.11487039  NetBSD  SocketAllocated      sock=1  type=SOCK_STREAM
-11  13.11487544  NetBSD  ConnectSocket        sock=1
-12  13.14889442  NetBSD  CbfuncTcpEvent       sock=1  event=Established
-13  13.14891358  NetBSD  ConnectStreamSuccess sock=1
-14  18.14885683  NetBSD  Closesocket          sock=1
-</pre><p>When the BSD socket is connected, the state of the underlying TCP socket is shown in the viewer as well:</p>
+<div class="fragment"><div class="line">10  13.11487039  NetBSD  SocketAllocated      sock=1  type=<a class="code hl_define" href="rl__net_8h.html#a249394484f9410a2e3f8eba24657feb9" title="BSD Socket Type.">SOCK_STREAM</a></div>
+<div class="line">11  13.11487544  NetBSD  ConnectSocket        sock=1</div>
+<div class="line">12  13.14889442  NetBSD  CbfuncTcpEvent       sock=1  <span class="keyword">event</span>=Established</div>
+<div class="line">13  13.14891358  NetBSD  ConnectStreamSuccess sock=1</div>
+<div class="line">14  18.14885683  NetBSD  Closesocket          sock=1</div>
+</div><!-- fragment --><p>When the BSD socket is connected, the state of the underlying TCP socket is shown in the viewer as well:</p>
 <div class="image">
 <img src="trbl_cv_nw_tcp.png" alt=""/>
 </div>
 <p>This shows the remote IP address and port number, as well as the local port number, the value for the timeout timer and the active TCP socket options. This is valuable information in addition to the events shown in Event Recorder.</p>
 <p>The following example shows the BSD event log in case a target cannot be reached:</p>
-<pre class="fragment">3   7.41687549   NetBSD  SocketAllocated      sock=1  type=SOCK_STREAM
-4   7.41688068   NetBSD  ConnectSocket        sock=1
-5   22.41490458  NetBSD  CbfuncTcpEvent       sock=1  event=Aborted
-6   22.41491838  NetBSD  ConnectStreamTimeout sock=1
-7   27.41486937  NetBSD  Closesocket          sock=1
-</pre><p>After a timeout, BSD connect fails with the log "ConnectStreamTimeout". From the timestamp records, you can observe that this happened 15 seconds later. During this time, a TCP module has made several retries to establish a connection with the remote host, but finally gave up.</p>
+<div class="fragment"><div class="line">3   7.41687549   NetBSD  SocketAllocated      sock=1  type=<a class="code hl_define" href="rl__net_8h.html#a249394484f9410a2e3f8eba24657feb9" title="BSD Socket Type.">SOCK_STREAM</a></div>
+<div class="line">4   7.41688068   NetBSD  ConnectSocket        sock=1</div>
+<div class="line">5   22.41490458  NetBSD  CbfuncTcpEvent       sock=1  <span class="keyword">event</span>=Aborted</div>
+<div class="line">6   22.41491838  NetBSD  ConnectStreamTimeout sock=1</div>
+<div class="line">7   27.41486937  NetBSD  Closesocket          sock=1</div>
+</div><!-- fragment --><p>After a timeout, BSD connect fails with the log "ConnectStreamTimeout". From the timestamp records, you can observe that this happened 15 seconds later. During this time, a TCP module has made several retries to establish a connection with the remote host, but finally gave up.</p>
 <p>Possible reasons for the connection to fail:</p>
 <ol type="1">
 <li>a remote host is not reachable (either not running or switched off).</li>
@@ -187,66 +189,67 @@ Verify Socket Communication</h2>
 <li>a local port number used for communication is reserved for other means in the communication equipment (ie. modem/router). For example, the TCP port 49152 is sometimes reserved by the Internet provider for remote management of the communication device. In general, communication using reserved ports is not possible.</li>
 </ol>
 <p>After a BSD <a class="el" href="group__using__network__sockets__bsd__func.html#ga9feed17ea4fc7449b8159eabc131ed5b" title="Connect a socket to a remote host. [thread-safe].">connect()</a> is called and before the function completes, many events are generated from the TCP socket, indicating how the TCP is performing the connect. Here is a log of successful connect with BSD and TCP events enabled:</p>
-<pre class="fragment">6   13.41688149  NetBSD  ConnectSocket        sock=1
-7   13.41688457  NetTCP  ConnectSocket        sock=1  loc_port=0
-8   13.41688673  NetTCP  ShowNetAddressIp4    ip=64.233.184.206  port=8883
-9   13.41688979  NetTCP  ConnectLocalPortAssigned    loc_port=49152
-10  13.41689299  NetTCP  ShowRttVariables     rto=4000  sa=0  sv=40
-11  13.41689612  NetTCP  SendControl          sock=1
-12  13.41690353  NetTCP  ShowFrameHeader      dport=8883  sport=49152  seq=0x1B35487F  ack=0x00000000  flags=0x02  win=4320  cksum=0x0000
-13  13.45960305  NetTCP  ReceiveFrame         len=24  ver=IPv4
-14  13.45960505  NetTCP  ShowFrameHeader      dport=49152  sport=8883  seq=0x22F3D202  ack=0x1B354880  flags=0x12  win=42780  cksum=0xF859
-15  13.45961008  NetTCP  MappedToSocket       sock=1  state=SYN_SENT
-16  13.45961235  NetTCP  ParseHeaderOptions   opt_len=4
-17  13.45961427  NetTCP  OptionMss            mss=1380
-18  13.45961622  NetTCP  ShowCongestionVariables     cwnd=4140  ssth=65535
-19  13.45961786  NetTCP  ShowSendWindow       send_win=42780
-20  13.45961948  NetTCP  NextState            state=ESTABLISHED
-21  13.45962121  NetTCP  SendControl          sock=1
-22  13.4596284   NetTCP  ShowFrameHeader      dport=8883  sport=49152  seq=0x1B354880  ack=0x22F3D203  flags=0x10  win=4320  cksum=0x0000
-23  13.45964949  NetBSD  CbfuncTcpEvent       sock=1  event=Established
-24  13.45966893  NetBSD  ConnectStreamSuccess sock=1
-</pre><p>To trace all events that are relevant for the BSD connect, also enable IPv4 and ETH events. In this case, the number of generated events is much larger. Tracking the Event Recorder log becomes more difficult:</p>
-<pre class="fragment">48  7.41688149   NetBSD  ConnectSocket         sock=1
-49  7.41688458   NetTCP  ConnectSocket         sock=1  loc_port=0
-50  7.41688674   NetTCP  ShowNetAddressIp4     ip=64.233.184.206  port=8883
-51  7.41688979   NetTCP  ConnectLocalPortAssigned    loc_port=49152
-52  7.416893     NetTCP  ShowRttVariables      rto=4000  sa=0  sv=40
-53  7.41689613   NetTCP  SendControl           sock=1
-54  7.41690354   NetTCP  ShowFrameHeader       dport=8883  sport=49152  seq=0x00828ADD  ack=0x00000000  flags=0x02  win=4320  cksum=0x0000
-55  7.41690848   NetIP4  SendFrame             proto=TCP  len=24
-56  7.41691169   NetIP4  ShowFrameHeader       dst=64.233.184.206  src=192.168.3.49  proto=TCP  id=0x0002  frag=0x4000  len=44
-57  7.41691642   NetETH  SendFrame             len=44  ver=IPv4
-58  7.4169189    NetARP  CacheFind             ip=64.233.184.206
-59  7.41692122   NetARP  UsingGateway          gw=192.168.3.1
-60  7.41692342   NetARP  EntryFound            entry=1
-61  7.4169255    NetETH  ShowFrameHeader       dst=C0-A0-BB-77-4F-B8  src=1E-30-6C-A2-45-5A  proto=IP4
-62  7.41692896   NetETH  OutputLowLevel        len=58
-63  7.4508298    NetETH  ReceiveFrame          len=60
-64  7.45083195   NetETH  ShowFrameHeader       dst=1E-30-6C-A2-45-5A  src=C0-A0-BB-77-4F-B8  proto=IP4
-65  7.45083569   NetIP4  ReceiveFrame          len=46
-66  7.45083735   NetIP4  ShowFrameHeader       dst=192.168.3.49  src=64.233.184.206  proto=TCP  id=0x1AB4  frag=0x0000  len=44
-67  7.45084473   NetTCP  ReceiveFrame          len=24  ver=IPv4
-68  7.45084669   NetTCP  ShowFrameHeader       dport=49152  sport=8883  seq=0x3E8D5ACA  ack=0x00828ADE  flags=0x12  win=42780  cksum=0x2C4D
-69  7.45085173   NetTCP  MappedToSocket        sock=1  state=SYN_SENT
-70  7.45085574   NetTCP  ParseHeaderOptions    opt_len=4
-71  7.45085765   NetTCP  OptionMss             mss=1380
-72  7.45085961   NetTCP  ShowCongestionVariables     cwnd=4140  ssth=65535
-73  7.45086124   NetTCP  ShowSendWindow        send_win=42780
-74  7.45086286   NetTCP  NextState             state=ESTABLISHED
-75  7.4508646    NetTCP  SendControl           sock=1
-76  7.45087179   NetTCP  ShowFrameHeader       dport=8883  sport=49152  seq=0x00828ADE  ack=0x3E8D5ACB  flags=0x10  win=4320  cksum=0x0000
-77  7.45087673   NetIP4  SendFrame             proto=TCP  len=20
-78  7.45087994   NetIP4  ShowFrameHeader       dst=64.233.184.206  src=192.168.3.49  proto=TCP  id=0x0003  frag=0x4000  len=40
-79  7.45088467   NetETH  SendFrame             len=40  ver=IPv4
-80  7.45088715   NetARP  CacheFind             ip=64.233.184.206
-81  7.45088947   NetARP  UsingGateway          gw=192.168.3.1
-82  7.45089167   NetARP  EntryFound            entry=1
-83  7.45089374   NetETH  ShowFrameHeader       dst=C0-A0-BB-77-4F-B8  src=1E-30-6C-A2-45-5A  proto=IP4
-84  7.4508972    NetETH  OutputLowLevel        len=54
-85  7.45090824   NetBSD  CbfuncTcpEvent        sock=1  event=Established
-86  7.45092768   NetBSD  ConnectStreamSuccess  sock=1
-</pre><p>This is what happens when the BSD <a class="el" href="group__using__network__sockets__bsd__func.html#ga9feed17ea4fc7449b8159eabc131ed5b" title="Connect a socket to a remote host. [thread-safe].">connect()</a> function is called:</p><ol type="1">
+<div class="fragment"><div class="line">6   13.41688149  NetBSD  ConnectSocket        sock=1</div>
+<div class="line">7   13.41688457  NetTCP  ConnectSocket        sock=1  loc_port=0</div>
+<div class="line">8   13.41688673  NetTCP  ShowNetAddressIp4    ip=64.233.184.206  port=8883</div>
+<div class="line">9   13.41688979  NetTCP  ConnectLocalPortAssigned    loc_port=49152</div>
+<div class="line">10  13.41689299  NetTCP  ShowRttVariables     rto=4000  sa=0  sv=40</div>
+<div class="line">11  13.41689612  NetTCP  SendControl          sock=1</div>
+<div class="line">12  13.41690353  NetTCP  ShowFrameHeader      dport=8883  sport=49152  seq=0x1B35487F  ack=0x00000000  flags=0x02  win=4320  cksum=0x0000</div>
+<div class="line">13  13.45960305  NetTCP  ReceiveFrame         len=24  ver=IPv4</div>
+<div class="line">14  13.45960505  NetTCP  ShowFrameHeader      dport=49152  sport=8883  seq=0x22F3D202  ack=0x1B354880  flags=0x12  win=42780  cksum=0xF859</div>
+<div class="line">15  13.45961008  NetTCP  MappedToSocket       sock=1  state=SYN_SENT</div>
+<div class="line">16  13.45961235  NetTCP  ParseHeaderOptions   opt_len=4</div>
+<div class="line">17  13.45961427  NetTCP  OptionMss            mss=1380</div>
+<div class="line">18  13.45961622  NetTCP  ShowCongestionVariables     cwnd=4140  ssth=65535</div>
+<div class="line">19  13.45961786  NetTCP  ShowSendWindow       send_win=42780</div>
+<div class="line">20  13.45961948  NetTCP  NextState            state=ESTABLISHED</div>
+<div class="line">21  13.45962121  NetTCP  SendControl          sock=1</div>
+<div class="line">22  13.4596284   NetTCP  ShowFrameHeader      dport=8883  sport=49152  seq=0x1B354880  ack=0x22F3D203  flags=0x10  win=4320  cksum=0x0000</div>
+<div class="line">23  13.45964949  NetBSD  CbfuncTcpEvent       sock=1  <span class="keyword">event</span>=Established</div>
+<div class="line">24  13.45966893  NetBSD  ConnectStreamSuccess sock=1</div>
+</div><!-- fragment --><p>To trace all events that are relevant for the BSD connect, also enable IPv4 and ETH events. In this case, the number of generated events is much larger. Tracking the Event Recorder log becomes more difficult:</p>
+<div class="fragment"><div class="line">48  7.41688149   NetBSD  ConnectSocket         sock=1</div>
+<div class="line">49  7.41688458   NetTCP  ConnectSocket         sock=1  loc_port=0</div>
+<div class="line">50  7.41688674   NetTCP  ShowNetAddressIp4     ip=64.233.184.206  port=8883</div>
+<div class="line">51  7.41688979   NetTCP  ConnectLocalPortAssigned    loc_port=49152</div>
+<div class="line">52  7.416893     NetTCP  ShowRttVariables      rto=4000  sa=0  sv=40</div>
+<div class="line">53  7.41689613   NetTCP  SendControl           sock=1</div>
+<div class="line">54  7.41690354   NetTCP  ShowFrameHeader       dport=8883  sport=49152  seq=0x00828ADD  ack=0x00000000  flags=0x02  win=4320  cksum=0x0000</div>
+<div class="line">55  7.41690848   NetIP4  SendFrame             proto=TCP  len=24</div>
+<div class="line">56  7.41691169   NetIP4  ShowFrameHeader       dst=64.233.184.206  src=192.168.3.49  proto=TCP  <span class="keywordtype">id</span>=0x0002  frag=0x4000  len=44</div>
+<div class="line">57  7.41691642   NetETH  SendFrame             len=44  ver=IPv4</div>
+<div class="line">58  7.4169189    NetARP  CacheFind             ip=64.233.184.206</div>
+<div class="line">59  7.41692122   NetARP  UsingGateway          gw=192.168.3.1</div>
+<div class="line">60  7.41692342   NetARP  EntryFound            entry=1</div>
+<div class="line">61  7.4169255    NetETH  ShowFrameHeader       dst=C0-A0-BB-77-4F-B8  src=1E-30-6C-A2-45-5A  proto=IP4</div>
+<div class="line">62  7.41692896   NetETH  OutputLowLevel        len=58</div>
+<div class="line">63  7.4508298    NetETH  ReceiveFrame          len=60</div>
+<div class="line">64  7.45083195   NetETH  ShowFrameHeader       dst=1E-30-6C-A2-45-5A  src=C0-A0-BB-77-4F-B8  proto=IP4</div>
+<div class="line">65  7.45083569   NetIP4  ReceiveFrame          len=46</div>
+<div class="line">66  7.45083735   NetIP4  ShowFrameHeader       dst=192.168.3.49  src=64.233.184.206  proto=TCP  <span class="keywordtype">id</span>=0x1AB4  frag=0x0000  len=44</div>
+<div class="line">67  7.45084473   NetTCP  ReceiveFrame          len=24  ver=IPv4</div>
+<div class="line">68  7.45084669   NetTCP  ShowFrameHeader       dport=49152  sport=8883  seq=0x3E8D5ACA  ack=0x00828ADE  flags=0x12  win=42780  cksum=0x2C4D</div>
+<div class="line">69  7.45085173   NetTCP  MappedToSocket        sock=1  state=SYN_SENT</div>
+<div class="line">70  7.45085574   NetTCP  ParseHeaderOptions    opt_len=4</div>
+<div class="line">71  7.45085765   NetTCP  OptionMss             mss=1380</div>
+<div class="line">72  7.45085961   NetTCP  ShowCongestionVariables     cwnd=4140  ssth=65535</div>
+<div class="line">73  7.45086124   NetTCP  ShowSendWindow        send_win=42780</div>
+<div class="line">74  7.45086286   NetTCP  NextState             state=ESTABLISHED</div>
+<div class="line">75  7.4508646    NetTCP  SendControl           sock=1</div>
+<div class="line">76  7.45087179   NetTCP  ShowFrameHeader       dport=8883  sport=49152  seq=0x00828ADE  ack=0x3E8D5ACB  flags=0x10  win=4320  cksum=0x0000</div>
+<div class="line">77  7.45087673   NetIP4  SendFrame             proto=TCP  len=20</div>
+<div class="line">78  7.45087994   NetIP4  ShowFrameHeader       dst=64.233.184.206  src=192.168.3.49  proto=TCP  <span class="keywordtype">id</span>=0x0003  frag=0x4000  len=40</div>
+<div class="line">79  7.45088467   NetETH  SendFrame             len=40  ver=IPv4</div>
+<div class="line">80  7.45088715   NetARP  CacheFind             ip=64.233.184.206</div>
+<div class="line">81  7.45088947   NetARP  UsingGateway          gw=192.168.3.1</div>
+<div class="line">82  7.45089167   NetARP  EntryFound            entry=1</div>
+<div class="line">83  7.45089374   NetETH  ShowFrameHeader       dst=C0-A0-BB-77-4F-B8  src=1E-30-6C-A2-45-5A  proto=IP4</div>
+<div class="line">84  7.4508972    NetETH  OutputLowLevel        len=54</div>
+<div class="line">85  7.45090824   NetBSD  CbfuncTcpEvent        sock=1  <span class="keyword">event</span>=Established</div>
+<div class="line">86  7.45092768   NetBSD  ConnectStreamSuccess  sock=1</div>
+</div><!-- fragment --><p>This is what happens when the BSD <a class="el" href="group__using__network__sockets__bsd__func.html#ga9feed17ea4fc7449b8159eabc131ed5b" title="Connect a socket to a remote host. [thread-safe].">connect()</a> function is called:</p>
+<ol type="1">
 <li>The TCP connect process is started.</li>
 <li>The current local port is <span class="XML-Token">0</span>. The system allocates port 49152 from the dynamic ports range for the local port.</li>
 <li>The TCP layer creates a TCP header and sends the control frame with a SYN flag set to the IPv4 network.</li>
@@ -264,7 +267,7 @@ Verify Socket Communication</h2>
 <h2><a class="anchor" id="trbl_verify_secure"></a>
 Verify Secure Communication</h2>
 <p>If the BSD socket has connected successfully to the IoT Cloud, but the TLS handshake has failed, no secure connection will be established. An established network connection is indicated with the NetBSD event "ConnectStreamSuccess" in the Event Recorder log.</p>
-<p>Usually, <a class="el" href="use_mbed_tls.html">Mbed TLS</a> is used as the security layer for MDK-Middleware. To successfully debug the Mbed TLS security layer, read the related MbedTLS documentation.</p>
+<p>Usually, <a class="el" href="secure_communication.html#use_mbed_tls">Mbed TLS</a> is used as the security layer for MDK-Middleware. To successfully debug the Mbed TLS security layer, read the related MbedTLS documentation.</p>
 <p>Typical errors in the security layer are:</p>
 <ul>
 <li>heap size too small and Mbed TLS cannot allocate enough memory for the requested operation.</li>

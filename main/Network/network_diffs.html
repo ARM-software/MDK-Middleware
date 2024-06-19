@@ -128,7 +128,8 @@ $(document).ready(function(){initNavTree('network_diffs.html',''); initResizable
   <div class="headertitle"><div class="title">Migration </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The following sections show how to migrate projects from previous versions of the Middleware:</p><ul>
+<div class="textblock"><p><a class="anchor" id="md_src_network_diffs"></a> The following sections show how to migrate projects from previous versions of the Middleware:</p>
+<ul>
 <li><a class="el" href="network_diffs.html#nw_diffs_project_migration">Project Migration</a> describes how to migrate an MDK project from the previous Middleware to the latest version.</li>
 <li><a class="el" href="network_diffs.html#mig_nw_configuration">Network Configuration</a> describes the differences in the configuration files of the Network Component.</li>
 <li><a class="el" href="network_diffs.html#netDebugStdio">STDIO Debug</a> explains how to use the legacy debug features.</li>
@@ -140,7 +141,7 @@ Project Migration</h1>
 <img src="mig_project_open.png" alt=""/>
 <div class="caption">
 Error message opening a legacy project</div></div>
-<p>This message is shown because the previous variants <b>IPv4 Release</b>/<b>IPv4 Debug</b> have been removed. Open the <b>Manage</b> <b>Run-Time</b> <b>Environment</b> window. It will show the same error message in a different way:</p>
+<p>This message is shown because the previous variants <b>IPv4 Release</b>/**IPv4 Debug** have been removed. Open the <b>Manage Run-Time Environment</b> window. It will show the same error message in a different way:</p>
 <div class="image">
 <img src="mig_rte_open.png" alt=""/>
 <div class="caption">
@@ -162,8 +163,8 @@ Updated Project window</div></div>
 <img src="mig_config_update_merge.png" alt=""/>
 <div class="caption">
 Update options for configuration files</div></div>
-<p><b>Update</b> <b>Config</b> <b>File</b> will simply copy the new configuration file into your project containing the default settings. The old file with your project's settings will be renamed to Net_Config.h.0000 for example. If you want to manually merge the two files, you can open this backup file (located in the folder RTE\Network) and compare it with the new file line by line.</p>
-<p>A better way is to use the option <b>Update</b> <b>Config</b> <b>File</b> <b>and</b> <b>Launch</b> <b>Merge</b>. This option is available for µVision users with version 5.15 and above. Refer to the µVision help  <script>link_ext('uv4_dg_mergetoolmnu');</script> for details.</p>
+<p><b>Update Config File</b> will simply copy the new configuration file into your project containing the default settings. The old file with your project's settings will be renamed to Net_Config.h.0000 for example. If you want to manually merge the two files, you can open this backup file (located in the folder RTE\Network) and compare it with the new file line by line.</p>
+<p>A better way is to use the option <b>Update Config File and Launch Merge</b>. This option is available for µVision users with version 5.15 and above. Refer to the µVision help  <script>link_ext('uv4_dg_mergetoolmnu');</script> for details.</p>
 <p>Not all configuration files require a merge, as many of them are compatible. The section <a class="el" href="network_diffs.html#mig_nw_configuration">Network Configuration</a> describes the differences in more detail.</p>
 <h2><a class="anchor" id="nw_diffs_rtx_configuration"></a>
 Configure Keil RTX</h2>
@@ -180,7 +181,7 @@ Network Configuration</h1>
 <p>The following screenshots show the previous settings on the left-hand side, while the new settings can be seen on the right-hand side.</p>
 <h2><a class="anchor" id="mig_nw_configuration_net_config_c"></a>
 Net_Config.c</h2>
-<p>The network core configuration file has been changed from <b>Net_Config.c</b> to <b>Net_Config.h</b>.</p>
+<p>The network core configuration file has been changed from <code>Net_Config.c</code> to <code>Net_Config.h</code>.</p>
 <div class="image">
 <img src="diff_net_config_c.png" alt=""/>
 <div class="caption">
@@ -195,7 +196,7 @@ Old Net_Config.c vs. new Net_Config.h</div></div>
 </ul>
 <h2><a class="anchor" id="mig_nw_configuration_net_debug"></a>
 Net_Debug.c</h2>
-<p>The network debug configuration file has been changed from <b>Net_Debug.c</b> to <b>Net_Debug.h</b>.</p>
+<p>The network debug configuration file has been changed from <code>Net_Debug.c</code> to <code>Net_Debug.h</code>.</p>
 <div class="image">
 <img src="diff_net_debug_c.png" alt=""/>
 <div class="caption">
@@ -216,16 +217,17 @@ Old Net_Debug.c vs. new Net_Debug.h</div></div>
 <h1><a class="anchor" id="netDebugStdio"></a>
 STDIO Debug</h1>
 <p>STDIO Debug is a legacy debug variant that prints event information as ASCII messages to a standard IO port. It is generally less feature-rich and slower than the debug with <a class="el" href="group__net__evr.html">Event Recorder</a> and is not recommended for new projects.</p>
-<p>To enable STDIO debugging together with the Network Component, it is required to create an image that generates event information. The necessary steps are:</p><ol type="1">
-<li><a class="el" href="network_create_app.html#netDebugConfig">Select Debug mode</a>: in the <b>Net_Config.h</b> enable the <b>Network Debug</b> for the component.</li>
-<li>In the RTE management dialog enable <b>CMSIS-Compiler:CORE</b> and <b>CMSIS-Compiler:STDOUT</b> components and select its <b>ITM</b> variant. <br  />
-</li>
+<p>To enable STDIO debugging together with the Network Component, it is required to create an image that generates event information. The necessary steps are:</p>
+<ol type="1">
+<li><a class="el" href="network_create_app.html#netDebugConfig">Select Debug mode</a>: in the <code>Net_Config.h</code> enable the <b>Network Debug</b> for the component.</li>
+<li>In the RTE management dialog enable <b>CMSIS-Compiler:CORE</b> and <b>CMSIS-Compiler:STDOUT</b> components and select its <b>ITM</b> variant.</li>
 <li>Configure the <a class="el" href="network_create_app.html#netDebugLevels">Debug Levels</a>.</li>
 <li>Build the application code and download it to the target hardware.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md110"></a>
+<h2><a class="anchor" id="autotoc_md53"></a>
 Module IDs</h2>
-<p>The owner module of the displayed debug message is identified by the message prefix. The following system and application modules are configurable for debugging: </p><table class="markdownTable">
+<p>The owner module of the displayed debug message is identified by the message prefix. The following system and application modules are configurable for debugging:</p>
+<table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">ID   </th><th class="markdownTableHeadNone">Module   </th><th class="markdownTableHeadNone">Description    </th></tr>
 <tr class="markdownTableRowOdd">
@@ -291,7 +293,8 @@ Module IDs</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">SNTP   </td><td class="markdownTableBodyNone">SNTP Client   </td><td class="markdownTableBodyNone">Manages clock synchronization over the network.   </td></tr>
 </table>
-<p>An example of the debug output is: </p><div class="fragment"><div class="line">015.0 ETH:*** Processing frame ***</div>
+<p>An example of the debug output is:</p>
+<div class="fragment"><div class="line">015.0 ETH:*** Processing frame ***</div>
 <div class="line">015.0 ETH: DstMAC 1E-30-6C-A2-45-5E</div>
 <div class="line">015.0 ETH: SrcMAC 00-11-43-A4-FE-40</div>
 <div class="line">015.0 ETH: Proto IP4, 66 bytes</div>
@@ -310,14 +313,15 @@ Module IDs</h2>
 <div class="line">015.0 TCP: SendWin: 8192</div>
 <div class="line">015.0 TCP: RTO=4000ms (sa=0, sv=40)</div>
 <div class="line">015.0 TCP: Next state SYN_REC</div>
-</div><!-- fragment --><p> In the above example, Ethernet, IP and TCP debug messages are enabled:</p><ul>
+</div><!-- fragment --><p>In the above example, Ethernet, IP and TCP debug messages are enabled:</p>
+<ul>
 <li>Received Ethernet packets are processed by the Ethernet layer and a debug message containing Ethernet header information is printed out. Ethernet debug information contains source and destination MAC address, Ethernet frame length and Ethernet protocol type.</li>
 <li>The packet is then passed to the IP layer. IP layer prints out IP debug messages containing the IP header information such as source and destination IP address, frame length, protocol type etc.</li>
 <li>When the IP layer has processed the packet, the packet is passed to the upper TCP layer. TCP layer prints out TCP debug messages containing the TCP header information such as source and destination ports, sequence and acknowledge numbers, checksum value, frame length etc.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd><ul>
-<li>If the debug mode is used on a high traffic LAN, the system might block. Reduce the amount of printed debug messages in <b>Net_Debug.h</b> configuration or disable the debug mode completely.</li>
-<li>Printing debug messages blocks out the system task scheduler during the time when the message is being sent from the serial port. The incoming IP packets accumulate in the memory. This soon causes an <b>out of memory </b>error. Any further incoming packets are lost until some memory is released. </li>
+<li>If the debug mode is used on a high traffic LAN, the system might block. Reduce the amount of printed debug messages in <code>Net_Debug.h</code> configuration or disable the debug mode completely.</li>
+<li>Printing debug messages blocks out the system task scheduler during the time when the message is being sent from the serial port. The incoming IP packets accumulate in the memory. This soon causes an <b>out of memory</b> error. Any further incoming packets are lost until some memory is released. </li>
 </ul>
 </dd></dl>
 </div></div><!-- contents -->

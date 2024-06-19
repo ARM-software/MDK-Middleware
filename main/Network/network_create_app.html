@@ -128,7 +128,8 @@ $(document).ready(function(){initNavTree('network_create_app.html',''); initResi
   <div class="headertitle"><div class="title">Creating a Network Application </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The steps to create a microcontroller application that uses TCP/IP communication are:</p><ol type="1">
+<div class="textblock"><p><a class="anchor" id="md_src_create_network_app"></a> The steps to create a microcontroller application that uses TCP/IP communication are:</p>
+<ol type="1">
 <li>Select <a class="el" href="network_create_app.html#nw_RTE_Software_Component_Selection">RTE Components</a> along with the Network Services that are required for your application.</li>
 <li><a class="el" href="network_create_app.html#nw_Driver_Configuration">Enable the Network Driver and Controller</a> that is integrated in the microcontroller.</li>
 <li>Configure the various <a class="el" href="network_create_app.html#nw_Device_Configuration">Network Components</a>.</li>
@@ -162,7 +163,7 @@ RTE Component Selection</h1>
 </ul>
 </li>
 <li>If you need to <a class="el" href="secure_communication.html">secure the communication</a>, select from the <b>Security</b> Component:<ul>
-<li><b>mbed</b> <b>TLS</b> </li>
+<li><b>mbed TLS</b></li>
 </ul>
 </li>
 </ol>
@@ -172,32 +173,35 @@ RTE Component Selection</h1>
 RTE Component Selection Example</div></div>
 <h1><a class="anchor" id="nw_Driver_Configuration"></a>
 Network Driver and Controller Configuration</h1>
-<p>The Network Device Driver and the Network Controller of the microcontroller need to be correctly configured. This means:</p><ul>
-<li>The <a class="el" href="group__netETH__Func.html">Ethernet interface</a> or <b>UART</b> (for <a class="el" href="group__netSLIP__Func.html">SLIP</a>/<a class="el" href="group__netPPP__Func.html">PPP</a>) is typically configured in the <b>RTE_Device.h</b> configuration file. While this file provides multiple options, it is typically sufficient to enable the Ethernet/UART interface. <b>Note:</b> Some microcontrollers may require settings that are related to a physical layer interface (PHY).</li>
+<p>The Network Device Driver and the Network Controller of the microcontroller need to be correctly configured. This means:</p>
+<ul>
+<li>The <a class="el" href="group__netETH__Func.html">Ethernet interface</a> or <b>UART</b> (for <a class="el" href="group__netSLIP__Func.html">SLIP</a>/<a class="el" href="group__netPPP__Func.html">PPP</a>) is typically configured in the RTE_Device.h configuration file. While this file provides multiple options, it is typically sufficient to enable the Ethernet/UART interface. <b>Note</b>: Some microcontrollers may require settings that are related to a physical layer interface (PHY).</li>
 <li>The Network Controller of the microcontroller typically needs specific clock settings. Consult the user's guide of the microcontroller to understand the requirements. Alternatively, you may copy the setup of an <a class="el" href="nw_examples.html">example project</a> that is provided for various evaluation boards.</li>
 </ul>
 <h1><a class="anchor" id="nw_PHY_Configuration"></a>
 Ethernet PHY Configuration</h1>
-<p>For Ethernet network communication, usually an external Ethernet PHY is required to interface the physical line to the digital MAC of the microcontroller device. The MAC usually contains two buses:</p><ol type="1">
+<p>For Ethernet network communication, usually an external Ethernet PHY is required to interface the physical line to the digital MAC of the microcontroller device. The MAC usually contains two buses:</p>
+<ol type="1">
 <li>Data bus: <a href="https://en.wikipedia.org/wiki/Media-independent_interface" target="_blank">MII, RMII,</a> or Serial Network Interface (SNI)</li>
 <li>Management bus: Serial Management Interface (<b>SMI</b>) (using MDC and MDIO)</li>
 </ol>
 <p>SMI is used to access the PHY’s internal registers to read the state of the link (up/down), duplex mode, speed, and to restart auto-negotiation etc. SMI is a serial bus, which allows to connect up to 32 devices. Devices on the bus are accessed using a 5-bit device address. A default device address is hardware configurable by pin-strapping on the device (some pins are sampled when a reset is asserted or at power-up).</p>
-<p>The device’s internal weak pull-up or pull-down resistors define a default device address. This address can be changed by connecting strong pull-up or pull-down resistors externally. In this case, the <code>ETH_PHY_ADDR</code> in the PHY driver needs to be changed accordingly to be able to control the PHY and to communicate with it. Use the <b>Options for Component</b> dialog to override the default setting for <code>ETH_PHY_ADDR:</code> </p>
+<p>The device’s internal weak pull-up or pull-down resistors define a default device address. This address can be changed by connecting strong pull-up or pull-down resistors externally. In this case, the <code>ETH_PHY_ADDR</code> in the PHY driver needs to be changed accordingly to be able to control the PHY and to communicate with it. Use the <b>Options for Component</b> dialog to override the default setting for <code>ETH_PHY_ADDR</code>:</p>
 <div class="image">
 <img src="eth_phy_config.png" alt=""/>
 </div>
 <h1><a class="anchor" id="nw_Device_Configuration"></a>
 Network Configuration</h1>
 <p>All configuration files for the Network Component are listed in the Project window below the Component Class <b>Network</b>.</p>
-<h2><a class="anchor" id="autotoc_md0"></a>
+<h2><a class="anchor" id="nw_Network_Core"></a>
 Network Core</h2>
 <div class="image">
 <img src="net_config_h.png" alt=""/>
 <div class="caption">
 Net_Config.h Configuration File</div></div>
-<p>The configuration file Network Core <b>Net_Config.h</b> contains the setting for the library version to be used in the application.</p>
-<p>The following <b>Variant</b> options are available:</p><ul>
+<p>The configuration file Network Core <code>Net_Config.h</code> contains the setting for the library version to be used in the application.</p>
+<p>The following <b>Variant</b> options are available:</p>
+<ul>
 <li><b>IPv4 only</b> is a pure IPv4 implementation. This choice saves some system resources if no IPv6 networking is used in the application. <br  />
 </li>
 <li><b>IPv4/IPv6 dual stack</b> implements both IPv4 and IPv6 internet protocols.</li>
@@ -205,25 +209,28 @@ Net_Config.h Configuration File</div></div>
 <p>The <b>Local Host Name</b> specifies a name under which the network device can be accessed on a local area network (<b>LAN</b>). This requires a <a class="el" href="group__using__ethernet__interfaces__conf.html">NetBIOS Name Service</a> to be enabled in the configuration. This name is very useful if you don't know the IP address that has been assigned to your device by the DHCP server.</p>
 <p>The <b>Memory Pool Size</b> specifies the amount of RAM in bytes allocated for the memory pool. The buffers for the network packets are allocated from this memory pool. Usually, the default value of 12000 bytes is sufficient.</p>
 <p>Many <a class="el" href="group__netServices.html">Network Services</a> are started by the Network Core automatically. If you disable <b>Start System Services</b>, you need to enable/start them at runtime using the dedicated functions for that.</p>
-<p>To change the default OS resource settings for the Network Core, use <b>Core Thread Stack Size</b>. The default value is 2048 bytes. The default Core Thread priority is <b>osPriorityNormal</b>. You can change this priority by changing the <b>NET_THREAD_PRIORITY</b> defined in this configuration file. This priority must be lower than the priorities of the network interface threads.</p>
-<h2><a class="anchor" id="autotoc_md1"></a>
+<p>To change the default OS resource settings for the Network Core, use <b>Core Thread Stack Size</b>. The default value is 2048 bytes. The default Core Thread priority is <b>osPriorityNormal</b>. You can change this priority by changing the <code>NET_THREAD_PRIORITY</code> defined in this configuration file. This priority must be lower than the priorities of the network interface threads.</p>
+<h2><a class="anchor" id="nw_Network_Interface"></a>
 Network Interface</h2>
-<p>The Network Interface configuration files <b>Net_Config_<em>Interface</em>_<em>n</em>.h</b> contain general IP address and other settings. You also need to specify the hardware driver number that is to be used with the network interface. In case of Ethernet for example, this is usually 0. If you are using a SLIP or PPP over a serial connection, you need to specify the hardware driver number of the exact UART you wish to use. All settings for the different interfaces are described here:</p><ul>
+<p>The Network Interface configuration files <b>Net_Config_Interface_n.h</b> contain general IP address and other settings. You also need to specify the hardware driver number that is to be used with the network interface. In case of Ethernet for example, this is usually 0. If you are using a SLIP or PPP over a serial connection, you need to specify the hardware driver number of the exact UART you wish to use. All settings for the different interfaces are described here:</p>
+<ul>
 <li><a class="el" href="group__using__ethernet__interfaces__conf.html">Net_Config_ETH_0.h</a></li>
 <li><a class="el" href="group__using__wifi__interfaces__conf.html">Net_Config_WiFi_0.h</a></li>
 <li><a class="el" href="group__using__ppp__interfaces__conf.html">Net_Config_PPP.h</a></li>
 <li><a class="el" href="group__using__slip__interfaces__conf.html">Net_Config_SLIP.h</a></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2"></a>
+<h2><a class="anchor" id="nw_Network_Socket"></a>
 Network Socket</h2>
-<p>Usually, the needs of most applications are served by using the default settings for the sockets. Of course, there are configuration files for all three socket types that are specified in</p><ul>
+<p>Usually, the needs of most applications are served by using the default settings for the sockets. Of course, there are configuration files for all three socket types that are specified in</p>
+<ul>
 <li><a class="el" href="group__using__network__sockets__bsd__conf.html">Net_Config_BSD.h</a></li>
 <li><a class="el" href="group__using__network__sockets__tcp__conf.html">Net_Config_TCP.h</a></li>
 <li><a class="el" href="group__using__network__sockets__udp__conf.html">Net_Config_UDP.h</a></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3"></a>
+<h2><a class="anchor" id="nw_Network_Service"></a>
 Network Service</h2>
-<p>The configuration files for all the Network Services are explained in the respective section:</p><ul>
+<p>The configuration files for all the Network Services are explained in the respective section:</p>
+<ul>
 <li><a class="el" href="group__ws__configuration.html">Net_Config_HTTP_Server.h</a></li>
 <li><a class="el" href="group__using__ftp__server__conf.html">Net_Config_FTP_Server.h</a></li>
 <li><a class="el" href="group__using__ftpc__conf.html">Net_Config_FTP_Client.h</a></li>
@@ -237,11 +244,12 @@ Network Service</h2>
 </ul>
 <h1><a class="anchor" id="nw_security_config"></a>
 Security Configuration</h1>
-<p>The <b>mbed</b> <b>TLS</b> component provides an API for <a class="el" href="secure_communication.html">secure communication</a>. When selecting this software component, the <b>mbedTLS_config.h</b> configuration file is added to the project. The proper usage of this file is out of the scope of this document. For further information, check the online documentation of  <script>link_ext('mbedTLS');</script>.</p>
+<p>The mbed TLS component provides an API for <a class="el" href="secure_communication.html">secure communication</a>. When selecting this software component, the mbedTLS_config.h configuration file is added to the project. The proper usage of this file is out of the scope of this document. For further information, check the online documentation of  <script>link_ext('mbedTLS');</script>.</p>
 <h1><a class="anchor" id="nw_system_resources"></a>
 System Resource Configuration</h1>
-<p>For proper operation, the Network Component requires some system configuration settings. The requirements are:</p><ul>
-<li>Additional <b>stack</b> size of <b>512 bytes</b>. This can be configured in the device's <b>startup_device.s</b> file (<code>Stack_Size</code>).</li>
+<p>For proper operation, the Network Component requires some system configuration settings. The requirements are:</p>
+<ul>
+<li>Additional <b>stack size</b> of <b>512 bytes</b>. This can be configured in the device's <code>startup_device.s</code> file (<code>Stack_Size</code>).</li>
 <li>Additional two <b>threads</b> when Ethernet Interface is enabled (<code>netCore_Thread</code> and <code>netETH_Thread</code>).<ul>
 <li>If you use <b>RTX v5</b>, you do not need to change the <b>RTX settings</b>, because all resources are statically allocated.</li>
 </ul>
@@ -253,7 +261,7 @@ User Code Implementation</h1>
 <p>Before using the networking communications, the Network Core must be initialized with the function <a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a>. The function initializes the Network system resources and creates threads and other RTOS objects. The initialization is usually executed from the <b>app_main</b> thread.</p>
 <p>The initialization process is different depending on which network interface is used:</p>
 <ul>
-<li><b>Ethernet</b> <b>interface</b> <div class="fragment"><div class="line">__NO_RETURN <span class="keywordtype">void</span> app_main_thread (<span class="keywordtype">void</span> *argument) {</div>
+<li><b>Ethernet interface</b> <div class="fragment"><div class="line">__NO_RETURN <span class="keywordtype">void</span> app_main_thread (<span class="keywordtype">void</span> *argument) {</div>
 <div class="line">  (void)argument;</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_function" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
@@ -261,7 +269,7 @@ User Code Implementation</h1>
 <div class="line">  osThreadExit();</div>
 <div class="line">}</div>
 </div><!-- fragment --></li>
-<li><b>WiFi</b> <b>interface</b> <div class="fragment"><div class="line">__NO_RETURN <span class="keywordtype">void</span> app_main_thread (<span class="keywordtype">void</span> *argument) {</div>
+<li><b>WiFi interface</b> <div class="fragment"><div class="line">__NO_RETURN <span class="keywordtype">void</span> app_main_thread (<span class="keywordtype">void</span> *argument) {</div>
 <div class="line">  <a class="code hl_struct" href="group__Wifi__structs.html#structNET__WIFI__CONFIG" title="WiFi Configuration.">NET_WIFI_CONFIG</a> wifi_config;</div>
 <div class="line">  (void)argument;</div>
 <div class="line"> </div>
@@ -280,7 +288,7 @@ User Code Implementation</h1>
 <div class="line">  osThreadExit();</div>
 <div class="line">}</div>
 </div><!-- fragment --></li>
-<li><b>PPP</b> <b>interface</b> <div class="fragment"><div class="line">__NO_RETURN <span class="keywordtype">void</span> app_main_thread (<span class="keywordtype">void</span> *argument) {</div>
+<li><b>PPP interface</b> <div class="fragment"><div class="line">__NO_RETURN <span class="keywordtype">void</span> app_main_thread (<span class="keywordtype">void</span> *argument) {</div>
 <div class="line">  (void)argument;</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_function" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
@@ -292,10 +300,11 @@ User Code Implementation</h1>
 <div class="line">}</div>
 </div><!-- fragment --></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<h2><a class="anchor" id="autotoc_md0"></a>
 User Code Templates</h2>
 <p> <script>link_ext('uv4_ca_sourcefiles');</script> files provide access to all functions that are required to communicate over the Network. The available functions are explained in the <a href="./modules.html" class="el">Reference</a> section of the Network Component. These routines can be adapted to the needs of the microcontroller application, in case more functionality is needed.</p>
-<p>The following templates are available for the Network component: </p><table class="markdownTable">
+<p>The following templates are available for the Network component:</p>
+<table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Template Name   </th><th class="markdownTableHeadNone">User Functions    </th></tr>
 <tr class="markdownTableRowOdd">
@@ -341,15 +350,15 @@ User Code Templates</h2>
 Debugging</h1>
 <p>Network Component can be easily configured to generate debug events and provide dynamic visibility to the component operation.</p>
 <p>Network supports event annotations for the  <script>link_ext('Event-Recorder-About');</script> and makes it very easy to analyze the internal operation of the Network Component during application debugging. The old <a class="el" href="network_diffs.html#netDebugStdio">STDIO</a> debug, which outputs event information as ASCII messages on the standard output device, is also supported.</p>
-<p><a class="anchor" id="netDebugConfig"></a></p>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<h2><a class="anchor" id="netDebugConfig"></a>
 Debug Configuration</h2>
-<p>The Network Component debug is configured using the <b>Net_Debug.h</b> file. The options are set in the file directly or using the <a href="https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard" class="el" target="_blank">Configuration Wizard</a>.</p>
+<p>The Network Component debug is configured using the <code>Net_Debug.h</code> file. The options are set in the file directly or using the <a href="https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard" class="el" target="_blank">Configuration Wizard</a>.</p>
 <div class="image">
 <img src="net_debug_h.png" alt=""/>
 <div class="caption">
 Net_Debug.h Configuration File</div></div>
-<p>The following settings are available:</p><ul>
+<p>The following settings are available:</p>
+<ul>
 <li><b>Network Debug</b> enables or disables the debug mode.</li>
 <li><b>Output Channel</b> selects where the diagnostic messages are to be sent:<ul>
 <li> <script>link_ext('Event-Recorder-About');</script> outputs event messages to event recorder.</li>
@@ -358,17 +367,18 @@ Net_Debug.h Configuration File</div></div>
 </ul>
 </li>
 </ul>
-<p>The debugging configuration settings are divided into groups that can be activated separately:</p><ul>
+<p>The debugging configuration settings are divided into groups that can be activated separately:</p>
+<ul>
 <li><b>System</b> enables memory allocation and interface diagnostics.</li>
 <li><b>IPv4</b> enables IP version 4 network layer diagnostics.</li>
 <li><b>IPv6</b> enables IP version 6 network layer diagnostics.</li>
 <li><b>Socket</b> enables socket layer diagnostics.</li>
 <li><b>Service</b> enables service layer diagnostics.</li>
 </ul>
-<p><a class="anchor" id="netDebugLevels"></a></p>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="netDebugLevels"></a>
 Debug Levels</h2>
-<p>The system is made up of several modules that output diagnostic messages. It is possible to configure the debug output for each module separately. The <b>Debug level</b> for each module defines what kind of debug messages are printed: </p><table class="markdownTable">
+<p>The system is made up of several modules that output diagnostic messages. It is possible to configure the debug output for each module separately. The <b>Debug level</b> for each module defines what kind of debug messages are printed:</p>
+<table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Level   </th><th class="markdownTableHeadNone">Description    </th></tr>
 <tr class="markdownTableRowOdd">
@@ -381,8 +391,9 @@ Debug Levels</h2>
 <h2><a class="anchor" id="netEvrSupport"></a>
 Event Recorder Support</h2>
 <p> <script>link_ext('Event-Recorder-About');</script> is a powerful tool that provides visibility to the dynamic execution of the program. The Network Component generates a broad set of <a class="el" href="group__net__evr.html">Debug Events</a> for the Event Recorder and implements required infrastructure to interface with it.</p>
-<p>To use the Event Recorder together with Network Component, it is required to create an image with event generation support. The necessary steps are:</p><ol type="1">
-<li><a class="el" href="network_create_app.html#netDebugConfig">Select Debug mode</a>: in the <b>Net_Config.h</b> enable the <b>Network Debug</b> for the component.</li>
+<p>To use the Event Recorder together with Network Component, it is required to create an image with event generation support. The necessary steps are:</p>
+<ol type="1">
+<li><a class="el" href="network_create_app.html#netDebugConfig">Select Debug mode</a>: in the <code>Net_Config.h</code> enable the <b>Network Debug</b> for the component.</li>
 <li> <script>link_ext('Event-Recorder-Enable');</script>: in the RTE management dialog enable the software component <b>CMSIS-View:Event Recorder</b>.</li>
 <li> <script>link_ext('Event-Recorder-Initialize');</script>: in the application code, call the function <b>EventRecorderInitialize</b>. <br  />
 </li>
@@ -390,11 +401,11 @@ Event Recorder Support</h2>
 <li>Build the application code, download it to the target hardware and start debug session.</li>
 </ol>
 <p>Now, when the network services generate event information, it can be viewed in the  <script>link_ext('uv4-Event-Recorder');</script>.</p>
-<h2><a class="anchor" id="autotoc_md7"></a>
-Event filtering</h2>
+<h3><a class="anchor" id="autotoc_md1"></a>
+Event filtering</h3>
 <p>The Network debug variant generates lots of debug events. This might have an impact on the operation of the Network library. It is a good idea to disable debug for modules, which are not used, or at least to reduce the number of messages, that are generated. Therefore, enable <b>Error</b> events for such modules and enable <b>All</b> debug events only for the modules you are focused on.</p>
-<h2><a class="anchor" id="autotoc_md8"></a>
-Event IDs</h2>
+<h3><a class="anchor" id="autotoc_md2"></a>
+Event IDs</h3>
 <p>The network component uses the following event IDs:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -465,17 +476,19 @@ Event IDs</h2>
 <h1><a class="anchor" id="nw_runtime_config"></a>
 Runtime Configuration</h1>
 <p>It is often necessary to change the parameters and mode of operation of the network interface at startup or runtime. System control functions allow reading and changing the settings of the network interface and the system (for example the <a href="https://en.wikipedia.org/wiki/Hostname" target="_blank">hostname</a>).</p>
-<p>This is required for using the same application code for serial production of embedded devices. The <b>runtime</b> <b>configuration</b> feature enables reading of configuration parameters from an EEPROM or SD Card and configuring the network interface for each embedded device differently.</p>
-<p>To control the network interface options, you can use:</p><ul>
+<p>This is required for using the same application code for serial production of embedded devices. The <b>runtime configuration</b> feature enables reading of configuration parameters from an EEPROM or SD Card and configuring the network interface for each embedded device differently.</p>
+<p>To control the network interface options, you can use:</p>
+<ul>
 <li><a class="el" href="group__common__user__api.html#gadbf28bb56266770f9b1d276c48c13d36">netIF_GetOption</a> function to retrieve the options</li>
 <li><a class="el" href="group__common__user__api.html#ga919bfb395143e0bc1775106080c61eb6">netIF_SetOption</a> function to set the options</li>
 <li><a class="el" href="group__common__user__api.html#ga7e16ce8f65945bfc49bee15172d6ad41">netIF_SetDefault</a> function to set default interface for internet access</li>
 </ul>
 <p>The options which can be changed are defined in the <a class="el" href="group__netInterfaces__Enums.html#ga2e0460c920b348a8633c2e54ceecbed5">netIF_Option</a> enumerator. However, some interfaces do not support the complete set of available options. For example, the PPP interface does not have a MAC address. If you try to modify an unsupported option, an error is returned.</p>
 <p>The <a href="https://en.wikipedia.org/wiki/Localhost" target="_blank">localhost</a> name is used to access the embedded system without knowledge of its IP address. <a class="el" href="group__netSys__Func.html#ga6eda1bb2895a98252a851160c15111a5">netSYS_GetHostName</a> is used to retrieve the localhost name, whereas <a class="el" href="group__netSys__Func.html#ga141ae4581698cb95e5fc5c8458fa9710">netSYS_SetHostName</a> changes the localhost name.</p>
-<p>The <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol" target="_blank">DHCP</a> client can be disabled or enabled at runtime. When disabled, the user provided network parameters defined in the <b>Net_Config_ETH_0.h</b> or <b>Net_Config_WiFi_0.h</b> configuration files are used. Switch the state of the DHCP client using <a class="el" href="group__common__user__api.html#gad8ddb783cbb076297f64c3aa13a7d930">netDHCP_Disable</a> and <a class="el" href="group__common__user__api.html#gace7634f951ec523cccc505b5d2ffd5a7">netDHCP_Enable</a>.</p>
-<dl class="section note"><dt>Note</dt><dd>Each embedded Ethernet device must have a unique <b>MAC</b> <b>address</b>, <b>IP</b> <b>address</b>, and <b>hostname</b>. This is very important when multiple devices are connected to the same LAN. Otherwise, the system might not work (due to collisions or disturbed network communications).</dd></dl>
-<p><b>Code</b> <b>Example</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="rl__net_8h.html">rl_net.h</a>&quot;</span></div>
+<p>The <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol" target="_blank">DHCP</a> client can be disabled or enabled at runtime. When disabled, the user provided network parameters defined in the <code>Net_Config_ETH_0.h</code> or <code>Net_Config_WiFi_0.h</code> configuration files are used. Switch the state of the DHCP client using <a class="el" href="group__common__user__api.html#gad8ddb783cbb076297f64c3aa13a7d930">netDHCP_Disable</a> and <a class="el" href="group__common__user__api.html#gace7634f951ec523cccc505b5d2ffd5a7">netDHCP_Enable</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>Each embedded Ethernet device must have a unique <b>MAC address</b>, <b>IP address</b>, and <b>hostname</b>. This is very important when multiple devices are connected to the same LAN. Otherwise, the system might not work (due to collisions or disturbed network communications).</dd></dl>
+<p><b>Code Example</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="rl__net_8h.html">rl_net.h</a>&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* The following values are read from EEPROM */</span></div>
 <div class="line"><span class="keyword">const</span> <span class="keywordtype">char</span> mac_addr[]  = { <span class="stringliteral">&quot;00-01-02-32-3c-46&quot;</span> };</div>

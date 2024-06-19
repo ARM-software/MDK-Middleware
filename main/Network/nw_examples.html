@@ -128,19 +128,364 @@ $(document).ready(function(){initNavTree('nw_examples.html',''); initResizable()
   <div class="headertitle"><div class="title">Network Examples </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Many networking applications can be built with the Network Middleware Component. The following examples demonstrate the usage of the most popular services in the component.</p><ul>
-<li>The <a class="el" href="Compact_Web_Server_Example.html">HTTP Server</a> example shows the basic functionality of an embedded web server. It also contains information on the usage of the <a class="el" href="group__ws__script__langugage.html">Common Gateway Interface (CGI)</a> interface for web page interaction with the underlying hardware.</li>
-<li>The <a class="el" href="Compact_Secure_Web_Server_Example.html">HTTPS Server</a> example shows the basic functionality of a secure web server using the mbed TLS software component.</li>
-<li>The <a class="el" href="HTTP_Upload_Example.html">HTTP Upload</a> example demonstrates how to access the SD card on a development board via a web interface.</li>
-<li>In the <a class="el" href="FTP_Server_Example.html">FTP Server</a> example you will learn to use a FTP server for file manipulation.</li>
-<li>The <a class="el" href="Telnet_Example.html">Telnet Server</a> example gives an example how to use Telnet to implement a <a class="el" href="group__telnet__user__notification.html">User Callbacks</a> for communication with your device.</li>
-<li>Sending dynamic e-mail messages to a predefined email address is explained in the <a class="el" href="SMTP_Client_Example.html">SMTP Client</a> example.</li>
-<li>The <a class="el" href="SNMP_Agent_Example.html">SNMP Agent</a> example shows you how to use the Simple Network Management Protocol to control an embedded system.</li>
-<li>The <a class="el" href="BSD_Examples.html">BSD Client/Server</a> example shows you how to use BSD sockets for network communication.</li>
+<div class="textblock"><p><a class="anchor" id="md_src_network_examples"></a> Many networking applications can be built with the Network Middleware Component. The following examples demonstrate the usage of the most popular services in the component.</p>
+<ul>
+<li>The <a class="el" href="nw_examples.html#Compact_Web_Server_Example">HTTP Server</a> example shows the basic functionality of an embedded web server. It also contains information on the usage of the <a class="el" href="group__ws__script__langugage.html">Common Gateway Interface (CGI)</a> interface for web page interaction with the underlying hardware.</li>
+<li>The <a class="el" href="nw_examples.html#Compact_Secure_Web_Server_Example">HTTPS Server</a> example shows the basic functionality of a secure web server using the mbed TLS software component.</li>
+<li>The <a class="el" href="nw_examples.html#HTTP_Upload_Example">HTTP Upload</a> example demonstrates how to access the SD card on a development board via a web interface.</li>
+<li>In the <a class="el" href="nw_examples.html#FTP_Server_Example">FTP Server</a> example you will learn to use a FTP server for file manipulation.</li>
+<li>The <a class="el" href="nw_examples.html#Telnet_Example">Telnet Server</a> example gives an example how to use Telnet to implement a <a class="el" href="group__telnet__user__notification.html">User Callbacks</a> for communication with your device.</li>
+<li>Sending dynamic e-mail messages to a predefined email address is explained in the <a class="el" href="nw_examples.html#SMTP_Client_Example">SMTP Client</a> example.</li>
+<li>The <a class="el" href="nw_examples.html#SNMP_Agent_Example">SNMP Agent</a> example shows you how to use the Simple Network Management Protocol to control an embedded system.</li>
+<li>The <a class="el" href="nw_examples.html#BSD_Examples">BSD Client/Server</a> example shows you how to use BSD sockets for network communication.</li>
 </ul>
 <p>Download these examples using the  <script>link_ext('uv4_ca_packinstaller');</script>, select the related <b>Board</b> and <b>Copy</b> the example to your working directory.</p>
-<dl class="section note"><dt>Note</dt><dd>Depending on your target device or development board, you may not see all of these examples in Pack Installer. </dd></dl>
-</div></div><!-- contents -->
+<dl class="section note"><dt>Note</dt><dd>Depending on your target device or development board, you may not see all of these examples in Pack Installer.</dd></dl>
+<h1><a class="anchor" id="Compact_Web_Server_Example"></a>
+HTTP Server</h1>
+<p>The HTTP Server example uses a fixed set of web pages stored in ROM, but is capable of exchanging information with the underlying hardware by using the CGI interface. The following picture shows an exemplary connection of the development board and a Computer.</p>
+<div class="image">
+<img src="cws_setup.png" alt=""/>
+</div>
+<p>The Abstract.txt file contained in the Documentation group of the Project window gives you more information on the general setup and the available I/O of the development board.</p>
+<h2><a class="anchor" id="autotoc_md9"></a>
+Build the "HTTP Server" Project</h2>
+<p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
+<div class="image">
+<img src="cws_proj_structure.png" alt=""/>
+<div class="caption">
+Compact Web Server Project Structure</div></div>
+<h3><a class="anchor" id="autotoc_md10"></a>
+Source Files</h3>
+<ul>
+<li><code>HTTP_Server.c</code> contains the main C function that initializes the board hardware and the Network Component.</li>
+<li>The <b>HTTP_Server_CGI.c</b> defines the functions for the scripting language for communication with the hardware.</li>
+<li><code>Web.c</code> is a compiled file that will be generated by the  <script>link_ext('uv4_ut_fcarmuv');</script> tool from all the web input files.</li>
+<li>The <b>Web files</b> group contains all the HTML and CGI files that will be compiled into the Web.c` file. The files in this group determine the actual layout of the web page and the behaviour of the different refs using CGI.</li>
+<li>A <code>HTTP_Server_Multiuser.c</code> file can be added using the  <script>link_ext('uv4_ca_sourcefiles');</script> feature. This file is used for specifying multiple users and access rights for these users.</li>
+<li>Adding the <code>HTTP_Server_Access.c</code> file enables the server to accept or block connection requests from certain remote clients.</li>
+<li>The user code template file <code>HTTP_Server_Error.c</code> contains the information that the web server is showing in case of errors (such as Error 404).</li>
+</ul>
+<p>You may now build and download the example project to the evaluation board using the µVision commands:</p>
+<ul>
+<li><b>Project</b> - <b>Build</b> target</li>
+<li><b>Flash</b> - <b>Download</b></li>
+</ul>
+<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information. If you want to know how the file converter works that is required to compile the web pages into a single C file, please visit the  <script>link_ext('uv4_ut_fcarmuv');</script> page.</p>
+<dl class="section note"><dt>Note</dt><dd>MDK Middleware 7.1.0 and above offers security extensions that can be used to convert the HTTP into a HTTPS server. Follow the instructions as described on page <a class="el" href="secure_communication.html#add_ssl_to_http">Converting the HTTP server to HTTPS</a>.</dd></dl>
+<h2><a class="anchor" id="autotoc_md11"></a>
+Using the "HTTP Server" Project</h2>
+<h3><a class="anchor" id="autotoc_md12"></a>
+Hardware Setup</h3>
+<p>The setup of the Evaluation Board hardware is described in the <code>Abstract.txt</code> file.</p>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already in this LAN.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md13"></a>
+PC Software</h3>
+<p>The web server can be tested on any PC using any browser available. Simply, type in the <b>Local Host Name</b> that is defined in the <code>Net_Config.h</code> file. The default name is <b>my_host</b>. If you have a DCHP server in your network, you will be automatically connected. You need to log in. As for all network examples, use "admin" (without the quotes) for the user and no password (you can change the defaults in the <code>Net_Config_HTTP_Server.h</code> file). The following (or a similar) page will come up in your browser:</p>
+<div class="image">
+<img src="cws_frontpage.png" alt=""/>
+</div>
+<p>If you get an error message, please verify that all network, IP and other settings are correct.</p>
+<h1><a class="anchor" id="Compact_Secure_Web_Server_Example"></a>
+HTTPS Server</h1>
+<p>The HTTPS Server example uses a fixed set of web pages stored in ROM, but is capable of exchanging information with the underlying hardware by using the CGI interface. The HTTPS server uses the ARM mbed TLS software component to enable <a class="el" href="secure_communication.html">Secure Communication</a>. The following picture shows an exemplary connection of the development board and a Computer.</p>
+<div class="image">
+<img src="cws_setup.png" alt=""/>
+</div>
+<p>The Abstract.txt file contained in the Documentation group of the Project window gives you more information on the general setup and the available I/O of the development board.</p>
+<h2><a class="anchor" id="autotoc_md14"></a>
+Build the "HTTPs Server" Project</h2>
+<p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
+<div class="image">
+<img src="cws_proj_structure.png" alt=""/>
+<div class="caption">
+Compact Secure Web Server Project Structure</div></div>
+<h3><a class="anchor" id="autotoc_md15"></a>
+Source Files</h3>
+<ul>
+<li><code>HTTP_Server.c</code> contains the main C function that initializes the board hardware and the Network Component.</li>
+<li>The <b>HTTP_Server_CGI.c</b> defines the functions for the scripting language for communication with the hardware.</li>
+<li><code>Web.c</code> is a compiled file that will be generated by the  <script>link_ext('uv4_ut_fcarmuv');</script> tool from all the web input files.</li>
+<li>The <b>Web files</b> group contains all the HTML and CGI files that will be compiled into the Web.c` file. The files in this group determine the actual layout of the web page and the behavior of the different refs using CGI.</li>
+<li>A <code>HTTP_Server_Multiuser.c</code> file can be added using the  <script>link_ext('uv4_ca_sourcefiles');</script> feature. This file is used for specifying multiple users and access rights for these users.</li>
+<li>Adding the <code>HTTP_Server_Access.c</code> file enables the server to accept or block connection requests from certain remote clients.</li>
+<li>The user code template file <code>HTTP_Server_Error.c</code> contains the information that the web server is showing in case of errors (such as Error 404).</li>
+<li>The file <code>Net_Security.c</code> in the <b>Network</b> group contains the certificate for secure communication. If you want to change the default certificate, refer to <a class="el" href="secure_communication.html#cert_creation">Creating your own certificates and keys</a>.</li>
+</ul>
+<p>You may now build and download the example project to the evaluation board using the µVision commands:</p><ul>
+<li><b>Project</b> - <b>Build</b> target</li>
+<li><b>Flash</b> - <b>Download</b></li>
+</ul>
+<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information. If you want to know how the file converter works that is required to compile the web pages into a single C file, please visit the  <script>link_ext('uv4_ut_fcarmuv');</script> page.</p>
+<h2><a class="anchor" id="autotoc_md16"></a>
+Using the "HTTPS Server" Project</h2>
+<h3><a class="anchor" id="autotoc_md17"></a>
+Hardware Setup</h3>
+<p>The setup of the Evaluation Board hardware is described in the <code>Abstract.txt</code> file.</p>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already in this LAN.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md18"></a>
+PC Software</h3>
+<p>The web server can be tested on any PC using any browser available. Simply, type in the <b>Local Host Name</b> that is defined in the <code>Net_Config.h</code> file. The default name is <b>my_host</b>. If you have a DCHP server in your network, you will be automatically connected. You need to log in. As for all network examples, use "admin" (without the quotes) for the user and no password (you can change the defaults in the <code>Net_Config_HTTP_Server.h</code> file). The following (or a similar) page will come up in your browser:</p>
+<div class="image">
+<img src="cws_frontpage.png" alt=""/>
+</div>
+<p>If you get an error message, please verify that all network, IP and other settings are correct.</p>
+<h1><a class="anchor" id="HTTP_Upload_Example"></a>
+HTTP Upload</h1>
+<p>The HTTP Upload example gives a web based interface to the SD card that is attached to a development board. The user is able to list the contents of the memory card and to upload files to it. The following picture shows an exemplary connection of the development board and a Computer.</p>
+<div class="image">
+<img src="http_upload_setup.png" alt=""/>
+</div>
+<p>The Abstract.txt file contained in the Documentation group of the Project window gives you more information on the general setup and the available I/O of the development board.</p>
+<h2><a class="anchor" id="autotoc_md19"></a>
+Build the "HTTP Upload" Project</h2>
+<p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
+<div class="image">
+<img src="http_upload_proj_structure.png" alt=""/>
+<div class="caption">
+HTTP Upload Project Structure</div></div>
+<h3><a class="anchor" id="autotoc_md20"></a>
+Source Files</h3>
+<ul>
+<li><code>HTTP_Upload.c</code> contains the main C function that initializes the board hardware and the Network Component.</li>
+<li>The <b>HTTP_Server_CGI.c</b> defines the functions for the scripting language for communication with the hardware.</li>
+<li><code>Web.c</code> is a compiled file that will be generated by the  <script>link_ext('uv4_ut_fcarmuv');</script> tool from all the web input files.</li>
+<li>The <b>Web files</b> group contains all the HTML and CGI files that will be compiled into the Web.c` file. The files in this group determine the actual layout of the web page and the behaviour of the different refs using CGI.</li>
+</ul>
+<p>You may now build and download the example project to the evaluation board using the µVision commands:</p>
+<ul>
+<li><b>Project</b> - <b>Build</b> target</li>
+<li><b>Flash</b> - <b>Download</b></li>
+</ul>
+<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
+<h2><a class="anchor" id="autotoc_md21"></a>
+Using the "HTTP Upload" Project</h2>
+<h3><a class="anchor" id="autotoc_md22"></a>
+Hardware Setup</h3>
+<p>The setup of the Evaluation Board hardware is described in the <code>Abstract.txt</code> file.</p>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already in this LAN.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md23"></a>
+PC Software</h3>
+<p>The web server can be tested on any PC using any browser available. Simply, type in the <b>Local Host Name</b> that is defined in the <code>Net_Config.h</code> file. If you have a DCHP server in your network, you will be automatically connected. You need to log in. As for all network examples, use "admin" (without the quotes) for the user and no password (you can change the defaults in the <code>Net_Config_HTTP_Server.h</code> file). The following (or a similar) page will come up in your browser:</p>
+<div class="image">
+<img src="http_upload_frontpage.png" alt=""/>
+</div>
+<p>If you get an error message, please verify that all network, IP and other settings are correct.</p>
+<h1><a class="anchor" id="FTP_Server_Example"></a>
+FTP Server</h1>
+<p>This tutorial creates a FTP server that allows you to manage files from any machine using a FTP client. The following picture shows an exemplary connection of the development board and a Computer.</p>
+<div class="image">
+<img src="ftp_setup.png" alt=""/>
+</div>
+<h2><a class="anchor" id="autotoc_md24"></a>
+Build the "FTP Server" Project</h2>
+<p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
+<div class="image">
+<img src="ftp_proj_structure.png" alt=""/>
+<div class="caption">
+FTP Server Project Structure</div></div>
+<h3><a class="anchor" id="autotoc_md25"></a>
+Source Files</h3>
+<ul>
+<li><code>FTP_Server.c</code> contains the main C function that initializes the board hardware and the Network Component.</li>
+<li>A <code>FTP_Server_Multiuser.c</code> file can be added using the  <script>link_ext('uv4_ca_sourcefiles');</script> feature. This file is used for specifying multiple users and access rights for these users.</li>
+<li>Adding the <code>FTP_Server_Access.c</code> file enables the server to accept or block connection requests from certain remote clients.</li>
+<li>The user code template file <code>FTP_Server_Event.c</code> contains a routine that notifies the user application about certain events happening on the FTP server (such as file/directory manipulation events).</li>
+</ul>
+<p>You may now build and download the example project to the evaluation board using the µVision commands:</p>
+<ul>
+<li><b>Project</b> - <b>Build</b> target</li>
+<li><b>Flash</b> - <b>Download</b></li>
+</ul>
+<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
+<h2><a class="anchor" id="autotoc_md26"></a>
+Using the "FTP Server" Project</h2>
+<h3><a class="anchor" id="autotoc_md27"></a>
+Hardware Setup</h3>
+<p>The setup of the Evaluation Board hardware is described in the <code>Abstract.txt</code> file.</p>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already a member of this LAN.</li>
+<li>If your hardware supports it, insert a SD card into the SD card slot. This will be the data storage that you will have access to. Hardware that does not have a SD card interface will most probably use a RAM disk for FTP demonstration.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md28"></a>
+PC Software</h3>
+<p>To connect to the FTP server, all you need is a FTP client. On a Windows PC you can use the Command Prompt. Simply type <code>ftp my_host</code> (or the respective hostname that you have chosen in the <code>Net_Config.h</code> file). If you have a DCHP server in your network, it will automatically connect to the FTP server. You will be asked for a username and password combination. As for all network examples, this is "admin" (without the quotes) for the user and no password (you can change the defaults in the <code>Net_Config_FTP_Server.h</code> file). After a successful log in, you should see something like this:</p>
+<div class="image">
+<img src="ftp_server.png" alt=""/>
+</div>
+<h1><a class="anchor" id="Telnet_Example"></a>
+Telnet Server</h1>
+<p>Often, it is necessary to have a <b>Command Line Interface (CLI)</b> for interaction with the device. This example shows how to use the Telnet server for this purpose. The following picture shows an exemplary connection of the development board and a Computer.</p>
+<div class="image">
+<img src="telnet_setup.png" alt=""/>
+</div>
+<h2><a class="anchor" id="autotoc_md29"></a>
+Build the "Telnet" Project</h2>
+<p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
+<div class="image">
+<img src="telnet_proj_structure.png" alt=""/>
+<div class="caption">
+Telnet Client Project Structure</div></div>
+<h3><a class="anchor" id="autotoc_md30"></a>
+Source Files</h3>
+<ul>
+<li><code>Telnet_Server.c</code> contains the main C function that initializes the board hardware and the Network Component.</li>
+<li>The <b>Telnet_Server_UIF.c</b> defines the functions for the user interface and all the available CLI commands.</li>
+<li>A <code>Telnet_Server_Multiuser.c</code> file can be added using the  <script>link_ext('uv4_ca_sourcefiles');</script> feature. This file is used for specifying multiple users and access rights for these users.</li>
+<li>Adding the <code>Telnet_Server_Access.c</code> file enables the server to accept or block connection requests from certain remote clients.</li>
+</ul>
+<p>You may now build and download the example project to the evaluation board using the µVision commands:</p>
+<ul>
+<li><b>Project</b> - <b>Build</b> target</li>
+<li><b>Flash</b> - <b>Download</b></li>
+</ul>
+<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
+<h2><a class="anchor" id="autotoc_md31"></a>
+Using the "Telnet" Project</h2>
+<h3><a class="anchor" id="autotoc_md32"></a>
+Hardware Setup</h3>
+<p>The setup of the Evaluation Board hardware is described in the <code>Abstract.txt</code> file.</p>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already a member of this LAN.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md33"></a>
+PC Software</h3>
+<p>For opening a Telnet session, you need a Telnet client. As this is not an integral part of Windows any more, please look for an alternative on the Internet. PuTTY has a good feature set and is easy to install and use. When you connect to your board using a Telnet client, please enter <code>my_host</code> (or the respective hostname that you have chosen in the <code>Net_Config.h</code> file) in the hostname field and use the standard Telnet port 23. You will be asked for log-in credentials. Like for all other tutorials, the default is <code>admin</code> for the username without any password (you can change the defaults in the <code>Net_Config_Telnet_Server.h</code> file). Using the <code>help</code> command, you can see the list of available CLI commands:</p>
+<div class="image">
+<img src="telnet_cli.png" alt=""/>
+<div class="caption">
+Telnet Command Line Interface</div></div>
+<h1><a class="anchor" id="SMTP_Client_Example"></a>
+SMTP Client</h1>
+<p>SMTP is used for sending e-mail notifications from an embedded system to various recipients. This example shows how to setup a SMTP client for this purpose. The following picture shows an exemplary connection of the development board and a Computer.</p>
+<div class="image">
+<img src="smtp_setup.png" alt=""/>
+</div>
+<h2><a class="anchor" id="autotoc_md34"></a>
+Build the "SMTP Client" Project</h2>
+<p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
+<div class="image">
+<img src="smtp_proj_structure.png" alt=""/>
+<div class="caption">
+SMTP Client Project Structure</div></div>
+<h3><a class="anchor" id="autotoc_md35"></a>
+Source Files</h3>
+<ul>
+<li><code>SMTP_Client.c</code> contains the main C function that initializes the board hardware, the Network Component and provides the IP address of SMTP server.</li>
+<li>The <b>SMTP_Client_UIF.c</b> defines the sender's and recipient's e-mail addresses and the subject. Optionally, you can specify a SMTP username and password.</li>
+</ul>
+<p>You may now build and download the example project to the evaluation board using the µVision commands:</p>
+<ul>
+<li><b>Project</b> - <b>Build</b> target</li>
+<li><b>Flash</b> - <b>Download</b></li>
+</ul>
+<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
+<h2><a class="anchor" id="autotoc_md36"></a>
+Using the "SMTP Client" Project</h2>
+<h3><a class="anchor" id="autotoc_md37"></a>
+Hardware Setup</h3>
+<p>The setup of the Evaluation Board hardware is described in the <code>Abstract.txt</code> file.</p>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already a member of this LAN.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md38"></a>
+PC Software</h3>
+<p>If you have entered your personal e-mail address as the recipient's address, you only need to open your mail program and check your inbox.</p>
+<h1><a class="anchor" id="SNMP_Agent_Example"></a>
+SNMP Agent</h1>
+<p>The Simple Network Management Protocol (SNMP) is mainly used in network management systems to monitor network-attached devices for conditions that warrant administrative attention. It is the most popular network management protocol in the TCP/IP protocol suite. The SNMP Agent example shows how to use SNMP to control an embedded system. The following picture shows an exemplary connection of the development board and a Computer.</p>
+<div class="image">
+<img src="snmp_example_setup.png" alt=""/>
+</div>
+<h2><a class="anchor" id="autotoc_md39"></a>
+Build the "SNMP Agent" Project</h2>
+<p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
+<div class="image">
+<img src="snmp_proj_structure.png" alt=""/>
+<div class="caption">
+SNMP Agent Project Structure</div></div>
+<h3><a class="anchor" id="autotoc_md40"></a>
+Source Files</h3>
+<ul>
+<li><code>SNMP_Agent.c</code> contains the main C function that initializes the board hardware and the Network Component.</li>
+<li>The <b>SNMP_Agent_MIB.c</b> contains the <a class="el" href="group__mib__interface.html#mib_data_table">mib_data_table</a>. Change this to the application's needs.</li>
+</ul>
+<p>You may now build and download the example project to the evaluation board using the µVision commands:</p>
+<ul>
+<li><b>Project</b> - <b>Build</b> target</li>
+<li><b>Flash</b> - <b>Download</b></li>
+</ul>
+<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
+<h2><a class="anchor" id="autotoc_md41"></a>
+Using the "SNMP Agent" Project</h2>
+<h3><a class="anchor" id="autotoc_md42"></a>
+Hardware Setup</h3>
+<p>The setup of the Evaluation Board hardware is described in the <code>Abstract.txt</code> file.</p>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already a member of this LAN.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md43"></a>
+PC Software</h3>
+<p>To test this example, run the Windows application 'SNMPTest.exe' from C:\Keil\ARM\Utilities\SNMPTest\Release and type in the IP address of your Embedded SNMP Agent and click 'Connect'. When connected, you can change the LCD text on the target, control the on-board LED diodes and monitor the state of on-board push-buttons.</p>
+<div class="image">
+<img src="SNMPTest_exe.png" alt=""/>
+<div class="caption">
+SNMP Test Application</div></div>
+<h1><a class="anchor" id="BSD_Examples"></a>
+BSD Client/Server</h1>
+<p>BSD sockets are often used for network communication as they are providing a well-defined API for exchanging data over the network. In general, they are relying on TCP and UDP socket communication. The BSD server and client examples are used to demonstrate BSD compliant communication. To make it work, you need to setup two development boards within the same network: a BSD server and a BSD client. An exemplary setup could look like this:</p>
+<div class="image">
+<img src="bsd_example_setup.png" alt=""/>
+</div>
+<h2><a class="anchor" id="autotoc_md44"></a>
+Build the "BSD" Projects</h2>
+<p>Open the two example projects in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
+<div class="image">
+<img src="bsd_proj_structure.png" alt=""/>
+<div class="caption">
+Structure of the BSD Projects</div></div>
+<h3><a class="anchor" id="autotoc_md45"></a>
+Source Files</h3>
+<ul>
+<li><code>BSD_Client.c</code> contains the main C function that initializes the board hardware and the Network Component for the BSD client. It also contains the actual code that is used to communicate with the BSD server.</li>
+<li><code>BSD_Server.c</code> contains the main C function that initializes the board hardware and the Network Component for the BSD server. The server is waiting for a connection from a BSD client.</li>
+</ul>
+<p>You may now build and download the example projects to the evaluation boards using the µVision commands:</p>
+<ul>
+<li><b>Project</b> - <b>Build</b> target</li>
+<li><b>Flash</b> - <b>Download</b></li>
+</ul>
+<p>After these steps, the projects should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
+<h2><a class="anchor" id="autotoc_md46"></a>
+Using the "BSD" Projects</h2>
+<h3><a class="anchor" id="autotoc_md47"></a>
+Hardware Setup</h3>
+<p>The setup of the Evaluation Board hardware is described in the <code>Abstract.txt</code> file.</p>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already a member of this LAN.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md48"></a>
+PC Software</h3>
+<p>To test the BSD Server example stand-alone, run the Windows application 'LEDSwitch.exe' from C:\Keil\ARM\Utilities\LEDSwitch\Release and type in the IP address of your development board (IPv4 and IPv6 addresses are accepted). When connected, you can control the on-board LEDs.</p>
+<div class="image">
+<img src="ledswitch.png" alt=""/>
+<div class="caption">
+LED Switch Application</div></div>
+ </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

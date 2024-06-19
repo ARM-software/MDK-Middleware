@@ -163,14 +163,14 @@ Functions</h2></td></tr>
 <li><a class="el" href="group__ws__fs__interface.html#ga859cb1bf75babd53e6e79a4a0e4626c0">netHTTPs_fstat</a> - retrieve size and last modification time of a file.</li>
 </ul>
 <p><a class="anchor" id="ws_web_on_sd"></a></p>
-<h2><a class="anchor" id="autotoc_md68"></a>
+<h2><a class="anchor" id="autotoc_md70"></a>
 Web on SD Card</h2>
 <p>The <b>Web Server</b> supports storing of web pages on a SD Card, which is attached to the embedded system. This is useful if you want to update or change the web content remotely. In this case, the File System Component is used, which must be configured for a target device Memory Card Drive.</p>
 <p>You can use any of the update methods to change the content of web pages:</p><ul>
 <li><b>HTTP File Upload</b>: The web files are uploaded using a web browser. The HTTP server must be configured for the file upload.</li>
 <li><b>FTP Server</b>: The web files are uploaded and managed with a FTP Client.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md69"></a>
+<h2><a class="anchor" id="autotoc_md71"></a>
 Web Update</h2>
 <p>When the Web Server tries to open a web page, it searches the <b>external file system</b> first. This is usually an externally attached SD Card. As the Compact Web Server is not configured to use an external file system, it searches only the internal ROM file system.</p>
 <p>If the requested file is found on the SD Card, the content is sent to the web client. If the requested file does not exist on the SD Card, it is opened from the internal ROM file system and transferred to the web client. This concept allows you to replace easily the web content from the internal ROM file system with a new one stored on the external SD Card.</p>

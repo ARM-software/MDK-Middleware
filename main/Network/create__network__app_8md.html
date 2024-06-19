@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Network Component: Telnet Server</title>
+<title>Network Component: create_network_app.md File Reference</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('Telnet_Example.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('create__network__app_8md.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -124,55 +124,16 @@ $(document).ready(function(){initNavTree('Telnet_Example.html',''); initResizabl
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">Telnet Server </div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">create_network_app.md File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Often, it is necessary to have a <b>Command Line Interface (CLI)</b> for interaction with the device. This example shows how to use the Telnet server for this purpose. The following picture shows an exemplary connection of the development board and a Computer.</p>
-<div class="image">
-<img src="telnet_setup.png" alt=""/>
-</div>
-<h1><a class="anchor" id="autotoc_md32"></a>
-Build the "Telnet" Project</h1>
-<p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
-<div class="image">
-<img src="telnet_proj_structure.png" alt=""/>
-<div class="caption">
-Telnet Client Project Structure</div></div>
-<h2><a class="anchor" id="autotoc_md33"></a>
-Source Files</h2>
-<ul>
-<li><b>Telnet_Server.c</b> contains the main C function that initializes the board hardware and the Network Component.</li>
-<li>The <b>Telnet_Server_UIF.c</b> defines the functions for the user interface and all the available CLI commands.</li>
-<li>A <b>Telnet_Server_Multiuser.c</b> file can be added using the  <script>link_ext('uv4_ca_sourcefiles');</script> feature. This file is used for specifying multiple users and access rights for these users.</li>
-<li>Adding the <b>Telnet_Server_Access.c</b> file enables the server to accept or block connection requests from certain remote clients.</li>
-</ul>
-<p>You may now build and download the example project to the evaluation board using the µVision commands:</p><ul>
-<li><b>Project</b> --&gt; <b>Build</b> target</li>
-<li><b>Flash</b> --&gt; <b>Download</b> </li>
-</ul>
-<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
-<h1><a class="anchor" id="autotoc_md34"></a>
-Using the "Telnet" Project</h1>
-<h2><a class="anchor" id="autotoc_md35"></a>
-Hardware Setup</h2>
-<p>The setup of the Evaluation Board hardware is described in the <b>Abstract.txt</b> file.</p><ul>
-<li>Verify all jumper settings on the target hardware.</li>
-<li>Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already a member of this LAN.</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md36"></a>
-PC Software</h2>
-<p>For opening a Telnet session, you need a Telnet client. As this is not an integral part of Windows any more, please look for an alternative on the Internet. PuTTY has a good feature set and is easy to install and use. When you connect to your board using a Telnet client, please enter <code>my_host</code> (or the respective hostname that you have chosen in the <b>Net_Config.h</b> file) in the hostname field and use the standard Telnet port 23. You will be asked for log-in credentials. Like for all other tutorials, the default is <code>admin</code> for the username without any password (you can change the defaults in the <b>Net_Config_Telnet_Server.h</b> file). Using the <code>help</code> command, you can see the list of available CLI commands:</p>
-<div class="image">
-<img src="telnet_cli.png" alt=""/>
-<div class="caption">
-Telnet Command Line Interface</div></div>
- </div></div><!-- contents -->
-</div><!-- PageDoc -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="create__network__app_8md.html">create_network_app.md</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Network Component: BSD Client/Server</title>
+<title>Network Component: net_function_overview.md File Reference</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('BSD_Examples.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('net__function__overview_8md.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -124,53 +124,16 @@ $(document).ready(function(){initNavTree('BSD_Examples.html',''); initResizable(
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">BSD Client/Server </div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">net_function_overview.md File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>BSD sockets are often used for network communication as they are providing a well-defined API for exchanging data over the network. In general, they are relying on TCP and UDP socket communication. The BSD server and client examples are used to demonstrate BSD compliant communication. To make it work, you need to setup two development boards within the same network: a BSD server and a BSD client. An exemplary setup could look like this:</p>
-<div class="image">
-<img src="bsd_example_setup.png" alt=""/>
-</div>
-<h1><a class="anchor" id="autotoc_md47"></a>
-Build the "BSD" Projects</h1>
-<p>Open the two example projects in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
-<div class="image">
-<img src="bsd_proj_structure.png" alt=""/>
-<div class="caption">
-Structure of the BSD Projects</div></div>
-<h2><a class="anchor" id="autotoc_md48"></a>
-Source Files</h2>
-<ul>
-<li><b>BSD_Client.c</b> contains the main C function that initializes the board hardware and the Network Component for the BSD client. It also contains the actual code that is used to communicate with the BSD server.</li>
-<li><b>BSD_Server.c</b> contains the main C function that initializes the board hardware and the Network Component for the BSD server. The server is waiting for a connection from a BSD client.</li>
-</ul>
-<p>You may now build and download the example projects to the evaluation boards using the µVision commands:</p><ul>
-<li><b>Project</b> --&gt; <b>Build</b> target</li>
-<li><b>Flash</b> --&gt; <b>Download</b> </li>
-</ul>
-<p>After these steps, the projects should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
-<h1><a class="anchor" id="autotoc_md49"></a>
-Using the "BSD" Projects</h1>
-<h2><a class="anchor" id="autotoc_md50"></a>
-Hardware Setup</h2>
-<p>The setup of the Evaluation Board hardware is described in the <b>Abstract.txt</b> file.</p><ul>
-<li>Verify all jumper settings on the target hardware.</li>
-<li>Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already a member of this LAN.</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md51"></a>
-PC Software</h2>
-<p>To test the BSD Server example stand-alone, run the Windows application 'LEDSwitch.exe' from C:\Keil\ARM\Utilities\LEDSwitch\Release and type in the IP address of your development board (IPv4 and IPv6 addresses are accepted). When connected, you can control the on-board LEDs.</p>
-<div class="image">
-<img src="ledswitch.png" alt=""/>
-<div class="caption">
-LED Switch Application</div></div>
- </div></div><!-- contents -->
-</div><!-- PageDoc -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="net__function__overview_8md.html">net_function_overview.md</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--

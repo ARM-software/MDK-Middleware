@@ -132,7 +132,7 @@ $(document).ready(function(){initNavTree('group__ws__web__pages.html',''); initR
 <p>How web pages are stored on and delivered by the HTTP Server.  
 </p>
 <p>How web pages are stored on and delivered by the HTTP Server. </p>
-<h1><a class="anchor" id="autotoc_md60"></a>
+<h1><a class="anchor" id="autotoc_md62"></a>
 Creating and storing static web pages</h1>
 <p>Static web pages for the HTTP server are created in the same way as web pages for any other web server. You can use any text editor to edit the HTML code. Here are a few guidelines:</p><ul>
 <li>Design web pages in HTML code. You can add <b>images</b> and <a class="el" href="group__ws__ajax.html">JavaScript</a> functions as well.</li>
@@ -151,7 +151,7 @@ Add web content as Image File</div></div>
 <img src="fcarm_configuration.png" alt=""/>
 <div class="caption">
 Configure Image File Processing (FCARM) Dialog</div></div>
-<h1><a class="anchor" id="autotoc_md61"></a>
+<h1><a class="anchor" id="autotoc_md63"></a>
 Default Page</h1>
 <p>When you type the HTTP Server's URL or IP address in the browser's address bar, the HTTP Server sends the content of the <b>index.htm</b> web page. This <b>default</b> <b>page</b> is opened, as long as no other filename is specified in the URL. If you enter a URL, including a filename (for example <a href="http://mcb1700/ad.htm">http://mcb1700/ad.htm</a>), the HTTP Server tries to open this page.</p>
 <p>The default page <b>index.htm</b> is a static page. This means the content of this page is stored on the HTTP Server and sent unmodified to the web client on request. Usually, this page contains links to other static or <a class="el" href="group__ws__web__technologies.html">dynamic pages</a> on the server.</p>
@@ -164,7 +164,7 @@ Default Page (index.htm) from the Network library</div></div>
 <p>To use the dynamic default page stored on the SD card, there must be <b>Web.c</b> in your project. It must contain an empty web page stored in a ROM. If you do not do this, the default Web.c from the network library will be used.</p>
 <dl class="section note"><dt>Note</dt><dd>If you want to use a dynamic default page, then the file index.htm <b>must not exist</b> on the HTTP server.</dd></dl>
 <p><a class="anchor" id="ws_error_pages"></a></p>
-<h1><a class="anchor" id="autotoc_md62"></a>
+<h1><a class="anchor" id="autotoc_md64"></a>
 Error Pages</h1>
 <p>The HTTP server shows an error page when encountering error conditions. </p><table class="markdownTable">
 <tr class="markdownTableHead">
@@ -219,7 +219,7 @@ Error Pages</h1>
 <div class="line">  <span class="stringliteral">&quot;The requested Method is not supported.&quot;</span></div>
 <div class="line">};</div>
 </div><!-- fragment --><p><a class="anchor" id="ws_http_caching"></a></p>
-<h1><a class="anchor" id="autotoc_md63"></a>
+<h1><a class="anchor" id="autotoc_md65"></a>
 HTTP Caching</h1>
 <p>The HTTP protocol supports <b>local caching</b> of static resources by the browser. Most web pages include resources that change infrequently, such as CSS/JavaScript files, images and so on. These resources take time to download over the network, which increases the time it takes to load a web page. HTTP caching allows these resources to be saved, or cached, by the browser. Once a resource is cached, the browser can refer to the locally cached copy instead of having to download it again on subsequent visits to the web page.</p>
 <p>The advantage of caching is obvious:</p><ul>
@@ -227,7 +227,7 @@ HTTP Caching</h1>
 <li>The total <b>payload</b> <b>size</b> of the responses is reduced.</li>
 </ul>
 <p>The HTTP Server supports HTTP <b>local caching</b> by the browser. For static resources (basically everything except the scripts themselves), the server sends the HTTP header with the <b>last modified</b> date tag in the response.</p>
-<h2><a class="anchor" id="autotoc_md64"></a>
+<h2><a class="anchor" id="autotoc_md66"></a>
 Caching of web resources stored in ROM</h2>
 <p>The internal web pages are included and compiled into the code. When the <a class="el" href="group__nw__sw__util__fcarm.html">FCARM File Converter</a> reformats the web files into a single C-file, a timestamp is also added: </p><div class="fragment"><div class="line"><span class="keyword">const</span> uint32_t imageLastModified = 1380695329;</div>
 </div><!-- fragment --><p> This time is used by the web server as the <b>File</b> <b>Modification</b> <b>Date</b>. It is specified in UTF format. The web server uses this date in the HTTP responses.</p>
@@ -237,13 +237,13 @@ Caching of web resources stored in ROM</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyCenter">447.5 ms   </td><td class="markdownTableBodyCenter">53.1 ms   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md65"></a>
+<h2><a class="anchor" id="autotoc_md67"></a>
 Caching of externally stored web resources</h2>
 <p>The HTTP Server also supports browser local caching of web pages stored on SD Card. In general, files on an SD Card are bigger, thus the performance gain is much better. The available space for internal web pages is limited to the size of the internal flash memory. Thus, all large images, JavaScript archives and other large web resources, have to be located on an externally attached SD Card.</p>
-<h3><a class="anchor" id="autotoc_md66"></a>
+<h3><a class="anchor" id="autotoc_md68"></a>
 Static Web Resources</h3>
 <p>The static web resource files are copied to a SD Card when the application is built. They will not be modified later. You might use a SD Card Reader attached to your PC to copy the files. In this case, the file modification date is set correctly by the PC. If you use an embedded application to copy the files, the file modification date is most likely set to the File System's default time. However, this does not create any problems for browser local caching. Once the web is locally cached by the browser, the cache is always valid and is used in subsequent browser requests.</p>
-<h3><a class="anchor" id="autotoc_md67"></a>
+<h3><a class="anchor" id="autotoc_md69"></a>
 Using Web Update</h3>
 <p>Files, which are updated later with one of the update options provided by the Network Component, are called dynamic web resource files. You must provide the file modification date and time to the File System. If this information is not available, the File System uses a default file modification time. This might create browser local caching problems.</p>
 <p>If you upload an updated web page with a wrong file modification date to the server, the HTTP Server is not able to recognize the updated files. It always reports the same <b>last</b> <b>modified</b> date. The browser then uses the locally cached page instead. So the updated pages will never be used. You can force the browser to load the updated pages by manually clearing the browser cache and reloading the web page.</p>

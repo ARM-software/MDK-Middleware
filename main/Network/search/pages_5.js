@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['network_20component_0',['Network Component',['../index.html',1,'']]],
-  ['network_20examples_1',['Network Examples',['../nw_examples.html',1,'']]]
+  ['resource_20requirements_0',['Resource Requirements',['../nw_resource_requirements.html',1,'']]],
+  ['revision_20history_1',['Revision History',['../netw_revhist.html',1,'']]]
 ];

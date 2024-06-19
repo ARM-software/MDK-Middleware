@@ -269,7 +269,7 @@ Functions</h2></td></tr>
 <li>The BSD functions are <b>thread</b> <b>safe</b> and must be used with a CMSIS-RTOS.</li>
 </ul>
 </dd></dl>
-<h2><a class="anchor" id="autotoc_md80"></a>
+<h2><a class="anchor" id="autotoc_md82"></a>
 Communication Flow</h2>
 <p>The image below explains the basic communication flow using BSD sockets with TCP.</p>
 <div class="image">
@@ -277,7 +277,7 @@ Communication Flow</h2>
 <div class="caption">
 Flow Diagram for BSD Sockets Communication using TCP</div></div>
 <p><a class="anchor" id="using_network_sockets_bsd_server"></a></p>
-<h2><a class="anchor" id="autotoc_md81"></a>
+<h2><a class="anchor" id="autotoc_md83"></a>
 BSD Server</h2>
 <p>The BSD server creates a <a class="el" href="group__using__network__sockets__bsd__func.html#gac01ac0611ef0f7d743e0eb464e7786a9">socket</a>, uses <a class="el" href="group__using__network__sockets__bsd__func.html#ga371b442b92e67a6046b168521d4a1b4a">bind</a> to attach that socket to a port, and configures it as a <a class="el" href="group__using__network__sockets__bsd__func.html#ga4dde9362ae7fd2b2a60eeba388874afa">listening</a> socket. This allows the server to receive incoming connection requests. Afterwards, <a class="el" href="group__using__network__sockets__bsd__func.html#ga34f0c4489df12e0ce4972a78ec3d62b4">accept</a> is called, which will block the socket, until an incoming connection request is received. When <a class="el" href="group__using__network__sockets__bsd__func.html#ga34f0c4489df12e0ce4972a78ec3d62b4">accept</a> returns, the <a class="el" href="group__bsd__structs.html#structSOCKADDR">SOCKADDR</a> structure will have been filled out with the originating IP Address and port of the incoming connection. Then, <a class="el" href="group__using__network__sockets__bsd__func.html#ga34f0c4489df12e0ce4972a78ec3d62b4">accept</a> creates a new socket, which is then used to <a class="el" href="group__using__network__sockets__bsd__func.html#gaf6d5bc55c3bcbed83a0e03eae48010ba">receive</a> data until the connection is <a class="el" href="group__using__network__sockets__bsd__func.html#ga50c4d62065c117f425ae2734e7979f21">closed</a> by the other side.</p>
 <p><b>Code Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> Server_Thread (<span class="keywordtype">void</span> *arg) {</div>
@@ -312,7 +312,7 @@ BSD Server</h2>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p><a class="anchor" id="using_network_sockets_bsd_server_ds"></a></p>
-<h2><a class="anchor" id="autotoc_md82"></a>
+<h2><a class="anchor" id="autotoc_md84"></a>
 BSD Server Dual-Stack</h2>
 <p>Dual-Stack sockets offer the ability to create a single IPv6 socket which can handle both IPv6 and IPv4 communication. For example, a TCP listening socket for IPv6 is created, put into dual-stack mode, and bound to port 1000. The dual-stack socket can accept connections from IPv6 TCP clients and IPv4 TCP clients that connect to port 1000.</p>
 <p>The IPv4 address is encoded in the <b>IPv4-mapped</b> IPv6 address with the address prefix <b>0:0:0:0:0:FFFF</b>, last four bytes of the address are the IPv4 address. The IPv4 address in this format can be used in a dual-stack socket communication. If the IPv4 address is converted to a string address with the function <a class="el" href="group__using__network__sockets__bsd__func.html#ga0bd214382fd14e4428076d88ced3748b">inet_ntop</a>, the result is represented in a hybrid dotted decimal notation. For example, the address 192.168.0.100 is converted to a string: </p><div class="fragment"><div class="line">::FFFF:192.168.0.100</div>
@@ -353,7 +353,7 @@ BSD Server Dual-Stack</h2>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p><a class="anchor" id="using_network_sockets_bsd_client"></a></p>
-<h2><a class="anchor" id="autotoc_md83"></a>
+<h2><a class="anchor" id="autotoc_md85"></a>
 BSD Client</h2>
 <p>The BSD Client creates a <a class="el" href="group__using__network__sockets__bsd__func.html#gac01ac0611ef0f7d743e0eb464e7786a9">socket</a> calls <a class="el" href="group__using__network__sockets__bsd__func.html#ga9feed17ea4fc7449b8159eabc131ed5b">connect</a>, because TCP requires a negotiated connection. Afterwards, <a class="el" href="group__using__network__sockets__bsd__func.html#ga4cc5678cb81694afc224221063fda9cd">send</a> is called to send the data to the server. Note that <a class="el" href="group__using__network__sockets__bsd__func.html#ga371b442b92e67a6046b168521d4a1b4a">bind</a> is never called, because the stack will pick a random port and an appropriate IP address. To finish the communication, the client calls <a class="el" href="group__using__network__sockets__bsd__func.html#ga50c4d62065c117f425ae2734e7979f21">closesocket</a>.</p>
 <p><b>Code Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> Client_Thread (<span class="keywordtype">void</span> *arg) {</div>

@@ -191,7 +191,7 @@ $(document).ready(function(){initNavTree('group__tcp__user__api.html',''); initR
 <img src="tcp_communication_flow.png" alt=""/>
 <div class="caption">
 Flow Diagram for TCP Sockets Communication</div></div>
-<h2><a class="anchor" id="autotoc_md84"></a>
+<h2><a class="anchor" id="autotoc_md86"></a>
 Connection Establishment</h2>
 <p>For establishing a connection, TCP uses a three-way handshake. Before a client can connect to a server, the server must first open a socket for incoming connections (using <a class="el" href="group__tcp__user__api.html#gac02a84a9dc999e80c5a8a1650e5d9674">netTCP_Listen</a>): this is called a passive open. Once the passive open is established, a client may initiate an active open. To establish a connection, the three-way handshake takes place:</p>
 <ol type="1">
@@ -200,14 +200,14 @@ Connection Establishment</h2>
 <li>Finally, the client sends an ACK back to the server.</li>
 </ol>
 <p>At this point, a full-duplex communication is established.</p>
-<h2><a class="anchor" id="autotoc_md85"></a>
+<h2><a class="anchor" id="autotoc_md87"></a>
 Connection Termination</h2>
 <p>The connection can be terminated from each side independently. When an endpoint wishes to stop the connection (by calling <a class="el" href="group__tcp__user__api.html#gad3b70b023f209cd7687f15f553219185">netTCP_Close</a>), it transmits a FIN packet, which the other end acknowledges with an ACK. Therefore, a typical connection close requires a pair of FIN and ACK segments from each TCP endpoint and takes some time. After both FIN/ACK exchanges are concluded, the side that sent the first FIN before receiving one waits for a timeout before finally closing the connection, during which time the local port is unavailable for new connections; this prevents confusion due to delayed packets being delivered during subsequent connections.</p>
-<h1><a class="anchor" id="autotoc_md86"></a>
+<h1><a class="anchor" id="autotoc_md88"></a>
 Operation Modes</h1>
 <p>The TCP Socket API distinguishes two operation modes: <a class="el" href="group__tcp__user__api.html#tcp_server">Server</a> and <a class="el" href="group__tcp__user__api.html#tcp_client">Client</a>. Both modes have distinct functions that can either be used in the respective mode only or are available for multiple operation modes.</p>
 <p><a class="anchor" id="tcp_server"></a></p>
-<h1><a class="anchor" id="autotoc_md87"></a>
+<h1><a class="anchor" id="autotoc_md89"></a>
 TCP Server Mode</h1>
 <p>The function <a class="el" href="group__tcp__user__api.html#gac02a84a9dc999e80c5a8a1650e5d9674">netTCP_Listen</a> opens a TCP socket on a local port for any incoming connection and starts <b>TCP Server Mode</b>. The next free socket can be allocated using the function <a class="el" href="group__tcp__user__api.html#ga19247901cf1062d474d767ac68277ed3">netTCP_GetSocket</a>. This function requires a callback function to be present that is called by the Network Core whenever a TCP event occurs. The TCP Server callback function is inside the module <b>TCP_Socket_Server.c</b>. To add the module to your project, simply right-click on the Source group, select <b>Add New Item to Group</b>, then click on <b>User Code Template</b> and scroll in the template files list until you find the <b>TCP Socket Server</b> template. Customize this module to the application's needs.</p>
 <p>It is not allowed to call <a class="el" href="group__tcp__user__api.html#gac02a84a9dc999e80c5a8a1650e5d9674">netTCP_Listen</a> with a port number of <span class="XML-Token">0</span>, because this is a reserved port number. To determine the state of a TCP socket, use <a class="el" href="group__tcp__user__api.html#ga75abc5d6ad7b4007e2bc373a141e4e7c">netTCP_GetState</a>. The user application can monitor the progress when establishing or closing a connection with this function.</p>
@@ -286,17 +286,17 @@ TCP Server Mode</h1>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p><a class="anchor" id="tcp_client"></a></p>
-<h1><a class="anchor" id="autotoc_md88"></a>
+<h1><a class="anchor" id="autotoc_md90"></a>
 TCP Client Mode</h1>
 <p>The function <a class="el" href="group__tcp__user__api.html#ga5dbbfc3def198bfe40ef51629dc55652">netTCP_Connect</a> initiates a connection to a remote TCP server and starts <b>TCP Client Mode</b>. You need to specify the socket number, the IP address and port of the remote machine and the local port.</p>
 <p>If <a class="el" href="group__tcp__user__api.html#ga5dbbfc3def198bfe40ef51629dc55652">netTCP_Connect</a> is called with a local port number of <span class="XML-Token">0</span>, the Network Core determines which port to use. Later, this information can be retrieved using the function <a class="el" href="group__tcp__user__api.html#ga3ec61c1414074c811541e0181916e3ba">netTCP_GetLocalPort</a>. To determine the state of a TCP socket, use <a class="el" href="group__tcp__user__api.html#ga75abc5d6ad7b4007e2bc373a141e4e7c">netTCP_GetState</a>. The user application can monitor the progress when establishing or closing a connection with this function.</p>
 <p>As soon as a client requests to connect, the socket/port combination is used for the data transfer. For that, the function <a class="el" href="group__tcp__user__api.html#gad8393d4e967564107799400710c94521">netTCP_GetMaxSegmentSize</a> helps to determine the maximum number of data bytes that can be sent in a TCP packet. Call this function after the client is connected to remote server.</p>
-<h2><a class="anchor" id="autotoc_md89"></a>
+<h2><a class="anchor" id="autotoc_md91"></a>
 Sending Data</h2>
 <p>To be able to successfully send data via TCP, you first need to request a buffer to be allocated using <a class="el" href="group__tcp__user__api.html#ga361ee211c7cd20ca32c266aec90d60ff">netTCP_GetBuffer</a>. Then, fill the buffer with the data to be sent and send it using <a class="el" href="group__tcp__user__api.html#ga0b32a74e8fc2d3d3fcea041d3958f4e6">netTCP_Send</a>. The buffer will be released by the Network Component automatically. If the buffer is not valid (not allocated with the <a class="el" href="group__tcp__user__api.html#ga361ee211c7cd20ca32c266aec90d60ff">netTCP_GetBuffer</a> function), the buffer is ignored.</p>
 <p>The Network Component does not send 0-length packets. So it is possible to release a buffer that has been allocated, by simply calling <a class="el" href="group__tcp__user__api.html#ga0b32a74e8fc2d3d3fcea041d3958f4e6">netTCP_Send</a> with parameter <em>len</em> = 0.</p>
 <p>The user code template <b>TCP_Socket_Client.c</b> contains an exemplary send function, called <b>send_data</b>. The send_data function must be implemented as a state machine. It opens an active TCP connection, sends data, and closes the TCP connection at the end. To add the template to your project, simply right-click on the Source group, select <b>Add New Item to Group</b>, then click on <b>User Code Template</b> and scroll in the template files list until you find the <b>TCP Socket Client</b> template. Adapt the <b>send_data</b> function to your application's needs.</p>
-<h2><a class="anchor" id="autotoc_md90"></a>
+<h2><a class="anchor" id="autotoc_md92"></a>
 Stopping TCP Communication</h2>
 <p>To instantly stop TCP communication (even during data transmission), use <a class="el" href="group__tcp__user__api.html#ga621b26f6da519678dd6a660fce012668">netTCP_Abort</a>. Use this only for cases, where the transmission really needs to be aborted. In client mode, TCP communication will be stopped using <a class="el" href="group__tcp__user__api.html#gad3b70b023f209cd7687f15f553219185">netTCP_Close</a>. The TCP socket will be closed. Subsequently, call <a class="el" href="group__tcp__user__api.html#ga20a5311ac374ab89995165de6e1dbe1c">netTCP_ReleaseSocket</a> as well, as this function finally frees the memory used by the TCP socket.</p>
 <p><b>Code</b> <b>Example</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="rl__net_8h.html">rl_net.h</a>&quot;</span></div>

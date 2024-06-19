@@ -128,10 +128,11 @@ $(document).ready(function(){initNavTree('net_func_overview.html',''); initResiz
   <div class="headertitle"><div class="title">Function Overview </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The following list provides a brief overview of all Network Component functions.</p>
+<div class="textblock"><p><a class="anchor" id="md_src_net_function_overview"></a> The following list provides a brief overview of all Network Component functions.</p>
 <h1><a class="anchor" id="net_fo_http"></a>
 HTTP Server</h1>
-<p><a class="el" href="group__ws__user__api.html">Control Interface</a></p><ul>
+<p><a class="el" href="group__ws__user__api.html">Control Interface</a></p>
+<ul>
 <li><a class="el" href="group__ws__user__api.html#gaa00f4ea06469abdb2ae186ace50f2810">netHTTPs_GetClient</a> &mdash;  Get IP address and port number of a connected remote HTTP client. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__ws__user__api.html#ga1fcc3ecb0e9e7338056171b2ecb03058">netHTTPs_GetContentType</a> &mdash;  Get Content-Type HTML header, received in XML post request. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__ws__user__api.html#gab6f2cc3e7b62ae1ca6d0c59cd03234dc">netHTTPs_GetLanguage</a> &mdash;  Retrieve the preferred language setting from the browser. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
@@ -151,7 +152,8 @@ HTTP Server</h1>
 <li><a class="el" href="group__ws__user__api.html#ga59dfc887436030c13ecbf186c233843f">netHTTPs_Start</a> &mdash;  Start the HTTP server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__ws__user__api.html#ga3839c51b949e6a2b3c978fe045db1f0c">netHTTPs_Stop</a> &mdash;  Stop the HTTP server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
-<p><a class="el" href="group__ws__access__filtering__mui.html">Access and Multi-User Interface</a></p><ul>
+<p><a class="el" href="group__ws__access__filtering__mui.html">Access and Multi-User Interface</a></p>
+<ul>
 <li><a class="el" href="group__ws__access__filtering__mui.html#gaf36a37f99a76e8ca958fbde377cee73d">netHTTPs_AcceptClient</a> &mdash;  Accept or deny a connection from a remote HTTP client. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__ws__access__filtering__mui.html#gaee074414cedf60bc3d259f6647d67e0d">netHTTPs_CheckAccount</a> &mdash;  Check if an user account exist in the user database. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__ws__access__filtering__mui.html#gac3c22aa4f158cba0b5492b3599f34e78">netHTTPs_GetUserSecret</a> &mdash;  Retrieve the secret word for the selected user. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].   <br  />
@@ -160,14 +162,16 @@ HTTP Server</h1>
 <li><a class="el" href="group__ws__access__filtering__mui.html#ga89c542f8305a5100bfa92ff733b0a31d">netHTTPs_GetUserId</a> &mdash;  Retrieve the user identification. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__ws__access__filtering__mui.html#gab61405012e910162d511208ab1d2bc3f">netHTTPs_CalcHashHA1</a> &mdash;  Calculate HA1 hash value for the given credentials. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
-<p><a class="el" href="group__ws__fs__interface.html">File System Interface</a></p><ul>
+<p><a class="el" href="group__ws__fs__interface.html">File System Interface</a></p>
+<ul>
 <li><a class="el" href="group__ws__fs__interface.html#ga5d5a67471b2b64b160e92c0323a1c836">netHTTPs_fclose</a> &mdash;  Close a file previously open on HTTP server. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 <li><a class="el" href="group__ws__fs__interface.html#gae5650c8cd217e1b469bfaad15fc8ec54">netHTTPs_fgets</a> &mdash;  Read a string from a file on HTTP server. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 <li><a class="el" href="group__ws__fs__interface.html#ga56b6455a9acb54cbf64bfc2c2113bcf0">netHTTPs_fopen</a> &mdash;  Open a file for reading on HTTP server. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 <li><a class="el" href="group__ws__fs__interface.html#ga9490494c7abda2aa9a00a3c24d0d701d">netHTTPs_fread</a> &mdash;  Read block of data from a file on HTTP server. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 <li><a class="el" href="group__ws__fs__interface.html#ga859cb1bf75babd53e6e79a4a0e4626c0">netHTTPs_fstat</a> &mdash;  Retrieve file size and last modification time. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 </ul>
-<p><a class="el" href="group__ws__cgi__script.html">Common Gateway Interface (CGI)</a></p><ul>
+<p><a class="el" href="group__ws__cgi__script.html">Common Gateway Interface (CGI)</a></p>
+<ul>
 <li><a class="el" href="group__ws__cgi__script.html#gaca2c1f80c78009bacb5e0339aa8071c5">netCGI_Charset</a> &mdash;  Override default character encoding in HTML documents. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__ws__cgi__script.html#gacab375c8f4d2516a1774c2dc37207eaa">netCGI_ContentType</a> &mdash;  Add custom MIME type for unsupported file types. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__ws__cgi__script.html#gafb9307f1dd4b12d983f16d625398e947">netCGI_CustomHeader</a> &mdash;  Add custom HTTP response header. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
@@ -183,7 +187,8 @@ HTTP Server</h1>
 </ul>
 <h1><a class="anchor" id="net_fo_ftps"></a>
 FTP Server</h1>
-<p><a class="el" href="group__ftp__user__api.html">Control Interface</a></p><ul>
+<p><a class="el" href="group__ftp__user__api.html">Control Interface</a></p>
+<ul>
 <li><a class="el" href="group__ftp__user__api.html#gaca3dd3c1503ea070874584f841b7b297">netFTPs_GetPassword</a> &mdash;  Retrieve password of the built-in user account. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__ftp__user__api.html#gaef249f682401c7723cc27b951127dd77">netFTPs_GetPort</a> &mdash;  Get port number of FTP server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__ftp__user__api.html#ga88f4091cde3aace10404f4604e59d211">netFTPs_GetRootPath</a> &mdash;  Retrieve path to the root directory on FTP server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
@@ -198,17 +203,20 @@ FTP Server</h1>
 <li><a class="el" href="group__ftp__user__api.html#gafba2740613dff7fcc32d5bebca976ae5">netFTPs_Start</a> &mdash;  Start FTP server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__ftp__user__api.html#gae45c5e8638f0b2b73aecc48340d3ea25">netFTPs_Stop</a> &mdash;  Stop FTP server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
-<p><a class="el" href="group__ftp__access__filter__mui.html">Access and Multi-User Interface</a></p><ul>
+<p><a class="el" href="group__ftp__access__filter__mui.html">Access and Multi-User Interface</a></p>
+<ul>
 <li><a class="el" href="group__ftp__access__filter__mui.html#ga38c2ff05058bdb0ca8b3c122bffc4bb9">netFTPs_AcceptClient</a> &mdash;  Accept or deny connection from remote FTP client. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__ftp__access__filter__mui.html#ga100ca730f5e9e891ede74caf51d0ce3a">netFTPs_CheckPassword</a> &mdash;  Check user account password in the user database. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__ftp__access__filter__mui.html#gab204f191fe2ed707562ca0246dab0617">netFTPs_CheckUsername</a> &mdash;  Check if an user account exists in the user database. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__ftp__access__filter__mui.html#ga946cfca1047c9d91737ba310ba4f2238">netFTPs_FileAccess</a> &mdash;  Check if remote user is allowed to access a file on FTP server. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__ftp__access__filter__mui.html#ga10e6ca292ab005d9e9f786ff84f97ae1">netFTPs_GetUserId</a> &mdash;  Retrieve the user identification number. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
-<p><a class="el" href="group__ftp__user__notification.html">User Callback</a></p><ul>
+<p><a class="el" href="group__ftp__user__notification.html">User Callback</a></p>
+<ul>
 <li><a class="el" href="group__ftp__user__notification.html#ga32dd710872b1d0a7d244af76f942d807">netFTPs_Notify</a> &mdash;  Notify the user application about events in FTP server service. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 </ul>
-<p><a class="el" href="group__ftp__fs__interface.html">File System Interface</a></p><ul>
+<p><a class="el" href="group__ftp__fs__interface.html">File System Interface</a></p>
+<ul>
 <li><a class="el" href="group__ftp__fs__interface.html#ga548f8a80d43cfc29d117cf93b4165942">netFTPs_fclose</a> &mdash;  Close a file previously open on FTP server. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 <li><a class="el" href="group__ftp__fs__interface.html#ga034f0593c51540b396a87e0d7cdfbada">netFTPs_fdelete</a> &mdash;  Delete a file on FTP server. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 <li><a class="el" href="group__ftp__fs__interface.html#ga058e1483a1bf2d52e7fe296b52d88901">netFTPs_ffind</a> &mdash;  Search the file system directory for matching files. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
@@ -222,14 +230,17 @@ FTP Server</h1>
 </ul>
 <h1><a class="anchor" id="net_fo_ftpc"></a>
 FTP Client</h1>
-<p><a class="el" href="group__ftpc__user__api.html">Control Interface</a></p><ul>
+<p><a class="el" href="group__ftpc__user__api.html">Control Interface</a></p>
+<ul>
 <li><a class="el" href="group__ftpc__user__api.html#ga3ef24b53e54fc1cfb9e325d861679065">netFTPc_Connect</a> &mdash;  Start FTP client file operation session. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
-<p><a class="el" href="group__ftpc__operation.html">User Callbacks</a></p><ul>
+<p><a class="el" href="group__ftpc__operation.html">User Callbacks</a></p>
+<ul>
 <li><a class="el" href="group__ftpc__operation.html#ga6c61683ecd364f193ceebd3aa6974288">netFTPc_Notify</a> &mdash;  Notify the user application when FTP client operation ends. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__ftpc__operation.html#ga2d45d1e964d8960971fb852b45f4cdf8">netFTPc_Process</a> &mdash;  Request parameters for FTP client session. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 </ul>
-<p><a class="el" href="group__ftpc__fs__interface.html">File System Interface</a></p><ul>
+<p><a class="el" href="group__ftpc__fs__interface.html">File System Interface</a></p>
+<ul>
 <li><a class="el" href="group__ftpc__fs__interface.html#ga78ba90c223885e5e83c7ce37cf1ad1d6">netFTPc_fclose</a> &mdash;  Close local file previously open in FTP client. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 <li><a class="el" href="group__ftpc__fs__interface.html#gafc7187116cf338b433a4b600cf3dd1c4">netFTPc_fopen</a> &mdash;  Open local file for reading or writing in FTP client. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 <li><a class="el" href="group__ftpc__fs__interface.html#ga22bd53a7b2278258f7445aa6c297b6d6">netFTPc_fread</a> &mdash;  Read block of data from local file in FTP client. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
@@ -237,7 +248,8 @@ FTP Client</h1>
 </ul>
 <h1><a class="anchor" id="net_fo_tftps"></a>
 TFTP Server</h1>
-<p><a class="el" href="group__tftp__server__user__api.html">Control Interface</a></p><ul>
+<p><a class="el" href="group__tftp__server__user__api.html">Control Interface</a></p>
+<ul>
 <li><a class="el" href="group__tftp__server__user__api.html#gaf0b01871618755b991c4fcc180285328">netTFTPs_GetPort</a> &mdash;  Get port number of the TFTP server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__tftp__server__user__api.html#gab33ee49d532b710e242751c1c3ba55ab">netTFTPs_GetRootPath</a> &mdash;  Retrieve path to the root directory on TFTP server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__tftp__server__user__api.html#gadf4f8d4aa4a107a1c3c796e536dab04a">netTFTPs_Running</a> &mdash;  Check if the TFTP server is running. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
@@ -246,10 +258,12 @@ TFTP Server</h1>
 <li><a class="el" href="group__tftp__server__user__api.html#gabec93856d5fbf3585a0d72af046458bb">netTFTPs_Start</a> &mdash;  Start the TFTP server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__tftp__server__user__api.html#gacdd22dd0d73fb2d2fc912a8d66897705">netTFTPs_Stop</a> &mdash;  Stop the TFTP server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
-<p><a class="el" href="group__tftp__server__access.html">Access Interface</a></p><ul>
+<p><a class="el" href="group__tftp__server__access.html">Access Interface</a></p>
+<ul>
 <li><a class="el" href="group__tftp__server__access.html#gab05c8ba4e93e67235ca3ac5e955288f4">netTFTPs_AcceptClient</a> &mdash;  Accept or deny connection from a remote TFTP client. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 </ul>
-<p><a class="el" href="group__tftp__server__fs__interface.html">File System Interface</a></p><ul>
+<p><a class="el" href="group__tftp__server__fs__interface.html">File System Interface</a></p>
+<ul>
 <li><a class="el" href="group__tftp__server__fs__interface.html#gaf24da09078fa289aabbfcdd742de9cce">netTFTPs_fclose</a> &mdash;  Close a file previously open on the TFTP server. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 <li><a class="el" href="group__tftp__server__fs__interface.html#gab32ad29f74e3ec6a8f3364e196f8bdb6">netTFTPs_fopen</a> &mdash;  Open a file for reading or writing on the TFTP server. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 <li><a class="el" href="group__tftp__server__fs__interface.html#ga972cb9d3e54f68650124f01b498e9281">netTFTPs_fread</a> &mdash;  Read block of data from a file on the TFTP server. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
@@ -257,14 +271,17 @@ TFTP Server</h1>
 </ul>
 <h1><a class="anchor" id="net_fo_tftpc"></a>
 TFTP Client</h1>
-<p><a class="el" href="group__tftpc__user__api.html">Control Interface</a></p><ul>
+<p><a class="el" href="group__tftpc__user__api.html">Control Interface</a></p>
+<ul>
 <li><a class="el" href="group__tftpc__user__api.html#gac872474a5e147043a6fb5581abdd9856">netTFTPc_Get</a> &mdash;  Retrieve a file from a remote TFTP server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__tftpc__user__api.html#ga436b11a1a4d2ad7eb2ac0172367720f9">netTFTPc_Put</a> &mdash;  Put a file to a remote TFTP server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
-<p><a class="el" href="group__tftpc__operation.html">User Callback</a></p><ul>
+<p><a class="el" href="group__tftpc__operation.html">User Callback</a></p>
+<ul>
 <li><a class="el" href="group__tftpc__operation.html#ga133b104cbb822a06d3b5db72a3aeb5ff">netTFTPc_Notify</a> &mdash;  Notify the user application when TFTP client operation ends. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 </ul>
-<p><a class="el" href="group__tftpc__fs__interface.html">File System Interface</a></p><ul>
+<p><a class="el" href="group__tftpc__fs__interface.html">File System Interface</a></p>
+<ul>
 <li><a class="el" href="group__tftpc__fs__interface.html#gaf47d007ffeeb03ea341fb1bdc02085f9">netTFTPc_fclose</a> &mdash;  Close local file previously open in the TFTP client. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 <li><a class="el" href="group__tftpc__fs__interface.html#ga93d1375cba94060f0f25f2f2e2923133">netTFTPc_fopen</a> &mdash;  Open local file for reading or writing in the TFTP client. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 <li><a class="el" href="group__tftpc__fs__interface.html#ga5cc46802dfb7f353bd3f212bddf0f966">netTFTPc_fread</a> &mdash;  Read block of data from local file in the TFTP client. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
@@ -272,7 +289,8 @@ TFTP Client</h1>
 </ul>
 <h1><a class="anchor" id="net_fo_telnet"></a>
 Telnet Server</h1>
-<p><a class="el" href="group__telnet__user__api.html">Control Interface</a></p><ul>
+<p><a class="el" href="group__telnet__user__api.html">Control Interface</a></p>
+<ul>
 <li><a class="el" href="group__telnet__user__api.html#ga6cd80391e20e12ed698f01e8a77f2e0f">netTELNETs_CheckCommand</a> &mdash;  Check command string for a command. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__telnet__user__api.html#ga67fd9ec340a8a1353d21481cc0b8040e">netTELNETs_GetClient</a> &mdash;  Get IP address and port number of a connected Telnet client. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__telnet__user__api.html#gae398eb97b49134af120f415797182445">netTELNETs_GetPassword</a> &mdash;  Retrieve password of the built-in user account. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
@@ -290,26 +308,30 @@ Telnet Server</h1>
 <li><a class="el" href="group__telnet__user__api.html#ga96c9ccb60d7275809fb4ee13946f20db">netTELNETs_Start</a> &mdash;  Start the Telnet server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__telnet__user__api.html#ga5388c98ce98454b7c341ce931a2bc6f0">netTELNETs_Stop</a> &mdash;  Stop the Telnet server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
-<p><a class="el" href="group__telnet__access__filter__mui.html">Access and Multi-User Interface</a></p><ul>
+<p><a class="el" href="group__telnet__access__filter__mui.html">Access and Multi-User Interface</a></p>
+<ul>
 <li><a class="el" href="group__telnet__access__filter__mui.html#ga3ec99f8332f7734909fb66808daca8f4">netTELNETs_AcceptClient</a> &mdash;  Accept or deny a connection from a remote Telnet client. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__telnet__access__filter__mui.html#ga2ce267a4349c5723e02eee6e22149bb8">netTELNETs_CheckPassword</a> &mdash;  Check user account password in the user database. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__telnet__access__filter__mui.html#ga73d0d9e1ca34deaef1a4d0ae60e4f899">netTELNETs_CheckUsername</a> &mdash;  Check if an user account exist in the user database. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__telnet__access__filter__mui.html#ga6084b683467f7703e1d202243d45f13a">netTELNETs_GetUserId</a> &mdash;  Retrieve the user identification number. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
-<p><a class="el" href="group__telnet__user__notification.html">User Callbacks</a></p><ul>
+<p><a class="el" href="group__telnet__user__notification.html">User Callbacks</a></p>
+<ul>
 <li><a class="el" href="group__telnet__user__notification.html#gae28cb4a796ee5e59ad5e32dccc969c76">netTELNETs_ProcessCommand</a> &mdash;  Process and execute a command requested by the Telnet client. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__telnet__user__notification.html#ga66dbef28a03b6885922151c38bf3b0e2">netTELNETs_ProcessMessage</a> &mdash;  Request a message for a Telnet server session. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 </ul>
 <h1><a class="anchor" id="net_fo_snmp"></a>
 SNMP Agent</h1>
-<p><a class="el" href="group__snmp__user__api.html">Control Interface</a></p><ul>
+<p><a class="el" href="group__snmp__user__api.html">Control Interface</a></p>
+<ul>
 <li><a class="el" href="group__snmp__user__api.html#gafb7747fb2b3e1feb9bffebf39c2cb995">netSNMP_SetCommunity</a> &mdash;  Change SNMP community to a new community. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__snmp__user__api.html#ga72b7ecacce13bb23ffeccdc691310d08">netSNMP_SetMIB_Table</a> &mdash;  Register MIB table to SNMP Agent. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__snmp__user__api.html#ga032aa3a7dbce115fa3286848ebb5960f">netSNMP_Trap</a> &mdash;  Send a trap message to the Trap Manager. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
 <h1><a class="anchor" id="net_fo_dnsc"></a>
 DNS Client</h1>
-<p><a class="el" href="group__starting__dns.html">Control Interface</a></p><ul>
+<p><a class="el" href="group__starting__dns.html">Control Interface</a></p>
+<ul>
 <li><a class="el" href="group__starting__dns.html#gaaa2001ec26cef7e8a35ddc989de83449">netDNSc_cb_t</a> &mdash;  DNS Client Event callback function.  </li>
 <li><a class="el" href="group__starting__dns.html#ga8ec9f1d13d74321604819950a63fa3a4">netDNSc_GetHostByName</a> &mdash;  Resolve IP address of a host from a hostname. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__starting__dns.html#gabdfb833d5ee0ce0be704b3dceb00fecd">netDNSc_GetHostByNameX</a> &mdash;  Resolve IP address of a host from a hostname in blocking mode. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
@@ -317,7 +339,8 @@ DNS Client</h1>
 </ul>
 <h1><a class="anchor" id="net_fo_sntpc"></a>
 SNTP Client</h1>
-<p><a class="el" href="group__starting__sntp.html">Control Interface</a></p><ul>
+<p><a class="el" href="group__starting__sntp.html">Control Interface</a></p>
+<ul>
 <li><a class="el" href="group__starting__sntp.html#gaf3fd3ff2aefd0e126d2c792431ddbff7">netSNTPc_cb_t</a> &mdash;  SNTP Client callback function.  </li>
 <li><a class="el" href="group__starting__sntp.html#ga5fb2de3e22a5aac8c29e1e7efdb567ca">netSNTPc_GetTime</a> &mdash;  Determine current time from NTP or SNTP time server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__starting__sntp.html#ga04422104fd2213e360bb4fdadc9eadec">netSNTPc_GetTimeX</a> &mdash;  Determine current time from NTP or SNTP time server in blocking mode. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
@@ -325,30 +348,35 @@ SNTP Client</h1>
 </ul>
 <h1><a class="anchor" id="net_fo_smtpc"></a>
 SMTP Client</h1>
-<p><a class="el" href="group__smtpc__user__api.html">Control Interface</a></p><ul>
+<p><a class="el" href="group__smtpc__user__api.html">Control Interface</a></p>
+<ul>
 <li><a class="el" href="group__smtpc__user__api.html#ga33454db9427528430742f6863c22f871">netSMTPc_Connect</a> &mdash;  Start SMTP client to send an email in legacy mode. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__smtpc__user__api.html#gabb5265fa948e0bfded49cc7bf695ab5d">netSMTPc_SendMail</a> &mdash;  Send an email in blocking mode. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
-<p><a class="el" href="group__smtpc__operation.html">User Callbacks</a></p><ul>
+<p><a class="el" href="group__smtpc__operation.html">User Callbacks</a></p>
+<ul>
 <li><a class="el" href="group__smtpc__operation.html#ga58a7a56c6bda480e21591ee33c028aa5">netSMTPc_AcceptAuthentication</a> &mdash;  Accept or deny authentication requested by SMTP server. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__smtpc__operation.html#ga5240c89a181c1ddb07bbe888a6a8657f">netSMTPc_Notify</a> &mdash;  Notify the user application when SMTP client operation ends. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__smtpc__operation.html#ga9f299f586e428d9a005c1ca9668fd7b3">netSMTPc_Process</a> &mdash;  Request parameters for SMTP client session. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 </ul>
-<p><a class="el" href="group__smtpc__fs__interface.html">File System Interface</a></p><ul>
+<p><a class="el" href="group__smtpc__fs__interface.html">File System Interface</a></p>
+<ul>
 <li><a class="el" href="group__smtpc__fs__interface.html#ga6b7289766a9e36aa7dedf70ddaf72540">netSMTPc_fclose</a> &mdash;  Close a file previously open in SMTP client. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 <li><a class="el" href="group__smtpc__fs__interface.html#ga483fcb55cfcc925168851ff4fa1167c0">netSMTPc_fopen</a> &mdash;  Open a file for reading in SMTP client. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 <li><a class="el" href="group__smtpc__fs__interface.html#ga410c403438fa041b547d4af833aee4df">netSMTPc_fread</a> &mdash;  Read block of data from a file in SMTP client. [<a class="el" href="group__function__categories.html#interface">interface</a>].  </li>
 </ul>
 <h1><a class="anchor" id="net_fo_pingc"></a>
 Ping Client</h1>
-<p><a class="el" href="group__netPing__Func.html">Ping Client</a></p><ul>
+<p><a class="el" href="group__netPing__Func.html">Ping Client</a></p>
+<ul>
 <li><a class="el" href="group__netPing__Func.html#gab2bf0b4b7c59b6d5cc20a806eae2aedb">netPing_cb_t</a> &mdash;  Ping Event callback function.  </li>
 <li><a class="el" href="group__netPing__Func.html#ga98d6ba045bd0270efae57d0fbebecdde">netPing_Echo</a> &mdash;  Start ICMP ping process. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__netPing__Func.html#gafa780e952aeb5a2e19987ca24a1c620e">netPing_EchoX</a> &mdash;  Start ICMP ping process in blocking mode. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
 <h1><a class="anchor" id="net_fo_socket"></a>
 Sockets</h1>
-<p><a class="el" href="group__netBSD__Func.html">BSD Socket</a></p><ul>
+<p><a class="el" href="group__netBSD__Func.html">BSD Socket</a></p>
+<ul>
 <li><a class="el" href="group__using__network__sockets__bsd__func.html#ga34f0c4489df12e0ce4972a78ec3d62b4">accept</a> &mdash;  Accept connect request for a listening socket. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__using__network__sockets__bsd__func.html#ga371b442b92e67a6046b168521d4a1b4a">bind</a> &mdash;  Assign a local address and port to a socket. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__using__network__sockets__bsd__func.html#ga50c4d62065c117f425ae2734e7979f21">closesocket</a> &mdash;  Close socket and release socket descriptor. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
@@ -374,7 +402,8 @@ Sockets</h1>
 <li><a class="el" href="group__using__network__sockets__bsd__func.html#gaadac07d29a87adfc6435582c989cdbc2">inet_pton</a> &mdash;  Convert from text address to a binary network address. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__using__network__sockets__bsd__func.html#ga0bd214382fd14e4428076d88ced3748b">inet_ntop</a> &mdash;  Convert from binary network address to a text string. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
-<p><a class="el" href="group__netTCP__Func.html">TCP Socket</a></p><ul>
+<p><a class="el" href="group__netTCP__Func.html">TCP Socket</a></p>
+<ul>
 <li><a class="el" href="group__tcp__user__api.html#ga9c559a5589c9476028adde1f8e509624">netTCP_cb_t</a> &mdash;  TCP Event callback function.  </li>
 <li><a class="el" href="group__tcp__user__api.html#ga621b26f6da519678dd6a660fce012668">netTCP_Abort</a> &mdash;  Instantly stop TCP communication. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__tcp__user__api.html#gad3b70b023f209cd7687f15f553219185">netTCP_Close</a> &mdash;  Stop TCP communication and start closing procedure. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
@@ -393,7 +422,8 @@ Sockets</h1>
 <li><a class="el" href="group__tcp__user__api.html#ga5770081776ef5a657b984a9ee600c149">netTCP_SendReady</a> &mdash;  Check if TCP socket can send data. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__tcp__user__api.html#ga574cc756d0ab2fb8e4719befd7c56913">netTCP_SetOption</a> &mdash;  Set TCP socket IP option. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
-<p><a class="el" href="group__netUDP__Func.html">UDP Socket</a></p><ul>
+<p><a class="el" href="group__netUDP__Func.html">UDP Socket</a></p>
+<ul>
 <li><a class="el" href="group__udp__user__api.html#ga25e3d72c69328efecfcf78c413251351">netUDP_cb_t</a> &mdash;  UDP Event callback function.  </li>
 <li><a class="el" href="group__udp__user__api.html#gaa92c8a4eaead886fe8b9bf16231aca91">netUDP_Close</a> &mdash;  Stop UDP communication and close socket. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__udp__user__api.html#gac133764142fbb68ec64ff13c01ed1208">netUDP_GetBuffer</a> &mdash;  Allocate memory for UDP send buffer. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
@@ -406,7 +436,8 @@ Sockets</h1>
 </ul>
 <h1><a class="anchor" id="net_interfaceover"></a>
 Interfaces</h1>
-<p><a class="el" href="group__netInterfaces__Common.html">Common Interface</a></p><ul>
+<p><a class="el" href="group__netInterfaces__Common.html">Common Interface</a></p>
+<ul>
 <li><a class="el" href="group__common__user__api.html#gadbf28bb56266770f9b1d276c48c13d36">netIF_GetOption</a> &mdash;  Get the current value of an Interface option. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__common__user__api.html#ga919bfb395143e0bc1775106080c61eb6">netIF_SetOption</a> &mdash;  Set the value of an Interface option. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__common__user__api.html#ga7e16ce8f65945bfc49bee15172d6ad41">netIF_SetDefault</a> &mdash;  Set default network interface for Internet access. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].   <br  />
@@ -440,12 +471,14 @@ Interfaces</h1>
 <li><a class="el" href="group__common__user__api.html#ga43818d4694329673f7f51478d2c48bd2">netDHCP6_Enable</a> &mdash;  Enable Dynamic Host Configuration version 6 at runtime. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__common__user__api.html#ga7befaaacaa77515ba50968111464fd99">netICMP6_SetNoEcho</a> &mdash;  Enable or disable ICMPv6 Echo response. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
-<p><a class="el" href="group__netETH__Func.html">Ethernet Interface</a></p><ul>
+<p><a class="el" href="group__netETH__Func.html">Ethernet Interface</a></p>
+<ul>
 <li><a class="el" href="group__ethernet__interface__callbacks.html#gaec33d8aae18edc0ce65cad4480246398">netETH_Notify</a> &mdash;  Notify the user of Ethernet link state change event. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 <li><a class="el" href="group__ethernet__user__api.html#ga3689cc367295fc84a2adade9a64b0178">netETH_SendRaw</a> &mdash;  Send raw Ethernet data. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__ethernet__interface__callbacks.html#ga44683a9134e3a393c5e8125ce42040f9">netETH_ReceiveRaw</a> &mdash;  Receive raw Ethernet data. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  </li>
 </ul>
-<p><a class="el" href="group__netWiFi__Func.html">WiFi Interface</a></p><ul>
+<p><a class="el" href="group__netWiFi__Func.html">WiFi Interface</a></p>
+<ul>
 <li><a class="el" href="group__wifi__user__api.html#gab4bacf0c336053959d9f679519860558">netWiFi_Scan</a> &mdash;  Search for available WiFi networks. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__wifi__user__api.html#ga21e5415954d60f6efa9b3fe5ea213e59">netWiFi_GetOption</a> &mdash;  Get the value of the WiFi driver option. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__wifi__user__api.html#gabbb13b72cebb270a9ecb6bf3cc2e1325">netWiFi_SetOption</a> &mdash;  Set the value of the WiFi driver option. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
@@ -454,13 +487,15 @@ Interfaces</h1>
 <li><a class="el" href="group__wifi__user__api.html#ga6a10a26a39c17e10765cb6231790e238">netWiFi_IsConnected</a> &mdash;  Get the connection state of the WiFi interface. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__wifi__user__api.html#gafa56f8f1d3da36c2f27de72c0dfdc21c">netWiFi_GetNetInfo</a> &mdash;  Get the network information of the WiFi interface. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
-<p><a class="el" href="group__netPPP__Func.html">PPP Interface</a></p><ul>
+<p><a class="el" href="group__netPPP__Func.html">PPP Interface</a></p>
+<ul>
 <li><a class="el" href="group__ppp__user__api.html#ga19e5b83c645aec7b967d4a1e06e05e65">netPPP_Close</a> &mdash;  Disconnect PPP link between two modems. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__ppp__user__api.html#gaff5343f51863e458736684f4d6bc5e91">netPPP_Connect</a> &mdash;  Start a dial-up connection to remote PPP server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__ppp__user__api.html#gaef04eb4884490ffbe3c66eda146ac66c">netPPP_LinkUp</a> &mdash;  Determine the state of PPP link. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__ppp__user__api.html#ga4bd34e4e1bb6351ed4ba20901e081ac9">netPPP_Listen</a> &mdash;  Start PPP interface to accept incoming PPP connection. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 </ul>
-<p><a class="el" href="group__netSLIP__Func.html">SLIP Interface</a></p><ul>
+<p><a class="el" href="group__netSLIP__Func.html">SLIP Interface</a></p>
+<ul>
 <li><a class="el" href="group__slip__user__api.html#ga03fde561d81d1126b7dfb99eb64ca3f8">netSLIP_Close</a> &mdash;  Disconnect SLIP link between two modems. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__slip__user__api.html#ga41f7779304aeca045fb263d70c75b411">netSLIP_Connect</a> &mdash;  Start a dial-up connection to remote SLIP server. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__slip__user__api.html#ga7866285b8627f6f107cfe5d717c0f095">netSLIP_LinkUp</a> &mdash;  Determine the state of SLIP link. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
@@ -468,7 +503,8 @@ Interfaces</h1>
 </ul>
 <h1><a class="anchor" id="net_fo_ip_addr"></a>
 IP Address</h1>
-<p><a class="el" href="group__netGen__AddrConvFunc.html">Conversion Functions</a></p><ul>
+<p><a class="el" href="group__netGen__AddrConvFunc.html">Conversion Functions</a></p>
+<ul>
 <li><a class="el" href="group__netGen__AddrConvFunc.html#ga39518491393bd2b4c6f32df03768b6b8">netIP_aton</a> &mdash;  Convert IP address from text to binary form. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__netGen__AddrConvFunc.html#ga546c7611025489af14f2b37dbda445c2">netIP_ntoa</a> &mdash;  Convert IP address from binary to text form. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
 <li><a class="el" href="group__netGen__AddrConvFunc.html#ga8f9dc823db5abb2bc6ccd8e1788c92da">netMAC_aton</a> &mdash;  Convert MAC address from text to binary form. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
@@ -476,7 +512,8 @@ IP Address</h1>
 </ul>
 <h1><a class="anchor" id="net_fo_sys_func"></a>
 System Functions (User)</h1>
-<p><a class="el" href="group__netSys__Func.html">System Functions (User)</a></p><ul>
+<p><a class="el" href="group__netSys__Func.html">System Functions (User)</a></p>
+<ul>
 <li><a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> &mdash;  Initialize Network Component and interfaces. [<a class="el" href="group__function__categories.html#not_thread-safe">not_thread-safe</a>].  </li>
 <li><a class="el" href="group__netSys__Func.html#gaeccbc594239e8a091514b5c225a642bf">netUninitialize</a> &mdash;  De-initialize Network Component and interfaces. [<a class="el" href="group__function__categories.html#not_thread-safe">not_thread-safe</a>].  </li>
 <li><a class="el" href="group__netSys__Func.html#ga6eda1bb2895a98252a851160c15111a5">netSYS_GetHostName</a> &mdash;  Retrieve localhost name. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  </li>
@@ -484,7 +521,8 @@ System Functions (User)</h1>
 </ul>
 <h1><a class="anchor" id="net_fo_modem"></a>
 Modem Driver Functions</h1>
-<p><a class="el" href="group__netDS__Modem.html">Modem Driver Functions</a></p><ul>
+<p><a class="el" href="group__netDS__Modem.html">Modem Driver Functions</a></p>
+<ul>
 <li><a class="el" href="group__netDS__Modem.html#gae8619c77f38c858b955990a6ca30ce7d">Modem_Dial</a> &mdash;  Start dialing target number.  </li>
 <li><a class="el" href="group__netDS__Modem.html#gadc8b483c92661e3f12cae24291f174cf">Modem_Hangup</a> &mdash;  Hangup the line.  </li>
 <li><a class="el" href="group__netDS__Modem.html#ga8bee6d2952068b51ab1bcb0d3b8d3d5c">Modem_Initialize</a> &mdash;  Initialize Modem Device.  </li>

@@ -182,12 +182,12 @@ Functions</h2></td></tr>
 </table>
 <p>The callback function <a class="el" href="group__ethernet__interface__callbacks.html#gaec33d8aae18edc0ce65cad4480246398">netETH_Notify</a> informs the user application about state changes on the Ethernet link.</p>
 <p><a class="anchor" id="ethernet_arp"></a></p>
-<h2><a class="anchor" id="autotoc_md96"></a>
+<h2><a class="anchor" id="autotoc_md98"></a>
 Address Resolution Protocol (ARP, IPv4 only)</h2>
 <p>The <a href="https://en.wikipedia.org/wiki/Address_Resolution_Protocol" target="_blank">Address Resolution Protocol (ARP)</a> is used to resolve network layer (IP) addresses to link layer (MAC) addresses. It is being used in IPv4 networks only. In IPv6 networks, <a class="el" href="group__ethernet__user__api.html#ethernet_ndp">Neighbor Discovery Protocol (NDP)</a> is used instead.</p>
 <p>The Network Component provides five functions for ARP. Two functions are working on the ARP table, two functions actually resolve the IP or MAC address and one function that checks whether the IP address is already in use. <a class="el" href="group__common__user__api.html#ga2ef41d262467109292e7e96eb4b6e399">netARP_CacheIP</a> determines whether the ARP table has a MAC address resolved for a certain IP address. <a class="el" href="group__common__user__api.html#ga0517419c7d4cf9bdb9133a26314f4fb9">netARP_CacheMAC</a> determines whether the ARP table has an IP address resolved for a certain MAC address. To retrieve the MAC address for an IP address from the ARP table, use <a class="el" href="group__common__user__api.html#ga63bb9bd2f310b9b47a987dd968ae34ce">netARP_GetMAC</a>, while <a class="el" href="group__common__user__api.html#ga64d1b664c9e52f4a3e1adb333f0b059b">netARP_GetIP</a> provides the IP address for a given MAC address. To verify that the IP address is not used in local area network, use <a class="el" href="group__common__user__api.html#ga9b7dcaba471180a6033c4568e23872e7">netARP_Probe</a>.</p>
 <p><a class="anchor" id="ethernet_ndp"></a></p>
-<h2><a class="anchor" id="autotoc_md97"></a>
+<h2><a class="anchor" id="autotoc_md99"></a>
 Neighbor Discovery Protocol (NDP, IPv6 only)</h2>
 <p>The <a href="https://en.wikipedia.org/wiki/Neighbor_Discovery_Protocol" target="_blank">Neighbor Discovery Protocol (NDP)</a> operates on the link layer and is responsible for</p><ul>
 <li>address auto-configuration of a node</li>
@@ -201,17 +201,17 @@ Neighbor Discovery Protocol (NDP, IPv6 only)</h2>
 <p>It is available for IPv6 only.</p>
 <p>The function <a class="el" href="group__common__user__api.html#ga8729881dd80de688b7d39e18d0abfb0a">netNDP_CacheIP</a> checks if the NDP table has a MAC address resolved for a certain IPv6 address. To retrieve this MAC address, use <a class="el" href="group__common__user__api.html#gafee45b0bcc2a5df0981fbe8a4de1543b">netNDP_GetMAC</a>. To retrieve an IPv6 address for any given MAC address, use <a class="el" href="group__common__user__api.html#ga28b47274f61346da4b15c811544809f3">netNDP_GetIP</a>. To verify that the IPv6 address is not used in local area network, use <a class="el" href="group__common__user__api.html#ga8a28246375e6b569630be5610c43ed36">netNDP_Probe</a>.</p>
 <p><a class="anchor" id="ethernet_igmp"></a></p>
-<h2><a class="anchor" id="autotoc_md98"></a>
+<h2><a class="anchor" id="autotoc_md100"></a>
 Internet Group Management Protocol (IGMP, IPv4 only)</h2>
 <p>The <a href="https://en.wikipedia.org/wiki/Internet_Group_Management_Protocol" target="_blank">Internet Group Management Protocol (IGMP)</a> is used to operate IP Multicasting. This means that an IP datagram is sent to a "host group". A multicast datagram is delivered to all members of its target host group. The IGMPv1 and IGMPv2 protocol specification is supported by the Network Component. It is only available for IPv4.</p>
 <p>To add a host to a specific host group, use <a class="el" href="group__common__user__api.html#ga7f3207be0b4b9a6aac320ddfe4c5937f">netIGMP_Join</a>. To leave a host group, <a class="el" href="group__common__user__api.html#gab0deb90dddf3ac4471d513c6a501b641">netIGMP_Leave</a> is used.</p>
 <p><a class="anchor" id="ethernet_mld"></a></p>
-<h2><a class="anchor" id="autotoc_md99"></a>
+<h2><a class="anchor" id="autotoc_md101"></a>
 Multicast Listener Discovery Protocol (MLD, IPv6 only)</h2>
 <p>The <a href="https://en.wikipedia.org/wiki/Multicast_Listener_Discovery" target="_blank">Multicast Listener Discovery (MLD)</a> is used to perform IPv6 Multicasting. This means that an IPv6 datagram is sent to a "multicast group". A multicast datagram is delivered to all members of its destination multicast listening nodes. The MLDv1 protocol specification is supported by the Network Component. It is only available for IPv6.</p>
 <p>To add a node to a specific multicast group, use <a class="el" href="group__common__user__api.html#ga78f8362937a5cbb046f5ccea7223f0da">netMLD_Join</a>. To leave a multicast group, <a class="el" href="group__common__user__api.html#ga5c8885da1c15cc4130bb7e1fb48f5939">netMLD_Leave</a> is used.</p>
 <p><a class="anchor" id="ethernet_dhcp"></a></p>
-<h2><a class="anchor" id="autotoc_md100"></a>
+<h2><a class="anchor" id="autotoc_md102"></a>
 Dynamic Host Configuration Protocol (DHCP, IPv4 only)</h2>
 <p>The <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol" target="_blank">Dynamic Host Configuration Protocol (DHCP)</a> is used for dynamically distributing network configuration parameters, such as IP addresses for interfaces and services. Using DHCP, network nodes request IP addresses and networking parameters automatically from a DHCP server, eliminating the need to configure these settings manually (refer to <a class="el" href="group__using__ethernet__interfaces__ip__assign.html">IP Address Assignment</a> for more information). Although DHCP is specified for IPv4 and IPv6 networks, the Network Component is only supporting IPv4 networks at the moment.</p>
 <p>Like all services, the DHCP is normally started automatically if <code>NET_START_SERVICE</code> is set to <span class="XML-Token">1</span> in the <b>Net_Config.h</b> configuration file. If it is disabled, DHCP needs to be started manually in the user application using <a class="el" href="group__common__user__api.html#gace7634f951ec523cccc505b5d2ffd5a7">netDHCP_Enable</a>. At runtime, it is always possible to stop DHCP using the function <a class="el" href="group__common__user__api.html#gad8ddb783cbb076297f64c3aa13a7d930">netDHCP_Disable</a>. In this case, the Network Core will revert the IP address of the node to the static IP address specified in the <b>Net_Config_ETH_<em>n</em></b>.h file.</p>

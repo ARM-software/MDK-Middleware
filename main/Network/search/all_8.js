@@ -10,7 +10,5 @@ var searchData=
   ['hr_7',['hr',['../rl__net_8h.html#af81497bba948ed53ee254cac82d9f40f',1,'NET_FS_TIME']]],
   ['htonl_8',['htonl',['../rl__net_8h.html#ae57dfbb8569adaac585951a19ae510c8',1,'rl_net.h']]],
   ['htons_9',['htons',['../rl__net_8h.html#af3a256b18d0645af51564e63fec1bbbb',1,'rl_net.h']]],
-  ['http_20server_10',['HTTP Server',['../Compact_Web_Server_Example.html',1,'nw_examples'],['../group__netHTTP__Func.html',1,'(Global Namespace)']]],
-  ['http_20upload_11',['HTTP Upload',['../HTTP_Upload_Example.html',1,'nw_examples']]],
-  ['https_20server_12',['HTTPS Server',['../Compact_Secure_Web_Server_Example.html',1,'nw_examples']]]
+  ['http_20server_10',['HTTP Server',['../group__netHTTP__Func.html',1,'']]]
 ];

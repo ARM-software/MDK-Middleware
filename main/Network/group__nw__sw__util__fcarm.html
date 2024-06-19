@@ -133,14 +133,14 @@ $(document).ready(function(){initNavTree('group__nw__sw__util__fcarm.html',''); 
 </p>
 <p>Software utility to compile static web pages. </p>
 <p>The FCARM file converter reformats all web files into a single C-file which is then included and compiled into the project. All files are stored in the Virtual ROM File System.</p>
-<h2><a class="anchor" id="autotoc_md70"></a>
+<h2><a class="anchor" id="autotoc_md72"></a>
 Automatic Invocation</h2>
 <p>If configured appropriately, FCARM will be invoked automatically during a project build. For setup, go to <b>Project</b> -&gt; <b>Options</b> <b>for</b> <b>Target</b> and select the <b>Utilities</b> tab. At the bottom, you can configure how FCARM compiles the image files. Here's an example:</p>
 <p><a class="anchor" id="fcarm_setup_ds"></a></p><div class="image">
 <img src="fcarm_configuration.png" alt=""/>
 <div class="caption">
 Configure Image File Processing (FCARM) Dialog</div></div>
-<h2><a class="anchor" id="autotoc_md71"></a>
+<h2><a class="anchor" id="autotoc_md73"></a>
 Manual Invocation</h2>
 <p>FCARM can also be invoked from the command line. You will find the executable in your MDK installation's sub-directory <code>\ARM\BIN</code>. FCARM has the following syntax:</p>
 <div class="fragment"><div class="line">FCARM @commandfile</div>
@@ -167,7 +167,7 @@ Manual Invocation</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">ROOT   </td><td class="markdownTableBodyNone">Specifies the root path where web files are located relative to the project directory path.   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md72"></a>
+<h2><a class="anchor" id="autotoc_md74"></a>
 Optimization</h2>
 <p>FCARM integrates a <b>file</b> <b>optimization</b> algorithm to compress files and creates more compact and smaller executable images. FCARM decides on the file extension which kind of compression is used. Each file group has a different compression and optimization flavor.</p>
 <p>When the filename has the <b>tilde</b> <b>prefix</b> (for example, <em>~doStuff</em>.js) then compression or certain compression optimizations are disabled. This is useful when debugging a file. It is hard to trace code compacted to a single line with no spaces, no comments, and no line feeds.</p>
@@ -249,7 +249,7 @@ removes spaces nearby a delimiter:&#160;<code>.,:;=!+-*\/&amp;|&lt;&gt;(){}""?</
 <tr>
 <td>others </td><td>.* </td><td>not affected </td><td>not affected  </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md73"></a>
+<h2><a class="anchor" id="autotoc_md75"></a>
 Examples</h2>
 <p>The following command line converts and optimizes <b>index.htm</b>, creates the output C-file <b>index.c</b>, and creates the listing file <b>index.lst</b>. </p><div class="fragment"><div class="line">FCARM index.htm</div>
 </div><!-- fragment --><p>The following command line converts and optimizes a list of files, creates the output C-file <b>web.c</b>, and creates the listing file <b>web.lst</b>. </p><div class="fragment"><div class="line">FCARM index.htm, keil.gif, llblue.jpg, system.cgi TO web.c</div>
