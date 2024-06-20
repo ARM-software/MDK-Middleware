@@ -1,0 +1,37 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/* Reference Section */
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+
+/**
+\defgroup   usb_files Directories and Files
+\brief      Folders and files related to the USB Component
+\details
+<b>Directories</b>
+
+The table below provides a complete overview of the folders that contain the files related to the USB Component.
+
+Directory                  | Description
+:------------------------- | :---------------------
+./Components/USB/Config    | Configuration Files that are copied to the project when components are selected.
+./Components/USB/Driver    | Drivers for USB Device and USB Host.
+./Components/USB/Include   | Include files for USB Device and USB Host. Once a component is select an Include Path is set for the C/C++ compiler to this directory.
+./Components/USB/Source    | Source files for USB Component.
+./Components/USB/Template  | \urlout{uv4_ca_sourcefiles} files that can be added to the project to create the application-specific functionality for the USB Component.
+
+<b>Header Files</b>
+
+The API interface of the USB Component is provided in the header file %rl_usb.h.
+The table below provides a complete overview of all public header files.
+
+Header File         | Used by           | Description
+:------------------ | :---------------- | :------------------------------------
+%rl_usb.h           | application code  | API interface for the USB Device and USB Host component
+usb_def.h           | main header       | Generic USB definitions
+usb_adc.h           | main header       | USB definitions for ADC device class 
+usb_cdc.h           | main header       | USB definitions for CDC device class 
+usb_cdc_acm_rndis.h | main header       | USB definitions for CDC ACM RNDIS device class 
+usb_hid.h           | main header       | USB definitions for HID device class 
+usb_msc.h           | main header       | USB definitions for MSC device class 
+usb_ms.h            | main header       | USB definitions for USB Microsoft Descriptors
+
+*/

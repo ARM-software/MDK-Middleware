@@ -930,7 +930,7 @@ INPUT                  = src/usb.md \
                          src/usb_function_reference.md \
                          src/usb_resource_requirements.md \
                          src/usb_migration.md \
-                         src/Reference_Files.md \
+                         src/Reference_Files.txt \
                          src/rl_usb.txt \
                          src/usb_structs.txt \
                          ../../../Components/USB/Include/rl_usb.h \

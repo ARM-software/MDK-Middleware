@@ -929,7 +929,7 @@ INPUT                  = src/FileSystem.md \
                          src/fs_function_reference.md \
                          src/fs_resource_requirements.md \
                          src/fs_migration.md \
-                         src/Reference_Files.md \
+                         src/Reference_Files.txt \
                          src/stdio.h \
                          src/stdio.txt \
                          ../../../Components/FileSystem/Include/rl_fs.h \
