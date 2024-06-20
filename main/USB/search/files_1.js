@@ -1,16 +1,18 @@
 var searchData=
 [
-  ['usb_2etxt_0',['usb.txt',['../usb_8txt.html',1,'']]],
-  ['usb_5fclasses_2etxt_1',['usb_classes.txt',['../usb__classes_8txt.html',1,'']]],
-  ['usb_5fexamples_2etxt_2',['usb_examples.txt',['../usb__examples_8txt.html',1,'']]],
-  ['usb_5ffunction_5freference_2etxt_3',['usb_function_reference.txt',['../usb__function__reference_8txt.html',1,'']]],
-  ['usb_5fmigration_2etxt_4',['usb_migration.txt',['../usb__migration_8txt.html',1,'']]],
-  ['usb_5fresource_5frequirements_2etxt_5',['usb_resource_requirements.txt',['../usb__resource__requirements_8txt.html',1,'']]],
-  ['usb_5fstructs_2etxt_6',['usb_structs.txt',['../usb__structs_8txt.html',1,'']]],
-  ['usb_5futilities_2etxt_7',['usb_utilities.txt',['../usb__utilities_8txt.html',1,'']]],
-  ['usbd_5fevr_2eh_8',['usbd_evr.h',['../usbd__evr_8h.html',1,'']]],
-  ['usbd_5fevr_2etxt_9',['usbd_evr.txt',['../usbd__evr_8txt.html',1,'']]],
-  ['usbd_5fmsc_2eh_10',['USBD_MSC.h',['../USBD__MSC_8h.html',1,'']]],
-  ['usbh_5fevr_2eh_11',['usbh_evr.h',['../usbh__evr_8h.html',1,'']]],
-  ['usbh_5fevr_2etxt_12',['usbh_evr.txt',['../usbh__evr_8txt.html',1,'']]]
+  ['usb_2emd_0',['usb.md',['../usb_8md.html',1,'']]],
+  ['usb_5fclasses_2emd_1',['usb_classes.md',['../usb__classes_8md.html',1,'']]],
+  ['usb_5fconcepts_2emd_2',['usb_concepts.md',['../usb__concepts_8md.html',1,'']]],
+  ['usb_5fdevice_2emd_3',['usb_device.md',['../usb__device_8md.html',1,'']]],
+  ['usb_5ffunction_5freference_2emd_4',['usb_function_reference.md',['../usb__function__reference_8md.html',1,'']]],
+  ['usb_5fhost_2emd_5',['usb_host.md',['../usb__host_8md.html',1,'']]],
+  ['usb_5fmigration_2emd_6',['usb_migration.md',['../usb__migration_8md.html',1,'']]],
+  ['usb_5fresource_5frequirements_2emd_7',['usb_resource_requirements.md',['../usb__resource__requirements_8md.html',1,'']]],
+  ['usb_5frev_5fhist_2emd_8',['usb_rev_hist.md',['../usb__rev__hist_8md.html',1,'']]],
+  ['usb_5fstructs_2etxt_9',['usb_structs.txt',['../usb__structs_8txt.html',1,'']]],
+  ['usbd_5fevr_2eh_10',['usbd_evr.h',['../usbd__evr_8h.html',1,'']]],
+  ['usbd_5fevr_2etxt_11',['usbd_evr.txt',['../usbd__evr_8txt.html',1,'']]],
+  ['usbd_5fmsc_2eh_12',['USBD_MSC.h',['../USBD__MSC_8h.html',1,'']]],
+  ['usbh_5fevr_2eh_13',['usbh_evr.h',['../usbh__evr_8h.html',1,'']]],
+  ['usbh_5fevr_2etxt_14',['usbh_evr.txt',['../usbh__evr_8txt.html',1,'']]]
 ];

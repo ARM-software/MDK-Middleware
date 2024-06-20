@@ -142,7 +142,7 @@ $(document).ready(function(){initNavTree('group__usbd__classFunctions__conf.html
 </li>
 <li>Thread stack size settings for every endpoint separately. To allow parallel functionality of the four interfaces, every endpoint (or pair of IN/OUT endpoints on the same endpoint number) uses one thread.</li>
 </ul>
-<p>These settings are used to create the <a class="el" href="USB_Interface_Descriptor.html">Interface Descriptor</a> and <a class="el" href="USB_Endpoint_Descriptor.html">Endpoint Descriptor</a> of the related USB Device Class. It is important that the settings match the application specific behavior in the related C source file USBD_User_CustomClass_<em>n</em>.c.</p>
+<p>These settings are used to create the <a class="el" href="USB_Concepts.html#USB_Interface_Descriptor">Interface Descriptor</a> and <a class="el" href="USB_Concepts.html#USB_Endpoint_Descriptor">Endpoint Descriptor</a> of the related USB Device Class. It is important that the settings match the application specific behavior in the related C source file USBD_User_CustomClass_<em>n</em>.c.</p>
 <div class="image">
 <img src="usbd_config_customclass_h.png" alt=""/>
 <div class="caption">
@@ -157,8 +157,8 @@ Custom Class Configuration File</div></div>
 </li>
 <li><b>Interface</b><ul>
 <li><b>Interface Settings</b><ul>
-<li><b>Interface Number</b> defines the value for <a class="el" href="USB_Interface_Descriptor.html">bInterfaceNumber</a>.</li>
-<li><b>Alternate Setting</b> defines the value for <a class="el" href="USB_Interface_Descriptor.html">bAlternateSetting</a>.</li>
+<li><b>Interface Number</b> defines the value for <a class="el" href="USB_Concepts.html#USB_Interface_Descriptor">bInterfaceNumber</a>.</li>
+<li><b>Alternate Setting</b> defines the value for <a class="el" href="USB_Concepts.html#USB_Interface_Descriptor">bAlternateSetting</a>.</li>
 <li><b>Class Code</b> defines the <a href="https://www.usb.org/defined-class-codes" target="_blank">class code</a>.</li>
 <li><b>Subclass Code</b> defines the <a href="https://www.usb.org/defined-class-codes" target="_blank">subclass code</a>.</li>
 <li><b>Protocol Code</b> defines the <a href="https://www.usb.org/defined-class-codes" target="_blank">protocol code</a>.</li>

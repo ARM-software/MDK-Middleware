@@ -134,10 +134,10 @@ $(document).ready(function(){initNavTree('group__usbd__cdcFunctions__acm__conf.h
 <p>Configuration of the USB Device CDC (ACM) Class. </p>
 <p>This configuration file defines:</p><ul>
 <li>The assignment of the CDC class to the USB Device instance.</li>
-<li><a class="el" href="USB_Endpoints.html">USB Endpoint</a> assignments for the CDC class with parameters for Full/Low-speed and High-speed communication.</li>
+<li><a class="el" href="USB_Concepts.html#USB_Endpoints">USB Endpoint</a> assignments for the CDC class with parameters for Full/Low-speed and High-speed communication.</li>
 <li>Class Settings for the Interface Descriptor.</li>
 </ul>
-<p>These settings are used to create the <a class="el" href="USB_Interface_Descriptor.html">Interface Descriptor</a> and <a class="el" href="USB_Endpoint_Descriptor.html">Endpoint Descriptor</a> of the related USB Device Class. It is important that the settings match the application specific behavior in the related C source file USBD_User_CDC_ACM_<em>n</em>.c.</p>
+<p>These settings are used to create the <a class="el" href="USB_Concepts.html#USB_Interface_Descriptor">Interface Descriptor</a> and <a class="el" href="USB_Concepts.html#USB_Endpoint_Descriptor">Endpoint Descriptor</a> of the related USB Device Class. It is important that the settings match the application specific behavior in the related C source file USBD_User_CDC_ACM_<em>n</em>.c.</p>
 <div class="image">
 <img src="usbd_config_cdc_acm_h.png" alt=""/>
 <div class="caption">
@@ -183,8 +183,8 @@ CDC Class Configuration File</div></div>
 </ul>
 </li>
 <li><b>Communication Class Settings</b><ul>
-<li><b>Communication Class Interface String</b> is used to create <a class="el" href="USB_Descriptors.html">USB Descriptors</a>.</li>
-<li><b>Data Class Interface String</b> is used to create <a class="el" href="USB_Descriptors.html">USB Descriptors</a>.</li>
+<li><b>Communication Class Interface String</b> is used to create <a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a>.</li>
+<li><b>Data Class Interface String</b> is used to create <a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a>.</li>
 <li><b>Abstract Control Model Settings</b><ul>
 <li><b>Call Management Capabilities</b> settings are used to create Call Management Functional Descriptor:<ul>
 <li><b>Call Management channel</b> is used to specify channel of exchanging call management commands. Select required option, for Virtual COM device typically this is set to <code>Communication</code> <code>and</code> <code>Data</code> <code>Class</code> <code>Interface</code>, and for RNDIS device this is typically set to <code>Communication</code> <code>Class</code> <code>Interface</code> <code>only</code>.</li>

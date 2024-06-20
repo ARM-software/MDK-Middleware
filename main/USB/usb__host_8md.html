@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>USB Component: USB Device Mass Storage</title>
+<title>USB Component: usb_host.md File Reference</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('dev_msc_tutorial.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('usb__host_8md.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -124,56 +124,16 @@ $(document).ready(function(){initNavTree('dev_msc_tutorial.html',''); initResiza
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">USB Device Mass Storage </div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">usb_host.md File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>A mass storage USB Device implements an USB memory stick. Together with the <b>File System</b> you can connect various drives using MSC to an USB Host: SD cards, internal or external Flash memory and even a simple RAM disk. The examples accesses either on-chip RAM or a SD card where available. The USB Host can then access the new drives using standard file access methods. The following picture shows an exemplary connection of the development board and the USB Host Computer.</p>
-<div class="image">
-<img src="msc_dev_example_setup.png" alt=""/>
-</div>
-<p>The <b>Abstract.txt</b> file contained in the <b>Documentation</b> group of the <b>Project</b> window gives you more information on the general setup and the available storage device on the development board.</p>
-<h1><a class="anchor" id="autotoc_md11"></a>
-Build the "USB Device Mass Storage" Project</h1>
-<p>Open the example project in MDK.</p>
-<h2><a class="anchor" id="autotoc_md12"></a>
-Source Files</h2>
-<ul>
-<li><b>MassStorage.c</b> contains the main C function that initializes the board hardware and the USB Device Component.</li>
-<li>The <b>USBD_User_MSC_0.c</b> is an adapted code template that implements all necessary file access functions. Refer to <a class="el" href="group__usbd__mscFunctions.html">MSC: Mass Storage Class</a> for details about these template functions.</li>
-</ul>
-<p>If you are using RTOS other than CMSIS-RTOS2 RTX5 for your project please make sure to satisfy <a class="el" href="usb_resource_requirements.html#usbd_res_req">USB Device Resource Requirements</a>.</p>
-<p>You may now build and download the example project to the evaluation board using the µVision commands:</p><ul>
-<li><b>Project</b> --&gt; <b> Build target (F7) </b></li>
-<li><b>Flash</b> &#160;&#160;--&gt; <b> Download (F8) </b></li>
-</ul>
-<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
-<h1><a class="anchor" id="autotoc_md13"></a>
-Using the "USB Device Mass Storage" Project</h1>
-<h2><a class="anchor" id="autotoc_md14"></a>
-Hardware Setup</h2>
-<p>The setup of the Evaluation Board hardware is described in the <b>Abstract.txt</b> file.</p><ul>
-<li>Verify all jumper settings on the target hardware.</li>
-<li>Insert a SD card into the socket (if available).</li>
-<li>Use an USB cable to connect your development board to the Host PC and power up your board.</li>
-<li>Wait for the driver installation on the PC to complete. First you will see "Installing device driver software" and after a successful installation "Keil Disk 0 USB Device": <div class="image">
-<img src="msc_ready.png" alt=""/>
-</div>
-</li>
-</ul>
-<h2><a class="anchor" id="autotoc_md15"></a>
-PC Software</h2>
-<p>The USB Device Mass Storage example can be tested on a Windows PC using the <b>Windows</b> <b>Explorer</b>. After a successful driver installation, the <b>AutoPlay</b> window appears:</p>
-<div class="image">
-<img src="auto_play_msc_dev.png" alt=""/>
-</div>
-<p>If you click on <b>Open folder to view files</b> Windows Explorer automatically starts with the drive opened. </p>
-</div></div><!-- contents -->
-</div><!-- PageDoc -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="usb__host_8md.html">usb_host.md</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--

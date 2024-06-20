@@ -118,6 +118,11 @@ var NAVTREE =
       [ "CMSIS-RTOS Requirements", "fs_resource_requirements.html#fs_rtos_req", null ],
       [ "Memory Requirements", "fs_resource_requirements.html#fs_spec_mem_req", null ]
     ] ],
+    [ "Migration Guide", "fs_migration.html", [
+      [ "Component Selection", "fs_migration.html#fs_migrate_components", null ],
+      [ "Configuration", "fs_migration.html#fs_migrate_config", null ]
+    ] ],
+    [ "Reference_Files", "md_src_Reference_Files.html", null ],
     [ "API Reference", "modules.html", "modules" ]
   ] ]
 ];
@@ -125,8 +130,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "fs_create_app.html",
-"group__evr__fsfat.html#gaf882722c399a877ae31d6b68b1534c7a",
-"group__stdio__routines.html#gad9291335f34e874c8431285d705bc3aa"
+"group__evr__fsfat.html#gaea6823784e6d24879888ca9657bd77fb",
+"group__stdio__routines.html#gab5de865c3093158c70bf4bd88a9deea5"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

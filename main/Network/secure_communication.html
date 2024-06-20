@@ -128,18 +128,19 @@ $(document).ready(function(){initNavTree('secure_communication.html',''); initRe
   <div class="headertitle"><div class="title">Secure Communication </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_src_securing_communication"></a> In today's world, <b>secure communication</b> is crucial for many applications to protect data transmission between two network nodes. The <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security" target="_blank">Transport Layer Security (TLS)</a> protocol is a standardized technology for establishing a secure, encrypted and authenticated link between two parties over an insecure network. TLS is an industry standard and is used in millions of devices and websites.</p>
+<div class="textblock"><p><a class="anchor" id="md_src_securing_communication"></a> In today's world, <b>secure communication</b> is crucial for many applications to protect data transmission between two network nodes. The <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">Transport Layer Security (TLS)</a> protocol is a standardized technology for establishing a secure, encrypted and authenticated link between two parties over an insecure network. TLS is an industry standard and is used in millions of devices and websites.</p>
 <p>The Network component offers two ways to secure communication in an application:</p><ol type="1">
 <li><a class="el" href="secure_communication.html#use_mbed_tls">Using Mbed TLS</a></li>
 <li><a class="el" href="secure_communication.html#use_secure_components">Using Secure Services</a></li>
 </ol>
 <h1><a class="anchor" id="use_mbed_tls"></a>
 Using Mbed TLS</h1>
-<p>Although the Network component does not offer encryption and secure communication on its own, you can use Arm's <a href="https://www.trustedfirmware.org/projects/mbed-tls/" target="_blank">mbed TLS</a> software component to achieve this.</p>
+<p>Although the Network component does not offer encryption and secure communication on its own, you can use Arm's <a href="https://www.trustedfirmware.org/projects/mbed-tls/">mbed TLS</a> software component to achieve this.</p>
 <div class="image">
 <img src="secure_com_sw_stack.png" alt=""/>
-</div>
-<p>From the bottom up:</p>
+<div class="caption">
+Software stack for secure network communication</div></div>
+    <p>From the bottom up:</p>
 <ul>
 <li>The <b>Cortex-M-based microcontroller</b> provides the processor core, storage, memory and network interface.</li>
 <li>The <b>CMSIS-RTOS</b> compliant operating system provides standard services such as scheduling and thread-safety.</li>
@@ -149,7 +150,7 @@ Using Mbed TLS</h1>
 </ul>
 <h2><a class="anchor" id="autotoc_md3"></a>
 Why Mbed TLS?</h2>
-<p>The Mbed TLS library is designed for ease-of-use. The library is documented and has examples so you can easily understand how to use it. In the Network Component, Mbed TLS is used under the <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache 2.0 license</a>, enabling you to use it in both open source and closed source projects. Mbed TLS is a fully featured and standards compliant SSL library offering server and client functionality in one single package.</p>
+<p>The Mbed TLS library is designed for ease-of-use. The library is documented and has examples so you can easily understand how to use it. In the Network Component, Mbed TLS is used under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>, enabling you to use it in both open source and closed source projects. Mbed TLS is a fully featured and standards compliant SSL library offering server and client functionality in one single package.</p>
 <h2><a class="anchor" id="autotoc_md4"></a>
 Difference between SSL/TLS</h2>
 <p>The TLS protocol is the successor of the SSL protocol. Just like its predecessor, the TLS protocol provides communication security for connections over possibly untrusted networks, like the Internet. The main difference between TLS and SSL is the increased standardization of the workings of the protocol. SSL itself was designed and developed by Netscape. The newer TLS standard is defined in a number of <a class="el" href="group__RFC__list.html#mbed_rfcs">public RFCs</a> and is extended periodically to counter possible weaknesses or add much needed functionality.</p>
@@ -157,14 +158,14 @@ Difference between SSL/TLS</h2>
 Parts of an SSL/TLS Library</h2>
 <p>In order to perform the SSL or TLS protocol, a number of supporting functionality is required. The SSL/TLS library:</p>
 <ul>
-<li>needs to perform symmetric cryptographic operations, such as <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard" target="_blank">AES</a>, to encrypt the data over the connection.</li>
-<li>uses asymmetric cryptographic operations, such as <a href="https://en.wikipedia.org/wiki/RSA_%28cryptosystem%29" target="_blank">RSA</a>, for identifying and authenticating the parties of the connection.</li>
-<li>uses message digest operations, such as the <a href="https://en.wikipedia.org/wiki/SHA-2" target="_blank">SHA-256</a> hash algorithm, to protect the integrity of the information sent over the wire.</li>
-<li>needs to be able to parse, understand and use <a href="https://en.wikipedia.org/wiki/X.509" target="_blank">X.509</a> certificates.</li>
+<li>needs to perform symmetric cryptographic operations, such as <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a>, to encrypt the data over the connection.</li>
+<li>uses asymmetric cryptographic operations, such as <a href="https://en.wikipedia.org/wiki/RSA_%28cryptosystem%29">RSA</a>, for identifying and authenticating the parties of the connection.</li>
+<li>uses message digest operations, such as the <a href="https://en.wikipedia.org/wiki/SHA-2">SHA-256</a> hash algorithm, to protect the integrity of the information sent over the wire.</li>
+<li>needs to be able to parse, understand and use <a href="https://en.wikipedia.org/wiki/X.509">X.509</a> certificates.</li>
 <li>has to perform network operations to send and receive the protocol packets.</li>
 </ul>
 <p>All of this is hidden from most users and wrapped inside an SSL library, such as Mbed TLS, which developers can use to implement SSL or TLS in their applications.</p>
-<p>For more information on Mbed TLS and how it works, visit the <a href="https://www.trustedfirmware.org/projects/mbed-tls/" target="_blank">high-level design</a> overview page.</p>
+<p>For more information on Mbed TLS and how it works, visit the <a href="https://www.trustedfirmware.org/projects/mbed-tls/">high-level design</a> overview page.</p>
 <h2><a class="anchor" id="add_mbedtls"></a>
 Add the mbed TLS library to a µVision project</h2>
 <p>The <a class="el" href="nw_examples.html">Network Examples</a> section carries two examples for secure communication over the IP network: SSL Server and SSL Client. To use the Mbed TLS library in your own projects, follow these steps:</p>
@@ -172,14 +173,8 @@ Add the mbed TLS library to a µVision project</h2>
 <li>Download the <b>ARM:mbedTLS</b> library from  <script>link_ext('SW-Pack');</script> or use  <script>link_ext('uv4_ca_packinstaller');</script></li>
 <li>Open or create a project using the <b>Network Component</b>.</li>
 <li>Configure the Network Component as required by your application (Ethernet settings, TCP/IP communication, etc.).</li>
-<li>In the <b>Manage Run-Time Environment</b> window expand <b>Security</b> and enable <b>Mbed TLS</b>: <div class="image">
-<img src="add_mbedTLS.png" alt=""/>
-</div>
-</li>
-<li>Configure Mbed TLS using the <code>mbedTLS_config.h</code> file under <b>Security</b> in the <b>Project</b> window. <div class="image">
-<img src="mbedTLS_config_h.png" alt=""/>
-</div>
-</li>
+<li>In the <b>Manage Run-Time Environment</b> window expand <b>Security</b> and enable <b>Mbed TLS</b>: <img src="add_mbedTLS.png" alt="" class="inline" title="Add mbed TLS"/>    </li>
+<li>Configure Mbed TLS using the <code>mbedTLS_config.h</code> file.</li>
 <li>Use the <b>Mbed TLS</b> API to secure your communication.</li>
 </ol>
 <dl class="section note"><dt>Note</dt><dd>You can use the Mbed TLS API in parallel to any of the <a class="el" href="secure_communication.html#use_secure_components">secure services</a> that are part of the Network Component.</dd></dl>
@@ -197,8 +192,9 @@ HTTPS Server</h2>
 <p>The web server and the compact web server have secure variants available. In the <b>Manage Run-Time Environment</b> window simply select the appropriate variant:</p>
 <div class="image">
 <img src="select_https.png" alt=""/>
-</div>
-<h3><a class="anchor" id="add_ssl_to_http"></a>
+<div class="caption">
+Selecting HTTPS for the web server</div></div>
+    <h3><a class="anchor" id="add_ssl_to_http"></a>
 Converting the HTTP server to HTTPS</h3>
 <p>It is also possible to convert an already existing (compact) web server to a secure HTTPS web server. A few simple steps are required to achieve this:</p>
 <ol type="1">
@@ -328,7 +324,7 @@ Creating your own certificates and keys</h3>
 <img src="Net_Security_Keys.PNG" alt=""/>
 <div class="caption">
 Settings required for the Net_Security.bat file</div></div>
-<p>This setting is needed only once in µVision and will work for any project since it uses project related folders.</p>
+    <p>This setting is needed only once in µVision and will work for any project since it uses project related folders.</p>
 <p>The file <code>Net_Security.bat</code> is copied to the project (.\RTE\Network) folder together with <code>Net_Security.c</code>. As it is project specific, the batch file can be customized to reflect your specific values for the certificates:</p>
 <ul>
 <li>CA and Server Private Keys: type (default: RSA) and key_size (default: 2048)</li>
@@ -375,8 +371,9 @@ SMTPS Client</h2>
 <p>The e-mail client is available in a secure variant. In the <b>Manage Run-Time Environment</b> window, simply select the appropriate variant:</p>
 <div class="image">
 <img src="select_smtps.png" alt=""/>
-</div>
-<h3><a class="anchor" id="add_ssl_to_smtp"></a>
+<div class="caption">
+Select the SMTPS variant</div></div>
+    <h3><a class="anchor" id="add_ssl_to_smtp"></a>
 Converting the SMTP client to SMTPS</h3>
 <p>It is also possible to convert an already existing e-mail client to a secure SMTPS e-mail client. A few simple steps are required to achieve this:</p>
 <ol type="1">

@@ -128,19 +128,19 @@ $(document).ready(function(){initNavTree('USB_Device.html',''); initResizable();
   <div class="headertitle"><div class="title">USB Device </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This chapter describes the software structure of the USB Device Component and its use for creating applications. The USB Device Component simplifies the software development of microcontroller systems that interface to an USB Host.</p>
+<div class="textblock"><p><a class="anchor" id="md_src_usb_device"></a> This chapter describes the software structure of the USB Device Component and its use for creating applications. The USB Device Component simplifies the software development of microcontroller systems that interface to an USB Host.</p>
 <p><b>Attributes of the USB Device Component:</b></p>
 <ul>
-<li>Supports <a class="el" href="USB_Transfer_Rates.html">Low-Speed</a>, <a class="el" href="USB_Transfer_Rates.html">Full-Speed</a> and <a class="el" href="USB_Transfer_Rates.html">High-Speed</a>.</li>
+<li>Supports <a class="el" href="USB_Concepts.html#USB_Transfer_Rates">Low-Speed</a>, <a class="el" href="USB_Concepts.html#USB_Transfer_Rates">Full-Speed</a> and <a class="el" href="USB_Concepts.html#USB_Transfer_Rates">High-Speed</a>.</li>
 <li>Supports standard <a class="el" href="USB_Classes.html">USB Classes</a> with multiple device class instances.</li>
-<li>Supports composite devices. Combine USB Device Classes to create a <a class="el" href="dev_comp_tutorial.html">composite device</a>.</li>
+<li>Supports composite devices. Combine USB Device Classes to create a <a class="el" href="USB_Device.html#dev_comp_tutorial">composite device</a>.</li>
 <li>Supports multiple USB Devices on a single microcontroller with more than one USB Device controller.</li>
 <li>Provides  <script>link_ext('uv4_ca_sourcefiles');</script> for implementing the USB Device functionality.</li>
-<li>Provides an user-friendly configuration file for each device class to generate <a class="el" href="USB_Descriptors.html">USB Descriptors</a>.</li>
-<li>Flexibly assigns <a class="el" href="USB_Endpoints.html">USB Endpoints</a> to the microcontroller USB Device peripheral.</li>
-<li>Provides <a class="el" href="USB_Device_Tutorial.html">Examples</a> to show the use of the software stack.</li>
+<li>Provides an user-friendly configuration file for each device class to generate <a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a>.</li>
+<li>Flexibly assigns <a class="el" href="USB_Concepts.html#USB_Endpoints">USB Endpoints</a> to the microcontroller USB Device peripheral.</li>
+<li>Provides <a class="el" href="USB_Device.html#USB_Device_Tutorial">Examples</a> to show the use of the software stack.</li>
 </ul>
-<p>For interfacing to an USB Host Computer, additional software may be required. Page <a class="el" href="usb_sw_utilities.html">USB Host Computer Applications</a> shows an example for such a software running on PCs with Microsoft Windows.</p>
+<p>For interfacing to an USB Host Computer, additional software may be required. Page <a class="el" href="USB_Device.html#usb_sw_utilities">USB Host Computer Applications</a> shows an example for such a software running on PCs with Microsoft Windows.</p>
 <h1><a class="anchor" id="usbd_rte_components"></a>
 RTE Components</h1>
 <p>The picture shows the relationship between RTE Components and the microcontroller's USB Device peripheral (USB Controller). RTE Components provide configuration files and user code templates. <b>Configuration files</b> configure the RTE Components, hardware interfaces, memory resources and USB Device driver parameters. They can have an impact on multiple RTE Components. <b>User code templates</b> provide the skeleton for implementing the USB Device functionality.</p>
@@ -149,18 +149,20 @@ RTE Components</h1>
 <img src="usb_device_blocks_config_files.png" alt=""/>
 <div class="caption">
 USB Device Structure</div></div>
-<p>USB Device peripherals can have one or more of the following USB Device Classes:</p><ul>
-<li><a class="el" href="ADC.html">Audio Device Class (ADC)</a> is used to exchange streaming audio data between the USB Host and the USB Device.</li>
-<li><a class="el" href="CDC.html">Communication Device Class (CDC)</a> provides virtual communication port functionality to the USB Host.</li>
-<li><a class="el" href="HID.html">Human Interface Device (HID)</a> is typically used to implement a keyboard, joystick, or mouse. The HID Class can be also used for low bandwidth data exchange.</li>
-<li><a class="el" href="MSC.html">Mass Storage Class (MSC)</a> is used to connect various storage devices to an USB Host. Mass Storage Class media can be an SD card, internal or external Flash memory, or RAM.</li>
-<li><a class="el" href="CustomClass.html">Custom Class</a> is used to implement either a standard or a vendor specific USB Device Class.</li>
+    <p>USB Device peripherals can have one or more of the following USB Device Classes:</p>
+<ul>
+<li><a class="el" href="USB_Classes.html#ADC">Audio Device Class (ADC)</a> is used to exchange streaming audio data between the USB Host and the USB Device.</li>
+<li><a class="el" href="USB_Classes.html#CDC">Communication Device Class (CDC)</a> provides virtual communication port functionality to the USB Host.</li>
+<li><a class="el" href="USB_Classes.html#HID">Human Interface Device (HID)</a> is typically used to implement a keyboard, joystick, or mouse. The HID Class can be also used for low bandwidth data exchange.</li>
+<li><a class="el" href="USB_Classes.html#MSC">Mass Storage Class (MSC)</a> is used to connect various storage devices to an USB Host. Mass Storage Class media can be an SD card, internal or external Flash memory, or RAM.</li>
+<li><a class="el" href="USB_Classes.html#CustomClass">Custom Class</a> is used to implement either a standard or a vendor specific USB Device Class.</li>
 </ul>
-<p>Generic information about USB Device Classes can be found on the USB-IF's <a href="https://www.usb.org/documents?search=&amp;category%5B%5D=49&amp;type%5B%5D=55&amp;items_per_page=50" class="el" target="_blank">Approved Class Specification Documents</a> page.</p>
-<p>Multiple RTE Component instances can interface with more than one USB Controller or can implement multiple USB Device Classes. RTE Component instances are numbered. The number is appended to the RTE Component name, related configuration files, and user code templates. Each RTE Component has a separate configuration file. For example, for HID 0 and HID 1 the configuration files have the name <b>USB_Config_HID_0.h</b> and <b>USB_Config_HID_1.h</b>. </p><dl class="section note"><dt>Note</dt><dd>The default configuration settings are pre-configured for one instance of an USB Device or USB Device Class in a non-composite device peripheral. For other combinations the settings <em>need</em> to be edited to ensure proper operation. The <a class="el" href="dev_comp_tutorial.html">USB Composite Device</a> example shows how to implement and configure a composite devices</dd></dl>
+<p>Generic information about USB Device Classes can be found on the USB-IF's <a href="https://www.usb.org/documents?search=&amp;category%5B%5D=49&amp;type%5B%5D=55&amp;items_per_page=50">Approved Class Specification Documents</a> page.</p>
+<p>Multiple RTE Component instances can interface with more than one USB Controller or can implement multiple USB Device Classes. RTE Component instances are numbered. The number is appended to the RTE Component name, related configuration files, and user code templates. Each RTE Component has a separate configuration file. For example, for HID 0 and HID 1 the configuration files have the name <code>USB_Config_HID_0.h</code> and <code>USB_Config_HID_1.h</code>. </p><dl class="section note"><dt>Note</dt><dd>The default configuration settings are pre-configured for one instance of an USB Device or USB Device Class in a non-composite device peripheral. For other combinations the settings <em>need</em> to be edited to ensure proper operation. The <a class="el" href="USB_Device.html#dev_comp_tutorial">USB Composite Device</a> example shows how to implement and configure a composite devices</dd></dl>
 <h1><a class="anchor" id="Creation_Steps"></a>
 Create an Application</h1>
-<p>The steps to create a microcontroller application that uses USB communication with an USB Device controller are:</p><ol type="1">
+<p>The steps to create a microcontroller application that uses USB communication with an USB Device controller are:</p>
+<ol type="1">
 <li>Select <a class="el" href="USB_Device.html#RTE_Software_Component_Selection">RTE Components</a> along with the USB Device Classes that are required for your application.</li>
 <li><a class="el" href="USB_Device.html#USB_Driver_Configuration">Enable and configure the USB Device Driver</a>.</li>
 <li>Configure the <a class="el" href="USB_Device.html#USB_Device_Configuration">USB Device</a> that connects the USB Middleware to the microcontroller USB peripheral.</li>
@@ -170,7 +172,7 @@ Create an Application</h1>
 <li>If required by your application, you can <a class="el" href="USB_Device.html#Overriding_Descriptors">change the default USB Device descriptors</a>.</li>
 <li><a class="el" href="USB_Device.html#usbd_debugging">Debug</a> you application using the built-in mechanisms of the USB Component.</li>
 </ol>
-<p>For interfacing to an USB Host computer, standard USB Device Classes drivers can be used. This may require additional software development for the USB Host application. An exemplary application for interfacing to an USB HID Device is explained <a class="el" href="usb_sw_utilities.html#hid_client_app">here</a>.</p>
+<p>For interfacing to an USB Host computer, standard USB Device Classes drivers can be used. This may require additional software development for the USB Host application. An exemplary application for interfacing to an USB HID Device is explained <a class="el" href="USB_Device.html#hid_client_app">here</a>.</p>
 <h2><a class="anchor" id="RTE_Software_Component_Selection"></a>
 RTE Component Selection</h2>
 <p>Only a few steps are necessary to complete the RTE Component selection:</p>
@@ -196,10 +198,10 @@ RTE Component Selection</h2>
 </li>
 </ol>
 <div class="image">
-<img src="rteusbx.png" alt="" width="90%"/>
+<img src="rteusbx.png" alt=""/>
 <div class="caption">
 RTE Component Selection</div></div>
-<dl class="section note"><dt>Note</dt><dd><ul>
+    <dl class="section note"><dt>Note</dt><dd><ul>
 <li>Most microcontrollers have only one USB Controller implemented in hardware and only one driver <b>Driver_USBD0</b> is available. In this case, only one <b>USB:Device</b> can be selected to generate <b>USB Device 0</b>.</li>
 <li>On a single <b>USB Device 0</b> an USB Composite Device may be implemented that combines multiple USB Device Classes.</li>
 <li>When a microcontroller implements multiple USB Controllers an additional <b>USB Device 1</b> can be generated by setting <b>USB:Device</b> to '2'.</li>
@@ -209,24 +211,25 @@ RTE Component Selection</div></div>
 USB Driver and Controller</h2>
 <p>The USB Device Driver and the USB Controller of the microcontroller need to be correctly configured. In particular this means:</p>
 <ul>
-<li>The USB Device Driver selected under the Drivers Component is typically configured with a driver specific configuration header file. Some microcontrollers may require settings that are related to a physical layer interface <b></b>(PHY). The picture below shows two possible variants. Either, the USB PHY is integrated into the controller, or an external chip is used for providing the USB signal lines:</li>
+<li>The USB Device Driver selected under the Drivers Component is typically configured with a driver specific configuration header file. Some microcontrollers may require settings that are related to a physical layer interface **(PHY)**. The picture below shows two possible variants. Either, the USB PHY is integrated into the controller, or an external chip is used for providing the USB signal lines:</li>
 </ul>
 <div class="image">
 <img src="usb_phy.png" alt=""/>
 <div class="caption">
 USB Controller and PHY Setups</div></div>
-<ul>
+    <ul>
 <li>The USB Controller of the microcontroller typically needs specific clock settings. Consult the user's guide of the microcontroller to understand the requirements. Alternatively, you may copy the setup of an USB Device example (in case your hardware setup is similar to that of the chosen evaluation boards).</li>
 </ul>
 <h2><a class="anchor" id="USB_Device_Configuration"></a>
 USB Device Configuration</h2>
-<p>The configuration file <b>USBD_Config_<em>n</em>.h</b> is listed in the Project Windows under the Component USB and contains a number of important settings for the specific USB Device.</p><ul>
+<p>The configuration file <b>USBD_Config_n.h</b> is listed in the Project Windows under the Component USB and contains a number of important settings for the specific USB Device.</p>
+<ul>
 <li>The <b>Driver_USBD#</b> number is set according to the selected USB Controller. This specifies which driver will be used for the USB Device determining the pin-out as well. For devices with single USB Device Controller it will typically be '0'.</li>
 <li><b>High-Speed</b> may be selected if supported by the USB Controller.</li>
-<li>The <b>Vendor</b> <b>ID</b> (VID) needs to be set to a private VID. The default Vendor ID is owned by Keil and must not be used for actual products. Please visit <a href="https://www.usb.org/getting-vendor-id" class="el" target="_blank">USB-IF</a> for more information on how to apply for a valid Vendor ID.</li>
-<li>Every device variant needs an unique <b>Product</b> <b>ID</b>. Together with the <b>Vendor</b> <b>ID</b>, it is used by the Host computer's operating system to find a driver for your device.</li>
+<li>The <b>Vendor ID</b> (VID) needs to be set to a private VID. The default Vendor ID is owned by Keil and must not be used for actual products. Please visit <a href="https://www.usb.org/getting-vendor-id">USB-IF</a> for more information on how to apply for a valid Vendor ID.</li>
+<li>Every device variant needs an unique <b>Product ID</b>. Together with the <b>Vendor ID</b>, it is used by the Host computer's operating system to find a driver for your device.</li>
 <li>The <b>Device Release Number</b> will be shown in Windows and Linux systems as “Firmware Revision”. The number will be interpreted as “binary coded decimal”, meaning that 0x0101 will be shown as firmware revision 1.01.</li>
-<li>The <b>Manufacturer</b>, <b>Product</b> and the <b>Serial</b> <b>Number</b> <b>String</b> can be set to identify the USB Device on the USB Host.</li>
+<li>The <b>Manufacturer</b>, <b>Product</b> and the <b>Serial Number String</b> can be set to identify the USB Device on the USB Host.</li>
 </ul>
 <p>Refer to <a class="el" href="group__usbd__coreFunctions__conf.html">USB Core Configuration</a> for more configuration options of the USB Device.</p>
 <dl class="section note"><dt>Note</dt><dd>You can configure the USB Device at run-time using the functions from the <a class="el" href="group__usbd__coreFunctions__api.html">USB Device Core API</a>. The section <a class="el" href="group__usbd__coreFunctions.html">USB Device Core</a> explains the details. Implement the run-time specific behavior with the user code template <a class="el" href="group__usbd__coreFunctions.html#USBD_User_Device_UCT">USBD_User_Device_n.c</a>.</dd></dl>
@@ -234,16 +237,17 @@ USB Device Configuration</h2>
 USB Device Class Configuration and USB Endpoint Settings</h2>
 <p>The USB Device Class Parameters and Endpoint Settings are configured in separate files for each USB Device Class and separately for each instance. The configuration files contain Device Class specific Endpoint Settings Numbers and are listed in the Project Window under the Component USB.</p>
 <ul>
-<li><b>USBD_Config_ADC_<em>n</em>.h</b> configuration for Audio Device Class (ADC).</li>
-<li><b>USBD_Config_CDC_<em>n</em>.h</b> configuration for Communication Device Class (CDC).</li>
-<li><b>USBD_Config_HID_<em>n</em>.h</b> configuration for Human Interface Device Class (HID).</li>
-<li><b>USBD_Config_MSC_<em>n</em>.h</b> configuration for Mass Storage Device Class (MSC).</li>
-<li><b>USBD_Config_CustomClass_<em>n</em>.h</b> configuration for Custom Class.</li>
+<li><b>USBD_Config_ADC_n.h</b> configuration for Audio Device Class (ADC).</li>
+<li><b>USBD_Config_CDC_n.h</b> configuration for Communication Device Class (CDC).</li>
+<li><b>USBD_Config_HID_n.h</b> configuration for Human Interface Device Class (HID).</li>
+<li><b>USBD_Config_MSC_n.h</b> configuration for Mass Storage Device Class (MSC).</li>
+<li><b>USBD_Config_CustomClass_n.h</b> configuration for Custom Class.</li>
 </ul>
-<p>Each <a class="el" href="USB_Endpoints.html">USB Endpoint</a> can only be used once on the same USB Device. It has to be made sure that the different USB Device Classes or multiple instances of the same USB Device Class use different Endpoints. The default configuration supports applications that use a single USB Device Class. The remaining parameters are specific settings that configure parameters for USB communication speed and the USB Device Class.</p>
+<p>Each <a class="el" href="USB_Concepts.html#USB_Endpoints">USB Endpoint</a> can only be used once on the same USB Device. It has to be made sure that the different USB Device Classes or multiple instances of the same USB Device Class use different Endpoints. The default configuration supports applications that use a single USB Device Class. The remaining parameters are specific settings that configure parameters for USB communication speed and the USB Device Class.</p>
 <h2><a class="anchor" id="usbd_system_resources"></a>
 System Resource Configuration</h2>
-<p>For proper operation, the USB Device Component requires some system configuration settings. The requirements are:</p><ul>
+<p>For proper operation, the USB Device Component requires some system configuration settings. The requirements are:</p>
+<ul>
 <li>Additional <b>main stack size</b> of <b>512 bytes</b>.</li>
 <li>The USB Device Component uses CMSIS-RTOS2 threads. In case <b>RTX v5</b> is used <b>no changes to RTX settings</b> are necessary as all resources are allocated statically.</li>
 </ul>
@@ -251,7 +255,8 @@ System Resource Configuration</h2>
 <h2><a class="anchor" id="User_Code_Implementation"></a>
 User Code Implementation</h2>
 <p> <script>link_ext('uv4_ca_sourcefiles');</script> files provide function templates used to implement USB Device Class functionality. The available functions are explained in the <a class="el" href="group__usbd__DevClassFunctions.html">Reference</a> section of the USB Component. These routines can be adapted to the needs of the microcontroller application, in case different then default functionality is needed.</p>
-<p>The following templates are available for the USB Device component: </p><table class="markdownTable">
+<p>The following templates are available for the USB Device component:</p>
+<table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Template Name   </th><th class="markdownTableHeadNone">Purpose    </th></tr>
 <tr class="markdownTableRowOdd">
@@ -285,39 +290,36 @@ User Code Implementation</h2>
 </table>
 <h2><a class="anchor" id="Overriding_Descriptors"></a>
 Changing Default USB Descriptors</h2>
-<p>If there are different requirements regarding the <a class="el" href="USB_Descriptors.html">USB Descriptors</a> than the USB Component allows, a user can change any or all of the default USB descriptors. Default descriptors are the ones that library creates based on <a class="el" href="USB_Device.html#USB_Device_Configuration">Device</a> and <a class="el" href="USB_Device.html#USB_Device_Class_Configuration">Classes</a> configuration file settings and are located in code memory.</p>
+<p>If there are different requirements regarding the <a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a> than the USB Component allows, a user can change any or all of the default USB descriptors. Default descriptors are the ones that library creates based on <a class="el" href="USB_Device.html#USB_Device_Configuration">Device</a> and <a class="el" href="USB_Device.html#USB_Device_Class_Configuration">Classes</a> configuration file settings and are located in code memory.</p>
 <p>The descriptors can be changed in two of the following ways:</p>
-<ul>
-<li><b>Static change</b></li>
-</ul>
+<h3><a class="anchor" id="autotoc_md0"></a>
+Static change</h3>
 <p>Static change of descriptors can be done to replace default descriptors if they will not change at runtime. The descriptors can be easily overridden by user code by creating descriptors with the same name.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">USB Device Descriptor   </th><th class="markdownTableHeadNone">Purpose    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>const</code> <code>uint8_t</code> <code>usbdn_ep0_descriptor</code>[]   </td><td class="markdownTableBodyNone">Control Endpoint 0 descriptor    </td></tr>
+<td class="markdownTableBodyNone"><code>const uint8_t usbdn_ep0_descriptor[]</code>   </td><td class="markdownTableBodyNone">Control Endpoint 0 descriptor    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>const</code> <code>uint8_t</code> <code>usbdn_device_descriptor</code>[]   </td><td class="markdownTableBodyNone">USB Device descriptor    </td></tr>
+<td class="markdownTableBodyNone"><code>const uint8_t usbdn_device_descriptor[]</code>   </td><td class="markdownTableBodyNone">USB Device descriptor    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>const</code> <code>uint8_t</code> <code>usbdn_string_descriptor</code>[]   </td><td class="markdownTableBodyNone">String descriptors    </td></tr>
+<td class="markdownTableBodyNone"><code>const uint8_t usbdn_string_descriptor[]</code>   </td><td class="markdownTableBodyNone">String descriptors    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>const</code> <code>uint8_t</code> <code>usbdn_device_qualifier_fs</code>[]   </td><td class="markdownTableBodyNone">Device qualifier for low/full-speed    </td></tr>
+<td class="markdownTableBodyNone"><code>const uint8_t usbdn_device_qualifier_fs[]</code>   </td><td class="markdownTableBodyNone">Device qualifier for low/full-speed    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>const</code> <code>uint8_t</code> <code>usbdn_device_qualifier_hs</code>[]   </td><td class="markdownTableBodyNone">Device qualifier for high-speed    </td></tr>
+<td class="markdownTableBodyNone"><code>const uint8_t usbdn_device_qualifier_hs[]</code>   </td><td class="markdownTableBodyNone">Device qualifier for high-speed    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>const</code> <code>uint8_t</code> <code>usbdn_config_descriptor_fs</code>[]   </td><td class="markdownTableBodyNone">Configuration descriptor for low/full-speed    </td></tr>
+<td class="markdownTableBodyNone"><code>const uint8_t usbdn_config_descriptor_fs[]</code>   </td><td class="markdownTableBodyNone">Configuration descriptor for low/full-speed    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>const</code> <code>uint8_t</code> <code>usbdn_config_descriptor_hs</code>[]   </td><td class="markdownTableBodyNone">Configuration descriptor for high-speed    </td></tr>
+<td class="markdownTableBodyNone"><code>const uint8_t usbdn_config_descriptor_hs[]</code>   </td><td class="markdownTableBodyNone">Configuration descriptor for high-speed    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>const</code> <code>uint8_t</code> <code>usbdn_other_speed_config_descriptor_fs</code>[]   </td><td class="markdownTableBodyNone">Other speed configuration descriptor for low/full-speed    </td></tr>
+<td class="markdownTableBodyNone"><code>const uint8_t usbdn_other_speed_config_descriptor_fs[]</code>   </td><td class="markdownTableBodyNone">Other speed configuration descriptor for low/full-speed    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>const</code> <code>uint8_t</code> <code>usbdn_other_speed_config_descriptor_hs</code>[]   </td><td class="markdownTableBodyNone">Other speed configuration descriptor for high-speed   </td></tr>
+<td class="markdownTableBodyNone"><code>const uint8_t usbdn_other_speed_config_descriptor_hs[]</code>   </td><td class="markdownTableBodyNone">Other speed configuration descriptor for high-speed   </td></tr>
 </table>
-<dl class="section note"><dt>Note</dt><dd><ul>
-<li><code>n</code> in <code>usbdn_</code> represents the USB Device instance. So for the USB Device 0 instance, you have to use <code>usbd0_</code>...</li>
-</ul>
-</dd></dl>
-<p><b>Code Example</b> </p><div class="fragment"><div class="line"><span class="comment">// Statically change USB Device 0 Device Descriptor</span></div>
+<dl class="section note"><dt>Note</dt><dd><code>n</code> in <code>usbdn_</code> represents the USB Device instance. So for the USB Device 0 instance, you have to use <code>usbd0_...</code></dd></dl>
+<p><b>Code Example</b></p>
+<div class="fragment"><div class="line"><span class="comment">// Statically change USB Device 0 Device Descriptor</span></div>
 <div class="line"><span class="keyword">const</span> uint8_t usbd0_device_descriptor[] = { </div>
 <div class="line">  18U,         <span class="comment">// bLength = 18 bytes</span></div>
 <div class="line">  1U,          <span class="comment">// bDescriptorType = 1 = Device Descriptor Type</span></div>
@@ -334,12 +336,12 @@ Changing Default USB Descriptors</h2>
 <div class="line">  0U,          <span class="comment">// iSerialNumber = 0 = No Serial Number string</span></div>
 <div class="line">  1U           <span class="comment">// bNumConfigurations = 1 = 1 configuration</span></div>
 <div class="line">};</div>
-</div><!-- fragment --><ul>
-<li><b>Dynamic change</b></li>
-</ul>
-<p>Dynamic change of descriptors can be done to change descriptors at runtime. The <code>struct</code> <b>usbd_desc_t</b> contains the required information. It is stored in RAM and contains pointers to the USB descriptors. If you change the pointers in the structure to the point to the externally created ones, you can change the descriptors at runtime.</p>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md1"></a>
+Dynamic change</h3>
+<p>Dynamic change of descriptors can be done to change descriptors at runtime. The <code>struct usbd_desc_t</code> contains the required information. It is stored in RAM and contains pointers to the USB descriptors. If you change the pointers in the structure to the point to the externally created ones, you can change the descriptors at runtime.</p>
 <p>The actual variable names of the structures holding descriptor pointers are <code>usbdn_desc</code> (n indicating the USB Device instance number). The following code example shows how to override the device descriptor for the <b>USB Device 0</b> (<code>usbd0_desc</code>):</p>
-<p><b>Code Example</b> </p><div class="fragment"><div class="line"><span class="comment">// Dynamically change USB Device 0 Device Descriptor</span></div>
+<p><b>Code Example</b></p>
+<div class="fragment"><div class="line"><span class="comment">// Dynamically change USB Device 0 Device Descriptor</span></div>
 <div class="line"><span class="keyword">const</span> uint8_t dev0_device_descriptor[] = { </div>
 <div class="line">  18U,         <span class="comment">// bLength = 18 bytes</span></div>
 <div class="line">  1U,          <span class="comment">// bDescriptorType = 1 = Device Descriptor Type</span></div>
@@ -357,7 +359,6 @@ Changing Default USB Descriptors</h2>
 <div class="line">  1U           <span class="comment">// bNumConfigurations = 1 = 1 configuration</span></div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"> </div>
 <div class="line"><span class="keyword">extern</span> usbd_desc_t usbd0_desc;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>) {</div>
@@ -370,34 +371,33 @@ Changing Default USB Descriptors</h2>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>For changing just serial number string use the <a class="el" href="group__usbd__coreFunctions__api.html#ga3ccf0ff5b34716f104e3891158b5c6d6">USBD_SetSerialNumber</a> function!</dd>
 <dd>
 For non high-speed capable device following descriptors are not important:<ul>
-<li><a class="el" href="USB_Device_Qualifier_Descriptor.html">Device Qualifier Descriptor</a> for low/full-speed</li>
-<li><a class="el" href="USB_Device_Qualifier_Descriptor.html">Device Qualifier Descriptor</a> for high-speed</li>
-<li><a class="el" href="USB_Configuration_Descriptor.html">Configuration Descriptor</a> for low/full-speed</li>
-<li><a class="el" href="USB_Configuration_Descriptor.html">Configuration Descriptor</a> for high-speed</li>
-<li>Other speed <a class="el" href="USB_Configuration_Descriptor.html">Configuration Descriptor</a> for low/full-speed</li>
-<li>Other speed <a class="el" href="USB_Configuration_Descriptor.html">Configuration Descriptor</a> high-speed</li>
+<li><a class="el" href="USB_Concepts.html#USB_Device_Qualifier_Descriptor">Device Qualifier Descriptor</a> for low/full-speed</li>
+<li><a class="el" href="USB_Concepts.html#USB_Device_Qualifier_Descriptor">Device Qualifier Descriptor</a> for high-speed</li>
+<li><a class="el" href="USB_Concepts.html#USB_Configuration_Descriptor">Configuration Descriptor</a> for low/full-speed</li>
+<li><a class="el" href="USB_Concepts.html#USB_Configuration_Descriptor">Configuration Descriptor</a> for high-speed</li>
+<li>Other speed <a class="el" href="USB_Concepts.html#USB_Configuration_Descriptor">Configuration Descriptor</a> for low/full-speed</li>
+<li>Other speed <a class="el" href="USB_Concepts.html#USB_Configuration_Descriptor">Configuration Descriptor</a> high-speed</li>
 </ul>
 </dd></dl>
 <h2><a class="anchor" id="usbd_debugging"></a>
 Debugging</h2>
 <p>USB Device Component is distributed in a source form and it allows direct code debug. However, with breakpoint stopping the program execution the USB Device will usually malfunction as USB Host will not be able to properly enumerate the device or communicate with it thus causing communication timeouts and failures. For such usage case a non-intrusive debug via the debug events is also provided (via Event Recorder).</p>
-<p><b>USB_Debug.h</b> configuration file is used to configure the level of debug events.</p>
+<p><code>USB_Debug.h</code> configuration file is used to configure the level of debug events.</p>
 <p>The <a class="el" href="group__usbd__evr.html">USB Device:Debug Events</a> describes the events implemented in the USB Device Component.</p>
-<p><a class="anchor" id="usbDevEvrSupport"></a></p>
-<h2><a class="anchor" id="autotoc_md0"></a>
-Event Recorder Support</h2>
+<h3><a class="anchor" id="usbDevEvrSupport"></a>
+Event Recorder Support</h3>
 <p> <script>link_ext('Event-Recorder-About');</script> is a powerful tool that provides visibility to the dynamic execution of the program.</p>
 <p>The USB Device Component generates <a class="el" href="group__usbd__evr.html">a broad set of Debug Events</a> for the Event Recorder and implements required infrastructure to interface with it.</p>
-<p>To use the Event Recorder it is required to create an image with event generation support. The necessary steps are:</p><ol type="1">
+<p>To use the Event Recorder it is required to create an image with event generation support. The necessary steps are:</p>
+<ol type="1">
 <li> <script>link_ext('Event-Recorder-Enable');</script>: in the RTE management dialog enable the software component <b>CMSIS-View:Event Recorder</b>.</li>
 <li>Ensure that Event Recorder is initialized preferably by  <script>link_ext('RTX5-Event-Recorder-Config');</script> if CMSIS-RTOS2 RTX v5 is used, or alternatively by calling the function  <script>link_ext('Event-Recorder-Initialize-Func');</script> in the application code.</li>
 <li><a class="el" href="USB_Device.html#usbDevEvrConfig">Event Recorder Configuration</a>: if necessary, adjust default Event Recorder configuration.</li>
 <li>Build the application code, download it to the target hardware and start debug session.</li>
 </ol>
 <p>Now, when the USB Device generates event information, it can be viewed in the  <script>link_ext('uv4-Event-Recorder');</script>.</p>
-<p><a class="anchor" id="usbDevEvrConfig"></a></p>
-<h2><a class="anchor" id="autotoc_md1"></a>
-Event Recorder Configuration</h2>
+<h3><a class="anchor" id="usbDevEvrConfig"></a>
+Event Recorder Configuration</h3>
 <p>This section describes the configuration settings for the Event Recorder; refer to <a class="el" href="USB_Device.html#usbDevEvrSupport">Event Recorder Support</a> for more information.</p>
 <p><b>USB Event Generation Configuration</b></p>
 <p>Selecting the <b>USB:CORE</b> will add the file <code>USB_Debug.h</code> to your project. Use this file to set the event generation configuration for USB core, drivers, and device classes separately. The file is available for USB Device and Host components.</p>
@@ -405,14 +405,17 @@ Event Recorder Configuration</h2>
 <img src="USBD_USB_Debug_h.png" alt=""/>
 <div class="caption">
 USB_Debug.h file for event generation configuration</div></div>
-<p>The following settings are available for event generation configuration of each module:</p><ul>
+    <p>The following settings are available for event generation configuration of each module:</p>
+<ul>
 <li><b>Off</b> means no events will be generated by the module</li>
 <li><b>Errors</b> means only error events will be generated by the module</li>
 <li><b>Errors + API</b> means error and API call events will be generated by the module</li>
 <li><b>All</b> means all available events will be generated by the module. Besides error and API call events, this contains operation and detailed events.</li>
 </ul>
-<p><b>Event IDs</b></p>
-<p>The USB Device component uses the following event IDs: </p><table class="markdownTable">
+<h3><a class="anchor" id="autotoc_md2"></a>
+Event IDs</h3>
+<p>The USB Device component uses the following event IDs:</p>
+<table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Component   </th><th class="markdownTableHeadNone">Event ID    </th></tr>
 <tr class="markdownTableRowOdd">
@@ -430,6 +433,1667 @@ USB_Debug.h file for event generation configuration</div></div>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">USBD_MSC   </td><td class="markdownTableBodyNone">0xA6   </td></tr>
 </table>
+<h1><a class="anchor" id="USB_Device_Tutorial"></a>
+Examples</h1>
+<p>MDK contains multiple example projects that show how to implement an USB Device. The following examples are available for most of the development boards:</p>
+<ul>
+<li>The <a class="el" href="USB_Device.html#dev_hid_tutorial">USB Device HID</a> example provides access from the USB Host to the development board's LEDs and push buttons</li>
+<li>The <a class="el" href="USB_Device.html#dev_msc_tutorial">USB Device Mass Storage</a> example provides mass storage device to the USB Host and uses SD/MMC memory card or internal RAM as storage media</li>
+<li>The <a class="el" href="USB_Device.html#dev_cdc_tutorial">USB Device Virtual COM Port</a> example provides virtual communication port to UART bridge to the USB Host</li>
+<li>The <a class="el" href="USB_Device.html#dev_cdc_ncm">Ethernet-over-USB (for Linux hosts)</a> example shows how to connect an Ethernet device via USB (for Linux hosts)</li>
+<li>The <a class="el" href="USB_Device.html#dev_cdc_acm_rndis_bridge">USB Device RNDIS to Ethernet Bridge</a> example shows how to connect an Ethernet device via USB (for Windows hosts)</li>
+<li>The <a class="el" href="USB_Device.html#dev_cdc_acm_rndis">USB Web Server (for Windows hosts)</a> example contains a step-by-step instruction how to change a network application example so that the embedded device can be connected to a Windows host using USB.</li>
+<li>The <a class="el" href="USB_Device.html#dev_comp_tutorial">USB Composite Device</a> example shows how to create a composite device using the HID and MSC classes</li>
+<li>The <a class="el" href="USB_Device.html#dev_mouse_tutorial">USB Mouse</a> example shows how to create a USB device that acts as a mouse input device</li>
+<li>The <a class="el" href="USB_Device.html#dev_adc_tutorial">USB Device Audio</a> example provides an audio input/output functionality to the USB Host</li>
+<li>The <a class="el" href="USB_Device.html#dev_cc_tutorial">Custom USB Device (WinUSB_Echo)</a> example provides an example for a custom USB class</li>
+</ul>
+<p>To use these examples, use the  <script>link_ext('uv4_ca_packinstaller');</script>, select the related <b>Board</b> and <b>Copy</b> the example.</p>
+<h2><a class="anchor" id="dev_hid_tutorial"></a>
+USB Device HID</h2>
+<p>The <a class="el" href="USB_Classes.html#HID">Human Interface Device (HID)</a> example shows simple data exchange between the USB Device and an USB Host Computer. The examples accesses the board LEDs and push buttons from the USB Host Computer using the HID client program. The following picture shows an exemplary connection of the development board and the USB Host Computer.</p>
+<div class="image">
+<img src="hid_example_setup.png" alt=""/>
+<div class="caption">
+USB device HID example hardware setup</div></div>
+    <p>The <code>Abstract.txt</code> file contained in the <b>Documentation</b> group of the <b>Project</b> window gives you more information on the general setup and the available I/O of the development board.</p>
+<h3><a class="anchor" id="autotoc_md3"></a>
+Build the "USB Device HID" Project</h3>
+<p>Open the example project in MDK.</p>
+<h4><a class="anchor" id="autotoc_md4"></a>
+Source Files</h4>
+<ul>
+<li><code>HID.c</code> contains the main C function that initializes the board hardware and the USB Device Component. It also sends the current input status (typical buttons) via <a class="el" href="group__usbd__hidFunctions__api.html#gad7e97151e60e0b12b3f331610f31c071">USBD_HID_GetReportTrigger</a> to the USB Host.</li>
+<li>The <b>USBD_User_HID_0.c</b> is an adapted code template that implements all necessary functions I/O communication. Refer to <a class="el" href="group__usbd__hidFunctions.html">HID: Human Interface Class</a> for details about these template functions.</li>
+</ul>
+<p>If you are using RTOS other than CMSIS-RTOS2 RTX5 for your project please make sure to satisfy <a class="el" href="usb_resource_requirements.html#usbd_res_req">USB Device Resource Requirements</a>.</p>
+<p>You may now build and download the example project to the evaluation board using the µVision commands:</p>
+<ul>
+<li><b>Project</b> --&gt; <b>Build target (F7)</b></li>
+<li><b>Flash</b> --&gt; <b>Download (F8)</b></li>
+</ul>
+<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
+<h3><a class="anchor" id="autotoc_md5"></a>
+Using the "USB Device HID" Project</h3>
+<h4><a class="anchor" id="autotoc_md6"></a>
+Hardware Setup</h4>
+<p>The setup of the Evaluation Board hardware is described in the <code>Abstract.txt</code> file.</p>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Use an USB cable to connect your development board to the Host PC and power up your board.</li>
+<li>Wait for the driver installation on the PC to complete. First you will see "Installing device driver software" and after a successful installation "USB Input Device":</li>
+</ul>
+<div class="image">
+<img src="hid_install.png" alt=""/>
+<div class="caption">
+Automatic driver installation</div></div>
+    <h4><a class="anchor" id="autotoc_md7"></a>
+PC Software</h4>
+<p>The USB Device HID example can be tested on a Windows PC using the HIDClient.exe utility (located in "C:\Keil\ARM\Utilities\HID_Client\Release"). The program runs stand-alone without installation.</p>
+<p>Steps to check the USB communication using the client utility:</p>
+<ul>
+<li>Run "C:\Keil\ARM\Utilities\HID_Client\Release\HIDClient.exe".</li>
+<li>Select the <b>Keil USB Device</b> to establish the communication channel.</li>
+<li>Press buttons on the target hardware and/or use the check boxes in the HID Client to interact with the application.</li>
+</ul>
+<div class="image">
+<img src="hid_client_test.png" alt=""/>
+<div class="caption">
+Testing the connection with the HID Client app</div></div>
+    <h2><a class="anchor" id="dev_msc_tutorial"></a>
+USB Device Mass Storage</h2>
+<p>A mass storage USB Device implements an USB memory stick. Together with the <b>File System</b> you can connect various drives using MSC to an USB Host: SD cards, internal or external Flash memory and even a simple RAM disk. The examples accesses either on-chip RAM or a SD card where available. The USB Host can then access the new drives using standard file access methods. The following picture shows an exemplary connection of the development board and the USB Host Computer.</p>
+<div class="image">
+<img src="msc_dev_example_setup.png" alt=""/>
+<div class="caption">
+USB device mass storage example hardware setup</div></div>
+    <p>The <code>Abstract.txt</code> file contained in the <b>Documentation</b> group of the <b>Project</b> window gives you more information on the general setup and the available storage device on the development board.</p>
+<h3><a class="anchor" id="autotoc_md8"></a>
+Build the "USB Device Mass Storage" Project</h3>
+<p>Open the example project in MDK.</p>
+<h4><a class="anchor" id="autotoc_md9"></a>
+Source Files</h4>
+<ul>
+<li><code>MassStorage.c</code> contains the main C function that initializes the board hardware and the USB Device Component.</li>
+<li>The <b>USBD_User_MSC_0.c</b> is an adapted code template that implements all necessary file access functions. Refer to <a class="el" href="group__usbd__mscFunctions.html">MSC: Mass Storage Class</a> for details about these template functions.</li>
+</ul>
+<p>If you are using RTOS other than CMSIS-RTOS2 RTX5 for your project please make sure to satisfy <a class="el" href="usb_resource_requirements.html#usbd_res_req">USB Device Resource Requirements</a>.</p>
+<p>You may now build and download the example project to the evaluation board using the µVision commands:</p>
+<ul>
+<li><b>Project</b> --&gt; <b>Build target (F7)</b></li>
+<li><b>Flash</b> --&gt; <b>Download (F8)</b></li>
+</ul>
+<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
+<h3><a class="anchor" id="autotoc_md10"></a>
+Using the "USB Device Mass Storage" Project</h3>
+<h4><a class="anchor" id="autotoc_md11"></a>
+Hardware Setup</h4>
+<p>The setup of the Evaluation Board hardware is described in the <code>Abstract.txt</code> file.</p>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Insert a SD card into the socket (if available).</li>
+<li>Use an USB cable to connect your development board to the Host PC and power up your board.</li>
+<li>Wait for the driver installation on the PC to complete. First you will see "Installing device driver software" and after a successful installation "Keil Disk 0 USB Device":</li>
+</ul>
+<div class="image">
+<img src="msc_ready.png" alt=""/>
+<div class="caption">
+Automatic driver installation</div></div>
+    <h4><a class="anchor" id="autotoc_md12"></a>
+PC Software</h4>
+<p>The USB Device Mass Storage example can be tested on a Windows PC using the <b>Windows Explorer</b>. After a successful driver installation, the <b>AutoPlay</b> window appears:</p>
+<div class="image">
+<img src="auto_play_msc_dev.png" alt=""/>
+<div class="caption">
+AutoPlay notification</div></div>
+    <p>If you click on <b>Open folder to view files</b> Windows Explorer automatically starts with the drive opened.</p>
+<h2><a class="anchor" id="dev_cdc_tutorial"></a>
+USB Device Virtual COM Port</h2>
+<p>The Communication Device Class (CDC) is used for implementing virtual communication ports. This example demonstrates a bridge between a <b>Virtual COM Port</b> on the USB Host Computer and an UART port on the evaluation board.</p>
+<p>The following picture shows an exemplary connection of the development board and the USB Host Computer.</p>
+<div class="image">
+<img src="cdc_dev_example_setup.png" alt=""/>
+<div class="caption">
+USB device virtual COM port example hardware setup</div></div>
+    <p>The <code>Abstract.txt</code> file contained in the <b>Documentation</b> group of the <b>Project</b> window gives you more information on the general setup and the available I/O on the development board.</p>
+<h3><a class="anchor" id="autotoc_md13"></a>
+Build the "USB Device Virtual COM" Project</h3>
+<p>Open the example project in MDK.</p>
+<h4><a class="anchor" id="autotoc_md14"></a>
+Source Files</h4>
+<ul>
+<li><code>VirtualCOM.c</code> contains the main C function that initializes the board hardware and the USB Device Component. Furthermore, it contains the code that exchanges the data internally between the USB and the UART port.</li>
+<li>The <b>USBD_User_CDC_0.c</b> is an adapted code template that implements all necessary file access functions. Refer to <a class="el" href="group__usbd__cdcFunctions__acm.html">CDC: Communication Device Class (ACM)</a> for details about these template functions.</li>
+</ul>
+<p>If you are using RTOS other than CMSIS-RTOS2 RTX5 for your project please make sure to satisfy <a class="el" href="usb_resource_requirements.html#usbd_res_req">USB Device Resource Requirements</a>.</p>
+<p>You may now build and download the example project to the evaluation board using the µVision commands:</p>
+<ul>
+<li><b>Project</b> --&gt; <b>Build target (F7)</b></li>
+<li><b>Flash</b> --&gt; <b>Download (F8)</b></li>
+</ul>
+<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
+<h3><a class="anchor" id="autotoc_md15"></a>
+Using the "USB Device Virtual COM" Project</h3>
+<h4><a class="anchor" id="autotoc_md16"></a>
+Hardware Setup</h4>
+<p>The setup of the Evaluation Board hardware is described in the <code>Abstract.txt</code> file.</p>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Connect the UART on the development board to your PC (you might need an USB to serial RS232 adapter). Use an USB cable to connect your development board to the Host PC and power up your board.</li>
+<li>The <b>Welcome to the Found New Hardware Wizard</b> appears. Installation of the driver is described in detail in the <code>Abstract.txt</code> file.</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md17"></a>
+PC Software</h4>
+<p>The USB Device Virtual COM example can be tested on a Windows PC using a terminal emulation program. Since Hyperterminal in not part of Windows any more, please download an appropriate program for this purpose (such as <b>PuTTY</b> for example). Open the two COM ports "COMx" and "COMy". Any data from "COMx" will be echoed on "COMy" and visa versa:</p>
+<div class="image">
+<img src="vcom_terminals.png" alt=""/>
+<div class="caption">
+VCOM terminals</div></div>
+    <p><b>About Host PC driver for Microsoft Windows</b></p>
+<p>The example folder contains two files relevant for driver installation on the Microsoft Windows:</p>
+<ul>
+<li>Driver setup information file (xxx-vcom.inf) which is used to create a digitally signed driver catalog file (xxx-vcom.cat)</li>
+<li>Digitally signed driver catalog file (xxx-vcom.cat)</li>
+</ul>
+<p>The driver files are provided as an example, the driver setup information file should be adapted and digitally signed driver catalog file should be created from adapted driver setup information file.</p>
+<p>Driver setup information file should be adapted in the following way:</p>
+<ul>
+<li><b>c251</b> in Vendor ID <b>VID_c251</b> entries should be changed to the vendor ID number assigned to your company by the USB organization (c251 Vendor ID is reserved for Keil Software and should not be used)</li>
+<li><b>xxxx</b> in Product ID <b>PID_xxxx</b> entries should be changed to the product ID as assigned by your company</li>
+<li>in <b>[DeviceList.xxx]</b> sections, entries not relevant for the device, should be removed or added as described below:<ul>
+<li>if device is pure CDC class device (<b>not composite</b>) then all entries ending with <b>&amp;MI_xx should be removed</b></li>
+<li>if device is a <b>composite device</b> with one or more CDC class instances then entries <b>not ending</b> with <b>&amp;MI_xx should be removed</b> and entries <b>ending</b> with <b>&amp;MI_xx should exist</b> for each CDC class instance (example driver contains entries ending with &amp;MI_00 and &amp;MI_02 which are used for composite device containing two CDC class instances and each instance uses 2 interfaces where MI_00 describes first CDC instance and MI_02 entry describes second CDC instance)</li>
+</ul>
+</li>
+<li><b>[Strings]</b> section should be changed as desired</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>Vendor ID and Product ID are configured in the USBD_Config_n.h configuration file of the embedded application.</li>
+<li>For producing digitally signed driver catalog file please refer to Microsoft Windows documentation.</li>
+</ul>
+</dd></dl>
+<h2><a class="anchor" id="dev_adc_tutorial"></a>
+USB Device Audio</h2>
+<p>The Audio Device Class (ADC) is used to send or receive audio, voice, and other sound-related functionality. This example demonstrates a <b>USB Audio Device</b> attached to the USB Host Computer to provide this capability.</p>
+<p>The following picture shows an exemplary connection of the development board and the USB Host Computer. Using the USB connection, the development board will play sound using its on-board speaker:</p>
+<div class="image">
+<img src="adc_dev_example_setup.png" alt=""/>
+<div class="caption">
+USB device audio example hardware setup</div></div>
+    <p>The <code>Abstract.txt</code> file contained in the <b>Documentation</b> group of the <b>Project</b> window gives you more information on the general setup and the available I/O on the development board.</p>
+<h3><a class="anchor" id="autotoc_md18"></a>
+Build the "USB Device Audio" Project</h3>
+<p>Open the example project in MDK.</p>
+<h4><a class="anchor" id="autotoc_md19"></a>
+Source Files</h4>
+<ul>
+<li><code>Audio.c</code> contains the main C function that initializes the board hardware and the USB Device Component.</li>
+<li>The file <b>USBD_User_ADC_0.c</b> is an code template that needs to be adapted to board audio hardware. Refer to <a class="el" href="group__usbd__adcFunctions.html">ADC: Audio Device Class</a> for details about these template functions.</li>
+</ul>
+<p>If you are using RTOS other than CMSIS-RTOS2 RTX5 for your project please make sure to satisfy <a class="el" href="usb_resource_requirements.html#usbd_res_req">USB Device Resource Requirements</a>.</p>
+<p>You may now build and download the example project to the evaluation board using the µVision commands:</p>
+<ul>
+<li><b>Project</b> --&gt; <b>Build target (F7)</b></li>
+<li><b>Flash</b> --&gt; <b>Download (F8)</b></li>
+</ul>
+<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
+<h3><a class="anchor" id="autotoc_md20"></a>
+Using the "USB Device Audio" Project</h3>
+<h4><a class="anchor" id="autotoc_md21"></a>
+Hardware Setup</h4>
+<p>The setup of the Evaluation Board hardware is described in the <code>Abstract.txt</code> file.</p>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Use a USB cable to connect your development board to the Host PC and power up your board.</li>
+<li>The <b>Welcome to the Found New Hardware Wizard</b> appears. Installation of the driver is described in detail in the <code>Abstract.txt</code> file.</li>
+<li>If detected correctly, you should be able to see the following message:</li>
+</ul>
+<div class="image">
+<img src="adc_install_ok.png" alt=""/>
+<div class="caption">
+Installation succeeded</div></div>
+    <h4><a class="anchor" id="autotoc_md22"></a>
+PC Software</h4>
+<p>Use any PC software that is capable of playing audio. Normally, the device that has been connected last will play the audio data. If you do not hear any sound coming from the on-board speaker, check your system settings.</p>
+<h2><a class="anchor" id="dev_cc_tutorial"></a>
+Custom USB Device (WinUSB_Echo)</h2>
+<p>Using the custom USB class, you can implement any USB device that is not covered by the other classes available in the MDK Middleware. An example is available for various development boards that is implementing a custom class to work with the Windows USB (WinUSB), a generic driver for USB devices for Microsoft Windows. The example demonstrates a WinUSB device that contains Bulk IN and Bulk OUT endpoints. All data that the device receives on the Bulk OUT endpoint is echoed back on the Bulk IN endpoint.</p>
+<p>The following picture shows an exemplary connection of the development board and the Windows USB host computer. Using the USB connection and WinUSB_Test.exe ("install_dir\ARM\PACK\Keil\Middleware\x.y.z\Utilities\WinUSB_Test" folder (where "install_dir" refers to the installation directory of Arm Keil MDK, default "C:\Keil_v5") and x &gt;= 7, y &gt;= 5, z &gt;= 0), you can initiate. For more information, refer to <a class="el" href="USB_Device.html#winusb_app">WinUSB Test</a>.</p>
+<div class="image">
+<img src="cc_dev_example_setup.png" alt=""/>
+<div class="caption">
+Hardware setup for WinUSB Custom Class example</div></div>
+    <p>The <code>Abstract.txt</code> file contained in the <b>Documentation</b> group of the <b>Project</b> window gives you more information on the general setup.</p>
+<h3><a class="anchor" id="autotoc_md23"></a>
+Build the "WinUSB_Echo" Project</h3>
+<p>Open the example project in MDK.</p>
+<h4><a class="anchor" id="autotoc_md24"></a>
+Source Files</h4>
+<ul>
+<li><code>main.c</code> contains the main C function that initializes the hardware.</li>
+<li><code>WinUSB_Echo.c</code> contains the app_main C function that initializes USB Device Component.</li>
+<li>The files <b>USBD_User_CustomClass_0.c/USBD_User_CustomClass_1.c</b> are adapted code templates that implement all necessary functions. Refer to <a class="el" href="group__usbd__classFunctions.html">Custom Class</a> for details about these template functions.</li>
+</ul>
+<p>If you are using RTOS other than CMSIS-RTOS2 RTX5 for your project please make sure to satisfy <a class="el" href="usb_resource_requirements.html#usbd_res_req">USB Device Resource Requirements</a>.</p>
+<p>You may now build and download the example project to the evaluation board using the µVision commands:</p>
+<ul>
+<li><b>Project</b> --&gt; <b>Build target (F7)</b></li>
+<li><b>Flash</b> --&gt; <b>Download (F8)</b></li>
+</ul>
+<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
+<h3><a class="anchor" id="autotoc_md25"></a>
+Using the "WinUSB_Echo" Project</h3>
+<h4><a class="anchor" id="autotoc_md26"></a>
+Hardware Setup</h4>
+<p>The setup of the evaluation board hardware is described in the <code>Abstract.txt</code> file.</p>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Use a USB cable to connect your development board to the host PC and power up your board.</li>
+<li>If you connect the device to a PC running Windows 8 or later, the device driver will be installed automatically. On Windows 7, you need to select a driver file that can be found in the project folder. For more information, refer to the <code>Abstract.txt</code> file in the µVision project.</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md27"></a>
+PC Software</h4>
+<p>The example can be tested on a Windows PC using the WinUSB_Test.exe utility provided with MDK Middleware. The program runs stand-alone without installation. Simply run "install_dir\\ARM\PACK\Keil\MDK-Middleware\x.y.z\Utilities\WinUSB_Test\Release\WinUSB_Test.exe" application (where x &gt;= 7, y &gt;= 5, z &gt;= 0):</p>
+<div class="image">
+<img src="WinUSB_Test_application.png" alt=""/>
+<div class="caption">
+WinUSB test application</div></div>
+    <p><b>Device Selection</b></p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Configuration Option   </th><th class="markdownTableHeadNone">Selection    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">GIUD   </td><td class="markdownTableBodyNone">The GUID that is used in Windows to access the device. For this example, the GIUD is fixed. To create your own GIUD, refer to the <code>Abstract.txt</code> file.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Device   </td><td class="markdownTableBodyNone">Select the device that you have attached to the PC (VID should be C251).   </td></tr>
+</table>
+<p><b>Control Transfer</b></p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Configuration Option   </th><th class="markdownTableHeadNone">Selection    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Setup Packet   </td><td class="markdownTableBodyNone">Normally, leave open. Will be filled automatically from the next options.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Direction   </td><td class="markdownTableBodyNone">Specify the communication direction. If you want to read for example the device descriptor from the device, use Device-to-Host.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="https://www.beyondlogic.org/usbnutshell/usb6.shtml">Type</a>   </td><td class="markdownTableBodyNone">Type of the control request (standard/class/vendor).    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="https://www.beyondlogic.org/usbnutshell/usb6.shtml">Recipient</a>   </td><td class="markdownTableBodyNone">Recipient of the control transfer message (device/interface/endpoint/other).    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="https://www.beyondlogic.org/usbnutshell/usb6.shtml">bRequest</a>   </td><td class="markdownTableBodyNone">Specify the setup packet request being made.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="https://www.beyondlogic.org/usbnutshell/usb6.shtml">wValue</a>   </td><td class="markdownTableBodyNone">Specify the wValue of the request.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="https://www.beyondlogic.org/usbnutshell/usb6.shtml">wIndex</a>   </td><td class="markdownTableBodyNone">Specify the wIndex of the request.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="https://www.beyondlogic.org/usbnutshell/usb6.shtml">wLength</a>   </td><td class="markdownTableBodyNone">Specify the wLength of the request.   </td></tr>
+</table>
+<p><b>Data Phase</b></p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Configuration Option   </th><th class="markdownTableHeadNone">Selection    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Data (aa bb cc ..)   </td><td class="markdownTableBodyNone">Shows the transmitted data    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Transfer button   </td><td class="markdownTableBodyNone">Start the data transfer    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">File   </td><td class="markdownTableBodyNone">Select a file for transfer or for saving transferred data    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Transfer to/from File button   </td><td class="markdownTableBodyNone">Start the data transfer to/from file   </td></tr>
+</table>
+<p><b>Bulk/Interrupt Transfer</b></p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Configuration Option   </th><th class="markdownTableHeadNone">Selection    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Interface   </td><td class="markdownTableBodyNone">Select USB interface number    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">IN Transfer Endpoint   </td><td class="markdownTableBodyNone">Select IN endpoint to be used for bulk/interrupt transfer    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Number of bytes to receive   </td><td class="markdownTableBodyNone">Specify the number of bytes to be received    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Data (aa bb cc ..)   </td><td class="markdownTableBodyNone">Shows the received data    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Start Reception button   </td><td class="markdownTableBodyNone">Start listening on the specified endpoint    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">File   </td><td class="markdownTableBodyNone">Select a file for saving received data    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Start Reception to File button   </td><td class="markdownTableBodyNone">Start listening on the specified endpoint and save data to file    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">OUT Transfer Endpoint   </td><td class="markdownTableBodyNone">Select OUT endpoint to be used for bulk/interrupt transfer    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Data (aa bb cc ..)   </td><td class="markdownTableBodyNone">Enter the data to be transmitted    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Start Transmission button   </td><td class="markdownTableBodyNone">Start sending data on the specified endpoint    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">File   </td><td class="markdownTableBodyNone">Select a file for data to be transmitted    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Start Transmission from File button   </td><td class="markdownTableBodyNone">Start sending data from the specified file on the OUT endpoint   </td></tr>
+</table>
+<h4><a class="anchor" id="autotoc_md28"></a>
+Examples</h4>
+<p><b>Control Transfer</b></p>
+<p>To setup the control endpoint and to read out the device descriptor of the device, enter the following:</p><ul>
+<li>Direction: Device-to-Host</li>
+<li>bRequest: 06</li>
+<li>wValue: 0100</li>
+<li>wIndex 0000</li>
+<li>wLength: 0012</li>
+</ul>
+<p>After pressing the <b>Transfer</b> button, you see the response in the Data window:</p>
+<div class="image">
+<img src="WinUSB_Test_control_transfer.png" alt=""/>
+<div class="caption">
+Control transfers in the WinUSB test app</div></div>
+    <p><b>Bulk Transfer</b></p>
+<p>To loop data from the device to the PC and back, enter the following:</p>
+<ul>
+<li>Interface: 0</li>
+<li>IN Transfer Endpoint: 1</li>
+<li>Press Start Reception to Buffer</li>
+<li>OUT Transfer Endpoint: 1</li>
+<li>Enter some data in the right-hand Data window, for example AA BB CC</li>
+<li>Press Start Transmission from Buffer</li>
+</ul>
+<p>You now see the same data in the left-hand Data window:</p>
+<div class="image">
+<img src="WinUSB_Test_bulk_transfer.png" alt=""/>
+<div class="caption">
+Bulk transfers in the WinUSB test app</div></div>
+    <p><b>About Host PC driver for Microsoft Windows</b></p>
+<p>The example folder contains two files relevant for driver installation on the Microsoft Windows:</p>
+<ul>
+<li>Driver setup information file (xxx-winusb_echo.inf) which is used to create a digitally signed driver catalog file (xxx-winusb_echo.cat)</li>
+<li>Digitally signed driver catalog file (xxx-winusb_echo.cat)</li>
+</ul>
+<p>The driver files are provided as an example, the driver setup information file should be adapted and digitally signed driver catalog file should be created from adapted driver setup information file.</p>
+<p>Driver setup information file should be adapted in the following way:</p>
+<ul>
+<li><b>c251</b> in Vendor ID <b>VID_c251</b> entries should be changed to the vendor ID number assigned to your company by the USB organization (c251 Vendor ID is reserved for Keil Software and should not be used)</li>
+<li><b>xxxx</b> in Product ID <b>PID_xxxx</b> entries should be changed to the product ID as assigned by your company</li>
+<li><b>[DeviceList.xxx]</b> sections should be changed if device is a composite device in the following way:<br  />
+ instead of entries like: <code>DeviceName0% = USB_Install, USB\VID_xxxx&amp;PID_yyyy</code> entries describing each custom class instance should be added like: <code>DeviceName0% = USB_Install, USB\VID_xxxx&amp;PID_yyyy&amp;MI_00</code> where two digit number after MI_ describes the starting interface of a custom class instance</li>
+<li><b>[Strings]</b> section should be changed as desired</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>Vendor ID and Product ID are configured in the USBD_Config_n.h configuration file of the embedded application.</li>
+<li>For producing digitally signed driver catalog file please refer to Microsoft Windows documentation.</li>
+</ul>
+</dd></dl>
+<h2><a class="anchor" id="dev_comp_tutorial"></a>
+USB Composite Device</h2>
+<p>An USB Composite Device is a peripheral device that supports more than one device class. Many different devices are implemented as composite devices. For example they consist of a certain device class, but also an USB disk that has all the necessary drivers stored so that the device can be installed automatically, without the need to have access to a certain driver software. <br  />
+ In this example, we will implement a composite device that is made up of two devices that have been used in the previous tutorials. We will have access to the development board's <b>buttons</b> (from the HID example) and the <b>SC card</b> (from the MSC example).</p>
+<div class="image">
+<img src="comp_dev_example_setup.png" alt=""/>
+<div class="caption">
+USB composite device example hardware setup</div></div>
+    <h3><a class="anchor" id="autotoc_md29"></a>
+Build the "USB Composite" Project</h3>
+<p>Open the <a class="el" href="USB_Device.html#dev_msc_tutorial">MSC example project</a> in MDK. From the <a class="el" href="USB_Device.html#dev_hid_tutorial">HID example project</a>, copy HID.c and USBD_User_HID.c and add them to the project. Open the <b>Manage Run-Time Environment</b> window. Add one USB:Device:HID component to the project. After clicking OK, you will see that the USB Component in the Project window will have an additional entry: USBD_Config_HID_0.h. As the HID example uses LEDs and push-buttons, you might need to add these <b>Board Support</b> related items as well. Check the RTE Component selection of the HID example for further detail.</p>
+<h4><a class="anchor" id="autotoc_md30"></a>
+Source Files</h4>
+<p>Now we have two main functions in the project. We need to delete one of them. Open the MassStorage.c file. Copy the lines</p>
+<div class="fragment"><div class="line">finit (<span class="stringliteral">&quot;M0:&quot;</span>);           <span class="comment">/* Initialize SD Card 0 */</span></div>
+<div class="line">fmount(<span class="stringliteral">&quot;M0:&quot;</span>);           <span class="comment">/* Mount SD Card 0 */</span></div>
+</div><!-- fragment --><p> to the HID.c file right before the lines </p><div class="fragment"><div class="line"><a class="code hl_function" href="group__usbd__coreFunctions__api.html#ga65ba44a47e3fa46a15f70bab9917c8ca" title="Initialize USB Device stack and controller.">USBD_Initialize</a>    (0);</div>
+<div class="line"><a class="code hl_function" href="group__usbd__coreFunctions__api.html#gad97153303fc0a6f51c1c20ac050b238f" title="Activate pull-up on D+ or D- line to signal USB Device connection on USB Bus.">USBD_Connect</a>       (0);</div>
+</div><!-- fragment --><p> Insert </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;rl_fs.h</span></div>
+</div><!-- fragment --><p>to the <code>#includes</code> at the beginning of the HID.c file. Afterwards, remove the MassStorage.c from your project. Now you have only one main function left.</p>
+<h4><a class="anchor" id="autotoc_md31"></a>
+USB Device Configuration</h4>
+<p>Before running the program on the target hardware, you need to edit the USBD_Config_HID_0.h file. Open the file, switch to the <b>Configuration Wizard</b> and go to the <b>Bulk Endpoint Settings</b>. As the file is generic and has no information about other classes available in the project, the Endpoint 1 is configured for IN and OUT. This endpoint is already used in the USBD_Config_MSC_0.h file. So change the number for IN and for OUT to '2'. This will make the HID Component use the Endpoint 2 for data exchange with the USB Host and no conflicts will occur with the MSC class.</p>
+<p>If you are using RTOS other than CMSIS-RTOS2 RTX5 for your project please make sure to satisfy <a class="el" href="usb_resource_requirements.html#usbd_res_req">USB Device Resource Requirements</a>.</p>
+<p>You may now build and download the example project to the evaluation board using the µVision commands:</p>
+<ul>
+<li><b>Project</b> --&gt; <b>Build target (F7)</b></li>
+<li><b>Flash</b> --&gt; <b>Download (F8)</b></li>
+</ul>
+<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
+<h3><a class="anchor" id="autotoc_md32"></a>
+Using the "USB Composite" Project</h3>
+<h4><a class="anchor" id="autotoc_md33"></a>
+Hardware Setup</h4>
+<p>The setup of the Evaluation Board hardware is described in the <code>Abstract.txt</code> file.</p>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Insert a SD card into the socket.</li>
+<li>Use an USB cable to connect your development board to the Host PC and power up your board.</li>
+<li>Wait for the driver installation on the PC to complete. First you will see "Installing device driver software" and after a successful installation "USB Input Device" and "Keil Disk 0 USB Device".</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>If devices do not install correctly then probably device is using same Vendor ID and Product ID as some device that was previously already installed. There are two possible solutions: either change Product ID in USBD_Config_0.h file or uninstall previously installed device that uses same Vendor ID and Product ID.</dd></dl>
+<h4><a class="anchor" id="autotoc_md34"></a>
+PC Software</h4>
+<p>The HID part of this example can be tested on a Windows PC using the HIDClient.exe utility (located in "C:\Keil\ARM\Utilities\HID_Client\Release"). The program runs stand-alone without installation. <br  />
+ Steps to check the USB communication using the client utility:</p>
+<ul>
+<li>Run "C:\Keil\ARM\Utilities\HID_Client\Release\HIDClient.exe".</li>
+<li>Select the <b>Keil USB Device</b> to establish the communication channel.</li>
+<li>Press buttons on the target hardware and/or use the check boxes in the HID Client to interact with the application. The Mass Storage part of this example can be tested on a Windows PC using the <b>Windows Explorer</b>.</li>
+<li>After a successful driver installation, the <b>AutoPlay</b> window appears.</li>
+<li>If you click on <b>Open folder to view files</b> Windows Explorer automatically starts with the drive opened.</li>
+</ul>
+<h2><a class="anchor" id="dev_mouse_tutorial"></a>
+USB Mouse</h2>
+<p>The USB Mouse example application shows how to control the mouse pointer of a host PC with a microcontroller device using USB Device HID.</p>
+<p>The following picture shows an exemplary connection of the development board (in this case a <a href="https://www.keil.com/boards2/keil/mcbstm32f400/">MCBSTM32F400</a>) to a host PC. Using the joystick on the development board you can move the mouse pointer on the screen. Pressing the joystick down will issue a left-click action.</p>
+<div class="image">
+<img src="mouse_dev_example_setup.png" alt=""/>
+<div class="caption">
+USB device mouse example hardware setup</div></div>
+    <h3><a class="anchor" id="autotoc_md35"></a>
+Create the "USB Mouse" Project</h3>
+<p>In this example, we are using the <a href="https://www.keil.com/boards2/keil/mcbstm32f400/">MCBSTM32F400</a> board with the STM32F407IGHx device. Create a new project in MDK (Select Device <b>STMicroelectronics:STM32F4 Series: STM32F407:STM32F407IG:STM32F407IGHx</b>). In the <b>Manage Run-Time Environment</b> window, select the following components:</p>
+<ul>
+<li><b>Board Support:Joystick (API):Joystick</b> (Variant <b>MCBSTM32F400</b>)</li>
+<li><b>CMSIS:Core</b></li>
+<li><b>CMSIS:RTOS2 (API):Keil RTX5</b></li>
+<li><b>CMSIS Driver:USB Device (API):Full-speed</b></li>
+<li><b>Device:STM32Cube Framework (API):Classic</b></li>
+<li><b>USB:Device: 1</b></li>
+<li><b>USB:Device:HID:1</b></li>
+</ul>
+<p>Click the <b>Resolve</b> button and then <b>OK</b>.</p>
+<p>Before continuing to add the required source code, you need to add a template file called <b>USBD_User_HID_Mouse_0.c</b>:</p>
+<ul>
+<li>Right-click on <b>Source Group 1</b> and select <b>Add New Item to Group 'Source Group 1'...</b>.</li>
+<li>Click on <b>User Code Template</b> and select the <b>USB Device HID Mouse</b> template.</li>
+<li>Click <b>Add</b> to copy the file <b>USBD_User_HID_Mouse_0.c</b> to the project.</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md36"></a>
+Source Files</h4>
+<ul>
+<li>Click on <b>New (Ctrl + N)</b> to create a new file.</li>
+<li>Save it (<b>File -&gt; Save</b>) as <b>main.h</b>.</li>
+<li>Copy the following code into the main.h file and save it again:</li>
+</ul>
+<div class="fragment"><div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  ******************************************************************************</span></div>
+<div class="line"><span class="comment">  * @file    Templates/Inc/main.h </span></div>
+<div class="line"><span class="comment">  * @author  MCD Application Team</span></div>
+<div class="line"><span class="comment">  * @brief   Header for main.c module</span></div>
+<div class="line"><span class="comment">  ******************************************************************************</span></div>
+<div class="line"><span class="comment">  * @attention</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  * &lt;h2&gt;&lt;center&gt;&amp;copy; COPYRIGHT(c) 2017-2018 STMicroelectronics&lt;/center&gt;&lt;/h2&gt;</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  * Redistribution and use in source and binary forms, with or without modification,</span></div>
+<div class="line"><span class="comment">  * are permitted provided that the following conditions are met:</span></div>
+<div class="line"><span class="comment">  *   1. Redistributions of source code must retain the above copyright notice,</span></div>
+<div class="line"><span class="comment">  *      this list of conditions and the following disclaimer.</span></div>
+<div class="line"><span class="comment">  *   2. Redistributions in binary form must reproduce the above copyright notice,</span></div>
+<div class="line"><span class="comment">  *      this list of conditions and the following disclaimer in the documentation</span></div>
+<div class="line"><span class="comment">  *      and/or other materials provided with the distribution.</span></div>
+<div class="line"><span class="comment">  *   3. Neither the name of STMicroelectronics nor the names of its contributors</span></div>
+<div class="line"><span class="comment">  *      may be used to endorse or promote products derived from this software</span></div>
+<div class="line"><span class="comment">  *      without specific prior written permission.</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS</span></div>
+<div class="line"><span class="comment">  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span></div>
+<div class="line"><span class="comment">  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span></div>
+<div class="line"><span class="comment">  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE</span></div>
+<div class="line"><span class="comment">  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span></div>
+<div class="line"><span class="comment">  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR</span></div>
+<div class="line"><span class="comment">  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER</span></div>
+<div class="line"><span class="comment">  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,</span></div>
+<div class="line"><span class="comment">  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span></div>
+<div class="line"><span class="comment">  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  ******************************************************************************</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line">  </div>
+<div class="line"><span class="comment">/* Define to prevent recursive inclusion -------------------------------------*/</span></div>
+<div class="line"><span class="preprocessor">#ifndef __MAIN_H</span></div>
+<div class="line"><span class="preprocessor">#define __MAIN_H</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">/* Includes ------------------------------------------------------------------*/</span></div>
+<div class="line"><span class="preprocessor">#include &quot;stm32f4xx_hal.h</span></div>
+<div class="line"><span class="preprocessor">#include &quot;</span>cmsis_os2.h<span class="stringliteral">&quot;                  // ::CMSIS:RTOS2</span></div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral">/* Exported types ------------------------------------------------------------*/</span></div>
+<div class="line"><span class="stringliteral">/* Exported constants --------------------------------------------------------*/</span></div>
+<div class="line"><span class="stringliteral">extern uint64_t app_main_stk[];</span></div>
+<div class="line"><span class="stringliteral">extern const osThreadAttr_t app_main_attr;</span></div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral">/* Exported macro ------------------------------------------------------------*/</span></div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral">/* Exported functions ------------------------------------------------------- */</span></div>
+<div class="line"><span class="stringliteral">extern void app_main (void *arg);</span></div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral">#endif /* __MAIN_H */</span></div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral">/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/ </span></div>
+</div><!-- fragment --><ul>
+<li>Right-click on <b>Source Group 1</b> and select <b>Add New Item to Group 'Source Group 1'...</b>.</li>
+<li>Click on <b>C File (.c)</b> and enter <b>main</b> in the <b>Name</b> box.</li>
+<li>Copy the following code into the main.c file:</li>
+</ul>
+<div class="fragment"><div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  ******************************************************************************</span></div>
+<div class="line"><span class="comment">  * @file    Templates/Src/main.c</span></div>
+<div class="line"><span class="comment">  * @author  MCD Application Team</span></div>
+<div class="line"><span class="comment">  * @brief   Main program body</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  * @note    modified by ARM</span></div>
+<div class="line"><span class="comment">  *          The modifications allow to use this file as User Code Template</span></div>
+<div class="line"><span class="comment">  *          within the Device Family Pack.</span></div>
+<div class="line"><span class="comment">  ******************************************************************************</span></div>
+<div class="line"><span class="comment">  * @attention</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  * &lt;h2&gt;&lt;center&gt;&amp;copy; COPYRIGHT(c) 2017-2018 STMicroelectronics&lt;/center&gt;&lt;/h2&gt;</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  * Redistribution and use in source and binary forms, with or without modification,</span></div>
+<div class="line"><span class="comment">  * are permitted provided that the following conditions are met:</span></div>
+<div class="line"><span class="comment">  *   1. Redistributions of source code must retain the above copyright notice,</span></div>
+<div class="line"><span class="comment">  *      this list of conditions and the following disclaimer.</span></div>
+<div class="line"><span class="comment">  *   2. Redistributions in binary form must reproduce the above copyright notice,</span></div>
+<div class="line"><span class="comment">  *      this list of conditions and the following disclaimer in the documentation</span></div>
+<div class="line"><span class="comment">  *      and/or other materials provided with the distribution.</span></div>
+<div class="line"><span class="comment">  *   3. Neither the name of STMicroelectronics nor the names of its contributors</span></div>
+<div class="line"><span class="comment">  *      may be used to endorse or promote products derived from this software</span></div>
+<div class="line"><span class="comment">  *      without specific prior written permission.</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS</span></div>
+<div class="line"><span class="comment">  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span></div>
+<div class="line"><span class="comment">  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span></div>
+<div class="line"><span class="comment">  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE</span></div>
+<div class="line"><span class="comment">  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span></div>
+<div class="line"><span class="comment">  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR</span></div>
+<div class="line"><span class="comment">  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER</span></div>
+<div class="line"><span class="comment">  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,</span></div>
+<div class="line"><span class="comment">  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span></div>
+<div class="line"><span class="comment">  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  ******************************************************************************</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">/* Includes ------------------------------------------------------------------*/</span></div>
+<div class="line"><span class="preprocessor">#include &quot;main.h</span></div>
+<div class="line"><span class="preprocessor"></span> </div>
+<div class="line"><span class="preprocessor">#ifdef _RTE_</span></div>
+<div class="line"><span class="preprocessor">#include &quot;</span>RTE_Components.h<span class="stringliteral">&quot;             // Component selection</span></div>
+<div class="line"><span class="stringliteral">#endif</span></div>
+<div class="line"><span class="stringliteral">#ifdef RTE_CMSIS_RTOS2                  // when RTE component CMSIS RTOS2 is used</span></div>
+<div class="line"><span class="stringliteral">#include &quot;</span>cmsis_os2.h<span class="stringliteral">&quot;                  // ::CMSIS:RTOS2</span></div>
+<div class="line"><span class="stringliteral">#endif</span></div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral">#ifdef RTE_CMSIS_RTOS2_RTX5</span><span class="comment"></span></div>
+<div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  * Override default HAL_GetTick function</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line">uint32_t HAL_GetTick (void) {</div>
+<div class="line">  static uint32_t ticks = 0U;</div>
+<div class="line">         uint32_t i;</div>
+<div class="line"> </div>
+<div class="line">  if (osKernelGetState () == osKernelRunning) {</div>
+<div class="line">    return ((uint32_t)osKernelGetTickCount ());</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  /* If Kernel is not running wait approximately 1 ms then increment</div>
+<div class="line">     and return auxiliary tick counter value */</div>
+<div class="line">  for (i = (SystemCoreClock &gt;&gt; 14U); i &gt; 0U; i--) {</div>
+<div class="line">    __NOP(); __NOP(); __NOP(); __NOP(); __NOP(); __NOP();</div>
+<div class="line">    __NOP(); __NOP(); __NOP(); __NOP(); __NOP(); __NOP();</div>
+<div class="line">  }</div>
+<div class="line">  return ++ticks;</div>
+<div class="line">}</div>
+<div class="line">#endif</div>
+<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment">/** @addtogroup STM32F4xx_HAL_Examples</span></div>
+<div class="line"><span class="comment">  * @{</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment">/** @addtogroup Templates</span></div>
+<div class="line"><span class="comment">  * @{</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line"> </div>
+<div class="line">/* Private typedef -----------------------------------------------------------*/</div>
+<div class="line">/* Private define ------------------------------------------------------------*/</div>
+<div class="line">/* Private macro -------------------------------------------------------------*/</div>
+<div class="line">/* Private variables ---------------------------------------------------------*/</div>
+<div class="line">/* Private function prototypes -----------------------------------------------*/</div>
+<div class="line">static void SystemClock_Config(void);</div>
+<div class="line">static void Error_Handler(void);</div>
+<div class="line"> </div>
+<div class="line">/* Private functions ---------------------------------------------------------*/<span class="comment"></span></div>
+<div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  * @brief  Main program</span></div>
+<div class="line"><span class="comment">  * @param  None</span></div>
+<div class="line"><span class="comment">  * @retval None</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line">int main(void)</div>
+<div class="line">{</div>
+<div class="line"> </div>
+<div class="line">  /* STM32F4xx HAL library initialization:</div>
+<div class="line">       - Configure the Flash prefetch, Flash preread and Buffer caches</div>
+<div class="line">       - Systick timer is configured by default as source of time base, but user</div>
+<div class="line">             can eventually implement his proper time base source (a general purpose</div>
+<div class="line">             timer for example or other time source), keeping in mind that Time base</div>
+<div class="line">             duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and</div>
+<div class="line">             handled in milliseconds basis.</div>
+<div class="line">       - Low Level Initialization</div>
+<div class="line">     */</div>
+<div class="line">  HAL_Init();</div>
+<div class="line"> </div>
+<div class="line">  /* Configure the system clock to 168 MHz */</div>
+<div class="line">  SystemClock_Config();</div>
+<div class="line">  SystemCoreClockUpdate();</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">  /* Add your application code here</div>
+<div class="line">     */</div>
+<div class="line"> </div>
+<div class="line">#ifdef RTE_CMSIS_RTOS2</div>
+<div class="line">  /* Initialize CMSIS-RTOS2 */</div>
+<div class="line">  osKernelInitialize ();</div>
+<div class="line"> </div>
+<div class="line">  /* Create application main thread */</div>
+<div class="line">  osThreadNew(app_main, NULL, &amp;app_main_attr);</div>
+<div class="line"> </div>
+<div class="line">  /* Start thread execution */</div>
+<div class="line">  osKernelStart();</div>
+<div class="line">#endif</div>
+<div class="line"> </div>
+<div class="line">  /* Infinite loop */</div>
+<div class="line">  while (1)</div>
+<div class="line">  {</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  * @brief  System Clock Configuration</span></div>
+<div class="line"><span class="comment">  *         The system Clock is configured as follow :</span></div>
+<div class="line"><span class="comment">  *            System Clock source            = PLL (HSE)</span></div>
+<div class="line"><span class="comment">  *            SYSCLK(Hz)                     = 168000000</span></div>
+<div class="line"><span class="comment">  *            HCLK(Hz)                       = 168000000</span></div>
+<div class="line"><span class="comment">  *            AHB Prescaler                  = 1</span></div>
+<div class="line"><span class="comment">  *            APB1 Prescaler                 = 4</span></div>
+<div class="line"><span class="comment">  *            APB2 Prescaler                 = 2</span></div>
+<div class="line"><span class="comment">  *            HSE Frequency(Hz)              = 8000000</span></div>
+<div class="line"><span class="comment">  *            PLL_M                          = 25</span></div>
+<div class="line"><span class="comment">  *            PLL_N                          = 336</span></div>
+<div class="line"><span class="comment">  *            PLL_P                          = 2</span></div>
+<div class="line"><span class="comment">  *            PLL_Q                          = 7</span></div>
+<div class="line"><span class="comment">  *            VDD(V)                         = 3.3</span></div>
+<div class="line"><span class="comment">  *            Main regulator output voltage  = Scale1 mode</span></div>
+<div class="line"><span class="comment">  *            Flash Latency(WS)              = 5</span></div>
+<div class="line"><span class="comment">  * @param  None</span></div>
+<div class="line"><span class="comment">  * @retval None</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line">static void SystemClock_Config(void)</div>
+<div class="line">{</div>
+<div class="line">  RCC_ClkInitTypeDef RCC_ClkInitStruct;</div>
+<div class="line">  RCC_OscInitTypeDef RCC_OscInitStruct;</div>
+<div class="line"> </div>
+<div class="line">  /* Enable Power Control clock */</div>
+<div class="line">  __HAL_RCC_PWR_CLK_ENABLE();</div>
+<div class="line"> </div>
+<div class="line">  /* The voltage scaling allows optimizing the power consumption when the device is</div>
+<div class="line">     clocked below the maximum system frequency, to update the voltage scaling value</div>
+<div class="line">     regarding system frequency refer to product datasheet.  */</div>
+<div class="line">  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);</div>
+<div class="line"> </div>
+<div class="line">  /* Enable HSE Oscillator and activate PLL with HSE as source */</div>
+<div class="line">  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;</div>
+<div class="line">  RCC_OscInitStruct.HSEState = RCC_HSE_ON;</div>
+<div class="line">  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;</div>
+<div class="line">  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;</div>
+<div class="line">  RCC_OscInitStruct.PLL.PLLM = 25;</div>
+<div class="line">  RCC_OscInitStruct.PLL.PLLN = 336;</div>
+<div class="line">  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;</div>
+<div class="line">  RCC_OscInitStruct.PLL.PLLQ = 7;</div>
+<div class="line">  if(HAL_RCC_OscConfig(&amp;RCC_OscInitStruct) != HAL_OK)</div>
+<div class="line">  {</div>
+<div class="line">    /* Initialization Error */</div>
+<div class="line">    Error_Handler();</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2</div>
+<div class="line">     clocks dividers */</div>
+<div class="line">  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);</div>
+<div class="line">  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;</div>
+<div class="line">  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;</div>
+<div class="line">  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;</div>
+<div class="line">  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;</div>
+<div class="line">  if(HAL_RCC_ClockConfig(&amp;RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)</div>
+<div class="line">  {</div>
+<div class="line">    /* Initialization Error */</div>
+<div class="line">    Error_Handler();</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  /* STM32F405x/407x/415x/417x Revision Z devices: prefetch is supported  */</div>
+<div class="line">  if (HAL_GetREVID() == 0x1001)</div>
+<div class="line">  {</div>
+<div class="line">    /* Enable the Flash prefetch */</div>
+<div class="line">    __HAL_FLASH_PREFETCH_BUFFER_ENABLE();</div>
+<div class="line">  }</div>
+<div class="line">}<span class="comment"></span></div>
+<div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  * @brief  This function is executed in case of error occurrence.</span></div>
+<div class="line"><span class="comment">  * @param  None</span></div>
+<div class="line"><span class="comment">  * @retval None</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line">static void Error_Handler(void)</div>
+<div class="line">{</div>
+<div class="line">  /* User may add here some code to deal with this error */</div>
+<div class="line">  while(1)</div>
+<div class="line">  {</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">#ifdef  USE_FULL_ASSERT</div>
+<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  * @brief  Reports the name of the source file and the source line number</span></div>
+<div class="line"><span class="comment">  *         where the assert_param error has occurred.</span></div>
+<div class="line"><span class="comment">  * @param  file: pointer to the source file name</span></div>
+<div class="line"><span class="comment">  * @param  line: assert_param error line source number</span></div>
+<div class="line"><span class="comment">  * @retval None</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line">void assert_failed(uint8_t* file, uint32_t line)</div>
+<div class="line">{</div>
+<div class="line">  /* User can add his own implementation to report the file name and line number,</div>
+<div class="line">     ex: printf(&quot;Wrong parameters value: file %s on line %d\r\n<span class="stringliteral">&quot;, file, line) */</span></div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral">  /* Infinite loop */</span></div>
+<div class="line"><span class="stringliteral">  while (1)</span></div>
+<div class="line"><span class="stringliteral">  {</span></div>
+<div class="line"><span class="stringliteral">  }</span></div>
+<div class="line"><span class="stringliteral">}</span></div>
+<div class="line"><span class="stringliteral">#endif</span></div>
+<div class="line"><span class="stringliteral"></span><span class="comment"></span> </div>
+<div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  * @}</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  * @}</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line"> </div>
+<div class="line">/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/</div>
+</div><!-- fragment --><ul>
+<li>Right-click on <b>Source Group 1</b> and select <b>Add New Item to Group 'Source Group 1'...</b>.</li>
+<li>Click on <b>C File (.c)</b> and enter <b>app_main</b> in the <b>Name</b> box.</li>
+<li>Copy the following code into the app_main.c file:</li>
+</ul>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;main.h</span></div>
+<div class="line"><span class="preprocessor">#include &quot;</span>rl_usb.h</div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &quot;Board_Joystick.h</span></div>
+<div class="line"><span class="preprocessor"></span> </div>
+<div class="line"><span class="preprocessor"></span><span class="comment">// Main stack size must be multiple of 8 Bytes</span></div>
+<div class="line">#define APP_MAIN_STK_SZ (1024U)</div>
+<div class="line">uint64_t app_main_stk[APP_MAIN_STK_SZ / 8];</div>
+<div class="line">const osThreadAttr_t app_main_attr = {</div>
+<div class="line">  .stack_mem  = &amp;app_main_stk[0],</div>
+<div class="line">  .stack_size = sizeof(app_main_stk)</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">/*------------------------------------------------------</span></div>
+<div class="line"><span class="comment"> *        Application</span></div>
+<div class="line"><span class="comment"> *----------------------------------------------------------------------------*/</span></div>
+<div class="line">__NO_RETURN void app_main (void *arg) {</div>
+<div class="line">  uint32_t state, state_ex = 0;</div>
+<div class="line">  uint8_t  mouse_in_report[4];</div>
+<div class="line">  bool     update;</div>
+<div class="line"> </div>
+<div class="line">  (void)arg;</div>
+<div class="line"> </div>
+<div class="line">  Joystick_Initialize();</div>
+<div class="line"> </div>
+<div class="line">  USBD_Initialize    (0);               <span class="comment">/* USB Device 0 Initialization        */</span></div>
+<div class="line">  USBD_Connect       (0);               <span class="comment">/* USB Device 0 Connect               */</span></div>
+<div class="line"> </div>
+<div class="line">  while (1) {</div>
+<div class="line">    state  = Joystick_GetState();</div>
+<div class="line">    update = 0;</div>
+<div class="line">    mouse_in_report[0] = 0;</div>
+<div class="line">    mouse_in_report[1] = 0;</div>
+<div class="line">    mouse_in_report[2] = 0;</div>
+<div class="line">    mouse_in_report[3] = 0;</div>
+<div class="line"> </div>
+<div class="line">    if ((state ^ state_ex) &amp; JOYSTICK_CENTER) {</div>
+<div class="line">      mouse_in_report[0] = (state &amp; JOYSTICK_CENTER) ? 1 : 0;   <span class="comment">/* Left Click */</span></div>
+<div class="line">      update   = 1;</div>
+<div class="line">      state_ex = state;</div>
+<div class="line">    }</div>
+<div class="line">    if (state &amp; JOYSTICK_LEFT  ) { mouse_in_report[1] = (uint8_t)(-4); update = 1; } <span class="comment">/* X Left  */</span></div>
+<div class="line">    if (state &amp; JOYSTICK_RIGHT ) { mouse_in_report[1] =            4 ; update = 1; } <span class="comment">/* X Right */</span></div>
+<div class="line">    if (state &amp; JOYSTICK_UP    ) { mouse_in_report[2] = (uint8_t)(-4); update = 1; } <span class="comment">/* Y Up    */</span></div>
+<div class="line">    if (state &amp; JOYSTICK_DOWN  ) { mouse_in_report[2] =            4 ; update = 1; } <span class="comment">/* Y Down  */</span></div>
+<div class="line"> </div>
+<div class="line">    if (update) {</div>
+<div class="line">      USBD_HID_GetReportTrigger(0, 0, mouse_in_report, 4);</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Before building the project, you need to edit these configuration files (in Configuration Wizard view):</p>
+<ul>
+<li>Under <b>Device</b>, double-click <b>RTE_Device.h</b> and:<ul>
+<li>enable <b>I2C1 (Inter-integrated Circuit Interface 1) [Driver_I2C1]</b> (for the Joystick connected to I2C1) and:<ul>
+<li>set <b>I2C1_SCL Pin</b> to <b>PB8</b></li>
+<li>set <b>I2C1_SDA Pin</b> to <b>PB9</b></li>
+</ul>
+</li>
+<li>enable <b>USB OTG Full-speed</b> and under it:<ul>
+<li>enable <b>Device [Driver_USBD0]</b></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Under <b>USB</b>, double-click <b>USBD_Config_0.h</b> and under <b>USB Device 0:Device Settings</b> change:<ul>
+<li>set <b>Product ID</b> to <b>0x3502</b></li>
+</ul>
+</li>
+<li>Under <b>USB</b>, double-click <b>USBD_Config_HID_0.h</b> and under <b>USB Device: Human Interface Device class (HID) 0:Human Interface Device Class Settings</b> change:<ul>
+<li>set <b>Maximum Input Report Size (in bytes)</b> to <b>4</b> as this is the size of report that is sent for a mouse position change and button presses from the main function</li>
+<li>enable <b>Use User Provided HID Report Descriptor</b> and:<ul>
+<li>set <b>User Provided HID Report Descriptor Size (in bytes)</b> to <b>52</b></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Before building and downloading the project to the target, make sure that the correct debugger is set in the <b>Options for Target</b> dialog (ALT + F7). You may then build and download the example project to the evaluation board using the µVision commands:</p>
+<ul>
+<li><b>Project</b> --&gt; <b>Build target (F7)</b></li>
+<li><b>Flash</b> --&gt; <b>Download (F8)</b></li>
+<li><b>Debug</b> --&gt; <b>Start/Stop Debug Session (Ctrl + F5)</b></li>
+<li><b>Debug</b> --&gt; <b>Run (F5)</b></li>
+</ul>
+<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
+<h3><a class="anchor" id="autotoc_md37"></a>
+Using the "USB Mouse" Project</h3>
+<h4><a class="anchor" id="autotoc_md38"></a>
+Hardware Setup</h4>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Connect the development board to a host PC attaching a Micro-USB cable to the <b>USBFS</b> port. Observe how it is recognized as a USB HID device with the mouse protocol:</li>
+</ul>
+<div class="image">
+<img src="hid_compliant_mouse.png" alt=""/>
+<div class="caption">
+HID-compliant mouse properties</div></div>
+    <ul>
+<li>Play around with the joystick and see how the mouse moves on the screen.</li>
+</ul>
+<h2><a class="anchor" id="dev_cdc_ncm"></a>
+Ethernet-over-USB (for Linux hosts)</h2>
+<p>The Ethernet-over-USB example connects a computer via USB to a Cortex-M system that provides an Ethernet interface for network connectivity. The Linux Kernel provides native support for the CDC (NCM) USB Device class. This example shows how to connect a Ubuntu system via USB to an MCBSTM32F400 development board.</p>
+<p>The following picture shows an exemplary connection of the development board (in this case a <a href="https://www.keil.com/boards2/keil/mcbstm32f400/">MCBSTM32F400</a>) to a host PC.</p>
+<div class="image">
+<img src="eth_over_usb_example_setup.png" alt=""/>
+<div class="caption">
+USB device Ethernet-over-USB example hardware setup</div></div>
+    <h3><a class="anchor" id="autotoc_md39"></a>
+Create the "Ethernet-over-USB" Project</h3>
+<p>In this example, we are using the <a href="https://www.keil.com/boards2/keil/mcbstm32f400/">MCBSTM32F400</a> board with the STM32F407IGHx device. Create a new project in MDK (Select Device <b>STMicroelectronics:STM32F4 Series: STM32F407:STM32F407IG:STM32F407IGHx</b>). In the <b>Manage Run-Time Environment</b> window, select the following components:</p>
+<ul>
+<li><b>CMSIS:Core</b></li>
+<li><b>CMSIS:RTOS2 (API):Keil RTX5</b></li>
+<li><b>CMSIS Driver:Ethernet MAC (API):Ethernet MAC</b></li>
+<li><b>CMSIS Driver:Ethernet PHY (API):KSZ8081RNA</b></li>
+<li><b>CMSIS Driver:USB Device (API):High-speed</b></li>
+<li><b>Device:STM32Cube Framework (API):Classic</b></li>
+<li><b>USB:Device: 1</b></li>
+<li><b>USB:Device:CDC:1</b></li>
+</ul>
+<p>Click the <b>Resolve</b> button and then <b>OK</b>.</p>
+<p>Before continuing to add the required source code, you need to add a template file called <b>USBD_User_CDC_NCM_ETH_0.c</b>:</p>
+<ul>
+<li>Right-click on <b>Source Group 1</b> and select <b>Add New Item to Group 'Source Group 1'...</b>.</li>
+<li>Click on <b>User Code Template</b> and select the <b>USB Device CDC NCM Ethernet Bridge</b> template.</li>
+<li>Click <b>Add</b> to copy the file <b>USBD_User_CDC_NCM_ETH_0.c</b> to the project.</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md40"></a>
+Source Files</h4>
+<ul>
+<li>Click on <b>New (Ctrl + N)</b> to create a new file.</li>
+<li>Save it (<b>File -&gt; Save</b>) as <b>main.h</b>.</li>
+<li>Copy the following code into the main.h file and save it again:</li>
+</ul>
+<div class="fragment"><div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  ******************************************************************************</span></div>
+<div class="line"><span class="comment">  * @file    Templates/Inc/main.h</span></div>
+<div class="line"><span class="comment">  * @author  MCD Application Team</span></div>
+<div class="line"><span class="comment">  * @brief   Header for main.c module</span></div>
+<div class="line"><span class="comment">  ******************************************************************************</span></div>
+<div class="line"><span class="comment">  * @attention</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  * &lt;h2&gt;&lt;center&gt;&amp;copy; COPYRIGHT(c) 2017-2018 STMicroelectronics&lt;/center&gt;&lt;/h2&gt;</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  * Redistribution and use in source and binary forms, with or without modification,</span></div>
+<div class="line"><span class="comment">  * are permitted provided that the following conditions are met:</span></div>
+<div class="line"><span class="comment">  *   1. Redistributions of source code must retain the above copyright notice,</span></div>
+<div class="line"><span class="comment">  *      this list of conditions and the following disclaimer.</span></div>
+<div class="line"><span class="comment">  *   2. Redistributions in binary form must reproduce the above copyright notice,</span></div>
+<div class="line"><span class="comment">  *      this list of conditions and the following disclaimer in the documentation</span></div>
+<div class="line"><span class="comment">  *      and/or other materials provided with the distribution.</span></div>
+<div class="line"><span class="comment">  *   3. Neither the name of STMicroelectronics nor the names of its contributors</span></div>
+<div class="line"><span class="comment">  *      may be used to endorse or promote products derived from this software</span></div>
+<div class="line"><span class="comment">  *      without specific prior written permission.</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS</span></div>
+<div class="line"><span class="comment">  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span></div>
+<div class="line"><span class="comment">  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span></div>
+<div class="line"><span class="comment">  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE</span></div>
+<div class="line"><span class="comment">  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span></div>
+<div class="line"><span class="comment">  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR</span></div>
+<div class="line"><span class="comment">  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER</span></div>
+<div class="line"><span class="comment">  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,</span></div>
+<div class="line"><span class="comment">  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span></div>
+<div class="line"><span class="comment">  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  ******************************************************************************</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">/* Define to prevent recursive inclusion -------------------------------------*/</span></div>
+<div class="line"><span class="preprocessor">#ifndef __MAIN_H</span></div>
+<div class="line"><span class="preprocessor">#define __MAIN_H</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">/* Includes ------------------------------------------------------------------*/</span></div>
+<div class="line"><span class="preprocessor">#include &quot;stm32f4xx_hal.h</span></div>
+<div class="line"><span class="preprocessor">#include &quot;</span>cmsis_os2.h<span class="stringliteral">&quot;                  // ::CMSIS:RTOS2</span></div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral">/* Exported types ------------------------------------------------------------*/</span></div>
+<div class="line"><span class="stringliteral">/* Exported constants --------------------------------------------------------*/</span></div>
+<div class="line"><span class="stringliteral">extern uint64_t app_main_stk[];</span></div>
+<div class="line"><span class="stringliteral">extern const osThreadAttr_t app_main_attr;</span></div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral">/* Exported macro ------------------------------------------------------------*/</span></div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral">/* Exported functions ------------------------------------------------------- */</span></div>
+<div class="line"><span class="stringliteral">extern void app_main (void *arg);</span></div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral">#endif /* __MAIN_H */</span></div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral">/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/</span></div>
+</div><!-- fragment --><ul>
+<li>Right-click on <b>Source Group 1</b> and select <b>Add New Item to Group 'Source Group 1'...</b>.</li>
+<li>Click on <b>C File (.c)</b> and enter <b>main</b> in the <b>Name</b> box.</li>
+<li>Copy the following code into the main.c file:</li>
+</ul>
+<div class="fragment"><div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  ******************************************************************************</span></div>
+<div class="line"><span class="comment">  * @file    Templates/Src/main.c</span></div>
+<div class="line"><span class="comment">  * @author  MCD Application Team</span></div>
+<div class="line"><span class="comment">  * @brief   Main program body</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  * @note    modified by ARM</span></div>
+<div class="line"><span class="comment">  *          The modifications allow to use this file as User Code Template</span></div>
+<div class="line"><span class="comment">  *          within the Device Family Pack.</span></div>
+<div class="line"><span class="comment">  ******************************************************************************</span></div>
+<div class="line"><span class="comment">  * @attention</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  * &lt;h2&gt;&lt;center&gt;&amp;copy; COPYRIGHT(c) 2017-2018 STMicroelectronics&lt;/center&gt;&lt;/h2&gt;</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  * Redistribution and use in source and binary forms, with or without modification,</span></div>
+<div class="line"><span class="comment">  * are permitted provided that the following conditions are met:</span></div>
+<div class="line"><span class="comment">  *   1. Redistributions of source code must retain the above copyright notice,</span></div>
+<div class="line"><span class="comment">  *      this list of conditions and the following disclaimer.</span></div>
+<div class="line"><span class="comment">  *   2. Redistributions in binary form must reproduce the above copyright notice,</span></div>
+<div class="line"><span class="comment">  *      this list of conditions and the following disclaimer in the documentation</span></div>
+<div class="line"><span class="comment">  *      and/or other materials provided with the distribution.</span></div>
+<div class="line"><span class="comment">  *   3. Neither the name of STMicroelectronics nor the names of its contributors</span></div>
+<div class="line"><span class="comment">  *      may be used to endorse or promote products derived from this software</span></div>
+<div class="line"><span class="comment">  *      without specific prior written permission.</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS</span></div>
+<div class="line"><span class="comment">  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE</span></div>
+<div class="line"><span class="comment">  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span></div>
+<div class="line"><span class="comment">  * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE</span></div>
+<div class="line"><span class="comment">  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL</span></div>
+<div class="line"><span class="comment">  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR</span></div>
+<div class="line"><span class="comment">  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER</span></div>
+<div class="line"><span class="comment">  * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,</span></div>
+<div class="line"><span class="comment">  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE</span></div>
+<div class="line"><span class="comment">  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></div>
+<div class="line"><span class="comment">  *</span></div>
+<div class="line"><span class="comment">  ******************************************************************************</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">/* Includes ------------------------------------------------------------------*/</span></div>
+<div class="line"><span class="preprocessor">#include &quot;main.h</span></div>
+<div class="line"><span class="preprocessor"></span> </div>
+<div class="line"><span class="preprocessor">#ifdef _RTE_</span></div>
+<div class="line"><span class="preprocessor">#include &quot;</span>RTE_Components.h<span class="stringliteral">&quot;             // Component selection</span></div>
+<div class="line"><span class="stringliteral">#endif</span></div>
+<div class="line"><span class="stringliteral">#ifdef RTE_CMSIS_RTOS2                  // when RTE component CMSIS RTOS2 is used</span></div>
+<div class="line"><span class="stringliteral">#include &quot;</span>cmsis_os2.h<span class="stringliteral">&quot;                  // ::CMSIS:RTOS2</span></div>
+<div class="line"><span class="stringliteral">#endif</span></div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral">#ifdef RTE_CMSIS_RTOS2_RTX5</span><span class="comment"></span></div>
+<div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  * Override default HAL_GetTick function</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line">uint32_t HAL_GetTick (void) {</div>
+<div class="line">  static uint32_t ticks = 0U;</div>
+<div class="line">         uint32_t i;</div>
+<div class="line"> </div>
+<div class="line">  if (osKernelGetState () == osKernelRunning) {</div>
+<div class="line">    return ((uint32_t)osKernelGetTickCount ());</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  /* If Kernel is not running wait approximately 1 ms then increment</div>
+<div class="line">     and return auxiliary tick counter value */</div>
+<div class="line">  for (i = (SystemCoreClock &gt;&gt; 14U); i &gt; 0U; i--) {</div>
+<div class="line">    __NOP(); __NOP(); __NOP(); __NOP(); __NOP(); __NOP();</div>
+<div class="line">    __NOP(); __NOP(); __NOP(); __NOP(); __NOP(); __NOP();</div>
+<div class="line">  }</div>
+<div class="line">  return ++ticks;</div>
+<div class="line">}</div>
+<div class="line">#endif</div>
+<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment">/** @addtogroup STM32F4xx_HAL_Examples</span></div>
+<div class="line"><span class="comment">  * @{</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment">/** @addtogroup Templates</span></div>
+<div class="line"><span class="comment">  * @{</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line"> </div>
+<div class="line">/* Private typedef -----------------------------------------------------------*/</div>
+<div class="line">/* Private define ------------------------------------------------------------*/</div>
+<div class="line">/* Private macro -------------------------------------------------------------*/</div>
+<div class="line">/* Private variables ---------------------------------------------------------*/</div>
+<div class="line">/* Private function prototypes -----------------------------------------------*/</div>
+<div class="line">static void SystemClock_Config(void);</div>
+<div class="line">static void Error_Handler(void);</div>
+<div class="line"> </div>
+<div class="line">/* Private functions ---------------------------------------------------------*/<span class="comment"></span></div>
+<div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  * @brief  Main program</span></div>
+<div class="line"><span class="comment">  * @param  None</span></div>
+<div class="line"><span class="comment">  * @retval None</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line">int main(void)</div>
+<div class="line">{</div>
+<div class="line"> </div>
+<div class="line">  /* STM32F4xx HAL library initialization:</div>
+<div class="line">       - Configure the Flash prefetch, Flash preread and Buffer caches</div>
+<div class="line">       - Systick timer is configured by default as source of time base, but user</div>
+<div class="line">             can eventually implement his proper time base source (a general purpose</div>
+<div class="line">             timer for example or other time source), keeping in mind that Time base</div>
+<div class="line">             duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and</div>
+<div class="line">             handled in milliseconds basis.</div>
+<div class="line">       - Low Level Initialization</div>
+<div class="line">     */</div>
+<div class="line">  HAL_Init();</div>
+<div class="line"> </div>
+<div class="line">  /* Configure the system clock to 168 MHz */</div>
+<div class="line">  SystemClock_Config();</div>
+<div class="line">  SystemCoreClockUpdate();</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">  /* Add your application code here</div>
+<div class="line">     */</div>
+<div class="line"> </div>
+<div class="line">#ifdef RTE_CMSIS_RTOS2</div>
+<div class="line">  /* Initialize CMSIS-RTOS2 */</div>
+<div class="line">  osKernelInitialize ();</div>
+<div class="line"> </div>
+<div class="line">  /* Create application main thread */</div>
+<div class="line">  osThreadNew(app_main, NULL, &amp;app_main_attr);</div>
+<div class="line"> </div>
+<div class="line">  /* Start thread execution */</div>
+<div class="line">  osKernelStart();</div>
+<div class="line">#endif</div>
+<div class="line"> </div>
+<div class="line">  /* Infinite loop */</div>
+<div class="line">  while (1)</div>
+<div class="line">  {</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  * @brief  System Clock Configuration</span></div>
+<div class="line"><span class="comment">  *         The system Clock is configured as follow :</span></div>
+<div class="line"><span class="comment">  *            System Clock source            = PLL (HSE)</span></div>
+<div class="line"><span class="comment">  *            SYSCLK(Hz)                     = 168000000</span></div>
+<div class="line"><span class="comment">  *            HCLK(Hz)                       = 168000000</span></div>
+<div class="line"><span class="comment">  *            AHB Prescaler                  = 1</span></div>
+<div class="line"><span class="comment">  *            APB1 Prescaler                 = 4</span></div>
+<div class="line"><span class="comment">  *            APB2 Prescaler                 = 2</span></div>
+<div class="line"><span class="comment">  *            HSE Frequency(Hz)              = 8000000</span></div>
+<div class="line"><span class="comment">  *            PLL_M                          = 25</span></div>
+<div class="line"><span class="comment">  *            PLL_N                          = 336</span></div>
+<div class="line"><span class="comment">  *            PLL_P                          = 2</span></div>
+<div class="line"><span class="comment">  *            PLL_Q                          = 7</span></div>
+<div class="line"><span class="comment">  *            VDD(V)                         = 3.3</span></div>
+<div class="line"><span class="comment">  *            Main regulator output voltage  = Scale1 mode</span></div>
+<div class="line"><span class="comment">  *            Flash Latency(WS)              = 5</span></div>
+<div class="line"><span class="comment">  * @param  None</span></div>
+<div class="line"><span class="comment">  * @retval None</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line">static void SystemClock_Config(void)</div>
+<div class="line">{</div>
+<div class="line">  RCC_ClkInitTypeDef RCC_ClkInitStruct;</div>
+<div class="line">  RCC_OscInitTypeDef RCC_OscInitStruct;</div>
+<div class="line"> </div>
+<div class="line">  /* Enable Power Control clock */</div>
+<div class="line">  __HAL_RCC_PWR_CLK_ENABLE();</div>
+<div class="line"> </div>
+<div class="line">  /* The voltage scaling allows optimizing the power consumption when the device is</div>
+<div class="line">     clocked below the maximum system frequency, to update the voltage scaling value</div>
+<div class="line">     regarding system frequency refer to product datasheet.  */</div>
+<div class="line">  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);</div>
+<div class="line"> </div>
+<div class="line">  /* Enable HSE Oscillator and activate PLL with HSE as source */</div>
+<div class="line">  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;</div>
+<div class="line">  RCC_OscInitStruct.HSEState = RCC_HSE_ON;</div>
+<div class="line">  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;</div>
+<div class="line">  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;</div>
+<div class="line">  RCC_OscInitStruct.PLL.PLLM = 25;</div>
+<div class="line">  RCC_OscInitStruct.PLL.PLLN = 336;</div>
+<div class="line">  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;</div>
+<div class="line">  RCC_OscInitStruct.PLL.PLLQ = 7;</div>
+<div class="line">  if(HAL_RCC_OscConfig(&amp;RCC_OscInitStruct) != HAL_OK)</div>
+<div class="line">  {</div>
+<div class="line">    /* Initialization Error */</div>
+<div class="line">    Error_Handler();</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2</div>
+<div class="line">     clocks dividers */</div>
+<div class="line">  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);</div>
+<div class="line">  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;</div>
+<div class="line">  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;</div>
+<div class="line">  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;</div>
+<div class="line">  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;</div>
+<div class="line">  if(HAL_RCC_ClockConfig(&amp;RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)</div>
+<div class="line">  {</div>
+<div class="line">    /* Initialization Error */</div>
+<div class="line">    Error_Handler();</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  /* STM32F405x/407x/415x/417x Revision Z devices: prefetch is supported  */</div>
+<div class="line">  if (HAL_GetREVID() == 0x1001)</div>
+<div class="line">  {</div>
+<div class="line">    /* Enable the Flash prefetch */</div>
+<div class="line">    __HAL_FLASH_PREFETCH_BUFFER_ENABLE();</div>
+<div class="line">  }</div>
+<div class="line">}<span class="comment"></span></div>
+<div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  * @brief  This function is executed in case of error occurrence.</span></div>
+<div class="line"><span class="comment">  * @param  None</span></div>
+<div class="line"><span class="comment">  * @retval None</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line">static void Error_Handler(void)</div>
+<div class="line">{</div>
+<div class="line">  /* User may add here some code to deal with this error */</div>
+<div class="line">  while(1)</div>
+<div class="line">  {</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">#ifdef  USE_FULL_ASSERT</div>
+<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  * @brief  Reports the name of the source file and the source line number</span></div>
+<div class="line"><span class="comment">  *         where the assert_param error has occurred.</span></div>
+<div class="line"><span class="comment">  * @param  file: pointer to the source file name</span></div>
+<div class="line"><span class="comment">  * @param  line: assert_param error line source number</span></div>
+<div class="line"><span class="comment">  * @retval None</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line">void assert_failed(uint8_t* file, uint32_t line)</div>
+<div class="line">{</div>
+<div class="line">  /* User can add his own implementation to report the file name and line number,</div>
+<div class="line">     ex: printf(&quot;Wrong parameters value: file %s on line %d\r\n<span class="stringliteral">&quot;, file, line) */</span></div>
+<div class="line"><span class="stringliteral"></span> </div>
+<div class="line"><span class="stringliteral">  /* Infinite loop */</span></div>
+<div class="line"><span class="stringliteral">  while (1)</span></div>
+<div class="line"><span class="stringliteral">  {</span></div>
+<div class="line"><span class="stringliteral">  }</span></div>
+<div class="line"><span class="stringliteral">}</span></div>
+<div class="line"><span class="stringliteral">#endif</span></div>
+<div class="line"><span class="stringliteral"></span><span class="comment"></span> </div>
+<div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  * @}</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line"><span class="comment"></span> </div>
+<div class="line"><span class="comment">/**</span></div>
+<div class="line"><span class="comment">  * @}</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line"> </div>
+<div class="line">/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/</div>
+</div><!-- fragment --><ul>
+<li>Right-click on <b>Source Group 1</b> and select <b>Add New Item to Group 'Source Group 1'...</b>.</li>
+<li>Click on <b>C File (.c)</b> and enter <b>app_main</b> in the <b>Name</b> box.</li>
+<li>Copy the following code into the app_main.c file:</li>
+</ul>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;main.h</span></div>
+<div class="line"><span class="preprocessor">#include &quot;</span>rl_usb.h</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Main stack size must be multiple of 8 Bytes</span></div>
+<div class="line"><span class="preprocessor">#define APP_MAIN_STK_SZ (1024U)</span></div>
+<div class="line">uint64_t app_main_stk[APP_MAIN_STK_SZ / 8];</div>
+<div class="line"><span class="keyword">const</span> osThreadAttr_t app_main_attr = {</div>
+<div class="line">  .stack_mem  = &amp;app_main_stk[0],</div>
+<div class="line">  .stack_size = <span class="keyword">sizeof</span>(app_main_stk)</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">/*------------------------------------------------------</span></div>
+<div class="line"><span class="comment"> *        Application</span></div>
+<div class="line"><span class="comment"> *----------------------------------------------------------------------------*/</span></div>
+<div class="line">__NO_RETURN <span class="keywordtype">void</span> app_main (<span class="keywordtype">void</span> *arg) {</div>
+<div class="line"> </div>
+<div class="line">  (void)arg;</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_function" href="group__usbd__coreFunctions__api.html#ga65ba44a47e3fa46a15f70bab9917c8ca" title="Initialize USB Device stack and controller.">USBD_Initialize</a>    (0);               <span class="comment">/* USB Device 0 Initialization        */</span></div>
+<div class="line">  <a class="code hl_function" href="group__usbd__coreFunctions__api.html#gad97153303fc0a6f51c1c20ac050b238f" title="Activate pull-up on D+ or D- line to signal USB Device connection on USB Bus.">USBD_Connect</a>       (0);               <span class="comment">/* USB Device 0 Connect               */</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">while</span> (1) {</div>
+<div class="line">    osThreadFlagsWait (0, osFlagsWaitAny, osWaitForever);</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Before building the project, you need to edit these configuration files (in Configuration Wizard view):</p>
+<ul>
+<li>Under <b>Device</b>, double-click <b>RTE_Device.h</b> and:<ul>
+<li>enable <b>ETH (Ethernet Interface) [Driver_ETH_MAC0]</b> and:<ul>
+<li>disable <b>ENET:MII (Media Independent Interface)</b></li>
+<li>enable <b>ENET:RMII (Reduced Media Independent Interface)</b> and:<ul>
+<li>set <b>ETH_RMII_TXD0 Pin</b> to <b>PG13</b></li>
+<li>set <b>ETH_RMII_TXD1 Pin</b> to <b>PG14</b></li>
+<li>set <b>ETH_RMII_TX_EN Pin</b> to <b>PG11</b></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>enable <b>USB OTG High-speed</b> and under it:<ul>
+<li>enable <b>Device [Driver_USBD1]</b></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Under <b>USB</b>, double-click <b>USBD_Config_0.h</b> and under <b>USB Device 0</b> change:<ul>
+<li>set <b>Connect to hardware via Driver_USBD#</b> to <b>1</b></li>
+<li>enable <b>High-speed</b></li>
+<li>under <b>Device Settings</b> change:<ul>
+<li>set <b>Max Endpoint 0 Packet Size</b> to <b>64</b></li>
+<li>set <b>Product ID</b> to <b>0x3518</b></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Under <b>USB</b>, double-click <b>USBD_Config_CDC_0.h</b> and under <b>USB Device: Communication Device Class (CDC) 0</b> change:<ul>
+<li>set <b>Communication Class Subclass</b> to <b>Network Control Model (NCM)</b></li>
+</ul>
+</li>
+</ul>
+<p>Before building and downloading the project to the target, make sure that the correct debugger is set in the <b>Options for Target</b> dialog (ALT + F7). You may then build and download the example project to the evaluation board using the µVision commands:</p>
+<ul>
+<li><b>Project</b> --&gt; <b>Build target (F7)</b></li>
+<li><b>Flash</b> --&gt; <b>Download (F8)</b></li>
+<li><b>Debug</b> --&gt; ** Start/Stop Debug Session (Ctrl + F5)**</li>
+<li><b>Debug</b> --&gt; ** Run (F5)**</li>
+</ul>
+<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
+<h3><a class="anchor" id="autotoc_md41"></a>
+Using the "Ethernet-over-USB" Project</h3>
+<h4><a class="anchor" id="autotoc_md42"></a>
+Hardware Setup</h4>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Connect the development board to a host Linux PC (native or in a virtual machine) attaching a Micro-USB cable to the <b>USBHS</b> port and using an Ethernet cable to the <b>ETH</b> connector.</li>
+<li>Using a virtual machine, you need to connect to the VM:</li>
+</ul>
+<div class="image">
+<img src="vbox_usb_attach.png" alt=""/>
+<div class="caption">
+Attach USB Device to Virtual Machine</div></div>
+    <ul>
+<li>Within the Linux system (here Ubuntu), you should be able to see a wired Ethernet connection (with the MAC address 1E:30:6C:A2:45:5E):</li>
+</ul>
+<div class="image">
+<img src="ubuntu_ncm.png" alt=""/>
+<div class="caption">
+Wired Ethernet Connection using the USB CDC NCM Device</div></div>
+    <dl class="section note"><dt>Note</dt><dd>Set the MAC address in the USB CDC configuration file <a class="el" href="group__usbd__cdcFunctions__ncm__conf.html">USBD_Config_CDC_0.h</a>.</dd></dl>
+<h4><a class="anchor" id="autotoc_md43"></a>
+Troubleshooting</h4>
+<p>Especially when working with virtual machines, the USB connection is not passed onto the guest system properly. Then it can help to restart the guest. Also, to make Ubuntu use the network adapter that you like, do the following: In Ubuntu's search, enter "network". The <b>Network Connections</b> program will be available in the search results:</p>
+<div class="image">
+<img src="ubuntu_network_connections.png" alt=""/>
+<div class="caption">
+Ubuntu network connections</div></div>
+    <p>Double-click to open and then mark the <b>Wired connection 1</b> and click <b>Edit</b>:</p>
+<div class="image">
+<img src="ubuntu_network_connections_wired1.png" alt=""/>
+<div class="caption">
+Wired Ethernet connection</div></div>
+    <p>Select the MAC address of your Ethernet-over-USB device and press <b>Save</b> and <b>Close</b>:</p>
+<div class="image">
+<img src="ubuntu_network_connections_wired1_selection.png" alt=""/>
+<div class="caption">
+Changing the connection</div></div>
+    <p>This should instruct Ubuntu to use your device for the network connection. Also, try to disconnect any other network adapter from the virtual machine.</p>
+<h2><a class="anchor" id="dev_cdc_acm_rndis_bridge"></a>
+USB Device RNDIS to Ethernet Bridge</h2>
+<p>The USB Device RNDIS to Ethernet Bridge example connects a Windows host via USB to a Cortex-M system that provides an Ethernet interface for network connectivity.</p>
+<p>The following picture shows an exemplary connection of the development board (in this case a <a href="https://www.keil.com/boards2/keil/mcb4300/">MCB4300</a>) to a host PC.</p>
+<div class="image">
+<img src="usb_dev_rndis_eth_bridge.png" alt=""/>
+<div class="caption">
+USB device RNDIS-to-Ethernet bridge example hardware setup</div></div>
+    <p>The <code>Abstract.txt</code> file contained in the <b>Documentation</b> group of the <b>Project</b> window gives you more information on the general setup.</p>
+<h3><a class="anchor" id="autotoc_md44"></a>
+Build the "RNDIS to Ethernet Bridge" project</h3>
+<p>Open the example project in MDK.</p>
+<h4><a class="anchor" id="autotoc_md45"></a>
+Source Files</h4>
+<ul>
+<li><code>main.c</code> contains the main C function that initializes the Keil RTX real-time operating system.</li>
+<li><code>RNDIS.c</code> contains the app_main C function that initializes the GLCD and the USB Device Component.</li>
+<li>The files <b>USBD_User_CDC_ACM_RNDIS_ETH_0.c</b> implements the application specific functionality of the CDC ACM class using the RNDIS protocol and is used to implement a Network Interface Card (NIC) to Ethernet Bridge to the USB Host. Refer to <a class="el" href="group__usbd__cdcFunctions__acm.html">CDC: Communication Device Class (ACM)</a> for details about these template functions.</li>
+</ul>
+<p>If you are using RTOS other than CMSIS-RTOS2 RTX5 for your project please make sure to satisfy <a class="el" href="usb_resource_requirements.html#usbd_res_req">USB Device Resource Requirements</a>.</p>
+<p>You may now build and download the example project to the development board using the µVision commands:</p>
+<ul>
+<li><b>Project</b> --&gt; <b>Build target (F7)</b></li>
+<li><b>Flash</b> --&gt; <b>Download (F8)</b></li>
+</ul>
+<p>After these steps, the project should start executing on your development kit. In case of errors, refer to the development board user's guide for configuration information.</p>
+<h3><a class="anchor" id="autotoc_md46"></a>
+Using the "RNDIS to Ethernet Bridge" Project</h3>
+<h4><a class="anchor" id="autotoc_md47"></a>
+Hardware Setup</h4>
+<p>The setup of the development board hardware is described in the <code>Abstract.txt</code> file.</p>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Power your development board externally.</li>
+<li>Connect a USB cable between your development board and the host PC.</li>
+<li>You should see new "Ethernet" connection with a "Remote NDIS compatible device" in your network control panel: <img src="usb_dev_rndis_eth_bridge_control_panel.png" alt="" class="inline" title="Control panel"/>     if driver is not installed automatically please install driver from example folder.</li>
+</ul>
+<p><b>About Host PC driver for Microsoft Windows</b></p>
+<p>The example folder contains two files relevant for driver installation on the Microsoft Windows:</p>
+<ul>
+<li>Driver setup information file (xxx-rndis.inf) which is used to create a digitally signed driver catalog file (xxx-rndis.cat)</li>
+<li>Digitally signed driver catalog file (xxx-rndis.cat)</li>
+</ul>
+<p>The driver files are provided as an example, the driver setup information file should be adapted and digitally signed driver catalog file should be created from adapted driver setup information file.</p>
+<p>Driver setup information file should be adapted in the following way:</p>
+<ul>
+<li><b>c251</b> in Vendor ID <b>VID_c251</b> entries should be changed to the vendor ID number assigned to your company by the USB organization (c251 Vendor ID is reserved for Keil Software and should not be used)</li>
+<li><b>xxxx</b> in Product ID <b>PID_xxxx</b> entries should be changed to the product ID as assigned by your company</li>
+<li>in <b>[DeviceList.xxx]</b> sections, entries not relevant for the device, should be removed or added as described below:<ul>
+<li>if device is pure RNDIS CDC class device (<b>not composite</b>) then all entries ending with <b>&amp;MI_xx should be removed</b></li>
+<li>if device is a <b>composite device</b> with one or more RNDIS CDC class instances then entries <b>not ending</b> with <b>&amp;MI_xx should be removed</b> and entries <b>ending</b> with <b>&amp;MI_xx should exist</b> for each RNDIS CDC class instance (example driver contains entries ending with &amp;MI_00 and &amp;MI_02 which are used for composite device containing two RNDIS CDC class instances and each instance uses 2 interfaces where MI_00 describes first RNDIS instance and MI_02 entry describes second RNDIS CDC instance)</li>
+</ul>
+</li>
+<li><b>[Strings]</b> section should be changed as desired</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>Vendor ID and Product ID are configured in the USBD_Config_n.h configuration file of the embedded application. </dd>
+<dd>
+For producing digitally signed driver catalog file please refer to Microsoft Windows documentation.</dd></dl>
+<h2><a class="anchor" id="dev_cdc_acm_rndis"></a>
+USB Web Server (for Windows hosts)</h2>
+<p>This example does not work out-of-the-box. You need to copy a network example for your development board using Pack Installer. Then, you need to change some settings and add user code, to be able to connect your network enabled device to a Windows hosts using USB.</p>
+<dl class="section note"><dt>Note</dt><dd>The following description is based on the HTTP Server for a MCB1800 development board.</dd></dl>
+<p>The following picture shows an exemplary connection of the development board (in this case a <a href="https://www.keil.com/boards2/keil/mcb1800/">MCB1800</a>) to a host PC.</p>
+<div class="image">
+<img src="usb_web_server_example.png" alt=""/>
+<div class="caption">
+USB device web server example hardware setup</div></div>
+    <h3><a class="anchor" id="autotoc_md48"></a>
+Create the "USB Web Server" project</h3>
+<ul>
+<li>Copy the HTTP Server example using Pack Installer</li>
+<li>Change following settings in RTE:<ul>
+<li>Disable CMSIS Driver:Ethernet MAC (API)</li>
+<li>Disable CMSIS Driver:Ethernet PHY (API)</li>
+<li>Enable CMSIS Driver:Ethernet (API):RNDIS</li>
+<li>Enable an appropriate CMSIS Driver:USB Device (API)</li>
+<li>Set USB:Device = 1</li>
+<li>Enable USB:CORE</li>
+<li>Set USB:Device:CDC = 1</li>
+</ul>
+</li>
+<li>Enable the selected USB port in RTE_Device.h or using external tools (for example STM32CubeMX for STMicroelectronics devices)</li>
+<li>Disable the Ethernet port in RTE_Device.h or using external tools (for example STM32CubeMX for STMicroelectronics devices)</li>
+<li>Add a user code template to your sources (right-click on Source group in Project window -&gt; Add New Item to Group 'Source' -&gt; User Code Template -&gt; USB:USB Device:CDC: USB Device CDC ACM RNDIS Virtual Ethernet -&gt; Add)</li>
+<li>Disable DHCP in network settings (open Network:Net_Config_ETH_0.h and disable Dynamic Host Configuration)</li>
+<li>Open USB:USBD_Config_0.h and check/change settings:<ul>
+<li>Set the correct hardware driver interface number</li>
+<li>Enable high-speed operation (if available)</li>
+<li>Device Settings:<ul>
+<li>Max Endpoint 0 Packet Size = 64 Bytes</li>
+</ul>
+</li>
+<li>Product ID = set to required (if you are using Windows 7, set it to 0x3709 for Keil MCB boards)</li>
+<li>Microsoft OS Descriptors Settings:OS String = enable</li>
+</ul>
+</li>
+<li>Open USB:USBD_Config_CDC_0.h and check/change settings:<ul>
+<li>USB Device: Communication Device Class (CDC) 0:<ul>
+<li>Communication Class Subclass = Abstract Control Model (ACM)</li>
+<li>Communication Class Protocol = Vendor-specific (RNDIS)</li>
+<li>Interrupt Endpoint Settings:<ul>
+<li>Endpoint Settings:<ul>
+<li>Full/Low-speed:<ul>
+<li>Maximum Endpoint Packet Size In bytes) = 16</li>
+</ul>
+</li>
+<li>High-speed:<ul>
+<li>Maximum Endpoint Packet Size In bytes) = 16</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Bulk Endpoint Settings:<ul>
+<li>Endpoint Settings:<ul>
+<li>Full/Low-speed:<ul>
+<li>Maximum Endpoint Packet Size In bytes) = 64</li>
+</ul>
+</li>
+<li>High-speed:<ul>
+<li>Maximum Endpoint Packet Size In bytes) = 512</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Communication Device Class Settings: Abstract Control Model Settings:<ul>
+<li>Communication Class Interface String = USB Remote NDIS6 based Device</li>
+<li>Call Management Capabilities:<ul>
+<li>Call Management channel = Communication Class Interface only</li>
+<li>Device Call Management handling = None</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Abstract Control Management Capabilities:<ul>
+<li>all disabled</li>
+</ul>
+</li>
+<li>Maximum Communication Device Send Buffer Size = 2048</li>
+<li>Maximum Communication Device Receive Buffer Size = 2048</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>If <b>RTX v5</b> is used <b>no changes to RTX settings</b> are necessary as all resources are allocated statically.</li>
+<li>Add this include to the main module: <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;rl_usb.h</span></div>
+</div><!-- fragment --></li>
+<li>Add these lines of code to the HTTP_Server.c module before endless loop in <code>main</code> or <code>app_main</code> function: <div class="fragment"><div class="line"><a class="code hl_function" href="group__usbd__coreFunctions__api.html#ga65ba44a47e3fa46a15f70bab9917c8ca" title="Initialize USB Device stack and controller.">USBD_Initialize</a> (0U); <span class="comment">// USB Device 0 Initialization</span></div>
+<div class="line"><a class="code hl_function" href="group__usbd__coreFunctions__api.html#gad97153303fc0a6f51c1c20ac050b238f" title="Activate pull-up on D+ or D- line to signal USB Device connection on USB Bus.">USBD_Connect</a>    (0U); <span class="comment">// USB Device 0 Connect</span></div>
+</div><!-- fragment --></li>
+</ul>
+<p>Build the project and download to the target.</p>
+<h3><a class="anchor" id="autotoc_md49"></a>
+Using the "USB Web Server" project</h3>
+<h4><a class="anchor" id="autotoc_md50"></a>
+Hardware Setup</h4>
+<ul>
+<li>Verify all jumper settings on the target hardware.</li>
+<li>Connect the development board to a host PC attaching a Micro-USB cable to the <b>USB0</b> port.</li>
+<li>Make sure that the board is not powered using this USB port. An external power supply is recommended.</li>
+<li>After the device is recognized on the Windows PC:<ul>
+<li>If the high-speed port is used, the driver should install on Windows 7 and later automatically</li>
+<li>If not, please use the provided .inf file from the USB RNDIS example (for example for MCB4300 evaluation board), but change .inf file Product ID according to one set in USBD_Config_0.h file</li>
+<li>Set your computer's IP address to 192.168.0.101 to match the settings of the embedded device:<ul>
+<li>Go to Control Panel -&gt; Network and Sharing Center -&gt; Change Adapter Settings</li>
+<li>Right-click on Local Area Connection n (Remote NDIS56 based Device): <img src="nw_connections_win_host.png" alt="" class="inline" title="Network connections on a Windows host"/>    </li>
+<li>Select properties -&gt; Internet Protocol Version 4 (TCP/IPv4) properties and use the following address:<ul>
+<li>IP address: 192.168.0.101</li>
+<li>Subnet mask: 255.255.255.0 OK and close all dialogs</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Open a web browser and enter the address 192.168.0.100</li>
+<li>Use "admin" without a password to log in: <img src="web_server_if.png" alt="" class="inline" title="Web server user interface"/>    </li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="usb_sw_utilities"></a>
+USB Host Computer Applications</h1>
+<p>Most of the available USB Device Classes are directly supported in operating systems. There is no need to install a particular driver on the USB Host Computer to connect to the USB Device peripheral.</p>
+<p>Some software needs to be written for the USB Host Computer when USB Driver classes are used to provide application specific functionality. For example, the USB HID Device Class may be used for generic data exchange. Therefore the data exchange interface needs to be developed at the USB Host Computer.</p>
+<p>Refer to the following web pages for more information on USB Host software development:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/">USB Serial Bus (USB)</a> for Microsoft Windows.</li>
+<li><a href="http://www.linux-usb.org/">Linux USB Project</a> for Linux based operating systems.</li>
+<li><a href="https://developer.apple.com/documentation/driverkit">DriverKit</a> for Apple OS.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md51"></a>
+Software Utilities</h2>
+<p>The USB Component comes with a set of software utilities that you can use as templates to create your own programs for the USB Host computer. The utilities are specific for the different USB Device Classes. These are the available utilities:</p>
+<ul>
+<li>The <a class="el" href="USB_Device.html#hid_client_app">HID Client</a> can be used to interact with an USB HID Device. You can toggle LEDs on the development board and check the state of the on-board push-buttons.</li>
+<li>The <a class="el" href="USB_Device.html#winusb_app">WinUSB Test</a> can be used to test the connection between the USB Host PC and the client device. This application uses WinUSB driver on the USB Host PC and demonstrates the basics of using the Microsoft Foundation Classes and can be used as a starting point for writing your application.</li>
+</ul>
+<h2><a class="anchor" id="hid_client_app"></a>
+HID Client</h2>
+<p>If you are using the <a class="el" href="USB_Device.html#dev_hid_tutorial">USB Device HID</a> code, there's a way to test the functionality of that code together with a Windows PC. The <code>HIDClient.exe</code> utility is located in <code>install_dir\ARM\Utilities\HID_Client\Release</code> folder (where <code>install_dir</code> refers to the installation directory of Arm Keil MDK, default <code>C:\Keil_v5</code>) and can run stand-alone without the need to install the software. To check the client utility with your board, do the following:</p>
+<ol type="1">
+<li>Download the USB Device <b>HID</b> application to your board.</li>
+<li>Verify all jumper settings on the board.</li>
+<li>Connect the board to a Windows PC. The PC should recognize the HID device and install the correct driver automatically.</li>
+<li>Run <code>HIDClient.exe</code>.</li>
+<li>Select the <b>Device</b> to establish the communication channel.</li>
+<li>Test the application by pressing the correct buttons (refer to the application's <code>Abstract.txt</code> file) on your development board and/or check the right boxes in the client application to see the LEDs flashing.</li>
+</ol>
+<div class="image">
+<img src="hid_client_test.png" alt=""/>
+<div class="caption">
+HID Client test app</div></div>
+    <h3><a class="anchor" id="client_app_cpp"></a>
+HID Client Source Code</h3>
+<p>The source code of the HID Client application is available in <code>install_dir\ARM\Utilities\HID_Client</code>. Visual Studio 2005 and 2010 based projects are available (<code>HIDClient.vproj</code>). The structure of the project is as follows:</p>
+<div class="image">
+<img src="HIDClientSolutionExplorer.png" alt=""/>
+<div class="caption">
+HID Client solutions explorer view</div></div>
+    <h4><a class="anchor" id="autotoc_md52"></a>
+Header Files</h4>
+<ul>
+<li><code>HID.h</code> includes the function declarations of the functions that are defined in <code>HID.cpp</code>.</li>
+<li><code>HIDClient.h</code> is the main header file for the application. It includes other project specific headers (including Resource.h) and declares the <code>CHIDClientApp</code> application class.</li>
+<li><code>HIDClientDlg.h</code> defines the behavior of the application's main dialog.</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md53"></a>
+Resource Files</h4>
+<ul>
+<li><code>HIDClient.ico</code> is an icon file, which is used as the application's icon. This icon is included by the main resource file <code>HIDClient.rc</code>.</li>
+<li><code>HIDClient.rc2</code> contains resources that are not edited by Microsoft Visual C++. You should place all resources not editable by the resource editor in this file.</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md54"></a>
+Source Files</h4>
+<ul>
+<li><code>HID.cpp</code> contains the necessary functions that are used in this example application to communicate with an USB HID device. All available functions in Windows for HID interaction are explained here: <a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/hid/introduction-to-hid-concepts" target="_blank">Introduction to HID Concepts</a>. The function:<ul>
+<li><code>HID_Init</code> initializes the HID class to be used with the USB Host.</li>
+<li><code>HID_UnInit</code> de-initializes the HID class from the USB Host.</li>
+<li><code>HID_FindDevices</code> scans the USB Bus and lists all available HID devices for connection to the application. This information is obtained from the <a class="el" href="USB_Concepts.html#USB_Device_Descriptor">Device Descriptor</a> that is generated by the USB Component using the configuration files.</li>
+<li><code>HID_GetName</code> evaluates the <a class="el" href="group__usbd.html#prod_string">Product String</a> of the device to be shown in the drop down box of the application.</li>
+<li><code>HID_GetInputReportSize</code> extracts the value of <code>USBD_HIDn_IN_REPORT_MAX_SZ</code> as specified in the <a class="el" href="group__usbd__hidFunctions__conf.html">USBD_Config_HID_n.h</a> file.</li>
+<li><code>HID_GetOutputReportSize</code> extracts the value of <code>USBD_HIDn_OUT_REPORT_MAX_SZ</code> as specified in the <a class="el" href="group__usbd__hidFunctions__conf.html">USBD_Config_HID_n.h</a> file.</li>
+<li><code>HID_GetFeatureReportSize</code> extracts the value of <code>USBD_HIDn_FEAT_REPORT_MAX_SZ</code> as specified in the <a class="el" href="group__usbd__hidFunctions__conf.html">USBD_Config_HID_n.h</a> file.</li>
+<li><code>HID_Open</code> opens the device.</li>
+<li><code>HID_GetSelectedDevice</code> returns the selected device.</li>
+<li><code>HID_Close</code> closes the device.</li>
+<li><code>HID_Read</code> initiates a <a class="el" href="group__usbd__hidFunctions__api.html#gaed8b507a9ce1bf958fbcae55ee0b91bf">USBD_HIDn_GetReport</a> within the device to send data to the USB Host.</li>
+<li><code>HID_Write</code> triggers a <a class="el" href="group__usbd__hidFunctions__api.html#gab7d101077f2018ca8a24da7dffce434f">USBD_HIDn_SetReport</a> within the device to read data sent from the USB Host.</li>
+<li><code>HID_GetFeature</code> and <code>HID_SetFeature</code> work on the USB HID Device's feature report (which is optional).</li>
+</ul>
+</li>
+<li><code>HIDClient.cpp</code> is the main application source file that contains the application class <code>CHIDClientApp</code>.</li>
+<li><code>HIDClient.rc</code> is a listing of all of the Microsoft Windows resources that the program uses (located in the res subdirectory).</li>
+<li><code>HIDClientDlg.cpp</code> implements the code of the client's dialog and calls the functions specified in <code>HID.cpp</code>. This is the actual place where the interaction between the USB Host and the USB Device is defined.</li>
+</ul>
+<h2><a class="anchor" id="winusb_app"></a>
+WinUSB Test</h2>
+<p>If you are following the <a class="el" href="USB_Device.html#dev_cc_tutorial">Custom USB Device (WinUSB_Echo)</a> tutorial, you can test the connection between your custom class USB device and a Microsoft Windows PC with this application. The binary <code>WinUSB_Test.exe</code> (which does not require installation) is available in the <code>install_dir\ARM\PACK\Keil\MDK-Middleware\x.y.z\Utilities\WinUSB_Test\Release</code> folder (where <code>install_dir</code> refers to the installation directory of Arm Keil MDK, default <code>C:\Keil_v5</code> and x &gt;= 7, y &gt;= 5, z &gt;= 0).</p>
+<p>To check the WinUSB utility with your board, do the following:</p><ol type="1">
+<li>Download the USB Device <code>WinUSB_Echo</code> application to your board.</li>
+<li>Verify all jumper settings on the board.</li>
+<li>Connect the board to a Windows PC. The PC should recognize the WinUSB device and install the correct driver automatically.</li>
+<li>Run <code>WinUSB_Test.exe</code>.</li>
+<li>Select the <b>Device</b> to establish the communication channel.</li>
+<li>For further settings and tests refer to <a class="el" href="USB_Device.html#dev_cc_tutorial">Custom USB Device (WinUSB_Echo)</a></li>
+</ol>
+<div class="image">
+<img src="WinUSB_Test_application.png" alt=""/>
+<div class="caption">
+WinUSB test app</div></div>
+    <h3><a class="anchor" id="winusb_app_cpp"></a>
+WinUSB application source code</h3>
+<p>The WinUSB source code can be found in <code>install_dir\ARM\PACK\Keil\MDK-Middleware\x.y.z\Utilities\WinUSB_Test</code>. A Visual Studio 2010 (or later) based solution named WinUSB_Test.sln is available. The following is a summary of what you will find in each of the files that make up your WinUSB_Test application.</p>
+<div class="image">
+<img src="WinUSB_test_sln.png" alt=""/>
+<div class="caption">
+WinUSB app solutions view</div></div>
+    <h4><a class="anchor" id="autotoc_md55"></a>
+Header Files</h4>
+<ul>
+<li><code>.\USB\WinUsbIF.h</code> includes the function declarations of the functions that are defined in <code>.\USB\WinUsbIF.cpp</code>.</li>
+<li><code>.\WinUSB_Test\WinUSB_Test.h</code> is the main header file for the application. It includes other project specific headers (including resource.h) and declares the <code>CWinUSB_TestApp</code> application class.</li>
+<li><code>.\WinUSB_Test\WinUSB_TestDlg.h</code> defines the behavior of the application's main dialog.</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md56"></a>
+Resource Files</h4>
+<ul>
+<li><code>.\WinUSB_Test\res\WinUSB_Test.ico</code> is an icon file, which is used as the application's icon. This icon is included by the main resource file <code>.\WinUSB_Test\WinUSB_Test.rc</code>.</li>
+<li><code>.\WinUSB_Test\res\Refresh_grey.ico</code> is an icon file, which is used for the refresh button in the application.</li>
+<li><code>.\WinUSB_Test\res\WinUSB_Test.rc2</code> contains resources that are not edited by Microsoft Visual C++. You should place all resources not editable by the resource editor in this file.</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md57"></a>
+Source Files</h4>
+<ul>
+<li><code>.\USB\WinUsbIF.cpp</code> contains the necessary functions that are used in this example application to communicate with a USB device via the WinUSB interface. Refer to the <a href="https://learn.microsoft.com/en-us/windows/win32/api/winusb/" target="_blank">WinUSB Functions</a> documentation for an overview of the available functions. The function:<ul>
+<li><code>WinUsbIF_Initialize</code> initializes the WinUSB interface to be used with the USB Host.</li>
+<li><code>WinUsbIF_Uninitialize</code> de-initializes the WinUSB interface from the USB Host.</li>
+<li><code>WinUsbIF_SetGUID</code> sets the USB interface Globally Unique Identifier (GUID).</li>
+<li><code>WinUsbIF_GetGUID</code> retrieves the USB interface Globally Unique Identifier (GUID).</li>
+<li><code>WinUsbIF_FindDevices</code> scans the USB Bus and lists all available devices, containing interface with set GUID, for connection to the application.</li>
+<li><code>WinUsbIF_GetNumOfInterfaces</code> retrieves the number of interfaces available for a device.</li>
+<li><code>WinUsbIF_GetEndpointsMask</code> retrieves the endpoint mask of the selected device.</li>
+<li><code>WinUsbIF_GetName</code> evaluates the VID + PID + Serial Number or Unique ID of the device to be shown in the drop down box of the application.</li>
+<li><code>WinUsbIF_GetManufacturerString</code> retrieves the device's manufacturer string.</li>
+<li><code>WinUsbIF_GetProductString</code> retrieves the device's product string.</li>
+<li><code>WinUsbIF_GetSerialNumberString</code> retrieves the device's serial number string.</li>
+<li><code>WinUsbIF_GetInterfaceString</code> retrieves the device's interface string.</li>
+<li><code>WinUsbIF_GetVID</code> retrieves the device's vendor ID.</li>
+<li><code>WinUsbIF_GetPID</code> retrieves the device's product ID.</li>
+<li><code>WinUsbIF_OpenDevice</code> opens the device for USB communication.</li>
+<li><code>WinUsbIF_CloseDevice</code> closes the device from USB communication.</li>
+<li><code>WinUsbIF_ControlTransfer</code> executes a control transfer on the USB Bus.</li>
+<li><code>WinUsbIF_WritePipe</code> executes an USB OUT transfer on a selected pipe to a bulk or interrupt endpoint of the device.</li>
+<li><code>WinUsbIF_ReadPipe</code> executes an USB IN transfer on a selected pipe to a bulk or interrupt endpoint of the device.</li>
+<li><code>WinUsbIF_AbortPipe</code> aborts pending pipe transfers.</li>
+<li><code>WinUsbIF_FlushPipe</code> flushes the cached data of a pipe.</li>
+<li><code>WinUsbIF_ResetPipe</code> resets a pipe.</li>
+<li><code>WinUsbIF_GetOverlappedResult</code> retrieves the overlapped result.</li>
+</ul>
+</li>
+<li><code>.\WinUSB_Test\WinUSB_Test.cpp</code> is the main application source file that contains the application class <code>CWinUSB_TestApp</code>.</li>
+<li><code>.\WinUSB_Test\WinUSB_Test.rc</code> is a listing of all of the Microsoft Windows resources that the program uses (located in the <code>.\WinUSB_Test\res</code> subdirectory).</li>
+<li><code>.\WinUSB_Test\WinUSB_TestDlg.cpp</code> implements the code of the client's dialog and calls the functions specified in <code>.\USB\WinUsbIF.cpp</code>. This is the actual place where the interaction between the USB Host and the USB Device is defined. </li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

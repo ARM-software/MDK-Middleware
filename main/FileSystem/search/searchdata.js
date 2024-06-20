@@ -9,7 +9,7 @@ var indexSectionsWithContent =
   6: "f",
   7: "efm",
   8: "dfimrsu",
-  9: "cfort"
+  9: "cfmort"
 };
 
 var indexSectionNames =

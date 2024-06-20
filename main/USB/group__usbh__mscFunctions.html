@@ -152,8 +152,8 @@ Content</h2></td></tr>
 <img src="usbh_msc_sw_stack.png" alt=""/>
 </div>
 <p>Refer to:</p><ul>
-<li><a class="el" href="MSC.html">MSC: Mass Storage Class</a> for an overview of the MSC class.</li>
-<li><a class="el" href="host_msc_tutorial.html">USB Host Mass Storage</a> for an example project that uses the MSC class.</li>
+<li><a class="el" href="USB_Classes.html#MSC">MSC: Mass Storage Class</a> for an overview of the MSC class.</li>
+<li><a class="el" href="USB_Host.html#host_msc_tutorial">USB Host Mass Storage</a> for an example project that uses the MSC class.</li>
 </ul>
 <p><b>Software Structure</b> <br  />
  The application starts the USB Host by calling <a class="el" href="group__usbh__coreFunctions__api.html#ga4420c0add78ae79e8e7ce035227ef4c5">USBH_Initialize</a>. The USB Host Core will wait until an USB MSC device is attached to the system. As soon as this happens it will enumerate the device and it will be ready to be used by the application.</p>
@@ -166,7 +166,7 @@ Content</h2></td></tr>
 <area href="group__usbh__coreFunctions__api.html#gaf98f4e13ff57a8bf1c49cd46a8034d3f" shape="rect" coords="50,384,151,397" alt=""/>
 </map>
 </div>
-<h2><a class="anchor" id="autotoc_md106"></a>
+<h2><a class="anchor" id="autotoc_md109"></a>
 Implementation</h2>
 <p>Steps to <a class="el" href="USB_Host.html#Create_a_USB_Host_Application">create an USB Host</a> application with MSC support:</p><ul>
 <li>In the <a class="el" href="USB_Device.html#RTE_Software_Component_Selection">Manage Run-Time Environment</a> window select <b>USB:Host:MSC</b> for support of the MSC class and <b>File System:CORE</b>, <b>File System:Drive:USB</b> for using the <b>File</b> <b>System</b> Component with support for USB mass storage devices. For the <b>File System:Drive:USB</b> you have to set the number to the number of devices you need to support simultaneously.</li>

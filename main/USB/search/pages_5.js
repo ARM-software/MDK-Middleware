@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['hid_3a_20human_20interface_20device_20class_0',['HID: Human Interface Device Class',['../HID.html',1,'USB_Classes']]]
+  ['usb_20concepts_0',['USB Concepts',['../USB_Concepts.html',1,'']]],
+  ['usb_20device_1',['USB Device',['../USB_Device.html',1,'']]],
+  ['usb_20host_2',['USB Host',['../USB_Host.html',1,'']]]
 ];

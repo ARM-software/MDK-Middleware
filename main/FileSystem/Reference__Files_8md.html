@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>USB Component: USB Host Keyboard</title>
+<title>File System Component: Reference_Files.md File Reference</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -41,16 +41,16 @@
  <tr style="height: 55px;">
   <td id="projectlogo" style="padding: 1.5em;"><img alt="Logo" src="armkeil_white_h.png"/></td>
   <td style="padding-left: 1em; padding-bottom: 1em;padding-top: 1em;">
-   <div id="projectname">USB Component
+   <div id="projectname">File System Component
    &#160;<span id="projectnumber"><script type="text/javascript">
      <!--
      writeHeader.call(this);
-     writeVersionDropdown.call(this, "USB Component");
+     writeVersionDropdown.call(this, "File System Component");
      //-->
     </script>
    </span>
    </div>
-   <div id="projectbrief">MDK Middleware for USB Device and Host Communication</div>
+   <div id="projectbrief">MDK Middleware for Devices with Flash File System</div>
   </td>
    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('host_hid_tutorial.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('Reference__Files_8md.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -124,50 +124,16 @@ $(document).ready(function(){initNavTree('host_hid_tutorial.html',''); initResiz
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">USB Host Keyboard </div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">Reference_Files.md File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The following example application shows how to interact with a <b>USB keyboard</b> from a microcontroller. To keep it simple, the graphical LCD on the evaluation board is used to show the keyboard inputs. This is done using the <b>Compiler</b> software component with the appropriate user code templates.</p>
-<div class="image">
-<img src="usbh_hid_setup.png" alt=""/>
-</div>
-<p>The <b>Abstract.txt</b> file contained in the <b>Documentation</b> group of the <b>Project</b> window gives you more information on the general setup and the available I/O of the development board.</p>
-<h1><a class="anchor" id="autotoc_md54"></a>
-Build the "USB Host Keyboard" Project</h1>
-<p>Open the example project in MDK ( <script>link_ext('uv4_ca_packinstaller');</script> web page explains this).</p>
-<h2><a class="anchor" id="autotoc_md55"></a>
-Source Files</h2>
-<ul>
-<li><b>Keyboard.c</b> contains the main C function that initializes the board hardware and the USB Host Component. It also reads the input from the attached keyboard.</li>
-<li>In <b>stdout_display.c</b>, the function <code>stdout_putchar</code> is retargeted to the function <code>GLCD_DrawChar</code> of the graphics display.</li>
-</ul>
-<p>If you are using RTOS other than CMSIS-RTOS2 RTX5 for your project please make sure to satisfy <a class="el" href="usb_resource_requirements.html#usbh_res_req">USB Host Resource Requirements</a>.</p>
-<p>You may now build and download the example project to the evaluation board using the µVision commands:</p><ul>
-<li><b>Project</b> --&gt; <b> Build target (F7) </b></li>
-<li><b>Flash</b> &#160;&#160;--&gt; <b> Download (F8) </b></li>
-<li><b>Debug</b> --&gt; <b> Start/Stop Debug Session (Ctrl + F5) </b></li>
-<li><b>Debug</b> --&gt; <b> Run (F5) </b></li>
-</ul>
-<p>After these steps, the project should start executing on your evaluation kit. In case of errors, refer to the Evaluation Board User's Guide for configuration information.</p>
-<h1><a class="anchor" id="autotoc_md56"></a>
-Using the "USB Host Keyboard" Project</h1>
-<h2><a class="anchor" id="autotoc_md57"></a>
-Hardware Setup</h2>
-<p>The setup of the Evaluation Board hardware is described in the <b>Abstract.txt</b> file.</p><ul>
-<li>Verify all jumper settings on the target hardware.</li>
-<li>Connect a USB keyboard to one of the development board's USB connectors.</li>
-<li>After downloading the code onto the board, you should be able to see something similar on the graphics display:</li>
-</ul>
-<div class="image">
-<img src="usbh_keyboard_glcd.png" alt=""/>
-</div>
- </div></div><!-- contents -->
-</div><!-- PageDoc -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="Reference__Files_8md.html">Reference_Files.md</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--

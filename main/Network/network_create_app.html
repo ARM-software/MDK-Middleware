@@ -171,7 +171,7 @@ RTE Component Selection</h1>
 <img src="nw_rte_comp_selection.png" alt=""/>
 <div class="caption">
 RTE Component Selection Example</div></div>
-<h1><a class="anchor" id="nw_Driver_Configuration"></a>
+    <h1><a class="anchor" id="nw_Driver_Configuration"></a>
 Network Driver and Controller Configuration</h1>
 <p>The Network Device Driver and the Network Controller of the microcontroller need to be correctly configured. This means:</p>
 <ul>
@@ -182,15 +182,16 @@ Network Driver and Controller Configuration</h1>
 Ethernet PHY Configuration</h1>
 <p>For Ethernet network communication, usually an external Ethernet PHY is required to interface the physical line to the digital MAC of the microcontroller device. The MAC usually contains two buses:</p>
 <ol type="1">
-<li>Data bus: <a href="https://en.wikipedia.org/wiki/Media-independent_interface" target="_blank">MII, RMII,</a> or Serial Network Interface (SNI)</li>
+<li>Data bus: <a href="https://en.wikipedia.org/wiki/Media-independent_interface">MII, RMII,</a> or Serial Network Interface (SNI)</li>
 <li>Management bus: Serial Management Interface (<b>SMI</b>) (using MDC and MDIO)</li>
 </ol>
 <p>SMI is used to access the PHY’s internal registers to read the state of the link (up/down), duplex mode, speed, and to restart auto-negotiation etc. SMI is a serial bus, which allows to connect up to 32 devices. Devices on the bus are accessed using a 5-bit device address. A default device address is hardware configurable by pin-strapping on the device (some pins are sampled when a reset is asserted or at power-up).</p>
 <p>The device’s internal weak pull-up or pull-down resistors define a default device address. This address can be changed by connecting strong pull-up or pull-down resistors externally. In this case, the <code>ETH_PHY_ADDR</code> in the PHY driver needs to be changed accordingly to be able to control the PHY and to communicate with it. Use the <b>Options for Component</b> dialog to override the default setting for <code>ETH_PHY_ADDR</code>:</p>
 <div class="image">
 <img src="eth_phy_config.png" alt=""/>
-</div>
-<h1><a class="anchor" id="nw_Device_Configuration"></a>
+<div class="caption">
+Ethernet PHY Configuration</div></div>
+    <h1><a class="anchor" id="nw_Device_Configuration"></a>
 Network Configuration</h1>
 <p>All configuration files for the Network Component are listed in the Project window below the Component Class <b>Network</b>.</p>
 <h2><a class="anchor" id="nw_Network_Core"></a>
@@ -199,11 +200,10 @@ Network Core</h2>
 <img src="net_config_h.png" alt=""/>
 <div class="caption">
 Net_Config.h Configuration File</div></div>
-<p>The configuration file Network Core <code>Net_Config.h</code> contains the setting for the library version to be used in the application.</p>
+    <p>The configuration file Network Core <code>Net_Config.h</code> contains the setting for the library version to be used in the application.</p>
 <p>The following <b>Variant</b> options are available:</p>
 <ul>
-<li><b>IPv4 only</b> is a pure IPv4 implementation. This choice saves some system resources if no IPv6 networking is used in the application. <br  />
-</li>
+<li><b>IPv4 only</b> is a pure IPv4 implementation. This choice saves some system resources if no IPv6 networking is used in the application.</li>
 <li><b>IPv4/IPv6 dual stack</b> implements both IPv4 and IPv6 internet protocols.</li>
 </ul>
 <p>The <b>Local Host Name</b> specifies a name under which the network device can be accessed on a local area network (<b>LAN</b>). This requires a <a class="el" href="group__using__ethernet__interfaces__conf.html">NetBIOS Name Service</a> to be enabled in the configuration. This name is very useful if you don't know the IP address that has been assigned to your device by the DHCP server.</p>
@@ -302,7 +302,7 @@ User Code Implementation</h1>
 </ul>
 <h2><a class="anchor" id="autotoc_md0"></a>
 User Code Templates</h2>
-<p> <script>link_ext('uv4_ca_sourcefiles');</script> files provide access to all functions that are required to communicate over the Network. The available functions are explained in the <a href="./modules.html" class="el">Reference</a> section of the Network Component. These routines can be adapted to the needs of the microcontroller application, in case more functionality is needed.</p>
+<p> <script>link_ext('uv4_ca_sourcefiles');</script> files provide access to all functions that are required to communicate over the Network. The available functions are explained in the <a href="./modules.html">Reference</a> section of the Network Component. These routines can be adapted to the needs of the microcontroller application, in case more functionality is needed.</p>
 <p>The following templates are available for the Network component:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -352,12 +352,12 @@ Debugging</h1>
 <p>Network supports event annotations for the  <script>link_ext('Event-Recorder-About');</script> and makes it very easy to analyze the internal operation of the Network Component during application debugging. The old <a class="el" href="network_diffs.html#netDebugStdio">STDIO</a> debug, which outputs event information as ASCII messages on the standard output device, is also supported.</p>
 <h2><a class="anchor" id="netDebugConfig"></a>
 Debug Configuration</h2>
-<p>The Network Component debug is configured using the <code>Net_Debug.h</code> file. The options are set in the file directly or using the <a href="https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard" class="el" target="_blank">Configuration Wizard</a>.</p>
+<p>The Network Component debug is configured using the <code>Net_Debug.h</code> file. The options are set in the file directly or using the <a href="https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard">Configuration Wizard</a>.</p>
 <div class="image">
 <img src="net_debug_h.png" alt=""/>
 <div class="caption">
 Net_Debug.h Configuration File</div></div>
-<p>The following settings are available:</p>
+    <p>The following settings are available:</p>
 <ul>
 <li><b>Network Debug</b> enables or disables the debug mode.</li>
 <li><b>Output Channel</b> selects where the diagnostic messages are to be sent:<ul>
@@ -395,8 +395,7 @@ Event Recorder Support</h2>
 <ol type="1">
 <li><a class="el" href="network_create_app.html#netDebugConfig">Select Debug mode</a>: in the <code>Net_Config.h</code> enable the <b>Network Debug</b> for the component.</li>
 <li> <script>link_ext('Event-Recorder-Enable');</script>: in the RTE management dialog enable the software component <b>CMSIS-View:Event Recorder</b>.</li>
-<li> <script>link_ext('Event-Recorder-Initialize');</script>: in the application code, call the function <b>EventRecorderInitialize</b>. <br  />
-</li>
+<li> <script>link_ext('Event-Recorder-Initialize');</script>: in the application code, call the function <b>EventRecorderInitialize</b>.</li>
 <li> <script>link_ext('Event-Recorder-Configure');</script>: if necessary, adjust default Event Recorder configuration.</li>
 <li>Build the application code, download it to the target hardware and start debug session.</li>
 </ol>
@@ -475,7 +474,7 @@ Event IDs</h3>
 </table>
 <h1><a class="anchor" id="nw_runtime_config"></a>
 Runtime Configuration</h1>
-<p>It is often necessary to change the parameters and mode of operation of the network interface at startup or runtime. System control functions allow reading and changing the settings of the network interface and the system (for example the <a href="https://en.wikipedia.org/wiki/Hostname" target="_blank">hostname</a>).</p>
+<p>It is often necessary to change the parameters and mode of operation of the network interface at startup or runtime. System control functions allow reading and changing the settings of the network interface and the system (for example the <a href="https://en.wikipedia.org/wiki/Hostname">hostname</a>).</p>
 <p>This is required for using the same application code for serial production of embedded devices. The <b>runtime configuration</b> feature enables reading of configuration parameters from an EEPROM or SD Card and configuring the network interface for each embedded device differently.</p>
 <p>To control the network interface options, you can use:</p>
 <ul>
@@ -484,8 +483,8 @@ Runtime Configuration</h1>
 <li><a class="el" href="group__common__user__api.html#ga7e16ce8f65945bfc49bee15172d6ad41">netIF_SetDefault</a> function to set default interface for internet access</li>
 </ul>
 <p>The options which can be changed are defined in the <a class="el" href="group__netInterfaces__Enums.html#ga2e0460c920b348a8633c2e54ceecbed5">netIF_Option</a> enumerator. However, some interfaces do not support the complete set of available options. For example, the PPP interface does not have a MAC address. If you try to modify an unsupported option, an error is returned.</p>
-<p>The <a href="https://en.wikipedia.org/wiki/Localhost" target="_blank">localhost</a> name is used to access the embedded system without knowledge of its IP address. <a class="el" href="group__netSys__Func.html#ga6eda1bb2895a98252a851160c15111a5">netSYS_GetHostName</a> is used to retrieve the localhost name, whereas <a class="el" href="group__netSys__Func.html#ga141ae4581698cb95e5fc5c8458fa9710">netSYS_SetHostName</a> changes the localhost name.</p>
-<p>The <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol" target="_blank">DHCP</a> client can be disabled or enabled at runtime. When disabled, the user provided network parameters defined in the <code>Net_Config_ETH_0.h</code> or <code>Net_Config_WiFi_0.h</code> configuration files are used. Switch the state of the DHCP client using <a class="el" href="group__common__user__api.html#gad8ddb783cbb076297f64c3aa13a7d930">netDHCP_Disable</a> and <a class="el" href="group__common__user__api.html#gace7634f951ec523cccc505b5d2ffd5a7">netDHCP_Enable</a>.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Localhost">localhost</a> name is used to access the embedded system without knowledge of its IP address. <a class="el" href="group__netSys__Func.html#ga6eda1bb2895a98252a851160c15111a5">netSYS_GetHostName</a> is used to retrieve the localhost name, whereas <a class="el" href="group__netSys__Func.html#ga141ae4581698cb95e5fc5c8458fa9710">netSYS_SetHostName</a> changes the localhost name.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol">DHCP</a> client can be disabled or enabled at runtime. When disabled, the user provided network parameters defined in the <code>Net_Config_ETH_0.h</code> or <code>Net_Config_WiFi_0.h</code> configuration files are used. Switch the state of the DHCP client using <a class="el" href="group__common__user__api.html#gad8ddb783cbb076297f64c3aa13a7d930">netDHCP_Disable</a> and <a class="el" href="group__common__user__api.html#gace7634f951ec523cccc505b5d2ffd5a7">netDHCP_Enable</a>.</p>
 <dl class="section note"><dt>Note</dt><dd>Each embedded Ethernet device must have a unique <b>MAC address</b>, <b>IP address</b>, and <b>hostname</b>. This is very important when multiple devices are connected to the same LAN. Otherwise, the system might not work (due to collisions or disturbed network communications).</dd></dl>
 <p><b>Code Example</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="rl__net_8h.html">rl_net.h</a>&quot;</span></div>
@@ -513,7 +512,7 @@ Runtime Configuration</h1>
 <div class="line">  <a class="code hl_function" href="group__common__user__api.html#ga919bfb395143e0bc1775106080c61eb6" title="Set the value of an Interface option. [thread-safe].">netIF_SetOption</a> (<a class="code hl_define" href="rl__net_8h.html#a005856112372179cbbdb9f815a563a6c" title="Interface Class.">NET_IF_CLASS_ETH</a> | 0, <a class="code hl_enumvalue" href="rl__net_8h.html#ga2e0460c920b348a8633c2e54ceecbed5a3433c9bf63b20186d9c9dc7359dc3d7e" title="Ethernet MAC Address (6 bytes)">netIF_OptionMAC_Address</a>, buf, <a class="code hl_define" href="rl__net_8h.html#abc6c76b89cc97f1dd7ffb8f1a82e0754" title="General definitions.">NET_ADDR_ETH_LEN</a>);</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">if</span> (DHCP_enabled == <span class="keyword">false</span>) {</div>
-<div class="line">    <span class="comment">/* Static configuration mode */</span> </div>
+<div class="line">    <span class="comment">/* Static configuration mode */</span></div>
 <div class="line">    <a class="code hl_function" href="group__common__user__api.html#gad8ddb783cbb076297f64c3aa13a7d930" title="Disable Dynamic Host Configuration at runtime. [thread-safe].">netDHCP_Disable</a> (<a class="code hl_define" href="rl__net_8h.html#a005856112372179cbbdb9f815a563a6c" title="Interface Class.">NET_IF_CLASS_ETH</a> | 0);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">/* Change IP address */</span></div>

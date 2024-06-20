@@ -161,7 +161,7 @@ RTE Component Selection</h1>
 <img src="fs_rte_comp_selection.png" alt=""/>
 <div class="caption">
 RTE Component for File System</div></div>
-<h1><a class="anchor" id="fs_drives"></a>
+    <h1><a class="anchor" id="fs_drives"></a>
 Using Drives</h1>
 <p>The section <a class="el" href="fs_operation.html#drive">Drives, Memory Devices and Drivers</a> shows the relationship between drive - memory device - and driver/interface.</p>
 <h2><a class="anchor" id="nor_usage"></a>
@@ -171,20 +171,20 @@ NOR Flash Drive</h2>
 <li>From the <b>CMSIS-Driver</b> Component, select an appropriate <b>Flash (API)</b> device. If your NOR Flash uses an SPI interface, select <b>SPI (API)</b> additionally.</li>
 </ul>
 <p>If your NOR Flash device is not listed, use one of the examples as a reference to implement a driver for your specific device:</p><ul>
-<li>AM29x800BB/<a href="https://www.farnell.com/datasheets/40281.pdf" target="_blank">M29W640FB</a> (Flash with 16-bit memory bus interface)</li>
-<li><a href="https://www.infineon.com/dgdl/Infineon-S29GL064N_S29GL032N_64_Mbit_32_Mbit_3_V_Page_Mode_MirrorBit_Flash-DataSheet-v03_00-EN.pdf?fileId=8ac78c8c7d0d8da4017d0ed556fd548b" target="_blank">S29GL064Nx2</a> (Flash with 32-bit memory bus interface)</li>
-<li><a href="https://datasheet.octopart.com/AT45DB642D-CNU-Atmel-datasheet-9652374.pdf" target="_blank">AT45DB642D</a> (Flash with SPI interface using an SPI driver)</li>
+<li>AM29x800BB/<a href="https://www.farnell.com/datasheets/40281.pdf">M29W640FB</a> (Flash with 16-bit memory bus interface)</li>
+<li><a href="https://www.infineon.com/dgdl/Infineon-S29GL064N_S29GL032N_64_Mbit_32_Mbit_3_V_Page_Mode_MirrorBit_Flash-DataSheet-v03_00-EN.pdf?fileId=8ac78c8c7d0d8da4017d0ed556fd548b">S29GL064Nx2</a> (Flash with 32-bit memory bus interface)</li>
+<li><a href="https://datasheet.octopart.com/AT45DB642D-CNU-Atmel-datasheet-9652374.pdf">AT45DB642D</a> (Flash with SPI interface using an SPI driver)</li>
 </ul>
 <div class="image">
 <img src="fs_flash_drivers.png" alt=""/>
 <div class="caption">
 Flash (API) Drivers shipped with the Middleware Component</div></div>
-<p>Configure the driver-hardware relationship using the <code>FS_Config_NOR_n.h</code> file:</p>
+    <p>Configure the driver-hardware relationship using the <code>FS_Config_NOR_n.h</code> file:</p>
 <div class="image">
 <img src="fs_config_nor_0_h.png" alt=""/>
 <div class="caption">
 NOR Flash Drive Configuration File</div></div>
-<dl class="section note"><dt>Note</dt><dd>General <a class="el" href="fs_create_app.html#fs_sys_req">System Resource Configuration</a> requirements apply.</dd></dl>
+    <dl class="section note"><dt>Note</dt><dd>General <a class="el" href="fs_create_app.html#fs_sys_req">System Resource Configuration</a> requirements apply.</dd></dl>
 <h2><a class="anchor" id="ram_usage"></a>
 RAM Disk Drive</h2>
 <p>To enable a RAM disk drive, select <b>File System:Drive:RAM</b>.</p>
@@ -193,7 +193,7 @@ RAM Disk Drive</h2>
 <img src="fs_config_ram_0_h.png" alt=""/>
 <div class="caption">
 RAM Disk Configuration File</div></div>
-<dl class="section note"><dt>Note</dt><dd>General <a class="el" href="fs_create_app.html#fs_sys_req">System Resource Configuration</a> requirements apply.</dd></dl>
+    <dl class="section note"><dt>Note</dt><dd>General <a class="el" href="fs_create_app.html#fs_sys_req">System Resource Configuration</a> requirements apply.</dd></dl>
 <h2><a class="anchor" id="mc_usage"></a>
 Memory Card Drive</h2>
 <p>Memory cards can be connected to a microcontroller device either using an SD/MMC bus mode (MCI) or an SPI bus mode:</p>
@@ -206,7 +206,7 @@ Memory Card Drive</h2>
 <img src="fs_config_mc_0_h.png" alt=""/>
 <div class="caption">
 Memory Card Drive Configuration File</div></div>
-<dl class="section note"><dt>Note</dt><dd><ul>
+    <dl class="section note"><dt>Note</dt><dd><ul>
 <li>If your microcontroller device does not have a <b>CMSIS-Driver</b> for the <b>MCI (API)</b> or <b>SPI (API)</b>, you can try to develop your own one based on the  <script>link_ext('CMSIS-Driver-Ref');</script> documentation.</li>
 <li>The page <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> lists all supported memory card types and gives further details on how to use these cards.</li>
 <li>General <a class="el" href="fs_create_app.html#fs_sys_req">System Resource Configuration</a> requirements apply.</li>
@@ -224,7 +224,7 @@ USB Flash Drive</h2>
 <img src="fs_config_usb_0_h.png" alt=""/>
 <div class="caption">
 USB Host Mass Storage Class Drive Configuration File</div></div>
-<dl class="section note"><dt>Note</dt><dd><ul>
+    <dl class="section note"><dt>Note</dt><dd><ul>
 <li>If your microcontroller device does not have a <b>CMSIS-Driver</b> for the <b>USB Host (API)</b>, you can try to develop your own one based on the  <script>link_ext('CMSIS-Driver-Ref');</script> documentation.</li>
 <li>General <a class="el" href="fs_create_app.html#fs_sys_req">System Resource Configuration</a> requirements apply.</li>
 </ul>
@@ -240,7 +240,7 @@ NAND Flash Drive</h2>
 <img src="fs_config_nand_0_h.png" alt=""/>
 <div class="caption">
 NAND Flash Drive Configuration File</div></div>
-<dl class="section note"><dt>Note</dt><dd><ul>
+    <dl class="section note"><dt>Note</dt><dd><ul>
 <li>If your microcontroller device does not have a <b>CMSIS-Driver</b> for the <b>NAND (API)</b>, you can try to develop your own one based on the  <script>link_ext('CMSIS-Driver-Ref');</script> documentation.</li>
 <li>The page <a class="el" href="fs_operation.html#nand_flash_TL">NAND Flash Translation Layer</a> describes additional features specific to these devices.</li>
 <li>Using a <b>NAND (API)</b> driver, you can use any NAND Flash device with an 8-/16-bit memory bus interface for data storage.</li>
@@ -255,7 +255,7 @@ File System Configuration</h1>
 <img src="fs_config_h.png" alt=""/>
 <div class="caption">
 File System Configuration File</div></div>
-<p>Maximum number of simultaneously opened files can be set separately for FAT File System and for Embedded File System (EFS).</p>
+    <p>Maximum number of simultaneously opened files can be set separately for FAT File System and for Embedded File System (EFS).</p>
 <h1><a class="anchor" id="fs_Driver_Configuration"></a>
 Hardware Configuration</h1>
 <p>As the file system is not bound to a special type of hardware, you need to configure the necessary drivers according to the requirements of your target device. This configuration is done in the <code>RTE_Device.h</code> configuration file:</p>
@@ -263,7 +263,7 @@ Hardware Configuration</h1>
 <img src="rte_device_h.png" alt=""/>
 <div class="caption">
 Hardware Configuration Example using RTE_Device.h</div></div>
-<dl class="section note"><dt>Note</dt><dd>Consult the device's user manual or hardware reference guide for more details.</dd></dl>
+    <dl class="section note"><dt>Note</dt><dd>Consult the device's user manual or hardware reference guide for more details.</dd></dl>
 <h1><a class="anchor" id="fs_sys_req"></a>
 System Resource Configuration</h1>
 <p>For proper operation, the File System Component requires some system configuration settings. The requirements are:</p><ul>
@@ -274,7 +274,7 @@ System Resource Configuration</h1>
 <p>For more information, check the File System component's <a class="el" href="fs_resource_requirements.html">Resource Requirements</a> section.</p>
 <h1><a class="anchor" id="fs_User_Code_Implementation"></a>
 User Code Implementation</h1>
-<p>All available functions are documented in the <a href="./modules.html" class="el">Reference</a> section of the File System Component. These routines can be adapted to the needs of the microcontroller application, in case more functionality is needed.</p>
+<p>All available functions are documented in the <a href="./modules.html">Reference</a> section of the File System Component. These routines can be adapted to the needs of the microcontroller application, in case more functionality is needed.</p>
 <h1><a class="anchor" id="fs_debugging"></a>
 Debugging</h1>
 <p>File System Component can be easily configured to generate debug events and provide dynamic visibility to the component operation.</p>
@@ -301,7 +301,7 @@ Event Recorder Configuration</h3>
 <img src="fs_debug_h.png" alt=""/>
 <div class="caption">
 FS_Debug.h file for event generation configuration</div></div>
-<p>The following settings are available for event generation configuration of each module:</p><ul>
+    <p>The following settings are available for event generation configuration of each module:</p><ul>
 <li><b>Off</b> means no events will be generated by the module</li>
 <li><b>Errors</b> means only error events will be generated by the module</li>
 <li><b>Errors + API</b> means error and API call events will be generated by the module</li>

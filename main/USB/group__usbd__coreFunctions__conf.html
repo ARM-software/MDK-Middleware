@@ -132,7 +132,7 @@ $(document).ready(function(){initNavTree('group__usbd__coreFunctions__conf.html'
 <p>Configuration of the USB Device Core.  
 </p>
 <p>Configuration of the USB Device Core. </p>
-<p>The configuration file <b>USBD_Config_<em>n</em>.h</b> contains generic settings for the USB Device and parameters that are necessary to create <a class="el" href="USB_Descriptors.html">USB Descriptors</a> . Some parts of the USB descriptors are configured in the respective device class configuration files (<a class="el" href="group__usbd__adcFunctions__conf.html">USBD_Config_ADC.h</a>, <a class="el" href="group__usbd__cdcFunctions__acm__conf.html">USBD_Config_CDC.h</a>, <a class="el" href="group__usbd__classFunctions__conf.html">USBD_Config_CustomClass.h</a>, <a class="el" href="group__usbd__hidFunctions__conf.html">USBD_Config_HID.h</a> and <a class="el" href="group__usbd__mscFunctions__conf.html">USBD_Config_MSC.h</a>).</p>
+<p>The configuration file <b>USBD_Config_<em>n</em>.h</b> contains generic settings for the USB Device and parameters that are necessary to create <a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a> . Some parts of the USB descriptors are configured in the respective device class configuration files (<a class="el" href="group__usbd__adcFunctions__conf.html">USBD_Config_ADC.h</a>, <a class="el" href="group__usbd__cdcFunctions__acm__conf.html">USBD_Config_CDC.h</a>, <a class="el" href="group__usbd__classFunctions__conf.html">USBD_Config_CustomClass.h</a>, <a class="el" href="group__usbd__hidFunctions__conf.html">USBD_Config_HID.h</a> and <a class="el" href="group__usbd__mscFunctions__conf.html">USBD_Config_MSC.h</a>).</p>
 <div class="image">
 <img src="usbd_config_0_h.png" alt=""/>
 <div class="caption">
@@ -140,19 +140,19 @@ USB Device Core Configuration File</div></div>
 <p>The configuration file <b>USBD_Config_<em>n</em>.h</b> contains the following settings:</p><ul>
 <li><b>Connect to hardware via Driver_USBD# </b> sets the <b>CMSIS-Driver</b> <b>Number</b> to be used (according to the selected USB controller). For devices with single USB Device Controller it will typically be '0'.</li>
 <li><b>High-Speed</b> may be selected if supported by the USB controller.</li>
-<li><b>Device Settings</b> are used to create the <a class="el" href="USB_Device_Descriptor.html">Device Descriptor</a>.<ul>
+<li><b>Device Settings</b> are used to create the <a class="el" href="USB_Concepts.html#USB_Device_Descriptor">Device Descriptor</a>.<ul>
 <li><b>Max Endpoint 0 Packet Size</b> sets the maximum packet size for Endpoint 0.</li>
 <li>The <b>Vendor</b> <b>ID</b> (VID) needs to be set to a private VID. The default Vendor ID is owned by Keil and must not be used for actual products. Please visit <a href="https://www.usb.org/getting-vendor-id" class="el" target="_blank">USB-IF</a> for more information on how to apply for a valid Vendor ID.</li>
 <li>Every device variant needs an unique <b>Product</b> <b>ID</b>. Together with the <b>VID</b>, it is used by the Host computer's operating system to find a driver for your device.</li>
 <li>The <b>Device Release Number</b> will be shown in Windows and Linux systems as “Firmware Revision”. The number will be interpreted as “binary coded decimal”, meaning that 0x0101 will be shown as firmware revision 1.01.</li>
 </ul>
 </li>
-<li><b>Configuration Settings</b> are used to create the <a class="el" href="USB_Configuration_Descriptor.html">Configuration Descriptor</a>.<ul>
+<li><b>Configuration Settings</b> are used to create the <a class="el" href="USB_Concepts.html#USB_Configuration_Descriptor">Configuration Descriptor</a>.<ul>
 <li><b>Power</b> determines whether the device is self- or bus-powered.</li>
 <li><b>Maximum Power Consumption (in mA) </b> advertises the maximum current drawn from the bus in this specific configuration when the USB Device is fully operational.</li>
 </ul>
 </li>
-<li><b>String Settings</b> are used to create the string descriptor within the <a class="el" href="USB_Device_Descriptor.html">Device Descriptor</a>.<ul>
+<li><b>String Settings</b> are used to create the string descriptor within the <a class="el" href="USB_Concepts.html#USB_Device_Descriptor">Device Descriptor</a>.<ul>
 <li><b>Language ID</b> set the product's language.</li>
 <li><b>Manufacturer String</b> describes the product's manufacturer.</li>
 <li><b>Product String</b> describes the product.</li>

@@ -147,7 +147,7 @@ Content</h2></td></tr>
 <p>USB Host functions to support Custom Class USB Devices. </p>
 <p>The Custom Class in the USB Host Component is used for attaching USB Devices with a specific USB Class to your system. This can either be one of the <a href="https://www.usb.org/defined-class-codes" class="el" target="_blank">standard</a> classes that are not directly supported by the USB Middleware or a <a href="https://www.usb.org/defined-class-codes" class="el" target="_blank">vendor specific</a> class. Using these functions, you can add support for any USB Device class to the system.</p>
 <p>Refer to:</p><ul>
-<li><a class="el" href="CustomClass.html">Custom Class</a> for an overview of the Custom Class.</li>
+<li><a class="el" href="USB_Classes.html#CustomClass">Custom Class</a> for an overview of the Custom Class.</li>
 </ul>
 <p><b>Software Structure</b> <br  />
  The application starts the USB Host by calling <a class="el" href="group__usbh__coreFunctions__api.html#ga4420c0add78ae79e8e7ce035227ef4c5">USBH_Initialize</a>. The USB Host Core will wait until an USB Custom Class device is attached to the system. As soon as this happens the Core will configure and initialize the device and it will be ready to be used by the application.</p>
@@ -165,7 +165,7 @@ Content</h2></td></tr>
 <area href="group__usbh__coreFunctions__api.html#gaf98f4e13ff57a8bf1c49cd46a8034d3f" shape="rect" coords="50,467,151,480" alt=""/>
 </map>
 </div>
-<h2><a class="anchor" id="autotoc_md104"></a>
+<h2><a class="anchor" id="autotoc_md107"></a>
 Implementation</h2>
 <p>To <a class="el" href="USB_Host.html#Create_a_USB_Host_Application">create an USB Host</a> with support for the Custom class:</p><ul>
 <li>Select <b>USB:Host:Custom Class</b> in the <a class="el" href="USB_Device.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>

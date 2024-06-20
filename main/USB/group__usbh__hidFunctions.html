@@ -147,8 +147,8 @@ Content</h2></td></tr>
 <p>USB Host functions to support Human Interface Device (HID) USB Devices. </p>
 <p>The HID class in the USB Component is used for attaching input devices to your system.</p>
 <p>Refer to:</p><ul>
-<li><a class="el" href="HID.html">HID: Human Interface Device Class</a> for an overview of the HID class.</li>
-<li><a class="el" href="host_hid_tutorial.html">USB Host Keyboard</a> for an example project that uses a HID-compliant keyboard as an input.</li>
+<li><a class="el" href="USB_Classes.html#HID">HID: Human Interface Device Class</a> for an overview of the HID class.</li>
+<li><a class="el" href="USB_Host.html#host_hid_tutorial">USB Host Keyboard</a> for an example project that uses a HID-compliant keyboard as an input.</li>
 </ul>
 <p><b>Software Structure</b> <br  />
  The application starts the USB Host by calling <a class="el" href="group__usbh__coreFunctions__api.html#ga4420c0add78ae79e8e7ce035227ef4c5">USBH_Initialize</a>. The USB Host Core will wait until an USB HID device is attached to the system. As soon as this happens it will enumerate the device and it will be ready to be used by the application. The handling of the HID class events is implemented in USBH_HIDn_Thread.</p>
@@ -161,7 +161,7 @@ Content</h2></td></tr>
 <area href="group__usbh__coreFunctions__api.html#gaf98f4e13ff57a8bf1c49cd46a8034d3f" shape="rect" coords="25,384,126,397" alt=""/>
 </map>
 </div>
-<h2><a class="anchor" id="autotoc_md105"></a>
+<h2><a class="anchor" id="autotoc_md108"></a>
 Implementation</h2>
 <p>To <a class="el" href="USB_Host.html#Create_a_USB_Host_Application">create an USB Host</a> with support for the HID class:</p><ul>
 <li>Select <b>USB:Host:HID</b> in the <a class="el" href="USB_Device.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>

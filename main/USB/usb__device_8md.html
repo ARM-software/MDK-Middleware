@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>USB Component: CDC: Communication Device Class</title>
+<title>USB Component: usb_device.md File Reference</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('CDC.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('usb__device_8md.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -124,76 +124,16 @@ $(document).ready(function(){initNavTree('CDC.html',''); initResizable(); });
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">CDC: Communication Device Class </div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">usb_device.md File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The <b>Communication Device Class (CDC)</b> supports a wide range of devices that can perform telecommunications and networking functions. Examples for communications equipment are:</p><ul>
-<li><em>Telecommunications</em> devices, such as analog phones and modems, ISDN terminal adapters, digital phones, as well as COM-port devices</li>
-<li><em>Networking</em> devices, such as ADSL and cable modems, as well as Ethernet adapters and hubs</li>
-</ul>
-<p>A detailed description about CDC is provided by the <a href="https://www.usb.org/documents?search=&amp;category%5B%5D=49&amp;type%5B%5D=55&amp;items_per_page=50" class="el">USB Implementers Forum (USB-IF)</a>.</p>
-<h2><a class="anchor" id="autotoc_md77"></a>
-CDC Class Features</h2>
-<p>A communications device has three basic tasks:</p><ul>
-<li>Device management (controlling an configuring a specific device and notifying the USB Host of certain events)</li>
-<li>Call management (establishing and terminating telephone calls or other connections)</li>
-<li>Data transmission (sending and receiving application data)</li>
-</ul>
-<p>The CDC implementation in the USB Component features:</p><ul>
-<li>Emulation of a Virtual COM-port using the <a class="el" href="group__usbd__cdcFunctions__acm.html">ACM (Abstract Control Model)</a> subclass of CDC.</li>
-<li>Emulation of network connectivity using the <a href="https://en.wikipedia.org/wiki/RNDIS">RDNIS</a> protocol using the <a class="el" href="group__usbd__cdcFunctions__acm.html">ACM (Abstract Control Model)</a> subclass of CDC. This enables <a class="el" href="dev_cdc_acm_rndis.html">network connections over USB between a Windows host PC and an embedded device</a>, as well as <a class="el" href="dev_cdc_acm_rndis_bridge.html">USB Device RNDIS to Ethernet Bridge</a> applications.</li>
-<li>Emulation of an Ethernet adapter using the <a class="el" href="group__usbd__cdcFunctions__ncm.html">NCM (Network Control Model)</a> subclass of CDC (only available for <a class="el" href="USB_Device.html">USB Device</a>). Using CDC (NCM), you can create <a class="el" href="dev_cdc_ncm.html">Ethernet-over-USB (for Linux hosts)</a> applications on Linux-based host systems.</li>
-</ul>
-<dl class="section note"><dt>Note</dt><dd>The following endpoint configurations are supported:<ul>
-<li>One interrupt IN endpoint for notifications to the USB Host</li>
-<li>One bulk IN and one bulk OUT endpoint for data transfer</li>
-</ul>
-</dd></dl>
-<h2><a class="anchor" id="autotoc_md78"></a>
-Control Transfers</h2>
-<p>The documents available at <a href="https://www.usb.org/documents?search=&amp;category%5B%5D=49&amp;type%5B%5D=55&amp;items_per_page=50" class="el" target="_blank">Communications Device Class</a> describe the nine available request types for the Abstract Control Model (ACM). All requests specified for the Network Control Model (NCM) by the documents in ECM120.pdf and NCM10.pdf are supported. are not supported.</p>
-<h2><a class="anchor" id="autotoc_md79"></a>
-USB Descriptors</h2>
-<p>The following descriptors are required in an USB CDC ACM Device:</p><ul>
-<li>Standard Device Descriptor</li>
-<li>Standard Configuration Descriptor</li>
-<li>Interface Association Descriptor</li>
-<li>CDC Header Functional Descriptor</li>
-<li>CDC Union Functional Descriptor</li>
-<li>Call Management Functional Descriptor</li>
-<li>Abstract Control Management Functional Descriptor</li>
-<li>Standard Interface Descriptor for the CDC Class communication interface</li>
-<li>Standard Endpoint Descriptor for Interrupt IN endpoint</li>
-<li>Standard Interface Descriptor for the CDC Class data interface</li>
-<li>Standard Endpoint Descriptors for Bulk IN and Bulk OUT endpoints</li>
-</ul>
-<p>The following descriptors are required in an USB CDC NCM Device:</p><ul>
-<li>Standard Device Descriptor</li>
-<li>Standard Configuration Descriptor</li>
-<li>Interface Association Descriptor</li>
-<li>CDC Header Functional Descriptor</li>
-<li>CDC Union Functional Descriptor</li>
-<li>CDC Ethernet Networking Functional Descriptor</li>
-<li>NCM Functional Descriptor</li>
-<li>Standard Interface Descriptor for the CDC Class communication interface</li>
-<li>Standard Endpoint Descriptor for Interrupt IN endpoint</li>
-<li>Standard Interface Descriptor for the CDC Class data interface</li>
-<li>Standard Endpoint Descriptors for Bulk IN and Bulk OUT endpoints</li>
-</ul>
-<p>The necessary descriptors are automatically generated by the USB Middleware Component. The page <a class="el" href="USB_Descriptors.html">USB Descriptors</a> provides more information on the topic.</p>
-<dl class="section note"><dt>Note</dt><dd>Further information on how to use CDC is given in the Reference section:<ul>
-<li><a class="el" href="group__usbd__cdcFunctions__acm.html">USB Device CDC (ACM) Functions</a></li>
-<li><a class="el" href="group__usbd__cdcFunctions__ncm.html">USB Device CDC (NCM) Functions</a></li>
-<li><a class="el" href="group__usbh__cdcacmFunctions.html">USB Host CDC Functions</a> </li>
-</ul>
-</dd></dl>
-</div></div><!-- contents -->
-</div><!-- PageDoc -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="usb__device_8md.html">usb_device.md</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--

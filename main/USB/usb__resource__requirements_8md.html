@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>USB Component: Device Qualifier Descriptor</title>
+<title>USB Component: usb_resource_requirements.md File Reference</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('USB_Device_Qualifier_Descriptor.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('usb__resource__requirements_8md.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -124,57 +124,16 @@ $(document).ready(function(){initNavTree('USB_Device_Qualifier_Descriptor.html',
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">Device Qualifier Descriptor </div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">usb_resource_requirements.md File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>A high-speed capable device that has different device information for full-speed and high-speed must have a <b>Device Qualifier Descriptor</b> (USB_DEVICE_QUALIFIER_DESCRIPTOR). For example, if the device is currently operating at full-speed, the <b>Device Qualifier</b> returns information about how it would operate at high-speed and vice-versa.</p>
-<p>The fields for the vendor, product, device, manufacturer, and serial number are not included. This information is constant for a device regardless of the supported speeds.</p>
-<p>If a full-speed only device receives a <em>GetDescriptor()</em> request for a <em>device_qualifier</em>, it must respond with a request error. Then, the host must not make a request for an <em>other_speed_configuration descriptor</em>.</p>
-<table class="cmtable" summary="Device Qualifier Descriptor">
-<tr>
-<th>Offset </th><th>Field </th><th>Type </th><th>Size </th><th>Value </th><th>Description  </th></tr>
-<tr>
-<td>0 </td><td>bLength </td><td>uint8_t </td><td>1 </td><td>Number </td><td>Size of this descriptor in bytes.  </td></tr>
-<tr>
-<td>1 </td><td>bDescriptorType </td><td>uint8_t </td><td>1 </td><td>Constant </td><td>Device Qualifier Descriptor Type = 6.  </td></tr>
-<tr>
-<td>2 </td><td>bcdUSB </td><td>uint16_t </td><td>2 </td><td>BCD </td><td>USB Specification Release Number in Binary-Coded Decimal (i.e., 2.10 is 210h). This field identifies the release of the USB Specification with which the device and its descriptors are compliant. At least V2.00 is required to use this descriptor.  </td></tr>
-<tr>
-<td>4 </td><td>bDeviceClass </td><td>uint8_t </td><td>1 </td><td>Class </td><td><p class="starttd">Class code (assigned by the USB-IF).</p>
-<p class="intertd">If this field is</p><ul>
-<li>reset to zero, each interface within a configuration specifies its own class information and the various interfaces operate independently.</li>
-<li>set to a value between 1 and FEh, the device supports different class specifications on different interfaces and the interfaces may not operate independently. This value identifies the class definition used for the aggregate interfaces.</li>
-</ul>
-<p class="endtd">If this field is set to FFh, the device class is vendor specific.  </p>
-</td></tr>
-<tr>
-<td>5 </td><td>bDeviceSubClass </td><td>uint8_t </td><td>1 </td><td>SubClass </td><td><p class="starttd">Subclass code (assigned by the USB-IF).</p>
-<p class="endtd">These codes are qualified by the value of the <em>bDeviceClass</em> field. If <em>bDeviceClass</em> is</p><ul>
-<li>reset to zero, this field must also be reset to zero.</li>
-<li>not set to FFh, all values are reserved for assignment by the USB-IF.  </li>
-</ul>
-</td></tr>
-<tr>
-<td>6 </td><td>bDeviceProtocol </td><td>uint8_t </td><td>1 </td><td>Protocol </td><td><p class="starttd">Protocol code (assigned by the USB-IF). These codes are qualified by the values of the <em>bDeviceClass</em> and <em>bDeviceSubClass</em> fields. If a device supports class-specific protocols on a device basis as opposed to an interface basis, this code identifies the protocols that the device uses as defined by the specification of the device class.</p>
-<p class="endtd">If this field is</p><ul>
-<li>reset to zero, the device does not use class-specific protocols on a device basis. However, it may use class-specific protocols on an interface basis.</li>
-<li>set to FFh, the device uses a vendor specific protocol on a device basis.  </li>
-</ul>
-</td></tr>
-<tr>
-<td>7 </td><td>bMaxPacketSize0 </td><td>uint8_t </td><td>1 </td><td>Number </td><td>Maximum packet size for other speed.  </td></tr>
-<tr>
-<td>8 </td><td>bNumConfigurations </td><td>uint8_t </td><td>1 </td><td>Number </td><td>Number of other-speed configurations.  </td></tr>
-<tr>
-<td>9 </td><td>bReserved </td><td>uint8_t </td><td>1 </td><td>Zero </td><td>Reserved for future use, must be zero.  </td></tr>
-</table>
-</div></div><!-- contents -->
-</div><!-- PageDoc -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="usb__resource__requirements_8md.html">usb_resource_requirements.md</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--

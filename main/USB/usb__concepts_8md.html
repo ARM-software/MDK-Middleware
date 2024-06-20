@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>USB Component: Configuration Descriptor</title>
+<title>USB Component: usb_concepts.md File Reference</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('USB_Configuration_Descriptor.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('usb__concepts_8md.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -124,44 +124,16 @@ $(document).ready(function(){initNavTree('USB_Configuration_Descriptor.html','')
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">Configuration Descriptor </div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">usb_concepts.md File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The <b>Configuration Descriptor</b> (<a class="el" href="group__usbh__data__types.html#structUSB__CONFIGURATION__DESCRIPTOR" title="USB Configuration Descriptor structure.">USB_CONFIGURATION_DESCRIPTOR</a>) contains information about the device power requirements and the number of interfaces it can support. A device can have multiple configurations. The host can select the configuration that best matches the requirements of the application software.</p>
-<table class="cmtable" summary="Configuration Descriptor">
-<tr>
-<th>Offset </th><th>Field </th><th>Type </th><th>Size </th><th>Value </th><th>Description  </th></tr>
-<tr>
-<td>0 </td><td>bLength </td><td>uint8_t </td><td>1 </td><td>Number </td><td>Size of this descriptor in bytes.  </td></tr>
-<tr>
-<td>1 </td><td>bDescriptorType </td><td>uint8_t </td><td>1 </td><td>Constant </td><td>Configuration Descriptor Type = 2.  </td></tr>
-<tr>
-<td>2 </td><td>wTotalLength </td><td>uint16_t </td><td>2 </td><td>Number </td><td>Total length of data returned for this configuration. Includes the combined length of all descriptors (configuration, interface, endpoint, and class or vendor specific) returned for this configuration.  </td></tr>
-<tr>
-<td>4 </td><td>bNumInterfaces </td><td>uint8_t </td><td>1 </td><td>Number </td><td>Number of interfaces supported by this configuration.  </td></tr>
-<tr>
-<td>5 </td><td>bConfigurationValue </td><td>uint8_t </td><td>1 </td><td>Number </td><td>Value to select this configuration with <em>SetConfiguration()</em>.  </td></tr>
-<tr>
-<td>6 </td><td>iConfiguration </td><td>uint8_t </td><td>1 </td><td>Index </td><td>Index of string descriptor describing this configuration.  </td></tr>
-<tr>
-<td>7 </td><td>bmAttributes </td><td>uint8_t </td><td>1 </td><td>Bitmap </td><td><p class="starttd">Configuration characteristics</p><ul>
-<li>D7: Reserved (must be set to <b>one</b> for historical reasons)</li>
-<li>D6: Self-powered</li>
-<li>D5: Remote Wakeup</li>
-<li>D4...0: Reserved (reset to zero)</li>
-</ul>
-<p class="endtd">A device configuration that uses power from the bus and a local source reports a non-zero value in <em>bMaxPower</em> to indicate the amount of bus power required and sets D6. The actual power source at runtime can be determined using the GetStatus(DEVICE) request. If a device configuration supports remote wakeup, D5 is set to 1.  </p>
-</td></tr>
-<tr>
-<td>8 </td><td>bMaxPower </td><td>uint8_t </td><td>1 </td><td>mA </td><td>Maximum power consumption of the USB device from the bus in this specific configuration when the device is fully operational. Expressed in 2mA units (i.e., 50 = 100mA).  </td></tr>
-</table>
-</div></div><!-- contents -->
-</div><!-- PageDoc -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="usb__concepts_8md.html">usb_concepts.md</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--

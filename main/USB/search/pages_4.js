@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['function_20overview_0',['Function Overview',['../usb_function_reference.html',1,'']]]
+  ['supported_20usb_20classes_0',['Supported USB Classes',['../USB_Classes.html',1,'']]]
 ];

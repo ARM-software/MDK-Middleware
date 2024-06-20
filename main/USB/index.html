@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>USB Component: USB Component</title>
+<title>USB Component: Overview</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -125,34 +125,33 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">USB Component </div></div>
+  <div class="headertitle"><div class="title">Overview </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="usb_mw_comp"></a> </p>
-<h1><a class="anchor" id="Overview"></a>
-Overview</h1>
-<p>The <b>USB Component</b> enables you to create <b>USB Device</b> and <b>USB Host</b> applications and is part of  <script>link_loc('MW-General');</script>. The USB Protocol is handled by the USB Component, so that developers can focus on their application needs.</p>
+<div class="textblock"><p><a class="anchor" id="mainpage"></a> The <b>USB Component</b> enables you to create <b>USB Device</b> and <b>USB Host</b> applications and is part of  <script>link_loc('MW-General');</script>. The USB Protocol is handled by the USB Component, so that developers can focus on their application needs.</p>
 <div class="image">
 <object type="image/svg+xml" data="usbmiddleware.svg" style="pointer-events: none;"></object>
 <div class="caption">
 USB Component Structure</div></div>
-<p>The <b>USB Component</b> is structured as follows:</p><ul>
+    <p>The <b>USB Component</b> is structured as follows:</p>
+<ul>
 <li><a class="el" href="USB_Device.html">USB Device</a> implements an USB Device peripheral that can be connected to an USB Host.</li>
 <li><a class="el" href="USB_Host.html">USB Host</a> is used to communicate to other USB Device peripherals over the USB bus.</li>
 <li>The following USB Classes are supported:<ul>
-<li><a class="el" href="HID.html">Human Interface Device (HID)</a></li>
-<li><a class="el" href="MSC.html">Mass Storage Class (MSC)</a></li>
-<li><a class="el" href="CDC.html">Communication Device Class (CDC)</a></li>
-<li><a class="el" href="ADC.html">Audio Device Class (ADC)</a> (USB Device only)</li>
-<li><a class="el" href="CustomClass.html">Custom Class</a> (for implementing new or unsupported USB Classes)</li>
+<li><a class="el" href="USB_Classes.html#HID">Human Interface Device (HID)</a></li>
+<li><a class="el" href="USB_Classes.html#MSC">Mass Storage Class (MSC)</a></li>
+<li><a class="el" href="USB_Classes.html#CDC">Communication Device Class (CDC)</a></li>
+<li><a class="el" href="USB_Classes.html#ADC">Audio Device Class (ADC)</a> (USB Device only)</li>
+<li><a class="el" href="USB_Classes.html#CustomClass">Custom Class</a> (for implementing new or unsupported USB Classes)</li>
 <li><b>Composite USB Devices</b> supporting multiple device classes can be implemented.</li>
 </ul>
 </li>
 <li> <script>link_ext('USB-API');</script> for USB Device and USB Host provide the interface to the microcontroller peripherals.</li>
 </ul>
-<h2><a class="anchor" id="usb_doc_structure"></a>
-Documentation Structure</h2>
-<p>This user's guide contains the following chapters:</p><ul>
+<h1><a class="anchor" id="usb_doc_structure"></a>
+Documentation Structure</h1>
+<p>This user's guide contains the following chapters:</p>
+<ul>
 <li><a class="el" href="USB_Device.html">USB Device</a> explains how to implement a <b>USB Device</b> with a microcontroller.</li>
 <li><a class="el" href="USB_Host.html">USB Host</a> explains how to implement a <b>USB Host</b> with a microcontroller.</li>
 <li><a class="el" href="USB_Concepts.html">USB Concepts</a> contains general information about the USB.</li>
@@ -162,7 +161,7 @@ Documentation Structure</h2>
 <li><a class="el" href="usb_migration.html">Migration Guide</a> contains information how to migrate projects to latest version of USB Component (v8).</li>
 <li><a href="./modules.html"><b>API Reference</b></a> shows the directory and file organization and contains the detailed API description.</li>
 </ul>
-<p>The <a href="https://www.usb.org/developers" class="el" target="_blank">USB-IF Developers Area</a> contains the complete <b>USB 2.0 Specification</b> and additional information that is referenced in this user's guide. </p>
+<p>The <a href="https://www.usb.org/developers">USB-IF Developers Area</a> contains the complete <b>USB 2.0 Specification</b> and additional information that is referenced in this user's guide. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->

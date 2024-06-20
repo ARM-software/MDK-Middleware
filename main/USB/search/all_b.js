@@ -1,7 +1,10 @@
 var searchData=
 [
-  ['speed_0',['speed',['../group__usbd__data__types.html#a220859a8b5da0232739a11cbe7f79fc5',1,'USBD_STATE']]],
-  ['status_20and_20error_20codes_1',['Status and Error Codes',['../group__status__error__codes__usb.html',1,'']]],
-  ['string_20descriptors_2',['String Descriptors',['../USB_String_Descriptor.html',1,'USB_Descriptors']]],
-  ['supported_20usb_20classes_3',['Supported USB Classes',['../USB_Classes.html',1,'']]]
+  ['reference_5ffiles_0',['Reference_Files',['../md_src_Reference_Files.html',1,'']]],
+  ['reference_5ffiles_2emd_1',['Reference_Files.md',['../Reference__Files_8md.html',1,'']]],
+  ['reserved_2',['reserved',['../group__usbh__data__types.html#acb7bc06bed6f6408d719334fc41698c7',1,'usbHID_MouseState']]],
+  ['resource_20requirements_3',['Resource Requirements',['../usb_resource_requirements.html',1,'']]],
+  ['revision_20history_4',['Revision History',['../usb_revhist.html',1,'']]],
+  ['rl_5fusb_2eh_5',['rl_usb.h',['../rl__usb_8h.html',1,'']]],
+  ['rl_5fusb_2etxt_6',['rl_usb.txt',['../rl__usb_8txt.html',1,'']]]
 ];

@@ -141,29 +141,29 @@ Project Migration</h1>
 <img src="mig_project_open.png" alt=""/>
 <div class="caption">
 Error message opening a legacy project</div></div>
-<p>This message is shown because the previous variants <b>IPv4 Release</b>/**IPv4 Debug** have been removed. Open the <b>Manage Run-Time Environment</b> window. It will show the same error message in a different way:</p>
+    <p>This message is shown because the previous variants <b>IPv4 Release</b>/**IPv4 Debug** have been removed. Open the <b>Manage Run-Time Environment</b> window. It will show the same error message in a different way:</p>
 <div class="image">
 <img src="mig_rte_open.png" alt=""/>
 <div class="caption">
 Error message in the Run-Time Environment</div></div>
-<p>Select a New Component variant <b>MDK</b> to get rid of this validation message:</p>
+    <p>Select a New Component variant <b>MDK</b> to get rid of this validation message:</p>
 <div class="image">
 <img src="mig_rte_choose_mdk.png" alt=""/>
 <div class="caption">
 Manually resolve the error message</div></div>
-<h2><a class="anchor" id="nw_diffs_update_configs"></a>
+    <h2><a class="anchor" id="nw_diffs_update_configs"></a>
 Update Configuration Files</h2>
 <p>After pressing OK, the Project window will look like this:</p>
 <div class="image">
 <img src="mig_project_required_changes_new_items.png" alt=""/>
 <div class="caption">
 Updated Project window</div></div>
-<p>Right-clicking each file will give you the update options:</p>
+    <p>Right-clicking each file will give you the update options:</p>
 <div class="image">
 <img src="mig_config_update_merge.png" alt=""/>
 <div class="caption">
 Update options for configuration files</div></div>
-<p><b>Update Config File</b> will simply copy the new configuration file into your project containing the default settings. The old file with your project's settings will be renamed to Net_Config.h.0000 for example. If you want to manually merge the two files, you can open this backup file (located in the folder RTE\Network) and compare it with the new file line by line.</p>
+    <p><b>Update Config File</b> will simply copy the new configuration file into your project containing the default settings. The old file with your project's settings will be renamed to Net_Config.h.0000 for example. If you want to manually merge the two files, you can open this backup file (located in the folder RTE\Network) and compare it with the new file line by line.</p>
 <p>A better way is to use the option <b>Update Config File and Launch Merge</b>. This option is available for µVision users with version 5.15 and above. Refer to the µVision help  <script>link_ext('uv4_dg_mergetoolmnu');</script> for details.</p>
 <p>Not all configuration files require a merge, as many of them are compatible. The section <a class="el" href="network_diffs.html#mig_nw_configuration">Network Configuration</a> describes the differences in more detail.</p>
 <h2><a class="anchor" id="nw_diffs_rtx_configuration"></a>
@@ -176,7 +176,7 @@ Build and Run the Network Project</h2>
 <img src="mig_build_ok.png" alt=""/>
 <div class="caption">
 Error-free build output</div></div>
-<h1><a class="anchor" id="mig_nw_configuration"></a>
+    <h1><a class="anchor" id="mig_nw_configuration"></a>
 Network Configuration</h1>
 <p>The following screenshots show the previous settings on the left-hand side, while the new settings can be seen on the right-hand side.</p>
 <h2><a class="anchor" id="mig_nw_configuration_net_config_c"></a>
@@ -186,7 +186,7 @@ Net_Config.c</h2>
 <img src="diff_net_config_c.png" alt=""/>
 <div class="caption">
 Old Net_Config.c vs. new Net_Config.h</div></div>
-<ul>
+    <ul>
 <li><b>Variant</b> selection added:<ul>
 <li>IPv4 only</li>
 <li>IPv4/IPv6 dual stack</li>
@@ -201,7 +201,7 @@ Net_Debug.c</h2>
 <img src="diff_net_debug_c.png" alt=""/>
 <div class="caption">
 Old Net_Debug.c vs. new Net_Debug.h</div></div>
-<ul>
+    <ul>
 <li><b>Network Debug</b> enable switch added</li>
 <li><b>Output Channel</b> selection added:<ul>
 <li>Event Recorder</li>

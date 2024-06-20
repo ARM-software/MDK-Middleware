@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>USB Component: Endpoint Descriptor</title>
+<title>USB Component: usb_migration.md File Reference</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('USB_Endpoint_Descriptor.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('usb__migration_8md.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -124,89 +124,16 @@ $(document).ready(function(){initNavTree('USB_Endpoint_Descriptor.html',''); ini
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">Endpoint Descriptor </div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">usb_migration.md File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The <b>Endpoint Descriptor</b> (USB_ENDPOINT_DESCRIPTOR) specifies the transfer type, direction, polling interval, and maximum packet size for each endpoint. Endpoint 0 (zero), the default endpoint, is always assumed to be a control endpoint and never has a descriptor.</p>
-<table class="cmtable" summary="Endpoint Descriptor">
-<tr>
-<th>Offset </th><th>Field </th><th>Type </th><th>Size </th><th>Value </th><th>Description  </th></tr>
-<tr>
-<td>0 </td><td>bLength </td><td>uint8_t </td><td>1 </td><td>Number </td><td>Size of this descriptor in bytes.  </td></tr>
-<tr>
-<td>1 </td><td>bDescriptorType </td><td>uint8_t </td><td>1 </td><td>Constant </td><td>Endpoint Descriptor Type = 5.  </td></tr>
-<tr>
-<td>2 </td><td>bEndpointAddress </td><td>uint8_t </td><td>1 </td><td>Endpoint </td><td>The address of the endpoint on the USB device described by this descriptor. The address is encoded as follows:<ul>
-<li>Bit 3...0: The endpoint number</li>
-<li>Bit 6...4: Reserved, reset to zero</li>
-<li>Bit 7: Direction, ignored for control endpoints.<ul>
-<li>0 = OUT endpoint</li>
-<li>1 = IN endpoint  </li>
-</ul>
-</li>
-</ul>
-</td></tr>
-<tr>
-<td>3 </td><td>bmAttributes </td><td>uint8_t </td><td>1 </td><td>Bitmap </td><td><p class="starttd">The endpoint attribute when configured through <em>bConfigurationValue</em>.</p><ul>
-<li>Bits 1..0: Transfer Type<ul>
-<li>00 = Control</li>
-<li>01 = Isochronous</li>
-<li>10 = Bulk</li>
-<li>11 = Interrupt</li>
-</ul>
-</li>
-</ul>
-<p class="intertd">For non-isochronous endpoints, bits 5..2 must be set to zero. For isochronous endpoints, they are defined as:</p><ul>
-<li>Bits 3..2: Synchronization Type<ul>
-<li>00 = No Synchronization</li>
-<li>01 = Asynchronous</li>
-<li>10 = Adaptive</li>
-<li>11 = Synchronous</li>
-</ul>
-</li>
-<li>Bits 5..4: Usage Type<ul>
-<li>00 = Data</li>
-<li>01 = Feedback</li>
-<li>10 = Implicit feedback</li>
-<li>11 = Reserved</li>
-</ul>
-</li>
-</ul>
-<p class="endtd">All other bits are reserved and must be reset to zero.  </p>
-</td></tr>
-<tr>
-<td>4 </td><td>wMaxPacketSize </td><td>uint16_t </td><td>2 </td><td>Number </td><td><p class="starttd">Is the maximum packet size of this endpoint. For isochronous endpoints, this value is used to reserve the time on the bus, required for the per-(micro)frame data payloads.</p>
-<ul>
-<li>Bits 10..0 = max. packet size (in bytes).</li>
-</ul>
-<p class="endtd">For high-speed isochronous and interrupt endpoints:</p><ul>
-<li>Bits 12..11 = number of additional transaction opportunities per micro-frame:<ul>
-<li>00 = None (1 transaction per micro-frame)</li>
-<li>01 = 1 additional (2 per micro-frame)</li>
-<li>10 = 2 additional (3 per micro-frame)</li>
-<li>11 = Reserved</li>
-</ul>
-</li>
-<li>Bits 15..13 are reserved and must be set to zero.  </li>
-</ul>
-</td></tr>
-<tr>
-<td>6 </td><td>bInterval </td><td>uint8_t </td><td>1 </td><td>Number </td><td><p class="starttd">Interval for polling endpoint for data transfers. Expressed in frames or micro-frames depending on the operating speed (1ms, or 125&mu;s units).</p>
-<ul>
-<li>For full-/high-speed isochronous endpoints, this value must be in the range from 1 to 16. The <em>bInterval</em> value is used as the exponent for a 2<sup>bInterval-1</sup> value; For example, a <em>bInterval</em> of 4 means a period of 8 (2<sup>4-1</sup>).</li>
-<li>For full-/low-speed interrupt endpoints, the value of this field may be from 1 to 255.</li>
-<li>For high-speed interrupt endpoints, the <em>bInterval</em> value is used as the exponent for a 2<sup>bInterval-1</sup> value; For Example, a <em>bInterval</em> of 4 means a period of 8 (2<sup>4-1</sup>). This value must be from 1 to 16.</li>
-<li>For high-speed bulk/control OUT endpoints, the <em>bInterval</em> must specify the maximum NAK rate of the endpoint. A value of 0 indicates the endpoint never NAKs. Other values indicate at most 1 NAK each <em>bInterval</em> number of microframes. This value must be in the range from 0 to 255.   </li>
-</ul>
-</td></tr>
-</table>
-</div></div><!-- contents -->
-</div><!-- PageDoc -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="usb__migration_8md.html">usb_migration.md</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--

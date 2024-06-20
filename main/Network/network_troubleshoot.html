@@ -139,18 +139,18 @@ Network library hierarchy</h1>
 <img src="nw_hierarchy.png" alt=""/>
 <div class="caption">
 Network library hierarchy</div></div>
-<h1><a class="anchor" id="trbl_bestpractice"></a>
+    <h1><a class="anchor" id="trbl_bestpractice"></a>
 Best practices</h1>
 <p>This section shows some of the best practices that are used by the developers of the network stack when troubleshooting communication issues. Following them should usually quickly help identifying the underlying problem of a non-working project.</p>
 <dl class="section note"><dt>Note</dt><dd>The following assumes that you are using <a class="el" href="network_create_app.html#netEvrSupport">Event Recorder</a> based debugging.</dd></dl>
 <h2><a class="anchor" id="trbl_verify_eth"></a>
 Check the Ethernet interface</h2>
-<p><a href="">Component Viewer</a> shows you static information about the operation of a software component. In the µVision debugger, go to <b>Debug -&gt; View -&gt; Watch windows -&gt; Network</b> to see the status information of the network library:</p>
+<p> <script>link_ext('CMSIS-View');</script> shows you static information about the operation of a software component. In the µVision debugger, go to <b>Debug -&gt; View -&gt; Watch windows -&gt; Network</b> to see the status information of the network library:</p>
 <div class="image">
 <img src="trbl_cv_nw.png" alt=""/>
 <div class="caption">
 Component Viewer for the Network library</div></div>
-<p>This indicates the following:</p>
+    <p>This indicates the following:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Property   </th><th class="markdownTableHeadNone">Description    </th></tr>
@@ -172,8 +172,9 @@ Verify Socket Communication</h2>
 </div><!-- fragment --><p>When the BSD socket is connected, the state of the underlying TCP socket is shown in the viewer as well:</p>
 <div class="image">
 <img src="trbl_cv_nw_tcp.png" alt=""/>
-</div>
-<p>This shows the remote IP address and port number, as well as the local port number, the value for the timeout timer and the active TCP socket options. This is valuable information in addition to the events shown in Event Recorder.</p>
+<div class="caption">
+TCP sockets in oCOmponent Viewer</div></div>
+    <p>This shows the remote IP address and port number, as well as the local port number, the value for the timeout timer and the active TCP socket options. This is valuable information in addition to the events shown in Event Recorder.</p>
 <p>The following example shows the BSD event log in case a target cannot be reached:</p>
 <div class="fragment"><div class="line">3   7.41687549   NetBSD  SocketAllocated      sock=1  type=<a class="code hl_define" href="rl__net_8h.html#a249394484f9410a2e3f8eba24657feb9" title="BSD Socket Type.">SOCK_STREAM</a></div>
 <div class="line">4   7.41688068   NetBSD  ConnectSocket        sock=1</div>

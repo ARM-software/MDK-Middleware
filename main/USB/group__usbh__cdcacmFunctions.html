@@ -147,7 +147,7 @@ Content</h2></td></tr>
 <p>USB Host functions to support Communication Device Class (CDC) Abstract Control Model (ACM) USB Devices. </p>
 <p>The CDC ACM class in the USB Host Component is used for attaching communication devices to your system.</p>
 <p>Refer to:</p><ul>
-<li><a class="el" href="CDC.html">CDC: Communication Device Class</a> for an overview of the CDC class.</li>
+<li><a class="el" href="USB_Classes.html#CDC">CDC: Communication Device Class</a> for an overview of the CDC class.</li>
 </ul>
 <p><b>Software Structure</b> <br  />
  The application starts the USB Host by calling <a class="el" href="group__usbh__coreFunctions__api.html#ga4420c0add78ae79e8e7ce035227ef4c5">USBH_Initialize</a>. The USB Host Core will wait until an USB CDC ACM Device is attached to the system. As soon as this happens it will enumerate the device and it will be ready to be used by the application. The handling of the CDC class events is implemented in USBH_CDCn_IntIn_Thread.</p>
@@ -161,7 +161,7 @@ Content</h2></td></tr>
 <area href="group__usbh__coreFunctions__api.html#gaf98f4e13ff57a8bf1c49cd46a8034d3f" shape="rect" coords="25,448,126,461" alt=""/>
 </map>
 </div>
-<h2><a class="anchor" id="autotoc_md103"></a>
+<h2><a class="anchor" id="autotoc_md106"></a>
 Implementation</h2>
 <p>To <a class="el" href="USB_Host.html#Create_a_USB_Host_Application">create an USB Host</a> with support for the CDC class:</p><ul>
 <li>Select <b>USB:Host:CDC</b> in the <a class="el" href="USB_Device.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>

@@ -134,10 +134,10 @@ $(document).ready(function(){initNavTree('group__usbd__mscFunctions__conf.html',
 <p>Configuration of the USB Device MSC Class. </p>
 <p>This configuration file defines:</p><ul>
 <li>The assignment of the MSC class to the USB Device instance.</li>
-<li><a class="el" href="USB_Endpoints.html">USB Endpoint</a> assignments for the MSC class with parameters for Full/Low-speed and High-speed communication.</li>
+<li><a class="el" href="USB_Concepts.html#USB_Endpoints">USB Endpoint</a> assignments for the MSC class with parameters for Full/Low-speed and High-speed communication.</li>
 <li>Class Settings for the Interface Descriptor.</li>
 </ul>
-<p>These settings are used to create the <a class="el" href="USB_Interface_Descriptor.html">Interface Descriptor</a> and <a class="el" href="USB_Endpoint_Descriptor.html">Endpoint Descriptor</a> of the related USB Device Class. It is important that the settings match the application specific behavior in the related C source file USBD_User_MSC_<em>n</em>.c.</p>
+<p>These settings are used to create the <a class="el" href="USB_Concepts.html#USB_Interface_Descriptor">Interface Descriptor</a> and <a class="el" href="USB_Concepts.html#USB_Endpoint_Descriptor">Endpoint Descriptor</a> of the related USB Device Class. It is important that the settings match the application specific behavior in the related C source file USBD_User_MSC_<em>n</em>.c.</p>
 <div class="image">
 <img src="usbd_config_msc_h.png" alt=""/>
 <div class="caption">
@@ -155,7 +155,7 @@ MSC Class Configuration File</div></div>
 </ul>
 </li>
 <li><b>Mass Storage Class Settings</b><ul>
-<li><b>Mass Storage Class Interface String</b> is used to create <a class="el" href="USB_Descriptors.html">USB Descriptors</a>.</li>
+<li><b>Mass Storage Class Interface String</b> is used to create <a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a>.</li>
 <li><b>Number of Logical Units (LUN)</b> specifies the number of logical units in a USB device (up to four).</li>
 <li><b>Logical Unit n Inquiry Data</b> is returned on Get Inquiry request for Logical Unit n from the USB Host.<ul>
 <li><b>Vendor Identification</b> specifies the vendor of the MSC device.</li>
@@ -163,7 +163,7 @@ MSC Class Configuration File</div></div>
 <li><b>Product Revision Level</b> specifies the product revision of the MSC device.</li>
 </ul>
 </li>
-<li><b>Maximum Mass Storage Device Bulk Buffer Size</b> is used to create <a class="el" href="USB_Descriptors.html">USB Descriptors</a>.</li>
+<li><b>Maximum Mass Storage Device Bulk Buffer Size</b> is used to create <a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a>.</li>
 </ul>
 </li>
 <li><b>OS Resources Settings</b><ul>

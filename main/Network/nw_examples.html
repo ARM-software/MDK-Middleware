@@ -146,8 +146,9 @@ HTTP Server</h1>
 <p>The HTTP Server example uses a fixed set of web pages stored in ROM, but is capable of exchanging information with the underlying hardware by using the CGI interface. The following picture shows an exemplary connection of the development board and a Computer.</p>
 <div class="image">
 <img src="cws_setup.png" alt=""/>
-</div>
-<p>The Abstract.txt file contained in the Documentation group of the Project window gives you more information on the general setup and the available I/O of the development board.</p>
+<div class="caption">
+HTTP server hardware setup</div></div>
+    <p>The Abstract.txt file contained in the Documentation group of the Project window gives you more information on the general setup and the available I/O of the development board.</p>
 <h2><a class="anchor" id="autotoc_md9"></a>
 Build the "HTTP Server" Project</h2>
 <p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
@@ -155,7 +156,7 @@ Build the "HTTP Server" Project</h2>
 <img src="cws_proj_structure.png" alt=""/>
 <div class="caption">
 Compact Web Server Project Structure</div></div>
-<h3><a class="anchor" id="autotoc_md10"></a>
+    <h3><a class="anchor" id="autotoc_md10"></a>
 Source Files</h3>
 <ul>
 <li><code>HTTP_Server.c</code> contains the main C function that initializes the board hardware and the Network Component.</li>
@@ -187,15 +188,17 @@ PC Software</h3>
 <p>The web server can be tested on any PC using any browser available. Simply, type in the <b>Local Host Name</b> that is defined in the <code>Net_Config.h</code> file. The default name is <b>my_host</b>. If you have a DCHP server in your network, you will be automatically connected. You need to log in. As for all network examples, use "admin" (without the quotes) for the user and no password (you can change the defaults in the <code>Net_Config_HTTP_Server.h</code> file). The following (or a similar) page will come up in your browser:</p>
 <div class="image">
 <img src="cws_frontpage.png" alt=""/>
-</div>
-<p>If you get an error message, please verify that all network, IP and other settings are correct.</p>
+<div class="caption">
+HTTP server web page</div></div>
+    <p>If you get an error message, please verify that all network, IP and other settings are correct.</p>
 <h1><a class="anchor" id="Compact_Secure_Web_Server_Example"></a>
 HTTPS Server</h1>
 <p>The HTTPS Server example uses a fixed set of web pages stored in ROM, but is capable of exchanging information with the underlying hardware by using the CGI interface. The HTTPS server uses the ARM mbed TLS software component to enable <a class="el" href="secure_communication.html">Secure Communication</a>. The following picture shows an exemplary connection of the development board and a Computer.</p>
 <div class="image">
 <img src="cws_setup.png" alt=""/>
-</div>
-<p>The Abstract.txt file contained in the Documentation group of the Project window gives you more information on the general setup and the available I/O of the development board.</p>
+<div class="caption">
+HTTPS server hardware setup</div></div>
+    <p>The Abstract.txt file contained in the Documentation group of the Project window gives you more information on the general setup and the available I/O of the development board.</p>
 <h2><a class="anchor" id="autotoc_md14"></a>
 Build the "HTTPs Server" Project</h2>
 <p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
@@ -203,7 +206,7 @@ Build the "HTTPs Server" Project</h2>
 <img src="cws_proj_structure.png" alt=""/>
 <div class="caption">
 Compact Secure Web Server Project Structure</div></div>
-<h3><a class="anchor" id="autotoc_md15"></a>
+    <h3><a class="anchor" id="autotoc_md15"></a>
 Source Files</h3>
 <ul>
 <li><code>HTTP_Server.c</code> contains the main C function that initializes the board hardware and the Network Component.</li>
@@ -234,15 +237,17 @@ PC Software</h3>
 <p>The web server can be tested on any PC using any browser available. Simply, type in the <b>Local Host Name</b> that is defined in the <code>Net_Config.h</code> file. The default name is <b>my_host</b>. If you have a DCHP server in your network, you will be automatically connected. You need to log in. As for all network examples, use "admin" (without the quotes) for the user and no password (you can change the defaults in the <code>Net_Config_HTTP_Server.h</code> file). The following (or a similar) page will come up in your browser:</p>
 <div class="image">
 <img src="cws_frontpage.png" alt=""/>
-</div>
-<p>If you get an error message, please verify that all network, IP and other settings are correct.</p>
+<div class="caption">
+HTTPS server web page</div></div>
+    <p>If you get an error message, please verify that all network, IP and other settings are correct.</p>
 <h1><a class="anchor" id="HTTP_Upload_Example"></a>
 HTTP Upload</h1>
 <p>The HTTP Upload example gives a web based interface to the SD card that is attached to a development board. The user is able to list the contents of the memory card and to upload files to it. The following picture shows an exemplary connection of the development board and a Computer.</p>
 <div class="image">
 <img src="http_upload_setup.png" alt=""/>
-</div>
-<p>The Abstract.txt file contained in the Documentation group of the Project window gives you more information on the general setup and the available I/O of the development board.</p>
+<div class="caption">
+HTTP upload example hardware setup</div></div>
+    <p>The Abstract.txt file contained in the Documentation group of the Project window gives you more information on the general setup and the available I/O of the development board.</p>
 <h2><a class="anchor" id="autotoc_md19"></a>
 Build the "HTTP Upload" Project</h2>
 <p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
@@ -250,7 +255,7 @@ Build the "HTTP Upload" Project</h2>
 <img src="http_upload_proj_structure.png" alt=""/>
 <div class="caption">
 HTTP Upload Project Structure</div></div>
-<h3><a class="anchor" id="autotoc_md20"></a>
+    <h3><a class="anchor" id="autotoc_md20"></a>
 Source Files</h3>
 <ul>
 <li><code>HTTP_Upload.c</code> contains the main C function that initializes the board hardware and the Network Component.</li>
@@ -278,22 +283,24 @@ PC Software</h3>
 <p>The web server can be tested on any PC using any browser available. Simply, type in the <b>Local Host Name</b> that is defined in the <code>Net_Config.h</code> file. If you have a DCHP server in your network, you will be automatically connected. You need to log in. As for all network examples, use "admin" (without the quotes) for the user and no password (you can change the defaults in the <code>Net_Config_HTTP_Server.h</code> file). The following (or a similar) page will come up in your browser:</p>
 <div class="image">
 <img src="http_upload_frontpage.png" alt=""/>
-</div>
-<p>If you get an error message, please verify that all network, IP and other settings are correct.</p>
+<div class="caption">
+HTTP upload web page</div></div>
+    <p>If you get an error message, please verify that all network, IP and other settings are correct.</p>
 <h1><a class="anchor" id="FTP_Server_Example"></a>
 FTP Server</h1>
 <p>This tutorial creates a FTP server that allows you to manage files from any machine using a FTP client. The following picture shows an exemplary connection of the development board and a Computer.</p>
 <div class="image">
 <img src="ftp_setup.png" alt=""/>
-</div>
-<h2><a class="anchor" id="autotoc_md24"></a>
+<div class="caption">
+FTP server hardware setup</div></div>
+    <h2><a class="anchor" id="autotoc_md24"></a>
 Build the "FTP Server" Project</h2>
 <p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
 <div class="image">
 <img src="ftp_proj_structure.png" alt=""/>
 <div class="caption">
 FTP Server Project Structure</div></div>
-<h3><a class="anchor" id="autotoc_md25"></a>
+    <h3><a class="anchor" id="autotoc_md25"></a>
 Source Files</h3>
 <ul>
 <li><code>FTP_Server.c</code> contains the main C function that initializes the board hardware and the Network Component.</li>
@@ -322,21 +329,23 @@ PC Software</h3>
 <p>To connect to the FTP server, all you need is a FTP client. On a Windows PC you can use the Command Prompt. Simply type <code>ftp my_host</code> (or the respective hostname that you have chosen in the <code>Net_Config.h</code> file). If you have a DCHP server in your network, it will automatically connect to the FTP server. You will be asked for a username and password combination. As for all network examples, this is "admin" (without the quotes) for the user and no password (you can change the defaults in the <code>Net_Config_FTP_Server.h</code> file). After a successful log in, you should see something like this:</p>
 <div class="image">
 <img src="ftp_server.png" alt=""/>
-</div>
-<h1><a class="anchor" id="Telnet_Example"></a>
+<div class="caption">
+FTP server command line interface</div></div>
+    <h1><a class="anchor" id="Telnet_Example"></a>
 Telnet Server</h1>
 <p>Often, it is necessary to have a <b>Command Line Interface (CLI)</b> for interaction with the device. This example shows how to use the Telnet server for this purpose. The following picture shows an exemplary connection of the development board and a Computer.</p>
 <div class="image">
 <img src="telnet_setup.png" alt=""/>
-</div>
-<h2><a class="anchor" id="autotoc_md29"></a>
+<div class="caption">
+Telnet example hardware setup</div></div>
+    <h2><a class="anchor" id="autotoc_md29"></a>
 Build the "Telnet" Project</h2>
 <p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
 <div class="image">
 <img src="telnet_proj_structure.png" alt=""/>
 <div class="caption">
 Telnet Client Project Structure</div></div>
-<h3><a class="anchor" id="autotoc_md30"></a>
+    <h3><a class="anchor" id="autotoc_md30"></a>
 Source Files</h3>
 <ul>
 <li><code>Telnet_Server.c</code> contains the main C function that initializes the board hardware and the Network Component.</li>
@@ -366,20 +375,21 @@ PC Software</h3>
 <img src="telnet_cli.png" alt=""/>
 <div class="caption">
 Telnet Command Line Interface</div></div>
-<h1><a class="anchor" id="SMTP_Client_Example"></a>
+    <h1><a class="anchor" id="SMTP_Client_Example"></a>
 SMTP Client</h1>
 <p>SMTP is used for sending e-mail notifications from an embedded system to various recipients. This example shows how to setup a SMTP client for this purpose. The following picture shows an exemplary connection of the development board and a Computer.</p>
 <div class="image">
 <img src="smtp_setup.png" alt=""/>
-</div>
-<h2><a class="anchor" id="autotoc_md34"></a>
+<div class="caption">
+SMTP client hardware setup</div></div>
+    <h2><a class="anchor" id="autotoc_md34"></a>
 Build the "SMTP Client" Project</h2>
 <p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
 <div class="image">
 <img src="smtp_proj_structure.png" alt=""/>
 <div class="caption">
 SMTP Client Project Structure</div></div>
-<h3><a class="anchor" id="autotoc_md35"></a>
+    <h3><a class="anchor" id="autotoc_md35"></a>
 Source Files</h3>
 <ul>
 <li><code>SMTP_Client.c</code> contains the main C function that initializes the board hardware, the Network Component and provides the IP address of SMTP server.</li>
@@ -408,15 +418,16 @@ SNMP Agent</h1>
 <p>The Simple Network Management Protocol (SNMP) is mainly used in network management systems to monitor network-attached devices for conditions that warrant administrative attention. It is the most popular network management protocol in the TCP/IP protocol suite. The SNMP Agent example shows how to use SNMP to control an embedded system. The following picture shows an exemplary connection of the development board and a Computer.</p>
 <div class="image">
 <img src="snmp_example_setup.png" alt=""/>
-</div>
-<h2><a class="anchor" id="autotoc_md39"></a>
+<div class="caption">
+SNMP agent hardware setup</div></div>
+    <h2><a class="anchor" id="autotoc_md39"></a>
 Build the "SNMP Agent" Project</h2>
 <p>Open the example project in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
 <div class="image">
 <img src="snmp_proj_structure.png" alt=""/>
 <div class="caption">
 SNMP Agent Project Structure</div></div>
-<h3><a class="anchor" id="autotoc_md40"></a>
+    <h3><a class="anchor" id="autotoc_md40"></a>
 Source Files</h3>
 <ul>
 <li><code>SNMP_Agent.c</code> contains the main C function that initializes the board hardware and the Network Component.</li>
@@ -444,20 +455,21 @@ PC Software</h3>
 <img src="SNMPTest_exe.png" alt=""/>
 <div class="caption">
 SNMP Test Application</div></div>
-<h1><a class="anchor" id="BSD_Examples"></a>
+    <h1><a class="anchor" id="BSD_Examples"></a>
 BSD Client/Server</h1>
 <p>BSD sockets are often used for network communication as they are providing a well-defined API for exchanging data over the network. In general, they are relying on TCP and UDP socket communication. The BSD server and client examples are used to demonstrate BSD compliant communication. To make it work, you need to setup two development boards within the same network: a BSD server and a BSD client. An exemplary setup could look like this:</p>
 <div class="image">
 <img src="bsd_example_setup.png" alt=""/>
-</div>
-<h2><a class="anchor" id="autotoc_md44"></a>
+<div class="caption">
+BSD example hardware setup</div></div>
+    <h2><a class="anchor" id="autotoc_md44"></a>
 Build the "BSD" Projects</h2>
 <p>Open the two example projects in MDK (the  <script>link_ext('uv4_ca_packinstaller');</script> web page explains how to do this). The µVision Project window should display a similar project structure:</p>
 <div class="image">
 <img src="bsd_proj_structure.png" alt=""/>
 <div class="caption">
 Structure of the BSD Projects</div></div>
-<h3><a class="anchor" id="autotoc_md45"></a>
+    <h3><a class="anchor" id="autotoc_md45"></a>
 Source Files</h3>
 <ul>
 <li><code>BSD_Client.c</code> contains the main C function that initializes the board hardware and the Network Component for the BSD client. It also contains the actual code that is used to communicate with the BSD server.</li>
@@ -485,7 +497,7 @@ PC Software</h3>
 <img src="ledswitch.png" alt=""/>
 <div class="caption">
 LED Switch Application</div></div>
- </div></div><!-- contents -->
+     </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

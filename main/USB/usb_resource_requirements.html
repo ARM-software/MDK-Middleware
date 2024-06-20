@@ -128,7 +128,7 @@ $(document).ready(function(){initNavTree('usb_resource_requirements.html',''); i
   <div class="headertitle"><div class="title">Resource Requirements </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This section describes the resource requirements of the USB component.</p>
+<div class="textblock"><p><a class="anchor" id="md_src_usb_resource_requirements"></a> This section describes the resource requirements of the USB component.</p>
 <h1><a class="anchor" id="usbd_res_req"></a>
 USB Device Resource Requirements</h1>
 <p>The following section documents the requirements for the <b>USB Device</b> component. The actual requirements depend on the components used in the application and the configuration of these components.</p>
@@ -145,32 +145,33 @@ Stack Requirements</h2>
 <p>User code that calls API functions of the USB Device Component should have a minimum of 512 Bytes of stack space available. Since API functions are frequently called from threads, the thread stack size should be at least 512 Bytes (see below).</p>
 <h2><a class="anchor" id="usbd_rtos_req"></a>
 CMSIS-RTOS2 Requirements</h2>
-<p>Currently, the USB Device component works in two different RTOS configurations:</p><ol type="1">
+<p>Currently, the USB Device component works in two different RTOS configurations:</p>
+<ol type="1">
 <li><b>CMSIS-RTOS2 RTX5</b>: This mode uses Keil RTX5 natively. In the Manage Run-Time Environment window, the component <b>CMSIS:RTOS2 (API):Keil RTX5</b> must be selected. The RTOS resources are static, configured by the system. There is <b>no need for additional user configuration</b>. This is the suggested option for new development.</li>
 <li><b>CMSIS-RTOS2 with a generic RTOS</b>: this mode uses a generic RTOS (such as FreeRTOS). The RTOS resources (thread, mutex and semaphore control blocks and thread stacks) are dynamically allocated. The user needs to provide memory pools big enough for the allocations in the specific RTOS configuration.</li>
 </ol>
-<p>The USB Device component uses threads. Each instance of a component starts its own threads, for example two HID instances start two threads with the name: <em>USBD_HID0_Thread</em>, <em>USBD_HID1_Thread</em>. The thread execution starts with <a class="el" href="group__usbd__coreFunctions__api.html#ga65ba44a47e3fa46a15f70bab9917c8ca">USBD_Initialize</a>.</p>
+<p>The USB Device component uses threads. Each instance of a component starts its own threads, for example two HID instances start two threads with the name: USBD_HID0_Thread, USBD_HID1_Thread. The thread execution starts with <a class="el" href="group__usbd__coreFunctions__api.html#ga65ba44a47e3fa46a15f70bab9917c8ca">USBD_Initialize</a>.</p>
 <p>The following table lists the components, number of threads, thread name, default thread priority, default stack size and the configuration file with <b>OS Resource Settings</b> for stack size adjustments.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Component   </th><th class="markdownTableHeadLeft">Number of Threads   </th><th class="markdownTableHeadLeft">Thread Name   </th><th class="markdownTableHeadCenter">Default Priority   </th><th class="markdownTableHeadCenter">Default Stack Size   </th><th class="markdownTableHeadLeft">Configuration File    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><b>::USB:Device</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBD<em>n</em>_Core_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">1024 Bytes   </td><td class="markdownTableBodyLeft">USBD_Config_<em>n</em>.h    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Device</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBDn_Core_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">1024 Bytes   </td><td class="markdownTableBodyLeft">USBD_Config_n.h    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><b>::USB:Device:ADC</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBD_ADC<em>n</em>_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBD_Config_ADC_<em>n</em>.h    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Device:ADC</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBD_ADCn_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBD_Config_ADC_n.h    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><b>::USB:Device:CDC</b>   </td><td class="markdownTableBodyLeft">2   </td><td class="markdownTableBodyLeft">USBD_CDC<em>n</em>_Bulk_Thread, USBD_CDC<em>n</em>_Int_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBD_Config_CDC_<em>n</em>.h    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Device:CDC</b>   </td><td class="markdownTableBodyLeft">2   </td><td class="markdownTableBodyLeft">USBD_CDCn_Bulk_Thread, USBD_CDCn_Int_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBD_Config_CDC_n.h    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><b>::USB:Device:Custom Class</b>   </td><td class="markdownTableBodyLeft">1...15   </td><td class="markdownTableBodyLeft">USBD_CustomClass<em>n</em>_EP<em>m</em>_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBD_Config_CustomClass_<em>n</em>.h    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Device:Custom Class</b>   </td><td class="markdownTableBodyLeft">1...15   </td><td class="markdownTableBodyLeft">USBD_CustomClassn_EPm_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBD_Config_CustomClass_n.h    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><b>::USB:Device:HID</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBD_HID<em>n</em>_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBD_Config_HID_<em>n</em>.h    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Device:HID</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBD_HIDn_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBD_Config_HID_n.h    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><b>::USB:Device:MSC</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBD_MSC<em>n</em>_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBD_Config_MSC_<em>n</em>.h   </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Device:MSC</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBD_MSCn_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBD_Config_MSC_n.h   </td></tr>
 </table>
-<p><em>n</em> is instance number, <em>m</em> is Endpoint number 1...15</p>
+<p>n is instance number, m is Endpoint number 1...15</p>
 <dl class="section note"><dt>Note</dt><dd><ul>
-<li>For <b>::USB:Device:Custom Class</b> each endpoint In/Out pair executes in a separate thread. The number of threads depends on the number of endpoints enabled in the configuration file USBD_Config_CustomClass_<em>n</em>.c.</li>
-<li>The <b>Default Stack Size</b> in the table above can be changed in the USB configuration files (for example USBD_Config_<em>n</em>.h and USBD_Config_<em>DeviceClass_n</em>.h). At the end of each configuration file, you will find <b>OS Resource Settings</b> and below that the value for the <b>Thread stack size</b>.</li>
+<li>For <b>USB:Device:Custom Class</b> each endpoint In/Out pair executes in a separate thread. The number of threads depends on the number of endpoints enabled in the configuration file USBD_Config_CustomClass_n.c.</li>
+<li>The <b>Default Stack Size</b> in the table above can be changed in the USB configuration files (for example USBD_Config_n.h and USBD_Config_DeviceClass_n.h). At the end of each configuration file, you will find <b>OS Resource Settings</b> and below that the value for the <b>Thread stack size</b>.</li>
 </ul>
 </dd></dl>
 <h2><a class="anchor" id="usbd_req_rtx5"></a>
@@ -183,17 +184,17 @@ Memory Requirements</h2>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Component   </th><th class="markdownTableHeadCenter">RO Memory [Bytes]   </th><th class="markdownTableHeadLeft">RW Memory (Data) [Bytes]    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><b>::USB:Core</b> (Device)   </td><td class="markdownTableBodyCenter">6.0 k   </td><td class="markdownTableBodyLeft">&lt; 470    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Core</b> (Device)   </td><td class="markdownTableBodyCenter">6.0 k   </td><td class="markdownTableBodyLeft">&lt; 470    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><b>::USB:Device:ADC</b>   </td><td class="markdownTableBodyCenter">2.5 k   </td><td class="markdownTableBodyLeft">&lt; 110 + <em>Audio Subframe Sizes</em> * <em>Buffer Sizes</em> (configured in the USBD_Config_ADC_<em>n</em>.h)    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Device:ADC</b>   </td><td class="markdownTableBodyCenter">2.5 k   </td><td class="markdownTableBodyLeft">&lt; 110 + Audio Subframe Sizes * Buffer Sizes (configured in the USBD_Config_ADC_n.h)    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><b>::USB:Device:HID</b>   </td><td class="markdownTableBodyCenter">2.7 k   </td><td class="markdownTableBodyLeft">&lt; 130 + <em>Maximum Report Sizes</em> (configured in the USBD_Config_HID_<em>n</em>.h)    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Device:HID</b>   </td><td class="markdownTableBodyCenter">2.7 k   </td><td class="markdownTableBodyLeft">&lt; 130 + Maximum Report Sizes (configured in the USBD_Config_HID_n.h)    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><b>::USB:Device:MSC</b>   </td><td class="markdownTableBodyCenter">4.1 k   </td><td class="markdownTableBodyLeft">&lt; 160 + <em>Maximum Bulk Buffer Size</em> (configured in the USBD_Config_MSC_<em>n</em>.h)    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Device:MSC</b>   </td><td class="markdownTableBodyCenter">4.1 k   </td><td class="markdownTableBodyLeft">&lt; 160 + Maximum Bulk Buffer Size (configured in the USBD_Config_MSC_n.h)    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><b>::USB:Device:CDC ACM</b>   </td><td class="markdownTableBodyCenter">3.2 k   </td><td class="markdownTableBodyLeft">&lt; 220 + <em>Maximum Send/Receive Buffer Sizes</em> (configured in the USBD_Config_CDC_<em>n</em>.h)    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Device:CDC ACM</b>   </td><td class="markdownTableBodyCenter">3.2 k   </td><td class="markdownTableBodyLeft">&lt; 220 + Maximum Send/Receive Buffer Sizes (configured in the USBD_Config_CDC_n.h)    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><b>::USB:Device:Custom Class</b>   </td><td class="markdownTableBodyCenter">2.0 k   </td><td class="markdownTableBodyLeft">&lt; 80    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Device:Custom Class</b>   </td><td class="markdownTableBodyCenter">2.0 k   </td><td class="markdownTableBodyLeft">&lt; 80    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyLeft"><b>USB Device Driver</b>   </td><td class="markdownTableBodyCenter">1 .. 4 k   </td><td class="markdownTableBodyLeft">0.5 .. 4 k   </td></tr>
 </table>
@@ -213,25 +214,26 @@ Stack Requirements</h2>
 <p>User code that calls API functions of the USB Host Component should have a minimum of 512 Bytes of stack space available. Since API functions are frequently called from threads, the thread stack size should be at least 512 Bytes.</p>
 <h2><a class="anchor" id="usbh_rtos_req"></a>
 CMSIS-RTOS2 Requirements</h2>
-<p>Currently, the USB Host component works in two different RTOS configurations:</p><ol type="1">
+<p>Currently, the USB Host component works in two different RTOS configurations:</p>
+<ol type="1">
 <li><b>CMSIS-RTOS2 RTX5</b>: This mode uses Keil RTX5 natively. In the Manage Run-Time Environment window, the component <b>CMSIS:RTOS2 (API):Keil RTX5</b> must be selected. The RTOS resources are static, configured by the system. There is <b>no need for additional user configuration</b>. This is the suggested option for new development.</li>
 <li><b>CMSIS-RTOS2 with a generic RTOS</b>: this mode uses a generic RTOS (such as FreeRTOS). The RTOS resources (thread, mutex and semaphore control blocks and thread stacks) are dynamically allocated. The user needs to provide memory pools big enough for the allocations in the specific RTOS configuration.</li>
 </ol>
-<p>The USB Host component uses threads. Each USB Host instance starts its own thread (USBH<em>n</em>_Core_Thread). The thread execution starts with <a class="el" href="group__usbh__coreFunctions__api.html#ga4420c0add78ae79e8e7ce035227ef4c5">USBH_Initialize</a>. Additionally each instance of HID and CDC class also start their own thread (USBH_HIDn_IntIn_Thread or USBH_CDCn_IntIn_Thread) when HID or CDC device is connected.</p>
+<p>The USB Host component uses threads. Each USB Host instance starts its own thread (USBHn_Core_Thread). The thread execution starts with <a class="el" href="group__usbh__coreFunctions__api.html#ga4420c0add78ae79e8e7ce035227ef4c5">USBH_Initialize</a>. Additionally each instance of HID and CDC class also start their own thread (USBH_HIDn_IntIn_Thread or USBH_CDCn_IntIn_Thread) when HID or CDC device is connected.</p>
 <p>The following table lists the components, number of threads, thread name, default thread priority, default stack size and the configuration file with <b>OS Resource Settings</b> for stack size adjustments.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Component   </th><th class="markdownTableHeadLeft">Number of Threads   </th><th class="markdownTableHeadLeft">Thread Name   </th><th class="markdownTableHeadCenter">Default Priority   </th><th class="markdownTableHeadCenter">Default Stack Size   </th><th class="markdownTableHeadLeft">Configuration File    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><b>::USB:Host</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBH<em>n</em>_Core_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">2048 Bytes   </td><td class="markdownTableBodyLeft">USBH_Config_<em>n</em>.h    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Host</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBHn_Core_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">2048 Bytes   </td><td class="markdownTableBodyLeft">USBH_Config_n.h    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><b>::USB:Host:CDC</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBH_CDC<em>n</em>_IntIn_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBH_Config_CDC.h    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Host:CDC</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBH_CDCn_IntIn_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBH_Config_CDC.h    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><b>::USB:Host:HID</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBH_HID<em>n</em>_IntIn_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBH_Config_HID.h   </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Host:HID</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBH_HIDn_IntIn_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBH_Config_HID.h   </td></tr>
 </table>
-<p><em>n</em> is instance number</p>
+<p>n is instance number</p>
 <dl class="section note"><dt>Note</dt><dd><ul>
-<li>The <b>Default Stack Size</b> in the table above can be changed in the USB configuration files (for example USBH_Config_<em>n</em>.h and USBH_Config_<em>DeviceClass</em>.h). At the end of each configuration file, you will find <b>OS Resource Settings</b> and below that the value for the <b>Thread stack size</b>.</li>
+<li>The <b>Default Stack Size</b> in the table above can be changed in the USB configuration files (for example USBH_Config_n.h and USBH_Config_DeviceClass.h). At the end of each configuration file, you will find <b>OS Resource Settings</b> and below that the value for the <b>Thread stack size</b>.</li>
 <li>If File System is used retargeted to USB Host Mass Storage the stack size for thread calling File System functions should be at least 2560 Bytes.</li>
 </ul>
 </dd></dl>
@@ -245,13 +247,13 @@ Memory Requirements</h2>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Component   </th><th class="markdownTableHeadCenter">RO Memory [Bytes]   </th><th class="markdownTableHeadCenter">RW Memory (Data) [Bytes]    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><b>::USB:Core</b> (Host)   </td><td class="markdownTableBodyCenter">&lt; 9.5 k   </td><td class="markdownTableBodyCenter">&lt; 370 + <em>Memory Pool Size</em> (configured in the USBH_Config_<em>n</em>.h)    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Core</b> (Host)   </td><td class="markdownTableBodyCenter">&lt; 9.5 k   </td><td class="markdownTableBodyCenter">&lt; 370 + Memory Pool Size (configured in the USBH_Config_n.h)    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><b>::USB:Host:HID</b>   </td><td class="markdownTableBodyCenter">&lt; 1.3 k   </td><td class="markdownTableBodyCenter">&lt; 70    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Host:HID</b>   </td><td class="markdownTableBodyCenter">&lt; 1.3 k   </td><td class="markdownTableBodyCenter">&lt; 70    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><b>::USB:Host:MSC</b>   </td><td class="markdownTableBodyCenter">&lt; 3.4 k   </td><td class="markdownTableBodyCenter">&lt; 40    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Host:MSC</b>   </td><td class="markdownTableBodyCenter">&lt; 3.4 k   </td><td class="markdownTableBodyCenter">&lt; 40    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><b>::USB:Host:CDC</b>   </td><td class="markdownTableBodyCenter">&lt; 1.0 k   </td><td class="markdownTableBodyCenter">&lt; 30    </td></tr>
+<td class="markdownTableBodyLeft"><b>USB:Host:CDC</b>   </td><td class="markdownTableBodyCenter">&lt; 1.0 k   </td><td class="markdownTableBodyCenter">&lt; 30    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyLeft"><b>USB Host OHCI</b> support   </td><td class="markdownTableBodyCenter">&lt; 3.5 k   </td><td class="markdownTableBodyCenter">&lt; 0.5 k    </td></tr>
 <tr class="markdownTableRowEven">

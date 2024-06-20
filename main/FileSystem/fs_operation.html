@@ -144,7 +144,7 @@ Using the File System</h1>
 <img src="fs_structure.png" alt=""/>
 <div class="caption">
 File System Component Structure</div></div>
-<ul>
+    <ul>
 <li><b>System, File Management</b>: functions that manage the File System and provide operation to format a drive and manage files and directories.</li>
 <li><b>Standard File I/O</b>: functions to perform input and output operations on files, such as read, write, and seek.</li>
 <li><b>ARM Standard Run-Time Library</b>: is the ARM Compiler standard C library with functions to manage file.</li>
@@ -169,7 +169,7 @@ Drives, Memory Devices and Drivers</h1>
 <img src="fs_types.png" alt=""/>
 <div class="caption">
 File System Component: Media types and Drives</div></div>
-<p>All available drives are defined with the <a class="el" href="fs_create_app.html#fs_RTE_Software_Component_Selection">RTE Component Selection</a>. A drive is passed as string to <a class="el" href="group__system__routines.html">System Routines</a> and may be part of a filename. The system allows you to configure a current drive that is used when no drive is specified as part of the filename.</p>
+    <p>All available drives are defined with the <a class="el" href="fs_create_app.html#fs_RTE_Software_Component_Selection">RTE Component Selection</a>. A drive is passed as string to <a class="el" href="group__system__routines.html">System Routines</a> and may be part of a filename. The system allows you to configure a current drive that is used when no drive is specified as part of the filename.</p>
 <p>The file system type is automatically chosen depending on the drive type (which correlates to a certain memory device). Some drives may use different interfaces that will be covered by appropriate CMSIS-Drivers. The following table shows the relationship between drive - memory device - and driver/interface:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -195,7 +195,7 @@ File System Component: Media types and Drives</div></div>
 </table>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>NOR Flash is typically connected over Memory Bus or SPI. For using a NOR Flash drive, a Flash driver is required which encapsulates either the Memory Bus interface or SPI (in which case an SPI driver required in addition).</li>
-<li>The Middleware Component contains example drivers for Flash devices that can be used to implement other device drivers if required. The examples are: AM29x800BB/<a href="https://www.farnell.com/datasheets/40281.pdf" target="_blank">M29W640FB</a> (Flash with 16-bit memory bus interface), <a href="https://www.infineon.com/dgdl/Infineon-S29GL064N_S29GL032N_64_Mbit_32_Mbit_3_V_Page_Mode_MirrorBit_Flash-DataSheet-v03_00-EN.pdf" target="_blank">S29GL064Nx2</a> (Flash with 32-bit memory bus interface), and <a href="https://datasheet.octopart.com/AT45DB642D-CNU-Atmel-datasheet-9652374.pdf" target="_blank">AT45DB642D</a> (Flash with SPI interface using an SPI driver).</li>
+<li>The Middleware Component contains example drivers for Flash devices that can be used to implement other device drivers if required. The examples are: AM29x800BB/<a href="https://www.farnell.com/datasheets/40281.pdf">M29W640FB</a> (Flash with 16-bit memory bus interface), <a href="https://www.infineon.com/dgdl/Infineon-S29GL064N_S29GL032N_64_Mbit_32_Mbit_3_V_Page_Mode_MirrorBit_Flash-DataSheet-v03_00-EN.pdf">S29GL064Nx2</a> (Flash with 32-bit memory bus interface), and <a href="https://datasheet.octopart.com/AT45DB642D-CNU-Atmel-datasheet-9652374.pdf">AT45DB642D</a> (Flash with SPI interface using an SPI driver).</li>
 <li>Other drives (memory card, USB memory device, NAND Flash) require appropriate CMSIS-Driver for the microcontroller device. If no suitable CMSIS-Driver is available for your selected device, you may create the required Flash interface driver. Refer to the  <script>link_ext('CMSIS-Driver-Ref');</script> for details.</li>
 <li>Currently, using NAND Flash devices with SPI interface (Serial NAND) <em>is</em> <em>not</em> <em>supported</em>.</li>
 </ul>
@@ -299,7 +299,7 @@ Time Stamping Support</h2>
 <p>To be able to use the time information provided by an on-chip RTC, the user application needs to implement the function <a class="el" href="group__file__time__routines.html#gafe26294de82a7597b98e3ff45ea2004e">fs_get_time()</a>. The <a class="el" href="rl__fs_8h.html#structfsTime">fsTime</a> structure must be filled with the data returned from the RTC driver. If the <a class="el" href="group__file__time__routines.html#gafe26294de82a7597b98e3ff45ea2004e">fs_get_time()</a> function is not implemented in the user application (which is the default), predefined time and date stamps are used.</p>
 <h2><a class="anchor" id="journaling_fat"></a>
 Journaling for the FAT File System</h2>
-<p>The File System Component supports a proprietary <a href="https://en.wikipedia.org/wiki/Journaling_file_system" class="el" target="_blank">journaling</a> mechanism for FAT which makes file I/O functions robust against system crashes or power failures. When FAT Journaling is enabled, the file allocation table and directory entries are protected.</p>
+<p>The File System Component supports a proprietary <a href="https://en.wikipedia.org/wiki/Journaling_file_system">journaling</a> mechanism for FAT which makes file I/O functions robust against system crashes or power failures. When FAT Journaling is enabled, the file allocation table and directory entries are protected.</p>
 <p><b>FAT Journaling</b> keeps track of the changes in the file system using a <b>journal</b> before committing them to the main file system. In the event of a system failure, file system does not become corrupted. Only content of files that are opened in writing mode may be lost. Other files are not affected.</p>
 <p>Journaling can be enabled individually for each drive that is using the FAT File System. For information on how to enable Journaling refer to:</p>
 <ul>
@@ -363,15 +363,15 @@ List of Supported Devices</h2>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Memory Card   </th><th class="markdownTableHeadNone">Specification    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><a href="https://en.wikipedia.org/wiki/Secure_Digital#SD" target="_blank">Standard Capacity SD Memory Card (SDSC)</a>   </td><td class="markdownTableBodyNone">Up to and including 2 GB    </td></tr>
+<td class="markdownTableBodyNone"><a href="https://en.wikipedia.org/wiki/Secure_Digital#SD">Standard Capacity SD Memory Card (SDSC)</a>   </td><td class="markdownTableBodyNone">Up to and including 2 GB    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><a href="https://en.wikipedia.org/wiki/Secure_Digital#SDHC" target="_blank">High Capacity SD Memory Card (SDHC)</a>   </td><td class="markdownTableBodyNone">More than 2GB and up to and including 32GB    </td></tr>
+<td class="markdownTableBodyNone"><a href="https://en.wikipedia.org/wiki/Secure_Digital#SDHC">High Capacity SD Memory Card (SDHC)</a>   </td><td class="markdownTableBodyNone">More than 2GB and up to and including 32GB    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><a href="https://en.wikipedia.org/wiki/Secure_Digital#SDXC" target="_blank">Extended Capacity SD Memory Card (SDXC)</a>   </td><td class="markdownTableBodyNone">More than 32GB and up to and including 2TB    </td></tr>
+<td class="markdownTableBodyNone"><a href="https://en.wikipedia.org/wiki/Secure_Digital#SDXC">Extended Capacity SD Memory Card (SDXC)</a>   </td><td class="markdownTableBodyNone">More than 32GB and up to and including 2TB    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><a href="https://en.wikipedia.org/wiki/MultiMediaCard" target="_blank">MultiMediaCard (MMC)</a>   </td><td class="markdownTableBodyNone">Up to specification version 4.2    </td></tr>
+<td class="markdownTableBodyNone"><a href="https://en.wikipedia.org/wiki/MultiMediaCard">MultiMediaCard (MMC)</a>   </td><td class="markdownTableBodyNone">Up to specification version 4.2    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><a href="https://en.wikipedia.org/wiki/MultiMediaCard#eMMC" target="_blank">Embedded MultiMediaCard (eMMC)</a>   </td><td class="markdownTableBodyNone">From specification 4.3   </td></tr>
+<td class="markdownTableBodyNone"><a href="https://en.wikipedia.org/wiki/MultiMediaCard#eMMC">Embedded MultiMediaCard (eMMC)</a>   </td><td class="markdownTableBodyNone">From specification 4.3   </td></tr>
 </table>
 <h2><a class="anchor" id="mci_list_of_mci_capabilities"></a>
 List of Supported MCI Driver Capabilities</h2>
@@ -417,7 +417,7 @@ Data Bus Width</h3>
 </ul>
 <h3><a class="anchor" id="autotoc_md3"></a>
 High Speed Mode</h3>
-<p>The MC Control Layer is able to automatically switch to <a href="https://www.sdcard.org/developers/sd-standard-overview/bus-speed-default-speed-high-speed-uhs-sd-express/" target="_blank">high speed mode</a> for SD cards supporting SD specification version 1.10 or higher (3.3V signaling, bus clock frequency up to 50MHz) and MMC/eMMC devices supporting MMCA specification version 4.2 or higher (3.3V signaling, bus clock frequency up to 52MHz). In order to do so, the high speed mode needs to be supported by the corresponding  <script>link_ext('MCI-API');</script>.</p>
+<p>The MC Control Layer is able to automatically switch to <a href="https://www.sdcard.org/developers/sd-standard-overview/bus-speed-default-speed-high-speed-uhs-sd-express/">high speed mode</a> for SD cards supporting SD specification version 1.10 or higher (3.3V signaling, bus clock frequency up to 50MHz) and MMC/eMMC devices supporting MMCA specification version 4.2 or higher (3.3V signaling, bus clock frequency up to 52MHz). In order to do so, the high speed mode needs to be supported by the corresponding  <script>link_ext('MCI-API');</script>.</p>
 <dl class="section note"><dt>Note</dt><dd>Improper PCB design can cause reliability problems when in high speed mode.</dd></dl>
 <h3><a class="anchor" id="autotoc_md4"></a>
 Password protection</h3>
@@ -508,7 +508,7 @@ SPI Mode Support</h2>
 <li><a class="el" href="group__media__support__routines.html#gac03f8075d61e08db4dafc5ab740d172f">fs_mc_spi_control_ss</a> is used to control the <b>Slave Select</b> signal</li>
 </ul>
 <p>User application should only implement callback function <a class="el" href="group__media__support__routines.html#gac03f8075d61e08db4dafc5ab740d172f">fs_mc_spi_control_ss</a> when SPI driver does not provide software controlled Slave Select line.</p>
-<dl class="section note"><dt>Note</dt><dd>Do not implement <a class="el" href="group__media__support__routines.html#gac03f8075d61e08db4dafc5ab740d172f">fs_mc_spi_control_ss</a> when using "SPI Master to Multi-Slave Driver Wrapper". In this case Slave Select line is controlled by Multi-Slave driver function <a href="https://arm-software.github.io/CMSIS-Driver/latest/driver_SPI.html" target="_blank">SPI_Control_SlaveSelect</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Do not implement <a class="el" href="group__media__support__routines.html#gac03f8075d61e08db4dafc5ab740d172f">fs_mc_spi_control_ss</a> when using "SPI Master to Multi-Slave Driver Wrapper". In this case Slave Select line is controlled by Multi-Slave driver function <a href="https://arm-software.github.io/CMSIS-Driver/latest/driver_SPI.html">SPI_Control_SlaveSelect</a>.</dd></dl>
 <h3><a class="anchor" id="mc_spi_bus_freq_setting"></a>
 SPI bus frequency setting</h3>
 <p>Reliable communication at high frequencies is a common problem when using SPI bus, since maximum bus frequency can be limited by PCB design. To overcome this problem, FileSystem component implements simple bus frequency adaptation algorithm in order to determine the maximum bus frequency at which it is still possible to communicate with the memory card.</p>
@@ -548,14 +548,14 @@ Bad Block Management</h2>
 <h2><a class="anchor" id="slc_ecc"></a>
 Error Correction Codes (ECC)</h2>
 <p>Error detection and correction codes are used in flash memory to protect data from corruption. All types of error correction codes add redundant information to the data being stored to the flash memory. The redundant information is calculated before the data is written, added to the spare area of the page and then stored in flash memory. When the data is read, the redundant information is recalculated and compared to those stored in the flash.</p>
-<p>Error correction codes (ECC) used in the NAND flash memory are block codes. This means that the redundant data bits are calculated for a fixed size block of used data. NTFL is implementing a <a href="https://en.wikipedia.org/wiki/Hamming_code" class="el" target="_blank">Hamming</a> ECC algorithm which is able to correct 1-bit and detect 2-bit errors for a fixed size of one sector or 512 bytes for SLC NAND Flashes. The redundant information is calculated in a way that a balance of correction power and efficiency is achieved.</p>
+<p>Error correction codes (ECC) used in the NAND flash memory are block codes. This means that the redundant data bits are calculated for a fixed size block of used data. NTFL is implementing a <a href="https://en.wikipedia.org/wiki/Hamming_code">Hamming</a> ECC algorithm which is able to correct 1-bit and detect 2-bit errors for a fixed size of one sector or 512 bytes for SLC NAND Flashes. The redundant information is calculated in a way that a balance of correction power and efficiency is achieved.</p>
 <dl class="section warning"><dt>Warning</dt><dd>If you are using a NAND Flash device that requires higher than 1-bit correctability per 512 byte codeword, you need to <b>disable the Software ECC</b> in the <code>FS_Config_NAND_n.h</code> file, otherwise the File System will not function correctly. Hardware driver or on-chip ECC calculation must be provided in such case.</dd></dl>
 <p>On-Chip ECC is supported on EZ NAND compliant devices. Various ECC layouts are supported by using flexible ECC codeword configuration.</p>
 <div class="image">
 <img src="fs_nand_ecc_config_0.png" alt=""/>
 <div class="caption">
 ECC Configuration (Contiguous Layout)</div></div>
-<p>ECC algorithms typically operate on smaller sections of the NAND physical page size. This section can be described as ECC virtual page, with its main and spare part. Typically main part consists of 512 bytes while spare part can be of different sizes (16, 28, 32, etc. bytes).</p>
+    <p>ECC algorithms typically operate on smaller sections of the NAND physical page size. This section can be described as ECC virtual page, with its main and spare part. Typically main part consists of 512 bytes while spare part can be of different sizes (16, 28, 32, etc. bytes).</p>
 <p>Amount of protected data is defined by codeword size, which is typically 512 bytes in main area and of various sizes in spare. Spare codeword may also not be aligned to start of spare area, but is located in spare with some offset. Spare codewords may also follow each other in arbitrary order, therefore codeword gap defines the gap between each codeword. It is similar with generated ECC data - its size, offset from start of spare and gap between each other may be arbitrary.</p>
 <h1><a class="anchor" id="emb_fs"></a>
 Embedded File System (EFS)</h1>
@@ -578,14 +578,14 @@ Memory Organization</h2>
 <img src="fs_memoryorg.png" alt=""/>
 <div class="caption">
 Flash Memory Organization</div></div>
-<h2><a class="anchor" id="efs_alloc_info"></a>
+    <h2><a class="anchor" id="efs_alloc_info"></a>
 Allocation Information</h2>
 <p>Allocation information region is located on top of a block and describes the block's content. It consists of block signature and file allocation information records, which are written in descending order. Each file has at least one record associated with it. Multiple records belong to files with content and to fragmented files. A file is fragmented when it is modified or its content size exceeds a single block size and must be stored across several blocks. Several small files are stored into a single block.</p>
 <div class="image">
 <img src="fs_allocinfo.png" alt=""/>
 <div class="caption">
 Flash Block Allocation</div></div>
-<h3><a class="anchor" id="autotoc_md6"></a>
+    <h3><a class="anchor" id="autotoc_md6"></a>
 Block Signature</h3>
 <p>Each block contains a signature, consisting of 4 bytes and determines if block is:</p>
 <ul>

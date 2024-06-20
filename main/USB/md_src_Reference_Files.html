@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>USB Component: Custom Class</title>
+<title>USB Component: Reference_Files</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search/",'.html');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('CustomClass.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('md_src_Reference_Files.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -125,43 +125,10 @@ $(document).ready(function(){initNavTree('CustomClass.html',''); initResizable()
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Custom Class </div></div>
+  <div class="headertitle"><div class="title">Reference_Files </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md88"></a>
-USB Host supporting any Device Class</h1>
-<p>The Custom Class for USB Host has two use cases:</p><ol type="1">
-<li>Implementing/supporting a <a href="https://www.usb.org/defined-class-codes" class="el" target="_blank">standard</a> Device class other than <a class="el" href="CDC.html">CDC</a>, <a class="el" href="HID.html">HID</a> and <a class="el" href="MSC.html">MSC</a> (also CDC, HID and MSC class handling can be overridden).</li>
-<li>Implementing/supporting a <a href="https://www.usb.org/defined-class-codes" class="el" target="_blank">vendor specific</a> Device class.</li>
-</ol>
-<p>Supporting Custom or Standard Class Devices requires the USB Host to be aware of the specific Class. On a PC, it is easy to add Class support by simply installing the required driver. However, in an embedded system this is not possible.</p>
-<p>The <a class="el" href="group__usbh__customFunctions.html">Custom Class</a> are a starting point for adding support for any USB Device Class. Furthermore, all <b>Class Specific Requests</b> need to be handled by the application running on the USB Host system. For more information on these requests, please consult the <a href="https://www.usb.org/documents?search=&amp;category%5B%5D=49&amp;type%5B%5D=55&amp;items_per_page=50" class="el" target="_blank">USB-IF Device Class Documents</a>. The <b>user code template</b> file <a class="el" href="group__usbh__customFunctions.html#USBH_Cust_UCT">USBH_User_CustomClass.c</a> contains all the functions that require adaptation.</p>
-<p>The number of concurrent Custom Class Devices in a system can be configured using the <b>USBH_Config_CustomClass.h</b> configuration file.</p>
-<h1><a class="anchor" id="autotoc_md89"></a>
-USB Device implementing any Device Class</h1>
-<p>The Custom Class for USB Device has two use cases:</p><ol type="1">
-<li>Implementing/supporting a <a href="https://www.usb.org/defined-class-codes" class="el" target="_blank">standard</a> Device class other than <a class="el" href="ADC.html">ADC</a>, <a class="el" href="CDC.html">CDC</a>, <a class="el" href="HID.html">HID</a>, and <a class="el" href="MSC.html">MSC</a>.</li>
-<li>Implementing/supporting a <a href="https://www.usb.org/defined-class-codes" class="el" target="_blank">vendor specific</a> Device class.</li>
-</ol>
-<p>The Custom Class gives full control of the USB handling. It is designed to react on any kind of event on any of the assigned endpoints and to handle any control message that may reach the system. The application has the full capability of dealing with control messages for whatever USB Device class. Message handling control can be taken over from the USB Device Core. The <b>user code template</b> file <a class="el" href="group__usbd__coreFunctions.html#USBD_User_Device_UCT">USBD_User_Device.c</a> contains all functions used for Device level Control Endpoint 0 (STANDARD, CLASS and VENDOR requests) message interception and handling, whereas file <a class="el" href="group__usbd__classFunctions.html#USBD_User_Cust_UCT">USBD_User_CustomClass.c</a> contains all the functions used for Custom Class Control Endpoint 0 CLASS requests and Custom Class endpoint events handling.</p>
-<p>To create the Custom Class the configuration file providing up to four interfaces with up to 8 endpoints has been provided.</p>
-<h2><a class="anchor" id="autotoc_md90"></a>
-USB Descriptors</h2>
-<p>Every USB Device requires certain descriptors. The following list is not complete but gives an impression about the various descriptors that may be required:</p><ul>
-<li>Standard Device Descriptor</li>
-<li>Standard Configuration Descriptor</li>
-<li>Standard Interface Descriptor for the Class that is implemented</li>
-<li>Standard Endpoint Descriptors for IN and OUT endpoints</li>
-<li>Standard String Descriptor</li>
-</ul>
-<p><br  />
- The necessary descriptors are automatically generated by the USB Middleware Component from the Class, Subclass, and Protocol Codes and the Interface String specified in the <b>USBD_Config_CustomClass_n.h</b> file. The page <a class="el" href="USB_Descriptors.html">USB Descriptors</a> provides more information on the topic.</p>
-<dl class="section note"><dt>Note</dt><dd>Further information on how to use the Custom Class in a USB Device is given in the Reference section:<ul>
-<li><a class="el" href="group__usbd__classFunctions.html">USB Device Custom Class Functions</a></li>
-<li><a class="el" href="group__usbh__customFunctions.html">USB Host Custom Class Functions</a> </li>
-</ul>
-</dd></dl>
-</div></div><!-- contents -->
+<div class="textblock"></div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

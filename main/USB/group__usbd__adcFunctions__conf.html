@@ -134,10 +134,10 @@ $(document).ready(function(){initNavTree('group__usbd__adcFunctions__conf.html',
 <p>Configuration of the USB Device ADC Class. </p>
 <p>This configuration file defines:</p><ul>
 <li>The assignment of the ADC class to the USB Device instance.</li>
-<li><a class="el" href="USB_Endpoints.html">USB Endpoint</a> assignments for the ADC class with parameters for Full/Low-speed communication.</li>
+<li><a class="el" href="USB_Concepts.html#USB_Endpoints">USB Endpoint</a> assignments for the ADC class with parameters for Full/Low-speed communication.</li>
 <li>Class Settings for the Interface Descriptor.</li>
 </ul>
-<p>The settings in this configuration file are used to create the <a class="el" href="USB_Interface_Descriptor.html">Interface Descriptor</a> and <a class="el" href="USB_Endpoint_Descriptor.html">Endpoint Descriptor</a> of the related USB Device Class.</p>
+<p>The settings in this configuration file are used to create the <a class="el" href="USB_Concepts.html#USB_Interface_Descriptor">Interface Descriptor</a> and <a class="el" href="USB_Concepts.html#USB_Endpoint_Descriptor">Endpoint Descriptor</a> of the related USB Device Class.</p>
 <div class="image">
 <img src="usbd_config_adc_h.png" alt=""/>
 <div class="caption">
@@ -145,7 +145,7 @@ ADC Class Configuration File</div></div>
 <p>The USB Device ADC Class configuration file <b>USBD_Config_ADC_n.h</b> contains the following settings:</p><ul>
 <li><b>Assign Device Class to USB Device #</b> selects the USB Device that is to be used for this Device Class instance.</li>
 <li><b>Isochronous Endpoint Settings</b><ul>
-<li><b>Isochronous OUT Endpoint Settings</b> enables or disables settings for an <a class="el" href="USB_Endpoints.html#USB_Isochronous_Transfers">Isochronous</a> OUT <a class="el" href="USB_Endpoints.html#endpoints">Endpoint</a>.<ul>
+<li><b>Isochronous OUT Endpoint Settings</b> enables or disables settings for an <a class="el" href="USB_Concepts.html#USB_Isochronous_Transfers">Isochronous</a> OUT <a class="el" href="USB_Concepts.html#endpoints">Endpoint</a>.<ul>
 <li><b>Isochronous OUT Endpoint Number</b> sets the number of the endpoint to be used. Conflicting settings are flagged by compile-time error messages.</li>
 <li><b>Endpoint Settings</b><ul>
 <li><b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange.</li>
@@ -154,7 +154,7 @@ ADC Class Configuration File</div></div>
 </li>
 </ul>
 </li>
-<li><b>Isochronous IN Endpoint Settings</b> enables or disables settings for an <a class="el" href="USB_Endpoints.html#USB_Isochronous_Transfers">Isochronous</a> IN <a class="el" href="USB_Endpoints.html#endpoints">Endpoint</a>.<ul>
+<li><b>Isochronous IN Endpoint Settings</b> enables or disables settings for an <a class="el" href="USB_Concepts.html#USB_Isochronous_Transfers">Isochronous</a> IN <a class="el" href="USB_Concepts.html#endpoints">Endpoint</a>.<ul>
 <li><b>Isochronous IN Endpoint Number</b> sets the number of the endpoint to be used. Conflicting settings are flagged by compile-time error messages.</li>
 <li><b>Endpoint Settings</b><ul>
 <li><b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange.</li>
@@ -166,10 +166,10 @@ ADC Class Configuration File</div></div>
 </ul>
 </li>
 <li><b>Audio Device Class Settings</b><ul>
-<li><b>Audio Control Interface String</b> is used to create <a class="el" href="USB_Descriptors.html">USB Descriptors</a>.</li>
+<li><b>Audio Control Interface String</b> is used to create <a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a>.</li>
 <li><b>Audio Output Settings (Speaker)</b><ul>
-<li><b>Audio Streaming (Zero Bandwidth) Interface String</b> is used to create <a class="el" href="USB_Descriptors.html">USB Descriptors</a>.</li>
-<li><b>Audio Streaming (Operational) Interface String</b> is used to create <a class="el" href="USB_Descriptors.html">USB Descriptors</a>.</li>
+<li><b>Audio Streaming (Zero Bandwidth) Interface String</b> is used to create <a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a>.</li>
+<li><b>Audio Streaming (Operational) Interface String</b> is used to create <a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a>.</li>
 <li><b>Channel Configuration</b> is used for memory allocation in the USB component.</li>
 <li><b>Sample Frequency (in Hz)</b> is used for memory allocation in the USB component.</li>
 <li><b>Audio Subframe Size</b> is used for memory allocation in the USB component.</li>
@@ -178,8 +178,8 @@ ADC Class Configuration File</div></div>
 </ul>
 </li>
 <li><b>Audio Input Settings (Microphone)</b><ul>
-<li><b>Audio Streaming (Zero Bandwidth) Interface String</b> is used to create <a class="el" href="USB_Descriptors.html">USB Descriptors</a>.</li>
-<li><b>Audio Streaming (Operational) Interface String</b> is used to create <a class="el" href="USB_Descriptors.html">USB Descriptors</a>.</li>
+<li><b>Audio Streaming (Zero Bandwidth) Interface String</b> is used to create <a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a>.</li>
+<li><b>Audio Streaming (Operational) Interface String</b> is used to create <a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a>.</li>
 <li><b>Channel Configuration</b> is used for memory allocation in the USB component.</li>
 <li><b>Sample Frequency (in Hz)</b> is used for memory allocation in the USB component.</li>
 <li><b>Audio Subframe Size</b> is used for memory allocation in the USB component.</li>

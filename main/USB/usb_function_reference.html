@@ -128,10 +128,11 @@ $(document).ready(function(){initNavTree('usb_function_reference.html',''); init
   <div class="headertitle"><div class="title">Function Overview </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The following list provides a brief overview of all USB Component functions.</p>
+<div class="textblock"><p><a class="anchor" id="md_src_usb_function_reference"></a> The following list provides a brief overview of all USB Component functions.</p>
 <h1><a class="anchor" id="usb_fo_usbd"></a>
 USB Device</h1>
-<p><a class="el" href="group__usbd__coreFunctions.html">Core</a></p><ul>
+<p><a class="el" href="group__usbd__coreFunctions.html">Core</a></p>
+<ul>
 <li><a class="el" href="group__usbd__coreFunctions__api.html#ga44c9e616d96f73dd485909e52a8c645d">USBD_GetVersion</a> &mdash;  Get version of USB Device stack.  </li>
 <li><a class="el" href="group__usbd__coreFunctions__api.html#gabcbbc7a70c6050fbaec107968a581487">USBD_Configured</a> &mdash;  Retrieve USB Device configuration status.  </li>
 <li><a class="el" href="group__usbd__coreFunctions__api.html#gad97153303fc0a6f51c1c20ac050b238f">USBD_Connect</a> &mdash;  Activate pull-up on D+ or D- line to signal USB Device connection on USB Bus.  </li>
@@ -155,7 +156,8 @@ USB Device</h1>
 <li><a class="el" href="group__usbd__coreFunctions__api.html#ga65ba44a47e3fa46a15f70bab9917c8ca">USBD_Initialize</a> &mdash;  Initialize USB Device stack and controller.  </li>
 <li><a class="el" href="group__usbd__coreFunctions__api.html#gabefe6dae72a49806a96b981c286d0aeb">USBD_Uninitialize</a> &mdash;  De-initialize USB Device stack and controller.  </li>
 </ul>
-<p><a class="el" href="group__usbd__adcFunctions.html">ADC: Audio Device Class</a></p><ul>
+<p><a class="el" href="group__usbd__adcFunctions.html">ADC: Audio Device Class</a></p>
+<ul>
 <li><a class="el" href="group__usbd__adcFunctions__api.html#ga507b5a036e1baa9ac6ae8b9735eb1414">USBD_ADC_ReadSamples</a> &mdash;  Read audio samples received from USB Host.  </li>
 <li><a class="el" href="group__usbd__adcFunctions__api.html#ga77c95dba9820e2430d7fa1b496d79510">USBD_ADC_ReceivedSamplesAvailable</a> &mdash;  Number of audio samples received from USB Host and available to be read.  </li>
 <li><a class="el" href="group__usbd__adcFunctions__api.html#gaac9faf4c6e6c541e99c4fc290320b07f">USBD_ADC_SetMicrophoneVolumeRange</a> &mdash;  Set range for microphone volume (level) control.  </li>
@@ -174,7 +176,8 @@ USB Device</h1>
 <li><a class="el" href="group__usbd__adcFunctions__api.html#ga6ddaa049712b33347bbcf244eeca99c7">USBD_ADCn_SetMicrophoneVolume</a> &mdash;  Callback function called when microphone volume setting changed.  </li>
 <li><a class="el" href="group__usbd__adcFunctions__api.html#gaba19562f5681c075858ae26a4f6e33c3">USBD_ADCn_Uninitialize</a> &mdash;  Callback function called during <a class="el" href="group__usbd__coreFunctions__api.html#gabefe6dae72a49806a96b981c286d0aeb">USBD_Uninitialize</a> to de-initialize the USB ADC class instance.  </li>
 </ul>
-<p><a class="el" href="group__usbd__cdcFunctions__acm.html">CDC: Communication Device Class (ACM)</a></p><ul>
+<p><a class="el" href="group__usbd__cdcFunctions__acm.html">CDC: Communication Device Class (ACM)</a></p>
+<ul>
 <li><a class="el" href="group__usbd__cdcFunctions__acm__api.html#gaa47cae7099ed7985469575d21fac7bb8">USBD_CDC_ACM_DataAvailable</a> &mdash;  Retrieve number of data bytes received by Communication Device from USB Host that are available to read.  </li>
 <li><a class="el" href="group__usbd__cdcFunctions__acm__api.html#ga76a9e905203e42c82f695738deab6e3e">USBD_CDC_ACM_GetChar</a> &mdash;  Read one character received by Communication Device from USB Host.  </li>
 <li><a class="el" href="group__usbd__cdcFunctions__acm__api.html#gad50c470966ad2b4337db6b8c8a5f839a">USBD_CDC_ACM_Notify_SerialState</a> &mdash;  Send notification of Communication Device status and line states to USB Host.  </li>
@@ -193,7 +196,8 @@ USB Device</h1>
 <li><a class="el" href="group__usbd__cdcFunctions__acm__api.html#gaeb540c51afed9b5217086bfde6965e99">USBD_CDCn_ACM_SetLineCoding</a> &mdash;  Callback function called upon USB Host request to change communication settings.  </li>
 <li><a class="el" href="group__usbd__cdcFunctions__acm__api.html#ga54ad02ac3b5e8dbcc40e5fe440076e39">USBD_CDCn_ACM_Uninitialize</a> &mdash;  Callback function called during <a class="el" href="group__usbd__coreFunctions__api.html#gabefe6dae72a49806a96b981c286d0aeb">USBD_Uninitialize</a> to de-initialize the USB CDC class instance (ACM)  </li>
 </ul>
-<p><a class="el" href="group__usbd__cdcFunctions__ncm.html">CDC: Communication Device Class (NCM)</a></p><ul>
+<p><a class="el" href="group__usbd__cdcFunctions__ncm.html">CDC: Communication Device Class (NCM)</a></p>
+<ul>
 <li><a class="el" href="group__usbd__cdcFunctions__ncm__api.html#ga5888e54f798b2bf2d20bdc41b1e8af55">USBD_CDC_NCM_Notify_ConnectionSpeedChange</a> &mdash;  Report a change in upstream or downstream speed of the networking connection to the USB Host.  </li>
 <li><a class="el" href="group__usbd__cdcFunctions__ncm__api.html#ga6966c46d11f2592edf7dde71f4220e3f">USBD_CDC_NCM_Notify_NetworkConnection</a> &mdash;  Report whether or not the physical layer (modem, Ethernet PHY, etc.) link is up to the USB Host.  </li>
 <li><a class="el" href="group__usbd__cdcFunctions__ncm__api.html#gae9fa4907d191f9e78483d588eef7081f">USBD_CDC_NCM_NTB_IN_CreateNDP</a> &mdash;  Create a new NDP in the NTB (datagrams can be added to it)  </li>
@@ -233,7 +237,8 @@ USB Device</h1>
 <li><a class="el" href="group__usbd__cdcFunctions__ncm__api.html#ga0fb025fb3475315f54f5a76375006927">USBD_CDCn_NCM_Stop</a> &mdash;  Callback function called when USB Host changes data interface from alternate 1 to alternate 0 (de-activates data interface)  </li>
 <li><a class="el" href="group__usbd__cdcFunctions__ncm__api.html#ga83368d843269eaee8e5852ce835291f0">USBD_CDCn_NCM_Uninitialize</a> &mdash;  Callback function called during USBD_Uninitialize to de-initialize the USB CDC class instance (NCM)  </li>
 </ul>
-<p><a class="el" href="group__usbd__classFunctions.html">Custom Class</a></p><ul>
+<p><a class="el" href="group__usbd__classFunctions.html">Custom Class</a></p>
+<ul>
 <li><a class="el" href="group__usbd__classFunctions__api.html#gadc6310693ad3c8c8e2bafa4b618aeb47">USBD_CustomClassn_Initialize</a> &mdash;  Callback function called during <a class="el" href="group__usbd__coreFunctions__api.html#ga65ba44a47e3fa46a15f70bab9917c8ca">USBD_Initialize</a> to initialize the USB Custom class instance.  </li>
 <li><a class="el" href="group__usbd__classFunctions__api.html#ga210ed53547ab1257fceaddfabaf03fc0">USBD_CustomClassn_Uninitialize</a> &mdash;  Callback function called during <a class="el" href="group__usbd__coreFunctions__api.html#gabefe6dae72a49806a96b981c286d0aeb">USBD_Uninitialize</a> to de-initialize the USB Custom class instance.  </li>
 <li><a class="el" href="group__usbd__classFunctions__api.html#gae3e58baa88162c4d60a47edbe5a842c4">USBD_CustomClassn_Reset</a> &mdash;  Callback function called upon USB Bus Reset signaling.  </li>
@@ -253,14 +258,16 @@ USB Device</h1>
 <li><a class="el" href="group__usbd__classFunctions__api.html#ga2ff61f65bd8ba9b2f9aac24abf99425e">USBD_EndpointStall</a> &mdash;  Set/Clear stall on Endpoint.  </li>
 <li><a class="el" href="group__usbd__classFunctions__api.html#ga1b6cc057c4285e575c5549a2c8999fdd">USBD_EndpointAbort</a> &mdash;  Abort read/write operation on Endpoint.  </li>
 </ul>
-<p><a class="el" href="group__usbd__hidFunctions.html">HID: Human Interface Class</a></p><ul>
+<p><a class="el" href="group__usbd__hidFunctions.html">HID: Human Interface Class</a></p>
+<ul>
 <li><a class="el" href="group__usbd__hidFunctions__api.html#ga2c21f6f5bbe3b1fb832bbd7a1615f477">USBD_HIDn_Initialize</a> &mdash;  Callback function called during <a class="el" href="group__usbd__coreFunctions__api.html#ga65ba44a47e3fa46a15f70bab9917c8ca">USBD_Initialize</a> to initialize the USB HID class instance.  </li>
 <li><a class="el" href="group__usbd__hidFunctions__api.html#ga5ff95f579fd90e3c75f90c0c8d2b2968">USBD_HIDn_Uninitialize</a> &mdash;  Callback function called during <a class="el" href="group__usbd__coreFunctions__api.html#gabefe6dae72a49806a96b981c286d0aeb">USBD_Uninitialize</a> to de-initialize the USB HID class instance.  </li>
 <li><a class="el" href="group__usbd__hidFunctions__api.html#gaed8b507a9ce1bf958fbcae55ee0b91bf">USBD_HIDn_GetReport</a> &mdash;  Callback function called to prepare HID Report data to send.  </li>
 <li><a class="el" href="group__usbd__hidFunctions__api.html#gab7d101077f2018ca8a24da7dffce434f">USBD_HIDn_SetReport</a> &mdash;  Callback function called to process received HID Report data.  </li>
 <li><a class="el" href="group__usbd__hidFunctions__api.html#gad7e97151e60e0b12b3f331610f31c071">USBD_HID_GetReportTrigger</a> &mdash;  Asynchronously prepare HID Report data to send.  </li>
 </ul>
-<p><a class="el" href="group__usbd__mscFunctions.html">MSC: Mass Storage Class</a></p><ul>
+<p><a class="el" href="group__usbd__mscFunctions.html">MSC: Mass Storage Class</a></p>
+<ul>
 <li><a class="el" href="group__usbd__mscFunctions__api.html#ga1c8c5ad7ab90f84e11122d878fae2350">USBD_MSCn_Initialize</a> &mdash;  Callback function called during <a class="el" href="group__usbd__coreFunctions__api.html#ga65ba44a47e3fa46a15f70bab9917c8ca">USBD_Initialize</a> to initialize all Logical Units of the USB MSC class instance.  </li>
 <li><a class="el" href="group__usbd__mscFunctions__api.html#ga8fccca7a1b5aa4794f85cf6fa10403bd">USBD_MSCn_Uninitialize</a> &mdash;  Callback function called during <a class="el" href="group__usbd__coreFunctions__api.html#gabefe6dae72a49806a96b981c286d0aeb">USBD_Uninitialize</a> to de-initialize all Logical Units of the USB MSC class instance.  </li>
 <li><a class="el" href="group__usbd__mscFunctions__api.html#gaad99aeaa60c8c0bd8f00e56779144f96">USBD_MSCn_GetCacheInfo</a> &mdash;  Callback function called to get cache information.  </li>
@@ -278,7 +285,8 @@ USB Device</h1>
 </ul>
 <h1><a class="anchor" id="usb_fo_usbh"></a>
 USB Host</h1>
-<p><a class="el" href="group__usbh__coreFunctions.html">Core</a></p><ul>
+<p><a class="el" href="group__usbh__coreFunctions.html">Core</a></p>
+<ul>
 <li><a class="el" href="group__usbh__coreFunctions__api.html#gaa1cd1b8d5841dcded56d9015da602c9e">USBH_GetVersion</a> &mdash;  Get version of USB Host stack.  </li>
 <li><a class="el" href="group__usbh__coreFunctions__api.html#ga4420c0add78ae79e8e7ce035227ef4c5">USBH_Initialize</a> &mdash;  Initialize USB Host stack and controller.  </li>
 <li><a class="el" href="group__usbh__coreFunctions__api.html#gaf98f4e13ff57a8bf1c49cd46a8034d3f">USBH_Uninitialize</a> &mdash;  De-initialize USB Host stack and controller.  </li>
@@ -294,7 +302,8 @@ USB Host</h1>
 <li><a class="el" href="group__usbh__coreFunctions__api.html#ga8bc8a6450de51c3fb1e86d00effb5805">USBH_Device_GetStringDescriptor</a> &mdash;  Get String Descriptor of USB Device.  </li>
 <li><a class="el" href="group__usbh__coreFunctions__api.html#gadf15f81f73e124c12c689dac8c93db42">USBH_Notify</a> &mdash;  Callback function called when some event has happened on corresponding controller and port.  </li>
 </ul>
-<p><a class="el" href="group__usbh__cdcacmFunctions.html">CDC (ACM): Communication Device Class (Abstract Control Model)</a></p><ul>
+<p><a class="el" href="group__usbh__cdcacmFunctions.html">CDC (ACM): Communication Device Class (Abstract Control Model)</a></p>
+<ul>
 <li><a class="el" href="group__usbh__cdcacmFunctions__api.html#ga46afdf86b21f4e7501b136c8fd85bdb8">USBH_CDC_ACM_GetDevice</a> &mdash;  Get Device instance of Communication Device Class device.  </li>
 <li><a class="el" href="group__usbh__cdcacmFunctions__api.html#ga461db252857602a0386e281d5907558d">USBH_CDC_ACM_GetLineCoding</a> &mdash;  Retrieve communication settings of Communication Device Class device.  </li>
 <li><a class="el" href="group__usbh__cdcacmFunctions__api.html#ga80302b5c547d7362c31d8f59126cdcfb">USBH_CDC_ACM_GetRxCount</a> &mdash;  Get result of receive data from Communication Device Class device.  </li>
@@ -311,7 +320,8 @@ USB Host</h1>
 <li><a class="el" href="group__usbh__cdcacmFunctions__api.html#ga28b0fad8d0eee3b203edc0e9310f3c6c">USBH_CDC_ACM_SetLineCoding</a> &mdash;  Change communication settings of Communication Device Class device.  </li>
 <li><a class="el" href="group__usbh__cdcacmFunctions__api.html#gae86408a576f0459bbd67d7cd57dd3a0f">USBH_CDC_ACM_Uninitialize</a> &mdash;  Callback function called when Communication Device Class device was disconnected.  </li>
 </ul>
-<p><a class="el" href="group__usbh__hidFunctions.html">HID: Human Interface Device Class</a></p><ul>
+<p><a class="el" href="group__usbh__hidFunctions.html">HID: Human Interface Device Class</a></p>
+<ul>
 <li><a class="el" href="group__usbh__hidFunctions__api.html#ga1855b754edcc9307ddffad04db313ac4">USBH_HID_DataReceived</a> &mdash;  Callback function called when data is received from the Human Interface Device.  </li>
 <li><a class="el" href="group__usbh__hidFunctions__api.html#gad565d4443916b27d72dd1967106c712e">USBH_HID_GetDevice</a> &mdash;  Get Device instance of Human Interface Device.  </li>
 <li><a class="el" href="group__usbh__hidFunctions__api.html#ga26b69d81b39f1f13c1fa7e8fec33507e">USBH_HID_GetKeyboardKey</a> &mdash;  Retrieve first pending pressed keyboard key on HID Keyboard.  </li>
@@ -323,7 +333,8 @@ USB Host</h1>
 <li><a class="el" href="group__usbh__hidFunctions__api.html#ga9b98d20c76bcfd8dd4cd1bd4bb00bcd0">USBH_HID_Uninitialize</a> &mdash;  Callback function called when Human Interface Device was disconnected.  </li>
 <li><a class="el" href="group__usbh__hidFunctions__api.html#ga3a2fb083a4f3a0118d06d68a9c56976f">USBH_HID_Write</a> &mdash;  Write data to Human Interface Device.  </li>
 </ul>
-<p><a class="el" href="group__usbh__mscFunctions.html">MSC: Mass Storage Class</a></p><ul>
+<p><a class="el" href="group__usbh__mscFunctions.html">MSC: Mass Storage Class</a></p>
+<ul>
 <li><a class="el" href="group__usbh__mscFunctions__api.html#ga223c7d01b0c48143a6383e52476f3093">USBH_MSC_Initialize</a> &mdash;  Callback function called when Mass Storage Device was enumerated and is ready.  </li>
 <li><a class="el" href="group__usbh__mscFunctions__api.html#ga2157962384509c254d5ecf298e015740">USBH_MSC_Uninitialize</a> &mdash;  Callback function called when Mass Storage Device was disconnected.  </li>
 <li><a class="el" href="group__usbh__mscFunctions__api.html#gadbff27f85d5e89ac2baba6d1e6e8a039">USBH_MSC_GetDevice</a> &mdash;  Get Device instance of Mass Storage Device.  </li>
@@ -332,7 +343,8 @@ USB Host</h1>
 <li><a class="el" href="group__usbh__mscFunctions__api.html#gaea01ed67542b6a8b16c29a1dbc3d1273">USBH_MSC_Write</a> &mdash;  Write requested number of blocks to Mass Storage Device.  </li>
 <li><a class="el" href="group__usbh__mscFunctions__api.html#ga168fe4c5c2cf222ab3df02841887a0ed">USBH_MSC_ReadCapacity</a> &mdash;  Read capacity of Mass Storage Device.  </li>
 </ul>
-<p><a class="el" href="group__usbh__customFunctions.html">Custom Class</a></p><ul>
+<p><a class="el" href="group__usbh__customFunctions.html">Custom Class</a></p>
+<ul>
 <li><a class="el" href="group__usbh__customFunctions__api.html#gae0f3f86f8a049c663b84fda06d5668cd">USBH_CustomClass_GetDevice</a> &mdash;  Get Device instance of Custom Class Device.  </li>
 <li><a class="el" href="group__usbh__customFunctions__api.html#ga6cc444113f6641e70d5276ffdea0b842">USBH_CustomClass_GetStatus</a> &mdash;  Get status of Custom Class Device.  </li>
 <li><a class="el" href="group__usbh__customFunctions__api.html#ga385a67ca676ca94efcf078b637fdf49c">USBH_CustomClass_Configure</a> &mdash;  Callback function called when custom class device is connected and needs to configure resources used by custom class device instance.  </li>
