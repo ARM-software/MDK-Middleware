@@ -281,7 +281,6 @@ var NAVTREE =
         [ "USB Host", "usb_migration.html#autotoc_md93", null ]
       ] ]
     ] ],
-    [ "Reference_Files", "md_src_Reference_Files.html", null ],
     [ "API Reference", "modules.html", "modules" ]
   ] ]
 ];

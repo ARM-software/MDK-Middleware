@@ -122,7 +122,6 @@ var NAVTREE =
       [ "Component Selection", "fs_migration.html#fs_migrate_components", null ],
       [ "Configuration", "fs_migration.html#fs_migrate_config", null ]
     ] ],
-    [ "Reference_Files", "md_src_Reference_Files.html", null ],
     [ "API Reference", "modules.html", "modules" ]
   ] ]
 ];
