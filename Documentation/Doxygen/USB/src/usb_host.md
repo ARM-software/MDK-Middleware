@@ -175,8 +175,7 @@ available for most of the development boards:
 - The \ref host_cdc_tutorial example shows how to communicate with an USB CDC Device from a microcontroller.
 - The \ref host_cust_tutorial example shows how to communicate with any USB Device from a microcontroller.
   Here, it will be demonstrated using a USB to serial RS232 adapter with
-  <a class=el href="https://www.prolific.com.tw/US/index.aspx" target="_blank">Prolific PL2303</a>
-  UART-to-USB bridge chip.
+  [Prolific PL2303](https://www.prolific.com.tw/US/index.aspx) UART-to-USB bridge chip.
 
 To use these examples, use the \urlout{uv4_ca_packinstaller}, select the related **Board** and **Copy** the example.
 
@@ -271,7 +270,7 @@ The setup of the Evaluation Board hardware is described in the `Abstract.txt` fi
 ### USB Host Custom Class {#host_cust_tutorial}
 
 This example application shows how to communicate with serial RS232 adapter with
-<a class=el href="https://www.prolific.com.tw/US/index.aspx" target="_blank">Prolific PL2303</a>
+[Prolific PL2303](https://www.prolific.com.tw/US/index.aspx)
 UART-to-USB bridge chip from a microcontroller. It is a simple demonstration
 on how to send data from the USB Host via the USB to serial RS232 adapter to an attached serial terminal. Here, the USB Host sends "Test!" to the
 USB to serial RS232 adapter and stores all incoming data from the device into the array `receive_buf`. This example is using the Custom
@@ -284,8 +283,9 @@ connected to a PC via RS232 to check incoming messages.
 
 #### Create the "USB Host Custom Class PL2303" Project
 
-In this example, we are using the <a class="el" href="https://www.keil.com/boards2/keil/mcbstm32f400/" target="_blank">MCBSTM32F400</a> board with the STM32F407IGHx device.
-Create a new project in MDK (Select Device **STMicroelectronics:STM32F4 Series: STM32F407:STM32F407IG:STM32F407IGHx**).
+In this example, we are using the [MCBSTM32F400](https://www.keil.arm.com/boards/keil-mcbstm32f400-ver-12-3cd831d/projects/)
+board with the STM32F407IGHx device. Create a new project in MDK
+(Select Device **STMicroelectronics:STM32F4 Series: STM32F407:STM32F407IG:STM32F407IGHx**).
 In the **Manage Run-Time Environment** window, select the following components:
 
 - **Board Support:LED (API):LED** (Variant **MCBSTM32F400**)
@@ -764,7 +764,8 @@ development board. This USB CDC ACM Device is connected to a PC via RS232 to che
 
 #### Create the "USB Host CDC" Project
 
-In this example, we are using the <a class="el" href="https://www.keil.com/boards2/keil/mcbstm32f400/" target="_blank">MCBSTM32F400</a> board with the STM32F407IGHx device.
+In this example, we are using the [MCBSTM32F400](https://www.keil.arm.com/boards/keil-mcbstm32f400-ver-12-3cd831d/projects/)\
+board with the STM32F407IGHx device.
 Create a new project in MDK (Select Device **STMicroelectronics:STM32F4 Series: STM32F407:STM32F407IG:STM32F407IGHx**).
 In the **Manage Run-Time Environment** window, select the following components:
 

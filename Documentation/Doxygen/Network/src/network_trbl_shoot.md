@@ -31,7 +31,7 @@ The following assumes that you are using \ref netEvrSupport "Event Recorder" bas
 
 ### Check the Ethernet interface {#trbl_verify_eth}
 
-<a href="">Component Viewer</a> shows you static information about the operation of a software component. In the µVision
+\urlout{CMSIS-View} shows you static information about the operation of a software component. In the µVision
 debugger, go to **Debug -> View -> Watch windows -> Network** to see the status information of the network library:
 
 \image html trbl_cv_nw.png "Component Viewer for the Network library"
@@ -42,7 +42,7 @@ This indicates the following:
 |-----------|-------------|
 | ETH interface | Shows physical connection problems; Link-Up indicates a stable connection |
 | IP Address| Shows DHCP address assignment problems; for an unassigned IP address the entry reads 0.0.0.0 |
-  
+
 The Ethernet interface is operational when the link-up state is indicated and a DHCP address is assigned. When using a static
 IP address, DHCP assignment is skipped. Thus, only the link-up state is required.
 
@@ -92,7 +92,7 @@ Possible reasons for the connection to fail:
 -# a local port number used for communication is reserved for other means in the communication equipment (ie. modem/router).
    For example, the TCP port 49152 is sometimes reserved by the Internet provider for remote management of the communication
    device. In general, communication using reserved ports is not possible.
-  
+
 After a BSD connect() is called and before the function completes, many events are generated from the TCP socket, indicating
 how the TCP is performing the connect. Here is a log of successful connect with BSD and TCP events enabled:
 

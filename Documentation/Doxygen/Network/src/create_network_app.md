@@ -12,7 +12,7 @@ The steps to create a microcontroller application that uses TCP/IP communication
    Component.
 -# \ref nw_debugging "Debug" your application using the built-in mechanisms of the Network Component.
 -# Sometimes, it is necessary to change some network settings at \ref nw_runtime_config "runtime".
-  
+
 ## RTE Component Selection {#nw_RTE_Software_Component_Selection}
 
 Only a few steps are necessary to complete the RTE Component selection:
@@ -51,13 +51,13 @@ The Network Device Driver and the Network Controller of the microcontroller need
 - The Network Controller of the microcontroller typically needs specific clock settings. Consult the user's guide of the
   microcontroller to understand the requirements. Alternatively, you may copy the setup of an
   \ref nw_examples "example project" that is provided for various evaluation boards.
-  
+
 ## Ethernet PHY Configuration {#nw_PHY_Configuration}
 
 For Ethernet network communication, usually an external Ethernet PHY is required to interface the physical line to the
 digital MAC of the microcontroller device. The MAC usually contains two buses:
 
--# Data bus: <a href="https://en.wikipedia.org/wiki/Media-independent_interface" target="_blank">MII, RMII,</a> or Serial
+-# Data bus: [MII, RMII,](https://en.wikipedia.org/wiki/Media-independent_interface) or Serial
    Network Interface (SNI)
 -# Management bus: Serial Management Interface (**SMI**) (using MDC and MDIO)
 
@@ -85,7 +85,7 @@ The configuration file Network Core `Net_Config.h` contains the setting for the 
 
 The following **Variant** options are available:
 
-- **IPv4 only** is a pure IPv4 implementation. This choice saves some system resources if no IPv6 networking is used in the application.  
+- **IPv4 only** is a pure IPv4 implementation. This choice saves some system resources if no IPv6 networking is used in the application.
 - **IPv4/IPv6 dual stack** implements both IPv4 and IPv6 internet protocols.
 
 The **Local Host Name** specifies a name under which the network device can be accessed on a local area network (**LAN**).
@@ -167,9 +167,9 @@ The initialization process is different depending on which network interface is 
 ```c
 __NO_RETURN void app_main_thread (void *argument) {
   (void)argument;
- 
+
   netInitialize ();
- 
+
   osThreadExit();
 }
 ```
@@ -179,19 +179,19 @@ __NO_RETURN void app_main_thread (void *argument) {
 __NO_RETURN void app_main_thread (void *argument) {
   NET_WIFI_CONFIG wifi_config;
   (void)argument;
- 
+
   netInitialize ();
- 
+
   // Configure wireless parameters
   wifi_config.ssid       = "GuestAccess";
   wifi_config.password   = "guest";
   wifi_config.security   = netWiFi_SecurityWPA2;
   wifi_config.channel    = 0;
   wifi_config.wps_method = netWiFi_WPS_None;
- 
+
   // Connect to wireless network
   netWiFi_Activate (0, &wifi_config);
- 
+
   osThreadExit();
 }
 ```
@@ -200,12 +200,12 @@ __NO_RETURN void app_main_thread (void *argument) {
 ```c
 __NO_RETURN void app_main_thread (void *argument) {
   (void)argument;
- 
+
   netInitialize ();
- 
+
   // Connect to remote PPP server
   netPPP_Connect ("04213372", "Guest", "test")
- 
+
   osThreadExit();
 }
 ```
@@ -213,7 +213,7 @@ __NO_RETURN void app_main_thread (void *argument) {
 ### User Code Templates
 
 \urlout{uv4_ca_sourcefiles} files provide access to all functions that are required to communicate over the Network. The available
-functions are explained in the <a class=el href="./modules.html">Reference</a> section of the Network
+functions are explained in the [Reference](./modules.html) section of the Network
 Component. These routines can be adapted to the needs of the microcontroller application, in case more functionality is
 needed.
 
@@ -247,12 +247,12 @@ Network Component can be easily configured to generate debug events and provide 
 
 Network supports event annotations for the \urlout{Event-Recorder-About} and makes it very easy to analyze the internal operation
 of the Network Component during application debugging. The old \ref netDebugStdio "STDIO" debug, which outputs event information
-as ASCII messages on the standard output device, is also supported. 
+as ASCII messages on the standard output device, is also supported.
 
 ### Debug Configuration {#netDebugConfig}
 
-The Network Component debug is configured using the `Net_Debug.h` file. The options are set in the file directly or using the 
-<a class=el href="https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard" target="_blank">Configuration Wizard</a>.
+The Network Component debug is configured using the `Net_Debug.h` file. The options are set in the file directly or using the
+[Configuration Wizard](https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard).
 
 \image html net_debug_h.png "Net_Debug.h Configuration File"
 
@@ -262,7 +262,7 @@ The following settings are available:
 - **Output Channel** selects where the diagnostic messages are to be sent:
   - \urlout{Event-Recorder-About} outputs event messages to event recorder.
   - \ref netDebugStdio "STDIO" outputs diagnostic messages on the standard output device.
-  - \ref netDebugStdio "STDIO + Timestamp" additionally prints the time information with debug messages. 
+  - \ref netDebugStdio "STDIO + Timestamp" additionally prints the time information with debug messages.
 
 The debugging configuration settings are divided into groups that can be activated separately:
 
@@ -293,7 +293,7 @@ To use the Event Recorder together with Network Component, it is required to cre
 
   1. \ref netDebugConfig "Select Debug mode": in the `Net_Config.h` enable the **Network Debug** for the component.
   2. \urlout{Event-Recorder-Enable}: in the RTE management dialog enable the software component **CMSIS-View:Event Recorder**.
-  3. \urlout{Event-Recorder-Initialize}: in the application code, call the function **EventRecorderInitialize**.  
+  3. \urlout{Event-Recorder-Initialize}: in the application code, call the function **EventRecorderInitialize**.
   4. \urlout{Event-Recorder-Configure}: if necessary, adjust default Event Recorder configuration.
   5. Build the application code, download it to the target hardware and start debug session.
 
@@ -348,7 +348,7 @@ The network component uses the following event IDs:
 
 It is often necessary to change the parameters and mode of operation of the network interface at startup or runtime. System
 control functions allow reading and changing the settings of the network interface and the system (for example the
-<a href="https://en.wikipedia.org/wiki/Hostname" target="_blank">hostname</a>).
+[hostname](https://en.wikipedia.org/wiki/Hostname)).
 
 This is required for using the same application code for serial production of embedded devices. The **runtime configuration**
 feature enables reading of configuration parameters from an EEPROM or SD Card and configuring the
@@ -364,11 +364,11 @@ The options which can be changed are defined in the \ref netIF_Option enumerator
 complete set of available options. For example, the PPP interface does not have a MAC address. If you try to modify an
 unsupported option, an error is returned.
 
-The <a href="https://en.wikipedia.org/wiki/Localhost" target="_blank">localhost</a> name is used to access the embedded
+The [localhost](https://en.wikipedia.org/wiki/Localhost) name is used to access the embedded
 system without knowledge of its IP address. \ref netSYS_GetHostName is used to retrieve the localhost name, whereas
 \ref netSYS_SetHostName changes the localhost name.
 
-The <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol" target="_blank">DHCP</a> client can be
+The [DHCP](https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol) client can be
 disabled or enabled at runtime. When disabled, the user provided network parameters defined in the `Net_Config_ETH_0.h`
 or `Net_Config_WiFi_0.h` configuration files are used. Switch the state of the DHCP client using \ref netDHCP_Disable and
 \ref netDHCP_Enable.
@@ -381,7 +381,7 @@ disturbed network communications).
 
 ```c
 #include "rl_net.h"
- 
+
 /* The following values are read from EEPROM */
 const char mac_addr[]  = { "00-01-02-32-3c-46" };
 const char ip_addr[]   = { "192.168.0.150"     };
@@ -391,39 +391,39 @@ const char pri_dns[]   = { "194.25.2.129"      };
 const char sec_dns[]   = { "194.25.2.130"      };
 const char host_name[] = { "Keil_MCB"          };
 bool DHCP_enabled      = false;
- 
+
 int main (void) {
   uint8_t buf[8];
- 
+
   netInitialize ();
- 
+
   /* Change host name */
   netSYS_SetHostName (host_name);
- 
+
   /* Change MAC address */
   netMAC_aton (mac_addr, buf);
   netIF_SetOption (NET_IF_CLASS_ETH | 0, netIF_OptionMAC_Address, buf, NET_ADDR_ETH_LEN);
- 
+
   if (DHCP_enabled == false) {
-    /* Static configuration mode */ 
+    /* Static configuration mode */
     netDHCP_Disable (NET_IF_CLASS_ETH | 0);
- 
+
     /* Change IP address */
     netIP_aton (ip_addr, NET_ADDR_IP4, buf);
     netIF_SetOption (NET_IF_CLASS_ETH | 0, netIF_OptionIP4_Address, buf, NET_ADDR_IP4_LEN);
- 
+
     /* Change Network mask */
     netIP_aton (net_mask, NET_ADDR_IP4, buf);
     netIF_SetOption (NET_IF_CLASS_ETH | 0, netIF_OptionIP4_SubnetMask, buf, NET_ADDR_IP4_LEN);
- 
+
     /* Change Default Gateway address */
     netIP_aton (def_gw, NET_ADDR_IP4, buf);
     netIF_SetOption (NET_IF_CLASS_ETH | 0, netIF_OptionIP4_DefaultGateway, buf, NET_ADDR_IP4_LEN);
- 
+
     /* Change Primary DNS Server address */
     netIP_aton (pri_dns, NET_ADDR_IP4, buf);
     netIF_SetOption (NET_IF_CLASS_ETH | 0, netIF_OptionIP4_PrimaryDNS, buf, NET_ADDR_IP4_LEN);
- 
+
     /* Change Secondary DNS Server address */
     netIP_aton (sec_dns, NET_ADDR_IP4, buf);
     netIF_SetOption (NET_IF_CLASS_ETH | 0, netIF_OptionIP4_SecondaryDNS, buf, NET_ADDR_IP4_LEN);

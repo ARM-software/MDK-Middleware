@@ -76,11 +76,11 @@ CMSIS-Drivers. The following table shows the relationship between drive - memory
   encapsulates either the Memory Bus interface or SPI (in which case an SPI driver required in addition).
 - The Middleware Component contains example drivers for Flash devices that can be used to implement other device drivers if
   required. The examples are:
-  AM29x800BB/<a href="https://www.farnell.com/datasheets/40281.pdf" target="_blank">M29W640FB</a>
+  AM29x800BB/[M29W640FB](https://www.farnell.com/datasheets/40281.pdf)
   (Flash with 16-bit memory bus interface),
-  <a href="https://www.infineon.com/dgdl/Infineon-S29GL064N_S29GL032N_64_Mbit_32_Mbit_3_V_Page_Mode_MirrorBit_Flash-DataSheet-v03_00-EN.pdf" target="_blank">S29GL064Nx2</a> (Flash with 32-bit
+  [S29GL064Nx2](https://www.infineon.com/dgdl/Infineon-S29GL064N_S29GL032N_64_Mbit_32_Mbit_3_V_Page_Mode_MirrorBit_Flash-DataSheet-v03_00-EN.pdf) (Flash with 32-bit
   memory bus interface), and
-  <a href="https://datasheet.octopart.com/AT45DB642D-CNU-Atmel-datasheet-9652374.pdf" target="_blank">AT45DB642D</a> (Flash with SPI interface using an SPI
+  [AT45DB642D](https://datasheet.octopart.com/AT45DB642D-CNU-Atmel-datasheet-9652374.pdf) (Flash with SPI interface using an SPI
   driver).
 - Other drives (memory card, USB memory device, NAND Flash) require appropriate CMSIS-Driver for the microcontroller
   device. If no suitable CMSIS-Driver is available for your selected device, you may create the required Flash interface
@@ -199,7 +199,7 @@ stamps are used.
 ### Journaling for the FAT File System {#journaling_fat}
 
 The File System Component supports a proprietary
-<a class="el" href="https://en.wikipedia.org/wiki/Journaling_file_system" target="_blank">journaling</a> mechanism for FAT
+[journaling](https://en.wikipedia.org/wiki/Journaling_file_system) mechanism for FAT
 which makes file I/O functions robust against system crashes or power failures. When FAT Journaling is enabled, the file
 allocation table and directory entries are protected. 
 
@@ -284,11 +284,11 @@ In general, the following devices are supported by the File System Component:
 
 |Memory Card | Specification|
 |------------|--------------|
-|<a href="https://en.wikipedia.org/wiki/Secure_Digital#SD" target="_blank">Standard Capacity SD Memory Card (SDSC)</a>  | Up to and including 2 GB                  |
-|<a href="https://en.wikipedia.org/wiki/Secure_Digital#SDHC" target="_blank">High Capacity SD Memory Card (SDHC)</a>    | More than 2GB and up to and including 32GB|
-|<a href="https://en.wikipedia.org/wiki/Secure_Digital#SDXC" target="_blank">Extended Capacity SD Memory Card (SDXC)</a>| More than 32GB and up to and including 2TB|
-|<a href="https://en.wikipedia.org/wiki/MultiMediaCard" target="_blank">MultiMediaCard (MMC)</a>                        | Up to specification version 4.2           |
-|<a href="https://en.wikipedia.org/wiki/MultiMediaCard#eMMC" target="_blank">Embedded MultiMediaCard (eMMC)</a>         | From specification 4.3                    |
+|[Standard Capacity SD Memory Card (SDSC)](https://en.wikipedia.org/wiki/Secure_Digital#SD)  | Up to and including 2 GB                  |
+|[High Capacity SD Memory Card (SDHC)](https://en.wikipedia.org/wiki/Secure_Digital#SDHC)    | More than 2GB and up to and including 32GB|
+|[Extended Capacity SD Memory Card (SDXC)](https://en.wikipedia.org/wiki/Secure_Digital#SDXC)| More than 32GB and up to and including 2TB|
+|[MultiMediaCard (MMC)](https://en.wikipedia.org/wiki/MultiMediaCard)                        | Up to specification version 4.2           |
+|[Embedded MultiMediaCard (eMMC)](https://en.wikipedia.org/wiki/MultiMediaCard#eMMC)         | From specification 4.3                    |
 
 ### List of Supported MCI Driver Capabilities {#mci_list_of_mci_capabilities}
 
@@ -330,7 +330,7 @@ Depending on the memory device type, appropriate data bus width will be selected
 #### High Speed Mode
 
 The MC Control Layer is able to automatically switch to
-<a href="https://www.sdcard.org/developers/sd-standard-overview/bus-speed-default-speed-high-speed-uhs-sd-express/" target="_blank">high speed mode</a> for SD cards
+[high speed mode](https://www.sdcard.org/developers/sd-standard-overview/bus-speed-default-speed-high-speed-uhs-sd-express/) for SD cards
 supporting SD specification version 1.10 or higher (3.3V signaling, bus clock frequency up to 50MHz) and MMC/eMMC devices
 supporting MMCA specification version 4.2 or higher (3.3V signaling, bus clock frequency up to 52MHz). In order to
 do so, the high speed mode needs to be supported by the corresponding \urlout{MCI-API}.
@@ -466,7 +466,7 @@ controlled Slave Select line.
 \note
 Do not implement \ref fs_mc_spi_control_ss when using "SPI Master to Multi-Slave Driver Wrapper". In this case Slave Select line
 is controlled by Multi-Slave driver function
-<a href="https://arm-software.github.io/CMSIS-Driver/latest/driver_SPI.html" target="_blank">SPI_Control_SlaveSelect</a>.
+[SPI_Control_SlaveSelect](https://arm-software.github.io/CMSIS-Driver/latest/driver_SPI.html).
 
 #### SPI bus frequency setting {#mc_spi_bus_freq_setting}
 
@@ -564,7 +564,7 @@ redundant information is recalculated and compared to those stored in the flash.
 
 Error correction codes (ECC) used in the NAND flash memory are block codes. This means that the redundant data bits are
 calculated for a fixed size block of used data. NTFL is implementing a 
-<a class="el" href="https://en.wikipedia.org/wiki/Hamming_code" target="_blank">Hamming</a> ECC algorithm which is able
+[Hamming](https://en.wikipedia.org/wiki/Hamming_code) ECC algorithm which is able
 to correct 1-bit and detect 2-bit errors for a fixed size of one sector or 512 bytes for SLC NAND Flashes. The redundant
 information is calculated in a way that a balance of correction power and efficiency is achieved.
 

@@ -8,8 +8,8 @@ throughout the development stage.
 ## Achilles Test Platform
 
 The
-**<a href="https://www.ge.com/digital/sites/default/files/download_assets/achilles-test-platform-from-ge-digital-datasheet.pdf" target="_blank">Achilles Test Platform</a>**
-by **<a href="https://www.ge.com/digital/">GE Digital</a>** provides a stress test that simulates cyber attacks via a TCP/IP network connection.
+**[Achilles Test Platform]()https://www.ge.com/digital/sites/default/files/download_assets/achilles-test-platform-from-ge-digital-datasheet.pdf**
+by **[GE Digital](https://www.ge.com/digital/)** provides a stress test that simulates cyber attacks via a TCP/IP network connection.
 GE Digital offers also a certification service for end-equipment.
 
 The **Network Component** is verified with the Achilles Test Software (ATS) and passes Level 1 tests. 

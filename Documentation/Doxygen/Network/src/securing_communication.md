@@ -2,7 +2,7 @@
 
 In today's world, **secure communication** is crucial for many applications to protect data transmission between two
 network nodes. The
-<a href="https://en.wikipedia.org/wiki/Transport_Layer_Security" target="_blank">Transport Layer Security (TLS)</a> protocol
+[Transport Layer Security (TLS)](https://en.wikipedia.org/wiki/Transport_Layer_Security) protocol
 is a standardized technology for establishing a secure, encrypted and authenticated link between two parties over an insecure
 network. TLS is an industry standard and is used in millions of devices and websites.
 
@@ -13,7 +13,7 @@ The Network component offers two ways to secure communication in an application:
 ## Using Mbed TLS {#use_mbed_tls}
 
 Although the Network component does not offer encryption and secure communication on its own, you can use Arm's
-<a href="https://www.trustedfirmware.org/projects/mbed-tls/" target="_blank">mbed TLS</a> software component to achieve this.
+[mbed TLS](https://www.trustedfirmware.org/projects/mbed-tls/) software component to achieve this.
 
 \image html secure_com_sw_stack.png
 
@@ -29,7 +29,7 @@ From the bottom up:
 
 The Mbed TLS library is designed for ease-of-use. The library is documented and has examples so you can easily understand how
 to use it. In the Network Component, Mbed TLS is used under the
-<a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache 2.0 license</a>, enabling you to use it in both
+[Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0), enabling you to use it in both
 open source and closed source projects. Mbed TLS is a fully featured and standards compliant SSL library offering server and
 client functionality in one single package.
 
@@ -46,23 +46,23 @@ or add much needed functionality.
 In order to perform the SSL or TLS protocol, a number of supporting functionality is required. The SSL/TLS library:
 
 - needs to perform symmetric cryptographic operations, such as
-  <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard" target="_blank">AES</a>, to encrypt the data over the
+  [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard), to encrypt the data over the
   connection.
 - uses asymmetric cryptographic operations, such as 
-  <a href="https://en.wikipedia.org/wiki/RSA_%28cryptosystem%29" target="_blank">RSA</a>, for identifying and authenticating
+  [RSA](https://en.wikipedia.org/wiki/RSA_%28cryptosystem%29), for identifying and authenticating
   the parties of the connection.
 - uses message digest operations, such as the
-  <a href="https://en.wikipedia.org/wiki/SHA-2" target="_blank">SHA-256</a> hash algorithm, to protect the integrity of
+  [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash algorithm, to protect the integrity of
   the information sent over the wire. 
 - needs to be able to parse, understand and use
-  <a href="https://en.wikipedia.org/wiki/X.509" target="_blank">X.509</a> certificates.
+  [X.509](https://en.wikipedia.org/wiki/X.509) certificates.
 - has to perform network operations to send and receive the protocol packets.
 
 All of this is hidden from most users and wrapped inside an SSL library, such as Mbed TLS, which developers can use to
 implement SSL or TLS in their applications.
 
 For more information on Mbed TLS and how it works, visit the
-<a href="https://www.trustedfirmware.org/projects/mbed-tls/" target="_blank">high-level design</a> overview page.
+[high-level design](https://www.trustedfirmware.org/projects/mbed-tls/) overview page.
 
 ### Add the mbed TLS library to a µVision project {#add_mbedtls}
 

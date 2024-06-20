@@ -284,8 +284,8 @@ The **Device Descriptor** (USB_DEVICE_DESCRIPTOR) is the root of the descriptor 
 ***idVendor*** and ***idProduct***, identify the connected device. The Windows operating system uses these numbers
 to determine which device driver must be loaded.
 
-***idVendor*** is the number assigned to each company producing USB-based devices. The <a class="el" href="https://www.usb.org/" target=
-"_blank">USB Implementers Forum</a> is responsible for administering the assignment of Vendor IDs.
+***idVendor*** is the number assigned to each company producing USB-based devices. The [USB Implementers Forum](https://www.usb.org/)
+is responsible for administering the assignment of Vendor IDs.
 
 The ***idProduct*** is another 16-bit field containing a number assigned by the manufacturer to identify a specific product.
 
@@ -902,7 +902,7 @@ error. Then, the host must not make a request for an *other_speed_configuration 
 a device does not support string descriptors, all references to string descriptors within device, configuration, and
 interface descriptors must be set to zero.
 
-String descriptors are encoded in <a href="https://en.wikipedia.org/wiki/Unicode" target="_blank">Unicode</a> so that
+String descriptors are encoded in [Unicode](https://en.wikipedia.org/wiki/Unicode) so that
 multiple languages can be supported with a single product. When requesting a string descriptor, the requester specifies the
 desired language using a 16-bit language ID (LANGID) defined by the USB-IF. String
 index zero is used for all languages and returns a string descriptor that contains an array of two-byte LANGID codes

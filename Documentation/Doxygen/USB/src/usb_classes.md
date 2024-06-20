@@ -24,7 +24,7 @@ control functionality). Audio class devices use isochronous data transfer for au
 be delivered using bulk transfers.
 
 A detailed description about ADC is provided by the
-<a class="el" href="https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50" target="_blank">USB Implementers Forum (USB-IF)</a>.
+[USB Implementers Forum (USB-IF)](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50).
 
 \note
 - The ADC implementation in the USB Component supports:
@@ -49,7 +49,7 @@ networking functions. Examples for communications equipment are:
 - \a Networking devices, such as ADSL and cable modems, as well as Ethernet adapters and hubs
 
 A detailed description about CDC is provided by the
-<a class="el" href="https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50">USB Implementers Forum (USB-IF)</a>.
+[USB Implementers Forum (USB-IF)](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50).
 
 ### CDC Class Features
 
@@ -62,7 +62,7 @@ A communications device has three basic tasks:
 The CDC implementation in the USB Component features:
 
 - Emulation of a Virtual COM-port using the \ref usbd_cdcFunctions_acm "ACM (Abstract Control Model)" subclass of CDC.
-- Emulation of network connectivity using the <a href="https://en.wikipedia.org/wiki/RNDIS">RDNIS</a> protocol using the
+- Emulation of network connectivity using the [RDNIS](https://en.wikipedia.org/wiki/RNDIS) protocol using the
   \ref usbd_cdcFunctions_acm "ACM (Abstract Control Model)" subclass of CDC. This enables
   \ref dev_cdc_acm_rndis "network connections over USB between a Windows host PC and an embedded device", as well as
   \ref dev_cdc_acm_rndis_bridge applications.
@@ -77,7 +77,7 @@ The following endpoint configurations are supported:
 ### Control Transfers
 
 The documents available at
-<a class="el" href="https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50" target="_blank">Communications Device Class</a>
+[Communications Device Class](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50)
 describe the nine available request types for the Abstract Control Model (ACM). All requests specified for the Network
 Control Model (NCM) by the documents in ECM120.pdf and NCM10.pdf are supported.
 are not supported.
@@ -135,7 +135,7 @@ examples for HID class devices are:
   bar-code readers)
 
 A detailed description about HID is provided by the
-<a class="el" href="https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50">USB Implementers Forum (USB-IF)</a>.
+[USB Implementers Forum (USB-IF)](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50).
 
 ### HID Class Features
 
@@ -154,7 +154,7 @@ of the HID class. These HID class implementation of the USB Component has the fo
 
 ### Control Transfers
 
-The <a class="el" href="https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50" target="_blank">HID specification</a> defines six
+The [HID specification](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50) defines six
 class-specific requests. They enable the USB Host to inquire about the capabilities and the current state of the device.
 Furthermore, the host can set the state of output and feature items. All six requests are transmitted using the control pipe.
 
@@ -206,7 +206,7 @@ examples for MSC class devices are:
 - Mobile phones
 
 A detailed description about MSC is provided by the
-<a class="el" href="https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50" target="_blank">USB Implementers Forum (USB-IF)</a>.
+[USB Implementers Forum (USB-IF)](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50).
 
 ### MSC Class Features
 
@@ -222,7 +222,7 @@ to the USB Bus as a mass storage device. The MSC class implementation in the USB
 
 ### Control Transfers
 
-The <a class="el" href="https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50" target="_blank">MSC specification</a>
+The [MSC specification](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50)
 defines five class-specific requests to be transmitted over the default (control) pipe. Only two of them are supported by
 the bulk-only protocol:
 
@@ -262,10 +262,10 @@ more information on the topic.
 The Custom Class for USB Host has two use cases:
 
 -# Implementing/supporting a
-   <a class=el href="https://www.usb.org/defined-class-codes" target="_blank">standard</a> Device class
+   [standard](https://www.usb.org/defined-class-codes) Device class
    other than \ref CDC "CDC", \ref HID "HID" and \ref MSC "MSC" (also CDC, HID and MSC class handling can be overridden).
 -# Implementing/supporting a
-   <a class=el href="https://www.usb.org/defined-class-codes" target="_blank">vendor specific</a> Device
+   [vendor specific](https://www.usb.org/defined-class-codes) Device
    class.
 
 Supporting Custom or Standard Class Devices requires the USB Host to be aware of the specific Class. On a PC, it is easy to
@@ -274,7 +274,7 @@ add Class support by simply installing the required driver. However, in an embed
 The \ref usbh_customFunctions are a starting point for adding support for any USB Device Class. Furthermore, all **Class
 Specific Requests** need to be handled by the application running on the USB Host system. For more information on these
 requests, please consult the
-<a class=el href="https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50" target="_blank">USB-IF Device Class Documents</a>.
+[USB-IF Device Class Documents](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50).
 The **user code template** file \ref USBH_Cust_UCT "USBH_User_CustomClass.c" contains all the functions that require
 adaptation.
 
@@ -285,10 +285,10 @@ configuration file.
 
 The Custom Class for USB Device has two use cases:
 -# Implementing/supporting a
-   <a class=el href="https://www.usb.org/defined-class-codes" target="_blank">standard</a> Device class
+   [standard](https://www.usb.org/defined-class-codes) Device class
    other than \ref ADC "ADC", \ref CDC "CDC", \ref HID "HID", and \ref MSC "MSC".
 -# Implementing/supporting a
-   <a class=el href="https://www.usb.org/defined-class-codes" target="_blank">vendor specific</a> Device
+   [vendor specific](https://www.usb.org/defined-class-codes) Device
    class.
 
 The Custom Class gives full control of the USB handling. It is designed to react on any kind of event on any of the assigned

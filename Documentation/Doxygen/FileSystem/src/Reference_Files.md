@@ -1,14 +1,7 @@
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/* Reference Section */
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-
-/**
 \defgroup   FS_files Directories and Files
 \brief      Folders and files related to the File System Component
-\details
 
-
-<b>Directories</b>
+**Directories**
 
 The table below provides a complete overview of the folders that contain the files related to the File System Component.
 
@@ -18,14 +11,11 @@ Directory              | Description
 ./FileSystem/Include   | Include files; once a component is select an Include Path is set for the C/C++ compiler to this directory.
 ./FileSystem/Source    | Source files for File System component.
 
-
-<b>Header Files</b>
+**Header Files**
 
 The API interface of the File System component is provided in the header files %rl_fs.h.
 The table below provides a complete overview of all header files.
 
 Header File     | Used by                | Description
 :-------------- | :--------------------- | :------------------------------------
-%rl_fs.h        | application code       | API interface for the File System component
-
-*/
+`%rl_fs.h`      | application code       | API interface for the File System component

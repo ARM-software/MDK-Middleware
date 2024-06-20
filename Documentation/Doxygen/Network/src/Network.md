@@ -53,8 +53,8 @@ or WiFi module).
 \note Usually, WiFi chips and modules have their own networking stack incorporated. This means that payload data is sent via a
 serial interface to the WiFi chip/module and the Ethernet frames are assembled inside. If you intend to use the
 MDK-Middleware Network component with a WiFi chip/module, make sure that its WiFi driver supports the
-<a href="https://arm-software.github.io/CMSIS_5/develop/Driver/html/group__wifi__bypass__gr.html" target="_blank">bypass mode</a>
-(currently only available for the <a href="https://www.keil.arm.com/packs/qca400x_wifi_driver-mdk-packs/versions/" target="_blank">Qualcomm QCA400x</a>).
+[bypass mode](https://arm-software.github.io/CMSIS_5/develop/Driver/html/group__wifi__bypass__gr.html)
+(currently only available for the [Qualcomm QCA400x](https://www.keil.arm.com/packs/qca400x_wifi_driver-mdk-packs/versions/)).
 This mode allows to send the Ethernet frames assembled by the Network component transparently through the WiFi chip/module.
 Some devices may support transparent mode at a higher level, such as TCP - this will not work with the Network component.
 

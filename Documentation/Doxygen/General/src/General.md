@@ -22,10 +22,10 @@ Software components or APIs outside the scope of this documentation are:
   visibility into internal operation of embedded applications and software components (optional).
 - \urlout{CMSIS-Driver}: required \ref DriverInterface "driver interface" for the MDK-Middleware software components  (required).
 
-> **Notes**
-> - Before using MDK-Middleware, please make sure that your selected microcontroller device offers \urlout{CMSIS-Driver} support.
-> - The middleware components require a \urlout{CMSIS-RTOS2} compliant real-time operating system for task scheduling.
-> - MDK-Middleware uses software components from the new \urlout{CMSIS-View} and \urlout{CMSIS-Compiler} CMSIS-Packs.
+\note
+- Before using MDK-Middleware, please make sure that your selected microcontroller device offers \urlout{CMSIS-Driver} support.
+- The middleware components require a \urlout{CMSIS-RTOS2} compliant real-time operating system for task scheduling.
+- MDK-Middleware uses software components from the new \urlout{CMSIS-View} and \urlout{CMSIS-Compiler} CMSIS-Packs.
 
 ## Supported toolchains {#gen_supported_toolchains}
 
@@ -54,31 +54,31 @@ The following table gives you links to the respective sections of each middlewar
     <th colspan="5" style="text-align:center;">Links to Documentation</th>
   </tr>
   <tr>
-    <td><b>Create an Application</b></td>
-    <td><a href="../FileSystem/fs_create_app.html"><b>File System</b></a></td>
-    <td><a href="../Network/network_create_app.html"><b>Network</b></a></td>
-    <td><a href="../USB/USB_Device.html#Creation_Steps"><b>USB Device</b></a></td>
-    <td><a href="../USB/USB_Host.html#Create_a_USB_Host_Application"><b>USB Host</b></a></td>
+    <td>**Create an Application**</td>
+    <td>[**File System**](../FileSystem/fs_create_app.html)</td>
+    <td>[**Network**](../Network/network_create_app.html)</td>
+    <td>[**USB Device**](../USB/USB_Device.html#Creation_Steps)</td>
+    <td>[**USB Host**](../USB/USB_Host.html#Create_a_USB_Host_Application)</td>
   </tr>
   <tr>
-    <td><b>Example projects</b></td>
-    <td><a href="../FileSystem/fs_examples.html"><b>File System</b></a></td>
-    <td><a href="../Network/nw_examples.html"><b>Network</b></a></td>
-    <td><a href="../USB/USB_Device_tutorial.html"><b>USB Device</b></a></td>
-    <td><a href="../USB/USB_Host_tutorial.html"><b>USB Host</b></a></td>
+    <td>**Example projects**</td>
+    <td>[**File System**](../FileSystem/fs_examples.html)</td>
+    <td>[**Network**](../Network/nw_examples.html)</td>
+    <td>[**USB Device**](../USB/USB_Device.html#USB_Device_Tutorial)</td>
+    <td>[**USB Host**](../USB/USB_Host.html#USB_Host_Tutorial)</td>
   </tr>
   <tr>
-    <td><b>Resource Requirements</b></td>
-    <td><a href="../FileSystem/fs_resource_requirements.html"><b>File System</b></a></td>
-    <td><a href="../Network/nw_resource_requirements.html"><b>Network</b></a></td>
-    <td><a href="../USB/usb_resource_requirements.html#usbd_res_req"><b>USB Device</b></a></td>
-    <td><a href="../USB/usb_resource_requirements.html#usbh_res_req"><b>USB Host</b></a></td>
+    <td>**Resource Requirements**</td>
+    <td>[**File System**](../FileSystem/fs_resource_requirements.html)</td>
+    <td>[**Network**](../Network/nw_resource_requirements.html)</td>
+    <td>[**USB Device**](../USB/usb_resource_requirements.html#usbd_res_req)</td>
+    <td>[**USB Host**](../USB/usb_resource_requirements.html#usbh_res_req)</td>
   </tr>
   <tr>
-    <td><b>Reference</b></td>
-    <td><a href="../FileSystem/modules.html"><b>File System</b></a></td>
-    <td><a href="../Network/modules.html"><b>Network</b></a></td>
-    <td><a href="../USB/group__usbd.html"><b>USB Device</b></a></td>
-    <td><a href="../USB/group__usbh.html"><b>USB Host</b></a></td>
+    <td>**Reference**</td>
+    <td>[**File System**](../FileSystem/modules.html)</td>
+    <td>[**Network**](../Network/modules.html)</td>
+    <td>[**USB Device**](../USB/group__usbd.html)</td>
+    <td>[**USB Host**](../USB/group__usbh.html)</td>
   </tr>
 </table>

@@ -41,11 +41,11 @@ For using a NOR Flash drive, a \urlout{Flash-API} driver is required, which enca
 
 If your NOR Flash device is not listed, use one of the examples as a reference to implement a driver for your specific
 device:
-- AM29x800BB/<a href="https://www.farnell.com/datasheets/40281.pdf" target="_blank">M29W640FB</a>
+- AM29x800BB/[M29W640FB](https://www.farnell.com/datasheets/40281.pdf)
 (Flash with 16-bit memory bus interface)
-- <a href="https://www.infineon.com/dgdl/Infineon-S29GL064N_S29GL032N_64_Mbit_32_Mbit_3_V_Page_Mode_MirrorBit_Flash-DataSheet-v03_00-EN.pdf?fileId=8ac78c8c7d0d8da4017d0ed556fd548b" target="_blank">S29GL064Nx2</a> (Flash with 32-bit
+- [S29GL064Nx2](https://www.infineon.com/dgdl/Infineon-S29GL064N_S29GL032N_64_Mbit_32_Mbit_3_V_Page_Mode_MirrorBit_Flash-DataSheet-v03_00-EN.pdf?fileId=8ac78c8c7d0d8da4017d0ed556fd548b) (Flash with 32-bit
 memory bus interface)
-- <a href="https://datasheet.octopart.com/AT45DB642D-CNU-Atmel-datasheet-9652374.pdf" target="_blank">AT45DB642D</a> (Flash with SPI interface using an SPI
+- [AT45DB642D](https://datasheet.octopart.com/AT45DB642D-CNU-Atmel-datasheet-9652374.pdf) (Flash with SPI interface using an SPI
 driver)
 
 \image html fs_flash_drivers.png "Flash (API) Drivers shipped with the Middleware Component"
@@ -153,7 +153,7 @@ For more information, check the File System component's \ref fs_resource_require
 
 ## User Code Implementation{#fs_User_Code_Implementation}
 
-All available functions are documented in the <a class=el href="./modules.html" >Reference</a> section of the File System
+All available functions are documented in the [Reference](./modules.html) section of the File System
 Component. These routines can be adapted to the needs of the microcontroller application, in case more functionality is
 needed.
 

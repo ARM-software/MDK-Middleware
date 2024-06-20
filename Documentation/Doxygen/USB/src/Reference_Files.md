@@ -1,5 +1,5 @@
 \defgroup   usb_files Directories and Files
-\brief      Directory structure and list of files.
+\brief      Folders and files related to the USB Component
 
 **Directories**
 

@@ -43,7 +43,7 @@ USB Device peripherals can have one or more of the following USB Device Classes:
 - \ref CustomClass "Custom Class" is used to implement either a standard or a vendor specific USB Device Class.
 
 Generic information about USB Device Classes can be found on the USB-IF's
-<a class="el" href="https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50" target="_blank">Approved Class Specification Documents</a>
+[Approved Class Specification Documents](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50)
 page.
 
 Multiple RTE Component instances can interface with more than one USB Controller or can implement multiple
@@ -78,18 +78,18 @@ development for the USB Host application. An exemplary application for interfaci
 
 Only a few steps are necessary to complete the RTE Component selection:
 
- -# From the USB Component:
-   - Select **USB:CORE** that provides the basic functionality required for USB communication.
-   - Set **USB:Device** to '1'. This creates one USB Device for communication with the USB Host.
-   - Select the desired USB Classes (HID, MSC, CDC, ADC, or Custom Class).  For example, set **USB:Device:HID** to '1' to create a single HID Class Device. If
-     you select more than one class or multiple instances of the same class on the same device, you will create a **Composite USB Device**.
- -# From the Drivers Component:
-   - Select an appropriate USB Device driver suitable for your application.
- -# From the Device Component:
-   - Additional device specific drivers may be required according to the validation output.
- -# From the CMSIS Component:
-   - Select the **CMSIS:CORE** to provide the core interface to the processor.
-   - Select a suitable **CMSIS:RTOS2** that is a required for the application.
+-# From the USB Component:
+  - Select **USB:CORE** that provides the basic functionality required for USB communication.
+  - Set **USB:Device** to '1'. This creates one USB Device for communication with the USB Host.
+  - Select the desired USB Classes (HID, MSC, CDC, ADC, or Custom Class).  For example, set **USB:Device:HID** to '1' to create a single HID Class Device. If
+    you select more than one class or multiple instances of the same class on the same device, you will create a **Composite USB Device**.
+-# From the Drivers Component:
+  - Select an appropriate USB Device driver suitable for your application.
+-# From the Device Component:
+  - Additional device specific drivers may be required according to the validation output.
+-# From the CMSIS Component:
+  - Select the **CMSIS:CORE** to provide the core interface to the processor.
+  - Select a suitable **CMSIS:RTOS2** that is a required for the application.
 
 \image html "rteusbx.png" "RTE Component Selection" width=90%
 
@@ -215,8 +215,7 @@ can be easily overridden by user code by creating descriptors with the same name
 | `const uint8_t usbdn_other_speed_config_descriptor_fs[]` | Other speed configuration descriptor for low/full-speed
 | `const uint8_t usbdn_other_speed_config_descriptor_hs[]` | Other speed configuration descriptor for high-speed
 
-\note
-- `n` in `usbdn_` represents the USB Device instance. So for the USB Device 0 instance, you have to use `usbd0_...`
+\note `n` in `usbdn_` represents the USB Device instance. So for the USB Device 0 instance, you have to use `usbd0_...`
 
 **Code Example**
 
@@ -685,12 +684,12 @@ The example can be tested on a Windows PC using the WinUSB_Test.exe utility prov
 |----------------------|-----------|
 | Setup Packet         | Normally, leave open. Will be filled automatically from the next options. |
 | Direction            | Specify the communication direction. If you want to read for example the device descriptor from the device, use Device-to-Host. |
-| <a href="https://www.beyondlogic.org/usbnutshell/usb6.shtml" target="_blank">Type</a>                | Type of the control request (standard/class/vendor). |
-| <a href="https://www.beyondlogic.org/usbnutshell/usb6.shtml" target="_blank">Recipient</a>           | Recipient of the control transfer message (device/interface/endpoint/other). |
-| <a href="https://www.beyondlogic.org/usbnutshell/usb6.shtml" target="_blank">bRequest</a>            | Specify the setup packet request being made. |
-| <a href="https://www.beyondlogic.org/usbnutshell/usb6.shtml" target="_blank">wValue</a>              | Specify the wValue of the request. |
-| <a href="https://www.beyondlogic.org/usbnutshell/usb6.shtml" target="_blank">wIndex</a>              | Specify the wIndex of the request. |
-| <a href="https://www.beyondlogic.org/usbnutshell/usb6.shtml" target="_blank">wLength</a>             | Specify the wLength of the request. |
+| [Type](https://www.beyondlogic.org/usbnutshell/usb6.shtml)                | Type of the control request (standard/class/vendor). |
+| [Recipient](https://www.beyondlogic.org/usbnutshell/usb6.shtml)           | Recipient of the control transfer message (device/interface/endpoint/other). |
+| [bRequest](https://www.beyondlogic.org/usbnutshell/usb6.shtml)            | Specify the setup packet request being made. |
+| [wValue](https://www.beyondlogic.org/usbnutshell/usb6.shtml)              | Specify the wValue of the request. |
+| [wIndex](https://www.beyondlogic.org/usbnutshell/usb6.shtml)              | Specify the wIndex of the request. |
+| [wLength](https://www.beyondlogic.org/usbnutshell/usb6.shtml)             | Specify the wLength of the request. |
 
 **Data Phase**
 
@@ -866,7 +865,7 @@ The USB Mouse example application shows how to control the mouse pointer of a ho
 USB Device HID.
 
 The following picture shows an exemplary connection of the development board (in this case a
-<a class="el" href="https://www.keil.com/boards2/keil/mcbstm32f400/" target="_blank">MCBSTM32F400</a>) to a host PC.
+[MCBSTM32F400](https://www.keil.com/boards2/keil/mcbstm32f400/)) to a host PC.
 Using the joystick on the development board you can move the mouse pointer on the screen. Pressing the joystick down will
 issue a left-click action.
 
@@ -874,7 +873,7 @@ issue a left-click action.
 
 #### Create the "USB Mouse" Project
 
-In this example, we are using the <a class="el" href="https://www.keil.com/boards2/keil/mcbstm32f400/" target="_blank">MCBSTM32F400</a> board with the STM32F407IGHx device.
+In this example, we are using the [MCBSTM32F400](https://www.keil.com/boards2/keil/mcbstm32f400/) board with the STM32F407IGHx device.
 Create a new project in MDK (Select Device **STMicroelectronics:STM32F4 Series: STM32F407:STM32F407IG:STM32F407IGHx**).
 In the **Manage Run-Time Environment** window, select the following components:
 
@@ -1317,13 +1316,13 @@ network connectivity. The Linux Kernel provides native support for the CDC (NCM)
 connect a Ubuntu system via USB to an MCBSTM32F400 development board.
 
 The following picture shows an exemplary connection of the development board (in this case a
-<a class="el" href="https://www.keil.com/boards2/keil/mcbstm32f400/" target="_blank">MCBSTM32F400</a>) to a host PC.
+[MCBSTM32F400](https://www.keil.com/boards2/keil/mcbstm32f400/)) to a host PC.
 
 \image html "eth_over_usb_example_setup.png"
 
 #### Create the "Ethernet-over-USB" Project
 
-In this example, we are using the <a class="el" href="https://www.keil.com/boards2/keil/mcbstm32f400/" target="_blank">MCBSTM32F400</a> board with the STM32F407IGHx device.
+In this example, we are using the [MCBSTM32F400](https://www.keil.com/boards2/keil/mcbstm32f400/) board with the STM32F407IGHx device.
 Create a new project in MDK (Select Device **STMicroelectronics:STM32F4 Series: STM32F407:STM32F407IG:STM32F407IGHx**).
 In the **Manage Run-Time Environment** window, select the following components:
 
@@ -1769,7 +1768,7 @@ The USB Device RNDIS to Ethernet Bridge example connects a Windows host via USB 
 Ethernet interface for network connectivity.
 
 The following picture shows an exemplary connection of the development board (in this case a
-<a class="el" href="https://www.keil.com/boards2/keil/mcb4300/" target="_blank">MCB4300</a>) to a host PC.
+[MCB4300](https://www.keil.com/boards2/keil/mcb4300/)) to a host PC.
 
 \image html usb_dev_rndis_eth_bridge.png
 
@@ -1849,7 +1848,7 @@ Windows hosts using USB.
 \note The following description is based on the HTTP Server for a MCB1800 development board.
 
 The following picture shows an exemplary connection of the development board (in this case a
-<a class="el" href="https://www.keil.com/boards2/keil/mcb1800/" target="_blank">MCB1800</a>) to a host PC.
+[MCB1800](https://www.keil.com/boards2/keil/mcb1800/)) to a host PC.
 
 \image html "usb_web_server_example.png"
 
@@ -2007,7 +2006,7 @@ based projects are available (`HIDClient.vproj`). The structure of the project i
 
 - `HID.cpp` contains the necessary functions that are used in this example application to communicate with an USB HID device.
   All available functions in Windows for HID interaction are explained here:
-  <a class="el" href="https://learn.microsoft.com/en-us/windows-hardware/drivers/hid/introduction-to-hid-concepts" target=_blank>Introduction to HID Concepts</a>.
+  <a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/hid/introduction-to-hid-concepts" target=_blank>Introduction to HID Concepts</a>.
   The function:
   - `HID_Init` initializes the HID class to be used with the USB Host.
   - `HID_UnInit` de-initializes the HID class from the USB Host.
@@ -2077,7 +2076,7 @@ will find in each of the files that make up your WinUSB_Test application.
 
 - `.\USB\WinUsbIF.cpp` contains the necessary functions that are used in this example application to communicate with
   a USB device via the WinUSB interface. Refer to the
-  <a class="el" href="https://learn.microsoft.com/en-us/windows/win32/api/winusb/" target=_blank>WinUSB Functions</a>
+  <a href="https://learn.microsoft.com/en-us/windows/win32/api/winusb/" target=_blank>WinUSB Functions</a>
   documentation for an overview of the available functions.	The function:
   - `WinUsbIF_Initialize` initializes the WinUSB interface to be used with the USB Host.
   - `WinUsbIF_Uninitialize` de-initializes the WinUSB interface from the USB Host.
