@@ -36,6 +36,7 @@
       - removed support for legacy fdelete function
       - fixed allocation table write access (regression) when using FAT12
       - fixed FAT volume label character checking
+      - corrected ffind error code for FAT on repeated search without wildcard
       USB Component Version 8.0.0
       - removed CORE component variants
       - changed source config files to headers

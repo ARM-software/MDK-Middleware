@@ -15,6 +15,7 @@
         - removed support for legacy fdelete function
         - fixed allocation table write access (regression) when using FAT12
         - fixed FAT volume label character checking
+        - corrected ffind error code for FAT on repeated search without wildcard
       </td>
     </tr>
     <tr>
