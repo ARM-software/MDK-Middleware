@@ -46,13 +46,13 @@ If any other component is used, like Network or File System, please refer to its
   old values into the new file:
   - if the old file does not exist then debugging was not configured previously
   - note that **USB Device Debug** and **USB Host Debug** order has swapped in the new configuration file.
-  \image html usb_debug_migrate.png "Old USB_Debug.c to new USB_Debug.h" width=90%
+  ![Old USB_Debug.c to new USB_Debug.h](usb_debug_migrate.png) width=90%
 
 ### USB Device
 
 - compare the existing **USBD_Config_0..3.c** files with the new **USBD_Config_0..3.h** files and copy
   old values into the new files:
-  \image html usbd_config_migrate.png "Old USBD_Config_0..3.c to new USBD_Config_0..3.h" width=90%
+  ![Old USBD_Config_0..3.c to new USBD_Config_0..3.h](usbd_config_migrate.png) width=90%
 
 ### USB Host
 
@@ -64,7 +64,7 @@ If any other component is used, like Network or File System, please refer to its
     to the new configuration file.
   - for **Memory Pool Size** update the new value by **adding 128** since old setting did not include
     additional necessary space for memory pool internal operation.
-  \image html usbh_config_migrate.png "Old USBD_Config_0..3.c to new USBD_Config_0..3.h" width=90%
+  ![Old USBD_Config_0..3.c to new USBD_Config_0..3.h](usbh_config_migrate.png) width=90%
 
 \note **OHCI** and **EHCI** drivers are not a part of the **MDK-Middleware** anymore but are distributed separately
       via the **CMSIS-Driver** pack, so please consult CMSIS-Driver documentation on configuring and using those drivers.

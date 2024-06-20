@@ -28,7 +28,7 @@ The HTTP Server example uses a fixed set of web pages stored in ROM, but is capa
 underlying hardware by using the CGI interface. The following picture shows an exemplary connection of the development board
 and a Computer.
 
-\image html "cws_setup.png"
+![HTTP server hardware setup](cws_setup.png)
 
 The Abstract.txt file contained in the Documentation group of the Project window gives you more information on the general
 setup and the available I/O of the development board.
@@ -38,7 +38,7 @@ setup and the available I/O of the development board.
 Open the example project in MDK (the \urlout{uv4_ca_packinstaller} web page explains how to do this). The µVision Project window
 should display a similar project structure:
 
-\image html "cws_proj_structure.png" "Compact Web Server Project Structure"
+![Compact Web Server Project Structure](cws_proj_structure.png)
 
 #### Source Files
 
@@ -86,7 +86,7 @@ automatically connected. You need to log in. As for all network examples, use "a
 no password (you can change the defaults in the `Net_Config_HTTP_Server.h` file). The following (or a similar) page will
 come up in your browser:
 
-\image html "cws_frontpage.png"
+![HTTP server web page](cws_frontpage.png)
 
 If you get an error message, please verify that all network, IP and other settings are correct.
 
@@ -96,7 +96,7 @@ The HTTPS Server example uses a fixed set of web pages stored in ROM, but is cap
 underlying hardware by using the CGI interface. The HTTPS server uses the ARM mbed TLS software component to enable
 \ref secure_communication. The following picture shows an exemplary connection of the development board and a Computer.
 
-\image html "cws_setup.png"
+![HTTPS server hardware setup](cws_setup.png)
 
 The Abstract.txt file contained in the Documentation group of the Project window gives you more information on the general
 setup and the available I/O of the development board.
@@ -106,7 +106,7 @@ setup and the available I/O of the development board.
 Open the example project in MDK (the \urlout{uv4_ca_packinstaller} web page explains how to do this). The µVision Project window
 should display a similar project structure:
 
-\image html "cws_proj_structure.png" "Compact Secure Web Server Project Structure"
+![Compact Secure Web Server Project Structure](cws_proj_structure.png)
 
 #### Source Files
 
@@ -152,7 +152,7 @@ automatically connected. You need to log in. As for all network examples, use "a
 no password (you can change the defaults in the `Net_Config_HTTP_Server.h` file). The following (or a similar) page will
 come up in your browser:
 
-\image html "cws_frontpage.png"
+![HTTPS server web page](cws_frontpage.png)
 
 If you get an error message, please verify that all network, IP and other settings are correct.
 
@@ -162,7 +162,7 @@ The HTTP Upload example gives a web based interface to the SD card that is attac
 to list the contents of the memory card and to upload files to it. The following picture shows an exemplary connection of the
 development board and a Computer.
 
-\image html "http_upload_setup.png"
+![HTTP upload example hardware setup](http_upload_setup.png)
 
 The Abstract.txt file contained in the Documentation group of the Project window gives you more information on the general
 setup and the available I/O of the development board.
@@ -172,7 +172,7 @@ setup and the available I/O of the development board.
 Open the example project in MDK (the \urlout{uv4_ca_packinstaller} web page explains how to do this). The µVision Project window
 should display a similar project structure:
 
-\image html "http_upload_proj_structure.png" "HTTP Upload Project Structure"
+![HTTP Upload Project Structure](http_upload_proj_structure.png)
 
 #### Source Files
 
@@ -207,7 +207,7 @@ defined in the `Net_Config.h` file. If you have a DCHP server in your network, y
 need to log in. As for all network examples, use "admin" (without the quotes) for the user and no password (you can change
 the defaults in the `Net_Config_HTTP_Server.h` file). The following (or a similar) page will come up in your browser:
 
-\image html "http_upload_frontpage.png"
+![HTTP upload web page](http_upload_frontpage.png)
 
 If you get an error message, please verify that all network, IP and other settings are correct.
 
@@ -216,14 +216,14 @@ If you get an error message, please verify that all network, IP and other settin
 This tutorial creates a FTP server that allows you to manage files from any machine using a FTP client. The following picture
 shows an exemplary connection of the development board and a Computer.
 
-\image html "ftp_setup.png"
+![FTP server hardware setup](ftp_setup.png)
 
 ### Build the "FTP Server" Project
 
 Open the example project in MDK (the \urlout{uv4_ca_packinstaller} web page explains how to do this). The µVision Project window
 should display a similar project structure:
 
-\image html "ftp_proj_structure.png" "FTP Server Project Structure"
+![FTP Server Project Structure](ftp_proj_structure.png)
 
 #### Source Files
 
@@ -263,7 +263,7 @@ in your network, it will automatically connect to the FTP server. You will be as
 As for all network examples, this is "admin" (without the quotes) for the user and no password (you can change the defaults
 in the `Net_Config_FTP_Server.h` file). After a successful log in, you should see something like this:
 
-\image html "ftp_server.png"
+![FTP server command line interface](ftp_server.png)
 
 ## Telnet Server {#Telnet_Example}
 
@@ -271,14 +271,14 @@ Often, it is necessary to have a **Command Line Interface (CLI)** for interactio
 to use the Telnet server for this purpose. The following picture shows an exemplary connection of the development board and
 a Computer.
 
-\image html "telnet_setup.png"
+![Telnet example hardware setup](telnet_setup.png)
 
 ### Build the "Telnet" Project
 
 Open the example project in MDK (the \urlout{uv4_ca_packinstaller} web page explains how to do this). The µVision Project window
 should display a similar project structure:
 
-\image html "telnet_proj_structure.png" "Telnet Client Project Structure"
+![Telnet Client Project Structure](telnet_proj_structure.png)
 
 #### Source Files
 
@@ -316,21 +316,21 @@ in the hostname field and use the standard Telnet port 23. You will be asked for
 tutorials, the default is `admin` for the username without any password (you can change the defaults in the
 `Net_Config_Telnet_Server.h` file). Using the `help` command, you can see the list of available CLI commands:
 
-\image html "telnet_cli.png" "Telnet Command Line Interface"
+![Telnet Command Line Interface](telnet_cli.png)
 
 ## SMTP Client {#SMTP_Client_Example}
 
 SMTP is used for sending e-mail notifications from an embedded system to various recipients. This example shows how to setup
 a SMTP client for this purpose. The following picture shows an exemplary connection of the development board and a Computer.
 
-\image html "smtp_setup.png"
+![SMTP client hardware setup](smtp_setup.png)
 
 ### Build the "SMTP Client" Project
 
 Open the example project in MDK (the \urlout{uv4_ca_packinstaller} web page explains how to do this). The µVision Project window
 should display a similar project structure:
 
-\image html "smtp_proj_structure.png" "SMTP Client Project Structure"
+![SMTP Client Project Structure](smtp_proj_structure.png)
 
 #### Source Files
 
@@ -369,14 +369,14 @@ devices for conditions that warrant administrative attention. It is the most pop
 TCP/IP protocol suite. The SNMP Agent example shows how to use SNMP to control an embedded system. The following picture
 shows an exemplary connection of the development board and a Computer.
 
-\image html "snmp_example_setup.png"
+![SNMP agent hardware setup](snmp_example_setup.png)
 
 ### Build the "SNMP Agent" Project
 
 Open the example project in MDK (the \urlout{uv4_ca_packinstaller} web page explains how to do this). The µVision Project window
 should display a similar project structure:
 
-\image html "snmp_proj_structure.png" "SNMP Agent Project Structure"
+![SNMP Agent Project Structure](snmp_proj_structure.png)
 
 #### Source Files
 
@@ -407,7 +407,7 @@ To test this example, run the Windows application 'SNMPTest.exe' from C:\\Keil\\
 in the IP address of your Embedded SNMP Agent and click 'Connect'. When connected, you can change the LCD text on the target,
 control the on-board LED diodes and monitor the state of on-board push-buttons.
 
-\image html "SNMPTest_exe.png" "SNMP Test Application"
+![SNMP Test Application](SNMPTest_exe.png)
 
 ## BSD Client/Server {#BSD_Examples}
 
@@ -416,14 +416,14 @@ network. In general, they are relying on TCP and UDP socket communication. The B
 demonstrate BSD compliant communication. To make it work, you need to setup two development boards within the same network:
 a BSD server and a BSD client. An exemplary setup could look like this:
 
-\image html "bsd_example_setup.png"
+![BSD example hardware setup](bsd_example_setup.png)
 
 ### Build the "BSD" Projects
 
 Open the two example projects in MDK (the \urlout{uv4_ca_packinstaller} web page explains how to do this). 
 The µVision Project window should display a similar project structure:
 
-\image html "bsd_proj_structure.png" "Structure of the BSD Projects"
+![Structure of the BSD Projects](bsd_proj_structure.png)
 
 #### Source Files
 
@@ -456,4 +456,4 @@ To test the BSD Server example stand-alone, run the Windows application 'LEDSwit
 C:\\Keil\\ARM\\Utilities\\LEDSwitch\\Release and type in the IP address of your development board (IPv4 and IPv6 addresses
 are accepted). When connected, you can control the on-board LEDs.
 
-\image html "ledswitch.png" "LED Switch Application"
+![LED Switch Application](ledswitch.png)

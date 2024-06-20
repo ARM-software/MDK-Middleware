@@ -19,7 +19,7 @@ about IP addresses, routing and packet fragmentation and reassembly (if this is 
 On the **Ethernet, WiFi, PPP and SLIP layer**, bits are packed into data frames and physical addressing is managed (for example
 using MAC addresses).
 
-\image html nw_hierarchy.png "Network library hierarchy"
+![Network library hierarchy](nw_hierarchy.png)
 
 ## Best practices {#trbl_bestpractice}
 
@@ -34,7 +34,7 @@ The following assumes that you are using \ref netEvrSupport "Event Recorder" bas
 \urlout{CMSIS-View} shows you static information about the operation of a software component. In the µVision
 debugger, go to **Debug -> View -> Watch windows -> Network** to see the status information of the network library:
 
-\image html trbl_cv_nw.png "Component Viewer for the Network library"
+![Component Viewer for the Network library](trbl_cv_nw.png)
 
 This indicates the following:
 
@@ -65,7 +65,7 @@ communication:
 
 When the BSD socket is connected, the state of the underlying TCP socket is shown in the viewer as well:
 
-\image html trbl_cv_nw_tcp.png
+![TCP sockets in oCOmponent Viewer](trbl_cv_nw_tcp.png)
 
 This shows the remote IP address and port number, as well as the local port number, the value for the timeout timer and the
 active TCP socket options. This is valuable information in addition to the events shown in Event Recorder.

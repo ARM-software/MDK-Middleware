@@ -3,7 +3,7 @@
 The **Network Component** contains services, protocol sockets, and physical communication interfaces for creating IPv4
 and IPv6 networking applications.
 
-\image html "Network.svg" "Network Component Structure"
+![Network Component Structure](Network.svg)
 
 The various \ref netServices "services" provide program templates for common networking tasks:
 

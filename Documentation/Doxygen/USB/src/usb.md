@@ -3,7 +3,7 @@
 The **USB Component** enables you to create **USB Device** and **USB Host** applications and is part of \url{MW-General}.
 The USB Protocol is handled by the USB Component, so that developers can focus on their application needs.
 
-\image html "usbmiddleware.svg" "USB Component Structure"
+![USB Component Structure](usbmiddleware.svg)
 
 The **USB Component** is structured as follows:
 

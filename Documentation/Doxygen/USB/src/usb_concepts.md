@@ -34,7 +34,7 @@ propagation, the maximum number of tiers allowed is seven:
 - One tier for the host (bus master).
 - Six tiers for hubs and devices.
 
-\image html "tiernetwork.png" "Tier Network"
+![Tier Network](tiernetwork.png)
 
 USB devices are divided into device classes:
 
@@ -57,7 +57,7 @@ any programming complexity and are transparent as far as the programmer is conce
 whether connected directly to a root-hub or whether connected via intermediate hubs. All USB devices are available as
 addressable nodes in this master/slave network. Only the host can initiate a data transfer in the network.
 
-\image html "starnetwork.png" "Star Network"
+![Star Network](starnetwork.png)
 
 \note
 - Only one host exists in any USB system.
@@ -72,7 +72,7 @@ The USB Host and the peripheral USB Device have distinct layers, as shown in the
 layers are \b logical Host-Device interfaces between each horizontal layer. Between the logical connections data is transferred
 using \ref pipe_types.
 
-\image html "usb_endpoints.png" "Logical Connections Between USB Host Clients and USB Device Endpoints"
+![Logical Connections Between USB Host Clients and USB Device Endpoints](usb_endpoints.png)
 
 ### Pipes {#pipe_types}
 
@@ -112,14 +112,14 @@ Control Transfers have three stages:
 
 -# The **SETUP** stage carries 8 bytes called the Setup packet, defining the request, and specifying how many data should be
   transferred in the DATA stage.
-\image html "ctrlTransferSetup.png" "Control SETUP Transaction Format"
+![Control SETUP Transaction Format](ctrlTransferSetup.png)
 \n
 -# The **DATA** stage is optional. If present, it always starts with a transaction containing a DATA1 packet.
   Then, the transaction type alternates between DATA0 and DATA1 until all required data have been transferred.
 -# The **STATUS** stage is a transaction containing a zero-length DATA1 packet. If the DATA stage was IN, then the STATUS
   stage is OUT, and vice-versa.
 
-\image html "ctrlTransferRedWriteSeq.png" "Control Read and Write Sequences"
+![Control Read and Write Sequences](ctrlTransferRedWriteSeq.png)
 
 #### Interrupt Transfers {#USB_Interrupt_Transfers}
 
@@ -142,7 +142,7 @@ reason, a certain amount of timing jitter is inherent in an USB transaction.
 
 Typically, Interrupt Transfer data consists of event notifications, characters, or coordinates from a pointing device.
 
-\image html "interruptTransfer.png" "Interrupt Transfer Format"
+![Interrupt Transfer Format](interruptTransfer.png)
 
 #### Isochronous Transfers {#USB_Isochronous_Transfers}
 
@@ -160,7 +160,7 @@ Isochronous Transfers have no error detection. Any error in electrical transmiss
 
 Isochronous Transfers are also subject to timing jitters as described for \ref USB_Interrupt_Transfers.
 
-\image html "isochronousTransfer.png" "Isochronous Transfer Format"
+![Isochronous Transfer Format](isochronousTransfer.png)
 
 #### Bulk Transfers {#USB_Bulk_Transfers}
 
@@ -182,7 +182,7 @@ in a single 1ms frame (Interrupt and Isochronous Transfers are limited to a maxi
 For example, Bulk Transfers send data to a printer. As long as the data is printed in a reasonable time frame, the exact transfer
 rate is not important.
 
-\image html "bulkTransfer.png" "Bulk Transfer Read and Writes"
+![Bulk Transfer Read and Writes](bulkTransfer.png)
 
 ### Endpoints {#endpoints}
 
@@ -219,13 +219,13 @@ Data is transferred in so called **transactions**. Normally, they consist of thr
 -# Data is transferred in a **data packet**.
 -# The final status of the transaction is acknowledges in the **handshake packet**.
 
-\image html "pipemodel.png" "Pipe Model"
+![Pipe Model](pipemodel.png)
 
 In a transaction, data is transferred either from the USB Host to an USB Device or vice-versa. The transfer direction
 is specified in the token packet that is sent from the USB Host. Then, the source sends a data packet or indicates it has no
 data to transfer. In general, the destination responds with a handshake packet indicating whether the transfer was successful.
 
-\image html "packetmodel.png" "Packet Model"
+![Packet Model](packetmodel.png)
 
 ### Packets
 
@@ -234,7 +234,7 @@ of bytes at the current transmission rate. Packets start with a synchronization 
 and concluded with an End-of-Packet (EOP) signal. All USB packet patterns are transmitted *least significant bit first*.
 Before and after the packet, the bus is in *idle* state.
 
-\image html "startofframe.png" "Start-of-Frame (SOF) Packet"
+![Start-of-Frame (SOF) Packet](startofframe.png)
 
 A special packet is the **Start-of-Frame** packet (SOF) that splits the USB bus into time segments. Each pipe is allocated
 a slot in each frame. The Start-of-Frame packet is sent every 1ms on full speed links. At high speed, the 1ms frame is divided
@@ -262,7 +262,7 @@ This is not a complete list of all the possible descriptors an USB host can requ
 
 \ref USB_String_Descriptor describe the above mentioned descriptors in human readable format.
 
-\image html "deviceconfig.png" "Device Configuration"
+![Device Configuration](deviceconfig.png)
 
 Alternative information that is needed when the device can operate in different speed modes can be defined in a
 \ref USB_Device_Qualifier_Descriptor.
@@ -663,7 +663,7 @@ It is possible to define an alternative setting for this device, by leaving the 
 The first two interface descriptors with *bAlternativeSettings* equal to 0 are used. However, the host can send a *SetInterface()*
 request to enable the alternative setting.
 
-\image html "alt_interface.png" "Alternative Interface"
+![Alternative Interface](alt_interface.png)
 
 ### Endpoint Descriptor {#USB_Endpoint_Descriptor}
 

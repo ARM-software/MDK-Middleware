@@ -30,7 +30,7 @@ The gray area around the RTE Components USB Device 1 and Driver_USBD1, as well a
 and can only be used if a microcontroller device has multiple USB controllers present. If this is the case, an USB Device
 Class can be connected to any of the USB Device Instances.
 
-\image html "usb_device_blocks_config_files.png" "USB Device Structure"
+![USB Device Structure](usb_device_blocks_config_files.png)
 
 USB Device peripherals can have one or more of the following USB Device Classes:
 
@@ -91,7 +91,7 @@ Only a few steps are necessary to complete the RTE Component selection:
   - Select the **CMSIS:CORE** to provide the core interface to the processor.
   - Select a suitable **CMSIS:RTOS2** that is a required for the application.
 
-\image html "rteusbx.png" "RTE Component Selection" width=90%
+![RTE Component Selection](rteusbx.png)
 
 \note
 - Most microcontrollers have only one USB Controller implemented in hardware and only one driver **Driver_USBD0**
@@ -108,7 +108,7 @@ The USB Device Driver and the USB Controller of the microcontroller need to be c
   Some microcontrollers may require settings that are related to a physical layer interface **(PHY)**. The picture below shows two possible
   variants. Either, the USB PHY is integrated into the controller, or an external chip is used for providing the USB signal lines:
 
-   \image html "usb_phy.png" USB Controller and PHY Setups
+   ![USB Controller and PHY Setups](usb_phy.png)
 
 - The USB Controller of the microcontroller typically needs specific clock settings. Consult the user's guide of the microcontroller
   to understand the requirements. Alternatively, you may copy the setup of an USB Device example (in case your hardware setup is
@@ -326,7 +326,7 @@ This section describes the configuration settings for the Event Recorder; refer 
 Selecting the **USB:CORE** will add the file `USB_Debug.h` to your project. Use this file to set the event
 generation configuration for USB core, drivers, and device classes separately. The file is available for USB Device and Host components.
 
-\image html USBD_USB_Debug_h.png "USB_Debug.h file for event generation configuration"
+![USB_Debug.h file for event generation configuration](USBD_USB_Debug_h.png)
 
 The following settings are available for event generation configuration of each module:
 
@@ -374,7 +374,7 @@ The \ref HID "Human Interface Device (HID)" example shows simple data exchange b
 The examples accesses the board LEDs and push buttons from the USB Host Computer using the HID client program. The following
 picture shows an exemplary connection of the development board and the USB Host Computer.
 
-\image html "hid_example_setup.png"
+![USB device HID example hardware setup](hid_example_setup.png)
 
 The `Abstract.txt` file contained in the **Documentation** group of the **Project** window gives you more
 information on the general setup and the available I/O of the development board.
@@ -410,7 +410,7 @@ The setup of the Evaluation Board hardware is described in the `Abstract.txt` fi
 - Use an USB cable to connect your development board to the Host PC and power up your board.
 - Wait for the driver installation on the PC to complete. First you will see "Installing device driver software" and after a successful installation "USB Input Device":
 
-\image html "hid_install.png"
+![Automatic driver installation](hid_install.png)
 
 ##### PC Software
 
@@ -423,7 +423,7 @@ Steps to check the USB communication using the client utility:
 - Select the **Keil USB Device** to establish the communication channel.
 - Press buttons on the target hardware and/or use the check boxes in the HID Client to interact with the application.
  
-\image html "hid_client_test.png"
+![Testing the connection with the HID Client app](hid_client_test.png)
 
 ### USB Device Mass Storage {#dev_msc_tutorial}
 
@@ -433,7 +433,7 @@ The examples accesses either on-chip RAM or a SD card where available. The USB H
 using standard file access methods. The following picture shows an exemplary connection of the development board
 and the USB Host Computer.
 
-\image html "msc_dev_example_setup.png"
+![USB device mass storage example hardware setup](msc_dev_example_setup.png)
 
 The `Abstract.txt` file contained in the **Documentation** group of the **Project** window gives you more
 information on the general setup and the available storage device on the development board.
@@ -470,14 +470,14 @@ The setup of the Evaluation Board hardware is described in the `Abstract.txt` fi
 - Wait for the driver installation on the PC to complete. First you will see "Installing device driver software" and after a
   successful installation "Keil Disk 0 USB Device":
 
-\image html "msc_ready.png"
+![Automatic driver installation](msc_ready.png)
 
 ##### PC Software
 
 The USB Device Mass Storage example can be tested on a Windows PC using the **Windows Explorer**. After a successful
 driver installation, the **AutoPlay** window appears:
 
-\image html "auto_play_msc_dev.png"
+![AutoPlay notification](auto_play_msc_dev.png)
 
 If you click on **Open folder to view files** Windows Explorer automatically starts with the drive opened.
 
@@ -489,7 +489,7 @@ between a **Virtual COM Port** on the USB Host Computer and an UART port on the 
 The following picture shows an exemplary connection of the development board
 and the USB Host Computer.
 
-\image html "cdc_dev_example_setup.png"
+![USB device virtual COM port example hardware setup](cdc_dev_example_setup.png)
 
 The `Abstract.txt` file contained in the **Documentation** group of the **Project** window gives you more
 information on the general setup and the available I/O on the development board.
@@ -533,7 +533,7 @@ The USB Device Virtual COM example can be tested on a Windows PC using a termina
 in not part of Windows any more, please download an appropriate program for this purpose (such as **PuTTY** for example).
 Open the two COM ports "COMx" and "COMy". Any data from "COMx" will be echoed on "COMy" and visa versa:
 
-\image html "vcom_terminals.png"
+![VCOM terminals](vcom_terminals.png)
 
 **About Host PC driver for Microsoft Windows**
 
@@ -572,7 +572,7 @@ demonstrates a **USB Audio Device** attached to the USB Host Computer to provide
 The following picture shows an exemplary connection of the development board and the USB Host Computer. Using the USB
 connection, the development board will play sound using its on-board speaker:
 
-\image html "adc_dev_example_setup.png"
+![USB device audio example hardware setup](adc_dev_example_setup.png)
 
 The `Abstract.txt` file contained in the **Documentation** group of the **Project** window gives you more information on the
 general setup and the available I/O on the development board.
@@ -609,7 +609,7 @@ The setup of the Evaluation Board hardware is described in the `Abstract.txt` fi
   `Abstract.txt` file.
 - If detected correctly, you should be able to see the following message:
 
-\image html "adc_install_ok.png" Installation succeeded
+![Installation succeeded](adc_install_ok.png)
 
 ##### PC Software
 
@@ -629,7 +629,7 @@ USB connection and WinUSB_Test.exe ("install_dir\ARM\PACK\Keil\Middleware\x.y.z\
 (where "install_dir" refers to the installation directory of Arm Keil MDK, default "C:\Keil_v5") and x >= 7, y >= 5, z >= 0),
 you can initiate. For more information, refer to \ref winusb_app.
 
-\image html "cc_dev_example_setup.png" Hardware setup for WinUSB Custom Class example
+![Hardware setup for WinUSB Custom Class example](cc_dev_example_setup.png)
 
 The `Abstract.txt` file contained in the **Documentation** group of the **Project** window gives you more information on the general setup.
 
@@ -669,7 +669,7 @@ The setup of the evaluation board hardware is described in the `Abstract.txt` fi
 The example can be tested on a Windows PC using the WinUSB_Test.exe utility provided with MDK Middleware. The program runs stand-alone without installation. Simply run "install_dir\\ARM\PACK\Keil\MDK-Middleware\x.y.z\Utilities\WinUSB_Test\Release\WinUSB_Test.exe" application
 (where x >= 7, y >= 5, z >= 0):
 
-\image html "WinUSB_Test_application.png"
+![WinUSB test application](WinUSB_Test_application.png)
 
 **Device Selection**
 
@@ -730,7 +730,7 @@ To setup the control endpoint and to read out the device descriptor of the devic
 
 After pressing the **Transfer** button, you see the response in the Data window:
 
-\image html "WinUSB_Test_control_transfer.png"
+![Control transfers in the WinUSB test app](WinUSB_Test_control_transfer.png)
 
 **Bulk Transfer**
 
@@ -745,7 +745,7 @@ To loop data from the device to the PC and back, enter the following:
 
 You now see the same data in the left-hand Data window:
 
-\image html "WinUSB_Test_bulk_transfer.png"
+![Bulk transfers in the WinUSB test app](WinUSB_Test_bulk_transfer.png)
 
 **About Host PC driver for Microsoft Windows**
 
@@ -780,7 +780,7 @@ stored so that the device can be installed automatically, without the need to ha
 \n In this example, we will implement a composite device that is made up of two devices that have been used in the previous tutorials.
 We will have access to the development board's **buttons** (from the HID example) and the **SC card** (from the MSC example).
 
-\image html "comp_dev_example_setup.png"
+![USB composite device example hardware setup](comp_dev_example_setup.png )
 
 #### Build the "USB Composite" Project
 
@@ -805,7 +805,7 @@ USBD_Connect       (0);
 ```
 Insert
 ```c
-#include "rl_fs.h"
+#include "rl_fs.h
 ```
 
 to the \c \#includes at the beginning of the HID.c file. Afterwards, remove the MassStorage.c from your project.
@@ -869,7 +869,7 @@ The following picture shows an exemplary connection of the development board (in
 Using the joystick on the development board you can move the mouse pointer on the screen. Pressing the joystick down will
 issue a left-click action.
 
-\image html "mouse_dev_example_setup.png"
+![USB device mouse example hardware setup](mouse_dev_example_setup.png)
 
 #### Create the "USB Mouse" Project
 
@@ -921,7 +921,7 @@ Before continuing to add the required source code, you need to add a template fi
   *      may be used to endorse or promote products derived from this software
   *      without specific prior written permission.
   *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS
   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
@@ -940,7 +940,7 @@ Before continuing to add the required source code, you need to add a template fi
 #define __MAIN_H
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_hal.h"
+#include "stm32f4xx_hal.h
 #include "cmsis_os2.h"                  // ::CMSIS:RTOS2
 
 /* Exported types ------------------------------------------------------------*/
@@ -989,7 +989,7 @@ extern void app_main (void *arg);
   *      may be used to endorse or promote products derived from this software
   *      without specific prior written permission.
   *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS
   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
@@ -1004,7 +1004,7 @@ extern void app_main (void *arg);
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
+#include "main.h
 
 #ifdef _RTE_
 #include "RTE_Components.h"             // Component selection
@@ -1214,10 +1214,10 @@ void assert_failed(uint8_t* file, uint32_t line)
 - Copy the following code into the app_main.c file:
 
 ```c
-#include "main.h"
-#include "rl_usb.h"
+#include "main.h
+#include "rl_usb.h
 
-#include "Board_Joystick.h"
+#include "Board_Joystick.h
 
 // Main stack size must be multiple of 8 Bytes
 #define APP_MAIN_STK_SZ (1024U)
@@ -1305,7 +1305,7 @@ In case of errors, refer to the Evaluation Board User's Guide for configuration 
 - Connect the development board to a host PC attaching a Micro-USB cable to the **USBFS** port. Observe how it is
   recognized as a USB HID device with the mouse protocol:
 
-\image html "hid_compliant_mouse.png"
+![HID-compliant mouse properties](hid_compliant_mouse.png)
 
 - Play around with the joystick and see how the mouse moves on the screen.
 
@@ -1318,7 +1318,7 @@ connect a Ubuntu system via USB to an MCBSTM32F400 development board.
 The following picture shows an exemplary connection of the development board (in this case a
 [MCBSTM32F400](https://www.keil.com/boards2/keil/mcbstm32f400/)) to a host PC.
 
-\image html "eth_over_usb_example_setup.png"
+![USB device Ethernet-over-USB example hardware setup](eth_over_usb_example_setup.png)
 
 #### Create the "Ethernet-over-USB" Project
 
@@ -1371,7 +1371,7 @@ Before continuing to add the required source code, you need to add a template fi
   *      may be used to endorse or promote products derived from this software
   *      without specific prior written permission.
   *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS
   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
@@ -1390,7 +1390,7 @@ Before continuing to add the required source code, you need to add a template fi
 #define __MAIN_H
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_hal.h"
+#include "stm32f4xx_hal.h
 #include "cmsis_os2.h"                  // ::CMSIS:RTOS2
 
 /* Exported types ------------------------------------------------------------*/
@@ -1439,7 +1439,7 @@ extern void app_main (void *arg);
   *      may be used to endorse or promote products derived from this software
   *      without specific prior written permission.
   *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS
   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
@@ -1454,7 +1454,7 @@ extern void app_main (void *arg);
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
+#include "main.h
 
 #ifdef _RTE_
 #include "RTE_Components.h"             // Component selection
@@ -1664,8 +1664,8 @@ void assert_failed(uint8_t* file, uint32_t line)
 - Copy the following code into the app_main.c file:
 
 ```c
-#include "main.h"
-#include "rl_usb.h"
+#include "main.h
+#include "rl_usb.h
 
 // Main stack size must be multiple of 8 Bytes
 #define APP_MAIN_STK_SZ (1024U)
@@ -1734,12 +1734,12 @@ In case of errors, refer to the Evaluation Board User's Guide for configuration 
   the **USBHS** port and using an Ethernet cable to the **ETH** connector.
 - Using a virtual machine, you need to connect to the VM:
 
-\image html vbox_usb_attach.png "Attach USB Device to Virtual Machine"
+![Attach USB Device to Virtual Machine](vbox_usb_attach.png)
 
 - Within the Linux system (here Ubuntu), you should be able to see a wired Ethernet connection (with the MAC address
   1E:30:6C:A2:45:5E):
 
-\image html ubuntu_ncm.png "Wired Ethernet Connection using the USB CDC NCM Device"
+![Wired Ethernet Connection using the USB CDC NCM Device](ubuntu_ncm.png)
 
 \note Set the MAC address in the USB CDC configuration file \ref usbd_cdcFunctions_ncm_conf "USBD_Config_CDC_0.h".
 
@@ -1749,15 +1749,15 @@ Especially when working with virtual machines, the USB connection is not passed 
 help to restart the guest. Also, to make Ubuntu use the network adapter that you like, do the following:
 In Ubuntu's search, enter "network". The **Network Connections** program will be available in the search results:
 
-\image html ubuntu_network_connections.png
+![Ubuntu network connections](ubuntu_network_connections.png)
 
 Double-click to open and then mark the **Wired connection 1** and click **Edit**:
 
-\image html ubuntu_network_connections_wired1.png
+![Wired Ethernet connection](ubuntu_network_connections_wired1.png)
 
 Select the MAC address of your Ethernet-over-USB device and press **Save** and **Close**:
 
-\image html ubuntu_network_connections_wired1_selection.png
+![Changing the connection](ubuntu_network_connections_wired1_selection.png)
 
 This should instruct Ubuntu to use your device for the network connection. Also, try to disconnect any other network adapter
 from the virtual machine.
@@ -1770,7 +1770,7 @@ Ethernet interface for network connectivity.
 The following picture shows an exemplary connection of the development board (in this case a
 [MCB4300](https://www.keil.com/boards2/keil/mcb4300/)) to a host PC.
 
-\image html usb_dev_rndis_eth_bridge.png
+![USB device RNDIS-to-Ethernet bridge example hardware setup](usb_dev_rndis_eth_bridge.png )
 
 The `Abstract.txt` file contained in the **Documentation** group of the **Project** window gives you more information on the
 general setup.
@@ -1808,7 +1808,7 @@ The setup of the development board hardware is described in the `Abstract.txt` f
 - Connect a USB cable between your development board and the host PC.
 - You should see new "Ethernet" connection with a "Remote NDIS compatible device" in your network
   control panel:
-  \image html usb_dev_rndis_eth_bridge_control_panel.png
+  ![Control panel](usb_dev_rndis_eth_bridge_control_panel.png)
   if driver is not installed automatically please install driver from example folder.
 
 **About Host PC driver for Microsoft Windows**
@@ -1850,7 +1850,7 @@ Windows hosts using USB.
 The following picture shows an exemplary connection of the development board (in this case a
 [MCB1800](https://www.keil.com/boards2/keil/mcb1800/)) to a host PC.
 
-\image html "usb_web_server_example.png"
+![USB device web server example hardware setup](usb_web_server_example.png )
 
 #### Create the "USB Web Server" project
 
@@ -1905,7 +1905,7 @@ The following picture shows an exemplary connection of the development board (in
 - If **RTX v5** is used **no changes to RTX settings** are necessary as all resources are allocated statically.
 - Add this include to the main module:
   ```c
-  #include "rl_usb.h"
+  #include "rl_usb.h
   ```
 - Add these lines of code to the HTTP_Server.c module before endless loop in \c main or \c app_main function:
   ```c
@@ -1929,14 +1929,14 @@ Build the project and download to the target.
  - Set your computer's IP address to 192.168.0.101 to match the settings of the embedded device:
    - Go to Control Panel -> Network and Sharing Center -> Change Adapter Settings
    - Right-click on Local Area Connection n (Remote NDIS56 based Device):
-     \image html nw_connections_win_host.png
+     ![Network connections on a Windows host](nw_connections_win_host.png)
    - Select properties -> Internet Protocol Version 4 (TCP/IPv4) properties and use the following address:
       - IP address: 192.168.0.101
       - Subnet mask: 255.255.255.0
    OK and close all dialogs
  - Open a web browser and enter the address 192.168.0.100
  - Use "admin" without a password to log in:
-   \image html web_server_if.png
+   ![Web server user interface](web_server_if.png)
 
 ## USB Host Computer Applications {#usb_sw_utilities}
 
@@ -1979,14 +1979,14 @@ without the need to install the software. To check the client utility with your 
 -# Test the application by pressing the correct buttons (refer to the application's `Abstract.txt` file) on your development
    board and/or check the right boxes in the client application to see the LEDs flashing.
 
-\image html "hid_client_test.png"
+![HID Client test app](hid_client_test.png)
 
 #### HID Client Source Code {#client_app_cpp}
 
 The source code of the HID Client application is available in `install_dir\ARM\Utilities\HID_Client`. Visual Studio 2005 and 2010
 based projects are available (`HIDClient.vproj`). The structure of the project is as follows:
 
-\image html "HIDClientSolutionExplorer.png"
+![HID Client solutions explorer view](HIDClientSolutionExplorer.png)
 
 ##### Header Files
 
@@ -2047,7 +2047,7 @@ To check the WinUSB utility with your board, do the following:
 -# Select the **Device** to establish the communication channel.
 -# For further settings and tests refer to \ref dev_cc_tutorial
 
-\image html "WinUSB_Test_application.png"
+![WinUSB test app](WinUSB_Test_application.png)
 
 #### WinUSB application source code {#winusb_app_cpp}
 
@@ -2055,7 +2055,7 @@ The WinUSB source code can be found in `install_dir\ARM\PACK\Keil\MDK-Middleware
 A Visual Studio 2010 (or later) based solution named WinUSB_Test.sln is available. The following is a summary of what you
 will find in each of the files that make up your WinUSB_Test application.
 
-\image html WinUSB_test_sln.png
+![WinUSB app solutions view](WinUSB_test_sln.png)
 
 ##### Header Files
 

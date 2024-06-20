@@ -19,7 +19,7 @@ Controller). RTE Components provide configuration files and user code templates.
 Components, hardware interfaces, memory resources and USB Host parameters. **User code templates** provide the skeleton
 for implementing support for different USB Device classes.
 
-\image html "usb_host_blocks_config_files.png" USB Host Structure
+![USB Host Structure](usb_host_blocks_config_files.png)
 
 ## Create an Application {#Create_a_USB_Host_Application}
 
@@ -53,7 +53,7 @@ The RTE Component selection is done in a few steps:
   - Select the **CMSIS:CORE** to provide the core interface to the processor.
   - Select a suitable **CMSIS:RTOS2** that is a required for the application.
 
-\image html "USBH_RTE.png" RTE Component Selection width=90%
+![RTE Component Selection](USBH_RTE.png)
 
 ### USB Driver and Controller {#USB_Driver_Configuration_USBH}
 
@@ -143,7 +143,7 @@ This section describes the configuration settings for the Event Recorder; refer 
 Selecting the **USB:CORE** will add the file `USB_Debug.h` to your project. Use this file to set the event
 generation configuration for USB core, drivers, and device classes separately. The file is common for USB Device and Host components.
 
-\image html USBH_USB_Debug_h.png "USB_Debug.h file for event generation configuration"
+![USB_Debug.h file for event generation configuration](USBH_USB_Debug_h.png)
 
 The following settings are available for event generation configuration of each module:
 
@@ -185,7 +185,7 @@ The following example application shows how to interact with a **USB keyboard** 
 To keep it simple, the graphical LCD on the evaluation board is used to show the keyboard inputs. This is done using
 the **Compiler** software component with the appropriate user code templates.
 
-\image html "usbh_hid_setup.png"
+![USB host keyboard example hardware setup](usbh_hid_setup.png)
 
 The `Abstract.txt` file contained in the **Documentation** group of the **Project** window gives you more information on the
 general setup and the available I/O of the development board.
@@ -223,7 +223,7 @@ The setup of the Evaluation Board hardware is described in the `Abstract.txt` fi
 - Connect a USB keyboard to one of the development board's USB connectors.
 - After downloading the code onto the board, you should be able to see something similar on the graphics display:
 
-\image html "usbh_keyboard_glcd.png"
+![USB host keyboard example output](usbh_keyboard_glcd.png)
 
 ### USB Host Mass Storage {#host_msc_tutorial}
 
@@ -231,7 +231,7 @@ The following example application shows how to access an **USB memory stick** fr
 This example will create or overwrite a file called `Test.txt` on the USB Stick with the content "USB Host Mass Storage!".
 The following picture shows an exemplary connection of the development board and an USB memory stick.
 
-\image html "usbh_msc_setup.png"
+![USB host mass storage example hardware setup](usbh_msc_setup.png)
 
 The `Abstract.txt` file contained in the **Documentation** group of the **Project** window gives you more information on the
 general setup and the available I/O of the development board.
@@ -279,7 +279,7 @@ Class because the PL2303 is not USB CDC ACM compliant.
 The following picture shows an exemplary connection of the development board and an PL2303 based Device. The PL2303 Device is
 connected to a PC via RS232 to check incoming messages.
 
-\image html "usbh_cust_pl2303_example_setup.png"
+![USB host custom class example hardware setup](usbh_cust_pl2303_example_setup.png)
 
 #### Create the "USB Host Custom Class PL2303" Project
 
@@ -335,7 +335,7 @@ Before continuing to add the required source code, you need to add a template fi
   *      may be used to endorse or promote products derived from this software
   *      without specific prior written permission.
   *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS
   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
@@ -354,7 +354,7 @@ Before continuing to add the required source code, you need to add a template fi
 #define __MAIN_H
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_hal.h"
+#include "stm32f4xx_hal.h
 #include "cmsis_os2.h"                  // ::CMSIS:RTOS2
 
 /* Exported types ------------------------------------------------------------*/
@@ -403,7 +403,7 @@ extern void app_main (void *arg);
   *      may be used to endorse or promote products derived from this software
   *      without specific prior written permission.
   *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS
   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
@@ -418,7 +418,7 @@ extern void app_main (void *arg);
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
+#include "main.h
 
 #ifdef _RTE_
 #include "RTE_Components.h"             // Component selection
@@ -628,12 +628,12 @@ void assert_failed(uint8_t* file, uint32_t line)
 - Copy the following code into the app_main.c file:
 
 ```c
-#include "main.h"
-#include "rl_usb.h"
+#include "main.h
+#include "rl_usb.h
 
-#include "Board_LED.h"
+#include "Board_LED.h
 
-#include "Driver_USART.h"
+#include "Driver_USART.h
 
 /* UART Driver */
 extern ARM_DRIVER_USART       Driver_USART9;
@@ -760,7 +760,7 @@ and stores all incoming data from the device into the array `receive_buf`.
 The following picture shows an exemplary connection of the development board and an USB CDC ACM Device implemented on another
 development board. This USB CDC ACM Device is connected to a PC via RS232 to check incoming messages.
 
-\image html "usbh_cdc_example_setup.png"
+![USB device audio example hardware setup](usbh_cdc_example_setup.png)
 
 #### Create the "USB Host CDC" Project
 
@@ -809,7 +809,7 @@ Click the **Resolve** button and then **OK**.
   *      may be used to endorse or promote products derived from this software
   *      without specific prior written permission.
   *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS
   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
@@ -828,7 +828,7 @@ Click the **Resolve** button and then **OK**.
 #define __MAIN_H
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_hal.h"
+#include "stm32f4xx_hal.h
 #include "cmsis_os2.h"                  // ::CMSIS:RTOS2
 
 /* Exported types ------------------------------------------------------------*/
@@ -877,7 +877,7 @@ extern void app_main (void *arg);
   *      may be used to endorse or promote products derived from this software
   *      without specific prior written permission.
   *
-  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS
   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
@@ -892,7 +892,7 @@ extern void app_main (void *arg);
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
+#include "main.h
 
 #ifdef _RTE_
 #include "RTE_Components.h"             // Component selection
@@ -1102,12 +1102,12 @@ void assert_failed(uint8_t* file, uint32_t line)
 - Copy the following code into the app_main.c file:
 
 ```c
-#include "main.h"
-#include "rl_usb.h"
+#include "main.h
+#include "rl_usb.h
 
-#include "Board_LED.h"
+#include "Board_LED.h
 
-#include "Driver_USART.h"
+#include "Driver_USART.h
 
 /* UART Driver */
 extern ARM_DRIVER_USART       Driver_USART9;

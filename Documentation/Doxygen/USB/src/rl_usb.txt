@@ -588,7 +588,7 @@ configuration files (\ref usbd_adcFunctions_conf "USBD_Config_ADC.h", \ref usbd_
 \ref usbd_classFunctions_conf "USBD_Config_CustomClass.h", \ref usbd_hidFunctions_conf "USBD_Config_HID.h" and
 \ref usbd_mscFunctions_conf "USBD_Config_MSC.h").
 
-\image html "usbd_config_0_h.png" "USB Device Core Configuration File"
+\image  html usbd_config_0_h.png "USB Device Core Configuration File"
 
 The configuration file <b>USBD_Config_<i>n</i>.h</b> contains the following settings:
 - <b>Connect to hardware via Driver_USBD# </b> sets the \b CMSIS-Driver \b Number to be used (according to the selected USB
@@ -1103,7 +1103,7 @@ This configuration file defines:
 The settings in this configuration file are used to create the \ref USB_Interface_Descriptor "Interface Descriptor" and
 \ref USB_Endpoint_Descriptor "Endpoint Descriptor" of the related USB Device Class.
 
-\image html "usbd_config_adc_h.png" "ADC Class Configuration File"
+\image  html usbd_config_adc_h.png "ADC Class Configuration File"
 
 The USB Device ADC Class configuration file <b>USBD_Config_ADC_n.h</b> contains the following settings:
 - <b>Assign Device Class to USB Device #</b> selects the USB Device that is to be used for this Device Class instance.
@@ -1603,7 +1603,7 @@ These settings are used to create the \ref USB_Interface_Descriptor "Interface D
 "Endpoint Descriptor" of the related USB Device Class. It is important that the settings match the application specific
 behavior in the related C source file USBD_User_CDC_ACM_<i>n</i>.c.
 
-\image html "usbd_config_cdc_acm_h.png" "CDC Class Configuration File"
+\image  html usbd_config_cdc_acm_h.png "CDC Class Configuration File"
 
 The USB Device CDC Class configuration file <b>USBD_Config_CDC_n.h</b> contains the following settings:
 - <b>Assign Device Class to USB Device #</b> selects USB Device that is used for this Device Class instance.
@@ -2640,7 +2640,7 @@ These settings are used to create the \ref USB_Interface_Descriptor "Interface D
 "Endpoint Descriptor" of the related USB Device Class. It is important that the settings match the application specific
 behavior in the related C source file USBD_User_CDC_NCM_<i>n</i>.c.
 
-\image html "usbd_config_cdc_h.png" "CDC Class Configuration File"
+\image  html usbd_config_cdc_h.png "CDC Class Configuration File"
 
 The USB Device CDC Class configuration file <b>USBD_Config_CDC_n.h</b> contains the following settings:
 - <b>Assign Device Class to USB Device #</b> selects USB Device that is used for this Device Class instance.
@@ -3362,7 +3362,7 @@ These settings are used to create the \ref USB_Interface_Descriptor "Interface D
 "Endpoint Descriptor" of the related USB Device Class. It is important that the settings match the application specific
 behavior in the related C source file USBD_User_CustomClass_<i>n</i>.c.
 
-\image html "usbd_config_customclass_h.png" "Custom Class Configuration File"
+\image  html usbd_config_customclass_h.png "Custom Class Configuration File"
 
 The USB Device Custom Class configuration file <b>USBD_Config_CustomClass_n.h</b> contains the following settings:
 - <b>Assign Device Class to USB Device #</b> selects USB Device that is used for this Device Class instance.
@@ -3790,7 +3790,7 @@ These settings are used to create the \ref USB_Interface_Descriptor "Interface D
 "Endpoint Descriptor" of the related USB Device Class. It is important that the settings match the application specific
 behavior in the related C source file USBD_User_HID_<i>n</i>.c.
 
-\image html "usbd_config_hid_h.png" "HID Class Configuration File"
+\image  html usbd_config_hid_h.png "HID Class Configuration File"
 
 The USB Device HID Class configuration file <b>USBD_Config_HID_n.h</b> contains the following settings:
 - <b>Assign Device Class to USB Device #</b> selects USB Device that is used for this Device Class instance.
@@ -4476,7 +4476,7 @@ These settings are used to create the \ref USB_Interface_Descriptor "Interface D
 "Endpoint Descriptor" of the related USB Device Class. It is important that the settings match the application specific
 behavior in the related C source file USBD_User_MSC_<i>n</i>.c.
 
-\image html "usbd_config_msc_h.png" "MSC Class Configuration File"
+\image  html usbd_config_msc_h.png "MSC Class Configuration File"
 
 The USB Device MSC Class configuration file <b>USBD_Config_MSC_n.h</b> contains the following settings:
 - <b>Assign Device Class to USB Device #</b> selects USB Device that is used for this Device Class instance.
@@ -4841,7 +4841,7 @@ Classes is configured in the respective device class configuration files (\ref u
 \ref usbh_mscFunctions_conf "USBH_Config_MSC.h").
 
 
-\image html "usbh_config_0_h.png" "USB Host Configuration File"
+\image  html usbh_config_0_h.png "USB Host Configuration File"
 
 The USB Host configuration file <b>USBH_Config_<i>n</i>.h</b> contains the following settings:
 - <b>Connect to hardware via Driver_USBH# </b> specifies the hardware driver number to use in case the microcontroller device
@@ -5298,7 +5298,7 @@ static int32_t ARM_USARTx_Control (uint8_t instance, uint32_t control, uint32_t 
 \ingroup usbh_cdcacmFunctions
 \brief Configuration of the USB Host CDC Class.
 \details
-\image html "usbh_config_cdc_h.png" "CDC Class Configuration File"
+\image  html usbh_config_cdc_h.png "CDC Class Configuration File"
 
 The USB Host CDC Class configuration file <b>USBH_Config_CDC.h</b> contains the following settings:
 - <b>Number of concurrent CDC Devices in system</b> specifies the number of CDC devices that will be supported.
@@ -6057,7 +6057,7 @@ The argument \a ptr_frame_number is a pointer to where frame number data will be
 \ingroup usbh_customFunctions
 \brief Configuration of the USB Host Custom Class.
 \details
-\image html "usbh_config_customclass_h.png" "Custom Class Configuration File"
+\image  html usbh_config_customclass_h.png "Custom Class Configuration File"
 
 The USB Host Custom Class configuration file <b>USBH_Config_CustomClass.h</b> contains the following settings:
 - <b>Number of concurrent Custom Devices in system</b> specifies the number of Custom devices that will be supported.
@@ -6479,7 +6479,7 @@ is useful if the default HID functionality needs to be changed to support specia
 \ingroup usbh_hidFunctions
 \brief Configuration of the USB Host HID Class.
 \details
-\image html "usbh_config_hid_h.png" "HID Class Configuration File"
+\image  html usbh_config_hid_h.png "HID Class Configuration File"
 
 The USB Host HID Class configuration file <b>USBH_Config_HID.h</b> contains the following settings:
 - <b>Number of concurrent HID Devices in system</b> specifies the number of HID devices that will be supported.
@@ -6749,7 +6749,7 @@ uint64_t USBH_MSC_DriveGetCapacity (const char *drive_name) {
 \ingroup usbh_mscFunctions
 \brief Configuration of the USB Host MSC Class.
 \details
-\image html "usbh_config_msc_h.png" "MSC Class Configuration File"
+\image  html usbh_config_msc_h.png "MSC Class Configuration File"
 
 The USB Host MSC Class configuration file <b>USBH_Config_MSC.h</b> contains the following settings:
 - <b>Number of concurrent MSC Devices in system</b> specifies the number of MSC devices that will be supported.

@@ -38,7 +38,7 @@ Only a few steps are necessary to complete the RTE Component selection:
 -# If you need to \ref secure_communication "secure the communication", select from the **Security** Component:
   - **mbed TLS**
 
-\image html "nw_rte_comp_selection.png" "RTE Component Selection Example"
+![RTE Component Selection Example](nw_rte_comp_selection.png)
 
 ## Network Driver and Controller Configuration {#nw_Driver_Configuration}
 
@@ -71,7 +71,7 @@ connecting strong pull-up or pull-down resistors externally. In this case, the `
 changed accordingly to be able to control the PHY and to communicate with it. Use the **Options for Component** dialog to
 override the default setting for `ETH_PHY_ADDR`:
 
-\image html eth_phy_config.png
+![Ethernet PHY Configuration](eth_phy_config.png)
 
 ## Network Configuration {#nw_Device_Configuration}
 
@@ -79,7 +79,7 @@ All configuration files for the Network Component are listed in the Project wind
 
 ### Network Core {#nw_Network_Core}
 
-\image html net_config_h.png "Net_Config.h Configuration File"
+![Net_Config.h Configuration File](net_config_h.png)
 
 The configuration file Network Core `Net_Config.h` contains the setting for the library version to be used in the application.
 
@@ -254,7 +254,7 @@ as ASCII messages on the standard output device, is also supported.
 The Network Component debug is configured using the `Net_Debug.h` file. The options are set in the file directly or using the
 [Configuration Wizard](https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard).
 
-\image html net_debug_h.png "Net_Debug.h Configuration File"
+![Net_Debug.h Configuration File](net_debug_h.png)
 
 The following settings are available:
 

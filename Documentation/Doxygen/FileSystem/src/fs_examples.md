@@ -21,14 +21,14 @@ Typically one connects the development board to a computer via debug connection 
 example application to a board and starts terminal application on computer. The following picture shows an exemplary connection
 of the development board and a computer:
 
-\image html "fs_setup.png"
+![Hardware setup of the File System example](fs_setup.png)
 
 ### Build the "File System" Project {#fs_example_build}
 
 Open the example project in MDK (the \urlout{uv4_ca_packinstaller} web page explains how to do this). The project tree should have
 a similar structure:
 
-\image html "fs_proj_structure.png" "File System Project Structure"
+![File System Project Structure](fs_proj_structure.png)
 
 #### Source Files {#fs_example_sources}
 
@@ -51,11 +51,11 @@ connected to the computer.
 Open any software terminal emulator application to start interacting with the example running on the Evaluation Board.
 After resetting the board, you should see something similar like this:
 
-\image html "fs_example_intro.png"
+![Terminal output](fs_example_intro.png)
 
 Now you can type **help** to the command prompt and press enter (make sure that the new line character is also sent after
 pressing enter). Now something similar to the below image should be printed:
 
-\image html "fs_example_help.png"
+![Output of the help command](fs_example_help.png)
 
 You can now type the listed commands and send arguments directly to the FileSystem API functions.

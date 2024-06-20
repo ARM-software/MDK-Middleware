@@ -12,26 +12,26 @@ The following sections show how to migrate projects from previous versions of th
 There is an easy migration path available for users of the Network Component v7. Simply open the project that is about
 to be migrated in µVision. The IDE will show an error message that a software component is not available:
 
-\image html mig_project_open.png "Error message opening a legacy project"
+![Error message opening a legacy project](mig_project_open.png)
 
 This message is shown because the previous variants **IPv4 Release**/**IPv4 Debug** have been removed.
 Open the **Manage Run-Time Environment** window. It will show the same error message in a different way:
 
-\image html mig_rte_open.png "Error message in the Run-Time Environment"
+![Error message in the Run-Time Environment](mig_rte_open.png)
 
 Select a New Component variant **MDK** to get rid of this validation message:
 
-\image html mig_rte_choose_mdk.png "Manually resolve the error message"
+![Manually resolve the error message](mig_rte_choose_mdk.png)
 
 ### Update Configuration Files {#nw_diffs_update_configs}
 
 After pressing OK, the Project window will look like this:
 
-\image html mig_project_required_changes_new_items.png "Updated Project window"
+![Updated Project window](mig_project_required_changes_new_items.png)
 
 Right-clicking each file will give you the update options:
 
-\image html mig_config_update_merge.png "Update options for configuration files"
+![Update options for configuration files](mig_config_update_merge.png)
 
 **Update Config File** will simply copy the new configuration file into your project containing the default settings.
 The old file with your project's settings will be renamed to Net_Config.h.0000 for example. If you want to manually merge the
@@ -52,7 +52,7 @@ Refer to the section \ref nw_resource_requirements for more information.
 
 Finally, after merging the configuration files, you should be able to compile the project and run it on your target hardware:
 
-\image html mig_build_ok.png "Error-free build output"
+![Error-free build output](mig_build_ok.png)
 
 ## Network Configuration {#mig_nw_configuration}
 
@@ -63,7 +63,7 @@ can be seen on the right-hand side.
 
 The network core configuration file has been changed from `Net_Config.c` to `Net_Config.h`.
 
-\image html diff_net_config_c.png "Old Net_Config.c vs. new Net_Config.h"
+![Old Net_Config.c vs. new Net_Config.h](diff_net_config_c.png)
 
 - **Variant** selection added:
   - IPv4 only
@@ -74,7 +74,7 @@ The network core configuration file has been changed from `Net_Config.c` to `Net
 
 The network debug configuration file has been changed from `Net_Debug.c` to `Net_Debug.h`.
 
-\image html diff_net_debug_c.png "Old Net_Debug.c vs. new Net_Debug.h"
+![Old Net_Debug.c vs. new Net_Debug.h](diff_net_debug_c.png)
 
 - **Network Debug** enable switch added
 - **Output Channel** selection added:

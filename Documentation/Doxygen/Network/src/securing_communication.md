@@ -15,7 +15,7 @@ The Network component offers two ways to secure communication in an application:
 Although the Network component does not offer encryption and secure communication on its own, you can use Arm's
 [mbed TLS](https://www.trustedfirmware.org/projects/mbed-tls/) software component to achieve this.
 
-\image html secure_com_sw_stack.png
+![Software stack for secure network communication](secure_com_sw_stack.png)
 
 From the bottom up:
 
@@ -73,9 +73,8 @@ To use the Mbed TLS library in your own projects, follow these steps:
 -# Open or create a project using the **Network Component**.
 -# Configure the Network Component as required by your application (Ethernet settings, TCP/IP communication, etc.).
 -# In the **Manage Run-Time Environment** window expand **Security** and enable **Mbed TLS**:
-\image html add_mbedTLS.png
--# Configure Mbed TLS using the `mbedTLS_config.h` file under **Security** in the **Project** window.
-\image html mbedTLS_config_h.png
+![Add mbed TLS](add_mbedTLS.png)
+-# Configure Mbed TLS using the `mbedTLS_config.h` file.
 -# Use the **Mbed TLS** API to secure your communication.
 
 \note You can use the Mbed TLS API in parallel to any of the \ref use_secure_components "secure services" that are
@@ -99,7 +98,7 @@ explains how to achieve this for the secure components by using additional tools
 The web server and the compact web server have secure variants available. In the **Manage Run-Time Environment** window
 simply select the appropriate variant:
 
-\image html select_https.png
+![Selecting HTTPS for the web server](select_https.png)
 
 #### Converting the HTTP server to HTTPS {#add_ssl_to_http}
 
@@ -239,7 +238,7 @@ Component.
 - In the **Arguments** box enter `\@K`
 - Enable **Run Independent**
 
-\image html Net_Security_Keys.PNG "Settings required for the Net_Security.bat file"
+![Settings required for the Net_Security.bat file](Net_Security_Keys.PNG)
 
 This setting is needed only once in µVision and will work for any project since it uses project related folders.
 
@@ -305,7 +304,7 @@ const uint8_t NetSecurity_ServerKey[] =
 The e-mail client is available in a secure variant. In the **Manage Run-Time Environment** window, simply select the
 appropriate variant:
 
-\image html select_smtps.png
+![Select the SMTPS variant](select_smtps.png)
 
 #### Converting the SMTP client to SMTPS {#add_ssl_to_smtp}
 

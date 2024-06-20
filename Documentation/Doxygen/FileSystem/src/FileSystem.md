@@ -3,7 +3,7 @@
 The **File System Component** allows your embedded applications to create, save, read, and modify files in storage devices
 such as **RAM**, **Flash**, **memory cards**, or **USB memory devices**.
 
-\image html "FileSystem.svg" "File System Component Structure"
+![File System Component Structure](FileSystem.svg)
 
 The File System Component is structured as follows:
 

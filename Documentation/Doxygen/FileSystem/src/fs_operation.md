@@ -24,7 +24,7 @@ It cannot be used with the Standard C/C++ Library that does not provide the (ret
 
 The following picture shows the File System's structure from a developer's perspective.
 
-\image html "fs_structure.png" File System Component Structure
+![File System Component Structure](fs_structure.png)
 
 - **System, File Management**: functions that manage the File System and provide operation to format a drive and manage files and directories.
 - **Standard File I/O**: functions to perform input and output operations on files, such as read, write, and seek.
@@ -49,7 +49,7 @@ The configuration steps and files that are needed to create applications for the
 
 The File System Component supports various memory and storage devices that are assigned to a **drive**.
 
-\image html "fs_types.png" "File System Component: Media types and Drives"
+![File System Component: Media types and Drives](fs_types.png)
 
 All available drives are defined with the \ref fs_RTE_Software_Component_Selection. A drive is passed as string to
 \ref system_routines and may be part of a filename. The system allows you to configure a current drive that is used when no
@@ -575,7 +575,7 @@ Hardware driver or on-chip ECC calculation must be provided in such case.
 On-Chip ECC is supported on EZ NAND compliant devices. Various ECC layouts are supported by using flexible ECC codeword
 configuration.
 
-\image html "fs_nand_ecc_config_0.png" ECC Configuration (Contiguous Layout)
+![ECC Configuration (Contiguous Layout)](fs_nand_ecc_config_0.png)
 
 ECC algorithms typically operate on smaller sections of the NAND physical page size. This section can be described as
 ECC virtual page, with its main and spare part. Typically main part consists of 512 bytes while spare part can be of different
@@ -610,7 +610,7 @@ Embedded File System organizes each block into three regions:
 - \ref efs_file_content "File Names & Content", located on bottom of the block, grows in ascending order and contains file
   names and data.
 
-\image html "fs_memoryorg.png" "Flash Memory Organization"
+![Flash Memory Organization](fs_memoryorg.png)
 
 ### Allocation Information {#efs_alloc_info}
 
@@ -620,7 +620,7 @@ with it. Multiple records belong to files with content and to fragmented files. 
 its content size exceeds a single block size and must be stored across several blocks. Several small files are stored into a
 single block.
 
-\image html "fs_allocinfo.png" "Flash Block Allocation"
+![Flash Block Allocation](fs_allocinfo.png)
 
 #### Block Signature
 
