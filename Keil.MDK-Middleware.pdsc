@@ -1324,7 +1324,7 @@
           #define RTE_USB_Device_HID_%Instance%            /* USB Device HID instance %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/html/USB/HID.html"/>
+          <file category="doc"    name="Documentation/html/USB/USB_Classes.html#HID"/>
           <file category="header" name="Components/USB/Config/USBD_Config_HID.h"       attr="config"   version="5.1.1"/>
           <file category="source" name="Components/USB/Template/USBD_User_HID.c"       attr="template" select="USB Device HID (Human Interface Device)"/>
           <file category="source" name="Components/USB/Template/USBD_User_HID_Mouse.c" attr="template" select="USB Device HID Mouse"/>
@@ -1340,7 +1340,7 @@
           #define RTE_USB_Device_MSC_%Instance%            /* USB Device MSC instance %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/html/USB/MSC.html"/>
+          <file category="doc"    name="Documentation/html/USB/USB_Classes.html#MSC"/>
           <file category="header" name="Components/USB/Config/USBD_Config_MSC.h"     attr="config"   version="5.2.1"/>
           <file category="source" name="Components/USB/Template/USBD_User_MSC.c"     attr="template" select="USB Device MSC (Mass Storage Class)"/>
           <file category="source" name="Components/USB/Template/USBD_User_MSC_LUN.c" attr="template" select="USB Device MSC multiple Logical Units (Mass Storage Class)"/>
@@ -1358,7 +1358,7 @@
           #define RTE_USB_Device_CDC_%Instance%            /* USB Device CDC instance %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/html/USB/CDC.html"/>
+          <file category="doc"    name="Documentation/html/USB/USB_Classes.html#CDC"/>
           <file category="header" name="Components/USB/Config/USBD_Config_CDC.h"                attr="config"   version="5.3.1"/>
           <file category="source" name="Components/USB/Template/USBD_User_CDC_ACM.c"            attr="template" select="USB Device CDC ACM (Abstract Control Model)"/>
           <file category="source" name="Components/USB/Template/USBD_User_CDC_ACM_RNDIS_ETH.c"  attr="template" select="USB Device CDC ACM RNDIS and Ethernet Bridge"/>
@@ -1378,7 +1378,7 @@
           #define RTE_USB_Device_ADC_%Instance%            /* USB Device ADC instance %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/html/USB/ADC.html"/>
+          <file category="doc"    name="Documentation/html/USB/USB_Classes.html#ADC"/>
           <file category="header" name="Components/USB/Config/USBD_Config_ADC.h"       attr="config"   version="5.3.1"/>
           <file category="source" name="Components/USB/Template/USBD_User_ADC_Audio.c" attr="template" select="USB Device ADC (Audio Interface)"/>
           <!-- Library source files -->
@@ -1393,7 +1393,7 @@
           #define RTE_USB_Device_CustomClass_%Instance%    /* USB Device Custom Class instance %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/html/USB/CustomClass.html"/>
+          <file category="doc"    name="Documentation/html/USB/USB_Classes.html#CustomClass"/>
           <file category="header" name="Components/USB/Config/USBD_Config_CustomClass.h" attr="config"   version="5.3.1"/>
           <file category="source" name="Components/USB/Template/USBD_User_CustomClass.c" attr="template" select="USB Device Custom Class"/>
           <!-- Library source files -->
@@ -1426,7 +1426,7 @@
           #define RTE_USB_Host_HID                /* USB Host HID */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/html/USB/HID.html"/>
+          <file category="doc"    name="Documentation/html/USB/USB_Classes.html#HID"/>
           <file category="header" name="Components/USB/Config/USBH_Config_HID.h" attr="config" version="5.1.0"/>
           <!-- Library source files -->
           <file category="source" name="Components/USB/Source/usbh_lib_hid.c"/>
@@ -1440,7 +1440,7 @@
           #define RTE_USB_Host_MSC                /* USB Host MSC */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/html/USB/MSC.html"/>
+          <file category="doc"    name="Documentation/html/USB/USB_Classes.html#MSC"/>
           <file category="header" name="Components/USB/Config/USBH_Config_MSC.h" attr="config"   version="5.0.0"/>
           <file category="source" name="Components/USB/Template/USBH_MSC.c"      attr="template" select="USB Host Mass Storage Access"/>
           <file category="source" name="Components/USB/Template/USBH_MSC.h"      attr="template" select="USB Host Mass Storage Access"/>
@@ -1455,7 +1455,7 @@
           #define RTE_USB_Host_CDC                /* USB Host CDC */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/html/USB/CDC.html"/>
+          <file category="doc"    name="Documentation/html/USB/USB_Classes.html#CDC"/>
           <file category="header" name="Components/USB/Config/USBH_Config_CDC.h" attr="config" version="5.0.0"/>
           <!-- Library source files -->
           <file category="source" name="Components/USB/Source/usbh_lib_cdc.c"/>
@@ -1468,7 +1468,7 @@
           #define RTE_USB_Host_CustomClass        /* USB Host Custom Class */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/html/USB/CustomClass.html"/>
+          <file category="doc"    name="Documentation/html/USB/USB_Classes.html#CustomClass"/>
           <file category="header" name="Components/USB/Config/USBH_Config_CustomClass.h" attr="config"   version="5.0.0"/>
           <file category="source" name="Components/USB/Template/USBH_User_CustomClass.c" attr="template" select="USB Host Generic Custom Class"/>
           <file category="source" name="Components/USB/Template/USBH_PL2303.c"           attr="template" select="USB Host Prolific PL2303"/>
