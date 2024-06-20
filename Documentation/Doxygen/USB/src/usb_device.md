@@ -1950,7 +1950,7 @@ interface needs to be developed at the USB Host Computer.
 Refer to the following web pages for more information on USB Host software development:
 
 - [USB Serial Bus (USB)](https://learn.microsoft.com/en-us/windows-hardware/drivers/) for Microsoft Windows.
-- [Linux USB Project](https://www.linux-usb.org/) for Linux based operating systems.
+- [Linux USB Project](http://www.linux-usb.org/) for Linux based operating systems.
 - [DriverKit](https://developer.apple.com/documentation/driverkit) for Apple OS.
 
 ### Software Utilities
