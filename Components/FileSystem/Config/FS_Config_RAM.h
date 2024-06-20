@@ -26,7 +26,7 @@
 //     <s>Section Name
 //     <i>Define the name of the section for the file system buffer.
 //     <i>Linker script shall have this section defined.
-#define RAM%Instance%_SECTION           ".filesystem.ram%Instance%"
+#define RAM%Instance%_SECTION            ".filesystem.ram%Instance%"
 
 //   </e>
 
