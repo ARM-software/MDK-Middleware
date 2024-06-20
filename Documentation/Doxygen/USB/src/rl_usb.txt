@@ -61,26 +61,6 @@ These settings are used to create \ref USB_Device_Descriptor, \ref USB_Configura
 
 */
 
-/*
-\image html "USBDevice.png" "USB Device Component"
-
-The USB Device component is an easy-to-use software collection providing a common API for a broad range of USB device
-controllers. The USB Device component uses standard device driver classes that are available already on most computers
-systems, avoiding driver development. The component requires a CMSIS-RTOS2 compatible RTOS.
-
-The component supports the following classes, which can also be used in various combinations for building composite devices.
-- A <b>Human Interface Device</b> (HID) is typically used to implement a keyboard, joystick or mouse. However, the HID class
-  can be also used for low bandwidth data exchange.
-- A <b>Mass Storage Device</b> (MSC) is used for file exchange. An USB stick is an example for a MSC device.
-- The <b>Communication Device Class</b> (CDC) is used for implementing virtual communication ports.
-- The <b>Audio Device Class</b> (ADC) is used for audio streaming to and from the device.
-
-The USB Device Driver is available for Full/Low-Speed or High-Speed physical hardware interfaces.
-
-The USB Device Core together with the USB Device Driver provides the central functions that are necessary for USB device communication to
-and from the PC.
-*/
-
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \defgroup usbd_coreFunctions Core

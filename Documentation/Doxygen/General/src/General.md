@@ -35,8 +35,8 @@ MDK-Middleware components are available as source code and will work with all ma
 
 This user's guide contains the following chapters:
 
-- \subpage mw_using_generic_steps explains the necessary steps to create from scratch a project containing a Middleware component.
-- \subpage mw_using_stack_and_heap describes how to configure a project to meet the resource requirements of the Middleware.
+- \ref mw_using_generic_steps explains the necessary steps to create from scratch a project containing a Middleware component.
+- \ref mw_using_stack_and_heap describes how to configure a project to meet the resource requirements of the Middleware.
 
 Every middleware component has a section on the following topics to explain how to create an application:
 

@@ -1,3 +1,16 @@
+/*
+\defgroup   usbd_structs  Structures
+\ingroup    usbd
+\brief      Structures of USB Device component
+
+\struct usbd_desc_t
+\brief USB Descriptors Structure
+\details
+
+**Used in**
+- \ref Overriding_Descriptors
+*/
+
 typedef struct {
   uint32_t          vbus   : 1;         ///< USB Device VBUS state
   uint32_t          speed  : 2;         ///< USB Device enumerated speed (USB_SPEED_LOW, USB_SPEED_FULL or USB_SPEED_HIGH)

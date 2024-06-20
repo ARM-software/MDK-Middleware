@@ -921,16 +921,18 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = src/usb.txt \
-                         src/usb_examples.txt \
-                         src/usb_utilities.txt \
-                         src/usb_classes.txt \
-                         src/usb_function_reference.txt \
-                         src/usb_resource_requirements.txt \
-                         src/usb_migration.txt \
-                         src/Reference_Files.txt \
-                         src/usb_structs.txt \
+INPUT                  = src/usb.md \
+                         src/usb_rev_hist.md \
+                         src/usb_device.md \
+                         src/usb_host.md \
+                         src/usb_concepts.md \
+                         src/usb_classes.md \
+                         src/usb_function_reference.md \
+                         src/usb_resource_requirements.md \
+                         src/usb_migration.md \
+                         src/Reference_Files.md \
                          src/rl_usb.txt \
+                         src/usb_structs.txt \
                          ../../../Components/USB/Include/rl_usb.h \
                          src/template/USBD_MSC.h \
                          ../../../Components/USB/Source/usbd_evr.h \
