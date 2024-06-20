@@ -5792,7 +5792,7 @@ __WEAK fsStatus fat_ffind (const char *fn, fsFileInfo *info, fsFAT_Volume *vol) 
       /* Explicit search without wildcard */
       if (info->fileID != 0) {
         /* We found this file already in the previous iteration */
-        return (fsError);
+        return (fsFileNotFound);
       }
       /* Copy name from path information */
       memcpy (info->name, pinfo.fn, pinfo.fn_len);
