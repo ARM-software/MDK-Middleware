@@ -147,7 +147,8 @@ extern const uint32_t NetSecurity_ServerKey_Len;
 // Email Client (SMTPS)
 
 // Email Server root CA certificate
-const uint8_t NetSecurity_EmailServerCA[] =
+extern const uint8_t NetSecurity_EmailServerCA[];
+       const uint8_t NetSecurity_EmailServerCA[] =
 "-----BEGIN CERTIFICATE-----\r\n"
 #error "Email Server CA certificate is missing!"
 /*
@@ -160,6 +161,7 @@ const uint8_t NetSecurity_EmailServerCA[] =
 */
 "-----END CERTIFICATE-----\r\n";
 
-const uint32_t NetSecurity_EmailServerCA_Len = sizeof(NetSecurity_EmailServerCA);
+extern const uint32_t NetSecurity_EmailServerCA_Len;
+       const uint32_t NetSecurity_EmailServerCA_Len = sizeof(NetSecurity_EmailServerCA);
 
 #endif
