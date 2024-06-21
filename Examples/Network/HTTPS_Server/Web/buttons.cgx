@@ -1,0 +1,27 @@
+t <form>
+t <checkbox><id>button0</id>
+c y0 <on>%s</on>
+t </checkbox>
+t <checkbox><id>button1</id>
+c y1 <on>%s</on>
+t </checkbox>
+t <checkbox><id>button2</id>
+c y2 <on>%s</on>
+t </checkbox>
+t <checkbox><id>button3</id>
+c y3 <on>%s</on>
+t </checkbox>
+t <checkbox><id>button4</id>
+c y4 <on>%s</on>
+t </checkbox>
+t <checkbox><id>button5</id>
+c y5 <on>%s</on>
+t </checkbox>
+t <checkbox><id>button6</id>
+c y6 <on>%s</on>
+t </checkbox>
+t <checkbox><id>button7</id>
+c y7 <on>%s</on>
+t </checkbox>
+t </form>
+.
