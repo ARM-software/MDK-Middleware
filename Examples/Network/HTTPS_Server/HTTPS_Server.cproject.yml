@@ -1,5 +1,5 @@
 project:
-  description: HTTP Web Server example
+  description: HTTPS Web Server example
 
   packs:
     - pack: Keil::MDK-Middleware@>=8.0.0-0
@@ -54,7 +54,7 @@ project:
     - component: Keil::Network&MDK:Interface:ETH
     - component: Keil::Network&MDK:Socket:TCP
     - component: Keil::Network&MDK:Socket:UDP
-    - component: Keil::Network&MDK:Service:Web Server Compact&HTTP
+    - component: Keil::Network&MDK:Service:Web Server Compact&HTTPS
     - component: ARM::Security:mbed TLS
 
   layers:

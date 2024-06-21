@@ -1,5 +1,5 @@
 project:
-  description: SMTP Client example
+  description: SMTPS Client example
 
   packs:
     - pack: Keil::MDK-Middleware@>=8.0.0-0
@@ -35,7 +35,7 @@ project:
     - component: Keil::Network&MDK:Socket:TCP
     - component: Keil::Network&MDK:Socket:UDP
     - component: Keil::Network&MDK:Service:DNS Client
-    - component: Keil::Network&MDK:Service:SMTP Client&SMTP
+    - component: Keil::Network&MDK:Service:SMTP Client&SMTPS
     - component: ARM::Security:mbed TLS
 
   layers:

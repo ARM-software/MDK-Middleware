@@ -24,6 +24,8 @@ solution:
     - project: FTP_Server/FTP_Server.cproject.yml
     - project: HTTP_Server/HTTP_Server.cproject.yml
     - project: HTTP_Upload/HTTP_Upload.cproject.yml
+    - project: HTTPS_Server/HTTPS_Server.cproject.yml
     - project: SMTP_Client/SMTP_Client.cproject.yml
+    - project: SMTPS_Client/SMTPS_Client.cproject.yml
     - project: SNMP_Agent/SNMP_Agent.cproject.yml
     - project: Telnet_Server/Telnet_Server.cproject.yml
