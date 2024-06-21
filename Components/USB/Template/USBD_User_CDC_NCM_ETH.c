@@ -442,8 +442,8 @@ bool USBD_CDC%Instance%_NCM_GetNtbParameters (CDC_NCM_NTB_PARAM *ntb_params) {
  
   return true;
 }
-
-
+ 
+ 
 // Called upon USB Host request to return the USB Device's current EUI-48 station address.
 // \param[out]  net_addr             Pointer to EUI-48 current address, in network byte order.
 // \return      true                 if this request was handled.
@@ -459,7 +459,7 @@ bool USBD_CDC%Instance%_NCM_GetNetAddress (uint8_t *net_addr) {
 }
  
  
-// Called upon USB Host request to set the USB Device�s current EUI-48 station address.
+// Called upon USB Host request to set the USB Device's current EUI-48 station address.
 // \param[in]   net_addr             Pointer to EUI-48 address, in network byte order.
 // \return      true                 if this request was handled.
 // \return      false                if this request was not handled.
