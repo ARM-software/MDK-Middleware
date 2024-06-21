@@ -506,6 +506,7 @@ retf:
     retv = netError;
     goto retf;
   }
+  net_if = out_if;
 
   /* Check the UDP data size limits */
   if (len > UDP_MTU) {
