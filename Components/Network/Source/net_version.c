@@ -9,9 +9,9 @@
 #include "net_lib.h"
 #include "net_version.h"
 
-#define MAJOR       (MW_NET_VERSION_MAJOR)
-#define MINOR       (MW_NET_VERSION_MINOR)
-#define PATCH       (MW_NET_VERSION_PATCH)
+#define MAJOR       MW_NET_VERSION_MAJOR
+#define MINOR       MW_NET_VERSION_MINOR
+#define PATCH       MW_NET_VERSION_PATCH
 
 /* Version create macros */
 #define VER_BIN(x,y,z)          (x << 24 | y << 16 | z)
@@ -32,5 +32,5 @@ const uint32_t net_lib_version = VER_BIN(MAJOR, MINOR, PATCH);
 
 #ifdef Network_Debug_STDIO
   /* String version: for example "7.17.0" */
-  const char   net_ver_ascii[] = VER_ASCII(MAJOR, MINOR, BUILD);
+  const char   net_ver_ascii[] = VER_ASCII(MAJOR, MINOR, PATCH);
 #endif
