@@ -84,7 +84,7 @@ The network debug configuration file has been changed from `Net_Debug.c` to `Net
 - **Print Time Stamps** option integrated into the **Output Channel** option
 - **Multicast Listener Discovery (MLD)** option added
 - **net_debug_init()** function removed
-- \c DBG_XXX prefix changed to \c NET_DEBUG_XXX
+- `DBG_XXX` prefix changed to `NET_DEBUG_XXX`
   
 ## STDIO Debug {#netDebugStdio}
 

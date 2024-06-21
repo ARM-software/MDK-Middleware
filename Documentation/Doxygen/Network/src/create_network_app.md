@@ -27,7 +27,7 @@ Only a few steps are necessary to complete the RTE Component selection:
     will also select **Network:Socket:UDP** for stateless communication.
 -# From the **CMSIS Driver** Component:
   - If you do Ethernet communication, select appropriate **CMSIS Driver:Ethernet (API)** or
-    **CMSIS Driver:Ethernet MAC (API)** \a and **CMSIS Driver:Ethernet PHY (API)** drivers suitable for your
+    **CMSIS Driver:Ethernet MAC (API)** *and* **CMSIS Driver:Ethernet PHY (API)** drivers suitable for your
     application. For PPP or SLIP communication simply select **CMSIS Driver:USART (API):USART**. If you use wireless
     communication, select appropriate **CMSIS Driver:WiFi (API)** driver that supports transparent mode.
 -# From the **Device** Component:

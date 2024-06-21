@@ -31,5 +31,6 @@ This user's guide contains the following chapters:
 - \ref usb_migration contains information how to migrate projects to latest version of USB Component (v8).
 - [**API Reference**](./modules.html) shows the directory and file organization and contains the detailed API description.
 
-The [USB-IF Developers Area](https://www.usb.org/developers) contains the complete
-**USB 2.0 Specification** and additional information that is referenced in this user's guide.
+The [USB-IF Document Library](https://www.usb.org/documents) contains the complete
+[USB 2.0 Specification](https://www.usb.org/document-library/usb-20-specification) and additional
+information that is referenced in this user's guide.

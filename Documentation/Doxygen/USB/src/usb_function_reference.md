@@ -121,9 +121,9 @@ The following list provides a brief overview of all USB Component functions.
 - \ref USBD_CustomClassn_Endpoint0_SetupPacketProcessed  &mdash; \copybrief USBD_CustomClassn_Endpoint0_SetupPacketProcessed
 - \ref USBD_CustomClassn_Endpoint0_OutDataReceived  &mdash; \copybrief USBD_CustomClassn_Endpoint0_OutDataReceived
 - \ref USBD_CustomClassn_Endpoint0_InDataSent  &mdash; \copybrief USBD_CustomClassn_Endpoint0_InDataSent
-- \ref USBD_CustomClassn_Endpoint1_Event  &mdash;  Is called by the USB Device Core when an event happens on endpoint 1.
-  \n :
-  \n \ref USBD_CustomClassn_Endpoint15_Event  &mdash;  Is called by the USB Device Core when an event happens on endpoint 15.
+- \ref USBD_CustomClassn_Endpoint1_Event  &mdash;  Is called by the USB Device Core when an event happens on endpoint 1.  
+  :  
+  \ref USBD_CustomClassn_Endpoint15_Event  &mdash;  Is called by the USB Device Core when an event happens on endpoint 15.
 - \ref USBD_EndpointRead  &mdash; \copybrief USBD_EndpointRead
 - \ref USBD_EndpointReadGetResult  &mdash; \copybrief USBD_EndpointReadGetResult
 - \ref USBD_EndpointWrite  &mdash; \copybrief USBD_EndpointWrite

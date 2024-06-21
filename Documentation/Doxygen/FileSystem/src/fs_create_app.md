@@ -114,7 +114,7 @@ Set the drive characteristics in the `FS_Config_NAND_n.h` file:
   own one based on the \urlout{CMSIS-Driver-Ref} documentation.
 - The page \ref nand_flash_TL describes additional features specific to these devices.
 - Using a **NAND (API)** driver, you can use any NAND Flash device with an 8-/16-bit memory bus interface for data storage.
-- NAND Flashes with SPI interface (Serial NAND) are currently \a not \a supported by the File System Component.
+- NAND Flashes with SPI interface (Serial NAND) are currently *not supported* by the File System Component.
 - General \ref fs_sys_req requirements apply.
 
 ## File System Configuration {#fs_Device_Configuration}

@@ -51,7 +51,7 @@ USB Device Classes. RTE Component instances are numbered. The number is appended
 and user code templates. Each RTE Component has a separate configuration file. For example, for HID 0 and HID 1
 the configuration files have the name `USB_Config_HID_0.h` and `USB_Config_HID_1.h`.
 \note The default configuration settings are pre-configured for one instance of an USB Device or USB Device Class
-in a non-composite device peripheral. For other combinations the settings \em need to be edited to ensure proper
+in a non-composite device peripheral. For other combinations the settings *need* to be edited to ensure proper
 operation. The \ref dev_comp_tutorial example shows how to implement and configure a composite devices 
 
 ## Create an Application {#Creation_Steps}
@@ -777,7 +777,8 @@ Driver setup information file should be adapted in the following way:
 An USB Composite Device is a peripheral device that supports more than one device class. Many different devices are implemented
 as composite devices. For example they consist of a certain device class, but also an USB disk that has all the necessary drivers
 stored so that the device can be installed automatically, without the need to have access to a certain driver software.
-\n In this example, we will implement a composite device that is made up of two devices that have been used in the previous tutorials.
+
+In this example, we will implement a composite device that is made up of two devices that have been used in the previous tutorials.
 We will have access to the development board's **buttons** (from the HID example) and the **SC card** (from the MSC example).
 
 ![USB composite device example hardware setup](comp_dev_example_setup.png )
@@ -808,7 +809,7 @@ Insert
 #include "rl_fs.h
 ```
 
-to the \c \#includes at the beginning of the HID.c file. Afterwards, remove the MassStorage.c from your project.
+to the `#includes` at the beginning of the HID.c file. Afterwards, remove the MassStorage.c from your project.
 Now you have only one main function left.
 
 ##### USB Device Configuration
@@ -850,7 +851,8 @@ or uninstall previously installed device that uses same Vendor ID and Product ID
 
 The HID part of this example can be tested on a Windows PC using the HIDClient.exe utility (located in
 "C:\Keil\ARM\Utilities\HID_Client\Release"). The program runs stand-alone without installation.
-\n Steps to check the USB communication using the client utility:
+
+Steps to check the USB communication using the client utility:
 
 - Run "C:\Keil\ARM\Utilities\HID_Client\Release\HIDClient.exe".
 - Select the **Keil USB Device** to establish the communication channel.
@@ -1907,7 +1909,7 @@ The following picture shows an exemplary connection of the development board (in
   ```c
   #include "rl_usb.h
   ```
-- Add these lines of code to the HTTP_Server.c module before endless loop in \c main or \c app_main function:
+- Add these lines of code to the HTTP_Server.c module before endless loop in `main` or `app_main` function:
   ```c
   USBD_Initialize (0U); // USB Device 0 Initialization
   USBD_Connect    (0U); // USB Device 0 Connect

@@ -38,9 +38,9 @@ propagation, the maximum number of tiers allowed is seven:
 
 USB devices are divided into device classes:
 
-- \b Hubs provide additional attachment points and simplify USB connectivity from the user perspective. Each hub converts
+- **Hubs** provide additional attachment points and simplify USB connectivity from the user perspective. Each hub converts
    a single attachment point into multiple attachment points referred to as ports.
-- \b Functions provide capabilities to the system for transmitting or receiving data and control information. Each function
+- **Functions** provide capabilities to the system for transmitting or receiving data and control information. Each function
    contains configuration information describing the device capabilities and resource requirements.
 - **Compound Devices** are physical packages that implement multiple functions and include an embedded hub. A compound
   device appears to the host as a hub with one or more non-removable USB devices.
@@ -67,24 +67,24 @@ addressable nodes in this master/slave network. Only the host can initiate a dat
 ## USB Communication {#USB_Endpoints}
 
 USB is a polled bus, where the USB Host initiates all data exchanges. The data travels to or from \ref endpoints in an USB Device.
-The \b client in the USB Host stores data in buffers, but does not have endpoints.
+The **client** in the USB Host stores data in buffers, but does not have endpoints.
 The USB Host and the peripheral USB Device have distinct layers, as shown in the picture below. The connections between the
-layers are \b logical Host-Device interfaces between each horizontal layer. Between the logical connections data is transferred
+layers are **logical** Host-Device interfaces between each horizontal layer. Between the logical connections data is transferred
 using \ref pipe_types.
 
 ![Logical Connections Between USB Host Clients and USB Device Endpoints](usb_endpoints.png)
 
 ### Pipes {#pipe_types}
 
-Basically, two types of \b pipes exist:
+Basically, two types of **pipes** exist:
 - **Message pipes** have a defined USB format and are host controlled. Message pipes allow data to flow in both directions and
   support \ref USB_Control_Transfers only.
 - **Stream pipes** have no defined USB format and can either be controlled by the host or by the device. The data stream has
-  a predefined direction, either \b IN or \b OUT. Stream pipes support \ref USB_Interrupt_Transfers, \ref USB_Isochronous_Transfers,
+  a predefined direction, either **IN** or **OUT**. Stream pipes support \ref USB_Interrupt_Transfers, \ref USB_Isochronous_Transfers,
   and \ref USB_Bulk_Transfers.
 
 Most pipes come into existence when an USB Device has been connected to the USB Bus and configured by the USB Host.
-A pipe originates from a \b data \b buffer within the host \b client and terminates inside the USB Device at an \ref endpoints
+A pipe originates from a **data buffer** within the host **client** and terminates inside the USB Device at an \ref endpoints
 "Endpoint".
 
 ### Transfers {#transfers}
@@ -186,22 +186,23 @@ rate is not important.
 
 ### Endpoints {#endpoints}
 
-\b Endpoints can be described as data sources or sinks and exists in USB Devices only. The data stored at an endpoint may either be
+**Endpoints** can be described as data sources or sinks and exists in USB Devices only. The data stored at an endpoint may either be
 received from or waiting for being sent to the USB Host. An endpoint can be configured to support four \ref transfers "transfer types"
 defined in the USB specification (\ref USB_Control_Transfers, \ref USB_Interrupt_Transfers, \ref USB_Isochronous_Transfers, and
 \ref USB_Bulk_Transfers). Within the limits of the hardware, endpoints can be configured using the USB Middleware
 (e.g. limit an endpoint to a certain transfer type).
-\n An endpoint acts as a kind of buffer. A USB Host's client may send data to Endpoint 1 for example. Coming from the USB Host,
-the data will be sent to the **OUT Endpoint 1**. The program on the microcontroller will then read the data as soon as it
-is ready to do so. Returning data has to be written to the **IN Endpoint 1**, as the program cannot access the USB bus freely
-(the USB bus being controlled by the USB Host). The data in IN Endpoint 1 stays there until the host sends an IN packet to Endpoint 1
-requesting the data.
+
+An endpoint acts as a kind of buffer. A USB Host's client may send data to Endpoint 1 for example. Coming from the USB Host,
+the data will be sent to the **OUT Endpoint 1**. The program on the microcontroller will then read the data as soon as it is
+ready to do so. Returning data has to be written to the **IN Endpoint 1**, as the program cannot access the USB bus freely
+(the USB bus being controlled by the USB Host). The data in IN Endpoint 1 stays there until the host sends an IN packet to
+Endpoint 1 requesting the data.
 
 These rules apply to all microcontroller devices:
 
-- A device can have up to \b 16 \b OUT and \b 16 \b IN endpoints.
-- Each endpoint can have only \b one \b transfer \b direction.
-- \b Endpoint \b 0 is used for control transfers only and can not be assigned to any other function.
+- A device can have up to **16 OUT** and **16 IN** endpoints.
+- Each endpoint can have only **one transfer direction**.
+- **Endpoint 0** is used for control transfers only and can not be assigned to any other function.
 - **OUT** always refers to the direction pointing from the host to the device.
 - **IN** always refers to the direction pointing towards the host.
 
@@ -351,9 +352,9 @@ The ***idProduct*** is another 16-bit field containing a number assigned by the 
       <td>SubClass</td>
       <td>Subclass code (assigned by the USB-IF).
      
-      These codes are qualified by the value of the \em bDeviceClass field.
+      These codes are qualified by the value of the *bDeviceClass* field.
      
-      If \em bDeviceClass is
+      If *bDeviceClass* is
       - reset to zero, this field must also be reset to zero.
       - not set to FFh, all values are reserved for assignment by the USB-IF.</td>
     </tr>
@@ -365,7 +366,7 @@ The ***idProduct*** is another 16-bit field containing a number assigned by the 
       <td>Protocol</td>
       <td>Protocol code (assigned by the USB-IF).
      
-      These codes are qualified by the value of the \em bDeviceClass and \em bDeviceSubClass fields. If a device supports class-specific
+      These codes are qualified by the value of the *bDeviceClass* and *bDeviceSubClass* fields. If a device supports class-specific
       protocols on a device basis as opposed to an interface basis, this code identifies the protocols that the device uses as
       defined by the specification of the device class.
      
@@ -498,7 +499,7 @@ configuration that best matches the requirements of the application software.
       <td>uint8_t</td>
       <td>1</td>
       <td>Number</td>
-      <td>Value to select this configuration with \em SetConfiguration().</td>
+      <td>Value to select this configuration with *SetConfiguration()*.</td>
     </tr>
     <tr>
       <td>6</td>
@@ -515,12 +516,12 @@ configuration that best matches the requirements of the application software.
       <td>1</td>
       <td>Bitmap</td>
       <td>Configuration characteristics
-      - D7: Reserved (must be set to \b one for historical reasons)
+      - D7: Reserved (must be set to **one** for historical reasons)
       - D6: Self-powered
       - D5: Remote Wakeup
       - D4...0: Reserved (reset to zero)
      
-      A device configuration that uses power from the bus and a local source reports a non-zero value in \em bMaxPower to indicate the
+      A device configuration that uses power from the bus and a local source reports a non-zero value in *bMaxPower* to indicate the
       amount of bus power required and sets D6. The actual power source at runtime can be determined using the GetStatus(DEVICE)
       request. If a device configuration supports remote wakeup, D5 is set to 1.</td>
     </tr>
@@ -625,7 +626,7 @@ its own device driver.
       <td>SubClass</td>
       <td>Subclass code (assigned by the USB-IF).
 
-      If \em bInterfaceClass
+      If *bInterfaceClass*
       - is reset to zero, this field must also be reset to zero.
       - is not set to FFh, all values are reserved for assignment by the USB-IF.</td>
     </tr>
@@ -767,14 +768,14 @@ be a control endpoint and never has a descriptor.
       <td>Interval for polling endpoint for data transfers. Expressed
       in frames or micro-frames depending on the operating speed (1ms, or 125&mu;s units).
 
-      - For full-/high-speed isochronous endpoints, this value must be in the range from 1 to 16. The \em bInterval value
-        is used as the exponent for a 2<sup>bInterval-1</sup> value; For example, a \em bInterval of 4 means
+      - For full-/high-speed isochronous endpoints, this value must be in the range from 1 to 16. The bInterval value
+        is used as the exponent for a 2<sup>bInterval-1</sup> value; For example, a *bInterval* of 4 means
         a period of 8 (2<sup>4-1</sup>).
       - For full-/low-speed interrupt endpoints, the value of this field may be from 1 to 255.
-      - For high-speed interrupt endpoints, the \em bInterval value is used as the exponent for a 2<sup>bInterval-1</sup> value;
-        For Example, a \em bInterval of 4 means a period of 8 (2<sup>4-1</sup>). This value must be from 1 to 16.
-      - For high-speed bulk/control OUT endpoints, the \em bInterval must specify the maximum NAK rate of the endpoint.
-        A value of 0 indicates the endpoint never NAKs. Other values indicate at most 1 NAK each \em bInterval number of microframes.
+      - For high-speed interrupt endpoints, the *bInterval* value is used as the exponent for a 2<sup>bInterval-1</sup> value;
+        For Example, a *bInterval* of 4 means a period of 8 (2<sup>4-1</sup>). This value must be from 1 to 16.
+      - For high-speed bulk/control OUT endpoints, the *bInterval* must specify the maximum NAK rate of the endpoint.
+        A value of 0 indicates the endpoint never NAKs. Other values indicate at most 1 NAK each *bInterval* number of microframes.
         This value must be in the range from 0 to 255.
       </td>
     </tr>
@@ -851,7 +852,7 @@ error. Then, the host must not make a request for an *other_speed_configuration 
       <td>SubClass</td>
       <td>Subclass code (assigned by the USB-IF).
 
-      These codes are qualified by the value of the \em bDeviceClass field. If \em bDeviceClass is
+      These codes are qualified by the value of the *bDeviceClass* field. If *bDeviceClass* is
       - reset to zero, this field must also be reset to zero.
       - not set to FFh, all values are reserved for assignment by the USB-IF.</td>
     </tr>
@@ -861,7 +862,7 @@ error. Then, the host must not make a request for an *other_speed_configuration 
       <td>uint8_t</td>
       <td>1</td>
       <td>Protocol</td>
-      <td>Protocol code (assigned by the USB-IF). These codes are qualified by the values of the \em bDeviceClass and \em bDeviceSubClass fields.
+      <td>Protocol code (assigned by the USB-IF). These codes are qualified by the values of the *bDeviceClass* and *bDeviceSubClass* fields.
       If a device supports class-specific protocols on a device basis as opposed to an interface basis, this code identifies the protocols
       that the device uses as defined by the specification of the device class.
      
@@ -898,7 +899,7 @@ error. Then, the host must not make a request for an *other_speed_configuration 
 
 ### String Descriptors {#USB_String_Descriptor}
 
-\b String \b descriptors (USB_STRING_DESCRIPTOR) are optional and add human readable information to the other descriptors. If
+**String descriptors** (USB_STRING_DESCRIPTOR) are optional and add human readable information to the other descriptors. If
 a device does not support string descriptors, all references to string descriptors within device, configuration, and
 interface descriptors must be set to zero.
 

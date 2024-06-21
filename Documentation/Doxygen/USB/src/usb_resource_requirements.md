@@ -42,15 +42,16 @@ instances start two threads with the name: USBD_HID0_Thread, USBD_HID1_Thread. T
 The following table lists the components, number of threads, thread name, default thread priority, default stack size
 and the configuration file with **OS Resource Settings** for stack size adjustments.
 
-| Component                   | Number of Threads | Thread Name                                 | Default Priority         | Default Stack Size | Configuration File
-| :---------------------------| :-----------------| :-------------------------------------------| :----------------------: | :----------------: | :------------------------
-| **USB:Device**              | 1                 | USBDn_Core_Thread                           | \c osPriorityAboveNormal | 1024 Bytes         | USBD_Config_n.h
-| **USB:Device:ADC**          | 1                 | USBD_ADCn_Thread                            | \c osPriorityAboveNormal | 512 Bytes          | USBD_Config_ADC_n.h
-| **USB:Device:CDC**          | 2                 | USBD_CDCn_Bulk_Thread, USBD_CDCn_Int_Thread | \c osPriorityAboveNormal | 512 Bytes          | USBD_Config_CDC_n.h
-| **USB:Device:Custom Class** | 1...15            | USBD_CustomClassn_EPm_Thread                | \c osPriorityAboveNormal | 512 Bytes          | USBD_Config_CustomClass_n.h
-| **USB:Device:HID**          | 1                 | USBD_HIDn_Thread                            | \c osPriorityAboveNormal | 512 Bytes          | USBD_Config_HID_n.h
-| **USB:Device:MSC**          | 1                 | USBD_MSCn_Thread                            | \c osPriorityAboveNormal | 512 Bytes          | USBD_Config_MSC_n.h
-n is instance number, m is Endpoint number 1...15
+| Component                   | Number of Threads | Thread Name                                 | Default Priority        | Default Stack Size | Configuration File
+| :---------------------------| :-----------------| :-------------------------------------------| :---------------------: | :----------------: | :------------------------
+| **USB:Device**              | 1                 | USBDn_Core_Thread                           | `osPriorityAboveNormal` | 1024 Bytes         | USBD_Config_n.h
+| **USB:Device:ADC**          | 1                 | USBD_ADCn_Thread                            | `osPriorityAboveNormal` | 512 Bytes          | USBD_Config_ADC_n.h
+| **USB:Device:CDC**          | 2                 | USBD_CDCn_Bulk_Thread, USBD_CDCn_Int_Thread | `osPriorityAboveNormal` | 512 Bytes          | USBD_Config_CDC_n.h
+| **USB:Device:Custom Class** | 1...15            | USBD_CustomClassn_EPm_Thread                | `osPriorityAboveNormal` | 512 Bytes          | USBD_Config_CustomClass_n.h
+| **USB:Device:HID**          | 1                 | USBD_HIDn_Thread                            | `osPriorityAboveNormal` | 512 Bytes          | USBD_Config_HID_n.h
+| **USB:Device:MSC**          | 1                 | USBD_MSCn_Thread                            | `osPriorityAboveNormal` | 512 Bytes          | USBD_Config_MSC_n.h
+
+n is the instance number, m is the endpoint number 1...15
 
 \note
 - For **USB:Device:Custom Class** each endpoint In/Out pair executes in a separate thread. The number of threads depends on
@@ -119,12 +120,13 @@ thread (USBH_HIDn_IntIn_Thread or USBH_CDCn_IntIn_Thread) when HID or CDC device
 The following table lists the components, number of threads, thread name, default thread priority, default stack size
 and the configuration file with **OS Resource Settings** for stack size adjustments.
 
-| Component                   | Number of Threads | Thread Name            | Default Priority         | Default Stack Size | Configuration File
-| :---------------------------| :-----------------| :----------------------| :----------------------: | :----------------: | :------------------------
-| **USB:Host**                | 1                 | USBHn_Core_Thread      | \c osPriorityAboveNormal | 2048 Bytes         | USBH_Config_n.h
-| **USB:Host:CDC**            | 1                 | USBH_CDCn_IntIn_Thread | \c osPriorityAboveNormal |  512 Bytes         | USBH_Config_CDC.h
-| **USB:Host:HID**            | 1                 | USBH_HIDn_IntIn_Thread | \c osPriorityAboveNormal |  512 Bytes         | USBH_Config_HID.h
-n is instance number
+| Component                   | Number of Threads | Thread Name            | Default Priority        | Default Stack Size | Configuration File
+| :---------------------------| :-----------------| :----------------------| :---------------------: | :----------------: | :------------------------
+| **USB:Host**                | 1                 | USBHn_Core_Thread      | `osPriorityAboveNormal` | 2048 Bytes         | USBH_Config_n.h
+| **USB:Host:CDC**            | 1                 | USBH_CDCn_IntIn_Thread | `osPriorityAboveNormal` |  512 Bytes         | USBH_Config_CDC.h
+| **USB:Host:HID**            | 1                 | USBH_HIDn_IntIn_Thread | `osPriorityAboveNormal` |  512 Bytes         | USBH_Config_HID.h
+
+n is the instance number
 
 \note
 - The **Default Stack Size** in the table above can be changed in the USB configuration files (for example

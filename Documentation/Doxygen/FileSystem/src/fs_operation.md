@@ -85,7 +85,7 @@ CMSIS-Drivers. The following table shows the relationship between drive - memory
 - Other drives (memory card, USB memory device, NAND Flash) require appropriate CMSIS-Driver for the microcontroller
   device. If no suitable CMSIS-Driver is available for your selected device, you may create the required Flash interface
   driver. Refer to the \urlout{CMSIS-Driver-Ref} for details.
-- Currently, using NAND Flash devices with SPI interface (Serial NAND) \a is \a not \a supported.
+- Currently, using NAND Flash devices with SPI interface (Serial NAND) *is not supported*.
 
 ### Current Drive {#cur_sys_drive}
 
