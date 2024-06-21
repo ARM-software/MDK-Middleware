@@ -822,8 +822,8 @@ Bulk transfers in the WinUSB test app</div></div>
 </dd></dl>
 <h2><a class="anchor" id="dev_comp_tutorial"></a>
 USB Composite Device</h2>
-<p>An USB Composite Device is a peripheral device that supports more than one device class. Many different devices are implemented as composite devices. For example they consist of a certain device class, but also an USB disk that has all the necessary drivers stored so that the device can be installed automatically, without the need to have access to a certain driver software. <br  />
- In this example, we will implement a composite device that is made up of two devices that have been used in the previous tutorials. We will have access to the development board's <b>buttons</b> (from the HID example) and the <b>SC card</b> (from the MSC example).</p>
+<p>An USB Composite Device is a peripheral device that supports more than one device class. Many different devices are implemented as composite devices. For example they consist of a certain device class, but also an USB disk that has all the necessary drivers stored so that the device can be installed automatically, without the need to have access to a certain driver software.</p>
+<p>In this example, we will implement a composite device that is made up of two devices that have been used in the previous tutorials. We will have access to the development board's <b>buttons</b> (from the HID example) and the <b>SC card</b> (from the MSC example).</p>
 <div class="image">
 <img src="comp_dev_example_setup.png" alt=""/>
 <div class="caption">
@@ -864,8 +864,8 @@ Hardware Setup</h4>
 <dl class="section note"><dt>Note</dt><dd>If devices do not install correctly then probably device is using same Vendor ID and Product ID as some device that was previously already installed. There are two possible solutions: either change Product ID in USBD_Config_0.h file or uninstall previously installed device that uses same Vendor ID and Product ID.</dd></dl>
 <h4><a class="anchor" id="autotoc_md34"></a>
 PC Software</h4>
-<p>The HID part of this example can be tested on a Windows PC using the HIDClient.exe utility (located in "C:\Keil\ARM\Utilities\HID_Client\Release"). The program runs stand-alone without installation. <br  />
- Steps to check the USB communication using the client utility:</p>
+<p>The HID part of this example can be tested on a Windows PC using the HIDClient.exe utility (located in "C:\Keil\ARM\Utilities\HID_Client\Release"). The program runs stand-alone without installation.</p>
+<p>Steps to check the USB communication using the client utility:</p>
 <ul>
 <li>Run "C:\Keil\ARM\Utilities\HID_Client\Release\HIDClient.exe".</li>
 <li>Select the <b>Keil USB Device</b> to establish the communication channel.</li>

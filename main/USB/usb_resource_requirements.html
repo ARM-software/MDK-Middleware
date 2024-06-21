@@ -168,7 +168,7 @@ CMSIS-RTOS2 Requirements</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft"><b>USB:Device:MSC</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBD_MSCn_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBD_Config_MSC_n.h   </td></tr>
 </table>
-<p>n is instance number, m is Endpoint number 1...15</p>
+<p>n is the instance number, m is the endpoint number 1...15</p>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>For <b>USB:Device:Custom Class</b> each endpoint In/Out pair executes in a separate thread. The number of threads depends on the number of endpoints enabled in the configuration file USBD_Config_CustomClass_n.c.</li>
 <li>The <b>Default Stack Size</b> in the table above can be changed in the USB configuration files (for example USBD_Config_n.h and USBD_Config_DeviceClass_n.h). At the end of each configuration file, you will find <b>OS Resource Settings</b> and below that the value for the <b>Thread stack size</b>.</li>
@@ -231,7 +231,7 @@ CMSIS-RTOS2 Requirements</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyLeft"><b>USB:Host:HID</b>   </td><td class="markdownTableBodyLeft">1   </td><td class="markdownTableBodyLeft">USBH_HIDn_IntIn_Thread   </td><td class="markdownTableBodyCenter"><code>osPriorityAboveNormal</code>   </td><td class="markdownTableBodyCenter">512 Bytes   </td><td class="markdownTableBodyLeft">USBH_Config_HID.h   </td></tr>
 </table>
-<p>n is instance number</p>
+<p>n is the instance number</p>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>The <b>Default Stack Size</b> in the table above can be changed in the USB configuration files (for example USBH_Config_n.h and USBH_Config_DeviceClass.h). At the end of each configuration file, you will find <b>OS Resource Settings</b> and below that the value for the <b>Thread stack size</b>.</li>
 <li>If File System is used retargeted to USB Host Mass Storage the stack size for thread calling File System functions should be at least 2560 Bytes.</li>

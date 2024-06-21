@@ -207,7 +207,7 @@ Pipes</h2>
 <li><b>Message pipes</b> have a defined USB format and are host controlled. Message pipes allow data to flow in both directions and support <a class="el" href="USB_Concepts.html#USB_Control_Transfers">Control Transfers</a> only.</li>
 <li><b>Stream pipes</b> have no defined USB format and can either be controlled by the host or by the device. The data stream has a predefined direction, either <b>IN</b> or <b>OUT</b>. Stream pipes support <a class="el" href="USB_Concepts.html#USB_Interrupt_Transfers">Interrupt Transfers</a>, <a class="el" href="USB_Concepts.html#USB_Isochronous_Transfers">Isochronous Transfers</a>, and <a class="el" href="USB_Concepts.html#USB_Bulk_Transfers">Bulk Transfers</a>.</li>
 </ul>
-<p>Most pipes come into existence when an USB Device has been connected to the USB Bus and configured by the USB Host. A pipe originates from a <b>data</b> <b>buffer</b> within the host <b>client</b> and terminates inside the USB Device at an <a class="el" href="USB_Concepts.html#endpoints">Endpoint</a>.</p>
+<p>Most pipes come into existence when an USB Device has been connected to the USB Bus and configured by the USB Host. A pipe originates from a <b>data buffer</b> within the host <b>client</b> and terminates inside the USB Device at an <a class="el" href="USB_Concepts.html#endpoints">Endpoint</a>.</p>
 <h2><a class="anchor" id="transfers"></a>
 Transfers</h2>
 <p><b>Transfers</b> (data flow types) can consist of one or more transactions. A pipe supports only one of the following transfer types:</p><ul>
@@ -287,13 +287,13 @@ Bulk Transfers</h3>
 Bulk Transfer Read and Writes</div></div>
     <h2><a class="anchor" id="endpoints"></a>
 Endpoints</h2>
-<p><b>Endpoints</b> can be described as data sources or sinks and exists in USB Devices only. The data stored at an endpoint may either be received from or waiting for being sent to the USB Host. An endpoint can be configured to support four <a class="el" href="USB_Concepts.html#transfers">transfer types</a> defined in the USB specification (<a class="el" href="USB_Concepts.html#USB_Control_Transfers">Control Transfers</a>, <a class="el" href="USB_Concepts.html#USB_Interrupt_Transfers">Interrupt Transfers</a>, <a class="el" href="USB_Concepts.html#USB_Isochronous_Transfers">Isochronous Transfers</a>, and <a class="el" href="USB_Concepts.html#USB_Bulk_Transfers">Bulk Transfers</a>). Within the limits of the hardware, endpoints can be configured using the USB Middleware (e.g. limit an endpoint to a certain transfer type). <br  />
- An endpoint acts as a kind of buffer. A USB Host's client may send data to Endpoint 1 for example. Coming from the USB Host, the data will be sent to the <b>OUT Endpoint 1</b>. The program on the microcontroller will then read the data as soon as it is ready to do so. Returning data has to be written to the <b>IN Endpoint 1</b>, as the program cannot access the USB bus freely (the USB bus being controlled by the USB Host). The data in IN Endpoint 1 stays there until the host sends an IN packet to Endpoint 1 requesting the data.</p>
+<p><b>Endpoints</b> can be described as data sources or sinks and exists in USB Devices only. The data stored at an endpoint may either be received from or waiting for being sent to the USB Host. An endpoint can be configured to support four <a class="el" href="USB_Concepts.html#transfers">transfer types</a> defined in the USB specification (<a class="el" href="USB_Concepts.html#USB_Control_Transfers">Control Transfers</a>, <a class="el" href="USB_Concepts.html#USB_Interrupt_Transfers">Interrupt Transfers</a>, <a class="el" href="USB_Concepts.html#USB_Isochronous_Transfers">Isochronous Transfers</a>, and <a class="el" href="USB_Concepts.html#USB_Bulk_Transfers">Bulk Transfers</a>). Within the limits of the hardware, endpoints can be configured using the USB Middleware (e.g. limit an endpoint to a certain transfer type).</p>
+<p>An endpoint acts as a kind of buffer. A USB Host's client may send data to Endpoint 1 for example. Coming from the USB Host, the data will be sent to the <b>OUT Endpoint 1</b>. The program on the microcontroller will then read the data as soon as it is ready to do so. Returning data has to be written to the <b>IN Endpoint 1</b>, as the program cannot access the USB bus freely (the USB bus being controlled by the USB Host). The data in IN Endpoint 1 stays there until the host sends an IN packet to Endpoint 1 requesting the data.</p>
 <p>These rules apply to all microcontroller devices:</p>
 <ul>
-<li>A device can have up to <b>16</b> <b>OUT</b> and <b>16</b> <b>IN</b> endpoints.</li>
-<li>Each endpoint can have only <b>one</b> <b>transfer</b> <b>direction</b>.</li>
-<li><b>Endpoint</b> <b>0</b> is used for control transfers only and can not be assigned to any other function.</li>
+<li>A device can have up to <b>16 OUT</b> and <b>16 IN</b> endpoints.</li>
+<li>Each endpoint can have only <b>one transfer direction</b>.</li>
+<li><b>Endpoint 0</b> is used for control transfers only and can not be assigned to any other function.</li>
 <li><b>OUT</b> always refers to the direction pointing from the host to the device.</li>
 <li><b>IN</b> always refers to the direction pointing towards the host.</li>
 </ul>
@@ -469,7 +469,7 @@ Interface Descriptor</h2>
 </td></tr>
 <tr>
 <td>6 </td><td>bInterfaceSubClass </td><td>uint8_t </td><td>1 </td><td>SubClass </td><td><p class="starttd">Subclass code (assigned by the USB-IF).</p>
-<p class="endtd">If <em>bInterfaceClass</em> </p><ul>
+<p class="endtd">If <em>bInterfaceClass</em></p><ul>
 <li>is reset to zero, this field must also be reset to zero.</li>
 <li>is not set to FFh, all values are reserved for assignment by the USB-IF.  </li>
 </ul>
@@ -560,7 +560,7 @@ Endpoint Descriptor</h2>
 <tr>
 <td>6 </td><td>bInterval </td><td>uint8_t </td><td>1 </td><td>Number </td><td><p class="starttd">Interval for polling endpoint for data transfers. Expressed in frames or micro-frames depending on the operating speed (1ms, or 125&mu;s units).</p>
 <ul>
-<li>For full-/high-speed isochronous endpoints, this value must be in the range from 1 to 16. The <em>bInterval</em> value is used as the exponent for a 2<sup>bInterval-1</sup> value; For example, a <em>bInterval</em> of 4 means a period of 8 (2<sup>4-1</sup>).</li>
+<li>For full-/high-speed isochronous endpoints, this value must be in the range from 1 to 16. The bInterval value is used as the exponent for a 2<sup>bInterval-1</sup> value; For example, a <em>bInterval</em> of 4 means a period of 8 (2<sup>4-1</sup>).</li>
 <li>For full-/low-speed interrupt endpoints, the value of this field may be from 1 to 255.</li>
 <li>For high-speed interrupt endpoints, the <em>bInterval</em> value is used as the exponent for a 2<sup>bInterval-1</sup> value; For Example, a <em>bInterval</em> of 4 means a period of 8 (2<sup>4-1</sup>). This value must be from 1 to 16.</li>
 <li>For high-speed bulk/control OUT endpoints, the <em>bInterval</em> must specify the maximum NAK rate of the endpoint. A value of 0 indicates the endpoint never NAKs. Other values indicate at most 1 NAK each <em>bInterval</em> number of microframes. This value must be in the range from 0 to 255.   </li>
@@ -612,7 +612,7 @@ Device Qualifier Descriptor</h2>
 </table>
 <h2><a class="anchor" id="USB_String_Descriptor"></a>
 String Descriptors</h2>
-<p><b>String</b> <b>descriptors</b> (USB_STRING_DESCRIPTOR) are optional and add human readable information to the other descriptors. If a device does not support string descriptors, all references to string descriptors within device, configuration, and interface descriptors must be set to zero.</p>
+<p><b>String descriptors</b> (USB_STRING_DESCRIPTOR) are optional and add human readable information to the other descriptors. If a device does not support string descriptors, all references to string descriptors within device, configuration, and interface descriptors must be set to zero.</p>
 <p>String descriptors are encoded in <a href="https://en.wikipedia.org/wiki/Unicode">Unicode</a> so that multiple languages can be supported with a single product. When requesting a string descriptor, the requester specifies the desired language using a 16-bit language ID (LANGID) defined by the USB-IF. String index zero is used for all languages and returns a string descriptor that contains an array of two-byte LANGID codes supported by the device.</p>
 <p>The array of LANGID codes is not NULL-terminated. The size of the array (in byte) is computed by subtracting two from the value of the first byte to the descriptor.</p>
 <table class="cmtable" summary="String Descriptor Zero">
