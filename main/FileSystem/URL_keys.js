@@ -71,15 +71,14 @@ var arrurl = [];
  
  arrurl.push( new urlKey( "Component-Viewer-About",         "https://arm-software.github.io/CMSIS-View/latest/cmp_viewer.html#about_cmp_viewerr",              "Component Viewer"));
 
- arrurl.push( new urlKey( "USB-Resource-Req",               "../../html/USB/usb_resource_requirements.html",                                                   "USB Resource Requirements"));
- arrurl.push( new urlKey( "USBD-MSC-Ex",                    "../../html/USB/dev_msc_tutorial.html",                                                            "USB Device Mass Storage Example"));
- arrurl.push( new urlKey( "USBH-MSC-Ex",                    "../../html/USB/host_msc_tutorial.html",                                                           "USB Host Mass Storage Example"));
- arrurl.push( new urlKey( "FTP-Server-Ex",                  "../../html/Network/FTP_Server_Example.html",                                                      "FTP Server Example"));
- arrurl.push( new urlKey( "GEN-MDK-Pro",                    "../../html/General/index.html",                                                                   "MDK-Professional Middleware"));
- arrurl.push( new urlKey( "MW-General",                     "../../html/General/index.html",                                                                   "MDK-Middleware"));
- arrurl.push( new urlKey( "MW-FileSystem",                  "../../html/FileSystem/index.html",                                                                "File System Component"));
- arrurl.push( new urlKey( "MW-Network",                     "../../html/Network/index.html",                                                                   "Network Component"));
- arrurl.push( new urlKey( "MW-USB",                         "../../html/USB/index.html",                                                                       "USB Component"));
+ arrurl.push( new urlKey( "USB-Resource-Req",               "https://arm-software.github.io/MDK-Middleware/latest/USB/usb_resource_requirements.html",         "USB Resource Requirements"));
+ arrurl.push( new urlKey( "USBD-MSC-Ex",                    "https://arm-software.github.io/MDK-Middleware/latest/USB/USB_Device.html#dev_msc_tutorial",       "USB Device Mass Storage Example"));
+ arrurl.push( new urlKey( "USBH-MSC-Ex",                    "https://arm-software.github.io/MDK-Middleware/latest/USB/USB_Host.html#host_msc_tutorial",        "USB Host Mass Storage Example"));
+ arrurl.push( new urlKey( "FTP-Server-Ex",                  "https://arm-software.github.io/MDK-Middleware/latest/Network/nw_examples.html#FTP_Server_Example","FTP Server Example"));
+ arrurl.push( new urlKey( "MW-General",                     "https://arm-software.github.io/MDK-Middleware/latest/General/index.html",                         "MDK-Middleware"));
+ arrurl.push( new urlKey( "MW-FileSystem",                  "https://arm-software.github.io/MDK-Middleware/latest/FileSystem/index.html",                      "File System Component"));
+ arrurl.push( new urlKey( "MW-Network",                     "https://arm-software.github.io/MDK-Middleware/latest/Network/index.html",                         "Network Component"));
+ arrurl.push( new urlKey( "MW-USB",                         "https://arm-software.github.io/MDK-Middleware/latest/USB/index.html",                             "USB Component"));
 
  arrurl.push( new urlKey( "STM32Cube",                      "https://www.st.com/en/development-tools/stm32cubemx.html",                                        "STMicroelectronic's STM32CubeMX"));
  arrurl.push( new urlKey( "MCUXpresso",                     "https://www.nxp.com/design/design-center/software/development-software/mcuxpresso-software-and-tools-/mcuxpresso-config-tools-pins-clocks-and-peripherals:MCUXpresso-Config-Tools",  "NXP's MCUXpresso Config Tools"));
