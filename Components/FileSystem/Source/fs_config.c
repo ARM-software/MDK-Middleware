@@ -243,20 +243,6 @@
 #endif
 
 /* ---------------------------------------------------------------------------*/
-/* Extern definitions for media object */
-#ifdef FS_DEBUG
-extern MC_MCI       fs_mc0_mci;
-extern MC_SPI       fs_mc0_spi;
-extern MC_MCI       fs_mc1_mci;
-extern MC_SPI       fs_mc1_spi;
-extern NAND_FTL_DEV fs_nand0_handle;
-extern NAND_FTL_DEV fs_nand1_handle;
-extern NOR_MEDIA    fs_nor0;
-extern NOR_MEDIA    fs_nor1;
-extern RAM_DEV      fs_ram0_dev;
-#endif
-
-/* ---------------------------------------------------------------------------*/
 /* File Control Blocks for the FAT File System */
 #if (FAT_USE == 0 || FAT_MAX_OPEN_FILES == 0)
 fsFAT_Handle  fs_fat_fh[1];
@@ -291,6 +277,9 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive F0: NOR Flash device NOR0 configuration
  *---------------------------------------------------------------------------*/
 #if (NOR0_ENABLE)
+  #ifdef FS_DEBUG
+  extern NOR_MEDIA fs_nor0;
+  #endif
   static fsEFS_Volume  fs_nor0_vol;
 
   static FLASH_TIMEOUT fs_nor0_flash_tout = {
@@ -356,6 +345,9 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive F1: NOR Flash device NOR1 configuration
  *---------------------------------------------------------------------------*/
 #if (NOR1_ENABLE)
+  #ifdef FS_DEBUG
+  extern NOR_MEDIA fs_nor1;
+  #endif
   static fsEFS_Volume  fs_nor1_vol;
 
   static FLASH_TIMEOUT fs_nor1_flash_tout = {
@@ -420,6 +412,10 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive M0: Memory Card device MC0 configuration
  *---------------------------------------------------------------------------*/
 #if (MC0_ENABLE)
+  #ifdef FS_DEBUG
+  extern MC_MCI fs_mc0_mci;
+  extern MC_SPI fs_mc0_spi;
+  #endif
   static fsFAT_Volume fs_mc0_vol;
 
   #if (MC0_FAT_JOURNAL)
@@ -537,6 +533,10 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive M1: Memory Card device MC1 configuration
  *---------------------------------------------------------------------------*/
 #if (MC1_ENABLE)
+  #ifdef FS_DEBUG
+  extern MC_MCI fs_mc1_mci;
+  extern MC_SPI fs_mc1_spi;
+  #endif
   static fsFAT_Volume fs_mc1_vol;
 
   #if (MC1_FAT_JOURNAL)
@@ -654,6 +654,9 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  General NAND Flash device configuration
  *---------------------------------------------------------------------------*/
 #if (NAND0_ENABLE)
+  #ifdef FS_DEBUG
+  extern NAND_FTL_DEV fs_nand0_handle;
+  #endif
   static NAND_MEDIA_HANDLE fs_nand0_media_handle;
   #ifndef FS_DEBUG
   static
@@ -668,6 +671,9 @@ uint8_t const fs_ndrv = FS_NDRV;
 #endif
 
 #if (NAND1_ENABLE)
+  #ifdef FS_DEBUG
+  extern NAND_FTL_DEV fs_nand1_handle;
+  #endif
   static NAND_MEDIA_HANDLE fs_nand1_media_handle;
   #ifndef FS_DEBUG
   static
@@ -1073,6 +1079,9 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive R0: RAM device RAM0 configuration
  *---------------------------------------------------------------------------*/
 #if (RAM0_ENABLE)
+  #ifdef FS_DEBUG
+  extern RAM_DEV fs_ram0_dev;
+  #endif
   static fsFAT_Volume fs_ram0_vol;
 
   #if (RAM0_SIZE < 0x4A00)
@@ -1132,6 +1141,9 @@ uint8_t const fs_ndrv = FS_NDRV;
  *  Drive R1: RAM device RAM1 configuration
  *---------------------------------------------------------------------------*/
 #if (RAM1_ENABLE)
+  #ifdef FS_DEBUG
+  extern RAM_DEV fs_ram1_dev;
+  #endif
   static fsFAT_Volume fs_ram1_vol;
 
   #if (RAM1_SIZE < 0x4A00)
