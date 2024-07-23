@@ -9,12 +9,12 @@
 #ifndef FS_CORE_H__
 #define FS_CORE_H__
 
-#include "rl_fs.h"
-#include "fs_core_lib.h"
 #include "fs_core_rte.h"
 
 #include "FS_Config.h"
 #include "FS_Debug.h"
+
+#include "fs_core_lib.h"
 
 #if defined(FS_RAM_0)
 #include "FS_Config_RAM_0.h"

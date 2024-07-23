@@ -9,7 +9,7 @@
 #ifndef FS_NAND_FLASH_H__
 #define FS_NAND_FLASH_H__
 
-#include "fs_core_lib.h"
+#include "rl_fs.h"
 #include "Driver_NAND.h"
 
 /* NAND Configuration macros */
