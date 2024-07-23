@@ -1,8 +1,14 @@
 solution:
   description: USB Host examples
-  created-for: CMSIS-Toolbox@2.4.0
-
+  created-for: CMSIS-Toolbox@2.5.0
   cdefault:
+ 
+# select-compiler:  # list of tested compilers that can be selected
+#   - compiler: AC6
+#   - compiler: GCC
+#   - compiler: IAR
+#   - compiler: LLVM
+  compiler: AC6
 
   target-types:
     # - type: <target_name>
