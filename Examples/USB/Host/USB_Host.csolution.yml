@@ -3,13 +3,12 @@ solution:
   created-for: CMSIS-Toolbox@2.5.0
   cdefault:
  
-# select-compiler:  # list of tested compilers that can be selected
-#   - compiler: AC6
-#   - compiler: GCC
-#   - compiler: IAR
-#   - compiler: LLVM
-  compiler: AC6
-
+  select-compiler:  # list of tested compilers that can be selected
+    - compiler: AC6
+    - compiler: GCC
+    - compiler: IAR
+    - compiler: CLANG
+ 
   target-types:
     # - type: <target_name>
     #   board: <board_name>

@@ -1525,25 +1525,25 @@
 
   <examples>
     <example name="FileSystem" doc="File_Demo/README.md" folder="Examples/FileSystem">
-      <description>Interactive application to access drives (SD/MMC Card, NOR/NAND Flash, RAM)</description>
+      <description>MDK-Middleware: Interactive application for file access on drives (SD/MMC Card, NOR/NAND Flash, RAM)</description>
       <project>
         <environment name="csolution" load="FileSystem.csolution.yml"/>
       </project>
     </example>
     <example name="Network" doc="README.md" folder="Examples/Network">
-      <description>IPv4/IPv6 Client and Server applications via Ethernet</description>
+      <description>MDK-Middleware: IPv4/IPv6 Client and Server applications via Ethernet</description>
       <project>
         <environment name="csolution" load="Network.csolution.yml"/>
       </project>
     </example>
     <example name="USB_Device" doc="README.md" folder="Examples/USB/Device">
-      <description>USB Device applications using Classes HID, MSC, CDC</description>
+      <description>MDK-Middleware: USB Device applications using Classes HID, MSC, CDC</description>
       <project>
         <environment name="csolution" load="USB_Device.csolution.yml"/>
       </project>
     </example>
     <example name="USB_Host" doc="README.md" folder="Examples/USB/Host">
-      <description>USB Host applications using Classes HID, MSC</description>
+      <description>MDK-Middleware: USB Host applications using Classes HID, MSC</description>
       <project>
         <environment name="csolution" load="USB_Host.csolution.yml"/>
       </project>
