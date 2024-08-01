@@ -25,20 +25,7 @@ project:
       files:
         - file: HTTP_Upload.c
         - file: HTTP_Server_CGI.c
-        - file: Web/Web.c
-    # - group: Web files
-    #   files:
-    #     - file: Web/index.htm
-    #     - file: Web/pg_header.inc
-    #     - file: Web/pg_footer.inc
-    #     - file: Web/home.png
-    #     - file: Web/keil.gif
-    #     - file: Web/arm.png
-    #     - file: Web/llblue.jpg
-    #     - file: Web/pabb.gif
-    #     - file: Web/upload.cgi
-    #     - file: Web/dir.cgi
-    #     - file: Web/format.cgi
+        - file: Web.c
 
   components:
     - component: CMSIS:OS Tick:SysTick
@@ -55,3 +42,14 @@ project:
   layers:
     - layer: $Board-Layer$
       type: Board
+
+  executes:
+    - execute: Run FCARM
+      run: ${CMAKE_COMMAND} -G Ninja -S $input(0)$ -B ${CMAKE_BINARY_DIR}/FCARM/HTTP_Upload -DINPUT_DIRECTORY=$input(1)$ -DOUTPUT=$output$ && ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}/FCARM/HTTP_Upload -- --quiet
+      always:
+      input:
+        - FCARM   # CMake script directory
+        - Web     # Input directory with "web files" for FCARM
+      output:
+        - Web.c   # Output file for FCARM
+
