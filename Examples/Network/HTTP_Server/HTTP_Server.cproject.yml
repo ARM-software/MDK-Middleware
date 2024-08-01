@@ -24,27 +24,6 @@ project:
         - file: HTTP_Server.c
         - file: HTTP_Server_CGI.c
         - file: Web/Web.c
-    # - group: Web files
-    #   files:
-    #     - file: Web/index.htm
-    #     - file: Web/pg_header.inc
-    #     - file: Web/pg_footer.inc
-    #     - file: Web/ad.cgi
-    #     - file: Web/ad.cgx
-    #     - file: Web/buttons.cgi
-    #     - file: Web/buttons.cgx
-    #     - file: Web/language.cgi
-    #     - file: Web/lcd.cgi
-    #     - file: Web/leds.cgi
-    #     - file: Web/network.cgi
-    #     - file: Web/system.cgi
-    #     - file: Web/tcp.cgi
-    #     - file: Web/xml_http.js
-    #     - file: Web/home.png
-    #     - file: Web/keil.gif
-    #     - file: Web/arm.png
-    #     - file: Web/llblue.jpg
-    #     - file: Web/pabb.gif
 
   components:
     - component: ARM::CMSIS:OS Tick:SysTick
@@ -58,3 +37,32 @@ project:
   layers:
     - layer: $Board-Layer$
       type: Board
+
+  executes:
+    - execute: Run FCARM
+      run: ${CMAKE_COMMAND} -P $input(0)$ $input$ $output$
+      always:
+      input:
+        - $SolutionDir()$/script/fcarm.cmake
+        - Web
+        - Web/index.htm
+        - Web/pg_header.inc
+        - Web/pg_footer.inc
+        - Web/ad.cgi
+        - Web/ad.cgx
+        - Web/buttons.cgi
+        - Web/buttons.cgx
+        - Web/language.cgi
+        - Web/lcd.cgi
+        - Web/leds.cgi
+        - Web/network.cgi
+        - Web/system.cgi
+        - Web/tcp.cgi
+        - Web/xml_http.js
+        - Web/arm.png
+        - Web/home.png
+        - Web/keil.gif
+        - Web/llblue.jpg
+        - Web/pabb.gif
+      output:
+        - Web/Web.c
