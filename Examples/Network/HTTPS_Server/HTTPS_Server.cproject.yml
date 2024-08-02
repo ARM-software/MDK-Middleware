@@ -24,7 +24,7 @@ project:
       files:
         - file: HTTPS_Server.c
         - file: HTTPS_Server_CGI.c
-        - file: Web/Web.c
+        - file: Web.c
 
   components:
     - component: ARM::CMSIS:OS Tick:SysTick
@@ -42,29 +42,10 @@ project:
 
   executes:
     - execute: Run FCARM
-      run: ${CMAKE_COMMAND} -P $input(0)$ $input$ $output$
+      run: ${CMAKE_COMMAND} -G Ninja -S ${INPUT_0} -B ${CMAKE_CURRENT_BINARY_DIR}/fcarm-cmake -DINPUT_DIRECTORY=${INPUT_1} -DOUTPUT=${OUTPUT} && ${CMAKE_COMMAND} --build ${CMAKE_CURRENT_BINARY_DIR}/fcarm-cmake -- --quiet
       always:
       input:
-        - $SolutionDir()$/script/fcarm.cmake
+        - $SolutionDir()$/fcarm-cmake
         - Web
-        - Web/index.htm
-        - Web/pg_header.inc
-        - Web/pg_footer.inc
-        - Web/ad.cgi
-        - Web/ad.cgx
-        - Web/buttons.cgi
-        - Web/buttons.cgx
-        - Web/language.cgi
-        - Web/lcd.cgi
-        - Web/leds.cgi
-        - Web/network.cgi
-        - Web/system.cgi
-        - Web/tcp.cgi
-        - Web/xml_http.js
-        - Web/arm.png
-        - Web/home.png
-        - Web/keil.gif
-        - Web/llblue.jpg
-        - Web/pabb.gif
       output:
-        - Web/Web.c
+        - Web.c
