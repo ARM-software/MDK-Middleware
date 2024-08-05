@@ -1,17 +1,29 @@
 # MDK-Middleware Build Test
 
-This directory contains CMSIS Solution projects for build tests.
+This directory contains CMSIS Solution projects for build tests that generate libraries and examples (for a dummy device) using various compilers and the [CMSIS-Toolbox](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/README.md) as build system.
 
-## Prerequisites
+## CI Test with GitHub Actions
 
-- VS Code with [Arm Keil Studio Pack extensions](https://marketplace.visualstudio.com/items?itemName=Arm.keil-studio-pack)
+These tests are executed with [GitHub Actions](https://github.com/features/actions) using the following *build test scripts*.
 
-## Build
+Build test script | Description
+:-----------------|:--------------------
+[`./github/workflows/build_fs.yml`](../.github/workflows/build_fs.yml) | Executes build test for File System library and related examples.
+[`./github/workflows/build_net.yml`](../.github/workflows/build_net.yml) | Executes build test for Network library and related examples.
+[`./github/workflows/build_usb.yml`](../.github/workflows/build_uss.yml) | Executes build test for USB Device and Host library and related examples.
 
-- Open .ci directory in VS Code
 
-- Open CMSIS Solution view
-  - Select "Build" to build complete solution
-  - Select "Active Context" to build required context
+## Analyse Problems in Desktop Environment
 
-> Alternatively, use cbuild to build the examples from the bash terminal
+> **Note:** 
+>
+> - For testing examples, it is required to define a `target-type` along with a variable to a board layer. Refer to the *build test scripts* listed above for details.
+
+- Use VS Code with [Arm Keil Studio Pack extensions](https://marketplace.visualstudio.com/items?itemName=Arm.keil-studio-pack).
+
+- Open the directory `.ci` and install the tools using the `vcpkg-configuration.json` file.
+
+- Enter the related `cbuild` command in the Terminal Window, for example:
+  ```
+  > cbuild 
+  ```
