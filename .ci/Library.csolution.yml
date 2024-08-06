@@ -1,8 +1,14 @@
 solution:
   description: MDK-Middleware Build Test
-  created-for: CMSIS-Toolbox@2.4.0
+  created-for: CMSIS-Toolbox@2.5.0
 
   cdefault:
+
+  select-compiler:  # list of tested compilers that can be selected
+    - compiler: AC6
+    - compiler: GCC
+    - compiler: IAR
+    - compiler: CLANG
 
   packs:
     - pack: ARM::Cortex_DFP

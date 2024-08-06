@@ -48,14 +48,14 @@ project:
     #     - file: Web/pabb.gif
 
   components:
-    - component: ARM::CMSIS:OS Tick:SysTick
-    - component: ARM::CMSIS:RTOS2:Keil RTX5&Source
-    - component: Keil::Network&MDK:CORE
-    - component: Keil::Network&MDK:Interface:ETH
-    - component: Keil::Network&MDK:Socket:TCP
-    - component: Keil::Network&MDK:Socket:UDP
-    - component: Keil::Network&MDK:Service:Web Server Compact&HTTPS
-    - component: ARM::Security:mbed TLS
+    - component: CMSIS:OS Tick:SysTick
+    - component: CMSIS:RTOS2:Keil RTX5&Source
+    - component: Network&MDK:CORE
+    - component: Network&MDK:Interface:ETH
+    - component: Network&MDK:Socket:TCP
+    - component: Network&MDK:Socket:UDP
+    - component: Network&MDK:Service:Web Server Compact&HTTPS
+    - component: Security:mbed TLS
 
   layers:
     - layer: $Board-Layer$

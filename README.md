@@ -1,4 +1,7 @@
 [![Version](https://img.shields.io/github/v/release/arm-software/MDK-Middleware)](https://github.com/ARM-software/MDK-Middleware/releases/latest)
+[![FileSystem Build Test](https://img.shields.io/github/actions/workflow/status/Arm-Software/MDK-Middleware/build_fs.yml?logo=arm&logoColor=0091bd&label=FileSystem%20Build%20Test)](./.ci)
+[![Network Build Test](https://img.shields.io/github/actions/workflow/status/Arm-Software/MDK-Middleware/build_net.yml?logo=arm&logoColor=0091bd&label=Network%20Build%20Test)](./.ci)
+[![USB Build Test](https://img.shields.io/github/actions/workflow/status/Arm-Software/MDK-Middleware/build_usb.yml?logo=arm&logoColor=0091bd&label=USB%20Build%20Test)](./.ci)
 
 # MDK-Middleware
 

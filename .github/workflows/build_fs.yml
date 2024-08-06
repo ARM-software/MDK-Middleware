@@ -71,31 +71,15 @@ jobs:
 
       - name: Build FileSystem sources
         working-directory: ./MDK-Middleware
+        if: always()
         run: |
-          cbuild ./.ci/Library.csolution.yml --packs --update-rte --context FileSystem --toolchain ${{ matrix.compiler }} 2>&1 | tee build_${{ matrix.compiler }}.log || true
+          cbuild ./.ci/Library.csolution.yml --packs --update-rte --context FileSystem --toolchain ${{ matrix.compiler }}
 
       - name: Build FileSystem examples
         working-directory: ./MDK-Middleware/
+        if: always()
         run: |
-          cbuild ./Examples/FileSystem/FileSystem.csolution.yml --packs --update-rte --toolchain ${{ matrix.compiler }} 2>&1 | tee -a build_${{ matrix.compiler }}.log || true
-
-      - name: Create build summary
-        working-directory: ./MDK-Middleware
-        run: |
-          # Parse build log:
-          # 1. keep only lines that contain text:
-          #    - "Building context:" or
-          #    - "error csolution:" or
-          #    - "error cbuild: error building" or
-          #    - "error cbuild: exit status" or
-          #    - "cbuild: build finished"
-          # 2. replace all lines that contain text "error cbuild" with word "ERROR"
-          # 3. replace all lines that contain text "successfully" with word "OK"
-          # 4. to all lines that contain text "info", append the next line
-          sed -n '/Building context:\|error csolution:\|error cbuild: error building\|error cbuild: exit status\|cbuild: build finished/p' build_${{ matrix.compiler }}.log | sed '/error cbuild/s/.*/ERROR/' | sed '/successfully/s/.*/OK/' | sed '/info/ {N;s/\n/ /}' 2>&1 | tee summary_${{ matrix.compiler }}.log
-
-          # Return error if text "ERROR" is found in the summary
-          awk '/ERROR/{print "Build FAILED."; exit 1}' summary_${{ matrix.compiler }}.log
+          cbuild ./Examples/FileSystem/FileSystem.csolution.yml --packs --update-rte --toolchain ${{ matrix.compiler }}
 
       - name: Deactivate Arm tool license
         if: always()
