@@ -1,7 +1,7 @@
 //--- list of versions‚ ---
 const versions = {
     "General": {
-        "latest": "8.0.0-dev192"
+        "latest": "8.0.0-dev193"
     },
     "FileSystem": {
         "latest": "8.0.0"
