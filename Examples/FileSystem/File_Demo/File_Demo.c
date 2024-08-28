@@ -144,6 +144,10 @@ static uint32_t fs_terminal (char *buf, int32_t buf_size)  {
   /* Add NUL terminator */
   buf[cnt] = '\0';
 
+  /* Command prompt end, go to new line */
+  putchar('\n');
+  fflush(stdout);
+
   return (cnt);
 }
 
@@ -165,16 +169,16 @@ static void cmd_mount (void) {
   status = finit(drive);
 
   if (status != fsOK) {
-    printf("\nDrive initialization failed!");
+    printf("Drive initialization failed!\n");
   }
   else {
     status = fmount (drive);
   }
 
   if (status != fsOK) {
-    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+    printf ("Command failed (fsStatus = %s).\n", fs_status[status]);
   } else {
-    printf ("\nDrive mounted.");
+    printf ("Drive mounted.\n");
   }
 }
 
@@ -196,16 +200,16 @@ static void cmd_unmount (void) {
   status = funmount (drive);
 
   if (status != fsOK) {
-    printf("\nDrive unmount failed!");
+    printf("Drive unmount failed!\n");
   }
   else {
     status = funinit(drive);
   }
 
   if (status != fsOK) {
-    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+    printf ("Command failed (fsStatus = %s).\n", fs_status[status]);
   } else {
-    printf ("\nDrive unmounted.");
+    printf ("Drive unmounted.\n");
   }
 }
 
@@ -229,9 +233,9 @@ static void cmd_format (void) {
   status = fformat (drive, options);
 
   if (status != fsOK) {
-    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+    printf ("Command failed (fsStatus = %s).\n", fs_status[status]);
   } else {
-    printf ("\nDrive formatted.");
+    printf ("Drive formatted.\n");
   }
 }
 
@@ -266,7 +270,7 @@ static void cmd_write (void) {
   f = fopen(file, "w");
 
   if (f == NULL) {
-    printf("\nCan not open file!");
+    printf("Can not open file!\n");
   }
   else {
     for (i = 0; i < cnt; i++)  {
@@ -280,7 +284,7 @@ static void cmd_write (void) {
     }
 
     fclose(f);
-    printf("\nFile closed.");
+    printf("\nFile closed.\n");
   }
 }
 
@@ -317,12 +321,10 @@ static void cmd_read (void) {
   f = fopen(path, "r");
 
   if (f == NULL) {
-    printf("\nCan not open file!");
+    printf("Can not open file!\n");
   }
   else {
     n_cnt = 0U;
-    /* Start printing to a new line */
-    putchar ('\n');
 
     while ((ch = fgetc(f)) != EOF) {
       /* Write character to the console */
@@ -340,7 +342,7 @@ static void cmd_read (void) {
     }
 
     fclose(f);
-    printf("\nFile closed.");
+    printf("File closed.\n");
   }
 }
 
@@ -364,7 +366,7 @@ static void cmd_delete (void) {
   status = fdelete (path, options);
 
   if (status != fsOK) {
-    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+    printf ("Command failed (fsStatus = %s).\n", fs_status[status]);
   }
 }
 
@@ -388,7 +390,7 @@ static void cmd_rename (void) {
   status = frename (path, newname);
 
   if (status != fsOK) {
-    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+    printf ("Command failed (fsStatus = %s).\n", fs_status[status]);
   }
 }
 
@@ -409,7 +411,7 @@ static void cmd_mkdir (void) {
   status = fmkdir (path);
 
   if (status != fsOK) {
-    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+    printf ("Command failed (fsStatus = %s).\n", fs_status[status]);
   }
 }
 
@@ -435,7 +437,7 @@ static void cmd_rmdir (void) {
   status = frmdir (path, options);
 
   if (status != fsOK) {
-    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+    printf ("Command failed (fsStatus = %s).\n", fs_status[status]);
   }
 }
 
@@ -468,16 +470,16 @@ static void cmd_find (void) {
 
       if (cnt == 0U) {
         /* Print search output header */
-        printf("\n%-5s %-12s %-17s %s", "type", "size", "date", "name");
-        printf("\n%-5s %-12s %-17s %s", "----", "----", "----", "----");
+        printf("%-5s %-12s %-17s %s\n", "type", "size", "date", "name");
+        printf("%-5s %-12s %-17s %s\n", "----", "----", "----", "----");
       }
 
       /* Print type of entry and its size */
       if (info.attrib & FS_FAT_ATTR_DIRECTORY) {
-        printf("\n%-5s %-12s ", "DIR", " ");
+        printf("%-5s %-12s ", "DIR", " ");
       }
       else {
-        printf("\n%-5s %-12u ", "FILE", info.size);
+        printf("%-5s %-12u ", "FILE", info.size);
       }
       /* Print date and time */
       printf("%02d.%02d.%04d  %02d:%02d ", info.time.day,
@@ -486,7 +488,7 @@ static void cmd_find (void) {
                                            info.time.hr,
                                            info.time.min);
       /* Print file or directory name */
-      printf("%s", info.name);
+      printf("%s\n", info.name);
 
       /* Increment number of entries found */
       cnt++;
@@ -495,11 +497,11 @@ static void cmd_find (void) {
 
   if (status == fsFileNotFound) {
     if (info.fileID == 0) {
-      printf("\nNo files...");
+      printf("No files...\n");
     }
   }
   else {
-    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+    printf ("Command failed (fsStatus = %s).\n", fs_status[status]);
   }
 }
 
@@ -523,9 +525,9 @@ static void cmd_pwd (void) {
   status = fpwd (drive, pwd_path, sizeof(pwd_path));
 
   if (status != fsOK) {
-    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+    printf ("Command failed (fsStatus = %s).\n", fs_status[status]);
   } else {
-    printf ("\n%s", pwd_path);
+    printf ("%s\n", pwd_path);
   }
 }
 
@@ -548,7 +550,7 @@ static void cmd_chdir (void) {
   status = fchdir (path);
 
   if (status != fsOK) {
-    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+    printf ("Command failed (fsStatus = %s).\n", fs_status[status]);
   }
 }
 
@@ -571,7 +573,7 @@ static void cmd_chdrive (void) {
   status = fchdrive (drive);
 
   if (status != fsOK) {
-    printf ("\nCommand failed (fsStatus = %s).", fs_status[status]);
+    printf ("Command failed (fsStatus = %s).\n", fs_status[status]);
   }
 }
 
@@ -581,13 +583,13 @@ static void cmd_chdrive (void) {
 static void cmd_help (void) {
   uint32_t i;
 
-  printf("\nThe following commands are defined:");
-  printf("\n%-8s %-16s %s", "cmd", "args", "info");
-  printf("\n%-8s %-16s %s", "---", "----", "----");
+  printf("The following commands are defined:\n");
+  printf("%-8s %-16s %s\n", "cmd", "args", "info");
+  printf("%-8s %-16s %s\n", "---", "----", "----");
 
   /* List all commands together with arguments and info */
   for (i = 0; i < CMD_LIST_SIZE; i++) {
-    printf("\n%-8s %-16s %s", cmd_list[i].cmd, cmd_list[i].args, cmd_list[i].info);
+    printf("%-8s %-16s %s\n", cmd_list[i].cmd, cmd_list[i].args, cmd_list[i].info);
   }
 }
 
@@ -600,10 +602,10 @@ static void print_prompt (void) {
   status = fpwd ("", pwd_path, sizeof(pwd_path));
 
   if (status == fsOK) {
-    printf("\n\n%s $ ", pwd_path);
+    printf("\n%s $ ", pwd_path);
   }
   else {
-    printf ("\n\n$ ");
+    printf ("\n$ ");
   }
   fflush(stdout);
 }
@@ -638,7 +640,7 @@ static void init_filesystem (void) {
 
   print_version();
 
-  printf("\nInitializing and mounting current drive...");
+  printf("Initializing and mounting current drive...\n");
 
   /* Set the drive to initialize and mount */
   drive = FILE_DEMO_DRIVE;
@@ -646,14 +648,14 @@ static void init_filesystem (void) {
   stat = finit(drive);
 
   if (stat != fsOK) {
-    printf("\nError: initialization failed (fsStatus = %s).", fs_status[stat]);
+    printf("Error: initialization failed (fsStatus = %s).\n", fs_status[stat]);
   }
   else {
     stat = fmount(drive);
 
     if (stat == fsNoFileSystem) {
       /* Format the drive */
-      printf ("\nDrive not formatted! Proceed with Format [Y/N]");
+      printf ("Drive not formatted! Proceed with Format [Y/N]\n");
 
       ch = (char) getchar();
 
@@ -662,22 +664,22 @@ static void init_filesystem (void) {
         stat = fformat (drive, NULL);
 
         if (stat == fsOK) {
-          printf ("\nDrive formatted!");
+          printf ("Drive formatted!\n");
         }
         else {
-          printf ("\nError: format failed (fsStatus = %s).", fs_status[stat]);
+          printf ("Error: format failed (fsStatus = %s).\n", fs_status[stat]);
         }
       }
     }
     else {
       if (stat != fsOK) {
-        printf ("\nError: mount failed (fsStatus = %s).", fs_status[stat]);
+        printf ("Error: mount failed (fsStatus = %s).\n", fs_status[stat]);
       }
     }
 
     if (stat == fsOK) {
       /* Drive mounted */
-      printf("\nDrive ready!");
+      printf("Drive ready!\n");
 
       if (drive[0] != '\0') {
         /* Make the specified drive the current drive */
