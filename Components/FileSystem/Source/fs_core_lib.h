@@ -13,9 +13,17 @@
 
 #include "rl_fs.h"
 
-#include "fs_memory_card.h"
-#include "fs_nand_flash.h"
-#include "fs_nor_flash.h"
+#if defined(FS_MEMORY_CARD_0) || defined(FS_MEMORY_CARD_1)
+  #include "fs_memory_card.h"
+#endif
+
+#if defined(FS_NAND_FLASH_0) || defined(FS_NAND_FLASH_1)
+  #include "fs_nand_flash.h"
+#endif
+
+#if defined(FS_NOR_FLASH_0) || defined(FS_NOR_FLASH_1)
+  #include "fs_nor_flash.h"
+#endif
 
 
 /* Switch case statement fall through compiler attribute */
