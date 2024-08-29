@@ -8,6 +8,7 @@
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
 
 //   <e>File System Debug
 //   <i>Enable File System event recording

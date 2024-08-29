@@ -1,13 +1,14 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USBH_Config_HID.h
  * Purpose: USB Host Human Interface Device class (HID) Configuration
- * Rev.:    V5.1.0
+ * Rev.:    V5.1.1
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
 
 // <h>USB Host: Human Interface Device class (HID)
 //   <o> Number of concurrent HID Devices in system <0-15>

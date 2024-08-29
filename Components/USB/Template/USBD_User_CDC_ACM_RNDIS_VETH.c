@@ -38,6 +38,7 @@
  
  
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
  
 // Configuration defines
  

@@ -8,6 +8,7 @@
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
 
 // <h>WiFi Network Interface
 #define WIFI%Instance%_ENABLE             1

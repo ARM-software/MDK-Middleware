@@ -1,13 +1,14 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network:Service
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    Net_Config_TFTP_Client.h
  * Purpose: Network Configuration for TFTP Client
- * Rev.:    V5.0.0
+ * Rev.:    V5.0.1
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
 
 // <h>TFTP Client
 #define TFTP_CLIENT_ENABLE      1

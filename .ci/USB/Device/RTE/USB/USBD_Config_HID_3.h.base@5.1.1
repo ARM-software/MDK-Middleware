@@ -8,6 +8,7 @@
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
 
 // <h>USB Device: Human Interface Device class (HID) 3
 //   <o>Assign Device Class to USB Device # <0-3>

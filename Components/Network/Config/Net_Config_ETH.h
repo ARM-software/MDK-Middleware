@@ -8,6 +8,7 @@
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
 
 // <h>Ethernet Network Interface %Instance%
 #define ETH%Instance%_ENABLE             1

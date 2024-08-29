@@ -16,7 +16,8 @@
 
 #include "rl_net.h"                     // Keil::Network&MDK:CORE
 
-//-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
+//-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
 
 //   <o>Socket type <0=>Stream <1=>Datagram
 //   <i>Stream (TCP) or Datagram (UDP) socket type.
@@ -48,7 +49,7 @@
 
 //   </e>
 
-//------------- <<< end of configuration section >>> -----------------------
+//------------- <<< end of configuration section >>> ---------------------------
 
 #if (!(IP4_ENABLE ^ IP6_ENABLE))
   #error Select only IPv4 or only IPv6!

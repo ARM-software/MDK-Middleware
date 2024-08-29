@@ -1,13 +1,14 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network:Service
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    Net_Config_Telnet_Server.h
  * Purpose: Network Configuration for Telnet Server
- * Rev.:    V7.0.1
+ * Rev.:    V7.0.2
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
 
 // <h>Telnet Server
 #define TELNET_SERVER_ENABLE        1

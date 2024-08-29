@@ -1,13 +1,14 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network:Socket
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    Net_Config_BSD.h
  * Purpose: Network Configuration for BSD Sockets
- * Rev.:    V5.0.0
+ * Rev.:    V5.0.1
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
 
 // <h>Berkley (BSD) Sockets
 #define BSD_ENABLE              1

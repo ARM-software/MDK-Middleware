@@ -15,6 +15,7 @@
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
 
 // <h>USB Device 3
 //   <y>Connect to hardware via Driver_USBD#
