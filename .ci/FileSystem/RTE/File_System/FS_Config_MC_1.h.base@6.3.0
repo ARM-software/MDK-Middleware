@@ -8,6 +8,7 @@
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
 
 // <h>Memory Card Drive 1
 // <i>Configuration for SD/SDHC/MMC Memory Card assigned to drive letter "M1:"

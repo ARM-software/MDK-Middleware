@@ -14,6 +14,7 @@
 #endif
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
 
 // <h>USB Host 0
 //   <y>Connect to hardware via Driver_USBH#

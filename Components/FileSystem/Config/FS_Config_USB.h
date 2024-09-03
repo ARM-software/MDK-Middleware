@@ -1,13 +1,14 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System:Drive
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    FS_Config_USB_%Instance%.h
  * Purpose: File System Configuration for USB Drive
- * Rev.:    V6.2.0
+ * Rev.:    V6.2.1
  *----------------------------------------------------------------------------*/
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
 
 // <h>USB Drive %Instance%
 // <i>Configuration for USB device assigned to drive letter "U%Instance%:"

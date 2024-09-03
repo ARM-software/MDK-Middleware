@@ -17,7 +17,8 @@
 
 #include "rl_net.h"                     // Keil::Network&MDK:CORE
 
-//-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
+//-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
+//------ With VS Code: Open Preview for Configuration Wizard -------------------
 
 //   <o>Local Port <1-65535>
 //   <i>Local port number.
@@ -32,7 +33,7 @@
 //   <i>Use IPv6 Protocol to accept connections.
 #define IP6_ENABLE      0
 
-//------------- <<< end of configuration section >>> -----------------------
+//------------- <<< end of configuration section >>> ---------------------------
 
 #if (!(IP4_ENABLE ^ IP6_ENABLE))
   #error Select only IPv4 or only IPv6!
