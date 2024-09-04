@@ -1,12 +1,15 @@
-This is an HID example that demonstrates Human Interface Device (HID)
-on USB Device.
+HID Example
+===========
 
-Detailed description is available on:
-www.keil.com/pack/doc/MW/USB/html/dev_hid_tutorial.html
+This example demonstrates usage of the Human Interface Device (HID) class running on an USB Device.
 
-User Interface:                 inputs:      vioBUTTON0
-                                outputs:     vioLED0..7
+[Refer to the MDK-Middleware documentation in the section USB Device Examples for further details.](https://arm-software.github.io/MDK-Middleware/latest/USB/USB_Device.html#dev_hid_tutorial)
 
-The example demonstrates a Human Interface Device. The board LEDs and
-push button can be accessed from the PC through a custom
-HID Client Program (<Keil-root>\ARM\Utilities\HID_Client\Release\HIDClient.exe).
+Usage
+-----
+
+For running on target hardware an compatible board layer is required. For details refer to [CMSIS-Toolbox > Reference Applications](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md).
+
+Using this board layer, the HID interface connects typically to buttons and LEDs using the [CMSIS-Driver VIO interface](https://arm-software.github.io/CMSIS_6/latest/Driver/group__vio__interface__gr.html).
+
+The Keil μVision MDK installation contains a HID Client Demo Program for Windows. Refer to `<Keil-root>\ARM\Utilities\HID_Client\Release\HIDClient.exe`.
