@@ -12,4 +12,4 @@ For running on target hardware an compatible board layer is required. For detail
 
 Using this board layer, the HID interface connects typically to buttons and LEDs using the [CMSIS-Driver VIO interface](https://arm-software.github.io/CMSIS_6/latest/Driver/group__vio__interface__gr.html).
 
-The Keil μVision MDK installation contains a HID Client Demo Program for Windows. Refer to `<Keil-root>\ARM\Utilities\HID_Client\Release\HIDClient.exe`.
+The Keil μVision MDK installation contains a HID Client demo program for Windows. This demo program starts with `<Keil-root>\ARM\Utilities\HID_Client\Release\HIDClient.exe`.
