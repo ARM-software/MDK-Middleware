@@ -1,7 +1,6 @@
 solution:
   description: IPv4/IPv6 Network examples
   created-for: CMSIS-Toolbox@2.5.0
-
   cdefault:
 
   select-compiler:  # list of tested compilers that can be selected
