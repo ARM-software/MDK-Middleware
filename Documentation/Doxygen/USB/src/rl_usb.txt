@@ -4529,6 +4529,9 @@ The USB Device MSC Class configuration file <b>USBD_Config_MSC_n.h</b> contains 
 <b>Used in</b>
 - USB Device Function: \ref USBD_CustomClassn_Endpoint0_SetupPacketReceived; \ref USBD_CustomClassn_Endpoint0_SetupPacketProcessed;
 
+\struct usbd_desc_t
+\brief USB Device Descriptors structure
+
 \struct CDC_LINE_CODING
 \brief CDC Line Coding structure
 \details

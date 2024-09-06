@@ -348,20 +348,4 @@ typedef struct {
   uint8_t              *inquiry_data[4];                    ///< pointer to data returned upon SCSI Inquiry request for 4 LUNs
 } const usbd_msc_t;
 
-/// Structure containing all descriptors (except report descriptor)
-typedef struct {
-  const uint8_t        *ep0_descriptor;                     ///< Control Endpoint 0 descriptor
-  const uint8_t        *device_descriptor;                  ///< device descriptor
-  const uint8_t        *device_qualifier_fs;                ///< device qualifier for low/full-speed
-  const uint8_t        *device_qualifier_hs;                ///< device qualifier for high-speed
-  const uint8_t        *config_descriptor_fs;               ///< configuration descriptor for low/full-speed
-  const uint8_t        *config_descriptor_hs;               ///< configuration descriptor for high-speed
-  const uint8_t        *other_speed_config_descriptor_fs;   ///< other speed configuration descriptor for low/full-speed
-  const uint8_t        *other_speed_config_descriptor_hs;   ///< other speed configuration descriptor for high-speed
-  const uint8_t        *string_descriptor;                  ///< string descriptors
-        uint8_t        *ser_num_string_descriptor;          ///< serial number string descriptor
-  const uint8_t        *ms_os_string_descriptor;            ///< Microsoft OS string descriptor
-  const uint8_t        *ms_os_ext_compat_id_descriptor;     ///< Microsoft Extended Compat ID OS Feature Descriptor 
-} usbd_desc_t;
-
 #endif  // USBD_LIB_H_

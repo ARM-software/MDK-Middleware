@@ -152,13 +152,31 @@ typedef enum {
 } usbdSemaphore_t;
 
 /* USB Device State structure */
-/// @cond USBD_STATE_cond
+/// @cond DOXYGEN_SKIP
 typedef struct {
   uint32_t vbus     :  1;               ///< USB Device VBUS state
   uint32_t speed    :  2;               ///< USB Device enumerated speed (USB_SPEED_LOW, USB_SPEED_FULL or USB_SPEED_HIGH)
   uint32_t active   :  1;               ///< USB Device bus activity
   uint32_t reserved : 28;               ///< reserved
 } USBD_STATE;
+/// @endcond
+
+/* USB Device Descriptors structure */
+/// @cond DOXYGEN_SKIP
+typedef struct {
+  const uint8_t *ep0_descriptor;                        ///< Pointer to Control Endpoint 0 descriptor
+  const uint8_t *device_descriptor;                     ///< Pointer to Device descriptor
+  const uint8_t *device_qualifier_fs;                   ///< Pointer to Device Qualifier for low/full-speed
+  const uint8_t *device_qualifier_hs;                   ///< Pointer to Device Qualifier for high-speed
+  const uint8_t *config_descriptor_fs;                  ///< Pointer to Configuration descriptor for low/full-speed
+  const uint8_t *config_descriptor_hs;                  ///< Pointer to Configuration descriptor for high-speed
+  const uint8_t *other_speed_config_descriptor_fs;      ///< Pointer to Other Speed Configuration descriptor for low/full-speed
+  const uint8_t *other_speed_config_descriptor_hs;      ///< Pointer to Other Speed Configuration descriptor for high-speed
+  const uint8_t *string_descriptor;                     ///< Pointer to String descriptors
+        uint8_t *ser_num_string_descriptor;             ///< Pointer to Serial Number String descriptor
+  const uint8_t *ms_os_string_descriptor;               ///< Pointer to Microsoft OS string descriptor
+  const uint8_t *ms_os_ext_compat_id_descriptor;        ///< Pointer to Microsoft Extended Compat ID OS Feature Descriptor 
+} usbd_desc_t;
 /// @endcond
 
 /* USB Host Constants and Defines */
@@ -1649,6 +1667,47 @@ extern usbStatus USBH_DeviceRequest_SetInterface (uint8_t device, uint8_t index,
 /// \param[out]    ptr_frame_number     pointer to where frame number data will be read.
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 extern usbStatus USBH_DeviceRequest_SynchFrame (uint8_t device, uint8_t index, uint8_t *ptr_frame_number);
+
+// USB Device descriptors external declarations
+extern const uint8_t     usbd0_ep0_descriptor[];
+extern const uint8_t     usbd0_device_descriptor[];
+extern const uint8_t     usbd0_config_descriptor_fs[];
+extern const uint8_t     usbd0_config_descriptor_hs[];
+extern const uint8_t     usbd0_device_qualifier_fs[];
+extern const uint8_t     usbd0_device_qualifier_hs[];
+extern const uint8_t     usbd0_other_speed_config_descriptor_fs[];
+extern const uint8_t     usbd0_other_speed_config_descriptor_hs[];
+extern usbd_desc_t       usbd0_desc;
+
+extern const uint8_t     usbd1_ep0_descriptor[];
+extern const uint8_t     usbd1_device_descriptor[];
+extern const uint8_t     usbd1_config_descriptor_fs[];
+extern const uint8_t     usbd1_config_descriptor_hs[];
+extern const uint8_t     usbd1_device_qualifier_fs[];
+extern const uint8_t     usbd1_device_qualifier_hs[];
+extern const uint8_t     usbd1_other_speed_config_descriptor_fs[];
+extern const uint8_t     usbd1_other_speed_config_descriptor_hs[];
+extern usbd_desc_t       usbd1_desc;
+
+extern const uint8_t     usbd2_ep0_descriptor[];
+extern const uint8_t     usbd2_device_descriptor[];
+extern const uint8_t     usbd2_config_descriptor_fs[];
+extern const uint8_t     usbd2_config_descriptor_hs[];
+extern const uint8_t     usbd2_device_qualifier_fs[];
+extern const uint8_t     usbd2_device_qualifier_hs[];
+extern const uint8_t     usbd2_other_speed_config_descriptor_fs[];
+extern const uint8_t     usbd2_other_speed_config_descriptor_hs[];
+extern usbd_desc_t       usbd2_desc;
+
+extern const uint8_t     usbd3_ep0_descriptor[];
+extern const uint8_t     usbd3_device_descriptor[];
+extern const uint8_t     usbd3_config_descriptor_fs[];
+extern const uint8_t     usbd3_config_descriptor_hs[];
+extern const uint8_t     usbd3_device_qualifier_fs[];
+extern const uint8_t     usbd3_device_qualifier_hs[];
+extern const uint8_t     usbd3_other_speed_config_descriptor_fs[];
+extern const uint8_t     usbd3_other_speed_config_descriptor_hs[];
+extern usbd_desc_t       usbd3_desc;
 
 // USB Device user callback function prototypes
 extern void              USBD_Device0_Initialize            (void);

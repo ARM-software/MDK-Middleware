@@ -1,17 +1,15 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_config_desc_$x.c
  * Purpose: USB Device $x Descriptor Creation
  *----------------------------------------------------------------------------*/
 
 /* USB Device $x Endpoint 0 Descriptor */
-extern const uint8_t usbd$x_ep0_descriptor[];
 __WEAK const uint8_t usbd$x_ep0_descriptor[] __ALIGNED(4) = { USBD_EP0($x) };
 
 /* USB Device $x Standard Descriptor */
-extern const uint8_t usbd$x_device_descriptor[];
 __WEAK const uint8_t usbd$x_device_descriptor[] __ALIGNED(4) = {
   USB_DEVICE_DESC_SIZE,                 /* bLength */
   USB_DEVICE_DESCRIPTOR_TYPE,           /* bDescriptorType */
@@ -42,7 +40,6 @@ __WEAK const uint8_t usbd$x_device_descriptor[] __ALIGNED(4) = {
 
 /* USB Device $x Configuration Descriptor (for Full Speed) */
 /*   All Descriptors (Configuration, Interface, Endpoint, Class, Vendor) */
-extern const uint8_t usbd$x_config_descriptor_fs[];
 __WEAK const uint8_t usbd$x_config_descriptor_fs[] __ALIGNED(4) = {
   /* Configuration 1 */
   USB_CONFIGURATION_DESC_SIZE,          /* bLength */
@@ -395,7 +392,6 @@ __WEAK const uint8_t usbd$x_config_descriptor_fs[] __ALIGNED(4) = {
 #endif
 #endif
 #endif
-
 
 #if (USBD$x_CUSTOM_CLASS3)
 #if (USBD_CUSTOM_CLASS3_IAD_EN)
@@ -932,15 +928,10 @@ __WEAK const uint8_t usbd$x_config_descriptor_fs[] __ALIGNED(4) = {
 };
 
 #if (!USBD$x_HS)                         /* If High-speed not enabled, declare dummy descriptors for High-speed */
-extern const uint8_t usbd$x_device_qualifier_fs[];
 __WEAK const uint8_t usbd$x_device_qualifier_fs[]              = { 0 };
-extern const uint8_t usbd$x_device_qualifier_hs[];
 __WEAK const uint8_t usbd$x_device_qualifier_hs[]              = { 0 };
-extern const uint8_t usbd$x_config_descriptor_hs[];
 __WEAK const uint8_t usbd$x_config_descriptor_hs[]             = { 0 };
-extern const uint8_t usbd$x_other_speed_config_descriptor_fs[];
 __WEAK const uint8_t usbd$x_other_speed_config_descriptor_fs[] = { 0 };
-extern const uint8_t usbd$x_other_speed_config_descriptor_hs[];
 __WEAK const uint8_t usbd$x_other_speed_config_descriptor_hs[] = { 0 };
 
 #else
@@ -950,7 +941,6 @@ __WEAK const uint8_t usbd$x_other_speed_config_descriptor_hs[] = { 0 };
 #endif
 
 /* USB Device $x Qualifier Descriptor (in Full Speed for High Speed) */
-extern const uint8_t usbd$x_device_qualifier_fs[];
 __WEAK const uint8_t usbd$x_device_qualifier_fs[] __ALIGNED(4) = {
   USB_DEVICE_QUALI_SIZE,                /* bLength */
   USB_DEVICE_QUALIFIER_DESCRIPTOR_TYPE, /* bDescriptorType */
@@ -964,7 +954,6 @@ __WEAK const uint8_t usbd$x_device_qualifier_fs[] __ALIGNED(4) = {
 };
 
 /* USB Device $x Qualifier Descriptor (in High Speed for Full Speed) */
-extern const uint8_t usbd$x_device_qualifier_hs[];
 __WEAK const uint8_t usbd$x_device_qualifier_hs[] __ALIGNED(4) = {
   USB_DEVICE_QUALI_SIZE,                /* bLength */
   USB_DEVICE_QUALIFIER_DESCRIPTOR_TYPE, /* bDescriptorType */
@@ -979,7 +968,6 @@ __WEAK const uint8_t usbd$x_device_qualifier_hs[] __ALIGNED(4) = {
 
 /* USB Device $x Configuration Descriptor (for High Speed) */
 /*   All Descriptors (Configuration, Interface, Endpoint, Class, Vendor) */
-extern const uint8_t usbd$x_config_descriptor_hs[];
 __WEAK const uint8_t usbd$x_config_descriptor_hs[] __ALIGNED(4) = {
   /* Configuration 1 */
   USB_CONFIGURATION_DESC_SIZE,          /* bLength */
@@ -1332,7 +1320,6 @@ __WEAK const uint8_t usbd$x_config_descriptor_hs[] __ALIGNED(4) = {
 #endif
 #endif
 #endif
-
 
 #if (USBD$x_CUSTOM_CLASS3)
 #if (USBD_CUSTOM_CLASS3_IAD_EN)
@@ -1721,7 +1708,6 @@ __WEAK const uint8_t usbd$x_config_descriptor_hs[] __ALIGNED(4) = {
 
 /* USB Device $x Other Speed Configuration Descriptor (in Full Speed for High Speed) */
 /*   All Descriptors (Configuration, Interface, Endpoint, Class, Vendor) */
-extern const uint8_t usbd$x_other_speed_config_descriptor_fs[];
 __WEAK const uint8_t usbd$x_other_speed_config_descriptor_fs[] __ALIGNED(4) = {
   /* Configuration 1 */
   USB_CONFIGURATION_DESC_SIZE,          /* bLength */
@@ -2002,7 +1988,6 @@ __WEAK const uint8_t usbd$x_other_speed_config_descriptor_fs[] __ALIGNED(4) = {
 #endif
 #endif
 #endif
-
 
 #if (USBD$x_CUSTOM_CLASS3)
 #if (USBD_CUSTOM_CLASS3_IAD_EN)
@@ -2367,7 +2352,6 @@ __WEAK const uint8_t usbd$x_other_speed_config_descriptor_fs[] __ALIGNED(4) = {
 
 /* USB Device $x Other Speed Configuration Descriptor (in High Speed for Full Speed) */
 /*   All Descriptors (Configuration, Interface, Endpoint, Class, Vendor) */
-extern const uint8_t usbd$x_other_speed_config_descriptor_hs[];
 __WEAK const uint8_t usbd$x_other_speed_config_descriptor_hs[] __ALIGNED(4) = {
   /* Configuration 1 */
   USB_CONFIGURATION_DESC_SIZE,          /* bLength */
@@ -2648,7 +2632,6 @@ __WEAK const uint8_t usbd$x_other_speed_config_descriptor_hs[] __ALIGNED(4) = {
 #endif
 #endif
 #endif
-
 
 #if (USBD$x_CUSTOM_CLASS3)
 #if (USBD_CUSTOM_CLASS3_IAD_EN)
@@ -4227,10 +4210,7 @@ static const usbd$x_ms_os_ext_compat_id_descriptor_t usbd$x_ms_os_ext_compat_id_
 #endif // ((USBD$x_CUSTOM_CLASS_MS_COMPAT_CNT != 0) || (USBD$x_CDC_MS_COMPAT_CNT != 0))
 #endif // (USBD$x_OS_DESC_EN != 0)
 
-
 // Pointers to all descriptors
-extern 
-usbd_desc_t usbd$x_desc;
 usbd_desc_t usbd$x_desc = {
   usbd$x_ep0_descriptor,
   usbd$x_device_descriptor,
