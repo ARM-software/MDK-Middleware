@@ -73,18 +73,17 @@ typedef struct {
   uint8_t           bMaxPower;          ///< Maximum power consumption of the USB device from the bus in this specific configuration when the device is fully operational. Expressed in 2 mA units (i.e., 50 = 100 mA).
 } USB_CONFIGURATION_DESCRIPTOR;
 
-/*
-/// Structure containing all descriptors
-typedef struct _usbd_desc_t {
-  uint8_t          *ep0_descriptor;                     ///< Control \ref USB_Endpoint_Descriptor "Endpoint 0 descriptor"
-  uint8_t          *device_descriptor;                  ///< \ref USB_Device_Descriptor
-  uint8_t          *device_qualifier_fs;                ///< \ref USB_Device_Qualifier_Descriptor for low/full-speed
-  uint8_t          *device_qualifier_hs;                ///< \ref USB_Device_Qualifier_Descriptor for high-speed
-  uint8_t          *config_descriptor_fs;               ///< \ref USB_Configuration_Descriptor for low/full-speed
-  uint8_t          *config_descriptor_hs;               ///< \ref USB_Configuration_Descriptor for high-speed
-  uint8_t          *other_speed_config_descriptor_fs;   ///< Other speed \ref USB_Configuration_Descriptor for low/full-speed
-  uint8_t          *other_speed_config_descriptor_hs;   ///< Other speed \ref USB_Configuration_Descriptor for high-speed
-  uint8_t          *string_descriptor;                  ///< \ref USB_String_Descriptor
-  uint8_t          *ser_num_string_descriptor;          ///< \ref USB_String_Descriptor
+typedef struct {
+  const uint8_t    *ep0_descriptor;                     ///< Pointer to Control \ref USB_Endpoint_Descriptor "Endpoint 0 descriptor"
+  const uint8_t    *device_descriptor;                  ///< Pointer to \ref USB_Device_Descriptor
+  const uint8_t    *device_qualifier_fs;                ///< Pointer to \ref USB_Device_Qualifier_Descriptor for low/full-speed
+  const uint8_t    *device_qualifier_hs;                ///< Pointer to \ref USB_Device_Qualifier_Descriptor for high-speed
+  const uint8_t    *config_descriptor_fs;               ///< Pointer to \ref USB_Configuration_Descriptor for low/full-speed
+  const uint8_t    *config_descriptor_hs;               ///< Pointer to \ref USB_Configuration_Descriptor for high-speed
+  const uint8_t    *other_speed_config_descriptor_fs;   ///< Pointer to Other speed \ref USB_Configuration_Descriptor for low/full-speed
+  const uint8_t    *other_speed_config_descriptor_hs;   ///< Pointer to Other speed \ref USB_Configuration_Descriptor for high-speed
+  const uint8_t    *string_descriptor;                  ///< Pointer to \ref USB_String_Descriptor
+        uint8_t    *ser_num_string_descriptor;          ///< Pointer to Serial Number \ref USB_String_Descriptor
+  const uint8_t    *ms_os_string_descriptor;            ///< Pointer to Microsoft OS string descriptor
+  const uint8_t    *ms_os_ext_compat_id_descriptor;     ///< Pointer to Microsoft Extended Compat ID OS Feature Descriptor 
 } usbd_desc_t;
-*/

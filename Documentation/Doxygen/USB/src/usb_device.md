@@ -207,15 +207,16 @@ can be easily overridden by user code by creating descriptors with the same name
 |----------------------------------------------------------|------------------------------------------------------
 | `const uint8_t usbdn_ep0_descriptor[]`                   | Control Endpoint 0 descriptor
 | `const uint8_t usbdn_device_descriptor[]`                | USB Device descriptor
-| `const uint8_t usbdn_string_descriptor[]`                | String descriptors
-| `const uint8_t usbdn_device_qualifier_fs[]`              | Device qualifier for low/full-speed
-| `const uint8_t usbdn_device_qualifier_hs[]`              | Device qualifier for high-speed
 | `const uint8_t usbdn_config_descriptor_fs[]`             | Configuration descriptor for low/full-speed
 | `const uint8_t usbdn_config_descriptor_hs[]`             | Configuration descriptor for high-speed
+| `const uint8_t usbdn_device_qualifier_fs[]`              | Device qualifier for low/full-speed
+| `const uint8_t usbdn_device_qualifier_hs[]`              | Device qualifier for high-speed
 | `const uint8_t usbdn_other_speed_config_descriptor_fs[]` | Other speed configuration descriptor for low/full-speed
 | `const uint8_t usbdn_other_speed_config_descriptor_hs[]` | Other speed configuration descriptor for high-speed
 
 \note `n` in `usbdn_` represents the USB Device instance. So for the USB Device 0 instance, you have to use `usbd0_...`
+
+\note String descriptor cannot be replaced this way.
 
 **Code Example**
 
@@ -269,12 +270,10 @@ const uint8_t dev0_device_descriptor[] = {
   1U           // bNumConfigurations = 1 = 1 configuration
 };
 
-extern usbd_desc_t usbd0_desc;
- 
 int main (void) {
 
 ...
-usbd0_desc.device_descriptor = (uint8_t *)dev0_device_descriptor;
+  usbd0_desc.device_descriptor = dev0_device_descriptor;
 ...
  
 }
