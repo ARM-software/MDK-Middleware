@@ -1,5 +1,18 @@
 var NAVTREEINDEX4 =
 {
+"group__usbh__hidFunctions__api.html#ga9b98d20c76bcfd8dd4cd1bd4bb00bcd0":[9,2,1,2,0,8],
+"group__usbh__hidFunctions__api.html#gad565d4443916b27d72dd1967106c712e":[9,2,1,2,0,1],
+"group__usbh__hidFunctions__api.html#gaeb3125192bb71b0b3feb8529ef641abf":[9,2,1,2,0,5],
+"group__usbh__hidFunctions__conf.html":[9,2,1,2,1],
+"group__usbh__mscFunctions.html":[9,2,1,3],
+"group__usbh__mscFunctions__api.html":[9,2,1,3,0],
+"group__usbh__mscFunctions__api.html#ga168fe4c5c2cf222ab3df02841887a0ed":[9,2,1,3,0,4],
+"group__usbh__mscFunctions__api.html#ga2157962384509c254d5ecf298e015740":[9,2,1,3,0,5],
+"group__usbh__mscFunctions__api.html#ga223c7d01b0c48143a6383e52476f3093":[9,2,1,3,0,2],
+"group__usbh__mscFunctions__api.html#ga2480185d26ff2652737fce77586ddcd8":[9,2,1,3,0,1],
+"group__usbh__mscFunctions__api.html#ga8fbe5bb0db9f02eb026fc37daf1fc6b3":[9,2,1,3,0,3],
+"group__usbh__mscFunctions__api.html#gadbff27f85d5e89ac2baba6d1e6e8a039":[9,2,1,3,0,0],
+"group__usbh__mscFunctions__api.html#gaea01ed67542b6a8b16c29a1dbc3d1273":[9,2,1,3,0,6],
 "group__usbh__mscFunctions__conf.html":[9,2,1,3,1],
 "index.html":[],
 "index.html":[0],
