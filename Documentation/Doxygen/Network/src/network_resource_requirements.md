@@ -9,7 +9,8 @@ only and the actual numbers may differ.
 The Network Core receives events sent from the interrupt service routine (ISR) of the Ethernet (or Serial)  **Driver**.
 The stack requirements for the ISR are typically less than 512 Bytes. The total stack space required for ISR depends
 on the interrupt nesting and therefore on the priority settings of these ISR.
-The stack requirements for ISR is configured in the  `startup_device.s` file located under the  **Device** component class.
+The stack requirements for ISR is configured in the `startup_device.s` file located under the  **Device** component class.
+If the stack settings are not available there, the stack settings must be configured in the **linker script** file.
 
 | Option (under section Stack Configuration)  | Increase Value by
 | :-------------------------------------------| :----------------------
@@ -26,8 +27,9 @@ Since API functions are frequently called from threads, the thread stack size sh
 
 ## Heap Requirements {#nw_heap_req}
 
-The mbed TLS component requires 90 kB of heap memory. The heap requirements are configured in the  `startup_device.s`
-file located under the  **Device** component class.
+The mbed TLS component requires 90 kB of heap memory. The heap requirements are configured in the `startup_device.s` file,
+which is located under the **Device** component class. If the heap settings are not available in the startup file, the heap
+settings must be configured in the **linker script** file.
 
 | Option (under section Stack Configuration)  | Increase Value to at least
 | :-------------------------------------------| :----------------------
@@ -63,10 +65,6 @@ For the Network Component, the number of threads and stack size requirements are
 
 - **Number of Threads**: sum up the number of used *Components*.
 - **Total stack size**: sum up the *Default Stack Sizes* of the related threads.
-
-### RTX v5 Requirements {#nw_req_rtx5}
-
-The Network component allocates all necessary resources statically so no changes to RTX settings are necessary.
 
 #### Timers
 

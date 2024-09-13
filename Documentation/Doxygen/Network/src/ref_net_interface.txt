@@ -230,7 +230,7 @@ Like all services, the DHCP is normally started automatically if \c NET_START_SE
 \b Net_Config.h configuration file. If it is disabled, DHCP needs to be started manually in the user
 application using \ref netDHCP_Enable. At runtime, it is always possible to stop DHCP using the function
 \ref netDHCP_Disable. In this case, the Network Core will revert the IP address of the node to the static IP address
-specified in the \b %Net_Config_ETH_<i>n</i>.h file.
+specified in the \b Net_Config_ETH_<i>n</i>.h file.
 
 The callback function \ref netDHCP_Notify notifies the user application of DHCP events or extended DHCP options. This
 function is optional and not required for a default DHCP client configuration. However, if your application requires the
@@ -456,7 +456,7 @@ The IPv6 addresses for the Ethernet network interface are assigned in several wa
 \note
 - Stateless Address Autoconfiguration is always active, no matter if DHCPv6 client is enabled in the system configuration or not.
 - All available functions for using Ethernet are explained in \ref netETH_Func section of the
-  <a class=el href="./modules.html">Reference</a>.
+  <a class=el href="./modules.html">API Reference</a>.
 - <a href="https://en.wikipedia.org/wiki/Link-local_Multicast_Name_Resolution" target="_blank">Link-local Multicast Name Resolution</a>
   is not supported.
 */
@@ -475,12 +475,12 @@ connection, you must implement this function.
 /**
 \defgroup using_ethernet_interfaces_conf Configuration
 \ingroup netETH_Func
-\brief Configuration of the Ethernet interface in µVision.
+\brief Configuration of the Ethernet interface.
 \details
 
-The Ethernet interface is configured using the \b %Net_Config_ETH_<i>n</i>.h file. \a n stands for the number of the Ethernet
+The Ethernet interface is configured using the \b Net_Config_ETH_<i>n</i>.h file. \a n stands for the number of the Ethernet
 interface. In general, most microcontrollers will have one Ethernet interface, thus the configuration file will be
-%Net_Config_ETH_0.h. The options are set in the file directly or using the
+Net_Config_ETH_0.h. The options are set in the file directly or using the
 <a class=el href="https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard" target="_blank">Configuration Wizard</a>.
 
 \image html "net_config_eth_0_h.png" "Ethernet Interface Configuration File"
@@ -641,10 +641,10 @@ layer protocols such as \ref ethernet_arp "ARP", \ref ethernet_ndp "NDP", \ref e
 /**
 \defgroup using_wifi_interfaces_conf Configuration
 \ingroup netWiFi_Func
-\brief Configuration of the WiFi interface in µVision.
+\brief Configuration of the WiFi interface.
 \details
 
-The WiFi interface is configured using the \b %Net_Config_WiFi_<i>n</i>.h file. \a n stands for the number of the WiFi
+The WiFi interface is configured using the \b Net_Config_WiFi_<i>n</i>.h file. \a n stands for the number of the WiFi
 interface. The options are set in the file directly or using the
 <a class=el href="https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard" target="_blank">Configuration Wizard</a>.
 
@@ -881,16 +881,16 @@ The IP address for the PPP network interface is assigned using the following mod
   settings are ignored.
 
 \note All available functions for using PPP are explained in \ref netPPP_Func section of the
-<a class=el href="./modules.html">Reference</a>.
+<a class=el href="./modules.html">API Reference</a>.
 */
 
 
 /**
 \defgroup using_ppp_interfaces_conf Configuration
 \ingroup netPPP_Func
-\brief Configuration of the PPP interface in µVision.
+\brief Configuration of the PPP interface.
 \details
-The PPP interface is configured using the \b %Net_Config_PPP.h file. The options are set in the file directly or using the
+The PPP interface is configured using the \b Net_Config_PPP.h file. The options are set in the file directly or using the
 <a class=el href="https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard" target="_blank">Configuration Wizard</a>.
 
 \image html "net_config_ppp_h.png" "PPP Interface Configuration File"
@@ -1037,16 +1037,16 @@ This is a simple protocol and does not allow automatic configuration, therefore 
 \note
 - If both SLIP and Ethernet interfaces are used simultaneously, you must not set the same network address for both.
 - All available functions for using SLIP are explained in \ref netSLIP_Func section of the
-  <a class=el href="./modules.html">Reference</a>.
+  <a class=el href="./modules.html">API Reference</a>.
 */
 
 
 /**
 \defgroup using_slip_interfaces_conf Configuration
 \ingroup netSLIP_Func
-\brief Configuration of the SLIP interface in µVision.
+\brief Configuration of the SLIP interface.
 \details
-The SLIP interface is configured using the \b %Net_Config_SLIP.h file.The options are set in the file directly or using the
+The SLIP interface is configured using the \b Net_Config_SLIP.h file.The options are set in the file directly or using the
 <a class=el href="https://developer.arm.com/documentation/101407/0539/Utilities/Configuration-Wizard" target="_blank">Configuration Wizard</a>.
 
 \image html "net_config_slip_h.png" "SLIP Interface Configuration File"

@@ -52,15 +52,15 @@ Directories and Files
 
 The table below provides a complete overview of the folders that contain the files related to the Network Component.
 
-Directory           | Description
-:------------------ | :---------------------
-./Network/Config    | Configuration Files that are copied to the project when components are selected.
-./Network/Driver    | Driver implementations for standard and null modem network drivers.
-./Network/Include   | Include files; once a component is select an Include Path is set for the C/C++ compiler to this directory.
-./Network/Interface | Interface files to other Middleware Components. Files are included when a related component is selected (\b read-only).
-./Network/Source    | Source files for the Network component.
-./Network/Template  | \urlout{uv4_ca_sourcefiles} simplify creating application specific functionality. Adapt the template functions to the application's needs.
-./Network/Tool      | Utilities for creating your own secure certificates and keys.
+Directory                      | Description
+:----------------------------- | :---------------------
+./Components/Network/Config    | Configuration Files that are copied to the project when components are selected.
+./Components/Network/Driver    | Driver implementations for standard and null modem network drivers.
+./Components/Network/Include   | Include files; once a component is select an Include Path is set for the C/C++ compiler to this directory.
+./Components/Network/Interface | Interface files to other Middleware Components. Files are included when a related component is selected (\b read-only).
+./Components/Network/Source    | Source files for the Network component.
+./Components/Network/Template  | \urlout{uv4_ca_sourcefiles} simplify creating application specific functionality. Adapt the template functions to the application's needs.
+./Components/Network/Tool      | Utilities for creating your own secure certificates and keys.
 
 
 \b Header \b Files

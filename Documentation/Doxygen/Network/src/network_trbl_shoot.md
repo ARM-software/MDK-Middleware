@@ -65,7 +65,7 @@ communication:
 
 When the BSD socket is connected, the state of the underlying TCP socket is shown in the viewer as well:
 
-![TCP sockets in oCOmponent Viewer](trbl_cv_nw_tcp.png)
+![TCP sockets in Component Viewer](trbl_cv_nw_tcp.png)
 
 This shows the remote IP address and port number, as well as the local port number, the value for the timeout timer and the
 active TCP socket options. This is valuable information in addition to the events shown in Event Recorder.

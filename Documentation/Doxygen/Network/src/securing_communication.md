@@ -64,7 +64,7 @@ implement SSL or TLS in their applications.
 For more information on Mbed TLS and how it works, visit the
 [high-level design](https://www.trustedfirmware.org/projects/mbed-tls/) overview page.
 
-### Add the mbed TLS library to a µVision project {#add_mbedtls}
+### Add the mbed TLS library to a project {#add_mbedtls}
 
 The \ref nw_examples section carries two examples for secure communication over the IP network: SSL Server and SSL Client.
 To use the Mbed TLS library in your own projects, follow these steps:
@@ -72,10 +72,10 @@ To use the Mbed TLS library in your own projects, follow these steps:
 -# Download the **ARM:mbedTLS** library from \urlout{SW-Pack} or use \urlout{uv4_ca_packinstaller}
 -# Open or create a project using the **Network Component**.
 -# Configure the Network Component as required by your application (Ethernet settings, TCP/IP communication, etc.).
--# In the **Manage Run-Time Environment** window expand **Security** and enable **Mbed TLS**:
+-# In the **Manage Run-Time Environment** window expand **Security** and enable **mbed TLS**:
 ![Add mbed TLS](add_mbedTLS.png)
 -# Configure Mbed TLS using the `mbedTLS_config.h` file.
--# Use the **Mbed TLS** API to secure your communication.
+-# Use the **mbed TLS** API to secure your communication.
 
 \note You can use the Mbed TLS API in parallel to any of the \ref use_secure_components "secure services" that are
 part of the Network Component.
@@ -198,12 +198,15 @@ required to achieve this:
 #define MBEDTLS_SSL_OUT_CONTENT_LEN     4096 /**< Maximum length (in bytes) of outgoing plaintext fragments. */
 ```
 
--# Set your device's heap to 90KB or more (or increase existing). In the **Project** window, under **Device**, open the file
-   `startup_xxx.s` and set
+-# Set your device's heap to 90KB or more, depending on the application. Open the file `startup_xxx.s` and set
    ```c
    Heap_Size = 0x16000
    ```
-   or more, depending on your application.
+   or alternatively modify the **linker script** file
+   ```c
+   #define __HEAP_SIZE     0x00016000
+   ```
+   
 -# Configure the RTX threads
    - If you use **RTX v5**, you do not need to change the **RTX settings**, because all resources are statically allocated.
 -# Update the HTTP Server configuration file (`Net_Config_HTTP_Server.h`):
@@ -398,12 +401,15 @@ required to achieve this:
    #define MBEDTLS_SSL_IN_CONTENT_LEN      4096 /**< Maximum length (in bytes) of incoming plaintext fragments. */
    #define MBEDTLS_SSL_OUT_CONTENT_LEN     4096 /**< Maximum length (in bytes) of outgoing plaintext fragments. */
    ```
--# Set your device's heap to at least 49 KB or increase appropriately. In the **Project** window, under **Device**, open the file
-   `startup_xxx.s` and set
+-# Set your device's heap to 49KB or more, depending on the application. Open the file `startup_xxx.s` and set
    ```c
    Heap_Size = 0xC000
    ```
-   or more, depending on your application.
+   or alternatively modify the **linker script** file
+   ```c
+   #define __HEAP_SIZE     0x0000C000
+   ```
+
 -# Configure the RTX threads
    - If you use **RTX v5**, you do not need to change the **RTX settings**, because all recources are statically allocated.
 -# Build the example and download to Flash. If it fails, please check your "Read/Write Memory Areas" in your target options.

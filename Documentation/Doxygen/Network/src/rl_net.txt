@@ -3422,8 +3422,8 @@ Possible \ref netStatus return values:
 - \em netInvalidParameter: Invalid interface number provided.
 
 \note
-- You can use the function only when the <b>Dynamic Host Configuration</b> for IPv4 is enabled in the \b %Net_Config_ETH_n.h
-  or \b %Net_Config_WiFi_n.h configuration file.
+- You can use the function only when the <b>Dynamic Host Configuration</b> for IPv4 is enabled in the \b Net_Config_ETH_n.h
+  or \b Net_Config_WiFi_n.h configuration file.
 - The DHCP service works for IPv4 only.
 
 \b Code \b Example
@@ -3465,8 +3465,8 @@ Possible \ref netStatus return values:
 - \em netWrongState: DHCP client is running.
 
 \note
-- You can use the function only when the <b>Dynamic Host Configuration</b> for IPv4 is enabled in the \b %Net_Config_ETH_n.h
-  or \b %Net_Config_WiFi_n.h configuration file.
+- You can use the function only when the <b>Dynamic Host Configuration</b> for IPv4 is enabled in the \b Net_Config_ETH_n.h
+  or \b Net_Config_WiFi_n.h configuration file.
 - The DHCP service works for IPv4 only.
 
 \b Code \b Example
@@ -3901,8 +3901,8 @@ Possible \ref netStatus return values:
 - \em netInvalidParameter: Invalid interface number provided.
 
 \note
-- You can use the function only when the <b>Dynamic Host Configuration</b> for IPv6 is enabled in the \b %Net_Config_ETH_n.h
-  or \b %Net_Config_WiFi_n.h configuration file.
+- You can use the function only when the <b>Dynamic Host Configuration</b> for IPv6 is enabled in the \b Net_Config_ETH_n.h
+  or \b Net_Config_WiFi_n.h configuration file.
 - The DHCPv6 service works for IPv6 only.
 
 \b Code \b Example
@@ -5055,7 +5055,7 @@ void change_server_port (uint16_t port) {}
 \fn const char *netFTPs_GetRootPath (void)
 \details
 The function \b netFTPs_GetRootPath returns the path to the current root directory if \c FTP_SERVER_ROOT_ENABLE is set to
-\token{1} in the \b %Net_Config_FTP_Server.h file. If this define is set to \token{0}, the function is not available at
+\token{1} in the \b Net_Config_FTP_Server.h file. If this define is set to \token{0}, the function is not available at
 runtime and returns \token{NULL}.
 
 \b Code \b Example
@@ -5071,7 +5071,7 @@ if (netFTPs_GetRootPath() != NULL) {
 \fn netStatus netFTPs_SetRootPath (const char *path)
 \details
 The function \b netFTPs_SetRootPath sets the path to the root directory of FTP server if \c FTP_SERVER_ROOT_ENABLE is set to
-\token{1} in the \b %Net_Config_FTP_Server.h file. If this define is set to \token{0}, the function is not available at
+\token{1} in the \b Net_Config_FTP_Server.h file. If this define is set to \token{0}, the function is not available at
 runtime. Root directory specifies a path on a storage device, where the user files are stored. This path is common to all
 FTP server users.
 
@@ -5115,7 +5115,7 @@ uint8_t netFTPs_CheckUsername ( const char *username) {
 \fn const char *netFTPs_GetUsername (void)
 \details
 The function \b netFTPs_GetUsername returns the user name of the built-in user if \c FTP_SERVER_AUTH_ADMIN is set to
-\token{1} in the \b %Net_Config_FTP.h file. If this define is set to \token{0}, the function is not available at runtime
+\token{1} in the \b Net_Config_FTP.h file. If this define is set to \token{0}, the function is not available at runtime
 and returns \token{NULL}. 
 
 \b Code \b Example (see \ref netFTPs_LoginActive)
@@ -5126,7 +5126,7 @@ and returns \token{NULL}.
 \fn netStatus netFTPs_SetUsername (const char *username)
 \details
 The function \b netFTPs_SetUsername sets the user name of the built-in user if \c FTP_SERVER_AUTH_ADMIN is set to
-\token{1} in the \b %Net_Config_FTP.h file. If this define is set to \token{0}, the function is not available at runtime. 
+\token{1} in the \b Net_Config_FTP.h file. If this define is set to \token{0}, the function is not available at runtime. 
 
 The argument \a username is a pointer to the user name to be set, which is a \token{null}-terminated string. The function 
 copies the content of the \a username to the user name of the built-in user. The maximum length of the \a username string is 
@@ -5154,7 +5154,7 @@ if (netFTPs_LoginActive() == true) {
 \fn const char *netFTPs_GetPassword (void)
 \details
 The function \b netFTPs_GetPassword returns the password of the built-in user account if \c FTP_SERVER_AUTH_ADMIN is set to
-\token{1} in the \b %Net_Config_FTP.h file. If this define is set to \token{0}, the function is not available at runtime
+\token{1} in the \b Net_Config_FTP.h file. If this define is set to \token{0}, the function is not available at runtime
 and returns \token{NULL}. 
 
 \b Code \b Example (see \ref netFTPs_LoginActive)
@@ -5165,7 +5165,7 @@ and returns \token{NULL}.
 \fn netStatus netFTPs_SetPassword (const char *password)
 \details
 The function \b netFTPs_SetPassword sets the password of the built-in user if \c FTP_SERVER_AUTH_ADMIN is set to
-\token{1} in the \b %Net_Config_FTP.h file. If this define is set to \token{0}, the function is not available at runtime. 
+\token{1} in the \b Net_Config_FTP.h file. If this define is set to \token{0}, the function is not available at runtime. 
 
 The argument \a password is a pointer to the password that is to be set, which is a \token{null}-terminated string. The function
 copies the content of the \a password to the password of the build-in user. The maximum length of the \a password string is 
@@ -5203,7 +5203,7 @@ if (netFTPs_LoginActive() == true) {
 \fn netStatus netFTPs_LoginOnOff (bool login)
 \details
 The function \b netFTPs_LoginOnOff enables or disables the user authentication on the FTP server. If
-\c FTP_SERVER_AUTH_ENABLE is set to \token{0} in the \b %Net_Config_FTP.h file, the function is not available at runtime. 
+\c FTP_SERVER_AUTH_ENABLE is set to \token{0} in the \b Net_Config_FTP.h file, the function is not available at runtime. 
 
 The argument \a login switches the log-in on (\token{true}) or off (\token{false}).
 
@@ -6023,7 +6023,7 @@ void change_server_port (uint16_t port) {}
 \fn const char *netTFTPs_GetRootPath (void)
 \details
 The function \b netTFTPs_GetRootPath returns the path to the current root directory if \c TFTP_SERVER_ROOT_ENABLE is set to
-\token{1} in the \b %Net_Config_TFTP_Server.h file. If this define is set to \token{0}, the function is not available at
+\token{1} in the \b Net_Config_TFTP_Server.h file. If this define is set to \token{0}, the function is not available at
 runtime and returns \token{NULL}.
 
 \b Code \b Example
@@ -6039,7 +6039,7 @@ if (netTFTPs_GetRootPath() != NULL) {
 \fn netStatus netTFTPs_SetRootPath (const char *path)
 \details
 The function \b netTFTPs_SetRootPath sets the path to the root directory of TFTP server if \c TFTP_SERVER_ROOT_ENABLE is set to
-\token{1} in the \b %Net_Config_TFTP_Server.h file. If this define is set to \token{0}, the function is not available at
+\token{1} in the \b Net_Config_TFTP_Server.h file. If this define is set to \token{0}, the function is not available at
 runtime. Root directory specifies a path on a storage device, where the user files are stored.
 
 The argument \a path is a pointer to the new root path to be set, which is a \token{null}-terminated string. The function 
@@ -6509,7 +6509,7 @@ void change_server_port (uint16_t port) {
 \fn const char *netTELNETs_GetUsername (void)
 \details
 The function \b netTELNETs_GetUsername returns the user name of the built-in user if \c TELNET_SERVER_AUTH_ADMIN is set to
-\token{1} in the \b %Net_Config_Telnet_Server.h file. If this define is set to \token{0}, the function is not available at
+\token{1} in the \b Net_Config_Telnet_Server.h file. If this define is set to \token{0}, the function is not available at
 runtime and returns \token{NULL}.
 
 \b Code \b Example (see \ref netTELNETs_LoginActive)
@@ -6520,7 +6520,7 @@ runtime and returns \token{NULL}.
 \fn netStatus netTELNETs_SetUsername (const char *username)
 \details
 The function \b netTELNETs_SetUsername sets the user name of the built-in user if \c TELNET_SERVER_AUTH_ADMIN is set to
-\token{1} in the \b %Net_Config_Telnet_Server.h file. If this define is set to \token{0}, the function is not available at
+\token{1} in the \b Net_Config_Telnet_Server.h file. If this define is set to \token{0}, the function is not available at
 runtime.
 
 The argument \a username is a pointer to the user name to be set, which is a \token{null}-terminated string. The function 
@@ -6549,7 +6549,7 @@ if (netTELNETs_LoginActive() == true) {
 \fn const char *netTELNETs_GetPassword (void)
 \details
 The function \b netTELNETs_GetPassword returns the password of the built-in user if \c TELNET_SERVER_AUTH_ADMIN is set to
-\token{1} in the \b %Net_Config_Telnet_Server.h file. If this define is set to \token{0}, the function is not available at
+\token{1} in the \b Net_Config_Telnet_Server.h file. If this define is set to \token{0}, the function is not available at
 runtime and returns \token{NULL}.
 
 \b Code \b Example (see \ref netTELNETs_LoginActive)
@@ -6560,7 +6560,7 @@ runtime and returns \token{NULL}.
 \fn netStatus netTELNETs_SetPassword (const char *password)
 \details
 The function \b netTELNETs_SetPassword sets the password of the built-in user if \c TELNET_SERVER_AUTH_ADMIN is set to
-\token{1} in the \b %Net_Config_Telnet_Server.h file. If this define is set to \token{0}, the function is not available at
+\token{1} in the \b Net_Config_Telnet_Server.h file. If this define is set to \token{0}, the function is not available at
 runtime.
 
 The argument \a password is a pointer to the password that is to be set, which is a \token{null}-terminated string. The function
@@ -6599,7 +6599,7 @@ if (netTELNETs_LoginActive() == true) {
 \fn netStatus netTELNETs_LoginOnOff (bool login)
 \details
 The function \b netTELNETs_LoginOnOff enables or disables the user authentication on the Telnet server. If
-\c TELNET_SERVER_AUTH_ENABLE is set to \token{0} in the \b %Net_Config_Telnet_Server.h file, the function is not available at
+\c TELNET_SERVER_AUTH_ENABLE is set to \token{0} in the \b Net_Config_Telnet_Server.h file, the function is not available at
 runtime. 
 
 The argument \a login switches the log-in on (\token{true}) or off (\token{false}).
@@ -7152,7 +7152,7 @@ void change_server_port (uint16_t port) {}
 \fn const char *netHTTPs_GetRootPath (void)
 \details
 The function \b netHTTPs_GetRootPath returns the path to the current root directory if \c HTTP_SERVER_ROOT_ENABLE is set to
-\token{1} in the \b %Net_Config_HTTP_Server.h file. If this define is set to \token{0}, the function is not available at
+\token{1} in the \b Net_Config_HTTP_Server.h file. If this define is set to \token{0}, the function is not available at
 runtime and returns \token{NULL}.
 
 \b Code \b Example
@@ -7169,7 +7169,7 @@ if (netHTTPs_GetRootPath() != NULL) {
 \fn netStatus netHTTPs_SetRootPath (const char *path)
 \details
 The function \b netHTTPs_SetRootPath sets the path to the root directory of HTTP server if \c HTTP_SERVER_ROOT_ENABLE is set to
-\token{1} in the \b %Net_Config_HTTP_Server.h file. If this define is set to \token{0}, the function is not available at
+\token{1} in the \b Net_Config_HTTP_Server.h file. If this define is set to \token{0}, the function is not available at
 runtime. Root directory specifies a path on a storage device, where the WEB recources are stored.
 
 The argument \a path is a pointer to the new root path to be set, which is a \token{null}-terminated string. The function 
@@ -7198,7 +7198,7 @@ netHTTPs_Start ();
 \fn const char *netHTTPs_GetUsername (void)
 \details
 The function \b netHTTPs_GetUsername returns the user name of the built-in user if \c HTTP_SERVER_AUTH_ADMIN is set to
-\token{1} in the \b %Net_Config_HTTP_Server.h file. If this define is set to \token{0}, the function is not available at
+\token{1} in the \b Net_Config_HTTP_Server.h file. If this define is set to \token{0}, the function is not available at
 runtime and returns \token{NULL}.
 
 \b Code \b Example (see \ref netHTTPs_LoginActive)
@@ -7209,7 +7209,7 @@ runtime and returns \token{NULL}.
 \fn netStatus netHTTPs_SetUsername (const char *username)
 \details
 The function \b netHTTPs_SetUsername sets the user name of the built-in user if \c HTTP_SERVER_AUTH_ADMIN is set to
-\token{1} in the \b %Net_Config_HTTP_Server.h file. If this define is set to \token{0}, the function is not available at
+\token{1} in the \b Net_Config_HTTP_Server.h file. If this define is set to \token{0}, the function is not available at
 runtime.
 
 The argument \a username is a pointer to the user name to be set, which is a \token{null}-terminated string. The function 
@@ -7238,7 +7238,7 @@ if (netHTTPs_LoginActive() == true) {
 \fn const char *netHTTPs_GetPassword (void)
 \details
 The function \b netHTTPs_GetPassword returns the password of the built-in user if \c HTTP_SERVER_AUTH_ADMIN is set to
-\token{1} in the \b %Net_Config_HTTP_Server.h file. If this define is set to \token{0}, the function is not available at
+\token{1} in the \b Net_Config_HTTP_Server.h file. If this define is set to \token{0}, the function is not available at
 runtime and returns \token{NULL}.
 
 \b Code \b Example (see \ref netHTTPs_LoginActive)
@@ -7249,7 +7249,7 @@ runtime and returns \token{NULL}.
 \fn netStatus netHTTPs_SetPassword (const char *password)
 \details
 The function \b netHTTPs_SetPassword sets the password of the built-in user if \c HTTP_SERVER_AUTH_ADMIN is set to
-\token{1} in the \b %Net_Config_HTTP_Server.h file. If this define is set to \token{0}, the function is not available at
+\token{1} in the \b Net_Config_HTTP_Server.h file. If this define is set to \token{0}, the function is not available at
 runtime.
 
 The argument \a password is a pointer to the password that is to be set, which is a \token{null}-terminated string. The function
@@ -7291,7 +7291,7 @@ if (netHTTPs_LoginActive() == true) {
 \fn netStatus netHTTPs_LoginOnOff (bool login)
 \details
 The function \b netHTTPs_LoginOnOff enables or disables the user authentication on the HTTP server. If
-\c HTTP_SERVER_AUTH_ENABLE is set to \token{0} in the \b %Net_Config_HTTP_Server.h file, the function is not available at
+\c HTTP_SERVER_AUTH_ENABLE is set to \token{0} in the \b Net_Config_HTTP_Server.h file, the function is not available at
 runtime. 
 
 The argument \a login switches the log-in on (\token{true}) or off (\token{false}).
@@ -7347,7 +7347,7 @@ printf ("TCP port:   %d\n", client.port);
 \details
 The function \b netHTTPs_GetSession returns the current session number of the HTTP server running on the Network
 Component. The session number can be any value between 0 and \c HTTP_SERVER_NUM_SESSIONS, defined in
-\b %Net_Config_HTTP_Server.h.
+\b Net_Config_HTTP_Server.h.
 
 \note Storing the HTTP query string in a single global variable can result in the HTTP server sending the wrong reply to a
 client when several clients try to access a dynamic HTTP page at the same time. Hence, it is better to have a separate
@@ -8634,7 +8634,7 @@ is less than \a len bytes.
 \details
 In \b unicast mode, the non-blocking function \b netSNTPc_GetTime sends a get time request to NTP server specified with the
 argument \a addr. If the IP address is not specified (\a addr is \token{NULL}), then the IP address of the NTP Server configured
-in \b %Net_Config_SNTP_Client.h is used.
+in \b Net_Config_SNTP_Client.h is used.
 
 In \b broadcast mode, it opens an UDP socket for receiving broadcast NTP messages. You can use broadcast mode, if you have a
 broadcasting NTP server in your local network. NTP messages that come from the specified NTP server are accepted. Messages that
@@ -8644,7 +8644,7 @@ from any NTP server are accepted.
 The argument \a addr is a pointer to the structure containing the IP address and port of a local or public NTP server.
 
 If the IP address is not specified (\a addr is \token{NULL}), then the IP address of the NTP Server configured in
-\b %Net_Config_SNTP_Client.h is used. <b>Broadcast Mode</b> gets also enabled here.
+\b Net_Config_SNTP_Client.h is used. <b>Broadcast Mode</b> gets also enabled here.
 
 The argument \a cb_func points to a user-defined callback function called by the SNTP client when an NTP message is received
 from the server. Refer to \ref netSNTPc_cb_t.
@@ -8686,7 +8686,7 @@ static void time_callback (uint32_t seconds, uint32_t seconds_fraction) {
 \details
 The blocking function \b netSNTPc_GetTimeX sends a get time request to NTP server specified with the argument \a server and
 returns current time retrieved from the server. If the address is not specified (\a server is \token{NULL}), then the IP address
-of the NTP Server configured in \b %Net_Config_SNTP_Client.h is used.
+of the NTP Server configured in \b Net_Config_SNTP_Client.h is used.
 
 The argument \a server is a fully qualified domain name or an absolute IP address of a local or public NTP server. If \a server
 is a hostname, the client uses the DNS resolver to resolve the destination IP address.
@@ -8760,7 +8760,7 @@ netSNTPc_SetMode (netSNTPc_ModeBroadcast);
 The function \b netSNMP_Trap sends a message to the Trap Manager.
 
 The argument \a addr points to the IP address and port of the Trap server. If the IP address of the Trap Manager is
-\token{NULL}, then the IP address of Trap Server configured in \b %Net_Config_SNMP_Agent.h is used.
+\token{NULL}, then the IP address of Trap Server configured in \b Net_Config_SNMP_Agent.h is used.
 
 The argument \a generic specifies the generic trap type:
 |Type|Description               |

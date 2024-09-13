@@ -68,8 +68,8 @@ sampled when a reset is asserted or at power-up).
 
 The device’s internal weak pull-up or pull-down resistors define a default device address. This address can be changed by
 connecting strong pull-up or pull-down resistors externally. In this case, the `ETH_PHY_ADDR` in the PHY driver needs to be
-changed accordingly to be able to control the PHY and to communicate with it. Use the **Options for Component** dialog to
-override the default setting for `ETH_PHY_ADDR`:
+changed accordingly to be able to control the PHY and to communicate with it. In µVision use the **Options for Component**
+dialog to override the default setting for `ETH_PHY_ADDR`:
 
 ![Ethernet PHY Configuration](eth_phy_config.png)
 
@@ -149,9 +149,9 @@ of the scope of this document. For further information, check the online documen
 
 For proper operation, the Network Component requires some system configuration settings. The requirements are:
 
-- Additional **stack size** of **512 bytes**. This can be configured in the device's `startup_device.s` file (`Stack_Size`).
+- Additional **main stack size** of **512 bytes**.
 - Additional two **threads** when Ethernet Interface is enabled (`netCore_Thread` and `netETH_Thread`).
-  - If you use **RTX v5**, you do not need to change the **RTX settings**, because all resources are statically allocated.
+  - If **RTX v5** is used, no changes to the **RTX settings** are required as all resources are statically allocated.
 
 For more information, check the Network Component's \ref nw_resource_requirements section.
 
@@ -165,7 +165,7 @@ The initialization process is different depending on which network interface is 
 
 - **Ethernet interface**
 ```c
-__NO_RETURN void app_main_thread (void *argument) {
+void app_main_thread (void *argument) {
   (void)argument;
 
   netInitialize ();
@@ -176,7 +176,7 @@ __NO_RETURN void app_main_thread (void *argument) {
 
 - **WiFi interface**
 ```c
-__NO_RETURN void app_main_thread (void *argument) {
+void app_main_thread (void *argument) {
   NET_WIFI_CONFIG wifi_config;
   (void)argument;
 
@@ -198,7 +198,7 @@ __NO_RETURN void app_main_thread (void *argument) {
 
 - **PPP interface**
 ```c
-__NO_RETURN void app_main_thread (void *argument) {
+void app_main_thread (void *argument) {
   (void)argument;
 
   netInitialize ();
@@ -272,10 +272,10 @@ The debugging configuration settings are divided into groups that can be activat
 - **Socket** enables socket layer diagnostics.
 - **Service** enables service layer diagnostics.
 
-### Debug Levels {#netDebugLevels}
+#### Debug Levels {#netDebugLevels}
 
-The system is made up of several modules that output diagnostic messages. It is possible to configure the debug output
-for each module separately. The **Debug level** for each module defines what kind of debug messages are printed:
+The system consists of several modules that output diagnostic messages. It is possible to configure the debug output
+for each module separately. The **Debug level** for each module defines what kind of debug messages are output:
 
 |Level |Description                                                            |
 |------|-----------------------------------------------------------------------|
@@ -283,7 +283,14 @@ for each module separately. The **Debug level** for each module defines what kin
 |Errors|Only error messages are output. This mode is useful for error tracking.|
 |All   |In this mode, **all** debug messages are output.                        |
 
-### Event Recorder Support {#netEvrSupport}
+#### Event filtering
+
+The Network debug variant generates lots of debug events. This might have an impact on the operation of the Network library.
+It is a good idea to disable debug for modules, which are not used, or at least to reduce the number of messages, that
+are generated. Therefore, enable **Error** events for such modules and enable **All** debug events only for the modules you are
+focused on.
+
+### Event Recorder {#netEvrSupport}
 
 \urlout{Event-Recorder-About} is a powerful tool that provides visibility to the dynamic execution of the program.
 The Network Component generates a broad set of  \ref net_evr "Debug Events" for the Event Recorder and implements
@@ -291,20 +298,14 @@ required infrastructure to interface with it.
 
 To use the Event Recorder together with Network Component, it is required to create an image with event generation support. The necessary steps are:
 
-  1. \ref netDebugConfig "Select Debug mode": in the `Net_Config.h` enable the **Network Debug** for the component.
-  2. \urlout{Event-Recorder-Enable}: in the RTE management dialog enable the software component **CMSIS-View:Event Recorder**.
-  3. \urlout{Event-Recorder-Initialize}: in the application code, call the function **EventRecorderInitialize**.
-  4. \urlout{Event-Recorder-Configure}: if necessary, adjust default Event Recorder configuration.
-  5. Build the application code, download it to the target hardware and start debug session.
+1. \ref netDebugConfig "Select Debug mode": in the `Net_Config.h` enable the **Network Debug** and select `Event Recorder` for **Output Channel**.
+2. \urlout{Event-Recorder-Enable}: in the RTE management dialog enable the software component **CMSIS-View:Event Recorder**.
+3. \urlout{Event-Recorder-Initialize}: in the application code, call the function **EventRecorderInitialize**.
+4. \urlout{Event-Recorder-Configure}: if necessary, adjust default Event Recorder configuration.
+5. Configure the \ref netDebugLevels "Debug Levels".
+6. Build the application code, download it to the target hardware and start debug session.
 
 Now, when the network services generate event information, it can be viewed in the \urlout{uv4-Event-Recorder}.
-
-#### Event filtering
-
-The Network debug variant generates lots of debug events. This might have an impact on the operation of the Network library.
-It is a good idea to disable debug for modules, which are not used, or at least to reduce the number of messages, that
-are generated. Therefore, enable **Error** events for such modules and enable **All** debug events only for the modules you are
-focused on.
 
 #### Event IDs
 
@@ -344,6 +345,103 @@ The network component uses the following event IDs:
 | Net_SNMP    | 0xDB     |
 | Net_SNTP    | 0xDC     |
 
+### STDIO Debug {#netDebugStdio}
+
+STDIO Debug is a legacy debug variant that prints event information as ASCII messages to a standard IO port.
+It is generally less feature-rich and slower than the debug with \ref netEvrSupport "Event Recorder" and is not
+recommended for new projects.
+
+To enable STDIO debugging together with the Network Component, it is required to create an image
+that generates event information. The necessary steps are:
+
+1. \ref netDebugConfig "Select Debug mode": in the `Net_Config.h` enable the **Network Debug** and select
+   `STDIO + Timestamp` or `STDIO` for **Output Channel**.
+2. In the RTE management dialog enable **CMSIS-Compiler:CORE** and **CMSIS-Compiler:STDOUT** components and
+   select its `ITM` variant.
+3. Configure the \ref netDebugLevels "Debug Levels".
+4. Build the application code and download it to the target hardware.
+
+#### Module IDs
+
+The owner module of the displayed debug message is identified by the message prefix. The following system and application
+modules are configurable for debugging:
+
+|ID    |Module                            |Description|
+|------|----------------------------------|-----------|
+|SYS   |System Core                       |Handles Network system operation.|
+|MEM   |Memory Management                 |Allocates and releases frame buffers.|
+|ETH   |ETH Interface                     |Handles Ethernet link.|
+|WIFI  |WiFi Interface                    |Handles wireless network link.|
+|PPP   |PPP Interface                     |Handles serial line direct or modem connection PPP link.|
+|SLIP  |SLIP Interface                    |Handles serial line direct or modem connection SLIP link.|
+|LOOP  |Loopback Interface                |Handles localhost loopback interface.|
+|IP4   |IPv4 Core                         |Processes the IP version 4 network layer.|
+|ICMP  |Control Message (ICMP)            |Processes ICMP messages. Best known example is the ping.|
+|ARP   |Address Resolution (ARP)          |Handles Ethernet MAC address resolution and caching.|
+|IGMP  |Group Management (IGMP)           |Processes IGMP messages, Hosts groups and IP Multicasting.|
+|NBNS  |NBNS Client                       |The NetBIOS Name Service maintains name access to your hardware.|
+|DHCP  |DHCP Client                       |Handles automatic configuration of IP address, Net mask, Default Gateway, and Primary and Secondary DNS servers.|
+|IP6   |IPv6 Core                         |Processes the IP version 6 network layer.|
+|ICMP6 |Control Message (ICMP6)           |Processes ICMP version 6 messages. Best known example is the ping.|
+|NDP   |Neighbor Discovery (NDP)          |Handles Neighbor Discovery MAC address resolution and caching.|
+|MLD   |Multicast Listener Discovery (MLD)|Handles Neighbor Discovery MAC address resolution and caching.|
+|DHCP6 |DHCP6 Client                      |Handles automatic configuration of IP address in IP version 6.|
+|UDP   |UDP Socket                        |Processes UDP frames.|
+|TCP   |TCP Socket                        |Processes TCP frames.|
+|BSD   |BSD Socket                        |Processes TCP and UDP frames via standard BSD Sockets API.|
+|HTTP  |HTTP Server                       |Delivers web pages on the request to web clients.|
+|FTP   |FTP Server                        |Manages the files stored on the server and serves the file requests received from the clients.|
+|FTPC  |FTP Client                        |Connects to FTP server to transfer files on the server, and to manage files stored on the server.|
+|TELN  |Telnet Server                     |Allows remote clients to control the system using the command line interface.|
+|TFTP  |TFTP Server                       |A simple service which allows you to send files to or read files from the server.|
+|TFTPC |TFTP Client                       |Connects to TFTP server to send or receive files.|
+|SMTP  |SMTP Client                       |Connects to SMTP server to send emails.|
+|DNS   |DNS Client                        |Handles the resolution of the IP address from a host name.|
+|SNMP  |SNMP Agent                        |Manages devices on IP network.|
+|SNTP  |SNTP Client                       |Manages clock synchronization over the network.|
+
+An example of the debug output is:
+
+```txt
+015.0 ETH:*** Processing frame ***
+015.0 ETH: DstMAC 1E-30-6C-A2-45-5E
+015.0 ETH: SrcMAC 00-11-43-A4-FE-40
+015.0 ETH: Proto IP4, 66 bytes
+015.0 IP4:*** Processing frame ***
+015.0 IP4: SrcAddr 192.168.0.5
+015.0 IP4: DstAddr 192.168.0.150
+015.0 IP4: Proto TCP, Id=0x0622
+015.0 IP4: Length 52 bytes
+015.0 TCP:*** Processing frame ***
+015.0 TCP: Ports  : Src=49232, Dst=80
+015.0 TCP: Segment: Seq=0x31EDC88C, Ack=0x0
+015.0 TCP: Control: [SYN] Win=8192, Cks=0x0C67
+015.0 TCP: Mapped to Socket 1, state LISTEN
+015.0 TCP:Process Options, 12 bytes
+015.0 TCP: Opt-MSS: 1440
+015.0 TCP: SendWin: 8192
+015.0 TCP: RTO=4000ms (sa=0, sv=40)
+015.0 TCP: Next state SYN_REC
+```
+
+In the above example, Ethernet, IP and TCP debug messages are enabled:
+
+- Received Ethernet packets are processed by the Ethernet layer and a debug message containing Ethernet header information is
+  printed out. Ethernet debug information contains source and destination MAC address, Ethernet frame length and Ethernet
+  protocol type.
+- The packet is then passed to the IP layer. IP layer prints out IP debug messages containing the IP header information such
+  as source and destination IP address, frame length, protocol type etc.
+- When the IP layer has processed the packet, the packet is passed to the upper TCP layer. TCP layer prints out TCP debug
+  messages containing the TCP header information such as source and destination ports, sequence and acknowledge numbers,
+  checksum value, frame length etc.
+
+\note
+- If the debug mode is used on a high traffic LAN, the system might block. Reduce the amount of printed debug messages
+  in `Net_Debug.h` configuration or disable the debug mode completely.
+- Printing debug messages blocks out the system task scheduler during the time when the message is being sent from the serial
+  port. The incoming IP packets accumulate in the memory. This soon causes an **out of memory** error. Any further
+  incoming packets are lost until some memory is released.
+  
 ## Runtime Configuration {#nw_runtime_config}
 
 It is often necessary to change the parameters and mode of operation of the network interface at startup or runtime. System

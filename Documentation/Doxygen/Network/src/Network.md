@@ -58,9 +58,6 @@ MDK-Middleware Network component with a WiFi chip/module, make sure that its WiF
 This mode allows to send the Ethernet frames assembled by the Network component transparently through the WiFi chip/module.
 Some devices may support transparent mode at a higher level, such as TCP - this will not work with the Network component.
 
-The Network **CORE** is available in a \ref nw_debugging "Debug" variant with extensive diagnostic messages. The **Release**
-variant omits this diagnostic information.
-
 For mass production, the \ref nw_runtime_config option can be used to assign individual network addresses to every device
 that is produced. Unique identifiers are required for proper network operation.
 
@@ -77,5 +74,8 @@ This user's guide contains the following chapters:
 - The chapter \ref certification explains how to test the TCP/IP stack with industry-standard tools against common
   vulnerabilities.
 - \ref nw_examples are a good starting point for implementing your own networking device.
-- The \ref network_diffs compares "migration guide" contains information how to migrate from previous versions to the
-  Network Component v8.
+- \ref nw_resource_requirements describes the resource requirements of the Network Component.
+- The \ref net_func_overview list provides a brief overview of all Network Component functions.
+- The \ref network_diffs section contains information how to migrate from previous versions to the Network Component v8.
+- The <a class=el href="./modules.html">API Reference</a> describes the functional interface of the Network Component in detail.
+
