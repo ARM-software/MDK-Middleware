@@ -564,7 +564,7 @@ text editor to edit the HTML code. Here are a few guidelines:
 - Images on a web page can be of type GIF, BMP, JPEG, or PNG for example. A good choice is to select the image type with the
   best compression because these files are included in the code. Large image files might increase the application code size
   above average.
-- To keep track of the web content, be advised to create a sub-folder in the µVision project  called \b Web (for
+- To keep track of the web content, be advised to create a sub-folder in the project called \b Web (for
   example). Add all files that the web server will deliver (HTML, images, etc.) as file type "Image File":
   
   \image html image_file.png "Add web content as Image File"
@@ -711,7 +711,7 @@ is available for managing the password (\ref netHTTPs_GetPassword / \ref netHTTP
 
 It is also possible to check if this login is active (\ref netHTTPs_LoginActive) and to enable or disable it at runtime using
 \ref netHTTPs_LoginOnOff. Please note that the function \ref netHTTPs_LoginOnOff is only available at runtime if the define
-\c HTTP_SERVER_AUTH_ENABLE is set to \token{1} in the \b %Net_Config_HTTP_Server.h file. Otherwise, this command will not be
+\c HTTP_SERVER_AUTH_ENABLE is set to \token{1} in the \b Net_Config_HTTP_Server.h file. Otherwise, this command will not be
 compiled into the project to save resources. For more complex account management, use the \ref ws_access_filtering_mui.
 
 For some of the \ref ws_web_technologies you need information from the client/browser that is connected to the HTTP server.
@@ -729,7 +729,7 @@ HTML header for further processing.
 \details
 To filter the access to the HTTP server based on the IP address and port of the connecting client, the optional function
 \ref netHTTPs_AcceptClient is used. It is part of the template file \b %HTTP_Server_Access.c. If this template file is
-missing in the µVision project, the function will not be available and thus connections from all remote clients will be
+missing in the project, the function will not be available and thus connections from all remote clients will be
 accepted. You need to adapt the function to the application's needs by specifying the rules for allowed/blocked clients. The
 HTTP server will use the information in this function to filter the access. 
 
@@ -738,7 +738,7 @@ the access rights to different files on the HTTP server. The users which are all
 an user database.
 
 If you want to use multi-user authentication, you need to check the <b>Enable User Authentication</b> in the
-\ref ws_configuration "configuration file" (\b %Net_Config_HTTP_Server.h). The default account is a system administrator
+\ref ws_configuration "configuration file" (\b Net_Config_HTTP_Server.h). The default account is a system administrator
 account, which has no restrictions. All other accounts are created in a separate \b %HTTP_Server_Multiuser.c module. To
 enable a list of users, you need to adapt the following functions that are included in this module:
 - \ref netHTTPs_CheckAccount - checks if the user account exists for the provided credentials.
@@ -819,11 +819,11 @@ character set (language) of a browser can be retrieved with \ref netCGI_Charset.
 /**
 \defgroup ws_configuration Configuration
 \ingroup netHTTP_Func
-\brief Configuration of the HTTP server in µVision.
+\brief Configuration of the HTTP server.
 \details
 \image html "net_config_http_server_h.png" "HTTP Server Configuration File"
 
-The HTTP server configuration file <b>%Net_Config_HTTP_Server.h</b> contains the following settings:
+The HTTP server configuration file <b>Net_Config_HTTP_Server.h</b> contains the following settings:
 - <b>Number of Sessions</b> specifies the number of simultaneously active HTTP sessions. This number should be increased
   when delays are observed while loading pages in a web browser. This increases also total RAM usage.
   Web pages can contain many objects (like GIF or JPEG images). The remote HTTP client (web browser) opens multiple connections
@@ -1116,7 +1116,7 @@ is available for managing the password (\ref netFTPs_GetPassword / \ref netFTPs_
 
 It is also possible to check if this login is active (\ref netFTPs_LoginActive) and to enable or disable it at runtime using
 \ref netFTPs_LoginOnOff. Please note that the function \ref netFTPs_LoginOnOff is only available at runtime if the define
-\c FTP_SERVER_AUTH_ENABLE is set to \token{1} in the \b %Net_Config_FTP_Server.h file. Otherwise, this command will not be
+\c FTP_SERVER_AUTH_ENABLE is set to \token{1} in the \b Net_Config_FTP_Server.h file. Otherwise, this command will not be
 compiled into the project to save resources. For more complex account management, use the \ref ftp_access_filter_mui.
 */
 
@@ -1129,7 +1129,7 @@ compiled into the project to save resources. For more complex account management
 
 To filter the access to the FTP server based on the IP address and port of the connecting client, the optional function
 \ref netFTPs_AcceptClient is used. It is part of the template file \b %FTP_Server_Access.c. If this template file is missing
-in the µVision project, the function will not be available and thus connections from all remote clients will be accepted. You
+in the project, the function will not be available and thus connections from all remote clients will be accepted. You
 need to adapt the function to the application's needs by specifying the rules for allowed/blocked clients. The FTP server
 will use the information in this function to filter the access. 
 
@@ -1138,7 +1138,7 @@ the access rights to different files on the FTP server. The users which are allo
 an user database.
 
 If you want to use multi-user authentication, you need to check the <b>Enable User Authentication</b> in the
-\ref using_ftp_server_conf "configuration file" (\b %Net_Config_FTP_Server.h). The default account is a system administrator
+\ref using_ftp_server_conf "configuration file" (\b Net_Config_FTP_Server.h). The default account is a system administrator
 account, which has no restrictions. All other accounts are created in a separate \b %FTP_Server_Multiuser.c module. To enable
 a list of users, you need to adapt the following functions that are included in this module:
 - \ref netFTPs_CheckUsername - checks if the user account exists for the provided credentials.
@@ -1240,7 +1240,7 @@ The following functions are implemented in this module:
 /**
 \defgroup using_ftp_server_conf Configuration
 \ingroup netFTPs_Func
-\brief Configuration of the FTP server in µVision.
+\brief Configuration of the FTP server.
 \details
 
 \image html "net_config_ftp_server_h.png" "FTP Server Configuration File"
@@ -1354,7 +1354,7 @@ The following functions are implemented in this module:
 /**
 \defgroup using_ftpc_conf Configuration
 \ingroup netFTPc_Func
-\brief Configuration of the FTP client in µVision.
+\brief Configuration of the FTP client.
 \details
 \image html "net_config_ftp_client_h.png" "FTP Client Configuration File"
 
@@ -1433,7 +1433,7 @@ calling \ref netTFTPs_Start.
 \brief Functions to filter access to the TFTP server.
 \details
 To filter the access to the TFTP server, the optional function \ref netTFTPs_AcceptClient is used. It is part of the template
-file \b %TFTP_Server_Access.c. If this template file is missing in the µVision project, the function will not be available
+file \b %TFTP_Server_Access.c. If this template file is missing in the project, the function will not be available
 and thus connections from all remote clients will be accepted. You need to adapt the function to the application's needs by
 specifying the rules for allowed/blocked clients. The TFTP server will use the information in this function to filter the
 access. 
@@ -1461,7 +1461,7 @@ The following functions are implemented in this module:
 /**
 \defgroup using_tftp_server_conf Configuration
 \ingroup netTFTPs_Func
-\brief Configuration of the TFTP server in µVision.
+\brief Configuration of the TFTP server.
 \details
 \image html "net_config_tftp_server_h.png" "TFTP Server Configuration File"
 
@@ -1549,7 +1549,7 @@ The following functions are implemented in this module:
 /**
 \defgroup using_tftpc_conf Configuration
 \ingroup netTFTPc_Func
-\brief Configuration of the TFTP client in µVision.
+\brief Configuration of the TFTP client.
 \details
 \image html "net_config_tftp_client_h.png" "TFTP Client Configuration File"
 
@@ -1613,7 +1613,7 @@ pair of functions is available for managing the password (\ref netTELNETs_GetPas
 
 It is also possible to check if this login is active (\ref netTELNETs_LoginActive) and to enable or disable it at runtime
 using \ref netTELNETs_LoginOnOff. Please note that the function \ref netTELNETs_LoginOnOff is only available at runtime if
-the define \c TELNET_SERVER_AUTH_ENABLE is set to \token{1} in the \b %Net_Config_Telnet_Server.h file. Otherwise, this
+the define \c TELNET_SERVER_AUTH_ENABLE is set to \token{1} in the \b Net_Config_Telnet_Server.h file. Otherwise, this
 command will not be compiled into the project to save resources. For more complex account management, use the
 \ref telnet_access_filter_mui.
 
@@ -1631,7 +1631,7 @@ your project, simply right-click on the Source group, select <b>Add New Item to 
 \details
 To filter the access to the Telnet server based on the IP address and port of the connecting client, the optional function
 \ref netTELNETs_AcceptClient is used. It is part of the template file \b %Telnet_Server_Access.c. If this template file is
-missing in the µVision project, the function will not be available and thus connections from all remote clients will be
+missing in the project, the function will not be available and thus connections from all remote clients will be
 accepted. You need to adapt the function to the application's needs by specifying the rules for allowed/blocked clients. The
 Telnet server will use the information in this function to filter the access. 
 
@@ -1640,7 +1640,7 @@ the access rights to different commands executed on the Telnet server. The users
 server are stored in an user database.
 
 If you want to use multi-user authentication, you need to check the <b>Enable User Authentication</b> in the
-\ref telnet_server_conf "configuration file" (\b %Net_Config_Telnet_Server.h). The default account is a system administrator
+\ref telnet_server_conf "configuration file" (\b Net_Config_Telnet_Server.h). The default account is a system administrator
 account, which has no restrictions. All other accounts are created in a separate \b %Telnet_Server_Multiuser.c module.
 
 To enable a list of users, you need to adapt the function \ref netTELNETs_CheckUsername, which checks if the user account
@@ -1839,7 +1839,7 @@ configuration, this is the configuration option \b Disable \b Echo:
 /**
 \defgroup telnet_server_conf Configuration
 \ingroup netTELNET_Func
-\brief Configuration of the Telnet server in µVision.
+\brief Configuration of the Telnet server.
 \details
 \image html "net_config_telnet_server_h.png" "Telnet Server Configuration File"
 
@@ -2166,7 +2166,7 @@ where the value 31036 is calculated as:
 /**
 \defgroup using_snmp_agent_conf Configuration
 \ingroup netSNMP_Func
-\brief Configuration of the SNMP agent in µVision.
+\brief Configuration of the SNMP agent.
 \details
 \image html "net_config_snmp_agent_h.png" "SNMP Agent Configuration File"
 
@@ -2220,7 +2220,7 @@ the Internet.
 Start the DNS Client by calling the function \ref netDNSc_GetHostByName. DNS requests are routed to the DNS Server IP
 address of an active network interface. If you are using a \ref netPPP_Func "PPP" or
 \ref netSLIP_Func "SLIP" interface and no \ref netETH_Func interface, you must enable the
-"Use default Gateway on remote Network" option in the configuration file (\b %Net_Config_PPP.h or \b %Net_Config_SLIP.h).
+"Use default Gateway on remote Network" option in the configuration file (\b Net_Config_PPP.h or \b Net_Config_SLIP.h).
 
 You must also specify a callback function, which is called from the DNS Client when a DNS event occurs.
 \code
@@ -2261,7 +2261,7 @@ the decoded IP address to the callback function.
 /**
 \defgroup using_dns_client_conf Configuration
 \ingroup netDNSc_Func
-\brief Configuration of the DNS client in µVision.
+\brief Configuration of the DNS client.
 \details
 \image html net_config_dns_client_h.png "DNS Client Configuration File"
 
@@ -2312,7 +2312,7 @@ opens UDP port for receiving broadcasted NTP messages in local network.
 /**
 \defgroup using_sntp_client_conf Configuration
 \ingroup netSNTPc_Func
-\brief Configuration of the SNTP client in µVision.
+\brief Configuration of the SNTP client.
 \details
 \image html "net_config_sntp_client_h.png" "SNTP Client Configuration File"
 
@@ -2374,9 +2374,9 @@ supports additional features, which are not available in legacy mode:
 - email attachments. 
 
 When the \ref netSMTPc_SendMail function is called, the SMTP client resolves the IP address from the specified server name
-and opens a SMTP connection to the server. After handshaking, the SMTP Client transmits the message content. If the email
+and opens an SMTP connection to the server. After handshaking, the SMTP Client transmits the content of the message. If the email
 attachments are specified, the client composes a multipart MIME message with the attachments. If you want to send an email
-with the attachment, you have to enable SMTP Client (full variant) in µVision configuration and specify file name(s) to attach.
+with attachments, you must activate attachments in client \ref using_smtpc_conf and specify file name(s) to attach.
 
 The <b>legacy mode</b> starts with a connect request using \ref netSMTPc_Connect. The SMTP client then opens a SMTP 
 connection to the specified server. The user application then needs to wait for the callback function \ref netSMTPc_Notify
@@ -2428,7 +2428,7 @@ enabled in the \ref using_smtpc_conf, otherwise the functions are not used.
 /**
 \defgroup using_smtpc_conf Configuration
 \ingroup netSMTPc_Func
-\brief Configuration of the SMTP client in µVision. 
+\brief Configuration of the SMTP client. 
 \details
 \image html net_config_smtp_client_h.png "SMTP Client Configuration File"
 

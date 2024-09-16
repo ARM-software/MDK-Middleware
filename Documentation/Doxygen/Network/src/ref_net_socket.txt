@@ -223,7 +223,7 @@ void Client_Thread (void *arg) {
 /**
 \defgroup using_network_sockets_bsd_conf Configuration
 \ingroup netBSD_Func
-\brief How to configure BSD sockets in µVision.
+\brief How to configure BSD sockets.
 \details
 \image html "net_config_bsd_h.png" "BSD Socket Configuration File"
 
@@ -526,7 +526,7 @@ int main (void) {
 /**
 \defgroup using_network_sockets_tcp_conf Configuration
 \ingroup netTCP_Func
-\brief Configuration of the TCP sockets in µVision.
+\brief Configuration of the TCP sockets.
 \details
 \image html "net_config_tcp_h.png" "TCP Socket Configuration File"
 
@@ -682,7 +682,7 @@ and receiving the data from that group address, you have to leave a specific gro
 /**
 \defgroup using_network_sockets_udp_conf Configuration
 \ingroup netUDP_Func
-\brief Configuration of the UDP Sockets in µVision.
+\brief Configuration of the UDP Sockets.
 \details
 \image html "net_config_udp_h.png" "UDP Socket Configuration File"
 
