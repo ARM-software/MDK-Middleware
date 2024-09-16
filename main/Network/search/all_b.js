@@ -2,7 +2,7 @@ var searchData=
 [
   ['management_20information_20base_20_28mib_29_20interface_0',['Management Information Base (MIB) Interface',['../group__mib__interface.html',1,'']]],
   ['message_1',['Message',['../group__smtp__structs.html#abb394486e1299f83ae0915fc16ff50e1',1,'NET_SMTP_MAIL']]],
-  ['migration_2',['Migration',['../network_diffs.html',1,'']]],
+  ['migration_20guide_2',['Migration Guide',['../network_diffs.html',1,'']]],
   ['min_3',['min',['../rl__net_8h.html#ac9b481208b43f7c37ed25e446bdec692',1,'NET_FS_TIME']]],
   ['modem_20driver_20functions_4',['Modem Driver Functions',['../group__netDS__Modem.html',1,'']]],
   ['modem_5fdial_5',['Modem_Dial',['../group__netDS__Modem.html#gae8619c77f38c858b955990a6ca30ce7d',1,'net_modem.txt']]],

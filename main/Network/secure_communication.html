@@ -148,13 +148,13 @@ Software stack for secure network communication</div></div>
 <li>Building on top of the Network Component, <b>mbed TLS</b> provides an abstraction layer for secure communication.</li>
 <li>The <b>application code</b> uses Mbed TLS to abstract the secure communication from itself.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3"></a>
+<h2><a class="anchor" id="autotoc_md4"></a>
 Why Mbed TLS?</h2>
 <p>The Mbed TLS library is designed for ease-of-use. The library is documented and has examples so you can easily understand how to use it. In the Network Component, Mbed TLS is used under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>, enabling you to use it in both open source and closed source projects. Mbed TLS is a fully featured and standards compliant SSL library offering server and client functionality in one single package.</p>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<h2><a class="anchor" id="autotoc_md5"></a>
 Difference between SSL/TLS</h2>
 <p>The TLS protocol is the successor of the SSL protocol. Just like its predecessor, the TLS protocol provides communication security for connections over possibly untrusted networks, like the Internet. The main difference between TLS and SSL is the increased standardization of the workings of the protocol. SSL itself was designed and developed by Netscape. The newer TLS standard is defined in a number of <a class="el" href="group__RFC__list.html#mbed_rfcs">public RFCs</a> and is extended periodically to counter possible weaknesses or add much needed functionality.</p>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<h2><a class="anchor" id="autotoc_md6"></a>
 Parts of an SSL/TLS Library</h2>
 <p>In order to perform the SSL or TLS protocol, a number of supporting functionality is required. The SSL/TLS library:</p>
 <ul>
@@ -167,15 +167,15 @@ Parts of an SSL/TLS Library</h2>
 <p>All of this is hidden from most users and wrapped inside an SSL library, such as Mbed TLS, which developers can use to implement SSL or TLS in their applications.</p>
 <p>For more information on Mbed TLS and how it works, visit the <a href="https://www.trustedfirmware.org/projects/mbed-tls/">high-level design</a> overview page.</p>
 <h2><a class="anchor" id="add_mbedtls"></a>
-Add the mbed TLS library to a µVision project</h2>
-<p>The <a class="el" href="nw_examples.html">Network Examples</a> section carries two examples for secure communication over the IP network: SSL Server and SSL Client. To use the Mbed TLS library in your own projects, follow these steps:</p>
+Add the mbed TLS library to a project</h2>
+<p>The <a class="el" href="nw_examples.html">Examples</a> section carries two examples for secure communication over the IP network: SSL Server and SSL Client. To use the Mbed TLS library in your own projects, follow these steps:</p>
 <ol type="1">
 <li>Download the <b>ARM:mbedTLS</b> library from  <script>link_ext('SW-Pack');</script> or use  <script>link_ext('uv4_ca_packinstaller');</script></li>
 <li>Open or create a project using the <b>Network Component</b>.</li>
 <li>Configure the Network Component as required by your application (Ethernet settings, TCP/IP communication, etc.).</li>
-<li>In the <b>Manage Run-Time Environment</b> window expand <b>Security</b> and enable <b>Mbed TLS</b>: <img src="add_mbedTLS.png" alt="" class="inline" title="Add mbed TLS"/>    </li>
+<li>In the <b>Manage Run-Time Environment</b> window expand <b>Security</b> and enable <b>mbed TLS</b>: <img src="add_mbedTLS.png" alt="" class="inline" title="Add mbed TLS"/>    </li>
 <li>Configure Mbed TLS using the <code>mbedTLS_config.h</code> file.</li>
-<li>Use the <b>Mbed TLS</b> API to secure your communication.</li>
+<li>Use the <b>mbed TLS</b> API to secure your communication.</li>
 </ol>
 <dl class="section note"><dt>Note</dt><dd>You can use the Mbed TLS API in parallel to any of the <a class="el" href="secure_communication.html#use_secure_components">secure services</a> that are part of the Network Component.</dd></dl>
 <h1><a class="anchor" id="use_secure_components"></a>
@@ -198,7 +198,7 @@ Selecting HTTPS for the web server</div></div>
 Converting the HTTP server to HTTPS</h3>
 <p>It is also possible to convert an already existing (compact) web server to a secure HTTPS web server. A few simple steps are required to achieve this:</p>
 <ol type="1">
-<li>Download and install the <b>ARM:mbedTLS</b> Software Pack (see <a class="el" href="secure_communication.html#add_mbedtls">Add the mbed TLS library to a µVision project</a>).</li>
+<li>Download and install the <b>ARM:mbedTLS</b> Software Pack (see <a class="el" href="secure_communication.html#add_mbedtls">Add the mbed TLS library to a project</a>).</li>
 <li>Change the following software components in the Manage Run-Time Environment:<ul>
 <li>Set <b>Network:Service:Web Server (Compact)</b> variant to <b>HTTPS</b>. This adds the file <code>Net_Security.c</code> to the project which contains test keys/certificates. To change them, follow the steps provided in <a class="el" href="secure_communication.html#cert_creation">Creating your own certificates and keys</a>.</li>
 <li>Enable <b>Security:mbed TLS</b> or resolve this dependency automatically.</li>
@@ -289,8 +289,9 @@ Converting the HTTP server to HTTPS</h3>
 <div class="line"><span class="preprocessor">#define MBEDTLS_SSL_IN_CONTENT_LEN      4096 </span><span class="comment">/**&lt; Maximum length (in bytes) of incoming plaintext fragments. */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor">#define MBEDTLS_SSL_OUT_CONTENT_LEN     4096 </span><span class="comment">/**&lt; Maximum length (in bytes) of outgoing plaintext fragments. */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --><ol type="1">
-<li>Set your device's heap to 90KB or more (or increase existing). In the <b>Project</b> window, under <b>Device</b>, open the file <code>startup_xxx.s</code> and set <div class="fragment"><div class="line">Heap_Size = 0x16000</div>
-</div><!-- fragment --> or more, depending on your application.</li>
+<li>Set your device's heap to 90KB or more, depending on the application. Open the file <code>startup_xxx.s</code> and set <div class="fragment"><div class="line">Heap_Size = 0x16000</div>
+</div><!-- fragment --> or alternatively modify the <b>linker script</b> file <div class="fragment"><div class="line"><span class="preprocessor">#define __HEAP_SIZE     0x00016000</span></div>
+</div><!-- fragment --></li>
 <li>Configure the RTX threads<ul>
 <li>If you use <b>RTX v5</b>, you do not need to change the <b>RTX settings</b>, because all resources are statically allocated.</li>
 </ul>
@@ -377,7 +378,7 @@ Select the SMTPS variant</div></div>
 Converting the SMTP client to SMTPS</h3>
 <p>It is also possible to convert an already existing e-mail client to a secure SMTPS e-mail client. A few simple steps are required to achieve this:</p>
 <ol type="1">
-<li>Download and install the <b>ARM:mbedTLS</b> Software Pack (see <a class="el" href="secure_communication.html#add_mbedtls">Add the mbed TLS library to a µVision project</a>).</li>
+<li>Download and install the <b>ARM:mbedTLS</b> Software Pack (see <a class="el" href="secure_communication.html#add_mbedtls">Add the mbed TLS library to a project</a>).</li>
 <li>Change the following software components in the Manage Run-Time Environment:<ul>
 <li>Set <b>Network:Service:SMTP Client</b> variant to SMTPS. This adds the file <code>Net_Security.c</code> to the project which contains an empty CA certificate. To define it, follow the steps provided in <a class="el" href="secure_communication.html#cert_adding">Adding server root CA certificate</a>.</li>
 <li>Enable <b>Security:mbed TLS</b> or resolve this dependency automatically.</li>
@@ -462,8 +463,9 @@ Converting the SMTP client to SMTPS</h3>
 <div class="line"><span class="preprocessor">#define MBEDTLS_SSL_IN_CONTENT_LEN      4096 </span><span class="comment">/**&lt; Maximum length (in bytes) of incoming plaintext fragments. */</span><span class="preprocessor"></span></div>
 <div class="line"><span class="preprocessor">#define MBEDTLS_SSL_OUT_CONTENT_LEN     4096 </span><span class="comment">/**&lt; Maximum length (in bytes) of outgoing plaintext fragments. */</span><span class="preprocessor"></span></div>
 </div><!-- fragment --></li>
-<li>Set your device's heap to at least 49 KB or increase appropriately. In the <b>Project</b> window, under <b>Device</b>, open the file <code>startup_xxx.s</code> and set <div class="fragment"><div class="line">Heap_Size = 0xC000</div>
-</div><!-- fragment --> or more, depending on your application.</li>
+<li>Set your device's heap to 49KB or more, depending on the application. Open the file <code>startup_xxx.s</code> and set <div class="fragment"><div class="line">Heap_Size = 0xC000</div>
+</div><!-- fragment --> or alternatively modify the <b>linker script</b> file <div class="fragment"><div class="line"><span class="preprocessor">#define __HEAP_SIZE     0x0000C000</span></div>
+</div><!-- fragment --></li>
 <li>Configure the RTX threads<ul>
 <li>If you use <b>RTX v5</b>, you do not need to change the <b>RTX settings</b>, because all recources are statically allocated.</li>
 </ul>

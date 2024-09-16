@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['network_20examples_0',['Network Examples',['../nw_examples.html',1,'']]]
+  ['migration_20guide_0',['Migration Guide',['../network_diffs.html',1,'']]]
 ];

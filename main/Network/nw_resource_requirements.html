@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('nw_resource_requirements.html',''); in
 <div class="textblock"><p><a class="anchor" id="md_src_network_resource_requirements"></a> This section describes the resource requirements of the <b>Network</b> component. The actual requirements depend on the features used in the application. Therefore, the numbers provided here are guidelines only and the actual numbers may differ.</p>
 <h1><a class="anchor" id="nw_mem_req"></a>
 Stack Requirements</h1>
-<p>The Network Core receives events sent from the interrupt service routine (ISR) of the Ethernet (or Serial) <b>Driver</b>. The stack requirements for the ISR are typically less than 512 Bytes. The total stack space required for ISR depends on the interrupt nesting and therefore on the priority settings of these ISR. The stack requirements for ISR is configured in the <code>startup_device.s</code> file located under the <b>Device</b> component class.</p>
+<p>The Network Core receives events sent from the interrupt service routine (ISR) of the Ethernet (or Serial) <b>Driver</b>. The stack requirements for the ISR are typically less than 512 Bytes. The total stack space required for ISR depends on the interrupt nesting and therefore on the priority settings of these ISR. The stack requirements for ISR is configured in the <code>startup_device.s</code> file located under the <b>Device</b> component class. If the stack settings are not available there, the stack settings must be configured in the <b>linker script</b> file.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Option (under section Stack Configuration)   </th><th class="markdownTableHeadLeft">Increase Value by    </th></tr>
@@ -142,7 +142,7 @@ Stack Requirements</h1>
 <p>User code that calls API functions of the Network Component should have a minimum of 512 Bytes of stack space available. Since API functions are frequently called from threads, the thread stack size should be at least 512 Bytes (see below).</p>
 <h1><a class="anchor" id="nw_heap_req"></a>
 Heap Requirements</h1>
-<p>The mbed TLS component requires 90 kB of heap memory. The heap requirements are configured in the <code>startup_device.s</code> file located under the <b>Device</b> component class.</p>
+<p>The mbed TLS component requires 90 kB of heap memory. The heap requirements are configured in the <code>startup_device.s</code> file, which is located under the <b>Device</b> component class. If the heap settings are not available in the startup file, the heap settings must be configured in the <b>linker script</b> file.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Option (under section Stack Configuration)   </th><th class="markdownTableHeadLeft">Increase Value to at least    </th></tr>
@@ -179,19 +179,16 @@ CMSIS-RTOS Requirements</h1>
 <li><b>Number of Threads</b>: sum up the number of used <em>Components</em>.</li>
 <li><b>Total stack size</b>: sum up the <em>Default Stack Sizes</em> of the related threads.</li>
 </ul>
-<h2><a class="anchor" id="nw_req_rtx5"></a>
-RTX v5 Requirements</h2>
-<p>The Network component allocates all necessary resources statically so no changes to RTX settings are necessary.</p>
-<h3><a class="anchor" id="autotoc_md49"></a>
+<h3><a class="anchor" id="autotoc_md50"></a>
 Timers</h3>
 <p>The Network component requires timers which need to be enabled in RTOS.</p>
-<h3><a class="anchor" id="autotoc_md50"></a>
+<h3><a class="anchor" id="autotoc_md51"></a>
 Signals</h3>
 <p>When using BSD sockets in blocking mode, the signal (1&lt;&lt;15) in that thread is reserved for the Network library. A user thread, when blocked on BSD sockets, is waiting for the signal 0x8000 to resume. The event, which has caused the thread to resume, is provided internally in the library. Therefore, signal 0x8000 must not be used by the user application in that thread.</p>
 <h1><a class="anchor" id="nw_spec_mem_req"></a>
 Memory Requirements</h1>
 <p>The following table shows the memory requirements for read-only (Flash) and read-write (RAM) memory. These numbers may be used to estimate the total size requirements of the application, but the actual numbers depend on compiler optimizations and target processor and may be therefore slightly different.</p>
-<h2><a class="anchor" id="autotoc_md51"></a>
+<h2><a class="anchor" id="autotoc_md52"></a>
 Network (IPv4/IPv6)</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -237,7 +234,7 @@ Network (IPv4/IPv6)</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft"><b>Ethernet PHY Driver</b>   </td><td class="markdownTableBodyCenter">&lt; 1 k   </td><td class="markdownTableBodyCenter">&lt; 0.1 k   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md52"></a>
+<h2><a class="anchor" id="autotoc_md53"></a>
 Network (IPv4)</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
