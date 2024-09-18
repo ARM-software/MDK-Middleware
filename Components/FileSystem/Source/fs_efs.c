@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_efs.c
  * Purpose: Embedded File System Implementation
@@ -2278,8 +2278,8 @@ __WEAK fsStatus efs_delete (const char *path, fsEFS_Volume *vol) {
 __WEAK fsStatus efs_ffind (fsFileInfo *info, fsEFS_Volume *vol) {
   FALLOC fa;
   uint32_t block, addr;
-  uint32_t id, nid;
-  uint32_t prev, fn_addr = 0;
+  uint32_t nid, id, id_block = 0U;
+  uint32_t prev, fn_addr = 0U;
   fsStatus stat;
 
   if (info == NULL) {
@@ -2318,8 +2318,11 @@ __WEAK fsStatus efs_ffind (fsFileInfo *info, fsEFS_Volume *vol) {
 
       if (fa.end != vol->ErasedValue) {
         if ((fa.fileID >= nid) && (fa.fileID < id)) {
+          /* Store the ID of the current valid file */
           id = fa.fileID;
-
+          /* Store the block where we found the file */
+          id_block = block;
+          /* Store the file name address */
           fn_addr = addr_of_block(vol, block) + prev;
 
           if (id == nid) {
@@ -2354,7 +2357,7 @@ __WEAK fsStatus efs_ffind (fsFileInfo *info, fsEFS_Volume *vol) {
   info->time.mon = 1;
   info->time.year= 1980;
   
-  info->size   = file_size_get (vol, block, info->fileID);
+  info->size   = file_size_get (vol, id_block, info->fileID);
   info->attrib = 0;
 
   return (fsOK);
