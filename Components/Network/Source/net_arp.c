@@ -460,7 +460,7 @@ void net_arp_cache_add (NET_IF_CFG *net_if,
 
   if (!net_ip4_is_onlink (h->If, ip4_addr)) {
     /* This IP Address belongs to external WAN */
-    if (get_u32 (LocM.DefGW) == 0) {
+    if (__ALIGNED_UINT32(LocM.DefGW) == 0) {
       /* Default Gateway is not specified */
       ERRORF (ARP,"Cache_add %s, Gateway unknown\n",h->If->Name);
       EvrNetARP_GatewayUnknown (h->If->Id, LocM.DefGW);
@@ -566,7 +566,7 @@ NET_ARP_INFO *net_arp_cache_find (NET_IF_CFG *net_if, const uint8_t *ip4_addr) {
   EvrNetARP_CacheFind (h->If->Id, ip4_addr);
   if (!net_ip4_is_onlink (h->If, ip4_addr)) {
     DEBUGF (ARP," External, Use gateway\n");
-    if (get_u32 (LocM.DefGW) == 0) {
+    if (__ALIGNED_UINT32(LocM.DefGW) == 0) {
       /* Default Gateway is not specified */
       ERRORF (ARP,"Cache_find %s, Gateway unknown\n",h->If->Name);
       EvrNetARP_GatewayUnknown (h->If->Id, LocM.DefGW);
@@ -713,7 +713,7 @@ netStatus netARP_CacheMAC (uint32_t if_id, const uint8_t *mac_addr) {
       RETURN (netOK);
     }
   }
-  if (get_u32 (LocM.IpAddr) == 0) {
+  if (__ALIGNED_UINT32(LocM.IpAddr) == 0) {
     ERRORF (ARP,"CacheMAC %s, Local-IP undefined\n",h->If->Name);
     EvrNetARP_UnresolvedIpAddress (h->If->Id, mac_addr);
     RETURN (netError);
@@ -1363,7 +1363,7 @@ static bool arp_is_cacheable (NET_ARP_CFG *h, const uint8_t *ip4_addr) {
   }
 
   /* 'ip_addr' may not be aligned */
-  ip_tmp   = get_u32 (ip4_addr);
+  ip_tmp = get_u32 (ip4_addr);
 
   if ((ip_tmp == 0) || (ip_tmp == 0xFFFFFFFF)) {
     /* Undefined (0.0.0.0) or Bcast (255.255.255.255) */
