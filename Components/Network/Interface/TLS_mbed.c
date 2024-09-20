@@ -572,7 +572,8 @@ static void tls_run (void) {
             goto close;
           }
         }
-        mbedtls_ssl_set_bio (tls_s->ssl, tls_s, bio_send, bio_recv, NULL);
+        mbedtls_ssl_set_bio (tls_s->ssl, tls_s, (mbedtls_ssl_send_t *)bio_send,
+                                                (mbedtls_ssl_recv_t *)bio_recv, NULL);
         tls_s->State = TLS_STATE_HANDSHAKE;
         ctrl.busy    = true;
         break;
