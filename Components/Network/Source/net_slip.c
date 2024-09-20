@@ -56,7 +56,7 @@ void net_slip_iface_init (void) {
     EvrNetSLIP_Ip4ConfigError ();
     net_sys_error (NET_ERROR_CONFIG);
   }
-  set_u32 (LocM.NetMask, SLIP_NET_MASK);
+  __ALIGNED_UINT32(LocM.NetMask) = HTONL(SLIP_NET_MASK);
   LocM.Mtu = slip_mtu_limit (h->If->Ip4Cfg->Mtu);
 
   /* Initialize modem and UART devices */

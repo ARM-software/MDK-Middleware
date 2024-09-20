@@ -794,8 +794,8 @@ static uint32_t dhcp_listener (int32_t socket, const NET_ADDR *addr,
     case DHCP_STATE_SELECTING:
     case DHCP_STATE_AUTO_IP:
       /* Select first DHCP_OFFER */
-      set_u32 (ctrl->SrvAddr, 0);
-      set_u32 (ctrl->RelayAddr, 0);
+      __ALIGNED_UINT32(ctrl->SrvAddr)   = 0;
+      __ALIGNED_UINT32(ctrl->RelayAddr) = 0;
       DEBUGF (DHCP," Client State-SELECTING\n");
       EvrNetDHCP_ClientState (h->If->Id, DHCP_STATE_SELECTING);
       /* Go through all parameters and try to find if this is DHCP_OFFER */
@@ -838,7 +838,7 @@ static uint32_t dhcp_listener (int32_t socket, const NET_ADDR *addr,
         }
       }
       /* Processed all, got what we were looking for ? */
-      if (get_u32 (ctrl->SrvAddr) == 0) {
+      if (__ALIGNED_UINT32(ctrl->SrvAddr) == 0) {
         DEBUGF (DHCP," Discarded, DHCP_OFFER with no Server ID\n");
         EvrNetDHCP_MissingServerId (h->If->Id, DHCP_OFFER);
         return (false);
@@ -855,7 +855,7 @@ static uint32_t dhcp_listener (int32_t socket, const NET_ADDR *addr,
       /*   e) 0.0.0.0         - Unspecified address       */
       if (((ctrl->ReqAddr[0] & 0xF0) >= 0xE0) ||
            (ctrl->ReqAddr[0]         == 0x7F) ||
-           (get_u32 (ctrl->ReqAddr)  == 0))   {
+           (__ALIGNED_UINT32(ctrl->ReqAddr) == 0)) {
         ERRORF (DHCP,"Process %s, Offered IP invalid\n",h->If->Name);
         EvrNetDHCP_OfferedAddressInvalid (h->If->Id, ctrl->ReqAddr);
         return (false);
@@ -869,7 +869,7 @@ static uint32_t dhcp_listener (int32_t socket, const NET_ADDR *addr,
         EvrNetDHCP_ForwardedMessage (h->If->Id, DHCP_OFFER);
         /* giaddr, Relay agent IP address */
         net_addr4_copy (ctrl->RelayAddr, &buf[24]);
-        if (get_u32 (ctrl->RelayAddr) == 0) {
+        if (__ALIGNED_UINT32(ctrl->RelayAddr) == 0) {
           /* Unspecified, save IP address of the sender */
           net_addr4_copy (ctrl->RelayAddr, addr->addr);
         }

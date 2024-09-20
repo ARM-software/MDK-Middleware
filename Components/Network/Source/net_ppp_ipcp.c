@@ -56,7 +56,7 @@ void net_ipcp_init (NET_PPP_CFG *h) {
     net_sys_error (NET_ERROR_CONFIG);
   }
   net_addr4_copy (ipcp_ctl->MyIP, LocM.IpAddr);
-  set_u32 (LocM.NetMask, PPP_NET_MASK);
+  __ALIGNED_UINT32(LocM.NetMask) = HTONL(PPP_NET_MASK);
 }
 
 /**
@@ -80,8 +80,8 @@ void net_ipcp_uninit (NET_PPP_CFG *h) {
 static void ipcp_set_rem_ip (NET_PPP_CFG *h) {
   uint32_t ip, mask, net;
 
-  ip   = get_u32 (LocM.IpAddr);
-  mask = get_u32 (LocM.NetMask);
+  ip   = ntohl(__ALIGNED_UINT32(LocM.IpAddr));
+  mask = ntohl(__ALIGNED_UINT32(LocM.NetMask));
 
   net = ip & mask;
   ip = (ip + 1) & ~mask;
@@ -296,7 +296,7 @@ void net_ipcp_process (NET_PPP_CFG *h, NET_FRAME *frame) {
             net_addr4_copy (LocM.IpAddr, ipcp_ctl->MyIP);
             if (ctrl->Flags & PPP_FLAG_CLIENT) {
               /* Set NetMask to 255.255.255.255 for PPP client */
-              set_u32 (LocM.NetMask, PPP_NET_MASK_CLIENT);
+              __ALIGNED_UINT32(LocM.NetMask) = HTONL(PPP_NET_MASK_CLIENT);
             }
             DEBUGF (PPP,"Network-Layer Up\n");
             EvrNetPPP_IpcpNetworkLayerUp ();

@@ -829,14 +829,14 @@ static bool dns_get_server (void) {
     dns->Addr.addr_type = NET_ADDR_IP4;
     if (dns->Flags & DNS_FLAG_SECDNS) {
       /* Check if secondary DNS server exists */
-      if (get_u32 (dns->locm->SecDNS) != 0) {
+      if (__ALIGNED_UINT32(dns->locm->SecDNS) != 0) {
         net_addr4_copy (dns->Addr.addr, dns->locm->SecDNS);
         return (true);
       }
       /* Secondary DNS server not known, use primary */
       dns->Flags &= ~DNS_FLAG_SECDNS;
     }
-    if (get_u32 (dns->locm->PriDNS) != 0) {
+    if (__ALIGNED_UINT32(dns->locm->PriDNS) != 0) {
       net_addr4_copy (dns->Addr.addr, dns->locm->PriDNS);
       return (true);
     }
