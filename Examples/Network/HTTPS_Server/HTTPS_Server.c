@@ -71,7 +71,7 @@ __NO_RETURN void app_main_thread (void *argument) {
   char    ip_ascii[40];
   (void)argument;
 
-  printf("Network HTTP Server example\n");
+  printf("Network HTTPS Server example\n");
 
   netInitialize ();
 
