@@ -11,4 +11,5 @@ ignoreerrors=
 ignorewarnings=
     http-redirected
 ignore=
-    ^http://mcb1700
+    ^http://my_host
+    ^https://my_host

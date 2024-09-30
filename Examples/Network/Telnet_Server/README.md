@@ -1,22 +1,24 @@
-This is a **Telnet Server** example. It shows you how to set up a command line 
+Telnet Server Example
+===========
+
+This MDK-Middleware example project implements a **Telnet Server** example. It shows you how to set up a command line 
 interface within an embedded application.
 
-Detailed description is available on:  
-<https://www.keil.com/pack/doc/MW/Network/html/_telnet__example.html>
+For detailed description see [Telnet Server Example section in MDK-Middleware documenation](https://arm-software.github.io/MDK-Middleware/latest/Network/Telnet_Server_Example.html).
 
-Use this example to connect an evaluation board to a LAN with a router.
-You can also connect an evaluation board directly to a PC using a direct or
-crossover network cable.
+Key usage aspects
+-----
 
-To test this example, run a Telnet client on your PC. If you are using the
-Windows Telnet client, you can establish the connection with the following
-command in the console window:
+For successful build and operation the project needs to be extended with a board layer that implements required [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections) to the target hardware intefaces. For details see example documentation referenced above.
 
-telnet my_host  
-or  
-telnet \<IP-address\>
 
-Default user: admin  
-Default password: \<none\>
+To use this example, connect an evaluation board to a LAN with a router. You can also connect an evaluation board directly to a PC using a direct or crossover network cable.
+
+To run the program, start a Telnet client (for example PuTTY) on your PC connected to the same LAN. Use following parameters as default to establish a Telnet connection:
+
+ - Host name:  `my_host`
+ - Telnet port: 23
+ - user: admin
+ - password: \<none\>
 
 Type *help* to see the available commands or *bye* to close the connection.

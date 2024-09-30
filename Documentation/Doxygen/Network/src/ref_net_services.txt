@@ -578,8 +578,8 @@ text editor to edit the HTML code. Here are a few guidelines:
 Default Page
 ============
 When you type the HTTP Server's URL or IP address in the browser's address bar, the HTTP Server sends the content of the
-\b %index.htm web page. This \b default \b page is opened, as long as no other filename is specified in the URL. If you enter
-a URL, including a filename (for example http://mcb1700/ad.htm), the HTTP Server tries to open this page.
+\b %index.html web page. This \b default \b page is opened, as long as no other filename is specified in the URL. If you enter
+a URL, including a filename (for example http://my_host/ad.htm), the HTTP Server tries to open this page.
 
 The default page \b %index.htm is a static page. This means the content of this page is stored on the HTTP Server and sent
 unmodified to the web client on request. Usually, this page contains links to other static or
@@ -1799,7 +1799,7 @@ After giving a \c meas \c 4 command, the Telnet Client screen looks like this:
 
 \image html "telnet_meas.png"
 
-\note You can check the \ref Telnet_Example to see how it works.
+\note You can check the \ref Telnet_Server_Example to see how it works.
 */
 
 

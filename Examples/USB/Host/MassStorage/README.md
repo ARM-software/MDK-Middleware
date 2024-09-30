@@ -1,7 +1,17 @@
-This is an USB Host Mass Storage and File System example.
+USB Host Mass Storage Example
+===========
 
-After the USB Flash memory stick is connected it creates/overwrites 
-a file with name "Test.txt" and content "USB Host Mass Storage!".
+This MDK-Middleware example project implemens a USB Host device that accesses a USB Mass Storage Device (USB memory stick) using Mass Storage Class.
 
-Detailed description is available on:
-http://www.keil.com/pack/doc/MW/USB/html/host_msc_tutorial.html
+For detailed description see [USB Host Mass Storage Example section in MDK-Middleware documenation](https://arm-software.github.io/MDK-Middleware/latest/USB/host_msc_tutorial.html).
+
+Key usage aspects
+-----
+
+For successful build and operation the project needs to be extended with a board layer that implements required [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections) to the target hardware intefaces. For details see example documentation referenced above.
+
+This program creates (or overwrites) a `Test.txt` file on the connected USB Stick with the content:
+
+```
+USB Host Mass Storage!"
+```

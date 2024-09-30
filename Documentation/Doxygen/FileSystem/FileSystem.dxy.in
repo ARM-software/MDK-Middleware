@@ -925,6 +925,7 @@ INPUT                  = src/FileSystem.md \
                          src/fs_rev_hist.md \
                          src/fs_create_app.md \
                          src/fs_examples.md \
+                         src/fs_standalone_example.md \
                          src/fs_operation.md \
                          src/fs_function_reference.md \
                          src/fs_resource_requirements.md \

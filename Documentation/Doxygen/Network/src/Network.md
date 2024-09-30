@@ -73,9 +73,8 @@ This user's guide contains the following chapters:
   channels. It also explains how to create your own SSL/TLS certificates.
 - The chapter \ref certification explains how to test the TCP/IP stack with industry-standard tools against common
   vulnerabilities.
-- \ref nw_examples are a good starting point for implementing your own networking device.
+- \ref nw_ref_example is a good starting point for implementing your own networking device.
 - \ref nw_resource_requirements describes the resource requirements of the Network Component.
-- The \ref net_func_overview list provides a brief overview of all Network Component functions.
-- The \ref network_diffs section contains information how to migrate from previous versions to the Network Component v8.
-- The <a class=el href="./modules.html">API Reference</a> describes the functional interface of the Network Component in detail.
-
+- \ref net_func_overview list provides a brief overview of all Network Component functions.
+- \ref network_diffs section contains information how to migrate from previous versions to the Network Component v8.
+- <a class=el href="./modules.html">API Reference</a> describes the functional interface of the Network Component in detail.

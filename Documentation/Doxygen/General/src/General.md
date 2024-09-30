@@ -6,7 +6,7 @@ connectors for cloud connectivity, or the \urlout{SDS}.
 
 ![Application stack with MDK-Middleware](./images/MDK-Middleware.svg)
 
-This documentation describes:
+The MDK-Middleware provides following components:
 
 - \url{MW-FileSystem}: create, save, read, and modify files in storage devices such as RAM, Flash, SD/SDHC/MMC memory cards,
   or USB memory devices.
@@ -26,6 +26,10 @@ Software components or APIs outside the scope of this documentation are:
 - Before using MDK-Middleware, please make sure that your selected microcontroller device offers \urlout{CMSIS-Driver} support.
 - The middleware components require a \urlout{CMSIS-RTOS2} compliant real-time operating system for task scheduling.
 - MDK-Middleware uses software components from the new \urlout{CMSIS-View} and \urlout{CMSIS-Compiler} CMSIS-Packs.
+
+## Access to MDK-Middleware {#mw_access}
+
+MDK-Middleware is actively maintained in the [**MDK-Middleware repository**](https://github.com/ARM-software/MDK-Middleware) and provided as part of the [**MDK-Middleware Software Pack**](https://www.keil.arm.com/packs/mdk-middleware-keil).
 
 ## Supported toolchains {#gen_supported_toolchains}
 
@@ -57,15 +61,15 @@ The following table gives you links to the respective sections of each middlewar
     <td>**Create an Application**</td>
     <td>[**File System**](../FileSystem/fs_create_app.html)</td>
     <td>[**Network**](../Network/network_create_app.html)</td>
-    <td>[**USB Device**](../USB/USB_Device.html#Creation_Steps)</td>
-    <td>[**USB Host**](../USB/USB_Host.html#Create_a_USB_Host_Application)</td>
+    <td>[**USB Device**](../USB/usbd_create_new.html)</td>
+    <td>[**USB Host**](../USB/usbh_create_new.html)</td>
   </tr>
   <tr>
     <td>**Example projects**</td>
     <td>[**File System**](../FileSystem/fs_examples.html)</td>
-    <td>[**Network**](../Network/nw_examples.html)</td>
-    <td>[**USB Device**](../USB/USB_Device.html#USB_Device_Tutorial)</td>
-    <td>[**USB Host**](../USB/USB_Host.html#USB_Host_Tutorial)</td>
+    <td>[**Network**](../Network/nw_ref_example.html)</td>
+    <td>[**USB Device**](../USB/usbd_ref_example.html)</td>
+    <td>[**USB Host**](../USB/usbh_ref_example.html)</td>
   </tr>
   <tr>
     <td>**Resource Requirements**</td>

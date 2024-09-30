@@ -924,21 +924,30 @@ WARN_LOGFILE           =
 INPUT                  = src/usb.md \
                          src/usb_rev_hist.md \
                          src/usb_device.md \
+                         src/usbd_ref_example.md \
+                         src/example_dev_hid.md \
+                         src/example_dev_msc.md \
+                         src/example_dev_cdc.md \
+                         src/usbd_create.md \
                          src/usb_host.md \
+                         src/usbh_ref_example.md \
+                         src/example_host_hid.md \
+                         src/example_host_msc.md \
+                         src/usbh_create.md \
                          src/usb_concepts.md \
                          src/usb_classes.md \
                          src/usb_function_reference.md \
                          src/usb_resource_requirements.md \
                          src/usb_migration.md \
                          src/Reference_Files.txt \
-                         src/rl_usb.txt \
-                         src/usb_structs.txt \
+                         src/ref_rl_usb.txt \
+                         src/ref_usb_structs.txt \
                          ../../../Components/USB/Include/rl_usb.h \
                          src/template/USBD_MSC.h \
                          ../../../Components/USB/Source/usbd_evr.h \
-                         src/usbd_evr.txt \
+                         src/ref_usbd_evr.txt \
                          ../../../Components/USB/Source/usbh_evr.h \
-                         src/usbh_evr.txt
+                         src/ref_usbh_evr.txt
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses

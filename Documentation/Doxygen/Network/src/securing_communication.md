@@ -66,7 +66,7 @@ For more information on Mbed TLS and how it works, visit the
 
 ### Add the mbed TLS library to a project {#add_mbedtls}
 
-The \ref nw_examples section carries two examples for secure communication over the IP network: SSL Server and SSL Client.
+The \ref nw_ref_example section carries two examples for secure communication over the IP network: SSL Server and SSL Client.
 To use the Mbed TLS library in your own projects, follow these steps:
 
 -# Download the **ARM:mbedTLS** library from \urlout{SW-Pack} or use \urlout{uv4_ca_packinstaller}

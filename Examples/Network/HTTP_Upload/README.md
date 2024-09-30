@@ -1,17 +1,24 @@
-This program is an example of a web server **upload**. It shows you how to upload
-files to an SD card via a web browser.
+HTTP Upload Example
+===========
 
-Detailed description is available on:  
-<http://www.keil.com/pack/doc/MW/Network/html/_h_t_t_p__upload__example.html>
+This MDK-Middleware example project implements a web based interface to an SD card attached to a development board.
 
-Use this example to connect an evaluation board to a LAN with a router.
-You can also connect an evaluation board directly to a PC using a direct or
-crossover network cable.
+For detailed description see [HTTP Upload Example section in MDK-Middleware documenation](https://arm-software.github.io/MDK-Middleware/latest/Network/HTTP_Upload_Example.html).
 
-To test this example, open your web browser and enter the address:  
-http://\<host-name\>  
-or  
-http://\<IP-address\>
+Key usage aspects
+-----
 
-Default user: admin  
-Default password: \<none\>
+For successful build and operation the project needs to be extended with a board layer that implements required [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections) to the target hardware intefaces. For details see example documentation referenced above.
+
+To use this example, connect an evaluation board to a LAN with a router. You can also connect an evaluation board directly to a PC using a direct or crossover network cable.
+
+To test the program, open a web browser on a PC connected to the same LAN, and enter the following address:
+
+```
+https://my_host
+```
+
+Login with the following default credentials:
+
+ - user: admin
+ - password: \<none\>
