@@ -19,7 +19,10 @@ Controller). RTE Components provide configuration files and user code templates.
 Components, hardware interfaces, memory resources and USB Host parameters. **User code templates** provide the skeleton
 for implementing support for different USB Device classes.
 
-![USB Host Structure](usb_host_blocks_config_files.png)
+<div>
+  <img style="text-align:left;" src="usb_host_blocks_config_files.png"/>
+  <div class="caption" style="text-align:center;">USB Host Structure</div>
+</div>
 
 ## Create an Application {#Create_a_USB_Host_Application}
 
@@ -53,7 +56,10 @@ The RTE Component selection is done in a few steps:
   - Select the **CMSIS:CORE** to provide the core interface to the processor.
   - Select a suitable **CMSIS:RTOS2** that is a required for the application.
 
-![RTE Component Selection](USBH_RTE.png)
+<div>
+  <img style="text-align:left;" src="USBH_RTE.png"/>
+  <div class="caption" style="text-align:center;">RTE Component Selection</div>
+</div>
 
 ### USB Driver and Controller {#USB_Driver_Configuration_USBH}
 
@@ -71,7 +77,7 @@ The USB Host Driver and the USB Controller of the microcontroller need to be cor
 The **USBH_Config_n.h** file contains additional settings for the specific USB Host:
 
 - The **Driver_USBH#** is set according to the selected USB Controller. For device with single USB Host Controller it will typically be '0'.
-- **Power Consumption** can be configured according to hardware capability of the USB Host Controller.
+- **Port Power Delivery** can be configured according to hardware capability of the USB Host Controller.
 - **Maximum Pipes** can be specified according to expected USB Device classes that are expected to be used by the USB Host.
 - **Memory Pool** parameters can be configured that are necessary for USB Host operation.
   This memory pool can also be located to specific memory via the linker script.
@@ -136,7 +142,7 @@ Now, when the USB Host generates event information, it can be viewed in the \url
 
 #### Event Recorder Configuration {#usbHostEvrConfig}
 
-This section describes the configuration settings for the Event Recorder; refer to \ref usbHostEvrSupport "Event Recorder Support" for more information.
+This section describes the configuration settings for the Event Recorder; refer to \urlout{RTX5-Event-Recorder-Config} for more information.
 
 **USB Event Generation Configuration**
 

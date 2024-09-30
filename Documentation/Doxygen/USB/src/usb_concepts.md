@@ -64,17 +64,17 @@ addressable nodes in this master/slave network. Only the host can initiate a dat
 - Only functions can be enabled in tier seven.
 - Compound devices occupy two tiers.
 
-## USB Communication {#USB_Endpoints}
+## USB Communication {#USB_Communication}
 
-USB is a polled bus, where the USB Host initiates all data exchanges. The data travels to or from \ref endpoints in an USB Device.
+USB is a polled bus, where the USB Host initiates all data exchanges. The data travels to or from \ref USB_Endpoints in an USB Device.
 The **client** in the USB Host stores data in buffers, but does not have endpoints.
 The USB Host and the peripheral USB Device have distinct layers, as shown in the picture below. The connections between the
 layers are **logical** Host-Device interfaces between each horizontal layer. Between the logical connections data is transferred
-using \ref pipe_types.
+using \ref USB_Pipes.
 
 ![Logical Connections Between USB Host Clients and USB Device Endpoints](usb_endpoints.png)
 
-### Pipes {#pipe_types}
+### Pipes {#USB_Pipes}
 
 Basically, two types of **pipes** exist:
 - **Message pipes** have a defined USB format and are host controlled. Message pipes allow data to flow in both directions and
@@ -84,10 +84,10 @@ Basically, two types of **pipes** exist:
   and \ref USB_Bulk_Transfers.
 
 Most pipes come into existence when an USB Device has been connected to the USB Bus and configured by the USB Host.
-A pipe originates from a **data buffer** within the host **client** and terminates inside the USB Device at an \ref endpoints
+A pipe originates from a **data buffer** within the host **client** and terminates inside the USB Device at an \ref USB_Endpoints
 "Endpoint".
 
-### Transfers {#transfers}
+### Transfers {#USB_Transfers}
 
 **Transfers** (data flow types) can consist of one or more transactions. A pipe supports only one of the following transfer types:
 - \ref USB_Control_Transfers are typically used to setup an USB device. They always use IN/OUT Endpoint 0.
@@ -184,10 +184,10 @@ rate is not important.
 
 ![Bulk Transfer Read and Writes](bulkTransfer.png)
 
-### Endpoints {#endpoints}
+### Endpoints {#USB_Endpoints}
 
 **Endpoints** can be described as data sources or sinks and exists in USB Devices only. The data stored at an endpoint may either be
-received from or waiting for being sent to the USB Host. An endpoint can be configured to support four \ref transfers "transfer types"
+received from or waiting for being sent to the USB Host. An endpoint can be configured to support four \ref USB_Transfers "transfer types"
 defined in the USB specification (\ref USB_Control_Transfers, \ref USB_Interrupt_Transfers, \ref USB_Isochronous_Transfers, and
 \ref USB_Bulk_Transfers). Within the limits of the hardware, endpoints can be configured using the USB Middleware
 (e.g. limit an endpoint to a certain transfer type).

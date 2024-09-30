@@ -24,21 +24,60 @@ The following sections show how to migrate projects from previous version of the
 - \ref usb_migration_component describes how to migrate the USB Component selection.
 - \ref usb_migration_config describes how to migrate the USB Component configuration.
 
-## Component migration {#usb_migration_component}
+## Component Selection {#usb_migration_component}
 
-To migrate the USB Component make the following changes to component selection:
+To migrate an USB component, make the following changes to the component selection:
 
-- **Keil::USB**: select **MDK** bundle instead MDK-Pro or MDK-Plus bundle.
-- **Keil::USB:CORE**: deselect **Debug** or **Release** variant if one was selected.
+1. Bundle **MDK** has replaced bundles **MDK-Pro** and **MDK-Plus**
 
-\note
-- If the **Event Recorder** was used for debugging, please select the **Event Recorder** from the **CMSIS-View** pack instead
-  the one from the **ARM_Compiler** pack.
-- USB Component requires C Compiler supporting C11 standard or higher.
+   Where applicable, replace the components:
+   ```
+     USB&MDK-Pro
+   ```
 
-If any other component is used, like Network or File System, please refer to its Migration Guide.
+     or
+   ```
+     USB&MDK-Plus
+   ```
 
-## Configuration migration {#usb_migration_config}
+   with the component that refers to the **MDK** bundle:
+   ```
+     USB&MDK
+   ```
+
+2. Variants of the **CORE** component were removed
+
+   Where applicable, replace the components:
+   ```
+     CORE&Debug
+   ```
+
+     or
+   ```
+     CORE&Release
+   ```
+
+   with the component without variant specified:
+   ```
+     CORE
+   ```
+
+3. **Event Recorder** component is now a part of the **CMSIS-View** class
+
+   If your project is configured for debugging, replace the component:
+   ```
+     Compiler:Event Recorder
+   ```
+
+   with the same component of the CMSIS-View class:
+   ```
+     CMSIS-View:Event Recorder
+   ```
+
+## Configuration {#usb_migration_config}
+
+The following screenshots show the previous settings on the left-hand side, while the new settings
+can be seen on the right-hand side.
 
 ### Debug
 
@@ -46,13 +85,13 @@ If any other component is used, like Network or File System, please refer to its
   old values into the new file:
   - if the old file does not exist then debugging was not configured previously
   - note that **USB Device Debug** and **USB Host Debug** order has swapped in the new configuration file.
-  ![Old USB_Debug.c to new USB_Debug.h](usb_debug_migrate.png) width=90%
+  ![Old USB_Debug.c to new USB_Debug.h](usb_debug_migrate.png)
 
 ### USB Device
 
 - compare the existing **USBD_Config_0..3.c** files with the new **USBD_Config_0..3.h** files and copy
   old values into the new files:
-  ![Old USBD_Config_0..3.c to new USBD_Config_0..3.h](usbd_config_migrate.png) width=90%
+  ![Old USBD_Config_0..3.c to new USBD_Config_0..3.h](usbd_config_migrate.png)
 
 ### USB Host
 
@@ -64,7 +103,7 @@ If any other component is used, like Network or File System, please refer to its
     to the new configuration file.
   - for **Memory Pool Size** update the new value by **adding 128** since old setting did not include
     additional necessary space for memory pool internal operation.
-  ![Old USBD_Config_0..3.c to new USBD_Config_0..3.h](usbh_config_migrate.png) width=90%
+  ![Old USBD_Config_0..3.c to new USBD_Config_0..3.h](usbh_config_migrate.png)
 
 \note **OHCI** and **EHCI** drivers are not a part of the **MDK-Middleware** anymore but are distributed separately
-      via the **CMSIS-Driver** pack, so please consult CMSIS-Driver documentation on configuring and using those drivers.
+      via the **CMSIS-Driver** pack, so please consult CMSIS-Driver documentation on how to configure and use those drivers.
