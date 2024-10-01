@@ -154,14 +154,14 @@ Content</h2></td></tr>
  The application starts the USB Host by calling <a class="el" href="group__usbh__coreFunctions__api.html#ga4420c0add78ae79e8e7ce035227ef4c5">USBH_Initialize</a>. The USB Host Core will wait until an USB HID device is attached to the system. As soon as this happens it will enumerate the device and it will be ready to be used by the application. The handling of the HID class events is implemented in USBH_HIDn_Thread.</p>
 <p>The transmit functions <a class="el" href="group__usbh__hidFunctions__api.html#ga35bdd4f4d943a627050ab052474eeadd">USBH_HID_Read</a> and <a class="el" href="group__usbh__hidFunctions__api.html#ga3a2fb083a4f3a0118d06d68a9c56976f">USBH_HID_Write</a> will be called by the user thread directly to communicate with the HID device.</p>
 <div class="mscgraph">
-<img src="msc_inline_mscgraph_10.png" alt="msc_inline_mscgraph_10" border="0" usemap="#msc_inline_mscgraph_10.map"/>
-<map name="msc_inline_mscgraph_10.map" id="msc_inline_mscgraph_10.map"><area href="group__usbh__coreFunctions__api.html#ga4420c0add78ae79e8e7ce035227ef4c5" shape="rect" coords="31,91,120,104" alt=""/>
+<img src="msc_inline_mscgraph_9.png" alt="msc_inline_mscgraph_9" border="0" usemap="#msc_inline_mscgraph_9.map"/>
+<map name="msc_inline_mscgraph_9.map" id="msc_inline_mscgraph_9.map"><area href="group__usbh__coreFunctions__api.html#ga4420c0add78ae79e8e7ce035227ef4c5" shape="rect" coords="31,91,120,104" alt=""/>
 <area href="group__usbh__hidFunctions__api.html#ga35bdd4f4d943a627050ab052474eeadd" shape="rect" coords="37,263,114,276" alt=""/>
 <area href="group__usbh__hidFunctions__api.html#ga3a2fb083a4f3a0118d06d68a9c56976f" shape="rect" coords="34,314,117,327" alt=""/>
 <area href="group__usbh__coreFunctions__api.html#gaf98f4e13ff57a8bf1c49cd46a8034d3f" shape="rect" coords="25,384,126,397" alt=""/>
 </map>
 </div>
-<h2><a class="anchor" id="autotoc_md108"></a>
+<h2><a class="anchor" id="autotoc_md107"></a>
 Implementation</h2>
 <p>To <a class="el" href="USB_Host.html#Create_a_USB_Host_Application">create an USB Host</a> with support for the HID class:</p><ul>
 <li>Select <b>USB:Host:HID</b> in the <a class="el" href="USB_Device.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>

@@ -132,7 +132,7 @@ $(document).ready(function(){initNavTree('USB_Concepts.html',''); initResizable(
 <ul>
 <li><a class="el" href="USB_Concepts.html#USB_Network">USB Network</a> shows the topology of the USB network.</li>
 <li><a class="el" href="USB_Concepts.html#USB_Transfer_Rates">USB Transfer Rates</a> gives a quick glance at the theoretical maximum data rates that are supported by USB.</li>
-<li><a class="el" href="USB_Concepts.html#USB_Endpoints">USB Communication</a> shows how data is exchanged on the USB bus.</li>
+<li><a class="el" href="USB_Concepts.html#USB_Endpoints">Endpoints</a> shows how data is exchanged on the USB bus.</li>
 <li><a class="el" href="USB_Concepts.html#USB_Protocol">USB Protocol</a> page gives an overview over the protocol and the basic communication model.</li>
 <li><a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a> explains the data structure that is used in USB devices to report their attributes to a host. Most of these descriptors can be matched to configuration settings in MDK.</li>
 </ul>
@@ -194,21 +194,21 @@ Star Network</div></div>
 <li>Compound devices occupy two tiers.</li>
 </ul>
 </dd></dl>
-<h1><a class="anchor" id="USB_Endpoints"></a>
+<h1><a class="anchor" id="USB_Communication"></a>
 USB Communication</h1>
-<p>USB is a polled bus, where the USB Host initiates all data exchanges. The data travels to or from <a class="el" href="USB_Concepts.html#endpoints">Endpoints</a> in an USB Device. The <b>client</b> in the USB Host stores data in buffers, but does not have endpoints. The USB Host and the peripheral USB Device have distinct layers, as shown in the picture below. The connections between the layers are <b>logical</b> Host-Device interfaces between each horizontal layer. Between the logical connections data is transferred using <a class="el" href="USB_Concepts.html#pipe_types">Pipes</a>.</p>
+<p>USB is a polled bus, where the USB Host initiates all data exchanges. The data travels to or from <a class="el" href="USB_Concepts.html#USB_Endpoints">Endpoints</a> in an USB Device. The <b>client</b> in the USB Host stores data in buffers, but does not have endpoints. The USB Host and the peripheral USB Device have distinct layers, as shown in the picture below. The connections between the layers are <b>logical</b> Host-Device interfaces between each horizontal layer. Between the logical connections data is transferred using <a class="el" href="USB_Concepts.html#USB_Pipes">Pipes</a>.</p>
 <div class="image">
 <img src="usb_endpoints.png" alt=""/>
 <div class="caption">
 Logical Connections Between USB Host Clients and USB Device Endpoints</div></div>
-    <h2><a class="anchor" id="pipe_types"></a>
+    <h2><a class="anchor" id="USB_Pipes"></a>
 Pipes</h2>
 <p>Basically, two types of <b>pipes</b> exist:</p><ul>
 <li><b>Message pipes</b> have a defined USB format and are host controlled. Message pipes allow data to flow in both directions and support <a class="el" href="USB_Concepts.html#USB_Control_Transfers">Control Transfers</a> only.</li>
 <li><b>Stream pipes</b> have no defined USB format and can either be controlled by the host or by the device. The data stream has a predefined direction, either <b>IN</b> or <b>OUT</b>. Stream pipes support <a class="el" href="USB_Concepts.html#USB_Interrupt_Transfers">Interrupt Transfers</a>, <a class="el" href="USB_Concepts.html#USB_Isochronous_Transfers">Isochronous Transfers</a>, and <a class="el" href="USB_Concepts.html#USB_Bulk_Transfers">Bulk Transfers</a>.</li>
 </ul>
-<p>Most pipes come into existence when an USB Device has been connected to the USB Bus and configured by the USB Host. A pipe originates from a <b>data buffer</b> within the host <b>client</b> and terminates inside the USB Device at an <a class="el" href="USB_Concepts.html#endpoints">Endpoint</a>.</p>
-<h2><a class="anchor" id="transfers"></a>
+<p>Most pipes come into existence when an USB Device has been connected to the USB Bus and configured by the USB Host. A pipe originates from a <b>data buffer</b> within the host <b>client</b> and terminates inside the USB Device at an <a class="el" href="USB_Concepts.html#USB_Endpoints">Endpoint</a>.</p>
+<h2><a class="anchor" id="USB_Transfers"></a>
 Transfers</h2>
 <p><b>Transfers</b> (data flow types) can consist of one or more transactions. A pipe supports only one of the following transfer types:</p><ul>
 <li><a class="el" href="USB_Concepts.html#USB_Control_Transfers">Control Transfers</a> are typically used to setup an USB device. They always use IN/OUT Endpoint 0.</li>
@@ -285,9 +285,9 @@ Bulk Transfers</h3>
 <img src="bulkTransfer.png" alt=""/>
 <div class="caption">
 Bulk Transfer Read and Writes</div></div>
-    <h2><a class="anchor" id="endpoints"></a>
+    <h2><a class="anchor" id="USB_Endpoints"></a>
 Endpoints</h2>
-<p><b>Endpoints</b> can be described as data sources or sinks and exists in USB Devices only. The data stored at an endpoint may either be received from or waiting for being sent to the USB Host. An endpoint can be configured to support four <a class="el" href="USB_Concepts.html#transfers">transfer types</a> defined in the USB specification (<a class="el" href="USB_Concepts.html#USB_Control_Transfers">Control Transfers</a>, <a class="el" href="USB_Concepts.html#USB_Interrupt_Transfers">Interrupt Transfers</a>, <a class="el" href="USB_Concepts.html#USB_Isochronous_Transfers">Isochronous Transfers</a>, and <a class="el" href="USB_Concepts.html#USB_Bulk_Transfers">Bulk Transfers</a>). Within the limits of the hardware, endpoints can be configured using the USB Middleware (e.g. limit an endpoint to a certain transfer type).</p>
+<p><b>Endpoints</b> can be described as data sources or sinks and exists in USB Devices only. The data stored at an endpoint may either be received from or waiting for being sent to the USB Host. An endpoint can be configured to support four <a class="el" href="USB_Concepts.html#USB_Transfers">transfer types</a> defined in the USB specification (<a class="el" href="USB_Concepts.html#USB_Control_Transfers">Control Transfers</a>, <a class="el" href="USB_Concepts.html#USB_Interrupt_Transfers">Interrupt Transfers</a>, <a class="el" href="USB_Concepts.html#USB_Isochronous_Transfers">Isochronous Transfers</a>, and <a class="el" href="USB_Concepts.html#USB_Bulk_Transfers">Bulk Transfers</a>). Within the limits of the hardware, endpoints can be configured using the USB Middleware (e.g. limit an endpoint to a certain transfer type).</p>
 <p>An endpoint acts as a kind of buffer. A USB Host's client may send data to Endpoint 1 for example. Coming from the USB Host, the data will be sent to the <b>OUT Endpoint 1</b>. The program on the microcontroller will then read the data as soon as it is ready to do so. Returning data has to be written to the <b>IN Endpoint 1</b>, as the program cannot access the USB bus freely (the USB bus being controlled by the USB Host). The data in IN Endpoint 1 stays there until the host sends an IN packet to Endpoint 1 requesting the data.</p>
 <p>These rules apply to all microcontroller devices:</p>
 <ul>

@@ -144,7 +144,7 @@ $(document).ready(function(){initNavTree('group__usbd__cdcFunctions__ncm__conf.h
 CDC Class Configuration File</div></div>
 <p>The USB Device CDC Class configuration file <b>USBD_Config_CDC_n.h</b> contains the following settings:</p><ul>
 <li><b>Assign Device Class to USB Device #</b> selects USB Device that is used for this Device Class instance.</li>
-<li><b>Communication Class Subclass</b> specifies the model used by the CDC class. Select the <code>Network</code> <code>Control</code> <code>Model</code>.</li>
+<li><b>Communication Class Subclass</b> specifies the model used by the CDC class. Select the <code>Network Control Model</code>.</li>
 <li><b>Interrupt Endpoint Settings</b><ul>
 <li><b>Interrupt IN Endpoint Number</b> sets the number of the endpoint to be used. Conflicting settings are flagged by compile-time error messages.</li>
 <li><b>Endpoint Settings</b><ul>
@@ -155,10 +155,10 @@ CDC Class Configuration File</div></div>
 </li>
 <li><b>High-speed</b>: These parameters apply when High-speed is enabled in <a class="el" href="group__usbd__coreFunctions__conf.html">USBD_Config_n.h</a>:<ul>
 <li><b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange.</li>
-<li><b>Endpoint polling Interval (in ms)</b> specifies the frequency of requests initiated by USB Host for getting a notification.</li>
+<li><b>Additional transactions per microframe</b> specifies additional transactions per microframe.</li>
+<li><b>Endpoint polling Interval (in 125 us intervals)</b> specifies the frequency of requests initiated by USB Host for getting a notification.</li>
 </ul>
 </li>
-<li><b>Additional transactions per microframe</b> improve communication performance.</li>
 </ul>
 </li>
 </ul>

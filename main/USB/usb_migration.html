@@ -154,48 +154,55 @@ $(document).ready(function(){initNavTree('usb_migration.html',''); initResizable
 </ul>
 <p>The following sections show how to migrate projects from previous version of the MDK-Middleware (v7):</p>
 <ul>
-<li><a class="el" href="usb_migration.html#usb_migration_component">Component migration</a> describes how to migrate the USB Component selection.</li>
-<li><a class="el" href="usb_migration.html#usb_migration_config">Configuration migration</a> describes how to migrate the USB Component configuration.</li>
+<li><a class="el" href="usb_migration.html#usb_migration_component">Component Selection</a> describes how to migrate the USB Component selection.</li>
+<li><a class="el" href="usb_migration.html#usb_migration_config">Configuration</a> describes how to migrate the USB Component configuration.</li>
 </ul>
 <h1><a class="anchor" id="usb_migration_component"></a>
-Component migration</h1>
-<p>To migrate the USB Component make the following changes to component selection:</p>
-<ul>
-<li><b>Keil::USB</b>: select <b>MDK</b> bundle instead MDK-Pro or MDK-Plus bundle.</li>
-<li><b>Keil::USB:CORE</b>: deselect <b>Debug</b> or <b>Release</b> variant if one was selected.</li>
-</ul>
-<dl class="section note"><dt>Note</dt><dd><ul>
-<li>If the <b>Event Recorder</b> was used for debugging, please select the <b>Event Recorder</b> from the <b>CMSIS-View</b> pack instead the one from the <b>ARM_Compiler</b> pack.</li>
-<li>USB Component requires C Compiler supporting C11 standard or higher.</li>
-</ul>
-</dd></dl>
-<p>If any other component is used, like Network or File System, please refer to its Migration Guide.</p>
+Component Selection</h1>
+<p>To migrate an USB component, make the following changes to the component selection:</p>
+<ol type="1">
+<li><p class="startli">Bundle <b>MDK</b> has replaced bundles <b>MDK-Pro</b> and <b>MDK-Plus</b></p>
+<p class="startli">Where applicable, replace the components: </p><div class="fragment"><div class="line">USB&amp;MDK-Pro</div>
+</div><!-- fragment --><p class="startli">or </p><div class="fragment"><div class="line">USB&amp;MDK-Plus</div>
+</div><!-- fragment --><p class="startli">with the component that refers to the <b>MDK</b> bundle: </p><div class="fragment"><div class="line">USB&amp;MDK</div>
+</div><!-- fragment --></li>
+<li><p class="startli">Variants of the <b>CORE</b> component were removed</p>
+<p class="startli">Where applicable, replace the components: </p><div class="fragment"><div class="line">CORE&amp;Debug</div>
+</div><!-- fragment --><p class="startli">or </p><div class="fragment"><div class="line">CORE&amp;Release</div>
+</div><!-- fragment --><p class="startli">with the component without variant specified: </p><div class="fragment"><div class="line">CORE</div>
+</div><!-- fragment --></li>
+<li><p class="startli"><b>Event Recorder</b> component is now a part of the <b>CMSIS-View</b> class</p>
+<p class="startli">If your project is configured for debugging, replace the component: </p><div class="fragment"><div class="line">Compiler:Event Recorder</div>
+</div><!-- fragment --><p class="startli">with the same component of the CMSIS-View class: </p><div class="fragment"><div class="line">CMSIS-View:Event Recorder</div>
+</div><!-- fragment --></li>
+</ol>
 <h1><a class="anchor" id="usb_migration_config"></a>
-Configuration migration</h1>
+Configuration</h1>
+<p>The following screenshots show the previous settings on the left-hand side, while the new settings can be seen on the right-hand side.</p>
 <h2><a class="anchor" id="autotoc_md91"></a>
 Debug</h2>
 <ul>
 <li>if the <b>USB_Debug.c</b> file exists, then compare it with the new <b>USB_Debug.h</b> file and copy old values into the new file:<ul>
 <li>if the old file does not exist then debugging was not configured previously</li>
-<li>note that <b>USB Device Debug</b> and <b>USB Host Debug</b> order has swapped in the new configuration file. <img src="usb_debug_migrate.png" alt="" class="inline" title="Old USB_Debug.c to new USB_Debug.h"/>     width=90%</li>
+<li>note that <b>USB Device Debug</b> and <b>USB Host Debug</b> order has swapped in the new configuration file. <img src="usb_debug_migrate.png" alt="" class="inline" title="Old USB_Debug.c to new USB_Debug.h"/>    </li>
 </ul>
 </li>
 </ul>
 <h2><a class="anchor" id="autotoc_md92"></a>
 USB Device</h2>
 <ul>
-<li>compare the existing <b>USBD_Config_0..3.c</b> files with the new <b>USBD_Config_0..3.h</b> files and copy old values into the new files: <img src="usbd_config_migrate.png" alt="" class="inline" title="Old USBD_Config_0..3.c to new USBD_Config_0..3.h"/>     width=90%</li>
+<li>compare the existing <b>USBD_Config_0..3.c</b> files with the new <b>USBD_Config_0..3.h</b> files and copy old values into the new files: <img src="usbd_config_migrate.png" alt="" class="inline" title="Old USBD_Config_0..3.c to new USBD_Config_0..3.h"/>    </li>
 </ul>
 <h2><a class="anchor" id="autotoc_md93"></a>
 USB Host</h2>
 <ul>
 <li>compare the existing <b>USBH_Config_0..3.c</b> files with the new <b>USBH_Config_0..3.h</b> files and copy old values into the new files:<ul>
 <li>the <b>USBH_Config_0..3.h</b> does not contain separate settings for <b>Custom</b>, <b>OHCI</b> or <b>EHCI</b> controllers anymore, so to migrate to the new configuration file note which <b>Controller Interface</b> was selected in the old <b>USBH_Config_0..3.c</b> file and copy appropriate controller's previous settings to the new configuration file.</li>
-<li>for <b>Memory Pool Size</b> update the new value by <b>adding 128</b> since old setting did not include additional necessary space for memory pool internal operation. <img src="usbh_config_migrate.png" alt="" class="inline" title="Old USBD_Config_0..3.c to new USBD_Config_0..3.h"/>     width=90%</li>
+<li>for <b>Memory Pool Size</b> update the new value by <b>adding 128</b> since old setting did not include additional necessary space for memory pool internal operation. <img src="usbh_config_migrate.png" alt="" class="inline" title="Old USBD_Config_0..3.c to new USBD_Config_0..3.h"/>    </li>
 </ul>
 </li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd><b>OHCI</b> and <b>EHCI</b> drivers are not a part of the <b>MDK-Middleware</b> anymore but are distributed separately via the <b>CMSIS-Driver</b> pack, so please consult CMSIS-Driver documentation on configuring and using those drivers. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd><b>OHCI</b> and <b>EHCI</b> drivers are not a part of the <b>MDK-Middleware</b> anymore but are distributed separately via the <b>CMSIS-Driver</b> pack, so please consult CMSIS-Driver documentation on how to configure and use those drivers. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

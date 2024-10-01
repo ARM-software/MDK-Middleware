@@ -239,7 +239,23 @@ Functions</h2></td></tr>
 <div class="line">        media_state |=  <a class="code hl_define" href="rl__usb_8h.html#aacab5c197e8fc0c05a01ad59096326cb" title="Media Write Protected.">USBD_MSC_MEDIA_PROTECTED</a>;</div>
 <div class="line">      }</div>
 <div class="line">      <span class="keywordflow">break</span>;</div>
-<div class="line">    <span class="keywordflow">default</span>:</div>
+<div class="line">    <span class="keywordflow">case</span> fsError:</div>
+<div class="line">    <span class="keywordflow">case</span> fsUnsupported:</div>
+<div class="line">    <span class="keywordflow">case</span> fsAccessDenied:</div>
+<div class="line">    <span class="keywordflow">case</span> fsInvalidParameter:</div>
+<div class="line">    <span class="keywordflow">case</span> fsInvalidDrive:</div>
+<div class="line">    <span class="keywordflow">case</span> fsInvalidPath:</div>
+<div class="line">    <span class="keywordflow">case</span> fsUninitializedDrive:</div>
+<div class="line">    <span class="keywordflow">case</span> fsDriverError:</div>
+<div class="line">    <span class="keywordflow">case</span> fsMediaError:</div>
+<div class="line">    <span class="keywordflow">case</span> fsNoMedia:</div>
+<div class="line">    <span class="keywordflow">case</span> fsNoFileSystem:</div>
+<div class="line">    <span class="keywordflow">case</span> fsNoFreeSpace:</div>
+<div class="line">    <span class="keywordflow">case</span> fsFileNotFound:</div>
+<div class="line">    <span class="keywordflow">case</span> fsDirNotEmpty:</div>
+<div class="line">    <span class="keywordflow">case</span> fsTooManyOpenFiles:</div>
+<div class="line">    <span class="keywordflow">case</span> fsAlreadyExists:</div>
+<div class="line">    <span class="keywordflow">case</span> fsNotDirectory:</div>
 <div class="line">      <span class="keywordflow">break</span>;</div>
 <div class="line">  }</div>
 <div class="line"> </div>
@@ -249,9 +265,9 @@ Functions</h2></td></tr>
 <div class="line">  <span class="comment">// De-initialize media according to previous owner</span></div>
 <div class="line">  <span class="keywordflow">if</span> (own &amp; MEDIA_OWN_CHG) {                    <span class="comment">// If owner change requested</span></div>
 <div class="line">    <span class="keywordflow">if</span> (own &amp; MEDIA_OWN_USB) {                  <span class="comment">// If new requested owner is USB (previous owner was File System)</span></div>
-<div class="line">      funmount (MEDIA_DRIVE);                   <span class="comment">// De-initialize media and dismount Drive</span></div>
+<div class="line">      (void)funmount (MEDIA_DRIVE);             <span class="comment">// De-initialize media and dismount Drive</span></div>
 <div class="line">    } <span class="keywordflow">else</span> {                                    <span class="comment">// If new requested owner is File System (previous owner was USB)</span></div>
-<div class="line">      fs_ioc_unlock (drv_id);                   <span class="comment">// Un-lock media</span></div>
+<div class="line">      (void)fs_ioc_unlock (drv_id);             <span class="comment">// Un-lock media</span></div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line"> </div>
@@ -264,7 +280,7 @@ Functions</h2></td></tr>
 <div class="line">        param_status = 0U;                      <span class="comment">// Parameter for function call is 0</span></div>
 <div class="line">        <span class="keywordflow">if</span> (fs_ioc_device_ctrl (drv_id, fsDevCtrlCodeControlMedia, &amp;param_status) == fsOK) {</div>
 <div class="line">                                                <span class="comment">// Initialization of media has succeeded</span></div>
-<div class="line">          <span class="keywordflow">if</span> (fs_ioc_lock (drv_id) == 0) {      <span class="comment">// If lock media for USB usage has succeeded</span></div>
+<div class="line">          <span class="keywordflow">if</span> (fs_ioc_lock (drv_id) == fsOK) {   <span class="comment">// If lock media for USB usage has succeeded</span></div>
 <div class="line">            media_ok = <span class="keyword">true</span>;                    <span class="comment">// Media was initialized and is ok</span></div>
 <div class="line">          }</div>
 <div class="line">        }</div>
@@ -472,14 +488,15 @@ Functions</h2></td></tr>
 <div class="line">    <span class="keywordflow">return</span>;                             <span class="comment">// Exit if failed</span></div>
 <div class="line">  }</div>
 <div class="line"> </div>
+<div class="line">  drv_id = fs_ioc_get_id (MEDIA_DRIVE); <span class="comment">// Get ID of media drive</span></div>
+<div class="line">  <span class="keywordflow">if</span> (drv_id &lt; 0)           { <span class="keywordflow">return</span>; } <span class="comment">// If ID is invalid exit</span></div>
+<div class="line"> </div>
 <div class="line">  param_status = 0U;                    <span class="comment">// Parameter for function call is 0</span></div>
 <div class="line">                                        <span class="comment">// Initialize media</span></div>
 <div class="line">  <span class="keywordflow">if</span> (fs_ioc_device_ctrl (drv_id, fsDevCtrlCodeControlMedia, &amp;param_status) != fsOK) {</div>
 <div class="line">    <span class="keywordflow">return</span>;                             <span class="comment">// Exit if failed</span></div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  drv_id = fs_ioc_get_id (MEDIA_DRIVE); <span class="comment">// Get ID of media drive</span></div>
-<div class="line">  <span class="keywordflow">if</span> (drv_id &lt; 0U)          { <span class="keywordflow">return</span>; } <span class="comment">// If ID is invalid exit</span></div>
 <div class="line">  <span class="keywordflow">if</span> (fs_ioc_lock (drv_id)) {           <span class="comment">// Lock media for USB usage</span></div>
 <div class="line">    <span class="keywordflow">return</span>;                             <span class="comment">// Exit if failed</span></div>
 <div class="line">  }</div>

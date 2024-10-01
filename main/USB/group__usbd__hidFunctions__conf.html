@@ -148,9 +148,9 @@ HID Class Configuration File</div></div>
 <li><b>Interrupt IN Endpoint Settings</b><ul>
 <li><b>Interrupt IN Endpoint Number</b> sets the number of the endpoint to be used. Conflicting settings are flagged by compile-time error messages.</li>
 <li><b>Endpoint Settings</b><ul>
-<li><b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange. This setting is available for low-/full- and high-speed devices.</li>
-<li><b>Endpoint polling Interval (in xxx)</b> specifies the frequency of requests initiated by USB Host for getting data. This setting is available for low-/full- and high-speed devices.</li>
-<li><b>Additional transactions per microframe</b> improve communication performance. This setting is available only for high-speed devices.</li>
+<li><b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange. This setting is available for low-/full- and high-speed endpoints.</li>
+<li><b>Additional transactions per microframe</b> specifies additional transactions per microframe. This setting is available only for high-speed endpoints.</li>
+<li><b>Endpoint polling Interval (in xxx)</b> specifies the frequency of requests initiated by USB Host for getting data. This setting is available for low-/full- and high-speed endpoints.</li>
 </ul>
 </li>
 </ul>
@@ -158,9 +158,9 @@ HID Class Configuration File</div></div>
 <li><b>Interrupt OUT Endpoint Settings</b><ul>
 <li><b>Interrupt OUT Endpoint Number</b> sets the number of the endpoint to be used. Conflicting settings are flagged by compile-time error messages.</li>
 <li><b>Endpoint Settings</b><ul>
-<li><b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange. This setting is available for low-/full- and high-speed devices.</li>
-<li><b>Endpoint polling Interval (in xxx)</b> specifies the frequency of requests sent by USB Host for setting data. This setting is available for low-/full- and high-speed devices.</li>
-<li><b>Additional transactions per microframe</b> improve communication performance. This setting is available only for high-speed devices.</li>
+<li><b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange. This setting is available for low-/full- and high-speed endpoints.</li>
+<li><b>Additional transactions per microframe</b> specifies additional transactions per microframe. This setting is available only for high-speed endpoints.</li>
+<li><b>Endpoint polling Interval (in xxx)</b> specifies the frequency of requests sent by USB Host for setting data. This setting is available for low-/full- and high-speed endpoints.</li>
 </ul>
 </li>
 </ul>
@@ -169,7 +169,6 @@ HID Class Configuration File</div></div>
 </li>
 <li><b>Human Interface Device Class Settings</b><ul>
 <li><b>HID Interface String</b> is used to create <a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a>.</li>
-<li><b>Data Class Interface String</b> is used to create <a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a>.</li>
 <li><b>Number of Input Reports</b> is used for memory allocation in the USB component.</li>
 <li><b>Number of Output Reports</b> is used for memory allocation in the USB component.</li>
 <li><b>Maximum Input Report Size (in bytes)</b> is used for memory allocation in the USB component.</li>

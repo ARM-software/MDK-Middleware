@@ -138,8 +138,11 @@ $(document).ready(function(){initNavTree('group__usbh__cdcacmFunctions__conf.htm
 CDC Class Configuration File</div></div>
 <p>The USB Host CDC Class configuration file <b>USBH_Config_CDC.h</b> contains the following settings:</p><ul>
 <li><b>Number of concurrent CDC Devices in system</b> specifies the number of CDC devices that will be supported.</li>
+<li><b>OS Resource Settings</b><ul>
 <li><b>CDC Interrupt In Pipe (modem and error status reception) handling Thread Stack Size</b> specifies the thread stack size for the thread that polls the interrupt endpoint of the CDC.</li>
 <li>The default CDC Interrupt In Pipe handling Thread priority is <b>osPriorityAboveNormal</b>. This priority can be changed by changing USBH_CDC_INT_IN_THREAD_PRIORITY define in this configuration file. This priority needs to be high enough so that USB Stack can react to USB events in a timely manner. Due to this requirement it is recommended to keep this setting at default. </li>
+</ul>
+</li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

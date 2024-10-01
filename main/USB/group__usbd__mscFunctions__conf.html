@@ -148,8 +148,8 @@ MSC Class Configuration File</div></div>
 <li><b>Bulk IN Endpoint Number</b> sets the number of the endpoint to be used. Conflicting settings are flagged by compile-time error messages.</li>
 <li><b>Bulk OUT Endpoint Number</b> sets the number of the endpoint to be used. Conflicting settings are flagged by compile-time error messages.</li>
 <li><b>Endpoint Settings</b><ul>
-<li><b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange. This setting is available for low-/full- and high-speed devices.</li>
-<li><b>Maximum NAK Rate</b> specifies the interval in which Bulk Endpoint can NAK. This setting is available only for high-speed devices.</li>
+<li><b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange. This setting is available for low-/full- and high-speed endpoints.</li>
+<li><b>Maximum NAK Rate</b> specifies the interval in which Bulk Endpoint can NAK. This setting is available only for high-speed endpoints.</li>
 </ul>
 </li>
 </ul>
@@ -159,7 +159,7 @@ MSC Class Configuration File</div></div>
 <li><b>Number of Logical Units (LUN)</b> specifies the number of logical units in a USB device (up to four).</li>
 <li><b>Logical Unit n Inquiry Data</b> is returned on Get Inquiry request for Logical Unit n from the USB Host.<ul>
 <li><b>Vendor Identification</b> specifies the vendor of the MSC device.</li>
-<li><b>Product Identification</b> specifies the MSC device.</li>
+<li><b>Product Identification</b> specifies the product identification of the MSC device.</li>
 <li><b>Product Revision Level</b> specifies the product revision of the MSC device.</li>
 </ul>
 </li>

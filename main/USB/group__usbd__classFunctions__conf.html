@@ -168,9 +168,9 @@ Custom Class Configuration File</div></div>
 <li><b>Endpoint</b>: Select if the specified Endpoint exists in this interface.</li>
 <li><b>Type</b> sets the type of the endpoint.</li>
 <li><b>Number</b> sets the number of the endpoint to be used. Conflicting settings are flagged by compile-time error messages.<ul>
-<li><b>Maximum Endpoint Packet Size</b> specifies the physical packet size used for information exchange (in bytes). This setting is available for full/low and high-speed devices.</li>
-<li><b>Endpoint Polling Interval (in xxx)</b> specifies the frequency of requests initiated by USB Host. This setting is available for full/low and high-speed devices. In case of high-speed device and bulk endpoint it represents maximum NAK rate.</li>
-<li><b>Additional Transactions per Microframe</b> specifies additional transactions per microframe for improved communication performance. This setting is available only for interrupt or isochronous endpoints on a high-speed devices.</li>
+<li><b>Maximum Endpoint Packet Size</b> specifies the physical packet size used for information exchange (in bytes). This setting is available for full/low and high-speed endpoints.</li>
+<li><b>Additional Transactions per Microframe</b> specifies additional transactions per microframe. This setting is available only for high-speed interrupt or isochronous endpoints.</li>
+<li><b>Endpoint Polling Interval (in xxx)</b> specifies the frequency of requests initiated by USB Host. This setting is available for full/low and high-speed endpoints. In case of high-speed device and bulk endpoint it represents maximum NAK rate.</li>
 </ul>
 </li>
 </ul>

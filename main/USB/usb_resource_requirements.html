@@ -170,13 +170,10 @@ CMSIS-RTOS2 Requirements</h2>
 </table>
 <p>n is the instance number, m is the endpoint number 1...15</p>
 <dl class="section note"><dt>Note</dt><dd><ul>
-<li>For <b>USB:Device:Custom Class</b> each endpoint In/Out pair executes in a separate thread. The number of threads depends on the number of endpoints enabled in the configuration file USBD_Config_CustomClass_n.c.</li>
+<li>For <b>USB:Device:Custom Class</b> each endpoint In/Out pair executes in a separate thread. The number of threads depends on the number of endpoints enabled in the configuration file USBD_Config_CustomClass_n.h.</li>
 <li>The <b>Default Stack Size</b> in the table above can be changed in the USB configuration files (for example USBD_Config_n.h and USBD_Config_DeviceClass_n.h). At the end of each configuration file, you will find <b>OS Resource Settings</b> and below that the value for the <b>Thread stack size</b>.</li>
 </ul>
 </dd></dl>
-<h2><a class="anchor" id="usbd_req_rtx5"></a>
-RTX v5 Requirements</h2>
-<p>The USB Device component allocates all necessary resources statically so no changes to RTX settings are necessary.</p>
 <h2><a class="anchor" id="usbd_mem_req"></a>
 Memory Requirements</h2>
 <p>The following table shows the memory requirements for read-only (Flash) and read-write (RAM) memory. These numbers may be used to estimate the total size requirements of the application, but the actual numbers depend on compiler optimizations and target processor and may be therefore slightly different.</p>
@@ -237,9 +234,6 @@ CMSIS-RTOS2 Requirements</h2>
 <li>If File System is used retargeted to USB Host Mass Storage the stack size for thread calling File System functions should be at least 2560 Bytes.</li>
 </ul>
 </dd></dl>
-<h2><a class="anchor" id="usbh_req_rtx5"></a>
-RTX v5 Requirements</h2>
-<p>The USB Host component allocates all necessary resources statically so no changes to RTX settings are necessary.</p>
 <h2><a class="anchor" id="usbh_mem_req"></a>
 Memory Requirements</h2>
 <p>The following table shows the memory requirements for read-only (Flash) and read-write (RAM) memory. These numbers may be used to estimate the total size requirements of the application, but the actual numbers depend on compiler optimizations and target processor and may be therefore slightly different.</p>

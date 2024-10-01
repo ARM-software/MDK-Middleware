@@ -210,24 +210,24 @@ Functions</h2></td></tr>
 <p>The argument <em>rid</em> specifies the report ID and should be 0 if there's only one report in the system.</p>
 <p>The argument <em>buf</em> is pointing to the buffer with the data to be sent.</p>
 <p>The argument <em>len</em> specifies the number of bytes to be sent.</p>
-<p><b>Code Example</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="rl__usb_8h.html">rl_usb.h</a>&quot;</span></div>
+<p><b>Code Example</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;cmsis_vio.h&quot;</span></div>
 <div class="line"> </div>
-<div class="line">__NO_RETURN <span class="keywordtype">void</span> app_main (<span class="keywordtype">void</span> *arg) {</div>
-<div class="line">  uint8_t joy, joy_last;</div>
+<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="rl__usb_8h.html">rl_usb.h</a>&quot;</span></div>
 <div class="line"> </div>
-<div class="line">  (void)arg;</div>
+<div class="line">__NO_RETURN <span class="keywordtype">void</span> app_main_thread (<span class="keywordtype">void</span> *argument) {</div>
+<div class="line">  uint8_t but;</div>
+<div class="line">  uint8_t but_prev = 0U;</div>
 <div class="line"> </div>
-<div class="line">  Joystick_Initialize();                <span class="comment">// Joystick Initialization</span></div>
+<div class="line">  (void)argument;</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_function" href="group__usbd__coreFunctions__api.html#ga65ba44a47e3fa46a15f70bab9917c8ca" title="Initialize USB Device stack and controller.">USBD_Initialize</a>(0U);                  <span class="comment">// USB Device 0 Initialization</span></div>
 <div class="line">  <a class="code hl_function" href="group__usbd__coreFunctions__api.html#gad97153303fc0a6f51c1c20ac050b238f" title="Activate pull-up on D+ or D- line to signal USB Device connection on USB Bus.">USBD_Connect</a>   (0U);                  <span class="comment">// USB Device 0 Connect</span></div>
 <div class="line"> </div>
-<div class="line">  joy = joy_last = 0U;</div>
 <div class="line">  <span class="keywordflow">for</span> (;;) {                            <span class="comment">// Loop forever</span></div>
-<div class="line">    joy = (uint8_t)(Joystick_GetState ());</div>
-<div class="line">    <span class="keywordflow">if</span> ((joy ^ joy_last) &amp; 0x1FU) {</div>
-<div class="line">      joy_last = joy &amp; 0x1FU;</div>
-<div class="line">      <span class="keywordflow">if</span> (<a class="code hl_function" href="group__usbd__coreFunctions__api.html#gabcbbc7a70c6050fbaec107968a581487" title="Retrieve USB Device configuration status.">USBD_Configured</a> (0)) { <a class="code hl_function" href="group__usbd__hidFunctions__api.html#gad7e97151e60e0b12b3f331610f31c071" title="Asynchronously prepare HID Report data to send.">USBD_HID_GetReportTrigger</a>(0U, 0U, &amp;joy, 1U); }</div>
+<div class="line">    but = (uint8_t)(vioGetSignal(0xFFU));</div>
+<div class="line">    <span class="keywordflow">if</span> (but != but_prev) {</div>
+<div class="line">      but_prev = but;</div>
+<div class="line">      <span class="keywordflow">if</span> (<a class="code hl_function" href="group__usbd__coreFunctions__api.html#gabcbbc7a70c6050fbaec107968a581487" title="Retrieve USB Device configuration status.">USBD_Configured</a> (0)) { <a class="code hl_function" href="group__usbd__hidFunctions__api.html#gad7e97151e60e0b12b3f331610f31c071" title="Asynchronously prepare HID Report data to send.">USBD_HID_GetReportTrigger</a>(0U, 0U, &amp;but, 1U); }</div>
 <div class="line">    }</div>
 <div class="line">    osDelay(100U);                      <span class="comment">// 100 ms delay for sampling buttons</span></div>
 <div class="line">  }</div>
@@ -322,7 +322,9 @@ Functions</h2></td></tr>
 </table>
 <p>The argument <em>rid</em> specifies the report ID and should be 0 if there's only one report in the system.</p>
 <p>The argument <em>buf</em> is pointing to the buffer to report data.</p>
-<p><b>Code Example</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;rl_usbd.h&quot;</span></div>
+<p><b>Code Example</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;cmsis_vio.h&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &quot;rl_usbd.h&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;usb_hid.h&quot;</span></div>
 <div class="line"> </div>
 <div class="line">int32_t <a class="code hl_function" href="group__usbd__hidFunctions__api.html#gaed8b507a9ce1bf958fbcae55ee0b91bf" title="Callback function called to prepare HID Report data to send.">USBD_HIDn_GetReport</a> (uint8_t rtype, uint8_t req, uint8_t rid, uint8_t *buf) {</div>
@@ -335,7 +337,8 @@ Functions</h2></td></tr>
 <div class="line">            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="rl__usb_8h.html#a4da684a1d01c75782fd63fcd65311791aa828fd6f941edb24dc3ec17e912c8745" title="Request from control endpoint.">USBD_HID_REQ_EP_CTRL</a>:</div>
 <div class="line">            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="rl__usb_8h.html#a4da684a1d01c75782fd63fcd65311791adde4a2cd8155113b82252ad237b899bf" title="Request from periodic update.">USBD_HID_REQ_PERIOD_UPDATE</a>:</div>
 <div class="line">            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="rl__usb_8h.html#a4da684a1d01c75782fd63fcd65311791a7d5c5fefca44e5d5b48bf0d2107f76ea" title="Request from interrupt endpoint.">USBD_HID_REQ_EP_INT</a>:</div>
-<div class="line">              <span class="keywordflow">break</span>;</div>
+<div class="line">              *buf = (uint8_t)(vioGetSignal(0xFFU));</div>
+<div class="line">              <span class="keywordflow">return</span> 1;</div>
 <div class="line">          }</div>
 <div class="line">          <span class="keywordflow">break</span>;</div>
 <div class="line">      }</div>
@@ -343,7 +346,7 @@ Functions</h2></td></tr>
 <div class="line">    <span class="keywordflow">case</span> HID_REPORT_FEATURE:</div>
 <div class="line">      <span class="keywordflow">break</span>;</div>
 <div class="line">  }</div>
-<div class="line">  <span class="keywordflow">return</span> (0);</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>
@@ -468,7 +471,9 @@ Functions</h2></td></tr>
 <p>The argument <em>rid</em> specifies the report ID and should be 0 if there's only one report in the system.</p>
 <p>The argument <em>buf</em> is pointing to the buffer to report data.</p>
 <p>The argument <em>len</em> specifies the length of the received report data.</p>
-<p><b>Code Example</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;rl_usbd.h&quot;</span></div>
+<p><b>Code Example</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;cmsis_vio.h&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &quot;rl_usbd.h&quot;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;usb_hid.h&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">bool</span> <a class="code hl_function" href="group__usbd__hidFunctions__api.html#gab7d101077f2018ca8a24da7dffce434f" title="Callback function called to process received HID Report data.">USBD_HIDn_SetReport</a> (uint8_t rtype, uint8_t req, uint8_t rid, <span class="keyword">const</span> uint8_t *buf, uint32_t len) {</div>
@@ -476,12 +481,7 @@ Functions</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">switch</span> (rtype) {</div>
 <div class="line">    <span class="keywordflow">case</span> HID_REPORT_OUTPUT:</div>
-<div class="line">      <span class="keywordflow">for</span> (i = 0; i &lt; 4; i++) {</div>
-<div class="line">        <span class="keywordflow">if</span> (*buf &amp; (1 &lt;&lt; i))</div>
-<div class="line">          LED_On  (i);</div>
-<div class="line">        <span class="keywordflow">else</span> </div>
-<div class="line">          LED_Off (i);</div>
-<div class="line">      }</div>
+<div class="line">      vioSetSignal(0xFFU, *buf);</div>
 <div class="line">      <span class="keywordflow">break</span>;</div>
 <div class="line">    <span class="keywordflow">case</span> HID_REPORT_FEATURE:</div>
 <div class="line">      <span class="keywordflow">break</span>;</div>

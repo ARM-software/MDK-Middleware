@@ -206,15 +206,15 @@ var NAVTREE =
     [ "USB Concepts", "USB_Concepts.html", [
       [ "USB Transfer Rates", "USB_Concepts.html#USB_Transfer_Rates", null ],
       [ "USB Network", "USB_Concepts.html#USB_Network", null ],
-      [ "USB Communication", "USB_Concepts.html#USB_Endpoints", [
-        [ "Pipes", "USB_Concepts.html#pipe_types", null ],
-        [ "Transfers", "USB_Concepts.html#transfers", [
+      [ "USB Communication", "USB_Concepts.html#USB_Communication", [
+        [ "Pipes", "USB_Concepts.html#USB_Pipes", null ],
+        [ "Transfers", "USB_Concepts.html#USB_Transfers", [
           [ "Control Transfers", "USB_Concepts.html#USB_Control_Transfers", null ],
           [ "Interrupt Transfers", "USB_Concepts.html#USB_Interrupt_Transfers", null ],
           [ "Isochronous Transfers", "USB_Concepts.html#USB_Isochronous_Transfers", null ],
           [ "Bulk Transfers", "USB_Concepts.html#USB_Bulk_Transfers", null ]
         ] ],
-        [ "Endpoints", "USB_Concepts.html#endpoints", null ]
+        [ "Endpoints", "USB_Concepts.html#USB_Endpoints", null ]
       ] ],
       [ "USB Protocol", "USB_Concepts.html#USB_Protocol", [
         [ "Transactions", "USB_Concepts.html#autotoc_md75", null ],
@@ -263,19 +263,17 @@ var NAVTREE =
       [ "USB Device Resource Requirements", "usb_resource_requirements.html#usbd_res_req", [
         [ "Stack Requirements", "usb_resource_requirements.html#usbd_stack_req", null ],
         [ "CMSIS-RTOS2 Requirements", "usb_resource_requirements.html#usbd_rtos_req", null ],
-        [ "RTX v5 Requirements", "usb_resource_requirements.html#usbd_req_rtx5", null ],
         [ "Memory Requirements", "usb_resource_requirements.html#usbd_mem_req", null ]
       ] ],
       [ "USB Host Resource Requirements", "usb_resource_requirements.html#usbh_res_req", [
         [ "Stack Requirements", "usb_resource_requirements.html#usbh_stack_req", null ],
         [ "CMSIS-RTOS2 Requirements", "usb_resource_requirements.html#usbh_rtos_req", null ],
-        [ "RTX v5 Requirements", "usb_resource_requirements.html#usbh_req_rtx5", null ],
         [ "Memory Requirements", "usb_resource_requirements.html#usbh_mem_req", null ]
       ] ]
     ] ],
     [ "Migration Guide", "usb_migration.html", [
-      [ "Component migration", "usb_migration.html#usb_migration_component", null ],
-      [ "Configuration migration", "usb_migration.html#usb_migration_config", [
+      [ "Component Selection", "usb_migration.html#usb_migration_component", null ],
+      [ "Configuration", "usb_migration.html#usb_migration_config", [
         [ "Debug", "usb_migration.html#autotoc_md91", null ],
         [ "USB Device", "usb_migration.html#autotoc_md92", null ],
         [ "USB Host", "usb_migration.html#autotoc_md93", null ]

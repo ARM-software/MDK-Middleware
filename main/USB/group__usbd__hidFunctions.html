@@ -175,8 +175,8 @@ Content</h2></td></tr>
 <p><a class="el" href="group__usbd__hidFunctions__api.html#gad7e97151e60e0b12b3f331610f31c071">USBD_HID_GetReportTrigger</a> may be called from any user thread to send asynchronous data reports to the USB Host. <a class="el" href="group__usbd__hidFunctions__api.html#gad7e97151e60e0b12b3f331610f31c071">USBD_HID_GetReportTrigger</a> cannot be called from interrupt service routines (ISR) as it may wait for previous data to be sent.</p>
 <p>The HID class uses a CMSIS-RTOS2 timer set to a 4ms interval to handle polling reports. The polling timing is defined with <a class="el" href="USB_Concepts.html#USB_Endpoint_Descriptor">Endpoint Descriptor</a>. For more information refer to "Set_Idle Request" in <a href="https://www.usb.org/hid" class="el" target="_blank">Device Class Definition HID</a> specification which is provided by USB Implementers Forum (USB-IF).</p>
 <div class="mscgraph">
-<img src="msc_inline_mscgraph_6.png" alt="msc_inline_mscgraph_6" border="0" usemap="#msc_inline_mscgraph_6.map"/>
-<map name="msc_inline_mscgraph_6.map" id="msc_inline_mscgraph_6.map"><area href="group__usbd__coreFunctions__api.html#ga65ba44a47e3fa46a15f70bab9917c8ca" shape="rect" coords="31,91,120,104" alt=""/>
+<img src="msc_inline_mscgraph_5.png" alt="msc_inline_mscgraph_5" border="0" usemap="#msc_inline_mscgraph_5.map"/>
+<map name="msc_inline_mscgraph_5.map" id="msc_inline_mscgraph_5.map"><area href="group__usbd__coreFunctions__api.html#ga65ba44a47e3fa46a15f70bab9917c8ca" shape="rect" coords="31,91,120,104" alt=""/>
 <area href="group__usbd__coreFunctions__api.html#gad97153303fc0a6f51c1c20ac050b238f" shape="rect" coords="40,142,111,155" alt=""/>
 <area href="group__usbd__hidFunctions__api.html#gab7d101077f2018ca8a24da7dffce434f" shape="rect" coords="19,244,132,257" alt=""/>
 <area href="group__usbd__hidFunctions__api.html#gaed8b507a9ce1bf958fbcae55ee0b91bf" shape="rect" coords="19,295,132,308" alt=""/>
@@ -186,7 +186,7 @@ Content</h2></td></tr>
 <area href="group__usbd__coreFunctions__api.html#gabefe6dae72a49806a96b981c286d0aeb" shape="rect" coords="25,448,126,461" alt=""/>
 </map>
 </div>
-<h2><a class="anchor" id="autotoc_md104"></a>
+<h2><a class="anchor" id="autotoc_md100"></a>
 Implementation</h2>
 <p>To <a class="el" href="USB_Device.html#Creation_Steps">create an USB Device</a> with a HID class:</p><ul>
 <li>Set the required number for USB:Device:HID class instances during the <a class="el" href="USB_Device.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>

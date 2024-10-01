@@ -564,8 +564,9 @@ Functions</h2></td></tr>
 <div class="line">    <a class="code hl_function" href="group__usbd__classFunctions__api.html#ga7118c1dabe34bdb7b822ef11aa30bd90" title="Start reception on Endpoint.">USBD_EndpointRead</a>(0, 0x01, class0_bulk_out_buf, 64);</div>
 <div class="line">    <span class="keywordflow">switch</span> (class0_bulk_out_buf[0]) {</div>
 <div class="line">      <span class="keywordflow">case</span> 0:</div>
-<div class="line">        <span class="keywordflow">for</span> (i = 1; i &lt; class0_bulk_len; i++)</div>
+<div class="line">        <span class="keywordflow">for</span> (i = 1; i &lt; class0_bulk_len; i++) {</div>
 <div class="line">          class0_bulk_in_buf[i] = (class0_bulk_out_buf[i] &lt;&lt; 4);</div>
+<div class="line">        }</div>
 <div class="line">        <a class="code hl_function" href="group__usbd__classFunctions__api.html#ga3e9549675ea613f44324c2a843b8a657" title="Start write on Endpoint.">USBD_EndpointWrite</a>(0, 0x81, class0_bulk_in_buf,  class0_bulk_len);</div>
 <div class="line">        <span class="keywordflow">break</span>;</div>
 <div class="line">    }</div>

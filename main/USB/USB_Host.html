@@ -138,11 +138,7 @@ $(document).ready(function(){initNavTree('USB_Host.html',''); initResizable(); }
 <h1><a class="anchor" id="usbh_rte_components"></a>
 RTE Components</h1>
 <p>The following picture shows the relationships of the RTE Components with the microcontroller's USB Host peripheral (USB Controller). RTE Components provide configuration files and user code templates. <b>Configuration files</b> configure the RTE Components, hardware interfaces, memory resources and USB Host parameters. <b>User code templates</b> provide the skeleton for implementing support for different USB Device classes.</p>
-<div class="image">
-<img src="usb_host_blocks_config_files.png" alt=""/>
-<div class="caption">
-USB Host Structure</div></div>
-    <h1><a class="anchor" id="Create_a_USB_Host_Application"></a>
+<div> <img src="usb_host_blocks_config_files.png" alt="" style="text-align:left;" class="inline"/> <div class="caption" style="text-align:center;">USB Host Structure</div> </div><h1><a class="anchor" id="Create_a_USB_Host_Application"></a>
 Create an Application</h1>
 <p>The steps to create a microcontroller application that functions as an USB Host are:</p>
 <ol type="1">
@@ -178,11 +174,7 @@ RTE Component Selection</h2>
 </ul>
 </li>
 </ol>
-<div class="image">
-<img src="USBH_RTE.png" alt=""/>
-<div class="caption">
-RTE Component Selection</div></div>
-    <h2><a class="anchor" id="USB_Driver_Configuration_USBH"></a>
+<div> <img src="USBH_RTE.png" alt="" style="text-align:left;" class="inline"/> <div class="caption" style="text-align:center;">RTE Component Selection</div> </div><h2><a class="anchor" id="USB_Driver_Configuration_USBH"></a>
 USB Driver and Controller</h2>
 <p>The USB Host Driver and the USB Controller of the microcontroller need to be correctly configured. In particular this means:</p>
 <ul>
@@ -194,7 +186,7 @@ USB Host Configuration</h2>
 <p>The <b>USBH_Config_n.h</b> file contains additional settings for the specific USB Host:</p>
 <ul>
 <li>The <b>Driver_USBH#</b> is set according to the selected USB Controller. For device with single USB Host Controller it will typically be '0'.</li>
-<li><b>Power Consumption</b> can be configured according to hardware capability of the USB Host Controller.</li>
+<li><b>Port Power Delivery</b> can be configured according to hardware capability of the USB Host Controller.</li>
 <li><b>Maximum Pipes</b> can be specified according to expected USB Device classes that are expected to be used by the USB Host.</li>
 <li><b>Memory Pool</b> parameters can be configured that are necessary for USB Host operation. This memory pool can also be located to specific memory via the linker script.</li>
 </ul>
@@ -243,7 +235,7 @@ Event Recorder Support</h3>
 <p>Now, when the USB Host generates event information, it can be viewed in the  <script>link_ext('uv4-Event-Recorder');</script>.</p>
 <h3><a class="anchor" id="usbHostEvrConfig"></a>
 Event Recorder Configuration</h3>
-<p>This section describes the configuration settings for the Event Recorder; refer to <a class="el" href="USB_Host.html#usbHostEvrSupport">Event Recorder Support</a> for more information.</p>
+<p>This section describes the configuration settings for the Event Recorder; refer to  <script>link_ext('RTX5-Event-Recorder-Config');</script> for more information.</p>
 <p><b>USB Event Generation Configuration</b></p>
 <p>Selecting the <b>USB:CORE</b> will add the file <code>USB_Debug.h</code> to your project. Use this file to set the event generation configuration for USB core, drivers, and device classes separately. The file is common for USB Device and Host components.</p>
 <div class="image">

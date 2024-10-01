@@ -138,18 +138,19 @@ $(document).ready(function(){initNavTree('group__usbd__coreFunctions__conf.html'
 <div class="caption">
 USB Device Core Configuration File</div></div>
 <p>The configuration file <b>USBD_Config_<em>n</em>.h</b> contains the following settings:</p><ul>
-<li><b>Connect to hardware via Driver_USBD# </b> sets the <b>CMSIS-Driver</b> <b>Number</b> to be used (according to the selected USB controller). For devices with single USB Device Controller it will typically be '0'.</li>
+<li><b>Connect to hardware via Driver_USBD#</b> sets the <b>CMSIS-Driver</b> <b>Number</b> to be used (according to the selected USB controller). For devices with single USB Device Controller it will typically be '0'.</li>
 <li><b>High-Speed</b> may be selected if supported by the USB controller.</li>
 <li><b>Device Settings</b> are used to create the <a class="el" href="USB_Concepts.html#USB_Device_Descriptor">Device Descriptor</a>.<ul>
 <li><b>Max Endpoint 0 Packet Size</b> sets the maximum packet size for Endpoint 0.</li>
-<li>The <b>Vendor</b> <b>ID</b> (VID) needs to be set to a private VID. The default Vendor ID is owned by Keil and must not be used for actual products. Please visit <a href="https://www.usb.org/getting-vendor-id" class="el" target="_blank">USB-IF</a> for more information on how to apply for a valid Vendor ID.</li>
-<li>Every device variant needs an unique <b>Product</b> <b>ID</b>. Together with the <b>VID</b>, it is used by the Host computer's operating system to find a driver for your device.</li>
+<li>The <b>Vendor ID</b> (VID) needs to be set to a private VID. The default Vendor ID is owned by Keil and must not be used for actual products. Please visit <a href="https://www.usb.org/getting-vendor-id" class="el" target="_blank">USB-IF</a> for more information on how to apply for a valid Vendor ID.</li>
+<li>Every device variant needs an unique <b>Product ID</b>. Together with the <b>VID</b>, it is used by the Host computer's operating system to find a driver for your device.</li>
 <li>The <b>Device Release Number</b> will be shown in Windows and Linux systems as “Firmware Revision”. The number will be interpreted as “binary coded decimal”, meaning that 0x0101 will be shown as firmware revision 1.01.</li>
 </ul>
 </li>
 <li><b>Configuration Settings</b> are used to create the <a class="el" href="USB_Concepts.html#USB_Configuration_Descriptor">Configuration Descriptor</a>.<ul>
 <li><b>Power</b> determines whether the device is self- or bus-powered.</li>
-<li><b>Maximum Power Consumption (in mA) </b> advertises the maximum current drawn from the bus in this specific configuration when the USB Device is fully operational.</li>
+<li>Enable <b>Remote Wakeup</b> if the device supports a remote wakeup functionality.</li>
+<li><b>Maximum Power Consumption (in mA)</b> advertises the maximum current drawn from the bus in this specific configuration when the USB Device is fully operational.</li>
 </ul>
 </li>
 <li><b>String Settings</b> are used to create the string descriptor within the <a class="el" href="USB_Concepts.html#USB_Device_Descriptor">Device Descriptor</a>.<ul>
@@ -177,7 +178,7 @@ USB Device Core Configuration File</div></div>
 </ul>
 </li>
 <li>Use the <b>OS Resources Settings</b> to optimize the usage of OS resources.<ul>
-<li>The default <b>Core Thread Stack Size </b> is <em>1024</em> bytes.</li>
+<li>The default <b>Core Thread Stack Size</b> is <em>1024</em> bytes.</li>
 <li>The default Core Thread priority is <b>osPriorityAboveNormal</b>. This priority can be changed by changing USBD<em>n</em>_CORE_THREAD_PRIORITY define in this configuration file. This priority needs to be high enough so that USB Stack can react to USB events in a timely manner. Due to this requirement it is recommended to keep this setting at default. </li>
 </ul>
 </li>

@@ -144,7 +144,7 @@ $(document).ready(function(){initNavTree('group__usbd__cdcFunctions__acm__conf.h
 CDC Class Configuration File</div></div>
 <p>The USB Device CDC Class configuration file <b>USBD_Config_CDC_n.h</b> contains the following settings:</p><ul>
 <li><b>Assign Device Class to USB Device #</b> selects USB Device that is used for this Device Class instance.</li>
-<li><b>Communication Class Subclass</b> specifies the model used by the CDC class. Select the <code>Abstract</code> <code>Control</code> <code>Model</code>.</li>
+<li><b>Communication Class Subclass</b> specifies the model used by the CDC class. Select the <code>Abstract Control Model (ACM)</code>.</li>
 <li><b>Communication Class Protocol</b> specifies the protocol used by the CDC class. For Virtual COM device select the <code>No protocol (Virtual COM)</code>, and for RNDIS device select the <code>Vendor-specific (RNDIS)</code>.</li>
 <li><b>Interrupt Endpoint Settings</b><ul>
 <li><b>Interrupt IN Endpoint Number</b> sets the number of the endpoint to be used. Conflicting settings are flagged by compile-time error messages.</li>
@@ -156,10 +156,10 @@ CDC Class Configuration File</div></div>
 </li>
 <li><b>High-speed</b>: These parameters apply when High-speed is enabled in <a class="el" href="group__usbd__coreFunctions__conf.html">USBD_Config_n.h</a>:<ul>
 <li><b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange.</li>
-<li><b>Endpoint polling Interval (in ms)</b> specifies the frequency of requests initiated by USB Host for getting a notification.</li>
+<li><b>Additional transactions per microframe</b> specifies additional transactions per microframe.</li>
+<li><b>Endpoint polling Interval (in 125 us intervals)</b> specifies the frequency of requests initiated by USB Host for getting a notification.</li>
 </ul>
 </li>
-<li><b>Additional transactions per microframe</b> improve communication performance.</li>
 </ul>
 </li>
 </ul>
@@ -170,7 +170,6 @@ CDC Class Configuration File</div></div>
 <li><b>Endpoint Settings</b><ul>
 <li><b>Full/Low-speed (High-speed disabled)</b>: These parameters apply when High-speed is disabled in <a class="el" href="group__usbd__coreFunctions__conf.html">USBD_Config_n.h</a>:<ul>
 <li><b>Maximum Endpoint Packet Size (in bytes)</b> specifies the physical packet size used for information exchange.</li>
-<li><b>Maximum NAK Rate</b> specifies the interval in which Bulk Endpoint can NAK.</li>
 </ul>
 </li>
 <li><b>High-speed</b>: These parameters apply when High-speed is enabled in <a class="el" href="group__usbd__coreFunctions__conf.html">USBD_Config_n.h</a>:<ul>
@@ -187,15 +186,15 @@ CDC Class Configuration File</div></div>
 <li><b>Data Class Interface String</b> is used to create <a class="el" href="USB_Concepts.html#USB_Descriptors">USB Descriptors</a>.</li>
 <li><b>Abstract Control Model Settings</b><ul>
 <li><b>Call Management Capabilities</b> settings are used to create Call Management Functional Descriptor:<ul>
-<li><b>Call Management channel</b> is used to specify channel of exchanging call management commands. Select required option, for Virtual COM device typically this is set to <code>Communication</code> <code>and</code> <code>Data</code> <code>Class</code> <code>Interface</code>, and for RNDIS device this is typically set to <code>Communication</code> <code>Class</code> <code>Interface</code> <code>only</code>.</li>
+<li><b>Call Management channel</b> is used to specify channel of exchanging call management commands. Select required option, for Virtual COM device typically this is set to <code>Communication and Data Class Interface</code>, and for RNDIS device this is typically set to <code>Communication Class Interface only</code>.</li>
 <li><b>Device Call Management handling</b> is used to specify level of handling of call management by device. Select required option, for VirtualCOM device typically this is set to <code>All</code>, and for RNDIS device this is typically set to <code>None</code>.</li>
 </ul>
 </li>
 <li><b>Abstract Control Management Capabilities</b> settings are used to create Abstract Control Management Functional Descriptor:<ul>
-<li><b>D3 bit</b> is used to specify if device supports the notification Network_Connection. Select required option, typically this is <code>disabled</code> for both Virtual COM and RNDIS device.</li>
-<li><b>D2 bit</b> is used to specify if device supports the request Send_Break. Select required option, for VirtualCOM device this is typically <code>enabled</code> and for RNDIS device this is typically <code>disabled</code>.</li>
-<li><b>D1 bit</b> is used to specify if device supports the following requests: Set_Line_Coding, Get_Line_Coding, Set_Control_Line_State, and notification Serial_State. Select required option, for Virtual COM device this is typically <code>enabled</code> and for RNDIS device this is typically <code>disabled</code>.</li>
-<li><b>D0 bit</b> is used to specify if device supports the following requests: Set_Comm_Feature, Clear_Comm_Feature and Get_Comm_Feature. Select required option, for Virtual COM device this is typically <code>enabled</code> and for RNDIS device this is typically <code>disabled</code>.</li>
+<li><b>D3 bit</b> is used to specify if device supports the notification NetworkConnection. Select required option, typically this is <code>disabled</code> for both Virtual COM and RNDIS device.</li>
+<li><b>D2 bit</b> is used to specify if device supports the request SendBreak. Select required option, for VirtualCOM device this is typically <code>enabled</code> and for RNDIS device this is typically <code>disabled</code>.</li>
+<li><b>D1 bit</b> is used to specify if device supports the following requests: SetLineCoding, GetLineCoding, SetControlLineState, and notification SerialState. Select required option, for Virtual COM device this is typically <code>enabled</code> and for RNDIS device this is typically <code>disabled</code>.</li>
+<li><b>D0 bit</b> is used to specify if device supports the following requests: SetCommFeature, ClearCommFeature and GetCommFeature. Select required option, for Virtual COM device this is typically <code>enabled</code> and for RNDIS device this is typically <code>disabled</code>.</li>
 </ul>
 </li>
 <li><b>Maximum Communication Device Send Buffer Size</b> is used for memory allocation in the USB component.</li>

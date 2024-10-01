@@ -131,7 +131,7 @@ $(document).ready(function(){initNavTree('group__usbd__data__types.html',''); in
 </div><!--header-->
 <div class="contents">
 
-<p>Data Types used by USB Device component.  
+<p>Public Data Types used by USB Device component.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
@@ -142,18 +142,18 @@ Data Structures</h2></td></tr>
 <tr class="memitem:structUSB__SETUP__PACKET"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbd__data__types.html#structUSB__SETUP__PACKET">USB_SETUP_PACKET</a></td></tr>
 <tr class="memdesc:structUSB__SETUP__PACKET"><td class="mdescLeft">&#160;</td><td class="mdescRight">USB Setup Packet structure.  <a href="group__usbd__data__types.html#structUSB__SETUP__PACKET">More...</a><br /></td></tr>
 <tr class="separator:structUSB__SETUP__PACKET"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structusbd__desc__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbd__data__types.html#structusbd__desc__t">usbd_desc_t</a></td></tr>
-<tr class="memdesc:structusbd__desc__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">USB Device Descriptors structure.  <a href="group__usbd__data__types.html#structusbd__desc__t">More...</a><br /></td></tr>
-<tr class="separator:structusbd__desc__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structCDC__LINE__CODING"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbd__data__types.html#structCDC__LINE__CODING">CDC_LINE_CODING</a></td></tr>
 <tr class="memdesc:structCDC__LINE__CODING"><td class="mdescLeft">&#160;</td><td class="mdescRight">CDC Line Coding structure.  <a href="group__usbd__data__types.html#structCDC__LINE__CODING">More...</a><br /></td></tr>
 <tr class="separator:structCDC__LINE__CODING"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structCDC__NCM__NTB__PARAM"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbd__data__types.html#structCDC__NCM__NTB__PARAM">CDC_NCM_NTB_PARAM</a></td></tr>
 <tr class="memdesc:structCDC__NCM__NTB__PARAM"><td class="mdescLeft">&#160;</td><td class="mdescRight">CDC NCM NTB Parameters structure.  <a href="group__usbd__data__types.html#structCDC__NCM__NTB__PARAM">More...</a><br /></td></tr>
 <tr class="separator:structCDC__NCM__NTB__PARAM"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structusbd__desc__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbd__data__types.html#structusbd__desc__t">usbd_desc_t</a></td></tr>
+<tr class="memdesc:structusbd__desc__t"><td class="mdescLeft">&#160;</td><td class="mdescRight">USB Device Descriptors structure.  <a href="group__usbd__data__types.html#structusbd__desc__t">More...</a><br /></td></tr>
+<tr class="separator:structusbd__desc__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>Data Types used by USB Device component. </p>
+<p>Public Data Types used by USB Device component. </p>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structUSBD__STATE" id="structUSBD__STATE"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#structUSBD__STATE">&#9670;&#160;</a></span>USBD_STATE</h2>
@@ -244,96 +244,6 @@ Number of bytes to transfer if there is a Data stage. </td></tr>
 wValue</td>
 <td class="fielddoc">
 Value according to request. </td></tr>
-</table>
-
-</div>
-</div>
-<a name="structusbd__desc__t" id="structusbd__desc__t"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#structusbd__desc__t">&#9670;&#160;</a></span>usbd_desc_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct usbd_desc_t</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>USB Device Descriptors structure. </p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Data Fields</th></tr>
-<tr><td class="fieldtype">
-<a id="a4ec10b65bf9ad70010109a4e4b638707" name="a4ec10b65bf9ad70010109a4e4b638707"></a>const uint8_t *</td>
-<td class="fieldname">
-config_descriptor_fs</td>
-<td class="fielddoc">
-Pointer to <a class="el" href="USB_Concepts.html#USB_Configuration_Descriptor">Configuration Descriptor</a> for low/full-speed. </td></tr>
-<tr><td class="fieldtype">
-<a id="a7f55164ab50a025ae54871f5438e4c3b" name="a7f55164ab50a025ae54871f5438e4c3b"></a>const uint8_t *</td>
-<td class="fieldname">
-config_descriptor_hs</td>
-<td class="fielddoc">
-Pointer to <a class="el" href="USB_Concepts.html#USB_Configuration_Descriptor">Configuration Descriptor</a> for high-speed. </td></tr>
-<tr><td class="fieldtype">
-<a id="a6e7af2b72d956bff4b2e91b2ba82cc10" name="a6e7af2b72d956bff4b2e91b2ba82cc10"></a>const uint8_t *</td>
-<td class="fieldname">
-device_descriptor</td>
-<td class="fielddoc">
-Pointer to <a class="el" href="USB_Concepts.html#USB_Device_Descriptor">Device Descriptor</a>. </td></tr>
-<tr><td class="fieldtype">
-<a id="a2ce5f6c6aa524acf601740cf71b13ee5" name="a2ce5f6c6aa524acf601740cf71b13ee5"></a>const uint8_t *</td>
-<td class="fieldname">
-device_qualifier_fs</td>
-<td class="fielddoc">
-Pointer to <a class="el" href="USB_Concepts.html#USB_Device_Qualifier_Descriptor">Device Qualifier Descriptor</a> for low/full-speed. </td></tr>
-<tr><td class="fieldtype">
-<a id="a73b3be3fb9cc929ad18260376e891938" name="a73b3be3fb9cc929ad18260376e891938"></a>const uint8_t *</td>
-<td class="fieldname">
-device_qualifier_hs</td>
-<td class="fielddoc">
-Pointer to <a class="el" href="USB_Concepts.html#USB_Device_Qualifier_Descriptor">Device Qualifier Descriptor</a> for high-speed. </td></tr>
-<tr><td class="fieldtype">
-<a id="aeb7925a19b480ce2507f6a21a6f8f85c" name="aeb7925a19b480ce2507f6a21a6f8f85c"></a>const uint8_t *</td>
-<td class="fieldname">
-ep0_descriptor</td>
-<td class="fielddoc">
-Pointer to Control <a class="el" href="USB_Concepts.html#USB_Endpoint_Descriptor">Endpoint 0 descriptor</a>. </td></tr>
-<tr><td class="fieldtype">
-<a id="a5820facff87940a8b7927c9c97ede302" name="a5820facff87940a8b7927c9c97ede302"></a>const uint8_t *</td>
-<td class="fieldname">
-ms_os_ext_compat_id_descriptor</td>
-<td class="fielddoc">
-Pointer to Microsoft Extended Compat ID OS Feature Descriptor. </td></tr>
-<tr><td class="fieldtype">
-<a id="aae290ac51cb1dc0868d9b9dfbc9988fc" name="aae290ac51cb1dc0868d9b9dfbc9988fc"></a>const uint8_t *</td>
-<td class="fieldname">
-ms_os_string_descriptor</td>
-<td class="fielddoc">
-Pointer to Microsoft OS string descriptor. </td></tr>
-<tr><td class="fieldtype">
-<a id="ae7907a41358ad5b90d6a16de0e37560d" name="ae7907a41358ad5b90d6a16de0e37560d"></a>const uint8_t *</td>
-<td class="fieldname">
-other_speed_config_descriptor_fs</td>
-<td class="fielddoc">
-Pointer to Other speed <a class="el" href="USB_Concepts.html#USB_Configuration_Descriptor">Configuration Descriptor</a> for low/full-speed. </td></tr>
-<tr><td class="fieldtype">
-<a id="ae1372c89eaa51cca7733e5bb7049b9a6" name="ae1372c89eaa51cca7733e5bb7049b9a6"></a>const uint8_t *</td>
-<td class="fieldname">
-other_speed_config_descriptor_hs</td>
-<td class="fielddoc">
-Pointer to Other speed <a class="el" href="USB_Concepts.html#USB_Configuration_Descriptor">Configuration Descriptor</a> for high-speed. </td></tr>
-<tr><td class="fieldtype">
-<a id="a2c5e427d259cd24a428d9509c964b4ef" name="a2c5e427d259cd24a428d9509c964b4ef"></a>uint8_t *</td>
-<td class="fieldname">
-ser_num_string_descriptor</td>
-<td class="fielddoc">
-Pointer to Serial Number <a class="el" href="USB_Concepts.html#USB_String_Descriptor">String Descriptors</a>. </td></tr>
-<tr><td class="fieldtype">
-<a id="a07ff97e3fd3fa5c1f5315265624c8c4e" name="a07ff97e3fd3fa5c1f5315265624c8c4e"></a>const uint8_t *</td>
-<td class="fieldname">
-string_descriptor</td>
-<td class="fielddoc">
-Pointer to <a class="el" href="USB_Concepts.html#USB_String_Descriptor">String Descriptors</a>. </td></tr>
 </table>
 
 </div>
@@ -463,6 +373,96 @@ OUT NTB Datagram alignment modulus. </td></tr>
 wNdpOutPayloadRemainder</td>
 <td class="fielddoc">
 Remainder used to align output datagram payload offsets within the NTB. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structusbd__desc__t" id="structusbd__desc__t"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structusbd__desc__t">&#9670;&#160;</a></span>usbd_desc_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct usbd_desc_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>USB Device Descriptors structure. </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a4ec10b65bf9ad70010109a4e4b638707" name="a4ec10b65bf9ad70010109a4e4b638707"></a>const uint8_t *</td>
+<td class="fieldname">
+config_descriptor_fs</td>
+<td class="fielddoc">
+Pointer to <a class="el" href="USB_Concepts.html#USB_Configuration_Descriptor">Configuration Descriptor</a> for low/full-speed. </td></tr>
+<tr><td class="fieldtype">
+<a id="a7f55164ab50a025ae54871f5438e4c3b" name="a7f55164ab50a025ae54871f5438e4c3b"></a>const uint8_t *</td>
+<td class="fieldname">
+config_descriptor_hs</td>
+<td class="fielddoc">
+Pointer to <a class="el" href="USB_Concepts.html#USB_Configuration_Descriptor">Configuration Descriptor</a> for high-speed. </td></tr>
+<tr><td class="fieldtype">
+<a id="a6e7af2b72d956bff4b2e91b2ba82cc10" name="a6e7af2b72d956bff4b2e91b2ba82cc10"></a>const uint8_t *</td>
+<td class="fieldname">
+device_descriptor</td>
+<td class="fielddoc">
+Pointer to <a class="el" href="USB_Concepts.html#USB_Device_Descriptor">Device Descriptor</a>. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2ce5f6c6aa524acf601740cf71b13ee5" name="a2ce5f6c6aa524acf601740cf71b13ee5"></a>const uint8_t *</td>
+<td class="fieldname">
+device_qualifier_fs</td>
+<td class="fielddoc">
+Pointer to <a class="el" href="USB_Concepts.html#USB_Device_Qualifier_Descriptor">Device Qualifier Descriptor</a> for low/full-speed. </td></tr>
+<tr><td class="fieldtype">
+<a id="a73b3be3fb9cc929ad18260376e891938" name="a73b3be3fb9cc929ad18260376e891938"></a>const uint8_t *</td>
+<td class="fieldname">
+device_qualifier_hs</td>
+<td class="fielddoc">
+Pointer to <a class="el" href="USB_Concepts.html#USB_Device_Qualifier_Descriptor">Device Qualifier Descriptor</a> for high-speed. </td></tr>
+<tr><td class="fieldtype">
+<a id="aeb7925a19b480ce2507f6a21a6f8f85c" name="aeb7925a19b480ce2507f6a21a6f8f85c"></a>const uint8_t *</td>
+<td class="fieldname">
+ep0_descriptor</td>
+<td class="fielddoc">
+Pointer to Control <a class="el" href="USB_Concepts.html#USB_Endpoint_Descriptor">Endpoint 0 descriptor</a>. </td></tr>
+<tr><td class="fieldtype">
+<a id="a5820facff87940a8b7927c9c97ede302" name="a5820facff87940a8b7927c9c97ede302"></a>const uint8_t *</td>
+<td class="fieldname">
+ms_os_ext_compat_id_descriptor</td>
+<td class="fielddoc">
+Pointer to Microsoft Extended Compat ID OS Feature Descriptor. </td></tr>
+<tr><td class="fieldtype">
+<a id="aae290ac51cb1dc0868d9b9dfbc9988fc" name="aae290ac51cb1dc0868d9b9dfbc9988fc"></a>const uint8_t *</td>
+<td class="fieldname">
+ms_os_string_descriptor</td>
+<td class="fielddoc">
+Pointer to Microsoft OS string descriptor. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae7907a41358ad5b90d6a16de0e37560d" name="ae7907a41358ad5b90d6a16de0e37560d"></a>const uint8_t *</td>
+<td class="fieldname">
+other_speed_config_descriptor_fs</td>
+<td class="fielddoc">
+Pointer to Other speed <a class="el" href="USB_Concepts.html#USB_Configuration_Descriptor">Configuration Descriptor</a> for low/full-speed. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae1372c89eaa51cca7733e5bb7049b9a6" name="ae1372c89eaa51cca7733e5bb7049b9a6"></a>const uint8_t *</td>
+<td class="fieldname">
+other_speed_config_descriptor_hs</td>
+<td class="fielddoc">
+Pointer to Other speed <a class="el" href="USB_Concepts.html#USB_Configuration_Descriptor">Configuration Descriptor</a> for high-speed. </td></tr>
+<tr><td class="fieldtype">
+<a id="a2c5e427d259cd24a428d9509c964b4ef" name="a2c5e427d259cd24a428d9509c964b4ef"></a>uint8_t *</td>
+<td class="fieldname">
+ser_num_string_descriptor</td>
+<td class="fielddoc">
+Pointer to Serial Number <a class="el" href="USB_Concepts.html#USB_String_Descriptor">String Descriptors</a>. </td></tr>
+<tr><td class="fieldtype">
+<a id="a07ff97e3fd3fa5c1f5315265624c8c4e" name="a07ff97e3fd3fa5c1f5315265624c8c4e"></a>const uint8_t *</td>
+<td class="fieldname">
+string_descriptor</td>
+<td class="fielddoc">
+Pointer to <a class="el" href="USB_Concepts.html#USB_String_Descriptor">String Descriptors</a>. </td></tr>
 </table>
 
 </div>

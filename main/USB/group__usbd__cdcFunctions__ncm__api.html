@@ -1123,7 +1123,7 @@ Refer to the <a class="el" href="group__usbd__cdcFunctions__ncm.html#USBD_User_C
 <p>The argument <em>net_addr</em> is a pointer to the current EUI-48 network address.</p>
 <p><b>Code Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">bool</span> <a class="code hl_function" href="group__usbd__cdcFunctions__ncm__api.html#gae68496f58e710418dec862ca858cf6e6" title="Callback function called upon USB Host request to return the USB Device&#39;s current EUI-48 station addr...">USBD_CDCn_NCM_GetNetAddress</a> (uint8_t *net_addr) {</div>
 <div class="line"><span class="preprocessor">#if ((USBD_CDCn_NCM_BM_NETWORK_CAPABILITIES &amp; 0x02) != 0)</span></div>
-<div class="line">  memcpy(net_addr, &amp;NCM_State.net_address, 6);</div>
+<div class="line">  memcpy(net_addr, NCM_State.net_address, 6);</div>
 <div class="line">  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><span class="preprocessor">#else</span></div>
 <div class="line">  <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
@@ -1287,7 +1287,7 @@ Refer to the <a class="el" href="group__usbd__cdcFunctions__ncm.html#USBD_User_C
 <div class="line">  NCM_State.ntb_input_size = USBD_CDCn_NCM_DW_NTB_IN_MAX_SIZE;</div>
 <div class="line">  NCM_State.max_datagram_size = USBD_CDCn_NCM_W_MAX_SEGMENT_SIZE;</div>
 <div class="line"><span class="preprocessor">#if ((USBD_CDCn_NCM_BM_NETWORK_CAPABILITIES &amp; 0x02) != 0)</span></div>
-<div class="line">  memcpy(&amp;NCM_State.net_address, &amp;MacAddress, 6);</div>
+<div class="line">  memcpy(NCM_State.net_address, &amp;MacAddress, 6);</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line">  NCM_State.packet_filter_bitmap = 0x0CU;</div>
 <div class="line"> </div>
@@ -1299,6 +1299,7 @@ Refer to the <a class="el" href="group__usbd__cdcFunctions__ncm.html#USBD_User_C
 <div class="line">  PacketFilter = ARM_ETH_MAC_ADDRESS_BROADCAST;</div>
 <div class="line"> </div>
 <div class="line">  FrameIN_Size = 0U;</div>
+<div class="line">  memset(FrameIN, 0, <span class="keyword">sizeof</span>(FrameIN));</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Initialize Media Access Controller</span></div>
 <div class="line">  capabilities = EthMac-&gt;GetCapabilities();</div>
@@ -1322,9 +1323,9 @@ Refer to the <a class="el" href="group__usbd__cdcFunctions__ncm.html#USBD_User_C
 <div class="line">  <span class="keywordflow">if</span> (status != ARM_DRIVER_OK) { <span class="keywordflow">return</span>; }</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Create Threads</span></div>
-<div class="line">  Connection_ThreadId = osThreadCreate(osThread(Connection_Thread), NULL);</div>
-<div class="line">  DataIN_ThreadId     = osThreadCreate(osThread(DataIN_Thread),     NULL);</div>
-<div class="line">  DataOUT_ThreadId    = osThreadCreate(osThread(DataOUT_Thread),    NULL);</div>
+<div class="line">  Connection_ThreadId = osThreadNew(Connection_Thread, NULL, &amp;connection_thread_attr);</div>
+<div class="line">  DataIN_ThreadId     = osThreadNew(DataIN_Thread,     NULL, &amp;data_in_thread_attr);</div>
+<div class="line">  DataOUT_ThreadId    = osThreadNew(DataOUT_Thread,    NULL, &amp;data_out_thread_attr);</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>
@@ -1710,7 +1711,7 @@ Refer to the <a class="el" href="group__usbd__cdcFunctions__ncm.html#USBD_User_C
 <div class="line">  status = EthMac-&gt;SetMacAddress((ARM_ETH_MAC_ADDR *)net_addr);</div>
 <div class="line">  <span class="keywordflow">if</span> (status != ARM_DRIVER_OK) { <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
 <div class="line"> </div>
-<div class="line">  memcpy(&amp;NCM_State.net_address, net_addr, 6);</div>
+<div class="line">  memcpy(NCM_State.net_address, net_addr, 6);</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><span class="preprocessor">#else</span></div>
@@ -1853,24 +1854,23 @@ Refer to the <a class="el" href="group__usbd__cdcFunctions__ncm.html#USBD_User_C
 <div class="line">  <span class="comment">// Explained in ncm10.pdf document from www.usb.org in paragraph 7.2</span></div>
 <div class="line"> </div>
 <div class="line">  FrameIN_Size = 0U;</div>
-<div class="line">  osSignalClear(DataIN_ThreadId, 1U);</div>
 <div class="line"> </div>
 <div class="line">  memset(&amp;NCM_State, 0, <span class="keyword">sizeof</span>(NCM_State));</div>
 <div class="line">  NCM_State.ntb_input_size = USBD_CDCn_NCM_DW_NTB_IN_MAX_SIZE;</div>
 <div class="line">  NCM_State.max_datagram_size = USBD_CDCn_NCM_W_MAX_SEGMENT_SIZE;</div>
 <div class="line"><span class="preprocessor">#if ((USBD_CDCn_NCM_BM_NETWORK_CAPABILITIES &amp; 0x02) != 0)</span></div>
-<div class="line">  memcpy(&amp;NCM_State.net_address, &amp;MacAddress, 6);</div>
+<div class="line">  memcpy(NCM_State.net_address, &amp;MacAddress, 6);</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line">  NCM_State.packet_filter_bitmap = 0x0CU;</div>
 <div class="line"> </div>
 <div class="line">  PacketFilter = ARM_ETH_MAC_ADDRESS_BROADCAST;</div>
 <div class="line"> </div>
-<div class="line">  EthMac-&gt;SetMacAddress(&amp;MacAddress);</div>
-<div class="line">  EthMac-&gt;SetAddressFilter(NULL, 0);</div>
-<div class="line">  EthMac-&gt;Control(ARM_ETH_MAC_CONFIGURE,</div>
-<div class="line">                  LinkInfo.speed  &lt;&lt; ARM_ETH_MAC_SPEED_Pos  |</div>
-<div class="line">                  LinkInfo.duplex &lt;&lt; ARM_ETH_MAC_DUPLEX_Pos |</div>
-<div class="line">                  PacketFilter);</div>
+<div class="line">  (void)EthMac-&gt;SetMacAddress(&amp;MacAddress);</div>
+<div class="line">  (void)EthMac-&gt;SetAddressFilter(NULL, 0);</div>
+<div class="line">  (void)EthMac-&gt;Control(ARM_ETH_MAC_CONFIGURE,</div>
+<div class="line">                       (uint32_t)(LinkInfo.speed                           ) |</div>
+<div class="line">                       (uint32_t)(LinkInfo.duplex &lt;&lt; ARM_ETH_MAC_DUPLEX_Pos) |</div>
+<div class="line">                        PacketFilter);</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>
