@@ -868,9 +868,144 @@ All files are stored in the Virtual ROM File System.
 
 Automatic Invocation
 --------------------
-If configured appropriately, FCARM will be invoked automatically during a project build. For setup, go to \b Project ->
-\b Options \b for \b Target and select the \b Utilities tab. At the bottom, you can configure how FCARM compiles the image
-files. Here's an example:
+If configured accordingly, FCARM is called automatically during a project build. In a csolution project, this is possible with
+the help of a \b cmake-script or a \b cmake-project. The main difference lies in how the web content resources are provided.
+In an FCARM call with a cmake-script, the web resource files are listed in the csolution project file \c cproject.yml, whereas
+in an FCARM call with a cmake-project, only the web resource container directory is specified in the csolution project file.
+The cmake project then searches the resource directory and adds all files found there to the web resources.
+
+CMake-script
+------------
+To setup the CMake script, create a file \c fcarm.cmake in the local csolution project directory with the following content:
+
+\code
+list(GET CMAKE_ARGV3 1 INPUT_DIRECTORY)
+list(REMOVE_AT CMAKE_ARGV3 0 1)
+foreach(ITEM ${CMAKE_ARGV3})
+  cmake_path(GET ITEM FILENAME FILE)
+  list(APPEND FILES ${FILE})
+endforeach()
+string(REPLACE ";" ",\n" FILES "${FILES}")
+
+cmake_path(RELATIVE_PATH CMAKE_ARGV4 BASE_DIRECTORY ${INPUT_DIRECTORY} OUTPUT_VARIABLE OUTPUT)
+cmake_path(GET INPUT_DIRECTORY FILENAME INPUT_DIRECTORY_NAME)
+cmake_path(GET INPUT_DIRECTORY PARENT_PATH WORKING_DIRECTORY)
+
+set(COMMAND_FILE "${CMAKE_CURRENT_BINARY_DIR}/Auto_FcArm_Cmd.inp")
+file(WRITE ${COMMAND_FILE} "${FILES}\nTO ${OUTPUT} RTE NOPRINT ROOT(${INPUT_DIRECTORY_NAME})\n")
+
+execute_process(COMMAND
+  fcarm @${COMMAND_FILE}
+  WORKING_DIRECTORY ${WORKING_DIRECTORY}
+  RESULT_VARIABLE STATUS
+)
+
+if(STATUS AND NOT STATUS EQUAL 0)
+  message(FATAL_ERROR "Failed to execute FCARM: ${STATUS}")
+endif()
+\endcode
+
+In the csolution project file \c cproject.yml add a list of all web resources under \c executes: node.
+
+\code
+  executes:
+    - execute: Run FCARM
+      run: ${CMAKE_COMMAND} -P $input(0)$ $input$ $output$
+      always:
+      input:
+        - $ProjectDir()$/fcarm.cmake  # CMake script directory
+        - Web                         # Root directory for web resources
+        - Web/index.htm
+        - Web/pg_header.inc
+        - Web/pg_footer.inc
+        - Web/ad.cgi
+        - Web/ad.cgx
+        - Web/buttons.cgi
+        - Web/buttons.cgx
+        - Web/language.cgi
+        - Web/lcd.cgi
+        - Web/leds.cgi
+        - Web/network.cgi
+        - Web/system.cgi
+        - Web/tcp.cgi
+        - Web/xml_http.js
+        - Web/arm.png
+        - Web/home.png
+        - Web/keil.gif
+        - Web/llblue.jpg
+        - Web/pabb.gif
+      output:
+        - Web.c                       # Output file for FCARM
+\endcode
+
+- The first line under \c input: specifies the location of the cmake script file.
+- The second line specifies the \b root directory for the web content.
+
+CMake-project
+-------------
+To setup the CMake project, create a file \c CMakeLists.txt in the local csolution project's subdirectory \b FCARM
+with the following content:
+
+\code
+# CMakeLists.txt for calling FCARM
+# Find input files in the input base directory and in its subfolders using recursive scanning
+# Format arguments and generate a steering command file, overcoming any command line length limitation
+# Call FCARM using the steering command file, generating the source file in the expected output  
+#
+# Configuration Step: ${CMAKE_COMMAND} -G <generator> -S <source directory> -B <build directory> -DINPUT_DIRECTORY=<input base directory> -DOUTPUT=<output source file>
+# Build Step: ${CMAKE_COMMAND} --build <build directory>
+#
+# <generator>: underlying generator build system, e.g. Ninja
+# <source directory>: directory where this CMakeLists.txt resides
+# <build directory>: directory for temp files
+# <input base directory>: directory where input data is located
+# <output source file>: path and filename of source file to be generated
+
+cmake_minimum_required(VERSION 3.22)
+include(ExternalProject)
+
+project("FCARM" NONE)
+
+file(GLOB_RECURSE INPUT ${INPUT_DIRECTORY}/*)
+
+foreach(ITEM ${INPUT})
+  cmake_path(RELATIVE_PATH ITEM BASE_DIRECTORY ${INPUT_DIRECTORY} OUTPUT_VARIABLE FILE)
+  list(APPEND FILES ${FILE})
+endforeach()
+string(REPLACE ";" ",\n" FILES "${FILES}")
+
+cmake_path(RELATIVE_PATH OUTPUT BASE_DIRECTORY ${INPUT_DIRECTORY} OUTPUT_VARIABLE RELATIVE_OUTPUT)
+cmake_path(GET INPUT_DIRECTORY FILENAME INPUT_DIRECTORY_NAME)
+cmake_path(GET INPUT_DIRECTORY PARENT_PATH WORKING_DIRECTORY)
+
+set(COMMAND_FILE "${CMAKE_CURRENT_BINARY_DIR}/Auto_FcArm_Cmd.inp")
+file(WRITE ${COMMAND_FILE} "${FILES}\nTO ${RELATIVE_OUTPUT} RTE NOPRINT ROOT(${INPUT_DIRECTORY_NAME})\n")
+
+add_custom_target(FCARM ALL DEPENDS ${OUTPUT})
+add_custom_command(OUTPUT ${OUTPUT} DEPENDS ${INPUT} ${INPUT_DIRECTORY}
+  COMMAND fcarm @${COMMAND_FILE}
+  WORKING_DIRECTORY ${WORKING_DIRECTORY}
+)
+\endcode
+
+In the csolution project file \c cproject.yml add command and parameters to invoke the FCARM file converter.
+
+\code
+  executes:
+    - execute: Run FCARM
+      run: ${CMAKE_COMMAND} -G Ninja -S $input(0)$ -B ${CMAKE_BINARY_DIR}/FCARM/$Project$.$BuildType$+$TargetType$ -DINPUT_DIRECTORY=$input(1)$ -DOUTPUT=$output$ && ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}/FCARM/$Project$.$BuildType$+$TargetType$ -- --quiet
+      always:
+      input:
+        - FCARM   # CMake script directory
+        - Web     # Input directory with "web files" for FCARM
+      output:
+        - Web.c   # Output file for FCARM
+\endcode
+
+µVision project
+---------------
+For setup, go to \b Project -> \b Options \b for \b Target and select the \b Utilities tab. At the bottom, you can configure
+how FCARM compiles the image files. Here's an example:
 
 \anchor fcarm_setup_ds
 \image html "fcarm_configuration.png" "Configure Image File Processing (FCARM) Dialog"
