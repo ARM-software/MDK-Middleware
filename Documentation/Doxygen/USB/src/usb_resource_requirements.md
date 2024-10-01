@@ -55,14 +55,10 @@ n is the instance number, m is the endpoint number 1...15
 
 \note
 - For **USB:Device:Custom Class** each endpoint In/Out pair executes in a separate thread. The number of threads depends on
-  the number of endpoints enabled in the configuration file USBD_Config_CustomClass_n.c.
+  the number of endpoints enabled in the configuration file USBD_Config_CustomClass_n.h.
 - The **Default Stack Size** in the table above can be changed in the USB configuration files (for example
   USBD_Config_n.h and USBD_Config_DeviceClass_n.h). At the end of each configuration file, you will find
   **OS Resource Settings** and below that the value for the **Thread stack size**.
-
-### RTX v5 Requirements {#usbd_req_rtx5}
-
-The USB Device component allocates all necessary resources statically so no changes to RTX settings are necessary.
 
 ### Memory Requirements {#usbd_mem_req}
 
@@ -134,10 +130,6 @@ n is the instance number
   **OS Resource Settings** and below that the value for the **Thread stack size**.
 - If File System is used retargeted to USB Host Mass Storage the stack size for thread calling File System functions should
   be at least 2560 Bytes.
-
-### RTX v5 Requirements {#usbh_req_rtx5}
-
-The USB Host component allocates all necessary resources statically so no changes to RTX settings are necessary.
 
 ### Memory Requirements {#usbh_mem_req}
 

@@ -30,7 +30,10 @@ The gray area around the RTE Components USB Device 1 and Driver_USBD1, as well a
 and can only be used if a microcontroller device has multiple USB controllers present. If this is the case, an USB Device
 Class can be connected to any of the USB Device Instances.
 
-![USB Device Structure](usb_device_blocks_config_files.png)
+<div>
+  <img style="text-align:left;" src="usb_device_blocks_config_files.png"/>
+  <div class="caption" style="text-align:center;">USB Device Structure</div>
+</div>
 
 USB Device peripherals can have one or more of the following USB Device Classes:
 
@@ -91,7 +94,10 @@ Only a few steps are necessary to complete the RTE Component selection:
   - Select the **CMSIS:CORE** to provide the core interface to the processor.
   - Select a suitable **CMSIS:RTOS2** that is a required for the application.
 
-![RTE Component Selection](rteusbx.png)
+<div>
+  <img style="text-align:left;" src="rteusbx.png"/>
+  <div class="caption" style="text-align:center;">RTE Component Selection</div>
+</div>
 
 \note
 - Most microcontrollers have only one USB Controller implemented in hardware and only one driver **Driver_USBD0**
@@ -279,7 +285,7 @@ int main (void) {
 }
 ```
 
-\note For changing just serial number string use the \ref USBD_SetSerialNumber function!
+\note For changing just serial number string use the \ref USBD_SetSerialNumber function.
 
 \note For non high-speed capable device following descriptors are not important:
 - \ref USB_Device_Qualifier_Descriptor for low/full-speed
@@ -308,17 +314,17 @@ The USB Device Component generates \ref usbd_evr "a broad set of Debug Events" f
 
 To use the Event Recorder it is required to create an image with event generation support. The necessary steps are:
 
-  1. \urlout{Event-Recorder-Enable}: in the RTE management dialog enable the software component **CMSIS-View:Event Recorder**.
-  2. Ensure that Event Recorder is initialized preferably by \urlout{RTX5-Event-Recorder-Config} if CMSIS-RTOS2 RTX v5 is used, 
-     or alternatively by calling the function \urlout{Event-Recorder-Initialize-Func} in the application code. 
-  3. \ref usbDevEvrConfig "Event Recorder Configuration": if necessary, adjust default Event Recorder configuration.
-  4. Build the application code, download it to the target hardware and start debug session.
+1. \urlout{Event-Recorder-Enable}: in the RTE management dialog enable the software component **CMSIS-View:Event Recorder**.
+2. Ensure that Event Recorder is initialized preferably by \urlout{RTX5-Event-Recorder-Config} if CMSIS-RTOS2 RTX v5 is used,
+   or alternatively by calling the function \urlout{Event-Recorder-Initialize-Func} in the application code.
+3. \ref usbDevEvrConfig "Event Recorder Configuration": if necessary, adjust default Event Recorder configuration.
+4. Build the application code, download it to the target hardware and start debug session.
 
 Now, when the USB Device generates event information, it can be viewed in the \urlout{uv4-Event-Recorder}.
 
 #### Event Recorder Configuration {#usbDevEvrConfig}
 
-This section describes the configuration settings for the Event Recorder; refer to \ref usbDevEvrSupport "Event Recorder Support" for more information.
+This section describes the configuration settings for the Event Recorder; refer to \urlout{RTX5-Event-Recorder-Config} for more information.
 
 **USB Event Generation Configuration**
 

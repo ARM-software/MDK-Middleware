@@ -23,15 +23,15 @@ Directory                  | Description
 The API interface of the USB Component is provided in the header file %rl_usb.h.
 The table below provides a complete overview of all public header files.
 
-Header File         | Used by           | Description
-:------------------ | :---------------- | :------------------------------------
-%rl_usb.h           | application code  | API interface for the USB Device and USB Host component
-usb_def.h           | main header       | Generic USB definitions
-usb_adc.h           | main header       | USB definitions for ADC device class 
-usb_cdc.h           | main header       | USB definitions for CDC device class 
-usb_cdc_acm_rndis.h | main header       | USB definitions for CDC ACM RNDIS device class 
-usb_hid.h           | main header       | USB definitions for HID device class 
-usb_msc.h           | main header       | USB definitions for MSC device class 
-usb_ms.h            | main header       | USB definitions for USB Microsoft Descriptors
+Header File         | Used by                            | Description
+:------------------ | :--------------------------------- | :------------------------------------
+%rl_usb.h           | application code                   | API interface for the USB Device and USB Host component
+usb_def.h           | application code and USB component | Generic USB definitions
+usb_adc.h           | application code and USB component | USB definitions for ADC device class 
+usb_cdc.h           | application code and USB component | USB definitions for CDC device class 
+usb_cdc_acm_rndis.h | application code and USB component | USB definitions for CDC ACM RNDIS device class 
+usb_hid.h           | application code and USB component | USB definitions for HID device class 
+usb_msc.h           | application code and USB component | USB definitions for MSC device class 
+usb_ms.h            | application code and USB component | USB definitions for USB Microsoft Descriptors
 
 */
