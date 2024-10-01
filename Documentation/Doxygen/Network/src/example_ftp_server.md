@@ -30,7 +30,7 @@ Following configuration files are provided with this example:
  - For the File System component, in the `/RTE/File_System/` folder:
    - `FS_Config.h`, `FS_Config_MC_0.h`, `FS_Debug.h`: [File System](../FileSystem/index.html) configuration files
  - For the CMSIS components, in the `/RTE/CMSIS/` folder:
-   - `RTX_Config.h` and `RTX_Config.h`: [CMSIS-RTX Configuration files](https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html) for the RTOS Kernel.
+   - `RTX_Config.c` and `RTX_Config.h`: [CMSIS-RTX Configuration files](https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html) for the RTOS Kernel.
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `/Board/` directory.
 
@@ -58,7 +58,7 @@ In order to build the FTP Server project it shall be extended with a compatible 
 Board-specific setup such as jumpers, Ethernet ports, power supply, etc. is documented in the board layer description (`README.md`) of your selected target.
 
  -# Load the firmware image to the target development board.
- -# Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already a member   of this LAN.
+ -# Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already a member of this LAN.
  -# If your hardware supports it, insert a SD card into the SD card slot. This will be the data storage that you will have access to. Hardware that does not have a SD card interface will most probably use a RAM disk for FTP demonstration.
 
 **Example execution**
@@ -67,6 +67,6 @@ You can use either a Command Line utility or a GUI FTP client program to connect
 
 In the Command console of your PC type `ftp my_host` (or the respective hostname specified in the `Net_Config.h` file). If you have a DCHP server in your network, it will automatically connect to the FTP server.
 
-You will be asked for a username and password combination. use *admin* for the user name and no password (you can change the defaults in the `Net_Config_FTP_Server.h` file). After a successful log in, you should see something like this:
+You will be asked for a username and password combination. Use *admin* for the user name and no password (you can change the defaults in the `Net_Config_FTP_Server.h` file). After a successful log in, you should see something like this:
 
 ![FTP server command line interface](ftp_server.png)

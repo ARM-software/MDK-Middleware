@@ -12,7 +12,7 @@ The SMTPS Client project is available as part of the \ref nw_ref_example "Networ
 
 Following files implement application-specific logic in the example:
 
- - `SMTPS_Client.c` contains the main C function that initializes the board hardware, the Network Component and provides the IP address of SMTPS server. 
+ - `SMTPS_Client.c` contains the main C function that initializes the board hardware, the Network Component and provides the IP address of SMTPS server.
 
 <h2>Software Components Configuration Files</h2>
 
@@ -21,7 +21,7 @@ Configuration files for the software components used in the project are located 
 Following configuration files are provided with this example:
 
  - For the Network component, in `/RTE/Network/` folder:
-   - `Net_Config_SMTP_Client.h`: \ref using_smtpc_conf. "SMTP Client configuration"
+   - `Net_Config_SMTP_Client.h`: \ref using_smtpc_conf "SMTP Client configuration"
    - `Net_Config_DNS_Client.h`: \ref using_dns_client_conf "DNS Client configuration"
    - `Net_Config_TCP.h`: \ref using_network_sockets_tcp_conf "TCP Socket configuration"
    - `Net_Config_UDP.h`: \ref using_network_sockets_udp_conf "UDP Socket configuration"
@@ -32,7 +32,7 @@ Following configuration files are provided with this example:
  - For mbedTLS component, in `/RTE/Security/` folder:
    - `mbedTLS_config.h`, `mbedTLS_crypto_config.h`: [mbedTLS configuration files](https://github.com/ARM-software/CMSIS-mbedTLS)
  - For the CMSIS components, in the `/RTE/CMSIS/` folder:
-   - `RTX_Config.h` and `RTX_Config.h`: [CMSIS-RTX Configuration files](https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html) for the RTOS Kernel
+   - `RTX_Config.c` and `RTX_Config.h`: [CMSIS-RTX Configuration files](https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html) for the RTOS Kernel
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `/Board/` directory.
 

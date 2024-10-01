@@ -29,7 +29,7 @@ Following configuration files are provided with this example:
    - `Net_Config.h`: \ref nw_Network_Core "Network Core configuration"
    - `Net_Debug.h`: \ref netDebugConfig "Network Debug configuration"
  - For the CMSIS components, in the `/RTE/CMSIS/` folder:
-   - `RTX_Config.h` and `RTX_Config.h`: [CMSIS-RTX Configuration files](https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html) for the RTOS Kernel
+   - `RTX_Config.c` and `RTX_Config.h`: [CMSIS-RTX Configuration files](https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html) for the RTOS Kernel
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `/Board/` directory.
 
@@ -65,6 +65,6 @@ For opening a Telnet session to your development , you need a Telnet client on t
 
 In the Telnet client use `my_host` (or the respective hostname that you have chosen in the `Net_Config.h` file) as the host name  and use the standard Telnet port 23.
 
-You will be asked for a username and password combination. use *admin* for the user name and no password (you can change the defaults in the `Net_Config_Telnet_Server.h` file). After a successful log in, eneter `help` command and you should see the list of available commands like this:
+You will be asked for a username and password combination. Use *admin* for the user name and no password (you can change the defaults in the `Net_Config_Telnet_Server.h` file). After a successful log in, eneter `help` command and you should see the list of available commands like this:
 
 ![Telnet Command Line Interface](telnet_cli.png)

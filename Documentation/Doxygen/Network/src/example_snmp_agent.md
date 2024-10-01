@@ -16,7 +16,7 @@ The SNMP Agent project is available as part of the \ref nw_ref_example "Network 
 
 Following files implement application-specific logic in the example:
 
- - `SNMP_Agent.c` contains the main C function that initializes the board hardware and the Network Component. 
+ - `SNMP_Agent.c` contains the main C function that initializes the board hardware and the Network Component.
  - `SNMP_Agent_MIB.c` contains the \ref mib_data_table. Change this to the application's needs.
 
 <h2>Software Components Configuration Files</h2>
@@ -32,7 +32,7 @@ Following configuration files are provided with this example:
    - `Net_Config.h`: \ref nw_Network_Core "Network Core configuration".
    - `Net_Debug.h`: \ref netDebugConfig "Network Debug configuration".
  - For the CMSIS components, in the `/RTE/CMSIS/` folder:
-   - `RTX_Config.h` and `RTX_Config.h`: [CMSIS-RTX Configuration files](https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html) for the RTOS Kernel.
+   - `RTX_Config.c` and `RTX_Config.h`: [CMSIS-RTX Configuration files](https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html) for the RTOS Kernel.
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `/Board/` directory.
 
