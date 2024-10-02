@@ -78,7 +78,7 @@ computer systems:
   technologies and programming languages.
 
 \note  
-The examples used in these sections are based on the \ref Compact_Web_Server_Example example. All file names mentioned in
+The examples used in these sections are based on the \ref HTTP_Server_Example example. All file names mentioned in
 the sections can be found in this example. If this example is not available for your target hardware, have a look at the code
 for another development platform. Porting the code to your underlying hardware is easy when using the MDK-Professional
 Middleware.
@@ -114,7 +114,7 @@ language itself is simple and works as follows:
 Application Example
 -------------------
 \note  
-The examples used in this section are based on the \ref Compact_Web_Server_Example example. All file names mentioned in
+The examples used in this section are based on the \ref HTTP_Server_Example example. All file names mentioned in
 the sections can be found in this example.
 
 Here is an example of a web page written in the scripting language. This web page is used to edit or change the system
@@ -353,7 +353,7 @@ back to the browser.
 Application Example
 -------------------
 \note  
-The examples used in this section are based on the \ref Compact_Web_Server_Example example. All file names mentioned in
+The examples used in this section are based on the \ref HTTP_Server_Example example. All file names mentioned in
 the sections can be found in this example.
 
 Here is a an example of a typical data flow. It assumes that you have clicked on the link to the \b AD page. This calls the

@@ -1,4 +1,4 @@
-# File Demo Example {#fs_standalone_example}
+# File Demo Example {#File_Demo_Example}
 
 This example shows how to manipulate files on a memory drive using the File System Component.
 
@@ -12,6 +12,8 @@ of the development board and a computer:
 
 ## Project Organization
 
+The File Demo project is available as part of \ref examples "File System Reference examples".
+
 <h2>Application Source Files</h2>
 
 Following files implement application-specific logic in the example:
@@ -20,22 +22,22 @@ Following files implement application-specific logic in the example:
 
 <h2>Software Components Configuration Files</h2>
 
-Configuration files for the software components used in the project are available in the `/RTE/` directory and can be modified by users to adjust the operation of related components. Section TBD gives an overview about the components and their dependencies.
+Configuration files for the software components used in the project are available in the `./RTE/` directory and can be modified by users to adjust the operation of related components.
 
 Following configuration files are provided with this example:
 
- - For the File System component, in the `/RTE/File_System/` folder:
+ - For the File System component, in the `./RTE/File_System/` folder:
    - `FS_Config.h`: \ref fs_Device_Configuration "File System configuration".
    - `FS_Config_MC_0.h`: \ref mc_usage "File System Memory Card configuration".
    - `FS_Debug.h`: \ref fsEvrConfig "File System Debug configuration".
- - For the CMSIS components, in the `/RTE/CMSIS/` folder:
-   - `RTX_Config.h` and `RTX_Config.h`: [CMSIS-RTX Configuration files](https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html) for the RTOS Kernel.
+ - For the CMSIS components, in the `./RTE/CMSIS/` folder:
+   - `RTX_Config.h` and `RTX_Config.c`: [CMSIS-RTX Configuration files](https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html) for the RTOS Kernel.
 
-When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `/Board/` directory.
+When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `./Board/` directory.
 
 <h2>Board Layer</h2>
 
-In order to build the File Demo project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
+In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
  - `CMSIS_MCI`: CMSIS-Driver for Memory Card Interface
  - `CMSIS_VIO`: CMSIS-Driver for virtual I/O interface
  - `STDIN`: Standard Input redirection
@@ -56,7 +58,7 @@ In order to build the File Demo project it shall be extended with a compatible b
 
 Board-specific setup such as jumpers, SD card ports, power supply, etc. is documented in the board layer description (`README.md`) of your selected target.
 
- -# Load the firmware image to the target development board.
+ -# Load the executable image to the target development board.
  -# Insert an SD Card to the corresponding slot on the development board.
  -# Connect your serial (virtual COM) port connected to the computer.
 

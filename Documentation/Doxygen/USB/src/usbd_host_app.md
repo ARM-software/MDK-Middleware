@@ -1,7 +1,5 @@
 # USB Host Computer Applications {#usb_sw_utilities}
 
-[TOC]
-
 Most of the available USB Device Classes are directly supported in operating systems. There is no need to install a particular driver on the USB Host Computer to connect to the USB Device peripheral.
 
 Some software needs to be written for the USB Host Computer when USB Driver classes are used to provide application specific functionality. For example, the USB HID Device Class may be used for generic data exchange. Therefore the data exchange interface needs to be developed at the USB Host Computer.

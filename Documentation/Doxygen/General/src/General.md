@@ -61,15 +61,15 @@ The following table gives you links to the respective sections of each middlewar
     <td>**Create an Application**</td>
     <td>[**File System**](../FileSystem/fs_create_app.html)</td>
     <td>[**Network**](../Network/network_create_app.html)</td>
-    <td>[**USB Device**](../USB/usbd_create_new.html)</td>
-    <td>[**USB Host**](../USB/usbh_create_new.html)</td>
+    <td>[**USB Device**](../USB/usbd_create_app.html)</td>
+    <td>[**USB Host**](../USB/usbh_create_app.html)</td>
   </tr>
   <tr>
     <td>**Example projects**</td>
-    <td>[**File System**](../FileSystem/fs_examples.html)</td>
-    <td>[**Network**](../Network/nw_ref_example.html)</td>
-    <td>[**USB Device**](../USB/usbd_ref_example.html)</td>
-    <td>[**USB Host**](../USB/usbh_ref_example.html)</td>
+    <td>[**File System**](../FileSystem/examples.html)</td>
+    <td>[**Network**](../Network/examples.html)</td>
+    <td>[**USB Device**](../USB/usbd_examples.html)</td>
+    <td>[**USB Host**](../USB/usbh_examples.html)</td>
   </tr>
   <tr>
     <td>**Resource Requirements**</td>

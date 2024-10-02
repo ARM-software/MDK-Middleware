@@ -924,16 +924,16 @@ WARN_LOGFILE           =
 INPUT                  = src/usb.md \
                          src/usb_rev_hist.md \
                          src/usb_device.md \
-                         src/usbd_ref_example.md \
-                         src/example_dev_hid.md \
-                         src/example_dev_msc.md \
-                         src/example_dev_cdc.md \
-                         src/usbd_create.md \
+                         src/usbd_create_app.md \
+                         src/usbd_examples.md \
+                         src/usbd_example_hid.md \
+                         src/usbd_example_msc.md \
+                         src/usbd_example_cdc.md \
                          src/usb_host.md \
-                         src/usbh_ref_example.md \
-                         src/example_host_hid.md \
-                         src/example_host_msc.md \
-                         src/usbh_create.md \
+                         src/usbh_create_app.md \
+                         src/usbh_examples.md \
+                         src/usbh_example_hid.md \
+                         src/usbh_example_msc.md \
                          src/usb_concepts.md \
                          src/usb_classes.md \
                          src/usb_function_reference.md \

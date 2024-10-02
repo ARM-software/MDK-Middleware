@@ -1,8 +1,4 @@
-# Create a new Application {#usbd_create_new}
-
-[TOC]
-
-\note this is
+# Create an Application {#usbd_create_app}
 
 The steps to create a microcontroller application that uses USB communication with an USB Device controller are:
 

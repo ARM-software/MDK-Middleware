@@ -925,8 +925,8 @@ INPUT                  = src/Network.md \
                          src/create_network_app.md \
                          src/network_trbl_shoot.md \
                          src/securing_communication.md \
+                         src/examples.md \
                          src/certification.md \
-                         src/nw_ref_example.md \
                          src/example_http_server.md \
                          src/example_https_server.md \
                          src/example_http_upload.md \

@@ -1,4 +1,3 @@
-
 ### USB Host Custom Class {#host_cust_tutorial}
 
 This example application shows how to communicate with serial RS232 adapter with
@@ -952,5 +951,5 @@ In case of errors, refer to the Evaluation Board User's Guide for configuration 
 ##### Hardware Setup
 
 - Verify all jumper settings on the target hardware.
-- Connect an USB CDC ACM Device (for example another development board with this example project: \ref dev_cdc_tutorial) to the
+- Connect an USB CDC ACM Device (for example another development board with this example project: \ref usbd_example_cdc) to the
   development board's **USBFS** connector.

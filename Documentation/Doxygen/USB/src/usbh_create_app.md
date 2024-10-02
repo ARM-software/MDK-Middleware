@@ -1,6 +1,4 @@
-# Create an Application {#usbh_create_new}
-
-[TOC]
+# Create an Application {#usbh_create_app}
 
 The steps to create a microcontroller application that functions as an USB Host are:
 
@@ -74,7 +72,7 @@ For more information, check the USB Host component's \ref usbh_res_req "Resource
 
 In the `USBH_Config_HID.h`, `USBH_Config_MSC.h`, `USBH_Config_CDC.h`, or `USBH_Config_CustomClass.h` you can specify the
 number of concurrent USB Devices that the USB Host will support. This has an impact on the amount of memory that will be
-reserved in your application for the attachment of USB Devices. The \ref usbh_ref_example shows how to configure an USB Host
+reserved in your application for the attachment of USB Devices. The \ref usbh_examples shows how to configure an USB Host
 to interact with different HID, MSC or CDC peripheral devices.
 
 ## User Code Implementation {#USBH_User_Code_Implementation}

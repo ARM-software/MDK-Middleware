@@ -17,7 +17,7 @@ Open the example project in MDK.
 
 ##### Source Files
 
-- `Audio.c` contains the main C function that initializes the board hardware and the USB Device Component.
+- `Audio.c` contains the application main thread which initializes the USB Device Component.
 - The file **USBD_User_ADC_0.c** is an code template that needs to be adapted to board audio hardware. Refer to
   \ref usbd_adcFunctions for details about these template functions.
 
@@ -219,7 +219,7 @@ We will have access to the development board's **buttons** (from the HID example
 
 #### Build the "USB Composite" Project
 
-Open the \ref dev_msc_tutorial "MSC example project" in MDK. From the \ref dev_hid_tutorial "HID example project", copy HID.c
+Open the \ref usbd_example_msc "MSC example project" in MDK. From the \ref usbd_example_hid "HID example project", copy HID.c
 and USBD_User_HID.c and add them to the project. Open the **Manage Run-Time Environment** window. Add one USB:Device:HID component to the
 project. After clicking OK, you will see that the USB Component in the Project window will have an additional entry:
 USBD_Config_HID_0.h. As the HID example uses LEDs and push-buttons, you might need to add these **Board Support** related

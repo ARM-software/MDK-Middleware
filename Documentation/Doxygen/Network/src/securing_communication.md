@@ -66,7 +66,7 @@ For more information on Mbed TLS and how it works, visit the
 
 ### Add the mbed TLS library to a project {#add_mbedtls}
 
-The \ref nw_ref_example section carries two examples for secure communication over the IP network: SSL Server and SSL Client.
+The \ref examples section carries two examples for secure communication over the IP network: SSL Server and SSL Client.
 To use the Mbed TLS library in your own projects, follow these steps:
 
 -# Download the **ARM:mbedTLS** library from \urlout{SW-Pack} or use \urlout{uv4_ca_packinstaller}
@@ -411,7 +411,7 @@ required to achieve this:
    ```
 
 -# Configure the RTX threads
-   - If you use **RTX v5**, you do not need to change the **RTX settings**, because all recources are statically allocated.
+   - If you use **RTX v5**, you do not need to change the **RTX settings**, because all resources are statically allocated.
 -# Build the example and download to Flash. If it fails, please check your "Read/Write Memory Areas" in your target options.
 -# You can test the example by sending an e-mail to your e-mail account, for example to Gmail or Yahoo.
 

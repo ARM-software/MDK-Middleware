@@ -13,8 +13,8 @@ The USB Device Component simplifies the software development of microcontroller 
 - Provides \urlout{uv4_ca_sourcefiles} for implementing the USB Device functionality.
 - Provides an user-friendly configuration file for each device class to generate \ref USB_Descriptors.
 - Flexibly assigns \ref USB_Endpoints "USB Endpoints" to the microcontroller USB Device peripheral.
-- Provides \subpage usbd_ref_example.
-- Explains how to \subpage usbd_create_new "Create a new application" from scracth.
+- Explains how to \subpage usbd_create_app "Create a new application" from scratch.
+- Provides \subpage usbd_examples implementing different USB Device use cases.
 
 ## RTE Components {#usbd_rte_components}
 
