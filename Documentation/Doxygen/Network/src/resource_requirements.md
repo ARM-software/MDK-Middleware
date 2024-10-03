@@ -1,4 +1,4 @@
-# Resource Requirements {#nw_resource_requirements}
+# Resource Requirements {#resource_requirements}
 
 This section describes the resource requirements of the **Network** component. 
 The actual requirements depend on the features used in the application. Therefore, the numbers provided here are guidelines

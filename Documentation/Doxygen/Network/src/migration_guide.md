@@ -1,4 +1,4 @@
-# Migration Guide {#network_diffs}
+# Migration Guide {#migration_guide}
 
 The following sections show how you can migrate MDK Middleware projects from version 7 to version 8:
 

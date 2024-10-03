@@ -1,8 +1,8 @@
-# Function Overview {#usb_function_reference}
+# Function Overview {#function_overview}
 
 The following list provides a brief overview of all USB Component functions.
 
-## USB Device {#usb_fo_usbd}
+## USB Device {#usbd_functions}
 
 \ref  usbd_coreFunctions
 
@@ -156,7 +156,7 @@ The following list provides a brief overview of all USB Component functions.
 - \ref USBD_MSCn_SetMediaOwnerUSB  &mdash; \copybrief USBD_MSCn_SetMediaOwnerUSB
 - \ref USBD_MSCn_SetMediaOwnerFS  &mdash; \copybrief USBD_MSCn_SetMediaOwnerFS
 
-## USB Host {#usb_fo_usbh}
+## USB Host {#usbh_functions}
 
 \ref  usbh_coreFunctions
 

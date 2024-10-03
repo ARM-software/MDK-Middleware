@@ -1,15 +1,15 @@
-# Create a File System Application {#fs_create_app}
+# Create a File System Application {#create_app}
 
 The steps to create a microcontroller application that uses the File System are:
 
--# Select \ref fs_RTE_Software_Component_Selection "RTE Components" along with other components that are
+-# Select \ref RTE_Component_Selection "RTE Components" along with other components that are
    required for your application.
--# Configure the \ref fs_Device_Configuration "File System".
--# Configure the \ref fs_Driver_Configuration "hardware".
--# Implement the \ref fs_User_Code_Implementation "User Code".
+-# Configure the \ref fs_configuration "File System".
+-# Configure the \ref hw_configuration "hardware".
+-# Implement the \ref User_Code_Implementation "User Code".
 -# \ref fs_debugging "Debug" you application using the built-in mechanisms of the File System Component.
   
-## RTE Component Selection {#fs_RTE_Software_Component_Selection}
+## RTE Component Selection {#RTE_Component_Selection}
 
 Only a few steps are necessary to complete the RTE Component selection:
 
@@ -54,7 +54,7 @@ Configure the driver-hardware relationship using the `FS_Config_NOR_n.h` file:
 
 ![NOR Flash Drive Configuration File](fs_config_nor_0_h.png)
 
-\note General \ref fs_sys_req requirements apply.
+\note General \ref system_configuration requirements apply.
 
 ### RAM Disk Drive {#ram_usage}
 
@@ -64,7 +64,7 @@ Set the drive characteristics in the `FS_Config_RAM.`h file:
 
 ![RAM Disk Configuration File](fs_config_ram_0_h.png)
 
-\note General \ref fs_sys_req requirements apply.
+\note General \ref system_configuration requirements apply.
 
 ### Memory Card Drive {#mc_usage}
 
@@ -82,7 +82,7 @@ Set the drive characteristics in the `FS_Config_MC_n.h` file:
 - If your microcontroller device does not have a **CMSIS-Driver** for the **MCI (API)** or **SPI (API)**, you can try
   to develop your own one based on the \urlout{CMSIS-Driver-Ref} documentation.
 - The page \ref mc_control_layer lists all supported memory card types and gives further details on how to use these cards. 
-- General \ref fs_sys_req requirements apply.
+- General \ref system_configuration requirements apply.
 
 ### USB Flash Drive {#usb_usage}
 
@@ -98,7 +98,7 @@ Set the drive characteristics in the `FS_Config_USB_n.h` file:
 - If your microcontroller device does not have a **CMSIS-Driver** for the **USB Host (API)**, you can try to develop
   your own one based on the
   \urlout{CMSIS-Driver-Ref} documentation.
-- General \ref fs_sys_req requirements apply.
+- General \ref system_configuration requirements apply.
 
 ### NAND Flash Drive {#nand_usage}
 
@@ -115,9 +115,9 @@ Set the drive characteristics in the `FS_Config_NAND_n.h` file:
 - The page \ref nand_flash_TL describes additional features specific to these devices.
 - Using a **NAND (API)** driver, you can use any NAND Flash device with an 8-/16-bit memory bus interface for data storage.
 - NAND Flashes with SPI interface (Serial NAND) are currently *not supported* by the File System Component.
-- General \ref fs_sys_req requirements apply.
+- General \ref system_configuration requirements apply.
 
-## File System Configuration {#fs_Device_Configuration}
+## File System Configuration {#fs_configuration}
 
 The File System configuration file `FS_Config.h` contains settings for the amount of files that can be open at the same time:
 
@@ -125,7 +125,7 @@ The File System configuration file `FS_Config.h` contains settings for the amoun
 
 Maximum number of simultaneously opened files can be set separately for FAT File System and for Embedded File System (EFS).
 
-## Hardware Configuration {#fs_Driver_Configuration}
+## Hardware Configuration {#hw_configuration}
 
 As the file system is not bound to a special type of hardware, you need to configure the necessary drivers according to the
 requirements of your target device. This configuration is done in the `RTE_Device.h` configuration file:
@@ -134,7 +134,7 @@ requirements of your target device. This configuration is done in the `RTE_Devic
 
 \note Consult the device's user manual or hardware reference guide for more details.
 
-## System Resource Configuration {#fs_sys_req}
+## System Resource Configuration {#system_configuration}
 
 For proper operation, the File System Component requires some system configuration settings. The requirements are:
 - Minimum **heap size of 512 + 96 Bytes for each opened file**. If you want to be able to have three files open
@@ -146,12 +146,12 @@ For proper operation, the File System Component requires some system configurati
   \urlout{RTX-Conf-CM5} file.
 - Each opened file is protected with a mutex in order to ensure thread-safe operation. When working with file functions
   from the standard C library, you need to ensure enough mutex objects available for the file stream operations in the
-  standard library system. File System component's \ref fs_resource_requirements section explains how to determine the
+  standard library system. File System component's \ref resource_requirements section explains how to determine the
   right setting in detail. Adjusting the number of mutex objects available for standard library system can be done in the \urlout{RTX-Conf-CM5} file.
 
-For more information, check the File System component's \ref fs_resource_requirements section.
+For more information, check the File System component's \ref resource_requirements section.
 
-## User Code Implementation{#fs_User_Code_Implementation}
+## User Code Implementation{#User_Code_Implementation}
 
 All available functions are documented in the [Reference](./modules.html) section of the File System
 Component. These routines can be adapted to the needs of the microcontroller application, in case more functionality is

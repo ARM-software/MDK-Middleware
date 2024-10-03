@@ -1,4 +1,4 @@
-# Resource Requirements {#usb_resource_requirements}
+# Resource Requirements {#resource_requirements}
 
 This section describes the resource requirements of the USB component.
 

@@ -1,4 +1,4 @@
-# Theory of Operation {#fs_operation}
+# Theory of Operation {#operation}
 
 The File System Component provides functions to create, save, read, and modify files.
 The Retarget Interface of the C/C++ compiler run-time library allows the usage of
@@ -51,7 +51,7 @@ The File System Component supports various memory and storage devices that are a
 
 ![File System Component: Media types and Drives](fs_types.png)
 
-All available drives are defined with the \ref fs_RTE_Software_Component_Selection. A drive is passed as string to
+All available drives are defined with the \ref RTE_Component_Selection. A drive is passed as string to
 \ref system_routines and may be part of a filename. The system allows you to configure a current drive that is used when no
 drive is specified as part of the filename.
 

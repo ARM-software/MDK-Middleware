@@ -1,4 +1,4 @@
-# Revision History {#netw_revhist}
+# Revision History {#rev_history}
 
 <table class="cmtable" summary="Revision History">
     <tr>
@@ -338,7 +338,7 @@
       <td>V7.0.0 (beta)</td>
       <td>
         - Initial release of dual-stack (IPv4 and IPv6) version of Network Component
-        - Incompatible API to version 6.x (refer to \ref network_diffs)
+        - Incompatible API to version 6.x
         - Added \ref RFC_list
         - This Pack contains example projects for development boards: MCB1800, MCBSTM32F200, MCBSTM32F400
       </td>

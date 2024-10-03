@@ -18,7 +18,7 @@ The **USB Component** is structured as follows:
   - **Composite USB Devices** supporting multiple device classes can be implemented.
 - \urlout{USB-API} for USB Device and USB Host provide the interface to the microcontroller peripherals.
 
-## Documentation Structure {#usb_doc_structure}
+## Documentation Structure {#doc_structure}
 
 This user's guide contains the following chapters:
 
@@ -26,8 +26,8 @@ This user's guide contains the following chapters:
 - \ref USB_Host explains how to implement a **USB Host** with a microcontroller.
 - \ref USB_Concepts contains general information about the USB.
 - \ref USB_Classes provides details about the supported USB Device Classes.
-- \ref usb_function_reference lists the complete API of the USB Component.
-- \ref usb_resource_requirements shows the configuration of system resources for USB Component in detail.
+- \ref function_overview lists the complete API of the USB Component.
+- \ref resource_requirements shows the configuration of system resources for USB Component in detail.
 - \ref usb_migration contains information how to migrate projects to latest version of USB Component (v8).
 - [**API Reference**](./modules.html) shows the directory and file organization and contains the detailed API description.
 

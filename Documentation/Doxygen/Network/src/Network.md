@@ -63,18 +63,18 @@ that is produced. Unique identifiers are required for proper network operation.
 
 An \ref RFC_list "list of implemented RFCs" is also available.
 
-## Documentation Structure {#net_docs_structure}
+## Documentation Structure {#doc_structure}
 
 This user's guide contains the following chapters:
 
-- \ref network_create_app explains the necessary steps to develop a network project from scratch.
-- \ref network_troubleshoot shows best practice when debugging general network/connection issues.
+- \ref create_app explains the necessary steps to develop a network project from scratch.
+- \ref troubleshoot shows best practice when debugging general network/connection issues.
 - \ref secure_communication shows how to use **mbed TLS** together with the Network Component to secure your communication
   channels. It also explains how to create your own SSL/TLS certificates.
 - \ref examples is a good starting point for implementing your own networking device.
-- The chapter \ref certification explains how to test the TCP/IP stack with industry-standard tools against common
+- The chapter \ref cyber_security explains how to test the TCP/IP stack with industry-standard tools against common
   vulnerabilities.
-- \ref nw_resource_requirements describes the resource requirements of the Network Component.
-- \ref net_func_overview list provides a brief overview of all Network Component functions.
-- \ref network_diffs section contains information how to migrate from previous versions to the Network Component v8.
+- \ref function_overview list provides a brief overview of all Network Component functions.
+- \ref resource_requirements describes the resource requirements of the Network Component.
+- \ref migration_guide section contains information how to migrate from previous versions to the Network Component v8.
 - <a class=el href="./modules.html">API Reference</a> describes the functional interface of the Network Component in detail.

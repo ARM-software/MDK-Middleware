@@ -1,11 +1,11 @@
-# Migration Guide {#fs_migration}
+# Migration Guide {#migration_guide}
 
 The chapters below describe migration from an existing project using File System library before version 8.
 
-- Refer to \ref fs_migrate_components to learn how to migrate the File System components.
-- Refer to \ref fs_migrate_config to learn what changed in the File System configuration files.
+- Refer to \ref migrate_components to learn how to migrate the File System components.
+- Refer to \ref migrate_config to learn what changed in the File System configuration files.
 
-## Component Selection {#fs_migrate_components}
+## Component Selection {#migrate_components}
 
 There are three major changes in File System version 8 that affect how File System components
 get selected.
@@ -63,7 +63,7 @@ get selected.
      ARM::CMSIS-View:Event Recorder
    ```
 
-## Configuration {#fs_migrate_config}
+## Configuration {#migrate_config}
 
 In general two major changes were made to the File System version 8 configuration files and affect
 how File System gets configured.

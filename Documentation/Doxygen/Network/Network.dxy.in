@@ -921,12 +921,12 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = src/Network.md \
-                         src/network_revhist.md \
-                         src/create_network_app.md \
-                         src/network_trbl_shoot.md \
-                         src/securing_communication.md \
+                         src/revision_history.md \
+                         src/create_app.md \
+                         src/troubleshoot.md \
+                         src/secure_communication.md \
                          src/examples.md \
-                         src/certification.md \
+                         src/cyber_security.md \
                          src/example_http_server.md \
                          src/example_https_server.md \
                          src/example_http_upload.md \
@@ -937,13 +937,13 @@ INPUT                  = src/Network.md \
                          src/example_snmp_agent.md \
                          src/example_bsd_client.md \
                          src/example_bsd_server.md \
-                         src/network_resource_requirements.md \
-                         src/net_function_overview.md \
-                         src/network_diffs.md \
-                         src/Reference_Files.txt \
-                         src/ref_net_services.txt \
-                         src/ref_net_socket.txt \
-                         src/ref_net_interface.txt \
+                         src/function_overview.md \
+                         src/resource_requirements.md \
+                         src/migration_guide.md \
+                         src/ref_files.txt \
+                         src/net_services.txt \
+                         src/net_socket.txt \
+                         src/net_interface.txt \
                          src/net_structs.txt \
                          src/rl_net.txt \
                          src/net_modem.txt \

@@ -1,4 +1,4 @@
-# Cyber Security {#certification}
+# Cyber Security {#cyber_security}
 
 Every device that is connected to a network is a potential target of a cyber attack. This also counts for devices that are
 not connected to public networks - a private network might get hacked and all devices attached to it compromised. Thus, the

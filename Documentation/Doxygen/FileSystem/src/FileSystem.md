@@ -21,11 +21,14 @@ The File System Component is structured as follows:
   - \ref usb_usage "USB devices"
   - On-chip \ref ram_usage "RAM", Flash and external memory interfaces. 
 
-## Documentation Structure {#fs_docs_structure}
+## Documentation Structure {#doc_structure}
 
 This user's guide contains the following chapters:
 
-- \ref fs_create_app explains the necessary steps to develop a project containing a file system from scratch.
+- \ref create_app explains the necessary steps to develop a project containing a file system from scratch.
 - \ref examples are a good starting point for implementing your own storage device.
-- \ref fs_operation gives more detail on the basics of the File System Component.
-- \ref fs_function_reference lists the complete API of the File System Component.
+- \ref operation gives more detail on the basics of the File System Component.
+- \ref function_overview lists the complete API of the File System Component.
+- \ref resource_requirements shows the configuration of system resources for the File System Component in detail.
+- \ref migration_guide contains information how to migrate projects to latest version of the File System Component (v8).
+- [**API Reference**](./modules.html) shows the directory and file organization and contains the detailed API description.

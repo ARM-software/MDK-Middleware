@@ -1,4 +1,4 @@
-# Creating a Network Application {#network_create_app}
+# Creating a Network Application {#create_app}
 
 The steps to create a microcontroller application that uses TCP/IP communication are:
 
@@ -7,7 +7,7 @@ The steps to create a microcontroller application that uses TCP/IP communication
 -# \ref nw_Driver_Configuration "Enable the Network Driver and Controller" that is integrated in the microcontroller.
 -# Configure the various \ref nw_Device_Configuration "Network Components".
 -# Configure the \ref nw_system_resources "system resources" according to the network component's
-   \ref nw_resource_requirements.
+   \ref resource_requirements.
 -# Implement the \ref nw_User_Code_Implementation "User Code" using code templates that are provided for the Network
    Component.
 -# \ref nw_debugging "Debug" your application using the built-in mechanisms of the Network Component.
@@ -153,7 +153,7 @@ For proper operation, the Network Component requires some system configuration s
 - Additional two **threads** when Ethernet Interface is enabled (`netCore_Thread` and `netETH_Thread`).
   - If **RTX v5** is used, no changes to the **RTX settings** are required as all resources are statically allocated.
 
-For more information, check the Network Component's \ref nw_resource_requirements section.
+For more information, check the Network Component's \ref resource_requirements section.
 
 ## User Code Implementation {#nw_User_Code_Implementation}
 

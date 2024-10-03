@@ -922,7 +922,7 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = src/usb.md \
-                         src/usb_rev_hist.md \
+                         src/revision_history.md \
                          src/usb_device.md \
                          src/usbd_create_app.md \
                          src/usbd_examples.md \
@@ -936,18 +936,18 @@ INPUT                  = src/usb.md \
                          src/usbh_example_msc.md \
                          src/usb_concepts.md \
                          src/usb_classes.md \
-                         src/usb_function_reference.md \
-                         src/usb_resource_requirements.md \
+                         src/function_overview.md \
+                         src/resource_requirements.md \
                          src/usb_migration.md \
-                         src/Reference_Files.txt \
-                         src/ref_rl_usb.txt \
-                         src/ref_usb_structs.txt \
+                         src/ref_files.txt \
+                         src/rl_usb.txt \
+                         src/usb_structs.txt \
                          ../../../Components/USB/Include/rl_usb.h \
                          src/template/USBD_MSC.h \
                          ../../../Components/USB/Source/usbd_evr.h \
-                         src/ref_usbd_evr.txt \
+                         src/usbd_evr.txt \
                          ../../../Components/USB/Source/usbh_evr.h \
-                         src/ref_usbh_evr.txt
+                         src/usbh_evr.txt
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses

@@ -1,4 +1,4 @@
-# Revision History {#usb_revhist}
+# Revision History {#rev_history}
 
 <table class="cmtable" summary="Revision History">
     <tr>

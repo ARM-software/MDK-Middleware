@@ -922,15 +922,15 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = src/FileSystem.md \
-                         src/fs_rev_hist.md \
-                         src/fs_create_app.md \
+                         src/revision_history.md \
+                         src/create_app.md \
                          src/examples.md \
                          src/example_file_demo.md \
-                         src/fs_operation.md \
-                         src/fs_function_reference.md \
-                         src/fs_resource_requirements.md \
-                         src/fs_migration.md \
-                         src/Reference_Files.txt \
+                         src/operation.md \
+                         src/function_overview.md \
+                         src/resource_requirements.md \
+                         src/migration_guide.md \
+                         src/ref_files.txt \
                          src/stdio.h \
                          src/stdio.txt \
                          ../../../Components/FileSystem/Include/rl_fs.h \

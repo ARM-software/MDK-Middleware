@@ -59,8 +59,8 @@ The following table gives you links to the respective sections of each middlewar
   </tr>
   <tr>
     <td>**Create an Application**</td>
-    <td>[**File System**](../FileSystem/fs_create_app.html)</td>
-    <td>[**Network**](../Network/network_create_app.html)</td>
+    <td>[**File System**](../FileSystem/create_app.html)</td>
+    <td>[**Network**](../Network/create_app.html)</td>
     <td>[**USB Device**](../USB/usbd_create_app.html)</td>
     <td>[**USB Host**](../USB/usbh_create_app.html)</td>
   </tr>
@@ -73,10 +73,10 @@ The following table gives you links to the respective sections of each middlewar
   </tr>
   <tr>
     <td>**Resource Requirements**</td>
-    <td>[**File System**](../FileSystem/fs_resource_requirements.html)</td>
-    <td>[**Network**](../Network/nw_resource_requirements.html)</td>
-    <td>[**USB Device**](../USB/usb_resource_requirements.html#usbd_res_req)</td>
-    <td>[**USB Host**](../USB/usb_resource_requirements.html#usbh_res_req)</td>
+    <td>[**File System**](../FileSystem/resource_requirements.html)</td>
+    <td>[**Network**](../Network/resource_requirements.html)</td>
+    <td>[**USB Device**](../USB/resource_requirements.html#usbd_res_req)</td>
+    <td>[**USB Host**](../USB/resource_requirements.html#usbh_res_req)</td>
   </tr>
   <tr>
     <td>**Reference**</td>

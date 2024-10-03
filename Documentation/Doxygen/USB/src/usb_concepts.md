@@ -213,7 +213,7 @@ the hardware reference manual of your microcontroller.
 
 USB is a polled bus, where the host initiates all data exchanges.
 
-### Transactions
+### Transactions {#USB_Transactions}
 
 Data is transferred in so called **transactions**. Normally, they consist of three packets:
 -# The **token packet** is the header defining the transaction type and direction, the device address, and the endpoint.
@@ -228,7 +228,7 @@ data to transfer. In general, the destination responds with a handshake packet i
 
 ![Packet Model](packetmodel.png)
 
-### Packets
+### Packets {#USB_Packets}
 
 **Packets** could be thought of as the smallest element of data transmission. Each packet transmits an integral number
 of bytes at the current transmission rate. Packets start with a synchronization pattern, followed by the data bytes of the packet,

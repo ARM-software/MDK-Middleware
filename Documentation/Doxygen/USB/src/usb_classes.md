@@ -51,7 +51,7 @@ networking functions. Examples for communications equipment are:
 A detailed description about CDC is provided by the
 [USB Implementers Forum (USB-IF)](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50).
 
-### CDC Class Features
+### CDC Class Features {#CDC_Features}
 
 A communications device has three basic tasks:
 
@@ -73,7 +73,7 @@ The following endpoint configurations are supported:
 - One interrupt IN endpoint for notifications to the USB Host
 - One bulk IN and one bulk OUT endpoint for data transfer
 
-### Control Transfers
+### Control Transfers {#CDC_Control_Transfers}
 
 The documents available at
 [Communications Device Class](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50)
@@ -81,7 +81,7 @@ describe the nine available request types for the Abstract Control Model (ACM). 
 Control Model (NCM) by the documents in ECM120.pdf and NCM10.pdf are supported.
 are not supported.
 
-### USB Descriptors
+### USB Descriptors {#CDC_Descriptors}
 
 The following descriptors are required in an USB CDC ACM Device:
 
@@ -136,7 +136,7 @@ examples for HID class devices are:
 A detailed description about HID is provided by the
 [USB Implementers Forum (USB-IF)](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50).
 
-### HID Class Features
+### HID Class Features {#HID_Features}
 
 The HID class is not necessarily a human interface. But a device using the HID class has to be able to work within the limits
 of the HID class. These HID class implementation of the USB Component has the following features:
@@ -151,7 +151,7 @@ of the HID class. These HID class implementation of the USB Component has the fo
   sure that the data is polled periodically.
 - The \ref mainpage "USB Component" supports the HID Class for \ref USB_Device and \ref USB_Host applications.
 
-### Control Transfers
+### Control Transfers {#HID_Control_Transfers}
 
 The [HID specification](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50) defines six
 class-specific requests. They enable the USB Host to inquire about the capabilities and the current state of the device.
@@ -167,12 +167,12 @@ Furthermore, the host can set the state of output and feature items. All six req
 - During booting of the USB Host, a simplified protocol can be used for communication. The `Get_Protocol` request reads
   which protocol is currently active. The `Set_Protocol` request switches between the boot protocol and the report protocol.
 
-### Interrupt Transfers
+### Interrupt Transfers {#HID_Interrupt_Transfers}
 
 To ensure minimum data delay, interrupt endpoints are used. The bandwidth for interrupt transfers is guaranteed for every
 device after successful enumeration. Control endpoints may face data delivery delay in case the bus is busy.
 
-### USB Descriptors
+### USB Descriptors {#HID_Descriptors}
 
 The following descriptors are required in an USB HID Device:
 
@@ -207,7 +207,7 @@ examples for MSC class devices are:
 A detailed description about MSC is provided by the
 [USB Implementers Forum (USB-IF)](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50).
 
-### MSC Class Features
+### MSC Class Features {#MSC_Features}
 
 Not only hard disks use the MSC class. Any device that allows access to its internal data storage using MSC can be connected
 to the USB Bus as a mass storage device. The MSC class implementation in the USB Component has the following features:
@@ -219,7 +219,7 @@ to the USB Bus as a mass storage device. The MSC class implementation in the USB
   card as media and another one could have a RAM disk as media.
 - The \ref mainpage "USB Component" supports the MSC Class for \ref USB_Device and \ref USB_Host applications.
 
-### Control Transfers
+### Control Transfers {#MSC_Control_Transfers}
 
 The [MSC specification](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50)
 defines five class-specific requests to be transmitted over the default (control) pipe. Only two of them are supported by
@@ -229,7 +229,7 @@ the bulk-only protocol:
 - The **Get Max LUN** request allows the USB Host determine the number of **Logical Units (LUNs)** that are supported
   by the device. LUNs are numbered starting from LUN 0 to LUN 15 (maximum).
 
-### Bulk Transfers
+### Bulk Transfers {#MSC_Bulk_Transfers}
 
 The bulk-only protocol divides a successful data transfer into three stages:
 
@@ -237,7 +237,7 @@ The bulk-only protocol divides a successful data transfer into three stages:
 -# Data transport: the data is sent to or from the USB Host
 -# Status transport: the USB Device sends status information in the **Command Status Wrapper (CSW)** structure
 
-### USB Descriptors
+### USB Descriptors {#MSC_Descriptors}
 
 The following descriptors are required in an USB MSC Device:
 
@@ -256,7 +256,7 @@ more information on the topic.
 
 ## Custom Class {#CustomClass}
 
-### USB Host supporting any Device Class
+### USB Host supporting any Device Class {#CustomClass_Host}
 
 The Custom Class for USB Host has two use cases:
 
@@ -280,7 +280,7 @@ adaptation.
 The number of concurrent Custom Class Devices in a system can be configured using the `USBH_Config_CustomClass.h`
 configuration file.
 
-### USB Device implementing any Device Class
+### USB Device implementing any Device Class {#CustomClass_Device}
 
 The Custom Class for USB Device has two use cases:
 -# Implementing/supporting a
@@ -300,7 +300,7 @@ requests and Custom Class endpoint events handling.
 
 To create the Custom Class the configuration file providing up to four interfaces with up to 8 endpoints has been provided.
 
-#### USB Descriptors
+### USB Descriptors {#CustomClass_Descriptors}
 
 Every USB Device requires certain descriptors. The following list is not complete but gives an impression about the various
 descriptors that may be required:

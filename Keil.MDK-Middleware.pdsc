@@ -1215,7 +1215,7 @@
           #define RTE_FileSystem_Drive_RAM_%Instance%      /* File System RAM Drive %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/html/FileSystem/fs_create_app.html#ram_usage"/>
+          <file category="doc"    name="Documentation/html/FileSystem/create_app.html#ram_usage"/>
           <file category="header" name="Components/FileSystem/Config/FS_Config_RAM.h" attr="config" version="6.3.0"/>
           <!-- Library source files -->
           <file category="source" name="Components/FileSystem/Source/fs_ram_drv.c"/>
@@ -1228,7 +1228,7 @@
           #define RTE_FileSystem_Drive_NOR_%Instance%      /* File System NOR Flash Drive %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/html/FileSystem/fs_create_app.html#nor_usage"/>
+          <file category="doc"    name="Documentation/html/FileSystem/create_app.html#nor_usage"/>
           <file category="header" name="Components/FileSystem/Config/FS_Config_NOR.h" attr="config" version="6.3.0"/>
           <!-- Library source files -->
           <file category="source" name="Components/FileSystem/Source/fs_nor_media.c"/>
@@ -1241,7 +1241,7 @@
           #define RTE_FileSystem_Drive_NAND_%Instance%     /* File System NAND Flash Drive %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/html/FileSystem/fs_create_app.html#nand_usage"/>
+          <file category="doc"    name="Documentation/html/FileSystem/create_app.html#nand_usage"/>
           <file category="header" name="Components/FileSystem/Config/FS_Config_NAND.h" attr="config" version="6.4.0"/>
           <!-- Library source files -->
           <file category="source" name="Components/FileSystem/Source/fs_nand_media.c"/>
@@ -1255,7 +1255,7 @@
           #define RTE_FileSystem_Drive_MC_%Instance%       /* File System Memory Card Drive %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/html/FileSystem/fs_create_app.html#mc_usage"/>
+          <file category="doc"    name="Documentation/html/FileSystem/create_app.html#mc_usage"/>
           <file category="header" name="Components/FileSystem/Config/FS_Config_MC.h" attr="config" version="6.3.0"/>
           <!-- Library source files -->
           <file category="source" name="Components/FileSystem/Source/fs_mc_mci.c"/>
@@ -1269,7 +1269,7 @@
           #define RTE_FileSystem_Drive_USB_%Instance%      /* File System USB Drive %Instance% */
         </RTE_Components_h>
         <files>
-          <file category="doc"    name="Documentation/html/FileSystem/fs_create_app.html#usb_usage"/>
+          <file category="doc"    name="Documentation/html/FileSystem/create_app.html#usb_usage"/>
           <file category="header" name="Components/FileSystem/Config/FS_Config_USB.h" attr="config" version="6.2.1"/>
           <!-- Library source files -->
           <file category="source" name="Components/FileSystem/Source/fs_usbh_msc.c"/>

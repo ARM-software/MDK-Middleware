@@ -1,4 +1,4 @@
-# Troubleshooting a Network Application {#network_troubleshoot}
+# Troubleshooting a Network Application {#troubleshoot}
 
 ## Network library hierarchy {#trbl_nw_hierachry}
 

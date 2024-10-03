@@ -27,7 +27,7 @@ Configuration files for the software components used in the project are availabl
 Following configuration files are provided with this example:
 
  - For the File System component, in the `./RTE/File_System/` folder:
-   - `FS_Config.h`: \ref fs_Device_Configuration "File System configuration".
+   - `FS_Config.h`: \ref fs_configuration "File System configuration".
    - `FS_Config_MC_0.h`: \ref mc_usage "File System Memory Card configuration".
    - `FS_Debug.h`: \ref fsEvrConfig "File System Debug configuration".
  - For the CMSIS components, in the `./RTE/CMSIS/` folder:

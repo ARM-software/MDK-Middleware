@@ -1,4 +1,4 @@
-# Resource Requirements {#fs_resource_requirements}
+# Resource Requirements {#resource_requirements}
 
 This section describes the resource requirements of the **File System** component. 
 The actual requirements depend on the features used in the application. Therefore, the numbers provided here are guidelines
@@ -34,7 +34,7 @@ you need to configure an additional heap size of 3 x (512 + 96) Bytes.
 
 ## CMSIS-RTOS Requirements {#fs_rtos_req}
 
-#### Thread Stack Requirements
+### Thread Stack Requirements
 
 Although the File System component requires a CMSIS-RTOS to be present, it is not creating any additional threads.
 
@@ -109,7 +109,7 @@ under the **CMSIS** component class:
     </tr>
 </table>
 
-#### Mutex Requirements
+### Mutex Requirements
 
 Additionally, you may also need to adjust the memory used to allocate mutex objects required by the C stdio library.
 Depending on the toolchain used, the total number of mutex objects required for proper operation may differ, but in

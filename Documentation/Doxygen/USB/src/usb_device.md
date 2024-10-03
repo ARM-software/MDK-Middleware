@@ -45,5 +45,3 @@ USB Device Classes. RTE Component instances are numbered. The number is appended
 the configuration files have the name `USB_Config_HID_0.h` and `USB_Config_HID_1.h`.
 
 \note The default configuration settings are pre-configured for one instance of an USB Device or USB Device Class in a non-composite device peripheral. For other combinations the settings *need* to be edited to ensure proper operation.
-
-
