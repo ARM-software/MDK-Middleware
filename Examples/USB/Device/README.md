@@ -1,6 +1,6 @@
 # USB Device Reference Applications
 
-**USB Device Reference Examples** contains following projects (in the corresponding subfolders) that implement specific USB Device functionality using MDK-Middleware USB component:
+**USB Device Reference Examples** contain the following projects (in the corresponding subfolders) that implement specific USB Device functionality using the MDK-Middleware USB component:
 
 | Example Project                           | Description                                                                   |
 |-------------------------------------------|-------------------------------------------------------------------------------|

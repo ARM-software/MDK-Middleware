@@ -1,6 +1,6 @@
 # USB Host Reference Applications
 
-**USB Host Reference Examples** contains following projects (in the corresponding subfolders) that implement specific USB Host functionality using MDK-Middleware USB component:
+**USB Host Reference Examples** contain the following projects (in the corresponding subfolders) that implement specific USB Host functionality using the MDK-Middleware USB component:
 
 | Example Project                           | Description                                                       |
 |-------------------------------------------|-------------------------------------------------------------------|
