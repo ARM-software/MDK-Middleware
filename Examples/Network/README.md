@@ -1,6 +1,6 @@
 # Network Reference Applications
 
-**Network Reference Examples** contains following projects (in the corresponding subfolders) that demonstrate how to use various services implemented in the MDK-Middleware Network component:
+**Network Reference Examples** contain the following projects (in the corresponding subfolders), which demonstrate the use of various services implemented in the MDK-Middleware Network component:
 
 | Example Project                  | Description                                                                                 |
 |----------------------------------|---------------------------------------------------------------------------------------------|
@@ -11,7 +11,7 @@
 | [HTTP Upload](./HTTP_Upload)     | Demonstrates how to access an SD card on a development board via a web interface.           |
 | [HTTPS Server](./HTTPS_Server)   | Shows the basic functionality of a secure web server using the mbed TLS software component. |
 | [SMTP Client](./SMTP_Client)     | Shows sending dynamic e-mail messages to a predefined email address.                        |
-| [SMTPS Client](./SMTPS_Client)   | shows sending dynamic e-mail messages to a predefined email address using secure client.    |
+| [SMTPS Client](./SMTPS_Client)   | Shows sending dynamic e-mail messages to a predefined email address using secure client.    |
 | [SNMP Agent](./SNMP_Agent)       | Shows how to use the Simple Network Management Protocol to control an embedded system.      |
 | [Telnet Server](./Telnet_Server) | Use Telnet interface for communication with the device.                                     |
 

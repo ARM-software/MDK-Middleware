@@ -4,8 +4,6 @@ This MDK-Middleware example project implements a USB Device that exchanges data 
 
 For detailed description see [USB Device Virtual COM Example section in MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/USB/usbd_example_cdc.html).
 
-
 ## Key usage aspects
 
 For successful build and operation the project needs to be extended with a board layer that implements required [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections) to the target hardware interfaces. For details see example documentation referenced above.
-

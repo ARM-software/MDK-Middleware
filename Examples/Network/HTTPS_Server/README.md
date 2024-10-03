@@ -4,7 +4,6 @@ This MDK-Middleware example project implements a secure compact Web-Server on a 
 
 For detailed description see [HTTPS Server Example section in MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/Network/HTTPS_Server_Example.html).
 
-
 ## Key usage aspects
 
 For successful build and operation the project needs to be extended with a board layer that implements required [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections) to the target hardware interfaces. For details see example documentation referenced above.
@@ -13,16 +12,17 @@ To use this example, connect an evaluation board to a LAN with a router. You can
 
 To test the program, open a web browser on a PC connected to the same LAN, and enter the following address:
 
-```
+```http
 https://my_host
 ```
 
 Login with the following default credentials:
 
- - user: admin
- - password: \<none\>
+- user: admin
+- password: \<none\>
 
 > **Note for Windows users**
+>
 > - You must add the test CA certificate **ca.crt** to the Trusted Root Certificate store on your computer
     to avoid the *Your connection is not private* error in the Chrome or Microsoft Edge browser.
 > - You need administrator rights for adding a certificate.
