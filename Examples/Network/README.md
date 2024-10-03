@@ -1,6 +1,6 @@
 # Network Reference Applications
 
-**Network Reference Examples** contain the following projects (in the corresponding subfolders), which demonstrate the use of various services implemented in the MDK-Middleware Network component:
+**Network Reference Examples** contain the following projects (in the corresponding subfolders) that demonstrate how to use various services implemented in the MDK-Middleware Network component:
 
 | Example Project                  | Description                                                                                 |
 |----------------------------------|---------------------------------------------------------------------------------------------|
