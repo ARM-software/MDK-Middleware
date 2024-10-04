@@ -19,7 +19,7 @@ The File System Component is structured as follows:
   - Flash chips (\ref nand_usage "NAND", \ref nor_usage "NOR")
   - Memory card interfaces (\ref mc_usage "SD/SDxC/MMC/eMMC")
   - \ref usb_usage "USB devices"
-  - On-chip \ref ram_usage "RAM", Flash and external memory interfaces. 
+  - On-chip \ref ram_usage "RAM", Flash and external memory interfaces.
 
 ## Documentation Structure {#doc_structure}
 

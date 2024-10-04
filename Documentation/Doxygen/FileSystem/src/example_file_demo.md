@@ -18,7 +18,7 @@ The File Demo project is available as part of \ref examples "File System Referen
 
 Following files implement application-specific logic in the example:
 
- - `File_Demo.c` contains the main application thread and implementation of commands for user interaction.
+- `File_Demo.c` contains the main application thread and implementation of commands for user interaction.
 
 <h2>Software Components Configuration Files</h2>
 
@@ -26,22 +26,23 @@ Configuration files for the software components used in the project are availabl
 
 Following configuration files are provided with this example:
 
- - For the File System component, in the `./RTE/File_System/` folder:
-   - `FS_Config.h`: \ref fs_configuration "File System configuration".
-   - `FS_Config_MC_0.h`: \ref mc_usage "File System Memory Card configuration".
-   - `FS_Debug.h`: \ref fsEvrConfig "File System Debug configuration".
- - For the CMSIS components, in the `./RTE/CMSIS/` folder:
-   - `RTX_Config.h` and `RTX_Config.c`: [CMSIS-RTX Configuration files](https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html) for the RTOS Kernel.
+- For the File System component, in the `./RTE/File_System/` folder:
+  - `FS_Config.h`: \ref fs_configuration "File System configuration".
+  - `FS_Config_MC_0.h`: \ref mc_usage "File System Memory Card configuration".
+  - `FS_Debug.h`: \ref fsEvrConfig "File System Debug configuration".
+- For the CMSIS components, in the `./RTE/CMSIS/` folder:
+  - `RTX_Config.h` and `RTX_Config.c`: [CMSIS-RTX Configuration files](https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html) for the RTOS Kernel.
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `./Board/` directory.
 
 <h2>Board Layer</h2>
 
 In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
- - `CMSIS_MCI`: CMSIS-Driver for Memory Card Interface
- - `CMSIS_VIO`: CMSIS-Driver for virtual I/O interface
- - `STDIN`: Standard Input redirection
- - `STDOUT`: Standard Output redirection
+
+- `CMSIS_MCI`: CMSIS-Driver for Memory Card Interface
+- `CMSIS_VIO`: CMSIS-Driver for virtual I/O interface
+- `STDIN`: Standard Input redirection
+- `STDOUT`: Standard Output redirection
 
 ## Build the Project
 
