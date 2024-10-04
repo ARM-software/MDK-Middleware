@@ -128,7 +128,7 @@ $(document).ready(function(){initNavTree('SMTP_Client_Example.html',''); initRes
   <div class="headertitle"><div class="title">SMTP Client </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_src_example_smtp_client"></a> SMTP is used for sending e-mail notifications from an embedded system to various recipients. This example shows how to setup a SMTP client for this purpose. The following picture shows an exemplary connection of the development board and a Computer.</p>
+<div class="textblock"><p><a class="anchor" id="md_src_example_smtp_client"></a> SMTP is used to send e-mail notifications from an embedded system to various recipients. This example shows how to setup an SMTP client for this purpose. The following picture shows an exemplary connection of the development board and a Computer.</p>
 <div class="image">
 <img src="smtp_setup.png" alt=""/>
 <div class="caption">
@@ -139,7 +139,21 @@ Project Organization</h1>
 <h2>Application Source Files</h2>
 <p>Following files implement application-specific logic in the example:</p>
 <ul>
-<li><code>SMTP_Client.c</code> contains the application main thread which initializes the Network Component and provides the IP address of SMTP server.</li>
+<li><code>SMTPS_Client.c</code> contains the application main thread which initializes the Network Component and provides the information required to compose and send an email. The following changes are required:<ul>
+<li>Content of the email information in the structure <a href="group__smtp__structs.html#structNET__SMTP__MAIL"><em>mail</em></a>:<ul>
+<li>Email addresses: <em>From</em>, <em>To</em>, <em>Cc</em>, <em>Bcc</em></li>
+<li>Subject and the message (body) of the email</li>
+<li>Optional attachments and encoding type</li>
+</ul>
+</li>
+<li>Information about the SMTP server and the user credentials in the structure <a href="group__smtp__structs.html#structNET__SMTP__MTA"><em>server</em></a>:<ul>
+<li>Server name or IP address</li>
+<li>Server port</li>
+<li>User name and password</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <h2>Software Components Configuration Files</h2>
 <p>Configuration files for the software components used in the project are located in the <code>./RTE/</code> directory and can be modified by users to adjust the operation of related components.</p>

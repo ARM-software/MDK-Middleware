@@ -128,7 +128,8 @@ $(document).ready(function(){initNavTree('Telnet_Server_Example.html',''); initR
   <div class="headertitle"><div class="title">Telnet Server </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_src_example_telnet_server"></a> Often, it is necessary to have a <b>Command Line Interface (CLI)</b> for interaction with the device. This example shows how to use the Telnet server for this purpose. The following picture shows an exemplary connection of the development board and a Computer.</p>
+<div class="textblock"><p><a class="anchor" id="md_src_example_telnet_server"></a> This example shows how the Telnet server can be used to implement a <b>Command Line Interface (CLI)</b> to interact with the device.</p>
+<p>The following picture shows an exemplary connection of the development board and a Computer.</p>
 <div class="image">
 <img src="telnet_setup.png" alt=""/>
 <div class="caption">
@@ -141,6 +142,11 @@ Project Organization</h1>
 <ul>
 <li><code>Telnet_Server.c</code> contains the application main thread which initializes the Network Component.</li>
 <li><code>Telnet_Server_UIF.c</code> defines the functions for the user interface and all the available CLI commands.</li>
+</ul>
+<p>You can add the following optional files, which are not included in the project by default:</p>
+<ul>
+<li><code>Telnet_Server_Multiuser.c</code> is used for specifying multiple users and access rights for these users.</li>
+<li><code>Telnet_Server_Access.c</code> enables the server to accept or block connection requests from certain remote clients.</li>
 </ul>
 <h2>Software Components Configuration Files</h2>
 <p>Configuration files for the software components used in the project are located in the <code>./RTE/</code> directory and can be modified by users to adjust the operation of related components.</p>

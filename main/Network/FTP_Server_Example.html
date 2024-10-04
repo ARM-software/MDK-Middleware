@@ -142,6 +142,12 @@ Project Organization</h1>
 <ul>
 <li><code>FTP_Server.c</code> contains the application main thread which initializes the Network Component.</li>
 </ul>
+<p>You can add the following optional files, which are not included in the project by default:</p>
+<ul>
+<li><code>FTP_Server_Multiuser.c</code> is used for specifying multiple users and access rights for these users.</li>
+<li><code>FTP_Server_Access.c</code> enables the server to accept or block connection requests from certain remote clients.</li>
+<li><code>FTP_Server_Event.c</code> contains a routine that notifies the user application about certain events happening on the FTP server (such as file/directory manipulation events).</li>
+</ul>
 <h2>Software Components Configuration Files</h2>
 <p>Configuration files for the software components used in the project are available in the <code>./RTE/</code> directory and can be modified by users to adjust the operation of related components.</p>
 <p>Following configuration files are provided with this example:</p>
