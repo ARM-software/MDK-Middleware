@@ -12,14 +12,14 @@ The following picture shows an exemplary connection of the development board and
 
 The USB Device Virtual COM Port project is available as part of the \ref usbd_examples "USB Device Reference examples".
 
-## Application Source Files
+<h2>Application Source Files</h2>
 
 Following files implement application-specific logic in the example:
 
  - `VirtualCOM.c`: contains the application main thread which initializes the USB Device Component.
  - `USBD_User_CDC_ACM_UART_0.c`: adapted code template that implements USB to UART bridge functionality. Refer to \ref usbd_cdcFunctions_acm for details.
 
-## Software Components Configuration Files
+<h2>Software Components Configuration Files</h2>
 
 Configuration files for the software components used in the project are available in the `./RTE/` directory and can be modified by users to adjust the operation of related components. Section \ref usbd_rte_components gives an overview about the components and their dependencies.
 
@@ -34,7 +34,7 @@ Following configuration files are provided with this example:
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `./Board/` directory.
 
-## Board Layer
+<h2>Board Layer</h2>
 
 In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
  - `CMSIS_USB_Device`: CMSIS-Driver for USB Device interface.

@@ -12,14 +12,14 @@ The following picture shows an exemplary connection of the development board and
 
 The USB Host Mass Storage project is available as part of the \ref usbh_examples "USB Host Reference examples".
 
-## Application Source Files
+<h2>Application Source Files</h2>
 
 Following files implement application-specific logic in the example:
 
  - `MassStorage.c`: contains the application main thread which initializes the flash storage device and the USB Host Component. Also, it contains that code that will write a file with a message onto the attached USB stick.
  - `USBH_MSC.c` and `USBH_MSC.h`: adapted code template for the application specific functionality of the USB Host MSC class. It implements the access to a USB storage device and allows file I/O via the File System component.
 
-## Software Components Configuration Files
+<h2>Software Components Configuration Files</h2>
 
 Configuration files for the software components used in the project are available in the `./RTE/` directory and can be modified by users to adjust the operation of related components. Section \ref usbh_rte_components gives an overview about the components and their dependencies.
 
@@ -36,7 +36,7 @@ Following configuration files are provided with this example:
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `./Board/` directory.
 
-## Board Layer
+<h2>Board Layer</h2>
 
 In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
  - `CMSIS_USB_Host`: CMSIS-Driver for USB Host interface.

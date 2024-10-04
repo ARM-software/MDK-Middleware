@@ -12,7 +12,7 @@ The following picture shows an exemplary connection of the development board and
 
 The USB Device Mass Storage project is available as part of the \ref usbd_examples "USB Device Reference examples".
 
-## Application Source Files
+<h2>Application Source Files</h2>
 
 Following files implement application-specific logic in the example:
 
@@ -20,7 +20,7 @@ Following files implement application-specific logic in the example:
  - `MemoryDiskImage.c`: a FAT12 disk image with small README.TXT file that gets copied to the RAM and is used as storage media.
  - `USBD_User_MSC_0.c`: adapted code template that implements necessary file access functions. Refer to \ref usbd_mscFunctions for details about these template functions.
 
-## Software Components Configuration Files
+<h2>Software Components Configuration Files</h2>
 
 Configuration files for the software components used in the project are available in the `./RTE/` directory and can be modified by users to adjust the operation of related components. Section \ref usbd_rte_components gives an overview about the components and their dependencies.
 
@@ -35,7 +35,7 @@ Following configuration files are provided with this example:
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `./Board/` directory.
 
-## Board Layer
+<h2>Board Layer</h2>
 
 In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
  - `CMSIS_USB_Device`: CMSIS-Driver for USB Device interface.
