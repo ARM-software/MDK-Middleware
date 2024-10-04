@@ -1,6 +1,6 @@
 # USB Host Mass Storage Example
 
-This MDK-Middleware example project implemens a USB Host device that accesses a USB Mass Storage Device (USB memory stick) using Mass Storage Class.
+This MDK-Middleware example project implements a USB Host that accesses a USB mass storage device (USB memory stick) using Mass Storage Class.
 
 For detailed description see [USB Host Mass Storage Example section in MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/USB/usbh_example_msc.html).
 
@@ -11,5 +11,5 @@ For successful build and operation the project needs to be extended with a board
 This program creates (or overwrites) a `Test.txt` file on the connected USB Stick with the content:
 
 ```text
-USB Host Mass Storage!"
+USB Host Mass Storage!
 ```
