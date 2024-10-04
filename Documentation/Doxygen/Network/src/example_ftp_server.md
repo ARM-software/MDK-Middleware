@@ -10,7 +10,7 @@ The following picture shows an exemplary connection of the development board and
 
 The FTP Server project is available as part of the \ref examples "Network Reference examples".
 
-### Application Source Files
+<h2>Application Source Files</h2>
 
 Following files implement application-specific logic in the example:
 
@@ -22,7 +22,7 @@ You can add the following optional files, which are not included in the project 
  - `FTP_Server_Access.c` enables the server to accept or block connection requests from certain remote clients.
  - `FTP_Server_Event.c` contains a routine that notifies the user application about certain events happening on the FTP server (such as file/directory manipulation events).
 
-### Software Components Configuration Files
+<h2>Software Components Configuration Files</h2>
 
 Configuration files for the software components used in the project are available in the `./RTE/` directory and can be modified by users to adjust the operation of related components.
 
@@ -42,7 +42,7 @@ Following configuration files are provided with this example:
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `./Board/` directory.
 
-### Board Layer
+<h2>Board Layer</h2>
 
 In order to build the project it shall be extended with a compatible board layer that provides following CMSIS-Driver interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
  - `CMSIS_ETH`: CMSIS-Driver for Ethernet interface

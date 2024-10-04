@@ -8,7 +8,7 @@ SMTP is used to send e-mail notifications from an embedded system to various rec
 
 The SMTP Client project is available as part of the \ref examples "Network Reference examples".
 
-### Application Source Files
+<h2>Application Source Files</h2>
 
 Following files implement application-specific logic in the example:
 
@@ -22,7 +22,7 @@ Following files implement application-specific logic in the example:
      - Server port
      - User name and password
 
-### Software Components Configuration Files
+<h2>Software Components Configuration Files</h2>
 
 Configuration files for the software components used in the project are located in the `./RTE/` directory and can be modified by users to adjust the operation of related components.
 
@@ -41,7 +41,7 @@ Following configuration files are provided with this example:
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `./Board/` directory.
 
-### Board Layer
+<h2>Board Layer</h2>
 
 In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
  - `CMSIS_ETH`: CMSIS-Driver for Ethernet interface

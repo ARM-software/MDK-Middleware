@@ -10,7 +10,7 @@ The following picture shows an exemplary connection of the development board and
 
 The Telnet Server project is available as part of the \ref examples "Network Reference examples".
 
-### Application Source Files
+<h2>Application Source Files</h2>
 
 Following files implement application-specific logic in the example:
 
@@ -22,7 +22,7 @@ You can add the following optional files, which are not included in the project 
  - `Telnet_Server_Multiuser.c` is used for specifying multiple users and access rights for these users.
  - `Telnet_Server_Access.c` enables the server to accept or block connection requests from certain remote clients.
 
-### Software Components Configuration Files
+<h2>Software Components Configuration Files</h2>
 
 Configuration files for the software components used in the project are located in the `./RTE/` directory and can be modified by users to adjust the operation of related components.
 
@@ -40,7 +40,7 @@ Following configuration files are provided with this example:
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `./Board/` directory.
 
-### Board Layer
+<h2>Board Layer</h2>
 
 In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
  - `CMSIS_ETH`: CMSIS-Driver for Ethernet interface

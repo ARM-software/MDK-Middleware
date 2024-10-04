@@ -12,13 +12,13 @@ An exemplary setup could look like this:
 
 The BSD Server project are available as part of the \ref examples "Network Reference examples".
 
-### Application Source Files
+<h2>Application Source Files</h2>
 
 Following files implement application-specific logic in the example:
 
  - `BSD_Server.c` contains the application main thread which initializes the Network Component for the BSD server. The server is waiting for a connection from a BSD client.
 
-### Software Components Configuration Files
+<h2>Software Components Configuration Files</h2>
 
 Configuration files for the software components used in the project are located in the `./RTE/` directory and can be modified by users to adjust the operation of related components.
 
@@ -36,7 +36,7 @@ Following configuration files are provided with this example:
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `./Board/` directory.
 
-### Board Layer
+<h2>Board Layer</h2>
 
 In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
  - `CMSIS_ETH`: CMSIS-Driver for Ethernet interface
