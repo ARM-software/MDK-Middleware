@@ -139,10 +139,10 @@ File System Component Structure</div></div>
 </ul>
 <ul>
 <li><b>Multiple instances</b> of the same storage device can be implemented (for example you might want to have two SD cards attached to your system).</li>
-<li>The File System <b>CORE</b> supports thread-safe operation and uses an <a class="el" href="operation.html#emb_fs">Embedded File System (EFS)</a> (for NOR and SPI Flashes) or a <a class="el" href="operation.html#fat_fs">FAT File System</a> (for RAM, NAND, SD/eMMC and USB devices).</li>
+<li>The File System <b>CORE</b> supports thread-safe operation and uses an <a class="el" href="operation.html#emb_fs">Embedded File System (EFS)</a> (for NOR Flashes) or a <a class="el" href="operation.html#fat_fs">FAT File System</a> (for RAM, NAND, SD/eMMC and USB devices).</li>
 <li>The Core allows <b>simultaneous access</b> to multiple storage devices (for example backing up data from internal flash to an external USB device).</li>
 <li>For accessing the drives appropriate <b>drivers</b> are in place to support<ul>
-<li>Flash chips (<a class="el" href="create_app.html#nand_usage">NAND</a>, <a class="el" href="create_app.html#nor_usage">NOR, and SPI</a>)</li>
+<li>Flash chips (<a class="el" href="create_app.html#nand_usage">NAND</a>, <a class="el" href="create_app.html#nor_usage">NOR</a>)</li>
 <li>Memory card interfaces (<a class="el" href="create_app.html#mc_usage">SD/SDxC/MMC/eMMC</a>)</li>
 <li><a class="el" href="create_app.html#usb_usage">USB devices</a></li>
 <li>On-chip <a class="el" href="create_app.html#ram_usage">RAM</a>, Flash and external memory interfaces.</li>
