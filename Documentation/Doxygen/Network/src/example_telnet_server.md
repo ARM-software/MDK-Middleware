@@ -1,6 +1,8 @@
 # Telnet Server {#Telnet_Server_Example}
 
-Often, it is necessary to have a **Command Line Interface (CLI)** for interaction with the device. This example shows how to use the Telnet server for this purpose. The following picture shows an exemplary connection of the development board and a Computer.
+This example shows how the Telnet server can be used to implement a **Command Line Interface (CLI)** to interact with the device.
+
+The following picture shows an exemplary connection of the development board and a Computer.
 
 ![Telnet example hardware setup](telnet_setup.png)
 
@@ -8,14 +10,19 @@ Often, it is necessary to have a **Command Line Interface (CLI)** for interactio
 
 The Telnet Server project is available as part of the \ref examples "Network Reference examples".
 
-<h2>Application Source Files</h2>
+### Application Source Files
 
 Following files implement application-specific logic in the example:
 
  - `Telnet_Server.c` contains the application main thread which initializes the Network Component.
  - `Telnet_Server_UIF.c` defines the functions for the user interface and all the available CLI commands.
 
-<h2>Software Components Configuration Files</h2>
+You can add the following optional files, which are not included in the project by default:
+
+ - `Telnet_Server_Multiuser.c` is used for specifying multiple users and access rights for these users.
+ - `Telnet_Server_Access.c` enables the server to accept or block connection requests from certain remote clients.
+
+### Software Components Configuration Files
 
 Configuration files for the software components used in the project are located in the `./RTE/` directory and can be modified by users to adjust the operation of related components.
 
@@ -33,7 +40,7 @@ Following configuration files are provided with this example:
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `./Board/` directory.
 
-<h2>Board Layer</h2>
+### Board Layer
 
 In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
  - `CMSIS_ETH`: CMSIS-Driver for Ethernet interface

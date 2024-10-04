@@ -1,6 +1,6 @@
 # SMTPS Client {#SMTPS_Client_Example}
 
-SMTPS is used for sending e-mail notifications from an embedded system to various recipients. This example shows how to setup a SMTPS client for this purpose. The following picture shows an exemplary connection of the development board and a Computer.
+SMTPS is used to send secure e-mail notifications from an embedded system to various recipients. This example shows how to setup an SMTPS client for this purpose. The following picture shows an exemplary connection of the development board and a Computer.
 
 ![SMTPS client hardware setup](smtp_setup.png)
 
@@ -8,13 +8,21 @@ SMTPS is used for sending e-mail notifications from an embedded system to variou
 
 The SMTPS Client project is available as part of the \ref examples "Network Reference examples".
 
-<h2>Application Source Files</h2>
+### Application Source Files
 
 Following files implement application-specific logic in the example:
 
- - `SMTPS_Client.c` contains the application main thread which initializes the Network Component and provides the IP address of SMTPS server.
+ - `SMTPS_Client.c` contains the application main thread which initializes the Network Component and provides the information required to compose and send an email. The following changes are required:
+   - Content of the email information in the structure [*mail*](group__smtp__structs.html#structNET__SMTP__MAIL): 
+     - Email addresses: *From*, *To*, *Cc*, *Bcc*
+     - Subject and the message (body) of the email
+     - Optional attachments and encoding type
+   - Information about the SMTP server and the user credentials in the structure [*server*](group__smtp__structs.html#structNET__SMTP__MTA):
+     - Server name or IP address
+     - Server port
+     - User name and password
 
-<h2>Software Components Configuration Files</h2>
+### Software Components Configuration Files
 
 Configuration files for the software components used in the project are located in the `./RTE/` directory and can be modified by users to adjust the operation of related components.
 
@@ -36,7 +44,7 @@ Following configuration files are provided with this example:
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `./Board/` directory.
 
-<h2>Board Layer</h2>
+### Board Layer
 
 In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
  - `CMSIS_ETH`: CMSIS-Driver for Ethernet interface
