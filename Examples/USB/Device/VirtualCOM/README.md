@@ -1,10 +1,9 @@
-This is an Virtual COM example that demonstrates Communication Device Class (CDC)
-Abstract Control Model (ACM) on USB Device.
+# USB Device Virtual COM Port Example
 
-It demonstrates a bridge between USB Virtual COM Port and UART port on the
-evaluation board.
+This MDK-Middleware example project implements a USB Device that exchanges data with a USB Host using Communication Device Class as a virtual communication port.
 
-Detailed description is available on:
-www.keil.com/pack/doc/MW/USB/html/dev_cdc_tutorial.html
+For detailed description see [USB Device Virtual COM Example section in MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/USB/usbd_example_cdc.html).
 
-Bridge functionality:           USB <-> USART1
+## Key usage aspects
+
+For successful build and operation the project needs to be extended with a board layer that implements required [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections) to the target hardware interfaces. For details see example documentation referenced above.

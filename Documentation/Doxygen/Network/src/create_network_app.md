@@ -50,7 +50,7 @@ The Network Device Driver and the Network Controller of the microcontroller need
   interface. **Note**: Some microcontrollers may require settings that are related to a physical layer interface (PHY).
 - The Network Controller of the microcontroller typically needs specific clock settings. Consult the user's guide of the
   microcontroller to understand the requirements. Alternatively, you may copy the setup of an
-  \ref nw_examples "example project" that is provided for various evaluation boards.
+  \ref examples that is provided for various evaluation boards.
 
 ## Ethernet PHY Configuration {#nw_PHY_Configuration}
 

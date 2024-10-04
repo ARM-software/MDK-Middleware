@@ -1,13 +1,17 @@
-This program is an example of a **BSD server**. It is used to serve LED control
-requests from BSD clients.
+# BSD Server Example
 
-To run this example, you must use the automatically assigned IPv6 address or set
-the IPv4 address to match your local network, otherwise the server cannot be reached.
-This is because the requests for non-LAN hosts are forwarded to the default gateway.
+This MDK-Middleware example project implements a **BSD Server** device. You can control the LEDs on the server board using requests from BSD clients.
 
-To test this example, start the Windows application *LEDSwitch.exe* on your PC.
-Enter the IP address and the port of the server and select the transmission protocol
-TCP or UDP. If you change the value of P2 in the Windows application, the LED diodes
-on the evaluation board should light up accordingly.
+For detailed description see [BSD Server Example section in MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/Network/BSD_Server_Example.html).
 
-The same example can also be tested with a BSD client on a different evaluation board.
+## Key usage aspects
+
+For successful build and operation the project needs to be extended with a board layer that implements required [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections) to the target hardware interfaces. For details see example documentation referenced above.
+
+To run this example, you must use the automatically assigned IPv6 address or set the IPv4 address to match your local network, otherwise the server cannot be reached. This is because the requests for non-LAN hosts are forwarded to the default gateway.
+
+Start the Windows application *LEDSwitch.exe* on your PC (part of Keil MDK uVision installation).
+
+Enter the IP address and the port of the server and select the transmission protocol TCP or UDP. If you change the value of P2 in the Windows application, the LED diodes on the evaluation board should light up accordingly.
+
+The example can be used with a BSD client running on a different evaluation board.

@@ -115,7 +115,7 @@ after data expected by request was sent.
 
 \msc
  a [label="",                                           textcolor="indigo", linecolor="indigo", arclinecolor="red"],
- b [label="USBDn_Core_Thread\n osProrityAboveNormal",   textcolor="blue",   linecolor="blue",   arclinecolor="blue"],
+ b [label="USBDn_Core_Thread\n osPriorityAboveNormal",  textcolor="blue",   linecolor="blue",   arclinecolor="blue"],
  c [label="",                                           textcolor="indigo", linecolor="indigo", arclinecolor="grey"];
  
  a note a [label="Application",                         textbgcolour="#FFCCCF"],
@@ -162,7 +162,7 @@ after data expected by request was sent.
 Implementation
 --------------
 
-To \ref Creation_Steps "create a USB Device":
+To \ref usbd_create_app "create a USB Device":
   - Select required USB Device Class during the \ref RTE_Software_Component_Selection.
   - Set the static USB Device parameters in the configuration file \ref usbd_coreFunctions_conf "USBD_Config_n.h".
   - Implement the application and run-time specific behavior using \ref USBD_User_Device_UCT "USBD_User_Device_n.c".
@@ -1012,7 +1012,9 @@ functions in the \urlout{uv4_ca_sourcefiles} file \b USBD_User_ADC_Audio_<i>n</i
 
 Refer to:
   - \ref ADC for an overview of the ADC class.
-  - \ref dev_adc_tutorial for an example project that uses the ADC class.
+\if USBD_EXAMPLE_ADC
+  - \ref usbd_example_adc for an example project that uses the ADC class.
+\endif
 
 The USB Component allows multiple instances of the ADC class. This feature is used to create USB Composite Devices.
 Each ADC class instance has a separate files and interface functions:
@@ -1034,8 +1036,8 @@ Isochronous IN/OUT Endpoints of the USB ADC Device.
 
 \msc
  a [label="",                                                      textcolor="indigo", linecolor="indigo", arclinecolor="red"],
- b [label="USBDn_Core_Thread\n osProrityAboveNormal",              textcolor="blue",   linecolor="blue",   arclinecolor="blue"],
- c [label="USBD_ADCn_Thread\n osProrityAboveNormal",               textcolor="green",  linecolor="green",  arclinecolor="green"],
+ b [label="USBDn_Core_Thread\n osPriorityAboveNormal",             textcolor="blue",   linecolor="blue",   arclinecolor="blue"],
+ c [label="USBD_ADCn_Thread\n osPriorityAboveNormal",               textcolor="green",  linecolor="green",  arclinecolor="green"],
  d [label="",                                                      textcolor="indigo", linecolor="indigo", arclinecolor="grey"];
  
  a note a [label="Application",                                    textbgcolour="#FFCCCF"],
@@ -1073,7 +1075,7 @@ Isochronous IN/OUT Endpoints of the USB ADC Device.
 Implementation
 --------------
 
-To \ref Creation_Steps "create an USB Device" with an ADC class:
+To \ref usbd_create_app "create an USB Device" with an ADC class:
   - Set the required number for USB:Device:ADC class instances during the \ref RTE_Software_Component_Selection.
   - Set the parameters in the configuration file \ref usbd_adcFunctions_conf "USBD_Config_ADC_n.h".
   - Implement the application specific behavior using these \ref UCT_USBD_User_ADC "template".
@@ -1166,7 +1168,7 @@ used a serial COM or UART communication.
 
 Refer to:
   - \ref CDC for an overview of the CDC class.
-  - \ref dev_cdc_tutorial example project.
+  - \ref usbd_example_cdc example project.
 
 The USB Component allows multiple instances of the CDC class. This feature is used to create USB Composite Devices.
 Each CDC class instance has a separate files and interface functions:
@@ -1207,9 +1209,9 @@ The thread USBD_CDCn_Int_Thread handles Interrupt IN Endpoint whereas the USBD_C
 
 \msc
  a [label="",                                               textcolor="indigo", linecolor="indigo", arclinecolor="red"],
- b [label="USBDn_Core_Thread\n osProrityAboveNormal",       textcolor="blue",   linecolor="blue",   arclinecolor="blue"],
- c [label="USBD_CDCn_Int_Thread\n osProrityAboveNormal",    textcolor="green",  linecolor="green",  arclinecolor="green"],
- d [label="USBD_CDCn_Bulk_Thread\n osProrityAboveNormal",   textcolor="green",  linecolor="green",  arclinecolor="green"],
+ b [label="USBDn_Core_Thread\n osPriorityAboveNormal",      textcolor="blue",   linecolor="blue",   arclinecolor="blue"],
+ c [label="USBD_CDCn_Int_Thread\n osPriorityAboveNormal",   textcolor="green",  linecolor="green",  arclinecolor="green"],
+ d [label="USBD_CDCn_Bulk_Thread\n osPriorityAboveNormal",  textcolor="green",  linecolor="green",  arclinecolor="green"],
  e [label="",                                               textcolor="indigo", linecolor="indigo", arclinecolor="grey"];
  
  a note a [label="Application",                             textbgcolour="#FFCCCF"],
@@ -1255,7 +1257,7 @@ The thread USBD_CDCn_Int_Thread handles Interrupt IN Endpoint whereas the USBD_C
 Implementation
 --------------
 
-To \ref Creation_Steps "create an USB Device" with a CDC ACM class:
+To \ref usbd_create_app "create an USB Device" with a CDC ACM class:
   - Set the required number for USB:Device:CDC class instances during the \ref RTE_Software_Component_Selection.
   - Set the parameters in the configuration file \ref usbd_cdcFunctions_acm_conf "USBD_Config_CDC_n.h".
   - Implement the application specific behavior using one of the following templates.
@@ -1693,7 +1695,9 @@ a USB Device to the host to emulate an Ethernet device. There is no native Ether
 
 Refer to:
   - \ref CDC for an overview of the CDC class.
-  - \ref dev_cdc_ncm example project.
+\if USBD_EXAMPLE_CDC_NCM
+  - \ref usbd_example_cdc_ncm example project.
+\endif
 
 The USB Component allows multiple instances of the CDC class. This feature is used to create USB Composite Devices.
 Each CDC class instance has a separate files and interface functions:
@@ -1791,7 +1795,7 @@ The thread USBD_CDCn_Int_Thread handles Interrupt IN Endpoint whereas the USBD_C
 Implementation
 --------------
 
-To \ref Creation_Steps "create an USB Device" with a CDC NCM class:
+To \ref usbd_create_app "create an USB Device" with a CDC NCM class:
   - Set the required number for USB:Device:CDC class instances during the \ref RTE_Software_Component_Selection.
   - Set the parameters in the configuration file \ref usbd_cdcFunctions_ncm_conf "USBD_Config_CDC_n.h".
   - Implement the application specific behavior using this \ref USBD_User_CDC_NCM_UCT "template" \a or
@@ -2736,7 +2740,8 @@ HID class with Usage Page ID=0xFF00.
 
 Refer to:
   - \ref HID for an overview of the HID class.
-  - \ref dev_hid_tutorial for example projects that use the HID class.
+  - \ref usbd_example_hid for example project that use the HID class on USB Device.
+  - \ref usbh_example_hid for example project that use the HID class on USB Host.
 
 The USB Component allows multiple instances of the HID class. This feature is used to create USB Composite Devices.
 Each HID class instance has a separate files and interface functions:
@@ -2825,7 +2830,7 @@ is provided by USB Implementers Forum (USB-IF).
 Implementation
 --------------
 
-To \ref Creation_Steps "create an USB Device" with a HID class:
+To \ref usbd_create_app "create an USB Device" with a HID class:
   - Set the required number for USB:Device:HID class instances during the \ref RTE_Software_Component_Selection.
   - Set the parameters in the configuration file \ref usbd_hidFunctions_conf "USBD_Config_HID_n.h".
   - Implement the application specific behavior in using a \ref UCT_USBD_User_HID "template".
@@ -3153,7 +3158,8 @@ The MSC class in the USB Component is used for data storage.
 
 Refer to:
   - \ref MSC for an overview of the MSC class.
-  - \ref dev_msc_tutorial for example projects that use the MSC class.
+  - \ref usbd_example_msc for example projects that use the MSC class on USB Device.
+  - \ref usbh_example_msc for example projects that use the MSC class on USB Host.
 
 The USB Component allows multiple instances of the MSC class.
 Each MSC class instance has a separate files and interface functions:
@@ -3213,7 +3219,7 @@ Each instance of a MSC class runs an instance of \b USBD_MSCn_Thread which calls
 Implementation
 --------------
 
-To \ref Creation_Steps "create an USB Device" with a MSC class:
+To \ref usbd_create_app "create an USB Device" with a MSC class:
 - Set the required number for USB:Device:MSC class instances during the \ref RTE_Software_Component_Selection.
 - Set the parameters in the configuration file \ref usbd_mscFunctions_conf "USBD_Config_MSC_n.h".
 - Implement the application specific behavior using a \ref UCT_USBD_User_MSC "template".
@@ -3944,7 +3950,7 @@ after data expected by request was sent.
 Implementation
 --------------
 
-To \ref Creation_Steps "create an USB Device" with a Custom Class:
+To \ref usbd_create_app "create an USB Device" with a Custom Class:
   - Set the required number for <b>USB:Device:Custom</b> class instances during the \ref RTE_Software_Component_Selection.
   - Set the parameters in the configuration file \ref usbd_classFunctions_conf "USBD_Config_CustomClass_n.h".
   - Implement the application specific behavior using one of the available \ref USBD_User_UCT "templates".
@@ -4963,8 +4969,8 @@ communicate with the CDC USB Device.
 Implementation
 --------------
 
-To \ref Create_a_USB_Host_Application "create an USB Host" with support for the CDC class:
-- Select <b>USB:Host:CDC</b> in the \ref RTE_Software_Component_Selection.
+To \ref usbh_create_app "create an USB Host" with support for the CDC class:
+- Select <b>USB:Host:CDC</b> in the \ref RTE_Software_Component_Selection_USBH.
 - Configure the number of USB CDC devices connected in the file \ref usbh_cdcacmFunctions_conf "USBH_Config_CDC.h".
 */
 
@@ -5342,7 +5348,7 @@ The HID class in the USB Component is used for attaching input devices to your s
 
 Refer to:
   - \ref HID for an overview of the HID class.
-  - \ref host_hid_tutorial for an example project that uses a HID-compliant keyboard as an input.
+  - \ref usbh_example_hid for an example project that uses a HID-compliant keyboard as an input.
 
 <b>Software Structure</b>
 \n The application starts the USB Host by calling \ref USBH_Initialize. The USB Host Core will wait until an USB HID device
@@ -5392,8 +5398,8 @@ with the HID device.
 Implementation
 --------------
 
-To \ref Create_a_USB_Host_Application "create an USB Host" with support for the HID class:
-- Select <b>USB:Host:HID</b> in the \ref RTE_Software_Component_Selection.
+To \ref usbh_create_app "create an USB Host" with support for the HID class:
+- Select <b>USB:Host:HID</b> in the \ref RTE_Software_Component_Selection_USBH.
 - Configure the number of USB HID devices connected in the file \ref usbh_hidFunctions_conf "USBH_Config_HID.h".
 
 <b>Code Example</b>
@@ -5777,7 +5783,8 @@ drive in the <b>File System</b> Component gives file I/O access to that data sto
 
 Refer to:
   - \ref MSC for an overview of the MSC class.
-  - \ref host_msc_tutorial for an example project that uses the MSC class.
+  - \ref usbd_example_msc for an example project that uses the MSC class on USB Device.
+  - \ref usbh_example_msc for an example project that uses the MSC class on USB Host.
 
 <b>Software Structure</b>
 \n The application starts the USB Host by calling \ref USBH_Initialize. The USB Host Core will wait until an USB MSC device
@@ -5826,8 +5833,8 @@ Device as media for data storage.
 Implementation
 --------------
 
-Steps to \ref Create_a_USB_Host_Application "create an USB Host" application with MSC support:
-- In the \ref RTE_Software_Component_Selection "Manage Run-Time Environment" window select <b>USB:Host:MSC</b> for support
+Steps to \ref usbh_create_app "create an USB Host" application with MSC support:
+- In the \ref RTE_Software_Component_Selection_USBH "Manage Run-Time Environment" window select <b>USB:Host:MSC</b> for support
   of the MSC class and <b>File System:CORE</b>, <b>File System:Drive:USB</b> for using the \b File \b System Component
   with support for USB mass storage devices. For the <b>File System:Drive:USB</b> you have to set the number to the number
   of devices you need to support	simultaneously.
@@ -6089,8 +6096,8 @@ As soon as the Custom Class Device is detached from the system, the callback fun
 Implementation
 --------------
 
- To \ref Create_a_USB_Host_Application "create an USB Host" with support for the Custom class:
-- Select <b>USB:Host:Custom Class</b> in the \ref RTE_Software_Component_Selection.
+ To \ref usbh_create_app "create an USB Host" with support for the Custom class:
+- Select <b>USB:Host:Custom Class</b> in the \ref RTE_Software_Component_Selection_USBH.
 - Configure the number of custom class devices allowed in the system in the file
   \ref usbh_customFunctions_conf "USBH_Config_CustomClass.h".
 - Add the related <b>user code template</b> file (\ref USBH_Cust_UCT "USBH_User_CustomClass.c") to your project.

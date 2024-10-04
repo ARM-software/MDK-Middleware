@@ -1,6 +1,11 @@
-This is a File System file manipulation example.
-You can mount and format drives and manage files and directories using 
-commands such as write, read, rename, delete, mkdir and rmdir.
+# File Demo Example
 
-Detailed description is available on:
-www.keil.com/pack/doc/MW/FileSystem/html/fs_examples.html#fs_standalone_example
+This MDK-Middleware example project implements a **File Demo** example. It shows how to manipulate files on a memory drive using the File System Component
+
+For detailed description see [File Demo Example section in MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/FileSystem/File_Demo_Example.html).
+
+## Key usage aspects
+
+For successful build and operation the project needs to be extended with a board layer that implements required [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections) to the target hardware interfaces. For details see example documentation referenced above.
+
+You can mount and format drives and manage files and directories using commands such as `write`, `read`, `rename`, `delete`, `mkdir` and `rmdir`.

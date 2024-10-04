@@ -63,11 +63,10 @@ The CDC implementation in the USB Component features:
 
 - Emulation of a Virtual COM-port using the \ref usbd_cdcFunctions_acm "ACM (Abstract Control Model)" subclass of CDC.
 - Emulation of network connectivity using the [RDNIS](https://en.wikipedia.org/wiki/RNDIS) protocol using the
-  \ref usbd_cdcFunctions_acm "ACM (Abstract Control Model)" subclass of CDC. This enables
-  \ref dev_cdc_acm_rndis "network connections over USB between a Windows host PC and an embedded device", as well as
-  \ref dev_cdc_acm_rndis_bridge applications.
+  \ref usbd_cdcFunctions_acm "ACM (Abstract Control Model)" subclass of CDC. This enables network connections over USB
+  between a Windows host PC and an embedded device, as well as USB Device RNDIS to Ethernet Bridge applications.
 - Emulation of an Ethernet adapter using the \ref usbd_cdcFunctions_ncm "NCM (Network Control Model)" subclass of CDC (only
-  available for \ref USB_Device). Using CDC (NCM), you can create \ref dev_cdc_ncm applications on Linux-based host systems.
+  available for \ref USB_Device). Using CDC (NCM), you can create  Ethernet-over-USB applications on Linux-based host systems.
 
 \note
 The following endpoint configurations are supported:
