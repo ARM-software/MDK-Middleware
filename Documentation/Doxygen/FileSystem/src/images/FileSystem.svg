@@ -32,7 +32,7 @@
   <g id="shape7" transform="matrix(1 0 0 1 0 0) matrix(1 0 0 1 389.852 170.086)">
    <path d="m83.1,52.9l0,-52.9l-83.1,0l0,52.9l83.1,0z" fill="none" id="svg_20" stroke="#ffffff" stroke-width="2"/>
    <text fill="#ffffff" font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="9.00pt" id="svg_21" xml:space="preserve">
-    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="12.00pt" id="svg_22" x="30.2" y="26">SPI</tspan>
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="12.00pt" id="svg_22" x="20.2" y="26">NAND</tspan>
     <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" id="svg_23" x="27.9" y="42">Flash</tspan>
    </text>
   </g>
