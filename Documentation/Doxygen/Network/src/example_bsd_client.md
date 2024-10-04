@@ -16,8 +16,8 @@ The BSD Client project is available as part of the \ref examples "Network Refere
 
 Following files implement application-specific logic in the example:
 
- - `BSD_Client.c`  contains the application main thread which initializes the Network Component for the BSD client. It also contains the actual code that is used to communicate with the BSD server.
-
+ - `BSD_Client.c` contains the application main thread which initializes the Network Component for the BSD client and provides the IP address of the BSD server.
+   The client establishes a connection to a BSD server with the specified IP address.
 
 <h2>Software Components Configuration Files</h2>
 

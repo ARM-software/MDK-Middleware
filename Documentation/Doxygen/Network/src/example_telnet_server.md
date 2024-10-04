@@ -1,6 +1,8 @@
 # Telnet Server {#Telnet_Server_Example}
 
-Often, it is necessary to have a **Command Line Interface (CLI)** for interaction with the device. This example shows how to use the Telnet server for this purpose. The following picture shows an exemplary connection of the development board and a Computer.
+This example shows how the Telnet server can be used to implement a **Command Line Interface (CLI)** to interact with the device.
+
+The following picture shows an exemplary connection of the development board and a Computer.
 
 ![Telnet example hardware setup](telnet_setup.png)
 
@@ -14,6 +16,11 @@ Following files implement application-specific logic in the example:
 
  - `Telnet_Server.c` contains the application main thread which initializes the Network Component.
  - `Telnet_Server_UIF.c` defines the functions for the user interface and all the available CLI commands.
+
+You can add the following optional files, which are not included in the project by default:
+
+ - `Telnet_Server_Multiuser.c` is used for specifying multiple users and access rights for these users.
+ - `Telnet_Server_Access.c` enables the server to accept or block connection requests from certain remote clients.
 
 <h2>Software Components Configuration Files</h2>
 

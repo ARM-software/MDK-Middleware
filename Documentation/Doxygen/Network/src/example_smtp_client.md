@@ -1,6 +1,6 @@
 # SMTP Client {#SMTP_Client_Example}
 
-SMTP is used for sending e-mail notifications from an embedded system to various recipients. This example shows how to setup a SMTP client for this purpose. The following picture shows an exemplary connection of the development board and a Computer.
+SMTP is used to send e-mail notifications from an embedded system to various recipients. This example shows how to setup an SMTP client for this purpose. The following picture shows an exemplary connection of the development board and a Computer.
 
 ![SMTP client hardware setup](smtp_setup.png)
 
@@ -12,7 +12,15 @@ The SMTP Client project is available as part of the \ref examples "Network Refer
 
 Following files implement application-specific logic in the example:
 
- - `SMTP_Client.c` contains the application main thread which initializes the Network Component and provides the IP address of SMTP server. 
+ - `SMTPS_Client.c` contains the application main thread which initializes the Network Component and provides the information required to compose and send an email. The following changes are required:
+   - Content of the email information in the structure [*mail*](group__smtp__structs.html#structNET__SMTP__MAIL): 
+     - Email addresses: *From*, *To*, *Cc*, *Bcc*
+     - Subject and the message (body) of the email
+     - Optional attachments and encoding type
+   - Information about the SMTP server and the user credentials in the structure [*server*](group__smtp__structs.html#structNET__SMTP__MTA):
+     - Server name or IP address
+     - Server port
+     - User name and password
 
 <h2>Software Components Configuration Files</h2>
 

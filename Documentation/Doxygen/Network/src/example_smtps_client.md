@@ -1,6 +1,6 @@
 # SMTPS Client {#SMTPS_Client_Example}
 
-SMTPS is used for sending e-mail notifications from an embedded system to various recipients. This example shows how to setup a SMTPS client for this purpose. The following picture shows an exemplary connection of the development board and a Computer.
+SMTPS is used to send secure e-mail notifications from an embedded system to various recipients. This example shows how to setup an SMTPS client for this purpose. The following picture shows an exemplary connection of the development board and a Computer.
 
 ![SMTPS client hardware setup](smtp_setup.png)
 
@@ -12,7 +12,15 @@ The SMTPS Client project is available as part of the \ref examples "Network Refe
 
 Following files implement application-specific logic in the example:
 
- - `SMTPS_Client.c` contains the application main thread which initializes the Network Component and provides the IP address of SMTPS server.
+ - `SMTPS_Client.c` contains the application main thread which initializes the Network Component and provides the information required to compose and send an email. The following changes are required:
+   - Content of the email information in the structure [*mail*](group__smtp__structs.html#structNET__SMTP__MAIL): 
+     - Email addresses: *From*, *To*, *Cc*, *Bcc*
+     - Subject and the message (body) of the email
+     - Optional attachments and encoding type
+   - Information about the SMTP server and the user credentials in the structure [*server*](group__smtp__structs.html#structNET__SMTP__MTA):
+     - Server name or IP address
+     - Server port
+     - User name and password
 
 <h2>Software Components Configuration Files</h2>
 
