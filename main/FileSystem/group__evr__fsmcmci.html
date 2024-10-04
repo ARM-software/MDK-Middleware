@@ -329,7 +329,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>AwakeActive</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> deactivates eMMC SLEEP state.</p>
+<p>The event <b>AwakeActive</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> deactivates eMMC SLEEP state.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -370,7 +370,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>BlenWriteError</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to set transfer block length.</p>
+<p>The event <b>BlenWriteError</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to set transfer block length.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>blen</b> : block length. </li>
@@ -412,7 +412,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>CardPowerControl</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> controls MCI driver card power.</p>
+<p>The event <b>CardPowerControl</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> controls MCI driver card power.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>voltage</b> : MCI Card Power. </li>
@@ -443,7 +443,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>CidReadError</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to read device CID register.</p>
+<p>The event <b>CidReadError</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to read device CID register.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -473,7 +473,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>CdsReadError</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to read device CSD register.</p>
+<p>The event <b>CdsReadError</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to read device CSD register.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -503,7 +503,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>DataBusSwitchError</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> fails to switch bus data width.</p>
+<p>The event <b>DataBusSwitchError</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> fails to switch bus data width.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -551,7 +551,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>DevCtrl</b> is generated when <a class="el" href="rl__fs_8h.html#a46f72ffa53d0379ea0bf5e51373d1a37">control code</a> is sent directly to <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a>.</p>
+<p>The event <b>DevCtrl</b> is generated when <a class="el" href="rl__fs_8h.html#a46f72ffa53d0379ea0bf5e51373d1a37">control code</a> is sent directly to <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a>.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>code</b> : string specifying the key name of the <a class="el" href="rl__fs_8h.html#a46f72ffa53d0379ea0bf5e51373d1a37">control code</a>.</li>
@@ -636,7 +636,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>DeviceStateInvalid</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> detects invalid SD/MMC/eMMC device state.</p>
+<p>The event <b>DeviceStateInvalid</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> detects invalid SD/MMC/eMMC device state.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>state</b> : current device state (R1 response). </li>
@@ -685,7 +685,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>DeviceStateTimeout</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> operation timed-out while waiting for the SD/MMC/eMMC device state transition.</p>
+<p>The event <b>DeviceStateTimeout</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> operation timed-out while waiting for the SD/MMC/eMMC device state transition.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>cstate</b> : current device state (R1 response).</li>
@@ -728,7 +728,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>DeviceStateUnknown</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> detects unknown SD/MMC/eMMC device state.</p>
+<p>The event <b>DeviceStateUnknown</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> detects unknown SD/MMC/eMMC device state.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>state</b> : current device state (R1 response). </li>
@@ -759,7 +759,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>ExtCdsReadError</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to read device EXT_CSD register.</p>
+<p>The event <b>ExtCdsReadError</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to read device EXT_CSD register.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -789,7 +789,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>HighSpeedSwitchError</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> fails to switch bus speed to high-speed mode.</p>
+<p>The event <b>HighSpeedSwitchError</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> fails to switch bus speed to high-speed mode.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -983,7 +983,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>InitSuccess</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> successfully initializes the SD/MMC/eMMC memory device.</p>
+<p>The event <b>InitSuccess</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> successfully initializes the SD/MMC/eMMC memory device.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -1013,7 +1013,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>LockActive</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> activates password protection and the SD/eMMC LOCK command executes successfully.</p>
+<p>The event <b>LockActive</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> activates password protection and the SD/eMMC LOCK command executes successfully.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -1043,7 +1043,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>LockDeactivated</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> deactivates password protection and the SD/eMMC UNLOCK command executes successfully.</p>
+<p>The event <b>LockDeactivated</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> deactivates password protection and the SD/eMMC UNLOCK command executes successfully.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -1193,7 +1193,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>MediaDetectionError</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to detect the SD/MMC/eMMC memory device.</p>
+<p>The event <b>MediaDetectionError</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to detect the SD/MMC/eMMC memory device.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -1535,7 +1535,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>ParameterInvalid</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> detects invalid function parameter.</p>
+<p>The event <b>ParameterInvalid</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> detects invalid function parameter.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -1565,7 +1565,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>RcaReadError</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to read device RCA (Relative Card Address) register.</p>
+<p>The event <b>RcaReadError</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to read device RCA (Relative Card Address) register.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -1595,7 +1595,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>RcaWriteError</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to write device RCA (Relative Card Address) register.</p>
+<p>The event <b>RcaWriteError</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to write device RCA (Relative Card Address) register.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -2005,7 +2005,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>SleepActive</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> activates eMMC SLEEP state.</p>
+<p>The event <b>SleepActive</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> activates eMMC SLEEP state.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -2065,7 +2065,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>StbyStateError</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> fails to switch device state to STBY.</p>
+<p>The event <b>StbyStateError</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> fails to switch device state to STBY.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -2095,7 +2095,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>TransferAbort</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> detects invalid SD/MMC/eMMC device state and aborts the MCI driver data transfer.</p>
+<p>The event <b>TransferAbort</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> detects invalid SD/MMC/eMMC device state and aborts the MCI driver data transfer.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>
@@ -2136,7 +2136,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>TransferError</b> is generated when data transfer is active and <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> does not receive ARM_MCI_EVENT_TRANSFER_COMPLETE event from the MCI driver.</p>
+<p>The event <b>TransferError</b> is generated when data transfer is active and <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> does not receive ARM_MCI_EVENT_TRANSFER_COMPLETE event from the MCI driver.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>events</b> : CMSIS MCI driver events. </li>
@@ -2178,7 +2178,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>TransferRetry</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> retries the data transfer operation.</p>
+<p>The event <b>TransferRetry</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> retries the data transfer operation.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance.</li>
 <li><b>retry</b> : retry count. </li>
@@ -2209,7 +2209,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>TranStateError</b> is generated when <a class="el" href="fs_operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to switch device state from STBY to TRAN.</p>
+<p>The event <b>TranStateError</b> is generated when <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> is not able to switch device state from STBY to TRAN.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>instance</b> : number of Software Component instance. </li>
 </ul>

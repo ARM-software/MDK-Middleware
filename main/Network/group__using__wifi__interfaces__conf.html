@@ -147,7 +147,7 @@ WiFi Interface Configuration File</div></div>
 </ul>
 </li>
 <li>To use <b>IPv4</b>, enable the check box.<ul>
-<li><b>IP Address</b> specifies a static local 4 bytes IP address. The value 255.255.255.255 is not allowed. This IP address is only used by the device if the <b>Dynamic Host Configuration</b> is disabled. If DHCP is enabled, the IP address is obtained automatically from the DHCP server or an <a href="https://en.wikipedia.org/wiki/AutoIP" class="el" target="_blank">AutoIP</a> is used. A static IP address can also be changed at <a class="el" href="network_create_app.html#nw_runtime_config">runtime</a>.</li>
+<li><b>IP Address</b> specifies a static local 4 bytes IP address. The value 255.255.255.255 is not allowed. This IP address is only used by the device if the <b>Dynamic Host Configuration</b> is disabled. If DHCP is enabled, the IP address is obtained automatically from the DHCP server or an <a href="https://en.wikipedia.org/wiki/AutoIP" class="el" target="_blank">AutoIP</a> is used. A static IP address can also be changed at <a class="el" href="create_app.html#nw_runtime_config">runtime</a>.</li>
 <li><b>Subnet mask</b> defines the <a href="https://en.wikipedia.org/wiki/Net_mask" class="el" target="_blank">net mask</a>. The value of the net mask has to to be in line with the above specified IP address.</li>
 <li><b>Default Gateway</b> specifies the IP address of the default gateway. It is used when accessing the external WAN. If the application is used on a local LAN only, then the value is irrelevant.</li>
 <li><b>Primary DNS Server</b> specifies the IP address of the primary DNS server. The <a class="el" href="group__netDNSc__Func.html">DNS Client</a> sends IP address resolution requests to this address. The setting is irrelevant if the DNS Client is disabled.</li>
@@ -217,7 +217,7 @@ WiFi Interface Configuration File</div></div>
 </li>
 <li><b>OS Resources Settings</b> are used to optimize usage of OS resources.<ul>
 <li>The default <b>Interface Thread Stack Size</b> is 512 bytes.</li>
-<li>The default Interface Thread priority is <b>osPriorityAboveNormal</b>. You can change this priority by changing the <b>WIFI<em>n</em>_THREAD_PRIORITY</b> defined in this configuration file. This priority must be high enough for the WiFi interface to respond to events in a timely manner. Due to this requirement, it is recommended that this setting remain the default. For more information on default settings, see the section <a class="el" href="nw_resource_requirements.html#nw_rtos_req">CMSIS-RTOS Requirements</a>.</li>
+<li>The default Interface Thread priority is <b>osPriorityAboveNormal</b>. You can change this priority by changing the <b>WIFI<em>n</em>_THREAD_PRIORITY</b> defined in this configuration file. This priority must be high enough for the WiFi interface to respond to events in a timely manner. Due to this requirement, it is recommended that this setting remain the default. For more information on default settings, see the section <a class="el" href="resource_requirements.html#nw_rtos_req">CMSIS-RTOS Requirements</a>.</li>
 </ul>
 </li>
 </ul>

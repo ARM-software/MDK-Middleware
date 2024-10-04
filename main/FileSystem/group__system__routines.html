@@ -214,7 +214,7 @@ Basic Flow Diagram for Calling System Routines</div></div>
 <p>Initialize File System and drive related driver. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">drive</td><td>a string specifying the <a class="el" href="fs_operation.html#drive">memory or storage device</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">drive</td><td>a string specifying the <a class="el" href="operation.html#drive">memory or storage device</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -228,7 +228,7 @@ Basic Flow Diagram for Calling System Routines</div></div>
 </dd></dl>
 <p>The function <b>finit</b> initializes the software library resources required for a certain <em>drive</em>, including the File System and the related driver. It must be called before invoking any other function accessing the file system of the <em>drive</em>. Calling <b>finit</b> does not access the actual media on the specified <em>drive</em>. Before working with the drive's media, a call to <a class="el" href="group__system__routines.html#gade92b7c5b374fb1485f2f9faa7259f27">fmount</a> is required. <a class="el" href="group__system__routines.html#gade92b7c5b374fb1485f2f9faa7259f27">fmount</a> checks if the media is present and formatted. <b>finit</b> fails if the File System Component in general or the driver cannot be initialized.</p>
 <p>Once the drive is successfully initialized, all subsequent calls of finit will return execution status fsOK, leaving internal drive state unchanged.</p>
-<p>The argument <em>drive</em> specifies the <a class="el" href="fs_operation.html#drive">Drives, Memory Devices and Drivers</a> to be initialized. Every drive that is used in the system must be initialized separately using this function. The <a class="el" href="fs_operation.html#cur_sys_drive">Current Drive</a> is used if an empty string is provided. A NULL pointer is not allowed and will be rejected.</p>
+<p>The argument <em>drive</em> specifies the <a class="el" href="operation.html#drive">Drives, Memory Devices and Drivers</a> to be initialized. Every drive that is used in the system must be initialized separately using this function. The <a class="el" href="operation.html#cur_sys_drive">Current Drive</a> is used if an empty string is provided. A NULL pointer is not allowed and will be rejected.</p>
 <dl class="section note"><dt>Note</dt><dd>Function finit initializes operating system resources and should not be called from multiple threads. </dd></dl>
 
 </div>
@@ -252,7 +252,7 @@ Basic Flow Diagram for Calling System Routines</div></div>
 <p>Mount drive. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">drive</td><td>a string specifying the <a class="el" href="fs_operation.html#drive">memory or storage device</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">drive</td><td>a string specifying the <a class="el" href="operation.html#drive">memory or storage device</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -267,8 +267,8 @@ Basic Flow Diagram for Calling System Routines</div></div>
 <li>fsNoFileSystem = No filesystem on the volume.</li>
 </ul>
 </dd></dl>
-<p>The function <b>fmount</b> is used to mount the File System of the specified <a class="el" href="fs_operation.html#drive">Drives, Memory Devices and Drivers</a>. It initializes memory media, media management layer and the file system on top of it. Mounting means that it will be checked if the drive's media is attached and formatted. After a successful mount, drive is ready for file I/O operations (such as <a class="el" href="group__stdio__routines.html#ga035ff3f250bb8d87973f9fb1c3c76f9c">fread</a>, <a class="el" href="group__stdio__routines.html#ga0f0929f348d0667d83ec3cd5a7672e93">fwrite</a>, etc.).</p>
-<p>The argument <em>drive</em> specifies the <a class="el" href="fs_operation.html#drive">Drives, Memory Devices and Drivers</a> to be mounted. Every drive that is used in the system must be mounted separately using this function. The <a class="el" href="fs_operation.html#cur_sys_drive">Current Drive</a> is used if an empty string is provided. A NULL pointer is not allowed and will be rejected.</p>
+<p>The function <b>fmount</b> is used to mount the File System of the specified <a class="el" href="operation.html#drive">Drives, Memory Devices and Drivers</a>. It initializes memory media, media management layer and the file system on top of it. Mounting means that it will be checked if the drive's media is attached and formatted. After a successful mount, drive is ready for file I/O operations (such as <a class="el" href="group__stdio__routines.html#ga035ff3f250bb8d87973f9fb1c3c76f9c">fread</a>, <a class="el" href="group__stdio__routines.html#ga0f0929f348d0667d83ec3cd5a7672e93">fwrite</a>, etc.).</p>
+<p>The argument <em>drive</em> specifies the <a class="el" href="operation.html#drive">Drives, Memory Devices and Drivers</a> to be mounted. Every drive that is used in the system must be mounted separately using this function. The <a class="el" href="operation.html#cur_sys_drive">Current Drive</a> is used if an empty string is provided. A NULL pointer is not allowed and will be rejected.</p>
 <p>The drive that requires formatting also requires operational memory media and therefore <b>fmount</b> shall be called before attempting to format the drive. The memory media is operational when <b>fmount</b> successfully examines the drive and returns with execution status <b>fsOK</b> or <b>fsNoFileSystem</b>. Execution status <b>fsNoFileSystem</b> is returned when the file system on the memory media is not present or is unrecognized. </p>
 
 </div>
@@ -292,7 +292,7 @@ Basic Flow Diagram for Calling System Routines</div></div>
 <p>Uninitialize File System. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">drive</td><td>a string specifying the <a class="el" href="fs_operation.html#drive">memory or storage device</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">drive</td><td>a string specifying the <a class="el" href="operation.html#drive">memory or storage device</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -305,7 +305,7 @@ Basic Flow Diagram for Calling System Routines</div></div>
 </dd></dl>
 <p>The <b>funinit</b> function uninitializes the File System. This is necessary if during application run time the drive volume needs to be disabled (for example for lowering power consumption). To reinitialize the drive afterwards, <b>finit</b> needs to be called again.</p>
 <p>The execution of funinit is unconditional and will always uninitialize available drive resources.</p>
-<p>The argument <em>drive</em> specifies the <a class="el" href="fs_operation.html#drive">Drives, Memory Devices and Drivers</a> to be uninitialized. Every drive that is used in the system must be uninitialized separately using this function. The <a class="el" href="fs_operation.html#cur_sys_drive">Current Drive</a> is used if an empty string is provided. A NULL pointer is not allowed and will be rejected.</p>
+<p>The argument <em>drive</em> specifies the <a class="el" href="operation.html#drive">Drives, Memory Devices and Drivers</a> to be uninitialized. Every drive that is used in the system must be uninitialized separately using this function. The <a class="el" href="operation.html#cur_sys_drive">Current Drive</a> is used if an empty string is provided. A NULL pointer is not allowed and will be rejected.</p>
 <dl class="section note"><dt>Note</dt><dd>Function funinit uninitializes operating system resources and should not be called from multiple threads. </dd></dl>
 
 </div>
@@ -329,7 +329,7 @@ Basic Flow Diagram for Calling System Routines</div></div>
 <p>Unmount drive. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">drive</td><td>a string specifying the <a class="el" href="fs_operation.html#drive">memory or storage device</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">drive</td><td>a string specifying the <a class="el" href="operation.html#drive">memory or storage device</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -340,7 +340,7 @@ Basic Flow Diagram for Calling System Routines</div></div>
 </ul>
 </dd></dl>
 <p>The function <b>funmount</b> is used to unmount a File System volume. When called, it flushes the data from internal file system buffers, closes all opened file handlers associated with the specified drive and disconnects the memory media. In case when removable memory media is not present only file handlers associated with the specified drive are closed.</p>
-<p>The argument <em>drive</em> specifies the <a class="el" href="fs_operation.html#drive">Drives, Memory Devices and Drivers</a> to be unmounted. Every drive that is used in the system must be unmounted separately using this function. The <a class="el" href="fs_operation.html#cur_sys_drive">Current Drive</a> is used if an empty string is provided. A NULL pointer is not allowed and will be rejected. </p>
+<p>The argument <em>drive</em> specifies the <a class="el" href="operation.html#drive">Drives, Memory Devices and Drivers</a> to be unmounted. Every drive that is used in the system must be unmounted separately using this function. The <a class="el" href="operation.html#cur_sys_drive">Current Drive</a> is used if an empty string is provided. A NULL pointer is not allowed and will be rejected. </p>
 
 </div>
 </div>

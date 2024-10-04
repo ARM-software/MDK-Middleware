@@ -198,7 +198,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>execution status <a class="el" href="group__status__error__codes__fs.html#gad871e37ea72fced1b09e65f119d4e441">fsStatus</a> </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>This function supports FAT drives only.</dd></dl>
 <p>The function <b>fattrib</b> changes file or directory attributes. File specified by the <em>path</em> argument shall not have any active file handle, otherwise the delete will fail and fsAccessDenied status code will be returned.</p>
-<p>The <em>path</em> argument is specifying the file or directory path. If the drive prefix is omitted, the <a class="el" href="fs_operation.html#cur_sys_drive">Current Drive</a> is used.</p>
+<p>The <em>path</em> argument is specifying the file or directory path. If the drive prefix is omitted, the <a class="el" href="operation.html#cur_sys_drive">Current Drive</a> is used.</p>
 <p>The argument <em>attr</em> is specifying file or directory attributes to be modified. The following characters are allowed within <em>par</em> string: </p><table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Character   </th><th class="markdownTableHeadNone">Function    </th></tr>
@@ -268,7 +268,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>execution status <a class="el" href="group__status__error__codes__fs.html#gad871e37ea72fced1b09e65f119d4e441">fsStatus</a></dd></dl>
 <p>The function <b>fdelete</b> deletes one or more files. If <em>path</em> argument points to the existing file, it is removed. If <em>path</em> argument points to the directory, all files within that directory are removed. File(s) specified by the <em>path</em> argument shall not have any active file handle, otherwise the delete will fail and fsAccessDenied status code will be returned.</p>
-<p>The <em>path</em> argument is specifying the file or directory path. If the drive prefix is omitted, the <a class="el" href="fs_operation.html#cur_sys_drive">Current Drive</a> is used.</p>
+<p>The <em>path</em> argument is specifying the file or directory path. If the drive prefix is omitted, the <a class="el" href="operation.html#cur_sys_drive">Current Drive</a> is used.</p>
 <p>The <em>options</em> argument can be NULL when options are not used or a pointer to a string specifying following options: </p><table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Option   </th><th class="markdownTableHeadNone">Description    </th></tr>
@@ -343,7 +343,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>execution status <a class="el" href="group__status__error__codes__fs.html#gad871e37ea72fced1b09e65f119d4e441">fsStatus</a></dd></dl>
 <p>The function <b>ffind</b> searches for files or directories that match a specific pattern. It can be used for explicit search, when full path is specified or iterative search, when using wildcard character within path.</p>
-<p>The argument <em>pattern</em> is specifying the file or directory path. If the drive prefix is omitted, the <a class="el" href="fs_operation.html#cur_sys_drive">Current Drive</a> is used. If the drive prefix specifies non-existing drive function returns <a class="el" href="rl__fs_8h.html#gad871e37ea72fced1b09e65f119d4e441ad86c60869f6d123bec93a710d4f24b80">fsInvalidDrive</a> status code. If targeted drive is not mounted <a class="el" href="rl__fs_8h.html#gad871e37ea72fced1b09e65f119d4e441af8c3d2bcf339de44bdc273412431e098">fsAccessDenied</a> is returned. Wildcard character * can be used when searching for multiple files. The following search rules apply:</p>
+<p>The argument <em>pattern</em> is specifying the file or directory path. If the drive prefix is omitted, the <a class="el" href="operation.html#cur_sys_drive">Current Drive</a> is used. If the drive prefix specifies non-existing drive function returns <a class="el" href="rl__fs_8h.html#gad871e37ea72fced1b09e65f119d4e441ad86c60869f6d123bec93a710d4f24b80">fsInvalidDrive</a> status code. If targeted drive is not mounted <a class="el" href="rl__fs_8h.html#gad871e37ea72fced1b09e65f119d4e441af8c3d2bcf339de44bdc273412431e098">fsAccessDenied</a> is returned. Wildcard character * can be used when searching for multiple files. The following search rules apply:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Pattern   </th><th class="markdownTableHeadNone">Description    </th></tr>
@@ -423,7 +423,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>execution status <a class="el" href="group__status__error__codes__fs.html#gad871e37ea72fced1b09e65f119d4e441">fsStatus</a></dd></dl>
 <p>The function <b>frename</b> replaces the name of a file or directory. File specified by the <em>path</em> argument shall not have any active file handle, otherwise the rename will fail and fsAccessDenied status code will be returned.</p>
-<p>The <em>path</em> argument is specifying the current name of the file or directory. If the drive prefix is omitted, the <a class="el" href="fs_operation.html#cur_sys_drive">Current Drive</a> is used.</p>
+<p>The <em>path</em> argument is specifying the current name of the file or directory. If the drive prefix is omitted, the <a class="el" href="operation.html#cur_sys_drive">Current Drive</a> is used.</p>
 <p>The argument <em>newname</em> is specifying the new name of the file or directory. If <em>newname</em> is specifying a file or directory that already exists, function returns with status code <a class="el" href="rl__fs_8h.html#gad871e37ea72fced1b09e65f119d4e441ac9907451be758f90b129bf34c599e038">fsAlreadyExists</a>.</p>
 <p><b>Code Example</b> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> tst_frename (<span class="keywordtype">void</span>)  {</div>
 <div class="line"> </div>

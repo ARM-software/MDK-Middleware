@@ -301,7 +301,7 @@ Endpoints</h2>
 <h1><a class="anchor" id="USB_Protocol"></a>
 USB Protocol</h1>
 <p>USB is a polled bus, where the host initiates all data exchanges.</p>
-<h2><a class="anchor" id="autotoc_md20"></a>
+<h2><a class="anchor" id="USB_Transactions"></a>
 Transactions</h2>
 <p>Data is transferred in so called <b>transactions</b>. Normally, they consist of three packets:</p><ol type="1">
 <li>The <b>token packet</b> is the header defining the transaction type and direction, the device address, and the endpoint.</li>
@@ -317,7 +317,7 @@ Pipe Model</div></div>
 <img src="packetmodel.png" alt=""/>
 <div class="caption">
 Packet Model</div></div>
-    <h2><a class="anchor" id="autotoc_md21"></a>
+    <h2><a class="anchor" id="USB_Packets"></a>
 Packets</h2>
 <p><b>Packets</b> could be thought of as the smallest element of data transmission. Each packet transmits an integral number of bytes at the current transmission rate. Packets start with a synchronization pattern, followed by the data bytes of the packet, and concluded with an End-of-Packet (EOP) signal. All USB packet patterns are transmitted <em>least significant bit first</em>. Before and after the packet, the bus is in <em>idle</em> state.</p>
 <div class="image">

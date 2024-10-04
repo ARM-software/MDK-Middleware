@@ -4,7 +4,7 @@ var searchData=
   ['sa_5ffamily_1',['sa_family',['../group__bsd__structs.html#a4df9597bca2a0bd5d0f51e93f3b762e7',1,'SOCKADDR']]],
   ['sec_2',['sec',['../rl__net_8h.html#ad1696900026b287a87c563b733a21bc3',1,'NET_FS_TIME']]],
   ['secure_20communication_3',['Secure Communication',['../secure_communication.html',1,'']]],
-  ['securing_5fcommunication_2emd_4',['securing_communication.md',['../securing__communication_8md.html',1,'']]],
+  ['secure_5fcommunication_2emd_4',['secure_communication.md',['../secure__communication_8md.html',1,'']]],
   ['security_5',['security',['../group__Wifi__structs.html#aec30474f97bb7bcc198d8d36b646f4f0',1,'NET_WIFI_CONFIG::security()'],['../group__Wifi__structs.html#aec30474f97bb7bcc198d8d36b646f4f0',1,'NET_WIFI_NET_INFO::security()'],['../group__Wifi__structs.html#aec30474f97bb7bcc198d8d36b646f4f0',1,'NET_WIFI_SCAN_INFO::security()']]],
   ['select_6',['select',['../group__using__network__sockets__bsd__func.html#ga2b756e98541d55081c99a70ef8f5ad43',1,'rl_net.h']]],
   ['send_7',['send',['../group__using__network__sockets__bsd__func.html#ga4cc5678cb81694afc224221063fda9cd',1,'rl_net.h']]],

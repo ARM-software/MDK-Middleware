@@ -159,10 +159,10 @@ Content</h2></td></tr>
 <li><b>USBD_User_CustomClass_0.c</b></li>
 <li>The function prefix is <b>USBD_CustomClass0_</b></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md47"></a>
+<h2><a class="anchor" id="autotoc_md31"></a>
 Software Structure</h2>
 <p>The handling of the Custom Class endpoint events is implemented in an USBD_CustomClassn_Endpointx_Event for every endpoint. Each endpoint (or pair of IN/OUT endpoints with the same endpoint number) uses an own thread in order to allow a parallel functionality of every interface.</p>
-<h3><a class="anchor" id="autotoc_md48"></a>
+<h3><a class="anchor" id="autotoc_md32"></a>
 Setup Packets on Control Endpoint 0</h3>
 <p>Setup packets sent to Control Endpoint 0 are received by the USB Device Core. The USB Device Core will call the <a class="el" href="group__usbd__coreFunctions__api.html#ga4e042536dff24404490771d698da1e22">USBD_Devicen_Endpoint0_SetupPacketReceived</a> function and pass the setup packet to it. Depending on the return code of <b>USBD_Devicen_Endpoint0_SetupPacketReceived</b>, the USB Device Core either passes the processing to the Custom Class function if custom class is used and if message is addressed to a custom class by calling <a class="el" href="group__usbd__classFunctions__api.html#ga71d4b65ea6d404c6e588672a413d06b5">USBD_CustomClassn_Endpoint0_SetupPacketReceived</a> function or continues to process the received setup packet itself. Depending on the return code of <b>USBD_CustomClassn_Endpoint0_SetupPacketReceived</b>, processing of the setup packet is either done or continues to be processed by USB Device Core.</p>
 <p>USB Device Core will call <a class="el" href="group__usbd__coreFunctions__api.html#ga966b91ca2ca092ca62095b82943dcfff">USBD_Devicen_Endpoint0_SetupPacketProcessed</a> and depending on return code it will call <a class="el" href="group__usbd__classFunctions__api.html#ga170bf6bfa6ab3bd069720d8a455b89b6">USBD_CustomClassn_Endpoint0_SetupPacketProcessed</a> to inform the application that setup packet has been processed by USB Device Core.</p>
@@ -215,7 +215,7 @@ Setup Packets on Control Endpoint 0</h3>
 <area href="group__usbd__coreFunctions__api.html#gabefe6dae72a49806a96b981c286d0aeb" shape="rect" coords="52,1052,69,1065" alt=""/>
 </map>
 </div>
-<h2><a class="anchor" id="autotoc_md49"></a>
+<h2><a class="anchor" id="autotoc_md33"></a>
 Implementation</h2>
 <p>To <a class="el" href="usbd_create_app.html">create an USB Device</a> with a Custom Class:</p><ul>
 <li>Set the required number for <b>USB:Device:Custom</b> class instances during the <a class="el" href="usbd_create_app.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>
@@ -223,7 +223,7 @@ Implementation</h2>
 <li>Implement the application specific behavior using one of the available <a class="el" href="group__usbd__classFunctions.html#USBD_User_UCT">templates</a>.</li>
 </ul>
 <p><a class="anchor" id="USBD_User_UCT"></a></p>
-<h2><a class="anchor" id="autotoc_md50"></a>
+<h2><a class="anchor" id="autotoc_md34"></a>
 User Code Templates</h2>
 <p>Two  <script>link_ext('uv4_ca_sourcefiles');</script> files are available to implement the application-specific behavior:</p><ul>
 <li><a class="el" href="group__usbd__classFunctions.html#USBD_User_Cust_UCT">USBD_User_CustomClass.c</a> is used for custom handling of class requests to instances of a custom class.</li>

@@ -166,20 +166,20 @@ Network Component Structure</div></div>
 <li>For WiFi interface a <b>WiFi module</b> is required.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>Usually, WiFi chips and modules have their own networking stack incorporated. This means that payload data is sent via a serial interface to the WiFi chip/module and the Ethernet frames are assembled inside. If you intend to use the MDK-Middleware Network component with a WiFi chip/module, make sure that its WiFi driver supports the <a href="https://arm-software.github.io/CMSIS_5/develop/Driver/html/group__wifi__bypass__gr.html">bypass mode</a> (currently only available for the <a href="https://www.keil.arm.com/packs/qca400x_wifi_driver-mdk-packs/versions/">Qualcomm QCA400x</a>). This mode allows to send the Ethernet frames assembled by the Network component transparently through the WiFi chip/module. Some devices may support transparent mode at a higher level, such as TCP - this will not work with the Network component.</dd></dl>
-<p>For mass production, the <a class="el" href="network_create_app.html#nw_runtime_config">Runtime Configuration</a> option can be used to assign individual network addresses to every device that is produced. Unique identifiers are required for proper network operation.</p>
+<p>For mass production, the <a class="el" href="create_app.html#nw_runtime_config">Runtime Configuration</a> option can be used to assign individual network addresses to every device that is produced. Unique identifiers are required for proper network operation.</p>
 <p>An <a class="el" href="group__RFC__list.html">list of implemented RFCs</a> is also available.</p>
-<h1><a class="anchor" id="net_docs_structure"></a>
+<h1><a class="anchor" id="doc_structure"></a>
 Documentation Structure</h1>
 <p>This user's guide contains the following chapters:</p>
 <ul>
-<li><a class="el" href="network_create_app.html">Creating a Network Application</a> explains the necessary steps to develop a network project from scratch.</li>
-<li><a class="el" href="network_troubleshoot.html">Troubleshooting a Network Application</a> shows best practice when debugging general network/connection issues.</li>
+<li><a class="el" href="create_app.html">Creating a Network Application</a> explains the necessary steps to develop a network project from scratch.</li>
+<li><a class="el" href="troubleshoot.html">Troubleshooting a Network Application</a> shows best practice when debugging general network/connection issues.</li>
 <li><a class="el" href="secure_communication.html">Secure Communication</a> shows how to use <b>mbed TLS</b> together with the Network Component to secure your communication channels. It also explains how to create your own SSL/TLS certificates.</li>
 <li><a class="el" href="examples.html">Examples</a> is a good starting point for implementing your own networking device.</li>
-<li>The chapter <a class="el" href="certification.html">Cyber Security</a> explains how to test the TCP/IP stack with industry-standard tools against common vulnerabilities.</li>
-<li><a class="el" href="nw_resource_requirements.html">Resource Requirements</a> describes the resource requirements of the Network Component.</li>
-<li><a class="el" href="net_func_overview.html">Function Overview</a> list provides a brief overview of all Network Component functions.</li>
-<li><a class="el" href="network_diffs.html">Migration Guide</a> section contains information how to migrate from previous versions to the Network Component v8.</li>
+<li>The chapter <a class="el" href="cyber_security.html">Cyber Security</a> explains how to test the TCP/IP stack with industry-standard tools against common vulnerabilities.</li>
+<li><a class="el" href="function_overview.html">Function Overview</a> list provides a brief overview of all Network Component functions.</li>
+<li><a class="el" href="resource_requirements.html">Resource Requirements</a> describes the resource requirements of the Network Component.</li>
+<li><a class="el" href="migration_guide.html">Migration Guide</a> section contains information how to migrate from previous versions to the Network Component v8.</li>
 <li><a href="./modules.html" class="el">API Reference</a> describes the functional interface of the Network Component in detail. </li>
 </ul>
 </div></div><!-- PageDoc -->

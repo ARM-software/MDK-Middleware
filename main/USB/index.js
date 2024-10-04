@@ -1,4 +1,4 @@
 var index =
 [
-    [ "Documentation Structure", "index.html#usb_doc_structure", null ]
+    [ "Documentation Structure", "index.html#doc_structure", null ]
 ];

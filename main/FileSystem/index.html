@@ -135,28 +135,31 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 File System Component Structure</div></div>
     <p>The File System Component is structured as follows:</p>
 <ul>
-<li>Storage devices are referenced as <a class="el" href="fs_operation.html#drive">drives</a> which can be accessed by the user</li>
+<li>Storage devices are referenced as <a class="el" href="operation.html#drive">drives</a> which can be accessed by the user</li>
 </ul>
 <ul>
 <li><b>Multiple instances</b> of the same storage device can be implemented (for example you might want to have two SD cards attached to your system).</li>
-<li>The File System <b>CORE</b> supports thread-safe operation and uses an <a class="el" href="fs_operation.html#emb_fs">Embedded File System (EFS)</a> (for NOR and SPI Flashes) or a <a class="el" href="fs_operation.html#fat_fs">FAT File System</a> (for RAM, NAND, SD/eMMC and USB devices).</li>
+<li>The File System <b>CORE</b> supports thread-safe operation and uses an <a class="el" href="operation.html#emb_fs">Embedded File System (EFS)</a> (for NOR and SPI Flashes) or a <a class="el" href="operation.html#fat_fs">FAT File System</a> (for RAM, NAND, SD/eMMC and USB devices).</li>
 <li>The Core allows <b>simultaneous access</b> to multiple storage devices (for example backing up data from internal flash to an external USB device).</li>
 <li>For accessing the drives appropriate <b>drivers</b> are in place to support<ul>
-<li>Flash chips (<a class="el" href="fs_create_app.html#nand_usage">NAND</a>, <a class="el" href="fs_create_app.html#nor_usage">NOR, and SPI</a>)</li>
-<li>Memory card interfaces (<a class="el" href="fs_create_app.html#mc_usage">SD/SDxC/MMC/eMMC</a>)</li>
-<li><a class="el" href="fs_create_app.html#usb_usage">USB devices</a></li>
-<li>On-chip <a class="el" href="fs_create_app.html#ram_usage">RAM</a>, Flash and external memory interfaces.</li>
+<li>Flash chips (<a class="el" href="create_app.html#nand_usage">NAND</a>, <a class="el" href="create_app.html#nor_usage">NOR, and SPI</a>)</li>
+<li>Memory card interfaces (<a class="el" href="create_app.html#mc_usage">SD/SDxC/MMC/eMMC</a>)</li>
+<li><a class="el" href="create_app.html#usb_usage">USB devices</a></li>
+<li>On-chip <a class="el" href="create_app.html#ram_usage">RAM</a>, Flash and external memory interfaces.</li>
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="fs_docs_structure"></a>
+<h1><a class="anchor" id="doc_structure"></a>
 Documentation Structure</h1>
 <p>This user's guide contains the following chapters:</p>
 <ul>
-<li><a class="el" href="fs_create_app.html">Create a File System Application</a> explains the necessary steps to develop a project containing a file system from scratch.</li>
+<li><a class="el" href="create_app.html">Create a File System Application</a> explains the necessary steps to develop a project containing a file system from scratch.</li>
 <li><a class="el" href="examples.html">Examples</a> are a good starting point for implementing your own storage device.</li>
-<li><a class="el" href="fs_operation.html">Theory of Operation</a> gives more detail on the basics of the File System Component.</li>
-<li><a class="el" href="fs_function_reference.html">Function Overview</a> lists the complete API of the File System Component. </li>
+<li><a class="el" href="operation.html">Theory of Operation</a> gives more detail on the basics of the File System Component.</li>
+<li><a class="el" href="function_overview.html">Function Overview</a> lists the complete API of the File System Component.</li>
+<li><a class="el" href="resource_requirements.html">Resource Requirements</a> shows the configuration of system resources for the File System Component in detail.</li>
+<li><a class="el" href="migration_guide.html">Migration Guide</a> contains information how to migrate projects to latest version of the File System Component (v8).</li>
+<li><a href="./modules.html"><b>API Reference</b></a> shows the directory and file organization and contains the detailed API description. </li>
 </ul>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->

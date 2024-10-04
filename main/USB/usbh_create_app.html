@@ -133,7 +133,7 @@ $(document).ready(function(){initNavTree('usbh_create_app.html',''); initResizab
 <li>Select <a class="el" href="usbh_create_app.html#RTE_Software_Component_Selection_USBH">RTE Components</a> that are required for your application.</li>
 <li><a class="el" href="usbh_create_app.html#USB_Driver_Configuration_USBH">Enable and configure the USB Host Driver</a>.</li>
 <li>Configure the <a class="el" href="usbh_create_app.html#USB_Host_Configuration_USBH">USB Host</a> that connects the USB Middleware to the microcontroller USB peripheral.</li>
-<li>Configure the <a class="el" href="usbh_create_app.html#usbh_system_resources">System Resources</a> according to the USB Host component's <a class="el" href="usb_resource_requirements.html#usbh_res_req">Resource Requirements</a>.</li>
+<li>Configure the <a class="el" href="usbh_create_app.html#usbh_system_resources">System Resources</a> according to the USB Host component's <a class="el" href="resource_requirements.html#usbh_res_req">Resource Requirements</a>.</li>
 <li>Configure the parameters of the attached <a class="el" href="usbh_create_app.html#USB_Device_Class_Configuration_USBH">USB Devices</a>.</li>
 <li>Implement the <a class="el" href="usbh_create_app.html#USBH_User_Code_Implementation">Application Code</a> using code templates that are provided to support various USB Device Classes.</li>
 <li><a class="el" href="usbh_create_app.html#usbh_debugging">Debug</a> you application using the built-in mechanisms of the USB Component.</li>
@@ -186,7 +186,7 @@ System Resource Configuration</h1>
 <li>Additional <b>main stack size</b> of <b>512 bytes</b>.</li>
 <li>The USB Host Component uses CMSIS-RTOS2 threads. In case <b>RTX v5</b> is used <b>no changes to RTX settings</b> are necessary as all resources are allocated statically.</li>
 </ul>
-<p>For more information, check the USB Host component's <a class="el" href="usb_resource_requirements.html#usbh_res_req">Resource Requirements</a> section.</p>
+<p>For more information, check the USB Host component's <a class="el" href="resource_requirements.html#usbh_res_req">Resource Requirements</a> section.</p>
 <h1><a class="anchor" id="USB_Device_Class_Configuration_USBH"></a>
 Configuration of Attachable USB Devices</h1>
 <p>In the <code>USBH_Config_HID.h</code>, <code>USBH_Config_MSC.h</code>, <code>USBH_Config_CDC.h</code>, or <code>USBH_Config_CustomClass.h</code> you can specify the number of concurrent USB Devices that the USB Host will support. This has an impact on the amount of memory that will be reserved in your application for the attachment of USB Devices. The <a class="el" href="usbh_examples.html">Examples</a> shows how to configure an USB Host to interact with different HID, MSC or CDC peripheral devices.</p>

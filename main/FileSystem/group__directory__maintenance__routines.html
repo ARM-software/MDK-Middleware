@@ -178,7 +178,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>execution status <a class="el" href="group__status__error__codes__fs.html#gad871e37ea72fced1b09e65f119d4e441">fsStatus</a></dd></dl>
 <p>The function <b>fchdir</b> changes the current working directory. It causes the directory named by the <em>path</em> argument to become the current working directory, which is the starting point for path searches for pathnames not beginning with '/' or '\'.</p>
-<p>The argument <em>path</em> is specifying the directory path. If the drive prefix is omitted, the <a class="el" href="fs_operation.html#cur_sys_drive">Current Drive</a> is used. If <em>path</em> is specifying a file, function returns with status code <a class="el" href="rl__fs_8h.html#gad871e37ea72fced1b09e65f119d4e441a2817eb80b89cefc6641ba331894c6bc9">fsNotDirectory</a>. </p>
+<p>The argument <em>path</em> is specifying the directory path. If the drive prefix is omitted, the <a class="el" href="operation.html#cur_sys_drive">Current Drive</a> is used. If <em>path</em> is specifying a file, function returns with status code <a class="el" href="rl__fs_8h.html#gad871e37ea72fced1b09e65f119d4e441a2817eb80b89cefc6641ba331894c6bc9">fsNotDirectory</a>. </p>
 
 </div>
 </div>
@@ -207,7 +207,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>execution status <a class="el" href="group__status__error__codes__fs.html#gad871e37ea72fced1b09e65f119d4e441">fsStatus</a></dd></dl>
 <p>The function <b>fmkdir</b> is used to make a new directory or any intermediate directories in the path.</p>
-<p>The argument <em>path</em> is specifying the directory path. If the drive prefix is omitted, the <a class="el" href="fs_operation.html#cur_sys_drive">Current Drive</a> is used. If <em>path</em> is specifying a file or directory that already exists, function returns with status code <a class="el" href="rl__fs_8h.html#gad871e37ea72fced1b09e65f119d4e441ac9907451be758f90b129bf34c599e038">fsAlreadyExists</a>. </p>
+<p>The argument <em>path</em> is specifying the directory path. If the drive prefix is omitted, the <a class="el" href="operation.html#cur_sys_drive">Current Drive</a> is used. If <em>path</em> is specifying a file or directory that already exists, function returns with status code <a class="el" href="rl__fs_8h.html#gad871e37ea72fced1b09e65f119d4e441ac9907451be758f90b129bf34c599e038">fsAlreadyExists</a>. </p>
 
 </div>
 </div>
@@ -246,7 +246,7 @@ Functions</h2></td></tr>
 <p>Print working directory. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">drive</td><td>a string specifying the <a class="el" href="fs_operation.html#drive">memory or storage device</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">drive</td><td>a string specifying the <a class="el" href="operation.html#drive">memory or storage device</a>. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">buf</td><td>pointer to string buffer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>string buffer length. </td></tr>
   </table>
@@ -254,7 +254,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>execution status <a class="el" href="group__status__error__codes__fs.html#gad871e37ea72fced1b09e65f119d4e441">fsStatus</a></dd></dl>
 <p>The function <b>fpwd</b> prints the current working directory.</p>
-<p>The argument <em>drive</em> specifies the <a class="el" href="fs_operation.html#drive">Drives, Memory Devices and Drivers</a>. The <a class="el" href="fs_operation.html#cur_sys_drive">Current Drive</a> is used if an empty string is provided. A NULL pointer is not allowed and will be rejected.</p>
+<p>The argument <em>drive</em> specifies the <a class="el" href="operation.html#drive">Drives, Memory Devices and Drivers</a>. The <a class="el" href="operation.html#cur_sys_drive">Current Drive</a> is used if an empty string is provided. A NULL pointer is not allowed and will be rejected.</p>
 <p>The argument <em>buf</em> point to the array where the absolute path of the current working directory is stored.</p>
 <p>The argument <em>len</em> is the size in bytes of the <em>buf</em> array. If <em>len</em> argument is less than maximum path length of the target file system, function returns with <a class="el" href="rl__fs_8h.html#gad871e37ea72fced1b09e65f119d4e441a9d29551af0b19b95f91e8d1084672a85">fsInvalidParameter</a> and content of <em>buf</em> remains unchanged.</p>
 <dl class="section note"><dt>Note</dt><dd><ul>
@@ -300,7 +300,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>execution status <a class="el" href="group__status__error__codes__fs.html#gad871e37ea72fced1b09e65f119d4e441">fsStatus</a></dd></dl>
 <p>The function <b>frmdir</b> removes a directory if it is empty. Argument options is used to specify function options.</p>
-<p>The argument <em>path</em> is specifying the directory path. If the drive prefix is omitted, the <a class="el" href="fs_operation.html#cur_sys_drive">Current Drive</a> is used. If <em>path</em> is specifying a file, function returns with status code <a class="el" href="rl__fs_8h.html#gad871e37ea72fced1b09e65f119d4e441a2817eb80b89cefc6641ba331894c6bc9">fsNotDirectory</a>.</p>
+<p>The argument <em>path</em> is specifying the directory path. If the drive prefix is omitted, the <a class="el" href="operation.html#cur_sys_drive">Current Drive</a> is used. If <em>path</em> is specifying a file, function returns with status code <a class="el" href="rl__fs_8h.html#gad871e37ea72fced1b09e65f119d4e441a2817eb80b89cefc6641ba331894c6bc9">fsNotDirectory</a>.</p>
 <p>The argument <em>options</em> can be NULL when options are not used or a pointer to a string specifying following option: </p><table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Option   </th><th class="markdownTableHeadNone">Description    </th></tr>

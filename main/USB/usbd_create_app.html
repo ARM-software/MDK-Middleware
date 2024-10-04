@@ -134,7 +134,7 @@ $(document).ready(function(){initNavTree('usbd_create_app.html',''); initResizab
 <li><a class="el" href="usbd_create_app.html#USB_Driver_Configuration">Enable and configure the USB Device Driver</a>.</li>
 <li>Configure the <a class="el" href="usbd_create_app.html#USB_Device_Configuration">USB Device</a> that connects the USB Middleware to the microcontroller USB peripheral.</li>
 <li>Configure <a class="el" href="usbd_create_app.html#USB_Device_Class_Configuration">USB Device Class Configuration and USB Endpoint Settings</a> for each selected USB Device Class and instance.</li>
-<li>Configure the <a class="el" href="usbd_create_app.html#usbd_system_resources">System Resources</a> according to the USB Device component's <a class="el" href="usb_resource_requirements.html#usbd_res_req">Resource Requirements</a>.</li>
+<li>Configure the <a class="el" href="usbd_create_app.html#usbd_system_resources">System Resources</a> according to the USB Device component's <a class="el" href="resource_requirements.html#usbd_res_req">Resource Requirements</a>.</li>
 <li>Implement the <a class="el" href="usbd_create_app.html#User_Code_Implementation">Application Code</a> using code templates that are provided for the USB Device Classes.</li>
 <li>If required by your application, you can <a class="el" href="usbd_create_app.html#Overriding_Descriptors">change the default USB Device descriptors</a>.</li>
 <li><a class="el" href="usbd_create_app.html#usbd_debugging">Debug</a> you application using the built-in mechanisms of the USB Component.</li>
@@ -214,7 +214,7 @@ System Resource Configuration</h1>
 <li>Additional <b>main stack size</b> of <b>512 bytes</b>.</li>
 <li>The USB Device Component uses CMSIS-RTOS2 threads. In case <b>RTX v5</b> is used <b>no changes to RTX settings</b> are necessary as all resources are allocated statically.</li>
 </ul>
-<p>For more information, check the USB Device component's <a class="el" href="usb_resource_requirements.html#usbd_res_req">Resource Requirements</a> section.</p>
+<p>For more information, check the USB Device component's <a class="el" href="resource_requirements.html#usbd_res_req">Resource Requirements</a> section.</p>
 <h1><a class="anchor" id="User_Code_Implementation"></a>
 User Code Implementation</h1>
 <p> <script>link_ext('uv4_ca_sourcefiles');</script> files provide function templates used to implement USB Device Class functionality. The available functions are explained in the <a class="el" href="group__usbd__DevClassFunctions.html">Reference</a> section of the USB Component. These routines can be adapted to the needs of the microcontroller application, in case different then default functionality is needed.</p>

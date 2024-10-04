@@ -206,7 +206,7 @@ Functions</h2></td></tr>
 
 <p>Retrieve localhost name. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>]. </p>
 <dl class="section return"><dt>Returns</dt><dd>pointer to localhost name, a null-terminated string.</dd></dl>
-<p>The function <b>netSYS_GetHostName</b> returns the name of the local host. The name is set with <code>NET_HOST_NAME</code> in the <b>Net_Config.h</b>, and can be changed at <a class="el" href="network_create_app.html#nw_runtime_config">runtime</a>.</p>
+<p>The function <b>netSYS_GetHostName</b> returns the name of the local host. The name is set with <code>NET_HOST_NAME</code> in the <b>Net_Config.h</b>, and can be changed at <a class="el" href="create_app.html#nw_runtime_config">runtime</a>.</p>
 <p><b>Code</b> <b>Example</b> </p><div class="fragment"><div class="line">printf (<span class="stringliteral">&quot;Localhost name is %s\n&quot;</span>, <a class="code hl_function" href="group__netSys__Func.html#ga6eda1bb2895a98252a851160c15111a5" title="Retrieve localhost name. [thread-safe].">netSYS_GetHostName</a> ());</div>
 </div><!-- fragment --> 
 </div>
@@ -235,7 +235,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
-<p>The function <b>netSYS_SetHostName</b> sets the name of the local host. Default name is set with <code>NET_HOST_NAME</code> in the <b>Net_Config.h</b>, and can be changed at <a class="el" href="network_create_app.html#nw_runtime_config">runtime</a>.</p>
+<p>The function <b>netSYS_SetHostName</b> sets the name of the local host. Default name is set with <code>NET_HOST_NAME</code> in the <b>Net_Config.h</b>, and can be changed at <a class="el" href="create_app.html#nw_runtime_config">runtime</a>.</p>
 <p>The argument <em>hostname</em> is a pointer to the localhost name that is to be set, which is a <span class="XML-Token">null</span>-terminated string. The function copies the content of the <em>hostname</em> to the localhost name. The maximum length of the <em>hostname</em> string is limited to <span class="XML-Token">15</span> characters.</p>
 <p>Possible <a class="el" href="group__netStatusErrorCodes.html#ga5675a3b88ee02986ae15ae3bb8135551">netStatus</a> return values:</p><ul>
 <li><em>netOK:</em> Host name successfully set.</li>

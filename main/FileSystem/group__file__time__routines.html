@@ -250,7 +250,7 @@ Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>execution status <a class="el" href="group__status__error__codes__fs.html#gad871e37ea72fced1b09e65f119d4e441">fsStatus</a> </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>This function supports FAT drives only.</dd></dl>
 <p>The function <b>ftime_get</b> retrieves the file or directory timestamp information.</p>
-<p>The <em>path</em> argument is specifying the file or directory path. If the drive prefix is omitted, the <a class="el" href="fs_operation.html#cur_sys_drive">Current Drive</a> is used.</p>
+<p>The <em>path</em> argument is specifying the file or directory path. If the drive prefix is omitted, the <a class="el" href="operation.html#cur_sys_drive">Current Drive</a> is used.</p>
 <p>The argument <em>create</em> is specifying a pointer to the <a class="el" href="rl__fs_8h.html#structfsTime">fsTime</a> structure where the create time will be stored and can be NULL.</p>
 <p>The argument <em>access</em> is specifying a pointer to the <a class="el" href="rl__fs_8h.html#structfsTime">fsTime</a> structure where the last access time will be stored and can be NULL.</p>
 <p>The argument <em>write</em> is specifying a pointer to the <a class="el" href="rl__fs_8h.html#structfsTime">fsTime</a> structure where the last write time will be stored and can be NULL.</p>
@@ -327,7 +327,7 @@ FAT last access timestamp only stores date and therefore the time members (hour,
 <dl class="section return"><dt>Returns</dt><dd>execution status <a class="el" href="group__status__error__codes__fs.html#gad871e37ea72fced1b09e65f119d4e441">fsStatus</a> </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>This function supports FAT drives only.</dd></dl>
 <p>The function <b>ftime_set</b> sets the file or directory timestamp information.</p>
-<p>The <em>path</em> argument is specifying the file or directory path. If the drive prefix is omitted, the <a class="el" href="fs_operation.html#cur_sys_drive">Current Drive</a> is used.</p>
+<p>The <em>path</em> argument is specifying the file or directory path. If the drive prefix is omitted, the <a class="el" href="operation.html#cur_sys_drive">Current Drive</a> is used.</p>
 <p>The argument <em>create</em> is specifying a pointer to the <a class="el" href="rl__fs_8h.html#structfsTime">fsTime</a> structure containing the create time and can be NULL.</p>
 <p>The argument <em>access</em> is specifying a pointer to the <a class="el" href="rl__fs_8h.html#structfsTime">fsTime</a> structure containing the last access time and can be NULL.</p>
 <p>The argument <em>write</em> is specifying a pointer to the <a class="el" href="rl__fs_8h.html#structfsTime">fsTime</a> structure containing the last write time and can be NULL.</p>
