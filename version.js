@@ -1,6 +1,7 @@
 //--- list of versions‚ ---
 const versions = {
     "General": {
+        "doc_usb": "8.0.0-dev211",
         "latest": "8.0.0-dev210"
     },
     "FileSystem": {
