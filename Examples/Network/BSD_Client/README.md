@@ -2,7 +2,7 @@
 
 This MDK-Middleware example project implements a **BSD client**. It shows you how to control the LEDs on the evaluation board of the server via the BSD socket.
 
-For detailed description see [BSD Server Example section in MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/Network/BSD_Client_Example.html).
+For detailed description see [BSD Client Example section in MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/Network/BSD_Client_Example.html).
 
 ## Key usage aspects
 
