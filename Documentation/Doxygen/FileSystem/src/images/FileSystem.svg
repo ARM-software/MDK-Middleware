@@ -1,1 +1,97 @@
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 552 414" height="414" xmlns="http://www.w3.org/2000/svg" width="552"><defs/><g transform="translate(-283.29,-170.00)"><path id="shape1" d="M551.1,159.0L551.1,.0L.0,.0L.0,159.0L551.1,159.0z" fill="#333e48" fill-rule="nonzero" transform="translate(283.719000,257.000000)"/><g id="shape2" transform="translate(433.257200,275.543300)"><path d="M170.0,52.9L170.0,.0L.0,.0L.0,52.9L170.0,52.9z" fill="none" stroke-width="2" stroke="#ffffff"/><text style="fill:#ffffff;font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:9.00pt" xml:space="preserve"><tspan y="26.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:12.00pt" x="50.5">USB MSC</tspan><tspan y="42.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial" x="34.7">Mass Storage Class</tspan></text></g><g id="shape3" transform="translate(622.139200,275.543300)"><path d="M186.4,52.9L186.4,.0L.0,.0L.0,52.9L186.4,52.9z" fill="none" stroke-width="2" stroke="#ffffff"/><text style="fill:#ffffff;font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:9.00pt" xml:space="preserve"><tspan y="26.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:12.00pt" x="59.1">SD/MMC</tspan><tspan y="42.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial" x="57.2">Memory Card</tspan></text></g><g id="shape4" transform="translate(622.140200,340.086300)"><path d="M83.1,52.9L83.1,.0L.0,.0L.0,52.9L83.1,52.9z" fill="none" stroke-width="2" stroke="#ffffff"/><text style="fill:#ffffff;font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:9.00pt" xml:space="preserve"><tspan y="26.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:12.00pt" x="17.9">NAND</tspan><tspan y="42.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial" x="27.9">Flash</tspan></text></g><g id="shape5" transform="translate(298.289000,268.000000)"><path d="M522.0,136.0L522.0,.0L.0,.0L.0,136.0L522.0,136.0z" fill="none" stroke-width="2.666670083999634" stroke="#00c1de"/><text style="fill:#ffffff;font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:14.00pt" xml:space="preserve"><tspan y="23.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial" x="4.0">Drive</tspan></text></g><g id="shape6" transform="translate(433.257700,340.086300)"><path d="M75.6,52.9L75.6,.0L.0,.0L.0,52.9L75.6,52.9z" fill="none" stroke-width="2" stroke="#ffffff"/><text style="fill:#ffffff;font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:12.00pt" xml:space="preserve"><tspan y="23.5" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial" x="20.0">RAM</tspan></text></g><g id="shape7" transform="translate(725.400200,340.086300)"><path d="M83.1,52.9L83.1,.0L.0,.0L.0,52.9L83.1,52.9z" fill="none" stroke-width="2" stroke="#ffffff"/><text style="fill:#ffffff;font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:9.00pt" xml:space="preserve"><tspan y="26.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:12.00pt" x="30.2">SPI</tspan><tspan y="42.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial" x="27.9">Flash</tspan></text></g><g id="shape8" transform="translate(527.698700,340.086300)"><path d="M75.6,52.9L75.6,.0L.0,.0L.0,52.9L75.6,52.9z" fill="none" stroke-width="2" stroke="#ffffff"/><text style="fill:#ffffff;font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:9.00pt" xml:space="preserve"><tspan y="26.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:12.00pt" x="20.3">NOR</tspan><tspan y="42.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial" x="24.1">Flash</tspan></text></g><path id="shape9" d="M551.1,129.0L551.1,.0L.0,.0L.0,129.0L551.1,129.0z" fill="#7d868c" fill-rule="nonzero" transform="translate(283.718000,423.000000)"/><g id="shape10" transform="translate(432.686200,444.000000)"><path d="M170.0,38.0L170.0,.0L.0,.0L.0,38.0L170.0,38.0z" fill="none" stroke-width="2" stroke="#ffffff"/><text style="fill:#ffffff;font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:12.00pt" xml:space="preserve"><tspan y="26.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial" x="61.3">NAND</tspan></text></g><g id="shape11" transform="translate(621.568200,444.000000)"><path d="M186.4,38.0L186.4,.0L.0,.0L.0,38.0L186.4,38.0z" fill="none" stroke-width="2" stroke="#ffffff"/><text style="fill:#ffffff;font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:12.00pt" xml:space="preserve"><tspan y="26.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial" x="75.0">Flash</tspan></text></g><g id="shape12" transform="translate(297.718000,435.500000)"><path d="M522.0,104.5L522.0,.0L.0,.0L.0,104.5L522.0,104.5z" fill="none" stroke-width="2.666670083999634" stroke="#00c1de"/><text style="fill:#ffffff;font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:14.00pt" xml:space="preserve"><tspan y="23.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial" x="4.0">CMSIS-Driver*</tspan></text></g><g id="shape13" transform="translate(433.257200,491.000000)"><path d="M170.0,38.0L170.0,.0L.0,.0L.0,38.0L170.0,38.0z" fill="none" stroke-width="2" stroke="#ffffff"/><text style="fill:#ffffff;font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:12.00pt" xml:space="preserve"><tspan y="26.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial" x="70.0">MCI</tspan></text></g><g id="shape14" transform="translate(622.139200,491.000400)"><path d="M186.4,38.2L186.4,.0L.0,.0L.0,38.2L186.4,38.2z" fill="none" stroke-width="2" stroke="#ffffff"/><text style="fill:#ffffff;font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:12.00pt" xml:space="preserve"><tspan y="26.1" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial" x="81.8">SPI</tspan></text></g><path id="shape15" d="M551.1,79.0L551.1,.0L.0,.0L.0,79.0L551.1,79.0z" fill="#333e48" fill-rule="nonzero" transform="translate(284.289000,170.000000)"/><g id="shape16" transform="translate(433.257000,191.000000)"><path d="M375.3,38.0L375.3,.0L.0,.0L.0,38.0L375.3,38.0z" fill="none" stroke-width="2" stroke="#ffffff"/><text style="fill:#ffffff;font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:12.00pt" xml:space="preserve"><tspan y="26.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial" x="170.9">Core</tspan></text></g><g id="shape17" transform="translate(298.289000,182.500000)"><path d="M522.0,55.5L522.0,.0L.0,.0L.0,55.5L522.0,55.5z" fill="none" stroke-width="2.666670083999634" stroke="#00c1de"/><text style="fill:#ffffff;font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial;font-size:14.00pt" xml:space="preserve"><tspan y="23.0" style="font-family:Lato,PingFang SC,Mircrosoft YaHei,Arial" x="4.0">File System</tspan></text></g><g id="shape18" transform="translate(284.289000,559.000000)"><path d="M.0,.0L350.7,.0L350.7,23.5L.0,23.5L.0,.0z" fill="#ffffff" fill-rule="nonzero" stroke-width="1" stroke="#ffffff" stroke-opacity="0.30"/><text style="fill:#191919;font-family:Arial,PingFang SC,Mircrosoft YaHei,Arial;font-size:9.00pt" xml:space="preserve"><tspan y="16.0" style="font-family:Arial,PingFang SC,Mircrosoft YaHei,Arial" x="4.4">*These components are not part of the File System component</tspan></text></g></g></svg>
+<?xml version="1.0"?>
+<svg width="552" height="414" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <g class="layer">
+  <title>Layer 1</title>
+  <path d="m551.53,246l0,-159l-551.1,0l0,159l551.1,0z" fill="#333e48" fill-rule="nonzero" id="shape1"/>
+  <g id="shape2" transform="translate(433.257 275.543) matrix(1 0 0 1 -283.29 -170)">
+   <path d="m170,52.9l0,-52.9l-170,0l0,52.9l170,0z" fill="none" id="svg_2" stroke="#ffffff" stroke-width="2"/>
+   <text fill="#ffffff" font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="9.00pt" id="svg_3" xml:space="preserve">
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="12.00pt" id="svg_4" x="50.5" y="26">USB MSC</tspan>
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" id="svg_5" x="34.7" y="42">Mass Storage Class</tspan>
+   </text>
+  </g>
+  <g id="shape3" transform="translate(622.139 275.543) matrix(1 0 0 1 -283.29 -170)">
+   <path d="m186.4,52.9l0,-52.9l-186.4,0l0,52.9l186.4,0z" fill="none" id="svg_6" stroke="#ffffff" stroke-width="2"/>
+   <text fill="#ffffff" font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="9.00pt" id="svg_7" xml:space="preserve">
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="12.00pt" id="svg_8" x="59.1" y="26">SD/MMC</tspan>
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" id="svg_9" x="57.2" y="42">Memory Card</tspan>
+   </text>
+  </g>
+  <g id="shape5" transform="translate(298.289 268) matrix(1 0 0 1 -283.29 -170)">
+   <path d="m522,136l0,-136l-522,0l0,136l522,0z" fill="none" id="svg_14" stroke="#00c1de" stroke-width="2.67"/>
+   <text fill="#ffffff" font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="14.00pt" id="svg_15" xml:space="preserve">
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" id="svg_16" x="4" y="23">Drive</tspan>
+   </text>
+  </g>
+  <g id="shape6" transform="matrix(1 0 0 1 193.193 170.086)">
+   <path d="m75.6,52.9l0,-52.9l-75.6,0l0,52.9l75.6,0z" fill="none" id="svg_17" stroke="#ffffff" stroke-width="2"/>
+   <text fill="#ffffff" font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="12.00pt" id="svg_18" xml:space="preserve">
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" id="svg_19" x="20" y="23.5">RAM</tspan>
+   </text>
+  </g>
+  <g id="shape7" transform="matrix(1 0 0 1 0 0) matrix(1 0 0 1 389.852 170.086)">
+   <path d="m83.1,52.9l0,-52.9l-83.1,0l0,52.9l83.1,0z" fill="none" id="svg_20" stroke="#ffffff" stroke-width="2"/>
+   <text fill="#ffffff" font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="9.00pt" id="svg_21" xml:space="preserve">
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="12.00pt" id="svg_22" x="30.2" y="26">SPI</tspan>
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" id="svg_23" x="27.9" y="42">Flash</tspan>
+   </text>
+  </g>
+  <g id="shape8" transform="translate(0.645161 0) matrix(1 0 0 1 290.86 170.086)">
+   <path d="m75.6,52.9l0,-52.9l-75.6,0l0,52.9l75.6,0z" fill="none" id="svg_24" stroke="#ffffff" stroke-width="2"/>
+   <text fill="#ffffff" font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="9.00pt" id="svg_25" xml:space="preserve">
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="12.00pt" id="svg_26" x="20.3" y="26">NOR</tspan>
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" id="svg_27" x="24.1" y="42">Flash</tspan>
+   </text>
+  </g>
+  <path d="m551.53,382l0,-129l-551.1,0l0,129l551.1,0z" fill="#7d868c" fill-rule="nonzero" id="shape9"/>
+  <g id="shape10" transform="translate(432.686 444) matrix(1 0 0 1 -283.29 -170)">
+   <path d="m170,38l0,-38l-170,0l0,38l170,0z" fill="none" id="svg_28" stroke="#ffffff" stroke-width="2"/>
+   <text fill="#ffffff" font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="12.00pt" id="svg_29" xml:space="preserve">
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" id="svg_30" x="61.3" y="26">NAND</tspan>
+   </text>
+  </g>
+  <g id="shape11" transform="translate(621.568 444) matrix(1 0 0 1 -283.29 -170)">
+   <path d="m186.4,38l0,-38l-186.4,0l0,38l186.4,0z" fill="none" id="svg_31" stroke="#ffffff" stroke-width="2"/>
+   <text fill="#ffffff" font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="12.00pt" id="svg_32" xml:space="preserve">
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" id="svg_33" x="75" y="26">Flash</tspan>
+   </text>
+  </g>
+  <g id="shape12" transform="translate(297.718 435.5) matrix(1 0 0 1 -283.29 -170)">
+   <path d="m522,104.5l0,-104.5l-522,0l0,104.5l522,0z" fill="none" id="svg_34" stroke="#00c1de" stroke-width="2.67"/>
+   <text fill="#ffffff" font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="14.00pt" id="svg_35" xml:space="preserve">
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" id="svg_36" x="4" y="23">CMSIS-Driver*</tspan>
+   </text>
+  </g>
+  <g id="shape13" transform="translate(433.257 491) matrix(1 0 0 1 -283.29 -170)">
+   <path d="m170,38l0,-38l-170,0l0,38l170,0z" fill="none" id="svg_37" stroke="#ffffff" stroke-width="2"/>
+   <text fill="#ffffff" font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="12.00pt" id="svg_38" xml:space="preserve">
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" id="svg_39" x="70" y="26">MCI</tspan>
+   </text>
+  </g>
+  <g id="shape14" transform="translate(622.139 491) matrix(1 0 0 1 -283.29 -170)">
+   <path d="m186.4,38.2l0,-38.2l-186.4,0l0,38.2l186.4,0z" fill="none" id="svg_40" stroke="#ffffff" stroke-width="2"/>
+   <text fill="#ffffff" font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="12.00pt" id="svg_41" xml:space="preserve">
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" id="svg_42" x="81.8" y="26.1">SPI</tspan>
+   </text>
+  </g>
+  <path d="m552.1,79l0,-79l-551.1,0l0,79l551.1,0z" fill="#333e48" fill-rule="nonzero" id="shape15"/>
+  <g id="shape16" transform="translate(433.257 191) matrix(1 0 0 1 -283.29 -170)">
+   <path d="m375.3,38l0,-38l-375.3,0l0,38l375.3,0z" fill="none" id="svg_43" stroke="#ffffff" stroke-width="2"/>
+   <text fill="#ffffff" font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="12.00pt" id="svg_44" xml:space="preserve">
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" id="svg_45" x="170.9" y="26">Core</tspan>
+   </text>
+  </g>
+  <g id="shape17" transform="translate(298.289 182.5) matrix(1 0 0 1 -283.29 -170)">
+   <path d="m522,55.5l0,-55.5l-522,0l0,55.5l522,0z" fill="none" id="svg_46" stroke="#00c1de" stroke-width="2.67"/>
+   <text fill="#ffffff" font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" font-size="14.00pt" id="svg_47" xml:space="preserve">
+    <tspan font-family="Lato,PingFang SC,Mircrosoft YaHei,Arial" id="svg_48" x="4" y="23">File System</tspan>
+   </text>
+  </g>
+  <g id="shape18" transform="translate(284.289 559) matrix(1 0 0 1 -283.29 -170)">
+   <path d="m0,0l350.7,0l0,23.5l-350.7,0l0,-23.5z" fill="#ffffff" fill-rule="nonzero" id="svg_49" stroke="#ffffff" stroke-opacity="0.3"/>
+   <text fill="#191919" font-family="Arial,PingFang SC,Mircrosoft YaHei,Arial" font-size="9.00pt" id="svg_50" xml:space="preserve">
+    <tspan font-family="Arial,PingFang SC,Mircrosoft YaHei,Arial" id="svg_51" x="4.4" y="16">*These components are not part of the File System component</tspan>
+   </text>
+  </g>
+ </g>
+</svg>
