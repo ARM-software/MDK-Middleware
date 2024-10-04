@@ -7,3 +7,5 @@ For detailed description see [USB Device Virtual COM Example section in MDK-Midd
 ## Key usage aspects
 
 For successful build and operation the project needs to be extended with a board layer that implements required [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections) to the target hardware interfaces. For details see example documentation referenced above.
+
+The device enumerates on the USB Host as virtual communication port and can be accessed via a Terminal application.

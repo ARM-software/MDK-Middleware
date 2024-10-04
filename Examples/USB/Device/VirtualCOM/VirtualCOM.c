@@ -3,16 +3,16 @@
  * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    VirtualCOM.c
- * Purpose: USB Device Virtual COM Port demonstration
+ * Purpose: USB Device - Virtual COM Port example
  *----------------------------------------------------------------------------*/
 
 #include <stdio.h>
 
 #include "main.h"
 
-#include "cmsis_os2.h"                  // ::CMSIS:RTOS2
+#include "cmsis_os2.h"
 
-#include "rl_usb.h"                     // Keil::USB&MDK:CORE
+#include "rl_usb.h"
 
 // Main stack size must be multiple of 8 Bytes
 #define APP_MAIN_STK_SZ (4096U)

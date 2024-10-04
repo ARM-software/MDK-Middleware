@@ -2,22 +2,24 @@
 
 This example implements a USB Device that exchanges data with a USB Host using \ref HID.
 
-A graphical "HID Client" program is available for the USB Host Computer (Windows only) to interface with the LEDs and buttons on the target USB Device. The following picture shows an exemplary connection of a development board and the USB Host Computer.
+A graphical **HID Client** program is available for the USB Host Computer (Windows only) to interface with the LEDs and buttons on the target USB Device.
 
-![USB device HID example hardware setup](hid_example_setup.png)
+The following picture shows an exemplary connection of the development board and the USB Host Computer.
+
+![USB Device HID example hardware setup](hid_example_setup.png)
 
 ## Project Organization
 
 The USB Device HID project is available as part of the \ref usbd_examples "USB Device Reference examples".
 
-<h2>Application Source Files</h2>
+## Application Source Files
 
 Following files implement application-specific logic in the example:
 
- - `HID.c`: contains the application main thread which initializes the USB Device Component. It also sends the current input status (typical buttons) via \ref USBD_HID_GetReportTrigger to the USB Host.
+ - `HID.c`: contains the application main thread which initializes the USB Device Component. It also sends the current input status (typically buttons state) via \ref USBD_HID_GetReportTrigger to the USB Host.
  - `USBD_User_HID_0.c`: adapted code template that implements necessary functions for I/O communication. Refer to \ref usbd_hidFunctions for details.
 
-<h2>Software Components Configuration Files</h2>
+## Software Components Configuration Files
 
 Configuration files for the software components used in the project are available in the `./RTE/` directory and can be modified by users to adjust the operation of related components. Section \ref usbd_rte_components gives an overview about the components and their dependencies.
 
@@ -32,11 +34,11 @@ Following configuration files are provided with this example:
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `./Board/` directory.
 
-<h2>Board Layer</h2>
+## Board Layer
 
 In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
- - `CMSIS_USB_Device`: CMSIS-Driver for USB Device interface
- - `CMSIS_VIO`: CMSIS-Driver for virtual I/O interface
+ - `CMSIS_USB_Device`: CMSIS-Driver for USB Device interface.
+ - `CMSIS_VIO`: CMSIS-Driver for Virtual I/O interface.
 
 ## Build the Project
 
@@ -51,11 +53,11 @@ In order to build the project it shall be extended with a compatible board layer
 
 **Setup**
 
-Board-specific setup such as jumpers, USB ports, power supply, etc. is documented in the board layer description (`README.md`) of your selected target. It also lists supported IOs such as LEDs and Buttons.
+Board-specific hardware setup such as jumpers, USB ports, power supply, etc. is documented in the board layer description (`README.md`) of your selected target.
 
  -# Load the executable image to the target development board.
  -# Connect a USB Device port on the development board with the USB port on a PC.
- -# Wait for the automatic driver installation on the PC to complete.
+ -# The device should appear as Human Interface Device - **USB Input Device**.
 
 **Example execution**
 
@@ -63,8 +65,8 @@ The USB Device HID example can be tested against a \ref hid_client_app "HID Clie
 
 Steps to check the USB communication using the client utility:
 
- -# Run `HIDClient.exe`.
- -# Select the **Keil USB Device** to establish the communication channel.
+ -# Start the `HIDClient.exe` utility.
+ -# Select the **Keil USB Device 0** to establish the communication channel.
  -# Press buttons on the target hardware and observe the checkmarks appear in corresponding check boxes in the HID Client utility.
  -# Use the LEDs check boxes in the HID Client and observe LED status changes on the board.
 
@@ -76,7 +78,7 @@ The HID Client utility is graphical application for Windows PC that can be used 
 
 ### HID Client Source Code
 
-The source code of the HID Client application is available in `install_dir\ARM\Utilities\HID_Client`. Visual Studio 2005 and 2010
+The source code of the HID Client application is available in `<install_dir>\ARM\Utilities\HID_Client`. Visual Studio 2005 and 2010
 based projects are available (`HIDClient.vproj`).
 
 **Header Files**
@@ -97,7 +99,7 @@ based projects are available (`HIDClient.vproj`).
 
 - `HID.cpp` contains the necessary functions that are used in this example application to communicate with an USB HID device.
   All available functions in Windows for HID interaction are explained here:
-  <a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/hid/introduction-to-hid-concepts" target=_blank>Introduction to HID Concepts</a>.
+  [Introduction to HID Concepts](https://learn.microsoft.com/en-us/windows-hardware/drivers/hid/introduction-to-hid-concepts).
   The function:
   - `HID_Init` initializes the HID class to be used with the USB Host.
   - `HID_UnInit` de-initializes the HID class from the USB Host.
@@ -118,6 +120,6 @@ based projects are available (`HIDClient.vproj`).
   - `HID_Write` triggers a \ref USBD_HIDn_SetReport within the device to read data sent from the USB Host.
   - `HID_GetFeature` and `HID_SetFeature` work on the USB HID Device's feature report (which is optional).
 - `HIDClient.cpp` is the main application source file that contains the application class `CHIDClientApp`.
-- `HIDClient.rc` is a listing of all of the Microsoft Windows resources that the program uses (located in the res subdirectory).
+- `HIDClient.rc` is a listing of all of the Microsoft Windows resources that the program uses (located in the `res` subdirectory).
 - `HIDClientDlg.cpp` implements the code of the client's dialog and calls the functions specified in `HID.cpp`. This is
   the actual place where the interaction between the USB Host and the USB Device is defined.

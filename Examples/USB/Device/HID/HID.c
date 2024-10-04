@@ -10,10 +10,10 @@
 
 #include "main.h"
 
-#include "cmsis_os2.h"                  // ::CMSIS:RTOS2
-#include "cmsis_vio.h"                  // ::CMSIS Driver:VIO
+#include "cmsis_os2.h"
+#include "cmsis_vio.h"
 
-#include "rl_usb.h"                     // Keil::USB&MDK:CORE
+#include "rl_usb.h"
 
 // Main stack size must be multiple of 8 Bytes
 #define APP_MAIN_STK_SZ (4096U)

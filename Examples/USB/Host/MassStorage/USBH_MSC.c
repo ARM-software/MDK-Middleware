@@ -4,7 +4,7 @@
  *------------------------------------------------------------------------------
  * Name:    USBH_MSC.c
  * Purpose: Functions to access USB storage device via USB Host
- * Rev.:    V6.4.3
+ * Rev.:    V6.4.4
  *----------------------------------------------------------------------------*/
 /*
  * USBH_MSC.c is a code template for the application specific functionality of
@@ -48,11 +48,12 @@
  * When USB Host Controller is not to be used any more call:
  *   USBH_Uninitialize (ctrl_num);
  */
+
+#include "USBH_MSC.h"                   // Access storage via USB Host
  
 #include <stdint.h>
  
-#include "RTE_Components.h"             // Component selection
-#include "USBH_MSC.h"                   // Access storage via USB Host
+#include "rl_usb.h"
  
 #if (!defined (RTE_FileSystem_Drive_USB_0) && !defined (RTE_FileSystem_Drive_USB_1))
   #error "Project does not contain USB storage device support"

@@ -1,6 +1,6 @@
 solution:
   description: USB Device examples
-  created-for: CMSIS-Toolbox@2.5.0
+  created-for: CMSIS-Toolbox@2.6.0
   cdefault:
 
   select-compiler:  # list of tested compilers that can be selected

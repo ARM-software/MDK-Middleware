@@ -1,17 +1,17 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host:MSC
- * Copyright (c) 2004-2020 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USBH_MSC.h
  * Purpose: Functions to access USB storage device via USB Host
- * Rev.:    V6.2.1
+ * Rev.:    V6.2.2
  *----------------------------------------------------------------------------*/
 
 #ifndef USBH_MSC_H
 #define USBH_MSC_H
 
-#include "rl_usb.h"                     // Keil.MDK-Pro::USB:CORE
-#include "rl_fs.h"                      // Keil.MDK-Pro::File System:CORE
+#include "rl_usb.h"
+#include "rl_fs.h"
 
 /* Execution status codes */
 #define USBH_MSC_OK                   0 ///< Function succeeded
