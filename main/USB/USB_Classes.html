@@ -164,7 +164,7 @@ CDC: Communication Device Class</h1>
 <li><em>Networking</em> devices, such as ADSL and cable modems, as well as Ethernet adapters and hubs</li>
 </ul>
 <p>A detailed description about CDC is provided by the <a href="https://www.usb.org/documents?search=&amp;category%5B%5D=49&amp;type%5B%5D=55&amp;items_per_page=50">USB Implementers Forum (USB-IF)</a>.</p>
-<h2><a class="anchor" id="autotoc_md77"></a>
+<h2><a class="anchor" id="autotoc_md22"></a>
 CDC Class Features</h2>
 <p>A communications device has three basic tasks:</p>
 <ul>
@@ -175,18 +175,18 @@ CDC Class Features</h2>
 <p>The CDC implementation in the USB Component features:</p>
 <ul>
 <li>Emulation of a Virtual COM-port using the <a class="el" href="group__usbd__cdcFunctions__acm.html">ACM (Abstract Control Model)</a> subclass of CDC.</li>
-<li>Emulation of network connectivity using the <a href="https://en.wikipedia.org/wiki/RNDIS">RDNIS</a> protocol using the <a class="el" href="group__usbd__cdcFunctions__acm.html">ACM (Abstract Control Model)</a> subclass of CDC. This enables <a class="el" href="USB_Device.html#dev_cdc_acm_rndis">network connections over USB between a Windows host PC and an embedded device</a>, as well as <a class="el" href="USB_Device.html#dev_cdc_acm_rndis_bridge">USB Device RNDIS to Ethernet Bridge</a> applications.</li>
-<li>Emulation of an Ethernet adapter using the <a class="el" href="group__usbd__cdcFunctions__ncm.html">NCM (Network Control Model)</a> subclass of CDC (only available for <a class="el" href="USB_Device.html">USB Device</a>). Using CDC (NCM), you can create <a class="el" href="USB_Device.html#dev_cdc_ncm">Ethernet-over-USB (for Linux hosts)</a> applications on Linux-based host systems.</li>
+<li>Emulation of network connectivity using the <a href="https://en.wikipedia.org/wiki/RNDIS">RDNIS</a> protocol using the <a class="el" href="group__usbd__cdcFunctions__acm.html">ACM (Abstract Control Model)</a> subclass of CDC. This enables network connections over USB between a Windows host PC and an embedded device, as well as USB Device RNDIS to Ethernet Bridge applications.</li>
+<li>Emulation of an Ethernet adapter using the <a class="el" href="group__usbd__cdcFunctions__ncm.html">NCM (Network Control Model)</a> subclass of CDC (only available for <a class="el" href="USB_Device.html">USB Device</a>). Using CDC (NCM), you can create Ethernet-over-USB applications on Linux-based host systems.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>The following endpoint configurations are supported:<ul>
 <li>One interrupt IN endpoint for notifications to the USB Host</li>
 <li>One bulk IN and one bulk OUT endpoint for data transfer</li>
 </ul>
 </dd></dl>
-<h2><a class="anchor" id="autotoc_md78"></a>
+<h2><a class="anchor" id="autotoc_md23"></a>
 Control Transfers</h2>
 <p>The documents available at <a href="https://www.usb.org/documents?search=&amp;category%5B%5D=49&amp;type%5B%5D=55&amp;items_per_page=50">Communications Device Class</a> describe the nine available request types for the Abstract Control Model (ACM). All requests specified for the Network Control Model (NCM) by the documents in ECM120.pdf and NCM10.pdf are supported. are not supported.</p>
-<h2><a class="anchor" id="autotoc_md79"></a>
+<h2><a class="anchor" id="autotoc_md24"></a>
 USB Descriptors</h2>
 <p>The following descriptors are required in an USB CDC ACM Device:</p>
 <ul>
@@ -234,7 +234,7 @@ HID: Human Interface Device Class</h1>
 <li>Other low data-rate devices that provide for example environmental data (such as thermometers, energy meters or even bar-code readers)</li>
 </ul>
 <p>A detailed description about HID is provided by the <a href="https://www.usb.org/documents?search=&amp;category%5B%5D=49&amp;type%5B%5D=55&amp;items_per_page=50">USB Implementers Forum (USB-IF)</a>.</p>
-<h2><a class="anchor" id="autotoc_md80"></a>
+<h2><a class="anchor" id="autotoc_md25"></a>
 HID Class Features</h2>
 <p>The HID class is not necessarily a human interface. But a device using the HID class has to be able to work within the limits of the HID class. These HID class implementation of the USB Component has the following features:</p>
 <ul>
@@ -245,7 +245,7 @@ HID Class Features</h2>
 <li>As the HID device can send data at any point in time using the interrupt IN endpoint, the USB Host driver needs to make sure that the data is polled periodically.</li>
 <li>The <a class="el" href="index.html#mainpage">USB Component</a> supports the HID Class for <a class="el" href="USB_Device.html">USB Device</a> and <a class="el" href="USB_Host.html">USB Host</a> applications.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md81"></a>
+<h2><a class="anchor" id="autotoc_md26"></a>
 Control Transfers</h2>
 <p>The <a href="https://www.usb.org/documents?search=&amp;category%5B%5D=49&amp;type%5B%5D=55&amp;items_per_page=50">HID specification</a> defines six class-specific requests. They enable the USB Host to inquire about the capabilities and the current state of the device. Furthermore, the host can set the state of output and feature items. All six requests are transmitted using the control pipe.</p>
 <ul>
@@ -255,10 +255,10 @@ Control Transfers</h2>
 <li>The <b>idle rate</b> can be set using the <code>Set_Idle</code> request. This is used to limit the reporting frequency of an interrupt IN endpoint. Default idle rates are 500 milliseconds for keyboards (delay before first repeat rate) and infinity for joysticks and mouse devices.</li>
 <li>During booting of the USB Host, a simplified protocol can be used for communication. The <code>Get_Protocol</code> request reads which protocol is currently active. The <code>Set_Protocol</code> request switches between the boot protocol and the report protocol.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md82"></a>
+<h2><a class="anchor" id="autotoc_md27"></a>
 Interrupt Transfers</h2>
 <p>To ensure minimum data delay, interrupt endpoints are used. The bandwidth for interrupt transfers is guaranteed for every device after successful enumeration. Control endpoints may face data delivery delay in case the bus is busy.</p>
-<h2><a class="anchor" id="autotoc_md83"></a>
+<h2><a class="anchor" id="autotoc_md28"></a>
 USB Descriptors</h2>
 <p>The following descriptors are required in an USB HID Device:</p>
 <ul>
@@ -288,7 +288,7 @@ MSC: Mass Storage Class</h1>
 <li>Mobile phones</li>
 </ul>
 <p>A detailed description about MSC is provided by the <a href="https://www.usb.org/documents?search=&amp;category%5B%5D=49&amp;type%5B%5D=55&amp;items_per_page=50">USB Implementers Forum (USB-IF)</a>.</p>
-<h2><a class="anchor" id="autotoc_md84"></a>
+<h2><a class="anchor" id="autotoc_md29"></a>
 MSC Class Features</h2>
 <p>Not only hard disks use the MSC class. Any device that allows access to its internal data storage using MSC can be connected to the USB Bus as a mass storage device. The MSC class implementation in the USB Component has the following features:</p>
 <ul>
@@ -297,14 +297,14 @@ MSC Class Features</h2>
 <li><a class="el" href="USB_Device.html">USB Device</a> supports multiple logical units (LUNs) which can operate separately, for example one unit could have an SD card as media and another one could have a RAM disk as media.</li>
 <li>The <a class="el" href="index.html#mainpage">USB Component</a> supports the MSC Class for <a class="el" href="USB_Device.html">USB Device</a> and <a class="el" href="USB_Host.html">USB Host</a> applications.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md85"></a>
+<h2><a class="anchor" id="autotoc_md30"></a>
 Control Transfers</h2>
 <p>The <a href="https://www.usb.org/documents?search=&amp;category%5B%5D=49&amp;type%5B%5D=55&amp;items_per_page=50">MSC specification</a> defines five class-specific requests to be transmitted over the default (control) pipe. Only two of them are supported by the bulk-only protocol:</p>
 <ul>
 <li>The <b>Bulk Only Mass Storage Reset</b> request enables the USB Host to reset the MSC device and its associated interface.</li>
 <li>The <b>Get Max LUN</b> request allows the USB Host determine the number of <b>Logical Units (LUNs)</b> that are supported by the device. LUNs are numbered starting from LUN 0 to LUN 15 (maximum).</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md86"></a>
+<h2><a class="anchor" id="autotoc_md31"></a>
 Bulk Transfers</h2>
 <p>The bulk-only protocol divides a successful data transfer into three stages:</p>
 <ol type="1">
@@ -312,7 +312,7 @@ Bulk Transfers</h2>
 <li>Data transport: the data is sent to or from the USB Host</li>
 <li>Status transport: the USB Device sends status information in the <b>Command Status Wrapper (CSW)</b> structure</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md87"></a>
+<h2><a class="anchor" id="autotoc_md32"></a>
 USB Descriptors</h2>
 <p>The following descriptors are required in an USB MSC Device:</p>
 <ul>
@@ -330,7 +330,7 @@ USB Descriptors</h2>
 </dd></dl>
 <h1><a class="anchor" id="CustomClass"></a>
 Custom Class</h1>
-<h2><a class="anchor" id="autotoc_md88"></a>
+<h2><a class="anchor" id="autotoc_md33"></a>
 USB Host supporting any Device Class</h2>
 <p>The Custom Class for USB Host has two use cases:</p>
 <ol type="1">
@@ -340,7 +340,7 @@ USB Host supporting any Device Class</h2>
 <p>Supporting Custom or Standard Class Devices requires the USB Host to be aware of the specific Class. On a PC, it is easy to add Class support by simply installing the required driver. However, in an embedded system this is not possible.</p>
 <p>The <a class="el" href="group__usbh__customFunctions.html">Custom Class</a> are a starting point for adding support for any USB Device Class. Furthermore, all <b>Class Specific Requests</b> need to be handled by the application running on the USB Host system. For more information on these requests, please consult the <a href="https://www.usb.org/documents?search=&amp;category%5B%5D=49&amp;type%5B%5D=55&amp;items_per_page=50">USB-IF Device Class Documents</a>. The <b>user code template</b> file <a class="el" href="group__usbh__customFunctions.html#USBH_Cust_UCT">USBH_User_CustomClass.c</a> contains all the functions that require adaptation.</p>
 <p>The number of concurrent Custom Class Devices in a system can be configured using the <code>USBH_Config_CustomClass.h</code> configuration file.</p>
-<h2><a class="anchor" id="autotoc_md89"></a>
+<h2><a class="anchor" id="autotoc_md34"></a>
 USB Device implementing any Device Class</h2>
 <p>The Custom Class for USB Device has two use cases:</p><ol type="1">
 <li>Implementing/supporting a <a href="https://www.usb.org/defined-class-codes">standard</a> Device class other than <a class="el" href="USB_Classes.html#ADC">ADC</a>, <a class="el" href="USB_Classes.html#CDC">CDC</a>, <a class="el" href="USB_Classes.html#HID">HID</a>, and <a class="el" href="USB_Classes.html#MSC">MSC</a>.</li>
@@ -348,7 +348,7 @@ USB Device implementing any Device Class</h2>
 </ol>
 <p>The Custom Class gives full control of the USB handling. It is designed to react on any kind of event on any of the assigned endpoints and to handle any control message that may reach the system. The application has the full capability of dealing with control messages for whatever USB Device class. Message handling control can be taken over from the USB Device Core. The <b>user code template</b> file <a class="el" href="group__usbd__coreFunctions.html#USBD_User_Device_UCT">USBD_User_Device.c</a> contains all functions used for Device level Control Endpoint 0 (STANDARD, CLASS and VENDOR requests) message interception and handling, whereas file <a class="el" href="group__usbd__classFunctions.html#USBD_User_Cust_UCT">USBD_User_CustomClass.c</a> contains all the functions used for Custom Class Control Endpoint 0 CLASS requests and Custom Class endpoint events handling.</p>
 <p>To create the Custom Class the configuration file providing up to four interfaces with up to 8 endpoints has been provided.</p>
-<h3><a class="anchor" id="autotoc_md90"></a>
+<h3><a class="anchor" id="autotoc_md35"></a>
 USB Descriptors</h3>
 <p>Every USB Device requires certain descriptors. The following list is not complete but gives an impression about the various descriptors that may be required:</p>
 <ul>

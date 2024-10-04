@@ -147,7 +147,7 @@ Functions</h2></td></tr>
 <p>Functions to notify the user application about events on the Telnet server. </p>
 <p>The <a class="el" href="group__telnet__user__notification.html#gae28cb4a796ee5e59ad5e32dccc969c76">netTELNETs_ProcessCommand</a> function processes the Telnet command when it is received from a remote client. A command is any sequence of characters that is terminated by the CRLF sequence (the Enter key is pressed). The Telnet server assembles this command and passes it as an argument to the <a class="el" href="group__telnet__user__notification.html#gae28cb4a796ee5e59ad5e32dccc969c76">netTELNETs_ProcessCommand</a> function. This function then generates a reply message and sends it back to the user. It is part of the <b>Telnet_Server_UIF.c</b> template file.</p>
 <p>When the reply message is short, the whole message can be sent in a <b>single TCP packet</b>. However, when long reports are generated, <b>multiple TCP packets</b> must be sent to transfer the whole message. For example, when the log files are displayed this is often the case. Both single and multiple packets are supported by the Embedded Telnet Server.</p>
-<h2><a class="anchor" id="autotoc_md76"></a>
+<h2><a class="anchor" id="autotoc_md66"></a>
 Short Reply</h2>
 <p>In the following example, the Telnet command HELP is sent by the Telnet client: </p><div class="fragment"><div class="line">cmd&gt; HELP</div>
 </div><!-- fragment --><p> This command is answered by the predefined help message <em>telnet_help</em>. This message is copied to the output buffer and sent to the remote Telnet client. The following code sends the reply message: </p><div class="fragment"><div class="line">uint32_t <a class="code hl_function" href="group__telnet__user__notification.html#gae28cb4a796ee5e59ad5e32dccc969c76" title="Process and execute a command requested by the Telnet client. [user-provided].">netTELNETs_ProcessCommand</a> (<span class="keyword">const</span> <span class="keywordtype">char</span> *cmd, <span class="keywordtype">char</span> *buf, uint32_t buf_len, uint32_t *pvar) {</div>
@@ -159,7 +159,7 @@ Short Reply</h2>
 <div class="line">  }</div>
 <div class="line">   ..</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md77"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md67"></a>
 Long Reply</h2>
 <p>A long reply message requires multiple calls to the function <a class="el" href="group__telnet__user__notification.html#gae28cb4a796ee5e59ad5e32dccc969c76">netTELNETs_ProcessCommand</a>. Each call to this function generates part of the reply message until the entire message is generated and sent. To distinguish between different calls to the function, the argument <em>pvar</em> is used. This argument is a pointer to a variable that is set to <span class="XML-Token">0</span> on the first call and not altered on each subsequent call to this function. The function's return value, which specifies the number of bytes in the reply message, cannot exceed <span class="XML-Token">1500</span>. Hence the high bits of the function's return value are used to store the flags:</p><ul>
 <li><b>Repeat flag</b> - bit 31<br  />
@@ -240,7 +240,7 @@ Long Reply</h2>
 <div class="image">
 <img src="telnet_meas.png" alt=""/>
 </div>
-<dl class="section note"><dt>Note</dt><dd>You can check the <a class="el" href="nw_examples.html#Telnet_Example">Telnet Server</a> to see how it works. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>You can check the <a class="el" href="Telnet_Server_Example.html">Telnet Server</a> to see how it works. </dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="gae28cb4a796ee5e59ad5e32dccc969c76" name="gae28cb4a796ee5e59ad5e32dccc969c76"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gae28cb4a796ee5e59ad5e32dccc969c76">&#9670;&#160;</a></span>netTELNETs_ProcessCommand()</h2>

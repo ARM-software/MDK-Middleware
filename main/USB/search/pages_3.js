@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['resource_20requirements_0',['Resource Requirements',['../usb_resource_requirements.html',1,'']]],
-  ['revision_20history_1',['Revision History',['../usb_revhist.html',1,'']]]
+  ['migration_20guide_0',['Migration Guide',['../usb_migration.html',1,'']]]
 ];

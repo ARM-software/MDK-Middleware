@@ -301,7 +301,7 @@ Endpoints</h2>
 <h1><a class="anchor" id="USB_Protocol"></a>
 USB Protocol</h1>
 <p>USB is a polled bus, where the host initiates all data exchanges.</p>
-<h2><a class="anchor" id="autotoc_md75"></a>
+<h2><a class="anchor" id="autotoc_md20"></a>
 Transactions</h2>
 <p>Data is transferred in so called <b>transactions</b>. Normally, they consist of three packets:</p><ol type="1">
 <li>The <b>token packet</b> is the header defining the transaction type and direction, the device address, and the endpoint.</li>
@@ -317,7 +317,7 @@ Pipe Model</div></div>
 <img src="packetmodel.png" alt=""/>
 <div class="caption">
 Packet Model</div></div>
-    <h2><a class="anchor" id="autotoc_md76"></a>
+    <h2><a class="anchor" id="autotoc_md21"></a>
 Packets</h2>
 <p><b>Packets</b> could be thought of as the smallest element of data transmission. Each packet transmits an integral number of bytes at the current transmission rate. Packets start with a synchronization pattern, followed by the data bytes of the packet, and concluded with an End-of-Packet (EOP) signal. All USB packet patterns are transmitted <em>least significant bit first</em>. Before and after the packet, the bus is in <em>idle</em> state.</p>
 <div class="image">
@@ -347,7 +347,7 @@ Device Configuration</div></div>
 <li>One audio class interface with 2 isochronous endpoints for transferring audio data in each direction.</li>
 <li>One HID interface with a single IN interrupt endpoint for a built-in keypad.</li>
 </ul>
-<p>Provisions have been made in the USB component to give the user the option to <a class="el" href="USB_Device.html#Overriding_Descriptors">override the USB descriptors</a> if necessary. This can be the case when the device class needs to be changed at runtime or other reports need to be created.</p>
+<p>Provisions have been made in the USB component to give the user the option to <a class="el" href="usbd_create_app.html#Overriding_Descriptors">override the USB descriptors</a> if necessary. This can be the case when the device class needs to be changed at runtime or other reports need to be created.</p>
 <h2><a class="anchor" id="USB_Device_Descriptor"></a>
 Device Descriptor</h2>
 <p>The <b>Device Descriptor</b> (<a class="el" href="group__usbh__data__types.html#structUSB__DEVICE__DESCRIPTOR" title="USB Device Descriptor structure.">USB_DEVICE_DESCRIPTOR</a>) is the root of the descriptor tree and contains basic device information. The unique numbers, <em><b>idVendor</b></em> and <em><b>idProduct</b></em>, identify the connected device. The Windows operating system uses these numbers to determine which device driver must be loaded.</p>

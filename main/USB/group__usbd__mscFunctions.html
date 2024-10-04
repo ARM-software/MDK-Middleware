@@ -148,7 +148,8 @@ Content</h2></td></tr>
 <p>The MSC class in the USB Component is used for data storage.</p>
 <p>Refer to:</p><ul>
 <li><a class="el" href="USB_Classes.html#MSC">MSC: Mass Storage Class</a> for an overview of the MSC class.</li>
-<li><a class="el" href="USB_Device.html#dev_msc_tutorial">USB Device Mass Storage</a> for example projects that use the MSC class.</li>
+<li><a class="el" href="usbd_example_msc.html">USB Device Mass Storage</a> for example projects that use the MSC class on USB Device.</li>
+<li><a class="el" href="usbh_example_msc.html">USB Host Mass Storage</a> for example projects that use the MSC class on USB Host.</li>
 </ul>
 <p>The USB Component allows multiple instances of the MSC class. Each MSC class instance has a separate files and interface functions:</p><ul>
 <li>A configuration file <a class="el" href="group__usbd__mscFunctions__conf.html">USBD_Config_MSC_n.h</a>.</li>
@@ -173,10 +174,10 @@ Content</h2></td></tr>
 <area href="group__usbd__coreFunctions__api.html#gabefe6dae72a49806a96b981c286d0aeb" shape="rect" coords="25,397,126,410" alt=""/>
 </map>
 </div>
-<h2><a class="anchor" id="autotoc_md101"></a>
+<h2><a class="anchor" id="autotoc_md46"></a>
 Implementation</h2>
-<p>To <a class="el" href="USB_Device.html#Creation_Steps">create an USB Device</a> with a MSC class:</p><ul>
-<li>Set the required number for USB:Device:MSC class instances during the <a class="el" href="USB_Device.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>
+<p>To <a class="el" href="usbd_create_app.html">create an USB Device</a> with a MSC class:</p><ul>
+<li>Set the required number for USB:Device:MSC class instances during the <a class="el" href="usbd_create_app.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>
 <li>Set the parameters in the configuration file <a class="el" href="group__usbd__mscFunctions__conf.html">USBD_Config_MSC_n.h</a>.</li>
 <li>Implement the application specific behavior using a <a class="el" href="group__usbd__mscFunctions.html#UCT_USBD_User_MSC">template</a>.</li>
 </ul>

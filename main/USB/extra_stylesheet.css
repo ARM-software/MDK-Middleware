@@ -992,6 +992,9 @@ a:-webkit-any-link {
      text-decoration: underline;
 }
 
+a.el {
+     font-weight:normal;
+}
 
 /* @group Member Details */
 

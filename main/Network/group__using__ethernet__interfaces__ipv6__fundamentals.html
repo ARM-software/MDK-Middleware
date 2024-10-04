@@ -134,14 +134,14 @@ $(document).ready(function(){initNavTree('group__using__ethernet__interfaces__ip
 <p>Explanation of the IPv6 address space and other fundamentals. </p>
 <p>The main difference of <a href="https://en.wikipedia.org/wiki/IPv6" target="_blank">IPv6</a> over <a href="https://en.wikipedia.org/wiki/IPv4" target="_blank">IPv4</a> is the extended address space, that is roughly 8*10^28 times larger. The reason for address space extension is caused by the IPv4 address exhaustion that became reality in 2011 when <a href="https://www.iana.org" target="_blank">IANA</a> allocated the last block of addresses to a regional address authority.</p>
 <p>Every endpoint on the Internet requires a unique IP address to realize point-to-point connections. As of 2014, already more than 10*10^9 devices are connected to the Internet. To bypass the fact that there are not enough IPv4 addresses available, technologies like <a href="https://en.wikipedia.org/wiki/Network_address_translation" target="_blank">Network Address Translation (NAT)</a> are used. NAT connects full TCP/IP networks using a single registered IPv4 address to the Internet.</p>
-<h2><a class="anchor" id="autotoc_md103"></a>
+<h2><a class="anchor" id="autotoc_md93"></a>
 IPv4 Address representation and interpretation</h2>
 <p>An IPv4 address is composed of 4 decimal byte values in the so called dot-decimal notation. There are three IPv4 address types (the examples assume a netmask of 255.255.0.0):</p><ul>
 <li>Network address: The least significant bytes (depending on the netmask) are 0. Typically not used in real communication. It is used to describe a network address range. <pre class="fragment">10.41.0.0</pre></li>
 <li>Broadcast address is used to communicate with all hosts on a network. It can be obtained by performing a bitwise OR operation between the bit complement of the subnet mask and the host's IP address. <pre class="fragment">10.41.255.255</pre></li>
 <li>Host address: any address between 10.41.0.1 and 10.41.255.254. Host addresses identify a specific host on an IP network and have to be unique. <pre class="fragment">10.41.0.23</pre></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md104"></a>
+<h2><a class="anchor" id="autotoc_md94"></a>
 IPv6 Address representation and interpretation</h2>
 <p>An IPv6 address consists of 16 bytes organized in blocks of two bytes separated by <b></b>: The most significant change in representation is the hexadecimal notation. Example: </p><pre class="fragment">2002:0a29:0017:0000:0000:ffff:0a29:0017
 </pre><p> IPv6 addresses often contain fields of zeros. <a href="https://tools.ietf.org/html/rfc5952" target="_blank">RFC5952</a> allows two methods to compress the textual representation to increase readability:</p><ol type="1">
@@ -149,10 +149,10 @@ IPv6 Address representation and interpretation</h2>
 <li>Leading zeros within a 16-bit field can be <b>omitted:</b> <pre class="fragment">2002:a29:17::ffff:a29:17</pre></li>
 </ol>
 <dl class="section note"><dt>Note</dt><dd><a class="el" href="group__netGen__AddrConvFunc.html#ga39518491393bd2b4c6f32df03768b6b8">netIP_aton</a> handles the full and compressed text representation.</dd></dl>
-<h1><a class="anchor" id="autotoc_md105"></a>
+<h1><a class="anchor" id="autotoc_md95"></a>
 IPv6 Address Types</h1>
 <p>In the following section you will find a list of the various address types used in IPv6. The <a class="el" href="group__common__user__api.html#ga919bfb395143e0bc1775106080c61eb6">netIF_SetOption</a> function allows you to change the unicast link-local address and a static address (which will typically a unicast global address).</p>
-<h2><a class="anchor" id="autotoc_md106"></a>
+<h2><a class="anchor" id="autotoc_md96"></a>
 Unicast Global Addresses</h2>
 <p>IPv6 unicast global addresses are similar to IPv4 public addresses. They are globally routable. The structure of an IPv6 unicast global address creates a three-level topology of public and site information and the local host interface.</p>
 <table class="markdownTable">
@@ -167,16 +167,16 @@ Unicast Global Addresses</h2>
 <li><em>SLA</em> holds the subnet information within a local site.</li>
 <li><em>Interface</em> identifies the specific node on a subnet.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md107"></a>
+<h2><a class="anchor" id="autotoc_md97"></a>
 Unicast site-local addresses (FC80::/48)</h2>
 <p>IPv6 unicast site-local addresses are similar to IPv4 private addresses. The scope of a site-local address is the intercommunication between subnets on an organization's site.</p>
-<h2><a class="anchor" id="autotoc_md108"></a>
+<h2><a class="anchor" id="autotoc_md98"></a>
 Unicast link-local addresses (FE80::/64)</h2>
 <p>Addresses in the link-local prefix are only valid and unique on a single link. Within this prefix only one subnet is allocated (54 zero bits), yielding an effective format of <code>fe80:</code>:/64. The least significant 64 bits are usually chosen as the interface hardware address constructed in modified <a href="https://en.wikipedia.org/w/index.php?title=MAC_address" target="_blank">EUI-64</a> format. It can be derived from an Ethernet MAC address.</p>
-<h2><a class="anchor" id="autotoc_md109"></a>
+<h2><a class="anchor" id="autotoc_md99"></a>
 Unicast loopback address</h2>
 <p>0:0:0:0:0:0:0:1</p>
-<h2><a class="anchor" id="autotoc_md110"></a>
+<h2><a class="anchor" id="autotoc_md100"></a>
 Unicast 6to4 address (2002::/16)</h2>
 <p><a href="https://en.wikipedia.org/wiki/6to4" target="_blank">6to4</a> addresses are used when two IPv6 nodes communicate on an IPv4 network.</p>
 <table class="markdownTable">
@@ -185,7 +185,7 @@ Unicast 6to4 address (2002::/16)</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">6to4 prefix   </td><td class="markdownTableBodyNone">IPv4 Address   </td><td class="markdownTableBodyNone">SLA   </td><td class="markdownTableBodyNone">Interface   </td></tr>
 </table>
-<h1><a class="anchor" id="autotoc_md111"></a>
+<h1><a class="anchor" id="autotoc_md101"></a>
 Neighbor Discovery Protocol and Dynamic Address Assignment</h1>
 <p>The <a href="https://en.wikipedia.org/wiki/Neighbor_Discovery_Protocol" target="_blank">Neighbor Discovery Protocol (NDP)</a> mainly replaces <a href="https://en.wikipedia.org/wiki/Address_Resolution_Protocol" target="_blank">ARP</a> known from IPv4. The main advantage is that it operates on the <a href="https://en.wikipedia.org/wiki/Internet_Control_Message_Protocol" target="_blank">ICMP</a> layer and is less dependent on the physical layer.</p>
 <p>Rather than using e.g. MAC addresses, NDP uses the link local address. This also allows endpoints to keep router associations even if the global prefix of the network is changed. Link detection is also handled by NDP detecting full or partial link failures or routing failures.</p>

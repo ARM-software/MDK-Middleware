@@ -148,8 +148,7 @@ Content</h2></td></tr>
 <p>The ability to connect Ethernet devices via USB ports is known as <b>Ethernet-over-USB</b>. Various industry protocols are available to achieve this. One of the most advanced protocols is the CDC (NCM) class which is supported by the USB Component.</p>
 <p>The <a href="http://www.linux-usb.org/usbnet/" target="_blank">usbnet</a> Kernel module in Linux hosts enables you to attach a USB Device to the host to emulate an Ethernet device. There is no native Ethernet-over-USB support in Windows.</p>
 <p>Refer to:</p><ul>
-<li><a class="el" href="USB_Classes.html#CDC">CDC: Communication Device Class</a> for an overview of the CDC class.</li>
-<li><a class="el" href="USB_Device.html#dev_cdc_ncm">Ethernet-over-USB (for Linux hosts)</a> example project.</li>
+<li><a class="el" href="USB_Classes.html#CDC">CDC: Communication Device Class</a> for an overview of the CDC class. </li>
 </ul>
 <p>The USB Component allows multiple instances of the CDC class. This feature is used to create USB Composite Devices. Each CDC class instance has a separate files and interface functions:</p><ul>
 <li>A CDC configuration file <a class="el" href="group__usbd__cdcFunctions__ncm__conf.html">USBD_Config_CDC_n.h</a>.</li>
@@ -214,10 +213,10 @@ Content</h2></td></tr>
 <area href="group__usbd__coreFunctions__api.html#gabefe6dae72a49806a96b981c286d0aeb" shape="rect" coords="52,820,69,833" alt=""/>
 </map>
 </div>
-<h2><a class="anchor" id="autotoc_md99"></a>
+<h2><a class="anchor" id="autotoc_md44"></a>
 Implementation</h2>
-<p>To <a class="el" href="USB_Device.html#Creation_Steps">create an USB Device</a> with a CDC NCM class:</p><ul>
-<li>Set the required number for USB:Device:CDC class instances during the <a class="el" href="USB_Device.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>
+<p>To <a class="el" href="usbd_create_app.html">create an USB Device</a> with a CDC NCM class:</p><ul>
+<li>Set the required number for USB:Device:CDC class instances during the <a class="el" href="usbd_create_app.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>
 <li>Set the parameters in the configuration file <a class="el" href="group__usbd__cdcFunctions__ncm__conf.html">USBD_Config_CDC_n.h</a>.</li>
 <li>Implement the application specific behavior using this <a class="el" href="group__usbd__cdcFunctions__ncm.html#USBD_User_CDC_NCM_UCT">template</a> <em>or</em> </li>
 <li>Use the pre-built <a class="el" href="group__usbd__cdcFunctions__ncm.html#USBD_User_CDC_NCM_ETH_UCT">template file for Ethernet-over-USB</a>.</li>

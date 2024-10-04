@@ -150,7 +150,7 @@ Content</h2></td></tr>
 <li>Connect a specific USB Device to the USB Bus by calling <a class="el" href="group__usbd__coreFunctions__api.html#gad97153303fc0a6f51c1c20ac050b238f">USBD_Connect</a>.</li>
 </ul>
 <p>These two functions are accompanied <a class="el" href="group__usbd__coreFunctions__api.html#ga9440f139618900f2011034e70cd7a528">USBD_Disconnect</a> and <a class="el" href="group__usbd__coreFunctions__api.html#gabefe6dae72a49806a96b981c286d0aeb">USBD_Uninitialize</a>. Use them to properly disconnect and uninitialize the device from the USB bus.</p>
-<h2><a class="anchor" id="autotoc_md94"></a>
+<h2><a class="anchor" id="autotoc_md39"></a>
 Static and Run-Time Configuration</h2>
 <p>The USB Device Core is statically configured using the <a class="el" href="group__usbd__coreFunctions__conf.html">USBD_Config_n.h</a> file. However, for mass-production it is often required to be able to configure some USB Device settings at run-time (for example the serial number which needs to be unique for every single device). To achieve this, the following device configuration functions are part of the <a class="el" href="group__usbd__coreFunctions.html#USBD_User_Device_UCT">USBD_User_Device_n.c</a> user code template. They enable user specific <a class="el" href="USB_Concepts.html#USB_Endpoints">USB Control Endpoint 0</a> request handling. This allows the user to intercept all Control Endpoint 0 requests and handle them overriding the default USB Component handling:</p><ul>
 <li><a class="el" href="group__usbd__coreFunctions__api.html#ga8b8efce115c5874aa26492627c54de88">USBD_Devicen_Initialize</a> is used to add device specific initialization code.</li>
@@ -161,7 +161,7 @@ Static and Run-Time Configuration</h2>
 <li>The callback function <a class="el" href="group__usbd__coreFunctions__api.html#ga4e042536dff24404490771d698da1e22">USBD_Devicen_Endpoint0_SetupPacketReceived</a> is called when the USB Device Instance n received a SETUP PACKET on Control Endpoint 0.</li>
 <li>The callback function <a class="el" href="group__usbd__coreFunctions__api.html#ga966b91ca2ca092ca62095b82943dcfff">USBD_Devicen_Endpoint0_SetupPacketProcessed</a> is called when a SETUP PACKET was processed by the USB Component.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md95"></a>
+<h3><a class="anchor" id="autotoc_md40"></a>
 Setup Packets on Control Endpoint 0</h3>
 <p>Setup packets sent to Control Endpoint 0 are received by the USB Device Core. The USB Device Core will call the <a class="el" href="group__usbd__coreFunctions__api.html#ga4e042536dff24404490771d698da1e22">USBD_Devicen_Endpoint0_SetupPacketReceived</a> function and pass the setup packet to it. Depending on the return code of <b>USBD_Devicen_Endpoint0_SetupPacketReceived</b>, the USB Device Core either passes the processing to the Custom Class function if custom class is used and if message is addressed to a custom class by calling <a class="el" href="group__usbd__classFunctions__api.html#ga71d4b65ea6d404c6e588672a413d06b5">USBD_CustomClassn_Endpoint0_SetupPacketReceived</a> function or continues to process the received setup packet itself. Depending on the return code of <b>USBD_CustomClassn_Endpoint0_SetupPacketReceived</b>, processing of the setup packet is either done or continues to be processed by USB Device Core.</p>
 <p>USB Device Core will call <a class="el" href="group__usbd__coreFunctions__api.html#ga966b91ca2ca092ca62095b82943dcfff">USBD_Devicen_Endpoint0_SetupPacketProcessed</a> and depending on return code it will call <a class="el" href="group__usbd__classFunctions__api.html#ga170bf6bfa6ab3bd069720d8a455b89b6">USBD_CustomClassn_Endpoint0_SetupPacketProcessed</a> to inform the application that setup packet has been processed by USB Device Core.</p>
@@ -187,10 +187,10 @@ Setup Packets on Control Endpoint 0</h3>
 <area href="group__usbd__coreFunctions__api.html#gabefe6dae72a49806a96b981c286d0aeb" shape="rect" coords="50,640,151,653" alt=""/>
 </map>
 </div>
-<h2><a class="anchor" id="autotoc_md96"></a>
+<h2><a class="anchor" id="autotoc_md41"></a>
 Implementation</h2>
-<p>To <a class="el" href="USB_Device.html#Creation_Steps">create a USB Device</a>:</p><ul>
-<li>Select required USB Device Class during the <a class="el" href="USB_Device.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>
+<p>To <a class="el" href="usbd_create_app.html">create a USB Device</a>:</p><ul>
+<li>Select required USB Device Class during the <a class="el" href="usbd_create_app.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>
 <li>Set the static USB Device parameters in the configuration file <a class="el" href="group__usbd__coreFunctions__conf.html">USBD_Config_n.h</a>.</li>
 <li>Implement the application and run-time specific behavior using <a class="el" href="group__usbd__coreFunctions.html#USBD_User_Device_UCT">USBD_User_Device_n.c</a>.</li>
 </ul>

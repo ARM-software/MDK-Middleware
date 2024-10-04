@@ -82,84 +82,11 @@ var NAVTREE =
         ] ]
       ] ]
     ] ],
+    [ "Examples", "examples.html", "examples" ],
     [ "Cyber Security", "certification.html", [
       [ "Achilles Test Platform", "certification.html#autotoc_md7", [
         [ "Setting up the Achilles Test Software", "certification.html#autotoc_md8", null ],
         [ "Storm Rate Limit determination", "certification.html#autotoc_md9", null ]
-      ] ]
-    ] ],
-    [ "Examples", "nw_examples.html", [
-      [ "HTTP Server", "nw_examples.html#Compact_Web_Server_Example", [
-        [ "Build the \"HTTP Server\" Project", "nw_examples.html#autotoc_md10", [
-          [ "Source Files", "nw_examples.html#autotoc_md11", null ]
-        ] ],
-        [ "Using the \"HTTP Server\" Project", "nw_examples.html#autotoc_md12", [
-          [ "Hardware Setup", "nw_examples.html#autotoc_md13", null ],
-          [ "PC Software", "nw_examples.html#autotoc_md14", null ]
-        ] ]
-      ] ],
-      [ "HTTPS Server", "nw_examples.html#Compact_Secure_Web_Server_Example", [
-        [ "Build the \"HTTPs Server\" Project", "nw_examples.html#autotoc_md15", [
-          [ "Source Files", "nw_examples.html#autotoc_md16", null ]
-        ] ],
-        [ "Using the \"HTTPS Server\" Project", "nw_examples.html#autotoc_md17", [
-          [ "Hardware Setup", "nw_examples.html#autotoc_md18", null ],
-          [ "PC Software", "nw_examples.html#autotoc_md19", null ]
-        ] ]
-      ] ],
-      [ "HTTP Upload", "nw_examples.html#HTTP_Upload_Example", [
-        [ "Build the \"HTTP Upload\" Project", "nw_examples.html#autotoc_md20", [
-          [ "Source Files", "nw_examples.html#autotoc_md21", null ]
-        ] ],
-        [ "Using the \"HTTP Upload\" Project", "nw_examples.html#autotoc_md22", [
-          [ "Hardware Setup", "nw_examples.html#autotoc_md23", null ],
-          [ "PC Software", "nw_examples.html#autotoc_md24", null ]
-        ] ]
-      ] ],
-      [ "FTP Server", "nw_examples.html#FTP_Server_Example", [
-        [ "Build the \"FTP Server\" Project", "nw_examples.html#autotoc_md25", [
-          [ "Source Files", "nw_examples.html#autotoc_md26", null ]
-        ] ],
-        [ "Using the \"FTP Server\" Project", "nw_examples.html#autotoc_md27", [
-          [ "Hardware Setup", "nw_examples.html#autotoc_md28", null ],
-          [ "PC Software", "nw_examples.html#autotoc_md29", null ]
-        ] ]
-      ] ],
-      [ "Telnet Server", "nw_examples.html#Telnet_Example", [
-        [ "Build the \"Telnet\" Project", "nw_examples.html#autotoc_md30", [
-          [ "Source Files", "nw_examples.html#autotoc_md31", null ]
-        ] ],
-        [ "Using the \"Telnet\" Project", "nw_examples.html#autotoc_md32", [
-          [ "Hardware Setup", "nw_examples.html#autotoc_md33", null ],
-          [ "PC Software", "nw_examples.html#autotoc_md34", null ]
-        ] ]
-      ] ],
-      [ "SMTP Client", "nw_examples.html#SMTP_Client_Example", [
-        [ "Build the \"SMTP Client\" Project", "nw_examples.html#autotoc_md35", [
-          [ "Source Files", "nw_examples.html#autotoc_md36", null ]
-        ] ],
-        [ "Using the \"SMTP Client\" Project", "nw_examples.html#autotoc_md37", [
-          [ "Hardware Setup", "nw_examples.html#autotoc_md38", null ],
-          [ "PC Software", "nw_examples.html#autotoc_md39", null ]
-        ] ]
-      ] ],
-      [ "SNMP Agent", "nw_examples.html#SNMP_Agent_Example", [
-        [ "Build the \"SNMP Agent\" Project", "nw_examples.html#autotoc_md40", [
-          [ "Source Files", "nw_examples.html#autotoc_md41", null ]
-        ] ],
-        [ "Using the \"SNMP Agent\" Project", "nw_examples.html#autotoc_md42", [
-          [ "Hardware Setup", "nw_examples.html#autotoc_md43", null ],
-          [ "PC Software", "nw_examples.html#autotoc_md44", null ]
-        ] ]
-      ] ],
-      [ "BSD Client/Server", "nw_examples.html#BSD_Examples", [
-        [ "Build the \"BSD\" Projects", "nw_examples.html#autotoc_md45", [
-          [ "Source Files", "nw_examples.html#autotoc_md46", null ]
-        ] ],
-        [ "Using the \"BSD\" Projects", "nw_examples.html#autotoc_md47", [
-          [ "Hardware Setup", "nw_examples.html#autotoc_md48", null ],
-          [ "PC Software", "nw_examples.html#autotoc_md49", null ]
-        ] ]
       ] ]
     ] ],
     [ "Resource Requirements", "nw_resource_requirements.html", [
@@ -167,8 +94,8 @@ var NAVTREE =
       [ "Heap Requirements", "nw_resource_requirements.html#nw_heap_req", null ],
       [ "CMSIS-RTOS Requirements", "nw_resource_requirements.html#nw_rtos_req", null ],
       [ "Memory Requirements", "nw_resource_requirements.html#nw_spec_mem_req", [
-        [ "Network (IPv4/IPv6)", "nw_resource_requirements.html#autotoc_md52", null ],
-        [ "Network (IPv4)", "nw_resource_requirements.html#autotoc_md53", null ]
+        [ "Network (IPv4/IPv6)", "nw_resource_requirements.html#autotoc_md42", null ],
+        [ "Network (IPv4)", "nw_resource_requirements.html#autotoc_md43", null ]
       ] ]
     ] ],
     [ "Function Overview", "net_func_overview.html", [
@@ -202,15 +129,15 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"certification.html",
-"group__netGen__AddrConvFunc.html#ga546c7611025489af14f2b37dbda445c2",
-"group__net__evr__bsd__func.html#gae140189f63c8ab2121246512b7022a1f",
-"group__net__evr__ftps__func.html#ga33fe055e6df37c272736e1929bbd8a3b",
-"group__net__evr__nbns__func.html#ga1327c8afd1aa134229fc07b2d2d92c4b",
-"group__net__evr__smtp__func.html#gac69740d66ef60a11a10ec71d84a9a948",
-"group__net__evr__tftpc__func.html#ga885c1d31d6ff0dd6a557d367e0ec8a30",
-"group__tcp__user__api.html#gad8393d4e967564107799400710c94521",
-"nw_examples.html#autotoc_md27"
+"BSD_Client_Example.html",
+"group__netDNS__Enums.html",
+"group__net__evr__bsd__func.html#gaa2f92301063dd42fdd975d510997ea3e",
+"group__net__evr__ftpc__func.html#ga945304b93631d47f9e32e40926dee633",
+"group__net__evr__ip6__func.html#gac25e2fa048f98b63c8802bdf167f4f23",
+"group__net__evr__slip__func.html#gadfe73168ca8814651756c54b148ef83c",
+"group__net__evr__teln__func.html#ga392d561ee8dc6ac01ea2f085b3e4284a",
+"group__smtpc__user__api.html#ga33454db9427528430742f6863c22f871",
+"network_create_app.html#nw_debugging"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

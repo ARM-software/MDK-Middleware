@@ -72,9 +72,6 @@ var arrurl = [];
  arrurl.push( new urlKey( "Component-Viewer-About",         "https://arm-software.github.io/CMSIS-View/latest/cmp_viewer.html#about_cmp_viewerr",              "Component Viewer"));
 
  arrurl.push( new urlKey( "USB-Resource-Req",               "https://arm-software.github.io/MDK-Middleware/latest/USB/usb_resource_requirements.html",         "USB Resource Requirements"));
- arrurl.push( new urlKey( "USBD-MSC-Ex",                    "https://arm-software.github.io/MDK-Middleware/latest/USB/USB_Device.html#dev_msc_tutorial",       "USB Device Mass Storage Example"));
- arrurl.push( new urlKey( "USBH-MSC-Ex",                    "https://arm-software.github.io/MDK-Middleware/latest/USB/USB_Host.html#host_msc_tutorial",        "USB Host Mass Storage Example"));
- arrurl.push( new urlKey( "FTP-Server-Ex",                  "https://arm-software.github.io/MDK-Middleware/latest/Network/nw_examples.html#FTP_Server_Example","FTP Server Example"));
  arrurl.push( new urlKey( "MW-General",                     "https://arm-software.github.io/MDK-Middleware/latest/General/index.html",                         "MDK-Middleware"));
  arrurl.push( new urlKey( "MW-FileSystem",                  "https://arm-software.github.io/MDK-Middleware/latest/FileSystem/index.html",                      "File System Component"));
  arrurl.push( new urlKey( "MW-Network",                     "https://arm-software.github.io/MDK-Middleware/latest/Network/index.html",                         "Network Component"));

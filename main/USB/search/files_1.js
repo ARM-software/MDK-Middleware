@@ -9,10 +9,16 @@ var searchData=
   ['usb_5fmigration_2emd_6',['usb_migration.md',['../usb__migration_8md.html',1,'']]],
   ['usb_5fresource_5frequirements_2emd_7',['usb_resource_requirements.md',['../usb__resource__requirements_8md.html',1,'']]],
   ['usb_5frev_5fhist_2emd_8',['usb_rev_hist.md',['../usb__rev__hist_8md.html',1,'']]],
-  ['usb_5fstructs_2etxt_9',['usb_structs.txt',['../usb__structs_8txt.html',1,'']]],
+  ['usbd_5fcreate_5fapp_2emd_9',['usbd_create_app.md',['../usbd__create__app_8md.html',1,'']]],
   ['usbd_5fevr_2eh_10',['usbd_evr.h',['../usbd__evr_8h.html',1,'']]],
-  ['usbd_5fevr_2etxt_11',['usbd_evr.txt',['../usbd__evr_8txt.html',1,'']]],
-  ['usbd_5fmsc_2eh_12',['USBD_MSC.h',['../USBD__MSC_8h.html',1,'']]],
-  ['usbh_5fevr_2eh_13',['usbh_evr.h',['../usbh__evr_8h.html',1,'']]],
-  ['usbh_5fevr_2etxt_14',['usbh_evr.txt',['../usbh__evr_8txt.html',1,'']]]
+  ['usbd_5fexample_5fcdc_2emd_11',['usbd_example_cdc.md',['../usbd__example__cdc_8md.html',1,'']]],
+  ['usbd_5fexample_5fhid_2emd_12',['usbd_example_hid.md',['../usbd__example__hid_8md.html',1,'']]],
+  ['usbd_5fexample_5fmsc_2emd_13',['usbd_example_msc.md',['../usbd__example__msc_8md.html',1,'']]],
+  ['usbd_5fexamples_2emd_14',['usbd_examples.md',['../usbd__examples_8md.html',1,'']]],
+  ['usbd_5fmsc_2eh_15',['USBD_MSC.h',['../USBD__MSC_8h.html',1,'']]],
+  ['usbh_5fcreate_5fapp_2emd_16',['usbh_create_app.md',['../usbh__create__app_8md.html',1,'']]],
+  ['usbh_5fevr_2eh_17',['usbh_evr.h',['../usbh__evr_8h.html',1,'']]],
+  ['usbh_5fexample_5fhid_2emd_18',['usbh_example_hid.md',['../usbh__example__hid_8md.html',1,'']]],
+  ['usbh_5fexample_5fmsc_2emd_19',['usbh_example_msc.md',['../usbh__example__msc_8md.html',1,'']]],
+  ['usbh_5fexamples_2emd_20',['usbh_examples.md',['../usbh__examples_8md.html',1,'']]]
 ];

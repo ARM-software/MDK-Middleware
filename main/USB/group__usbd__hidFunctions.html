@@ -148,7 +148,8 @@ Content</h2></td></tr>
 <p>The HID class in the USB Component is used for data exchange. It implements a vendor defined HID class with Usage Page ID=0xFF00.</p>
 <p>Refer to:</p><ul>
 <li><a class="el" href="USB_Classes.html#HID">HID: Human Interface Device Class</a> for an overview of the HID class.</li>
-<li><a class="el" href="USB_Device.html#dev_hid_tutorial">USB Device HID</a> for example projects that use the HID class.</li>
+<li><a class="el" href="usbd_example_hid.html">USB Device HID</a> for example project that use the HID class on USB Device.</li>
+<li><a class="el" href="usbh_example_hid.html">USB Host Keyboard</a> for example project that use the HID class on USB Host.</li>
 </ul>
 <p>The USB Component allows multiple instances of the HID class. This feature is used to create USB Composite Devices. Each HID class instance has a separate files and interface functions:</p><ul>
 <li>A configuration file <a class="el" href="group__usbd__hidFunctions__conf.html">USBD_Config_HID_n.h</a>.</li>
@@ -186,10 +187,10 @@ Content</h2></td></tr>
 <area href="group__usbd__coreFunctions__api.html#gabefe6dae72a49806a96b981c286d0aeb" shape="rect" coords="25,448,126,461" alt=""/>
 </map>
 </div>
-<h2><a class="anchor" id="autotoc_md100"></a>
+<h2><a class="anchor" id="autotoc_md45"></a>
 Implementation</h2>
-<p>To <a class="el" href="USB_Device.html#Creation_Steps">create an USB Device</a> with a HID class:</p><ul>
-<li>Set the required number for USB:Device:HID class instances during the <a class="el" href="USB_Device.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>
+<p>To <a class="el" href="usbd_create_app.html">create an USB Device</a> with a HID class:</p><ul>
+<li>Set the required number for USB:Device:HID class instances during the <a class="el" href="usbd_create_app.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>
 <li>Set the parameters in the configuration file <a class="el" href="group__usbd__hidFunctions__conf.html">USBD_Config_HID_n.h</a>.</li>
 <li>Implement the application specific behavior in using a <a class="el" href="group__usbd__hidFunctions.html#UCT_USBD_User_HID">template</a>.</li>
 </ul>

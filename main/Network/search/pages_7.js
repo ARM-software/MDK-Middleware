@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['troubleshooting_20a_20network_20application_0',['Troubleshooting a Network Application',['../network_troubleshoot.html',1,'']]]
+  ['resource_20requirements_0',['Resource Requirements',['../nw_resource_requirements.html',1,'']]],
+  ['revision_20history_1',['Revision History',['../netw_revhist.html',1,'']]]
 ];

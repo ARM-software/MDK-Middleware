@@ -512,12 +512,11 @@ var searchData=
   ['netwifi_5fwps_5fpin_509',['netWiFi_WPS_PIN',['../rl__net_8h.html#ga923615425840e0578bc76e8ba1b9147eaf071b43f1a5099553b7fe23af4bce7aa',1,'rl_net.h']]],
   ['network_2emd_510',['Network.md',['../Network_8md.html',1,'']]],
   ['network_5fdiffs_2emd_511',['network_diffs.md',['../network__diffs_8md.html',1,'']]],
-  ['network_5fexamples_2emd_512',['network_examples.md',['../network__examples_8md.html',1,'']]],
-  ['network_5fresource_5frequirements_2emd_513',['network_resource_requirements.md',['../network__resource__requirements_8md.html',1,'']]],
-  ['network_5frevhist_2emd_514',['network_revhist.md',['../network__revhist_8md.html',1,'']]],
-  ['network_5ftrbl_5fshoot_2emd_515',['network_trbl_shoot.md',['../network__trbl__shoot_8md.html',1,'']]],
-  ['netwrongstate_516',['netWrongState',['../rl__net_8h.html#ga5675a3b88ee02986ae15ae3bb8135551abf1edad6e676229e08ab3bf2546bb4a6',1,'rl_net.h']]],
-  ['notify_517',['Notify',['../group__netDS__Modem.html#a1f744bf97d3a60b95332c37106337edf',1,'DRIVER_MODEM']]],
-  ['ntohl_518',['ntohl',['../rl__net_8h.html#a9c97c14f2d7fb01a84857a9c775b9b11',1,'rl_net.h']]],
-  ['ntohs_519',['ntohs',['../rl__net_8h.html#aaf82f29d63af29bd83e76d8f7122cf47',1,'rl_net.h']]]
+  ['network_5fresource_5frequirements_2emd_512',['network_resource_requirements.md',['../network__resource__requirements_8md.html',1,'']]],
+  ['network_5frevhist_2emd_513',['network_revhist.md',['../network__revhist_8md.html',1,'']]],
+  ['network_5ftrbl_5fshoot_2emd_514',['network_trbl_shoot.md',['../network__trbl__shoot_8md.html',1,'']]],
+  ['netwrongstate_515',['netWrongState',['../rl__net_8h.html#ga5675a3b88ee02986ae15ae3bb8135551abf1edad6e676229e08ab3bf2546bb4a6',1,'rl_net.h']]],
+  ['notify_516',['Notify',['../group__netDS__Modem.html#a1f744bf97d3a60b95332c37106337edf',1,'DRIVER_MODEM']]],
+  ['ntohl_517',['ntohl',['../rl__net_8h.html#a9c97c14f2d7fb01a84857a9c775b9b11',1,'rl_net.h']]],
+  ['ntohs_518',['ntohs',['../rl__net_8h.html#aaf82f29d63af29bd83e76d8f7122cf47',1,'rl_net.h']]]
 ];

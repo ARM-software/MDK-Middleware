@@ -1,7 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"group__stdio__routines.html#gab5de865c3093158c70bf4bd88a9deea5":[8,1,0],
-"group__stdio__routines.html#gabe6299d5823dd023e610aaa619735a3f":[8,1,10],
 "group__stdio__routines.html#gad5a0ea2c21a23a380b7c30fe35fa9456":[8,1,19],
 "group__stdio__routines.html#gad9291335f34e874c8431285d705bc3aa":[8,1,9],
 "group__stdio__routines.html#gadb974f28765a31026ee6bf71d5175951":[8,1,4],

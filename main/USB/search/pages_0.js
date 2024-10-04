@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['function_20overview_0',['Function Overview',['../usb_function_reference.html',1,'']]]
+  ['create_20an_20application_0',['Create an Application',['../usbd_create_app.html',1,'USB_Device'],['../usbh_create_app.html',1,'USB_Host']]]
 ];

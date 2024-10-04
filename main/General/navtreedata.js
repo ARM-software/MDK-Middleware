@@ -39,6 +39,17 @@ var NAVTREE =
         [ "Configuring Stack using startup_device.s", "mw_using.html#mw_using_startup", null ],
         [ "Configuring CMSIS-RTOS2 using RTX_Config.h", "mw_using.html#mw_using_rtx_conf", null ]
       ] ]
+    ] ],
+    [ "Working with MDK-Middleware Examples", "working_with_examples.html", [
+      [ "Available examples", "working_with_examples.html#autotoc_md0", null ],
+      [ "Using VS Code", "working_with_examples.html#autotoc_md1", [
+        [ "Explore MDK-Middleware Examples", "working_with_examples.html#autotoc_md2", null ],
+        [ "API Interfaces", "working_with_examples.html#autotoc_md3", null ],
+        [ "Compile for Board", "working_with_examples.html#autotoc_md4", null ],
+        [ "Compile for Custom Hardware", "working_with_examples.html#autotoc_md5", null ],
+        [ "Using uVision for Debug", "working_with_examples.html#autotoc_md6", null ]
+      ] ],
+      [ "Using uVision IDE", "working_with_examples.html#autotoc_md7", null ]
     ] ]
   ] ]
 ];

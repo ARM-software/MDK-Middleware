@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['overview_0',['Overview',['../index.html',1,'']]]
+  ['function_20overview_0',['Function Overview',['../usb_function_reference.html',1,'']]]
 ];

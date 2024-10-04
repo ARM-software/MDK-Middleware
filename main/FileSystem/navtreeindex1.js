@@ -1,7 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"group__evr__fsfat.html#gaea6823784e6d24879888ca9657bd77fb":[8,11,1,92],
-"group__evr__fsfat.html#gaf2b36670aa5159605714822ae177b991":[8,11,1,82],
 "group__evr__fsfat.html#gaf7a69b4ff885db68be17ae5087fe8fd7":[8,11,1,73],
 "group__evr__fsfat.html#gaf882722c399a877ae31d6b68b1534c7a":[8,11,1,8],
 "group__evr__fsfat.html#gafabd8eb93d4d05258f678bade5252c36":[8,11,1,20],
@@ -249,5 +247,7 @@ var NAVTREEINDEX1 =
 "group__stdio__routines.html#gaa0cd401f198d33d9d01a9e8aa4026819":[8,1,21],
 "group__stdio__routines.html#gaadb0fd1f97e393175a27829805cbff92":[8,1,26],
 "group__stdio__routines.html#gab11a990e4f8863a1e7736e3c1d430092":[8,1,5],
-"group__stdio__routines.html#gab208d061e2309ba0f6b7f9412f8a80c1":[8,1,13]
+"group__stdio__routines.html#gab208d061e2309ba0f6b7f9412f8a80c1":[8,1,13],
+"group__stdio__routines.html#gab5de865c3093158c70bf4bd88a9deea5":[8,1,0],
+"group__stdio__routines.html#gabe6299d5823dd023e610aaa619735a3f":[8,1,10]
 };

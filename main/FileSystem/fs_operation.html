@@ -400,7 +400,7 @@ List of Supported MCI Driver Capabilities</h2>
 </table>
 <h2><a class="anchor" id="mci_device_specifics"></a>
 Device Specific Features</h2>
-<h3><a class="anchor" id="autotoc_md1"></a>
+<h3><a class="anchor" id="autotoc_md4"></a>
 Power Supply Voltage Control</h3>
 <p>With appropriately designed hardware and support from the corresponding MCI driver, MC Control Layer can control memory device power supply voltage:</p>
 <ul>
@@ -408,18 +408,18 @@ Power Supply Voltage Control</h3>
 <li>VDD (VCC) and VCCQ power supply is turned <b>off</b> when device is <a class="el" href="group__system__routines.html#gad1975930d66a5b2fd05ca3502955785b">unmounted</a>,</li>
 <li>VCC power supply is turned <b>on/off</b> when eMMC device is <b>switched to/from Sleep state</b></li>
 </ul>
-<h3><a class="anchor" id="autotoc_md2"></a>
+<h3><a class="anchor" id="autotoc_md5"></a>
 Data Bus Width</h3>
 <p>Depending on the memory device type, appropriate data bus width will be selected:</p>
 <ul>
 <li>1-bit data bus width is selected by default, since it must be supported by all devices and MCI drivers.</li>
 <li>4-bit or 8-bit data bus width selection depends on both, device and MCI driver capabilities. In order to switch either to 4 or 8-bit data bus, both, device and MCI driver must support it.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md3"></a>
+<h3><a class="anchor" id="autotoc_md6"></a>
 High Speed Mode</h3>
 <p>The MC Control Layer is able to automatically switch to <a href="https://www.sdcard.org/developers/sd-standard-overview/bus-speed-default-speed-high-speed-uhs-sd-express/">high speed mode</a> for SD cards supporting SD specification version 1.10 or higher (3.3V signaling, bus clock frequency up to 50MHz) and MMC/eMMC devices supporting MMCA specification version 4.2 or higher (3.3V signaling, bus clock frequency up to 52MHz). In order to do so, the high speed mode needs to be supported by the corresponding  <script>link_ext('MCI-API');</script>.</p>
 <dl class="section note"><dt>Note</dt><dd>Improper PCB design can cause reliability problems when in high speed mode.</dd></dl>
-<h3><a class="anchor" id="autotoc_md4"></a>
+<h3><a class="anchor" id="autotoc_md7"></a>
 Password protection</h3>
 <p>The password protection feature enables the host to lock a card while providing a password, which later will be used for unlocking the card. The password is stored to device internal non-volatile registers and can consist of up to 16 bytes, where each byte can be arbitrary 8-bit value.</p>
 <p>Password can be managed by using the function <a class="el" href="group__ioc__interface__routines.html#ga3036c7dbc536ec052c41056245df407e">fs_ioc_device_ctrl</a>, with control code <a class="el" href="rl__fs_8h.html#a46f72ffa53d0379ea0bf5e51373d1a37a1c907bf83317635be0bdb40a3231da23">fsDevCtrlCodeLockUnlock</a> and structure <a class="el" href="rl__fs_8h.html#structfsLockUnlock">fsLockUnlock</a> as control code argument. When executing management operation, members of the <a class="el" href="rl__fs_8h.html#structfsLockUnlock">fsLockUnlock</a> structure must be set as follows:</p>
@@ -471,7 +471,7 @@ Password protection</h3>
 <li><a class="el" href="group__media__support__routines.html#gace19ffe245efca9f6ee93e744041b2f1">fs_mc_lock_unlock</a> function is used to return pointer to <a class="el" href="rl__fs_8h.html#structfsLockUnlock">fsLockUnlock</a> structure containing password information</li>
 </ul>
 <p>User application should only implement callback function <a class="el" href="group__media__support__routines.html#gace19ffe245efca9f6ee93e744041b2f1">fs_mc_lock_unlock</a> when support for memory card password management is required. This function will be called only when mounting a memory card with active password protection.</p>
-<h3><a class="anchor" id="autotoc_md5"></a>
+<h3><a class="anchor" id="autotoc_md8"></a>
 Health Status (S.M.A.R.T)</h3>
 <p>Many industrial grade eMMC and SD memory devices support health status monitoring system known as S.M.A.R.T. (Self-Monitoring, Analysis and Reporting Technology). Health Status monitor data is used to anticipate and detect imminent memory failures.</p>
 <p>eMMC and SD memory devices use common command (CMD56) to access vendor specific information about memory health status. In order to retrieve relevant information, function <a class="el" href="group__ioc__interface__routines.html#ga3036c7dbc536ec052c41056245df407e">fs_ioc_device_ctrl</a> can be used together with control code <a class="el" href="rl__fs_8h.html#a46f72ffa53d0379ea0bf5e51373d1a37ab0fd8541b0842669d009df84fc5c2aba">fsDevCtrlCodeHealthStatus</a> and structure <a class="el" href="rl__fs_8h.html#structfsHealthStatus">fsHealthStatus</a> as control code argument.</p>
@@ -585,7 +585,7 @@ Allocation Information</h2>
 <img src="fs_allocinfo.png" alt=""/>
 <div class="caption">
 Flash Block Allocation</div></div>
-    <h3><a class="anchor" id="autotoc_md6"></a>
+    <h3><a class="anchor" id="autotoc_md9"></a>
 Block Signature</h3>
 <p>Each block contains a signature, consisting of 4 bytes and determines if block is:</p>
 <ul>
@@ -594,7 +594,7 @@ Block Signature</h3>
 <li><b>used</b> temporarily during defragmentation</li>
 <li><b>full</b> and cannot be written anymore (only erased)</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md7"></a>
+<h3><a class="anchor" id="autotoc_md10"></a>
 Allocation Information Record</h3>
 <p>The file allocation information record consists of 8 bytes and has the following components:</p>
 <ul>
@@ -617,10 +617,10 @@ Allocation Information Record</h3>
 <h2><a class="anchor" id="efs_file_content"></a>
 File Names &amp; Content</h2>
 <p>The file names &amp; content region is located at the bottom of a block and is fully defined through the file allocation information records. It consists of file names and file content, which can both be fragmented. The first file fragment always starts at the beginning of a block (at offset 0) and is written in ascending order.</p>
-<h3><a class="anchor" id="autotoc_md8"></a>
+<h3><a class="anchor" id="autotoc_md11"></a>
 File Names</h3>
 <p>In the Embedded File System, a file name consists of maximum 31 characters. Directories are not supported, therefore any file name which contains a directory separator character, such as slash (/) or backslash(\), is rejected as invalid. Other characters are allowed.</p>
-<h3><a class="anchor" id="autotoc_md9"></a>
+<h3><a class="anchor" id="autotoc_md12"></a>
 File Content</h3>
 <p>Since file fragments are of variable size, <b>create big file fragments</b> in order to reduce the total number of file fragments and make the best use of a block. Writing or appending small amounts of data to a file is not optimal, since such an approach creates a large number of allocation information records. They consume free space and the required processing time results in a slow file access time.</p>
 <p>When the file content is modified, the old file content is invalidated and a new file fragment is allocated. a block is erased when all the data stored within has been invalidated.</p>

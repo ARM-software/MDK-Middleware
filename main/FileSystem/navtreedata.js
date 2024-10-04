@@ -47,17 +47,7 @@ var NAVTREE =
         ] ]
       ] ]
     ] ],
-    [ "File System Examples", "fs_examples.html", [
-      [ "File System Example", "fs_examples.html#fs_standalone_example", [
-        [ "Build the \"File System\" Project", "fs_examples.html#fs_example_build", [
-          [ "Source Files", "fs_examples.html#fs_example_sources", null ]
-        ] ],
-        [ "Using the \"File System\" Project", "fs_examples.html#fs_example_using", [
-          [ "Hardware Setup", "fs_examples.html#fs_example_using_hw", null ],
-          [ "PC Software", "fs_examples.html#fs_example_using_pc", null ]
-        ] ]
-      ] ]
-    ] ],
+    [ "Examples", "examples.html", "examples" ],
     [ "Theory of Operation", "fs_operation.html", [
       [ "Using the File System", "fs_operation.html#fs_usage", null ],
       [ "Drives, Memory Devices and Drivers", "fs_operation.html#drive", [
@@ -82,11 +72,11 @@ var NAVTREE =
         [ "List of Supported Devices", "fs_operation.html#mci_list_of_devices", null ],
         [ "List of Supported MCI Driver Capabilities", "fs_operation.html#mci_list_of_mci_capabilities", null ],
         [ "Device Specific Features", "fs_operation.html#mci_device_specifics", [
-          [ "Power Supply Voltage Control", "fs_operation.html#autotoc_md1", null ],
-          [ "Data Bus Width", "fs_operation.html#autotoc_md2", null ],
-          [ "High Speed Mode", "fs_operation.html#autotoc_md3", null ],
-          [ "Password protection", "fs_operation.html#autotoc_md4", null ],
-          [ "Health Status (S.M.A.R.T)", "fs_operation.html#autotoc_md5", null ]
+          [ "Power Supply Voltage Control", "fs_operation.html#autotoc_md4", null ],
+          [ "Data Bus Width", "fs_operation.html#autotoc_md5", null ],
+          [ "High Speed Mode", "fs_operation.html#autotoc_md6", null ],
+          [ "Password protection", "fs_operation.html#autotoc_md7", null ],
+          [ "Health Status (S.M.A.R.T)", "fs_operation.html#autotoc_md8", null ]
         ] ],
         [ "Power Saving Features", "fs_operation.html#mci_power_save", null ],
         [ "SPI Mode Support", "fs_operation.html#mc_spi_mode_support", [
@@ -101,12 +91,12 @@ var NAVTREE =
       [ "Embedded File System (EFS)", "fs_operation.html#emb_fs", [
         [ "Memory Organization", "fs_operation.html#efs_mem_org", null ],
         [ "Allocation Information", "fs_operation.html#efs_alloc_info", [
-          [ "Block Signature", "fs_operation.html#autotoc_md6", null ],
-          [ "Allocation Information Record", "fs_operation.html#autotoc_md7", null ]
+          [ "Block Signature", "fs_operation.html#autotoc_md9", null ],
+          [ "Allocation Information Record", "fs_operation.html#autotoc_md10", null ]
         ] ],
         [ "File Names & Content", "fs_operation.html#efs_file_content", [
-          [ "File Names", "fs_operation.html#autotoc_md8", null ],
-          [ "File Content", "fs_operation.html#autotoc_md9", null ]
+          [ "File Names", "fs_operation.html#autotoc_md11", null ],
+          [ "File Content", "fs_operation.html#autotoc_md12", null ]
         ] ],
         [ "Limitations", "fs_operation.html#efs_limits", null ]
       ] ]
@@ -128,9 +118,9 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"fs_create_app.html",
-"group__evr__fsfat.html#gaea6823784e6d24879888ca9657bd77fb",
-"group__stdio__routines.html#gab5de865c3093158c70bf4bd88a9deea5"
+"File_Demo_Example.html",
+"group__evr__fsfat.html#gaf7a69b4ff885db68be17ae5087fe8fd7",
+"group__stdio__routines.html#gad5a0ea2c21a23a380b7c30fe35fa9456"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

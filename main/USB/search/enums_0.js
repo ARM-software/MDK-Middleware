@@ -4,7 +4,7 @@ var searchData=
   ['usbdrequeststatus_1',['usbdRequestStatus',['../group__status__error__codes__usb.html#gaefad6fdbbf674f7d85f203e24732ca7e',1,'rl_usb.h']]],
   ['usbdsemaphore_5ft_2',['usbdSemaphore_t',['../rl__usb_8h.html#a8d121285e05e0217d91ba0d8fdedfb61',1,'rl_usb.h']]],
   ['usbdthread_5ft_3',['usbdThread_t',['../rl__usb_8h.html#ada0ecc624d3f106c7d51e974f00305ee',1,'rl_usb.h']]],
-  ['usbh_5fnotify_4',['USBH_NOTIFY',['../group__usbh__data__types.html#gac1c5bd4e4bbd4de40f06a5f120ed4c01',1,'USBH_NOTIFY():&#160;rl_usb.txt'],['../rl__usb_8h.html#ac1c5bd4e4bbd4de40f06a5f120ed4c01',1,'USBH_NOTIFY():&#160;rl_usb.h']]],
+  ['usbh_5fnotify_4',['USBH_NOTIFY',['../group__usbh__data__types.html#gac1c5bd4e4bbd4de40f06a5f120ed4c01',1,'USBH_NOTIFY():&#160;ref_rl_usb.txt'],['../rl__usb_8h.html#ac1c5bd4e4bbd4de40f06a5f120ed4c01',1,'USBH_NOTIFY():&#160;rl_usb.h']]],
   ['usbhmutex_5ft_5',['usbhMutex_t',['../rl__usb_8h.html#ac2c45668b8bdb55f071d417ef5d8c0b3',1,'rl_usb.h']]],
   ['usbhsemaphore_5ft_6',['usbhSemaphore_t',['../rl__usb_8h.html#ab23c91e1388c005097b688b65ede3622',1,'rl_usb.h']]],
   ['usbhthread_5ft_7',['usbhThread_t',['../rl__usb_8h.html#a134e993fda55bc09d8ce7a437f55d69f',1,'rl_usb.h']]],

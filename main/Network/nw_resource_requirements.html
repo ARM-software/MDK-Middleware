@@ -179,16 +179,16 @@ CMSIS-RTOS Requirements</h1>
 <li><b>Number of Threads</b>: sum up the number of used <em>Components</em>.</li>
 <li><b>Total stack size</b>: sum up the <em>Default Stack Sizes</em> of the related threads.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md50"></a>
+<h3><a class="anchor" id="autotoc_md40"></a>
 Timers</h3>
 <p>The Network component requires timers which need to be enabled in RTOS.</p>
-<h3><a class="anchor" id="autotoc_md51"></a>
+<h3><a class="anchor" id="autotoc_md41"></a>
 Signals</h3>
 <p>When using BSD sockets in blocking mode, the signal (1&lt;&lt;15) in that thread is reserved for the Network library. A user thread, when blocked on BSD sockets, is waiting for the signal 0x8000 to resume. The event, which has caused the thread to resume, is provided internally in the library. Therefore, signal 0x8000 must not be used by the user application in that thread.</p>
 <h1><a class="anchor" id="nw_spec_mem_req"></a>
 Memory Requirements</h1>
 <p>The following table shows the memory requirements for read-only (Flash) and read-write (RAM) memory. These numbers may be used to estimate the total size requirements of the application, but the actual numbers depend on compiler optimizations and target processor and may be therefore slightly different.</p>
-<h2><a class="anchor" id="autotoc_md52"></a>
+<h2><a class="anchor" id="autotoc_md42"></a>
 Network (IPv4/IPv6)</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -234,7 +234,7 @@ Network (IPv4/IPv6)</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft"><b>Ethernet PHY Driver</b>   </td><td class="markdownTableBodyCenter">&lt; 1 k   </td><td class="markdownTableBodyCenter">&lt; 0.1 k   </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md53"></a>
+<h2><a class="anchor" id="autotoc_md43"></a>
 Network (IPv4)</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">

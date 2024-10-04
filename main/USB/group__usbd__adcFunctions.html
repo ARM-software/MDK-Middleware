@@ -147,8 +147,7 @@ Content</h2></td></tr>
 <p>Implement application specific behavior of an Audio Device Class (ADC) USB Device. </p>
 <p>Use the following class specific functions to customize the functionality of an Audio Device Class (ADC) Device. Adapt these functions in the  <script>link_ext('uv4_ca_sourcefiles');</script> file <b>USBD_User_ADC_Audio_<em>n</em></b>.c.</p>
 <p>Refer to:</p><ul>
-<li><a class="el" href="USB_Classes.html#ADC">ADC: Audio Device Class</a> for an overview of the ADC class.</li>
-<li><a class="el" href="USB_Device.html#dev_adc_tutorial">USB Device Audio</a> for an example project that uses the ADC class.</li>
+<li><a class="el" href="USB_Classes.html#ADC">ADC: Audio Device Class</a> for an overview of the ADC class. </li>
 </ul>
 <p>The USB Component allows multiple instances of the ADC class. This feature is used to create USB Composite Devices. Each ADC class instance has a separate files and interface functions:</p><ul>
 <li>A configuration file <a class="el" href="group__usbd__adcFunctions__conf.html">USBD_Config_ADC_n.h</a>.</li>
@@ -174,10 +173,10 @@ Content</h2></td></tr>
 <area href="group__usbd__coreFunctions__api.html#gabefe6dae72a49806a96b981c286d0aeb" shape="rect" coords="25,429,126,442" alt=""/>
 </map>
 </div>
-<h2><a class="anchor" id="autotoc_md97"></a>
+<h2><a class="anchor" id="autotoc_md42"></a>
 Implementation</h2>
-<p>To <a class="el" href="USB_Device.html#Creation_Steps">create an USB Device</a> with an ADC class:</p><ul>
-<li>Set the required number for USB:Device:ADC class instances during the <a class="el" href="USB_Device.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>
+<p>To <a class="el" href="usbd_create_app.html">create an USB Device</a> with an ADC class:</p><ul>
+<li>Set the required number for USB:Device:ADC class instances during the <a class="el" href="usbd_create_app.html#RTE_Software_Component_Selection">RTE Component Selection</a>.</li>
 <li>Set the parameters in the configuration file <a class="el" href="group__usbd__adcFunctions__conf.html">USBD_Config_ADC_n.h</a>.</li>
 <li>Implement the application specific behavior using these <a class="el" href="group__usbd__adcFunctions.html#UCT_USBD_User_ADC">template</a>.</li>
 </ul>

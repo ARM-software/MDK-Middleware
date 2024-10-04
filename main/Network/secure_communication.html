@@ -168,7 +168,7 @@ Parts of an SSL/TLS Library</h2>
 <p>For more information on Mbed TLS and how it works, visit the <a href="https://www.trustedfirmware.org/projects/mbed-tls/">high-level design</a> overview page.</p>
 <h2><a class="anchor" id="add_mbedtls"></a>
 Add the mbed TLS library to a project</h2>
-<p>The <a class="el" href="nw_examples.html">Examples</a> section carries two examples for secure communication over the IP network: SSL Server and SSL Client. To use the Mbed TLS library in your own projects, follow these steps:</p>
+<p>The <a class="el" href="examples.html">Examples</a> section carries two examples for secure communication over the IP network: SSL Server and SSL Client. To use the Mbed TLS library in your own projects, follow these steps:</p>
 <ol type="1">
 <li>Download the <b>ARM:mbedTLS</b> library from  <script>link_ext('SW-Pack');</script> or use  <script>link_ext('uv4_ca_packinstaller');</script></li>
 <li>Open or create a project using the <b>Network Component</b>.</li>
@@ -467,7 +467,7 @@ Converting the SMTP client to SMTPS</h3>
 </div><!-- fragment --> or alternatively modify the <b>linker script</b> file <div class="fragment"><div class="line"><span class="preprocessor">#define __HEAP_SIZE     0x0000C000</span></div>
 </div><!-- fragment --></li>
 <li>Configure the RTX threads<ul>
-<li>If you use <b>RTX v5</b>, you do not need to change the <b>RTX settings</b>, because all recources are statically allocated.</li>
+<li>If you use <b>RTX v5</b>, you do not need to change the <b>RTX settings</b>, because all resources are statically allocated.</li>
 </ul>
 </li>
 <li>Build the example and download to Flash. If it fails, please check your "Read/Write Memory Areas" in your target options.</li>

@@ -1475,5 +1475,6 @@ var searchData=
   ['evtusbh_5fmsc_5funinitializefailed_1472',['EvtUSBH_MSC_UninitializeFailed',['../usbh__evr_8h.html#ac5447c1ea8eef28c0cdbbf3d9399eea1',1,'usbh_evr.h']]],
   ['evtusbh_5fmsc_5fwrite_1473',['EvtUSBH_MSC_Write',['../usbh__evr_8h.html#a155f8d394d6d1187d6847ed58c48400f',1,'usbh_evr.h']]],
   ['evtusbh_5fmsc_5fwritedone_1474',['EvtUSBH_MSC_WriteDone',['../usbh__evr_8h.html#a93cd0e448e397779f3d91f220b21ea46',1,'usbh_evr.h']]],
-  ['evtusbh_5fmsc_5fwritefailed_1475',['EvtUSBH_MSC_WriteFailed',['../usbh__evr_8h.html#a19ffaba3230d5bf4e2ab8c92bd493930',1,'usbh_evr.h']]]
+  ['evtusbh_5fmsc_5fwritefailed_1475',['EvtUSBH_MSC_WriteFailed',['../usbh__evr_8h.html#a19ffaba3230d5bf4e2ab8c92bd493930',1,'usbh_evr.h']]],
+  ['examples_1476',['Examples',['../usbd_examples.html',1,'USB_Device'],['../usbh_examples.html',1,'USB_Host']]]
 ];
