@@ -1,16 +1,17 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    MassStorage.c
  * Purpose: USB Host - Mass Storage example
  *----------------------------------------------------------------------------*/
 
-#include "main.h"
 #include <stdio.h>
 
-#include "rl_fs.h"                      // Keil.MDK::File System:CORE
-#include "rl_usb.h"                     // Keil.MDK::USB:CORE
+#include "main.h"
+
+#include "rl_fs.h"
+#include "rl_usb.h"
 
 #include "USBH_MSC.h"
 
@@ -22,9 +23,9 @@ static const osThreadAttr_t app_main_attr = {
   .stack_size = sizeof(app_main_stk)
 };
 
-/*---------------------------------------------------------------------------
+/*-----------------------------------------------------------------------------
  * Application main thread
- *---------------------------------------------------------------------------*/
+ *----------------------------------------------------------------------------*/
 __NO_RETURN void app_main_thread (void *argument) {
   usbStatus usb_status;                 // USB status
   int32_t   msc_status;                 // MSC status

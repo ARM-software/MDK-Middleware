@@ -60,13 +60,13 @@
 #include "rl_usb.h"
  
 #include "Driver_USART.h"
- 
+
 #ifdef   CMSIS_target_header
 #include CMSIS_target_header
 #else
 #define CMSIS_DRIVER_USART      0
 #endif
- 
+
 #ifndef  RTE_CMSIS_RTOS2
 #error   This user template requires CMSIS-RTOS2!
 #else

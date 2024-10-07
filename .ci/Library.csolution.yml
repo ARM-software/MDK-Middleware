@@ -1,6 +1,6 @@
 solution:
   description: MDK-Middleware Build Test
-  created-for: CMSIS-Toolbox@2.5.0
+  created-for: CMSIS-Toolbox@2.6.0
 
   cdefault:
 

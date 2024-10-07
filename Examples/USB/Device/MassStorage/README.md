@@ -1,6 +1,6 @@
 # USB Device Mass Storage Example
 
-This MDK-Middleware example project implements a mass storage USB Device using Mass Storage Device Class.
+This MDK-Middleware example project implements a mass storage USB Device using Mass Storage device Class.
 
 For detailed description see [USB Device MSC Example section in MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/USB/usbd_example_msc.html).
 

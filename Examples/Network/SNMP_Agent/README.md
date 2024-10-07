@@ -1,6 +1,6 @@
 # SNMP Agent Example
 
-This MDK-Middleware example project implements an **SNMP Agent** example. It shows how to use a Simple Network Management Protocol to control the embedded system.
+This MDK-Middleware example project implements an **SNMP Agent**. It shows how to use a Simple Network Management Protocol to control the embedded system.
 
 For detailed description see [SNMP Agent Example section in MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/Network/SNMP_Agent_Example.html).
 

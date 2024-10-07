@@ -6,10 +6,11 @@
  * Purpose: USB Host - HID Keyboard example
  *----------------------------------------------------------------------------*/
 
-#include "main.h"
 #include <stdio.h>
 
-#include "rl_usb.h"                     // Keil::USB&MDK:CORE
+#include "main.h"
+
+#include "rl_usb.h"
 
 // Main stack size must be multiple of 8 Bytes
 #define APP_MAIN_STK_SZ (4096U)
@@ -19,9 +20,9 @@ static const osThreadAttr_t app_main_attr = {
   .stack_size = sizeof(app_main_stk)
 };
 
-/*---------------------------------------------------------------------------
+/*-----------------------------------------------------------------------------
  * Application main thread
- *---------------------------------------------------------------------------*/
+ *----------------------------------------------------------------------------*/
 __NO_RETURN void app_main_thread (void *argument) {
   usbStatus usb_status;                 // USB status
   usbStatus hid_status;                 // HID status

@@ -1,6 +1,8 @@
 # SMTP Client {#SMTP_Client_Example}
 
-SMTP is used to send e-mail notifications from an embedded system to various recipients. This example shows how to setup an SMTP client for this purpose. The following picture shows an exemplary connection of the development board and a Computer.
+SMTP is used to send e-mail notifications from an embedded system to various recipients. This example shows how to setup an SMTP client for this purpose.
+
+The following picture shows an exemplary connection of the development board and a Computer.
 
 ![SMTP client hardware setup](smtp_setup.png)
 
@@ -12,7 +14,7 @@ The SMTP Client project is available as part of the \ref examples "Network Refer
 
 Following files implement application-specific logic in the example:
 
- - `SMTPS_Client.c` contains the application main thread which initializes the Network Component and provides the information required to compose and send an email. The following changes are required:
+ - `SMTP_Client.c` contains the application main thread which initializes the Network Component and provides the information required to compose and send an email. The following changes are required:
    - Content of the email information in the structure [*mail*](group__smtp__structs.html#structNET__SMTP__MAIL): 
      - Email addresses: *From*, *To*, *Cc*, *Bcc*
      - Subject and the message (body) of the email
@@ -45,7 +47,7 @@ When a board layer is added to the project, corresponding configuration files fo
 
 In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
  - `CMSIS_ETH`: CMSIS-Driver for Ethernet interface
- - `CMSIS_VIO`: CMSIS-Driver for virtual I/O interface
+ - `CMSIS_VIO`: CMSIS-Driver for Virtual I/O interface
  - `STDOUT`: Standard Output redirection
 
 ## Build the Project
@@ -61,7 +63,7 @@ In order to build the project it shall be extended with a compatible board layer
 
 **Setup**
 
-Board-specific setup such as jumpers, Ethernet ports, power supply, etc. is documented in the board layer description (`README.md`) of your selected target.
+Board-specific hardware setup such as jumpers, Ethernet ports, power supply, etc. is documented in the board layer description (`README.md`) of your selected target.
 
  -# Load the executable image to the target development board.
  -# Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already in this LAN.

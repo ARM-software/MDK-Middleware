@@ -1,6 +1,6 @@
 # USB Host Keyboard Example
 
-This MDK-Middleware example project implements a USB Host device that receives data from a USB Device (Keyboard) using Human Interface Device (HID) Class.
+This MDK-Middleware example project implements a USB Host that receives data from a USB Device (Keyboard) using Human Interface Device (HID) class.
 
 For detailed description see [USB Host Keyboard Example section in MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/USB/usbh_example_hid.html).
 

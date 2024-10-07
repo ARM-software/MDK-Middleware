@@ -1,6 +1,6 @@
 # File Demo Example
 
-This MDK-Middleware example project implements a **File Demo** example. It shows how to manipulate files on a memory drive using the File System Component
+This MDK-Middleware example project implements a **File Demo**. It shows how to manipulate files on a memory drive using the File System Component
 
 For detailed description see [File Demo Example section in MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/FileSystem/File_Demo_Example.html).
 
