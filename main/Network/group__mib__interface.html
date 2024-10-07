@@ -138,7 +138,7 @@ $(document).ready(function(){initNavTree('group__mib__interface.html',''); initR
 <p>The SNMP Agent manages MIB variables that are located in the <b>SNMP_Agent_MIB.c</b> template file. To add the file to your project, simply right-click on the Source group, select <b>Add New Item to Group</b>, then click on <b>User Code Template</b> and scroll in the template files list until you find the <b>SNMP Agent</b> template. The <b>SNMP_Agent_MIB.c</b> file has implemented a scaled-down <b>MIB-II</b> Management Information Base. Only the System <b>MIB</b> is defined by default. The user might expand this table by adding his own MIB variables.</p>
 <p>The user can register a callback function with a MIB variable. This function gets called, when the SNMP Manager accesses the MIB variable. This concept allows the SNMP Manager to control the SNMP Agent system. For example to change LED outputs, to write text on embedded LCD module, to read push buttons or analog inputs, etc.</p>
 <p><a class="anchor" id="mib_entry"></a></p>
-<h2><a class="anchor" id="autotoc_md68"></a>
+<h2><a class="anchor" id="autotoc_md71"></a>
 MIB Entry</h2>
 <p>The SNMP MIB entry information structure <a class="el" href="group__snmp__structs.html#structNET__SNMP__MIB__INFO">NET_SNMP_MIB_INFO</a> describes the MIB variable. The SNMP Agent uses this description to process local MIB variables. This structure is defined as follows: </p><div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>net_snmp_mib_info {</div>
 <div class="line">  uint8_t  type;                        <span class="comment">// Object Type</span></div>
@@ -191,7 +191,7 @@ The <em>type</em> component may be OR-ed with the <b>NET_SNMP_MIB_ATR_RO</b> rea
 </li>
 </ul>
 <p><a class="anchor" id="mib_data_table"></a></p>
-<h2><a class="anchor" id="autotoc_md69"></a>
+<h2><a class="anchor" id="autotoc_md72"></a>
 MIB Table</h2>
 <p>The <b>MIB</b> Table table is defined as an array. The components of this array are of type <a class="el" href="group__snmp__structs.html#structNET__SNMP__MIB__INFO">NET_SNMP_MIB_INFO</a>. </p><div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code hl_struct" href="group__snmp__structs.html#structNET__SNMP__MIB__INFO" title="SNMP-MIB Entry information.">NET_SNMP_MIB_INFO</a> mib_table[] = {</div>
 <div class="line"><span class="comment">// ---------- System MIB ----------- </span></div>
@@ -253,7 +253,7 @@ MIB Table</h2>
 <div class="line">    LED_SetOut (LedOut);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md70"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md73"></a>
 String Handling</h2>
 <p>Two types of read/write strings are supported: </p><table class="markdownTable">
 <tr class="markdownTableHead">
@@ -298,7 +298,7 @@ String Handling</h2>
 <div class="line">    NULL },</div>
 <div class="line">    ..</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md71"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md74"></a>
 Extended OID Encoding</h2>
 <p>The value of OID address byte must be less than <b>128</b>. If it is not, an OID address must be encoded in extended format. This is because the high bit of an address byte is an address <b>extension bit</b>.</p>
 <p>For example, the OID address 1.3.6.1.4.1.<b>311</b>.0 is encoded as: </p><div class="fragment"><div class="line">8, {<a class="code hl_define" href="rl__net_8h.html#aa4f513d3fe2e5edf191f3bdb498fa7d0">NET_SNMP_MIB_OID0</a>(1,3), 6, 1, 4, 1, 130, 55, 0},</div>

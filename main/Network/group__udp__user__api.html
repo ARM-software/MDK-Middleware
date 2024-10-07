@@ -173,7 +173,7 @@ Functions</h2></td></tr>
 <p>UDP is a byte stream service. It does not know anything about the format of the data being sent. It simply takes the data, <b>encapsulates</b> it into a UDP packet, and sends it to the remote peer.</p>
 <p>The UDP protocol does not wait for any acknowledgment and is unable to detect any lost packets. If this is required, it must be done by the application layer. However, it is better to use a <a class="el" href="group__netTCP__Func.html">TCP Socket</a> for reliable communication.</p>
 <p><a class="anchor" id="udp_send_data"></a></p>
-<h2><a class="anchor" id="autotoc_md83"></a>
+<h2><a class="anchor" id="autotoc_md86"></a>
 Sending Data via UDP in Unicast Mode</h2>
 <p>The function <a class="el" href="group__udp__user__api.html#ga688c8b42295a8bbe177f0eab181f9871">netUDP_Open</a> opens a socket for communication. You need to specify the socket number and the local port to be used. As a first step, you need to establish the communication between two nodes, otherwise <a class="el" href="group__udp__user__api.html#ga7a82db98b82300e5fd03ce1b7afb6cba">netUDP_Send</a> will fail with netError. To avoid this, call a <a class="el" href="group__common__user__api.html#ga2ef41d262467109292e7e96eb4b6e399">netARP_CacheIP</a> in a first step.</p>
 <p>If <a class="el" href="group__udp__user__api.html#ga688c8b42295a8bbe177f0eab181f9871">netUDP_Open</a> is called with a local port number of <span class="XML-Token">0</span>, the Network Core determines which port to use. Later, this information can be retrieved using the function <a class="el" href="group__udp__user__api.html#ga1bb08cb3ed2cffaf19b056056c84b3d3">netUDP_GetLocalPort</a>. To set certain UDP options (for IPv4 or IPv6) for the opened socket, use <a class="el" href="group__udp__user__api.html#ga93496cfeb5f324f09dc81211243093cb">netUDP_SetOption</a>.</p>
@@ -228,7 +228,7 @@ Sending Data via UDP in Unicast Mode</h2>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p><a class="anchor" id="udp_send_data_mcast"></a></p>
-<h2><a class="anchor" id="autotoc_md84"></a>
+<h2><a class="anchor" id="autotoc_md87"></a>
 Sending Data via UDP in Multicast Mode</h2>
 <p>To send and receive data to/from multiple hosts, you need to join a specific group of hosts with <a class="el" href="group__common__user__api.html#ga7f3207be0b4b9a6aac320ddfe4c5937f">netIGMP_Join</a> function. Then you can use the same functions as described in <a class="el" href="group__udp__user__api.html#udp_send_data">Sending Data via UDP in Unicast Mode</a>. When you want to stop sending and receiving the data from that group address, you have to leave a specific group with <a class="el" href="group__common__user__api.html#gab0deb90dddf3ac4471d513c6a501b641">netIGMP_Leave</a> function. </p>
 <h2 class="groupheader">Typedef Documentation</h2>
