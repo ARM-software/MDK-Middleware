@@ -49,7 +49,7 @@ default:
         - -Wl,--gc-sections
 
     - for-compiler: IAR
-      C-CPP: 
+      C-CPP:
         - -e
         - --dlib_config DLib_Config_Full.h
       Link:
