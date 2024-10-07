@@ -2,8 +2,7 @@
 
 The steps to create a microcontroller application that uses the File System are:
 
--# Select \ref RTE_Component_Selection "RTE Components" along with other components that are
-   required for your application.
+-# Select \ref RTE_Component_Selection "RTE Components" along with other components that are required for your application.
 -# Configure the \ref fs_configuration "File System".
 -# Configure the \ref hw_configuration "hardware".
 -# Implement the \ref User_Code_Implementation "User Code".
@@ -16,16 +15,14 @@ Only a few steps are necessary to complete the RTE Component selection:
 -# From the **File System** Component:
   - Select **File System:CORE** that provides the basic functionality required for data storage and access.
   - Select your desired **File System:Drive**. \ref fs_drives gives more details.
--# From the **CMSIS Driver** Component select an appropriate driver suitable for your **drive**. \ref fs_drives gives more
-   details.
--# From the **CMSIS-Compiler** Component select **CORE** and **File Interface:MDK-MW File System** to provide
-   interface for the Standard C Library functions.
+-# From the **CMSIS Driver** Component select an appropriate driver suitable for your **drive**. \ref fs_drives gives more details.
+-# From the **CMSIS-Compiler** Component select **CORE** and **File Interface:MDK-MW File System** to provide interface for the Standard C Library functions.
 -# From the **Device** Component:
   - Additional device specific drivers may be required according to the validation output.
 -# From the CMSIS Component:
   - Select the **CMSIS:CORE** to provide the core interface to the processor.
   - Select a suitable **CMSIS:RTOS** that is a required for the File System Component.
-   
+
 ![RTE Component for File System](fs_rte_comp_selection.png)
 
 ## Using Drives {#fs_drives}
@@ -35,18 +32,18 @@ The section \ref drive shows the relationship between drive - memory device - an
 ### NOR Flash Drive {#nor_usage}
 
 For using a NOR Flash drive, a \urlout{Flash-API} driver is required, which encapsulates either the Memory Bus interface or SPI (in which case an \urlout{SPI-API} driver is required in addition):
-- Set **File System:Drive:NOR** to at least '1' to use a NOR Flash drive (independently if it is using a memory bus or SPI interface).
-- From the **CMSIS-Driver** Component, select an appropriate **Flash (API)** device. If your NOR Flash uses an SPI
-  interface, select **SPI (API)** additionally.
 
-If your NOR Flash device is not listed, use one of the examples as a reference to implement a driver for your specific
-device:
+- Set **File System:Drive:NOR** to at least '1' to use a NOR Flash drive (independently if it is using a memory bus or SPI interface).
+- From the **CMSIS-Driver** Component, select an appropriate **Flash (API)** device. If your NOR Flash uses an SPI interface, select **SPI (API)** additionally.
+
+If your NOR Flash device is not listed, use one of the examples as a reference to implement a driver for your specific device:
+
 - AM29x800BB/[M29W640FB](https://www.farnell.com/datasheets/40281.pdf)
 (Flash with 16-bit memory bus interface)
-- [S29GL064Nx2](https://www.infineon.com/dgdl/Infineon-S29GL064N_S29GL032N_64_Mbit_32_Mbit_3_V_Page_Mode_MirrorBit_Flash-DataSheet-v03_00-EN.pdf?fileId=8ac78c8c7d0d8da4017d0ed556fd548b) (Flash with 32-bit
-memory bus interface)
-- [AT45DB642D](https://datasheet.octopart.com/AT45DB642D-CNU-Atmel-datasheet-9652374.pdf) (Flash with SPI interface using an SPI
-driver)
+- [S29GL064Nx2](https://www.infineon.com/dgdl/Infineon-S29GL064N_S29GL032N_64_Mbit_32_Mbit_3_V_Page_Mode_MirrorBit_Flash-DataSheet-v03_00-EN.pdf?fileId=8ac78c8c7d0d8da4017d0ed556fd548b)
+(Flash with 32-bit memory bus interface)
+- [AT45DB642D](https://datasheet.octopart.com/AT45DB642D-CNU-Atmel-datasheet-9652374.pdf)
+(Flash with SPI interface using an SPI driver)
 
 ![Flash (API) Drivers shipped with the Middleware Component](fs_flash_drivers.png)
 
@@ -78,11 +75,12 @@ Set the drive characteristics in the `FS_Config_MC_n.h` file:
 
 ![Memory Card Drive Configuration File](fs_config_mc_0_h.png)
 
-\note
-- If your microcontroller device does not have a **CMSIS-Driver** for the **MCI (API)** or **SPI (API)**, you can try
-  to develop your own one based on the \urlout{CMSIS-Driver-Ref} documentation.
-- The page \ref mc_control_layer lists all supported memory card types and gives further details on how to use these cards. 
-- General \ref system_configuration requirements apply.
+> **Note**
+>
+> - If your microcontroller device does not have a **CMSIS-Driver** for the **MCI (API)** or **SPI (API)**, you can try
+>   to develop your own one based on the \urlout{CMSIS-Driver-Ref} documentation.
+> - The page \ref mc_control_layer lists all supported memory card types and gives further details on how to use these cards.
+> - General \ref system_configuration requirements apply.
 
 ### USB Flash Drive {#usb_usage}
 
@@ -94,11 +92,12 @@ Set the drive characteristics in the `FS_Config_USB_n.h` file:
 
 ![USB Host Mass Storage Class Drive Configuration File](fs_config_usb_0_h.png)
 
-\note
-- If your microcontroller device does not have a **CMSIS-Driver** for the **USB Host (API)**, you can try to develop
-  your own one based on the
-  \urlout{CMSIS-Driver-Ref} documentation.
-- General \ref system_configuration requirements apply.
+> **Note**
+>
+> - If your microcontroller device does not have a **CMSIS-Driver** for the **USB Host (API)**, you can try to develop
+>   your own one based on the
+>   \urlout{CMSIS-Driver-Ref} documentation.
+> - General \ref system_configuration requirements apply.
 
 ### NAND Flash Drive {#nand_usage}
 
@@ -109,13 +108,14 @@ Set the drive characteristics in the `FS_Config_NAND_n.h` file:
 
 ![NAND Flash Drive Configuration File](fs_config_nand_0_h.png)
 
-\note
-- If your microcontroller device does not have a **CMSIS-Driver** for the **NAND (API)**, you can try to develop your
-  own one based on the \urlout{CMSIS-Driver-Ref} documentation.
-- The page \ref nand_flash_TL describes additional features specific to these devices.
-- Using a **NAND (API)** driver, you can use any NAND Flash device with an 8-/16-bit memory bus interface for data storage.
-- NAND Flashes with SPI interface (Serial NAND) are currently *not supported* by the File System Component.
-- General \ref system_configuration requirements apply.
+> **Note**
+>
+> - If your microcontroller device does not have a **CMSIS-Driver** for the **NAND (API)**, you can try to develop your
+>   own one based on the \urlout{CMSIS-Driver-Ref} documentation.
+> - The page \ref nand_flash_TL describes additional features specific to these devices.
+> - Using a **NAND (API)** driver, you can use any NAND Flash device with an 8-/16-bit memory bus interface for data storage.
+> - NAND Flashes with SPI interface (Serial NAND) are currently *not supported* by the File System Component.
+> - General \ref system_configuration requirements apply.
 
 ## File System Configuration {#fs_configuration}
 
@@ -137,6 +137,7 @@ requirements of your target device. This configuration is done in the `RTE_Devic
 ## System Resource Configuration {#system_configuration}
 
 For proper operation, the File System Component requires some system configuration settings. The requirements are:
+
 - Minimum **heap size of 512 + 96 Bytes for each opened file**. If you want to be able to have three files open
   at the same time, you need to set a heap size of at least 3 * (512+96) Bytes = 1824 Bytes. This can be configured in the device's
   `startup_device.s` file (`Heap_Size`).
@@ -173,6 +174,7 @@ of the File System Component during application debug. The \ref evr_gr describes
 The File System Component generates \ref evr_gr "a broad set of Debug Events" for the Event Recorder and implements required infrastructure to interface with it.
 
 To use the Event Recorder it is required to create an image with event generation support. The necessary steps are:
+
   1. \urlout{Event-Recorder-Enable}: in the RTE management dialog enable the software component **CMSIS-View:Event Recorder**.
   2. Ensure that Event Recorder is initialized preferably by \urlout{RTX5-Event-Recorder-Config} if CMSIS-RTOS2 RTX v5 is used,
      or alternatively by calling the function \urlout{Event-Recorder-Initialize-Func} in the application code.
@@ -194,6 +196,7 @@ generation configuration for File System core and drivers separately.
 ![FS_Debug.h file for event generation configuration](fs_debug_h.png)
 
 The following settings are available for event generation configuration of each module:
+
 - **Off** means no events will be generated by the module
 - **Errors** means only error events will be generated by the module
 - **Errors + API** means error and API call events will be generated by the module

@@ -7,6 +7,7 @@ processor-based devices and requires an CMSIS-RTOS compliant real-time operating
 for thread-safe operation.
 
 The File System Component consists of two different file systems, placed on top of different layers, depending on the media type:
+
 - \ref fat_fs (using FAT12, FAT16, or FAT32) is used for \ref mc_usage "memory card" devices,
   \ref usb_usage "USB Memory sticks", \ref nand_usage "NAND Flash" devices, and \ref ram_usage "RAM disks". FAT is a standard
   file system used on many computers.
@@ -39,6 +40,7 @@ The following picture shows the File System's structure from a developer's persp
 - **Drivers** The File System Core accesses the drives via CMSIS-Drivers that are typically part of the Device Family Pack. Every drive uses dedicated driver.
 
 The configuration steps and files that are needed to create applications for the different devices are explained here:
+
 - \ref nor_usage
 - \ref ram_usage
 - \ref mc_usage
@@ -61,31 +63,32 @@ CMSIS-Drivers. The following table shows the relationship between drive - memory
 
 |Drive        |File System       |Drive Type                          | CMSIS-Driver/Interface|
 |:------------|:----------------:|:-----------------------------------|-----------------------|
-|"F:" or "F0:"|\ref emb_fs "EFS" |NOR Flash drive 0                   | \urlout{Flash-API} (Memory Bus or \urlout{SPI-API} |
-|"F1:"        |\ref emb_fs "EFS" |NOR Flash drive 1                   | \urlout{Flash-API} (Memory Bus or \urlout{SPI-API} |
+|"F:" or "F0:"|\ref emb_fs "EFS" |NOR Flash drive 0                   | \urlout{Flash-API} (Memory Bus or \urlout{SPI-API}) |
+|"F1:"        |\ref emb_fs "EFS" |NOR Flash drive 1                   | \urlout{Flash-API} (Memory Bus or \urlout{SPI-API}) |
 |"R:" or "R0:"|\ref fat_fs "FAT" |RAM drive                           | N/A |
 |"M:" or "M0:"|\ref fat_fs "FAT" |Memory Card drive 0                 | \urlout{MCI-API} or \urlout{SPI-API} |
 |"M1:"        |\ref fat_fs "FAT" |Memory Card drive 1                 | \urlout{MCI-API} or \urlout{SPI-API} |
 |"U:" or "U0:"|\ref fat_fs "FAT" |USB Memory Stick drive 0            | \urlout{USB-API}                     |
 |"U1:"        |\ref fat_fs "FAT" |USB Memory Stick drive 1            | \urlout{USB-API}                     |
 |"N:" or "N0:"|\ref fat_fs "FAT" |NAND Flash drive 0                  | \urlout{NAND-API} (Memory Bus)       |
-|"N1:"        |\ref fat_fs "FAT" |NAND Flash drive 1                  | \urlout{NAND-API} (Memory Bus)       | 
+|"N1:"        |\ref fat_fs "FAT" |NAND Flash drive 1                  | \urlout{NAND-API} (Memory Bus)       |
 
-\note
-- NOR Flash is typically connected over Memory Bus or SPI. For using a NOR Flash drive, a Flash driver is required which
-  encapsulates either the Memory Bus interface or SPI (in which case an SPI driver required in addition).
-- The Middleware Component contains example drivers for Flash devices that can be used to implement other device drivers if
-  required. The examples are:
-  AM29x800BB/[M29W640FB](https://www.farnell.com/datasheets/40281.pdf)
-  (Flash with 16-bit memory bus interface),
-  [S29GL064Nx2](https://www.infineon.com/dgdl/Infineon-S29GL064N_S29GL032N_64_Mbit_32_Mbit_3_V_Page_Mode_MirrorBit_Flash-DataSheet-v03_00-EN.pdf) (Flash with 32-bit
-  memory bus interface), and
-  [AT45DB642D](https://datasheet.octopart.com/AT45DB642D-CNU-Atmel-datasheet-9652374.pdf) (Flash with SPI interface using an SPI
-  driver).
-- Other drives (memory card, USB memory device, NAND Flash) require appropriate CMSIS-Driver for the microcontroller
-  device. If no suitable CMSIS-Driver is available for your selected device, you may create the required Flash interface
-  driver. Refer to the \urlout{CMSIS-Driver-Ref} for details.
-- Currently, using NAND Flash devices with SPI interface (Serial NAND) *is not supported*.
+> **Note**
+>
+> - NOR Flash is typically connected over Memory Bus or SPI. For using a NOR Flash drive, a Flash driver is required which
+>   encapsulates either the Memory Bus interface or SPI (in which case an SPI driver required in addition).
+> - The Middleware Component contains example drivers for Flash devices that can be used to implement other device drivers if
+>   required. The examples are:
+>   AM29x800BB/[M29W640FB](https://www.farnell.com/datasheets/40281.pdf)
+>   (Flash with 16-bit memory bus interface),
+>   [S29GL064Nx2](https://www.infineon.com/dgdl/Infineon-S29GL064N_S29GL032N_64_Mbit_32_Mbit_3_V_Page_Mode_MirrorBit_Flash-DataSheet-v03_00-EN.pdf) (Flash with 32-bit
+>   memory bus interface), and
+>   [AT45DB642D](https://datasheet.octopart.com/AT45DB642D-CNU-Atmel-datasheet-9652374.pdf) (Flash with SPI interface using an SPI
+>   driver).
+> - Other drives (memory card, USB memory device, NAND Flash) require appropriate CMSIS-Driver for the microcontroller
+>   device. If no suitable CMSIS-Driver is available for your selected device, you may create the required Flash interface
+>   driver. Refer to the \urlout{CMSIS-Driver-Ref} for details.
+> - Currently, using NAND Flash devices with SPI interface (Serial NAND) *is not supported*.
 
 ### Current Drive {#cur_sys_drive}
 
@@ -97,9 +100,10 @@ when there are multiple drives enabled, the one with the drive letter that is fi
 set as the "Current Drive".
 The \ref cur_sys_drive "Current Drive" can be changed during run-time using the function \ref fchdrive.
 
-\note
-- Define `FS_INITIAL_CDRIVE` can be used to define initial current drive at build time.
-- Set `FS_INITIAL_CDRIVE` to one of the following values: 0(F0), 1(F1), 2(M0), 3(M1), 4(N0), 5(N1), 6(R0), 9(R1), 7(U0), 8(U1)
+> **Note**
+>
+> - Define `FS_INITIAL_CDRIVE` can be used to define initial current drive at build time.
+> - Set `FS_INITIAL_CDRIVE` to one of the following values: 0(F0), 1(F1), 2(M0), 3(M1), 4(N0), 5(N1), 6(R0), 9(R1), 7(U0), 8(U1)
 
 ## FAT File System {#fat_fs}
 
@@ -122,6 +126,7 @@ bits: **FAT12**, **FAT16**, and **FAT32**. Each of these variants is is supporte
 ### Layout {#fat_layout}
 
 The actual FAT file system is made up of four different sections:
+
 |Section              |Description                                                                                        |
 |:--------------------|:--------------------------------------------------------------------------------------------------|
 |Boot sector          |Contains machine startup code                                                                      |
@@ -168,16 +173,16 @@ File System Component is provided with the long (LFN) and short (SFN or 8.3) fil
 Since there is no compulsory algorithm for creating the 8.3 name from an LFN, File System
 Component uses convention described below.
 
-- Uppercased or lowercased name which is 8.3 valid, is stored uppercased in a single SFN entry
+- The name in uppercase or lowercase, which is 8.3 valid, is stored in uppercase in a single SFN entry
   - Example: "TEXTFILE.TXT" is stored as "TEXTFILE.TXT" (SFN)
   - Example: "textfile.txt" is stored as "TEXTFILE.TXT" (SFN)
 
-- Mixedcase name which is 8.3 valid, is stored mixed-case in LFN entry and SFN entry is created,
+- A mixed-case name, which is 8.3 valid, is stored as mixed-case in LFN entry and SFN entry is created,
   which is concluded with tilde and a numeric value.
   - Example: "TextFile.txt" is stored as "TextFile.txt" (LFN) and "TEXTFI~1.TXT" (SFN)
 
-- Name which is not 8.3 valid is stored in LFN entry and SFN entry. Name writen in SFN entry
-  is uppercased, stripped of invalid 8.3 characters which are replaced with underscore "_" and
+- Name which is not 8.3 valid is stored in LFN entry and SFN entry. Name written in SFN entry
+  is in uppercase, stripped of invalid 8.3 characters, which are replaced with underscore "_" and
   concluded with tilde and a numeric value.
   - Example: "Tex+File.txt" is stored as "Tex+File.txt" (LFN) and "TEX_FI~1.TXT (SFN)"
 
@@ -201,13 +206,13 @@ stamps are used.
 The File System Component supports a proprietary
 [journaling](https://en.wikipedia.org/wiki/Journaling_file_system) mechanism for FAT
 which makes file I/O functions robust against system crashes or power failures. When FAT Journaling is enabled, the file
-allocation table and directory entries are protected. 
+allocation table and directory entries are protected.
 
 **FAT Journaling** keeps track of the changes in the file system using a **journal** before committing them to the
 main file system. In the event of a system failure, file system does not become corrupted. Only content of files that
 are opened in writing mode may be lost. Other files are not affected.
 
-Journaling can be enabled individually for each drive that is using the FAT File System. 
+Journaling can be enabled individually for each drive that is using the FAT File System.
 For information on how to enable Journaling refer to:
 
 - \ref mc_usage
@@ -224,26 +229,26 @@ There requirements for creating a **journal** are:
 If journaling is enabled, mounting a drive triggers the File System to search for the journal.
 
 When journal is found the journaling system is initialized and the journal content is checked for any
-incomplete data transactions that may be the result of a system crash. When incomplete data transactions 
+incomplete data transactions that may be the result of a system crash. When incomplete data transactions
 are found the file system restores the drive to the last known valid state.
 
-When no journal is found, the journal is automatically created. 
-The required space (32kB) for journal is reserved by marking the adequate amount of clusters 
+When no journal is found, the journal is automatically created.
+The required space (32kB) for journal is reserved by marking the adequate amount of clusters
 in the last 1% of the drive partition. This reduces the reported amount of free space on the drive accordingly.
 
-No special drive formatting is required. When a drive is formatted on a different computer 
+No special drive formatting is required. When a drive is formatted on a different computer
 (running Window or Linux) free space is typical available at the end of a partition.
-Creation of a journal may fail on removable media when above requirements are not meet. 
-This may happen if the drive is fragmented or there is not enough space. In this case the 
+Creation of a journal may fail on removable media when above requirements are not meet.
+This may happen if the drive is fragmented or there is not enough space. In this case the
 drive should be defragmented or some files should be deleted.
 
-When using the \ref fformat function of the File System Component, the journal is automatically created on drives with 
+When using the \ref fformat function of the File System Component, the journal is automatically created on drives with
 enabled option "Use FAT Journal".
 
 #### System failure behavior {#sys_fail_beh}
 
 When File System Component experiences a power loss or crashes before a file opened for writing is
-successfully closed the content of that file is lost. This results in lost data clusters which 
+successfully closed the content of that file is lost. This results in lost data clusters which
 can be restored using a file system repair utility tool such as chkdsk on Windows or fsck on Linux.
 
 ### FAT System Design Limitations {#fat_sys_design_limitations}
@@ -316,7 +321,7 @@ With appropriately designed hardware and support from the corresponding MCI driv
 device power supply voltage:
 
 - VDD (VCC) and VCCQ power supply is turned **on** when device is \ref fmount "mounted"
-- VDD (VCC) and VCCQ power supply is turned **off** when device is \ref funmount "unmounted", 
+- VDD (VCC) and VCCQ power supply is turned **off** when device is \ref funmount "unmounted",
 - VCC power supply is turned **on/off** when eMMC device is **switched to/from Sleep state**
 
 #### Data Bus Width
@@ -371,6 +376,11 @@ When operation executes successfully, password is cleared from device registers.
 
 When operation executes successfully, data access protection is activated. All read/write accesses are rejected.
 
+> **Note**
+> It is possible to set password and lock the card in a single step:
+>
+> - define set password and lock the card operation by setting member `.flags` to (\ref FS_DEVICE_SET_PASSWORD | \ref FS_DEVICE_LOCK_UNLOCK)
+
 **Unlock the card:**
 
 - assign password buffer to member `.password`
@@ -386,16 +396,12 @@ When operation executes successfully, data access protection is deactivated. All
 
 When operation executes successfully, all the card data content is erased along with the current password.
 
-\note
-It is possible to set password and lock the card in a single step:
-
-- define set password and lock the card operation by setting member `.flags` to (\ref FS_DEVICE_SET_PASSWORD | \ref FS_DEVICE_LOCK_UNLOCK)
-
-\note
-- SD and MMCA specification also allows to replace the password in a single step. This is not supported by the FileSystem library,
-  since it is known that various devices have issues with the interpretation of this operation. Therefore, when changing the password,
-  old one must be first cleared and then new password can be set.
-- Is is also recommended to unlock the device before resetting the password.
+> **Note**
+>
+> - SD and MMCA specification also allows to replace the password in a single step. This is not supported by the FileSystem library,
+>   since it is known that various devices have issues with the interpretation of this operation. Therefore, when changing the password,
+>   old one must be first cleared and then new password can be set.
+> - Is is also recommended to unlock the device before resetting the password.
 
 To successfully \ref fmount "mount" locked memory card and gain read/write data access, password management information
 must be provided from the user application:
@@ -475,7 +481,7 @@ by PCB design. To overcome this problem, FileSystem component implements simple 
 determine the maximum bus frequency at which it is still possible to communicate with the memory card.
 
 FileSystem component will always attempt to set the highest bus frequency supported by the memory card (usually 25MHz) but if
-after that the memory card is not accessible anymore I will lower the bus frequency. The adaptation is performed only during 
+after that the memory card is not accessible anymore I will lower the bus frequency. The adaptation is performed only during
 memory card initialization procedure.
 
 \cond This_should_be_done_later
@@ -490,7 +496,7 @@ memory card initialization procedure.
        It should be similar to old performance table (\refrlarm{fs_technical_data}, but with updated measurements.
 \endcond
 
-##  NAND Flash Translation Layer {#nand_flash_TL}
+## NAND Flash Translation Layer {#nand_flash_TL}
 
 **Features**
 
@@ -563,7 +569,7 @@ the data is written, added to the spare area of the page and then stored in flas
 redundant information is recalculated and compared to those stored in the flash.
 
 Error correction codes (ECC) used in the NAND flash memory are block codes. This means that the redundant data bits are
-calculated for a fixed size block of used data. NTFL is implementing a 
+calculated for a fixed size block of used data. NTFL is implementing a
 [Hamming](https://en.wikipedia.org/wiki/Hamming_code) ECC algorithm which is able
 to correct 1-bit and detect 2-bit errors for a fixed size of one sector or 512 bytes for SLC NAND Flashes. The redundant
 information is calculated in a way that a balance of correction power and efficiency is achieved.
