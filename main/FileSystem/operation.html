@@ -129,7 +129,8 @@ $(document).ready(function(){initNavTree('operation.html',''); initResizable(); 
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_src_operation"></a> The File System Component provides functions to create, save, read, and modify files. The Retarget Interface of the C/C++ compiler run-time library allows the usage of ANSI C standard file I/O functions. The File System Component is designed for Cortex-M processor-based devices and requires an CMSIS-RTOS compliant real-time operating system for thread-safe operation.</p>
-<p>The File System Component consists of two different file systems, placed on top of different layers, depending on the media type:</p><ul>
+<p>The File System Component consists of two different file systems, placed on top of different layers, depending on the media type:</p>
+<ul>
 <li><a class="el" href="operation.html#fat_fs">FAT File System</a> (using FAT12, FAT16, or FAT32) is used for <a class="el" href="create_app.html#mc_usage">memory card</a> devices, <a class="el" href="create_app.html#usb_usage">USB Memory sticks</a>, <a class="el" href="create_app.html#nand_usage">NAND Flash</a> devices, and <a class="el" href="create_app.html#ram_usage">RAM disks</a>. FAT is a standard file system used on many computers.</li>
 <li><a class="el" href="operation.html#emb_fs">Embedded File System (EFS)</a> is optimized for <a class="el" href="create_app.html#nor_usage">NOR Flash</a> memory devices.</li>
 <li><a class="el" href="operation.html#journaling_fat">Journaling for the FAT File System</a> is an extension to the <a class="el" href="operation.html#fat_fs">FAT File System</a> that helps to keep the file system consistent in an embedded system.</li>
@@ -155,7 +156,8 @@ File System Component Structure</div></div>
 <li><b>FAT, EFS Media</b>: the FAT file system supports Memory Cards (MC), NAND Flash, and USB memory sticks, and RAM disks. The Embedded File System (EFS) supports NOR Flash devices.</li>
 <li><b>Drivers</b> The File System Core accesses the drives via CMSIS-Drivers that are typically part of the Device Family Pack. Every drive uses dedicated driver.</li>
 </ul>
-<p>The configuration steps and files that are needed to create applications for the different devices are explained here:</p><ul>
+<p>The configuration steps and files that are needed to create applications for the different devices are explained here:</p>
+<ul>
 <li><a class="el" href="create_app.html#nor_usage">NOR Flash Drive</a></li>
 <li><a class="el" href="create_app.html#ram_usage">RAM Disk Drive</a></li>
 <li><a class="el" href="create_app.html#mc_usage">Memory Card Drive</a></li>
@@ -175,9 +177,9 @@ File System Component: Media types and Drives</div></div>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Drive   </th><th class="markdownTableHeadCenter">File System   </th><th class="markdownTableHeadLeft">Drive Type   </th><th class="markdownTableHeadNone">CMSIS-Driver/Interface    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">"F:" or "F0:"   </td><td class="markdownTableBodyCenter"><a class="el" href="operation.html#emb_fs">EFS</a>   </td><td class="markdownTableBodyLeft">NOR Flash drive 0   </td><td class="markdownTableBodyNone"> <script>link_ext('Flash-API');</script> (Memory Bus or  <script>link_ext('SPI-API');</script>    </td></tr>
+<td class="markdownTableBodyLeft">"F:" or "F0:"   </td><td class="markdownTableBodyCenter"><a class="el" href="operation.html#emb_fs">EFS</a>   </td><td class="markdownTableBodyLeft">NOR Flash drive 0   </td><td class="markdownTableBodyNone"> <script>link_ext('Flash-API');</script> (Memory Bus or  <script>link_ext('SPI-API');</script>)    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft">"F1:"   </td><td class="markdownTableBodyCenter"><a class="el" href="operation.html#emb_fs">EFS</a>   </td><td class="markdownTableBodyLeft">NOR Flash drive 1   </td><td class="markdownTableBodyNone"> <script>link_ext('Flash-API');</script> (Memory Bus or  <script>link_ext('SPI-API');</script>    </td></tr>
+<td class="markdownTableBodyLeft">"F1:"   </td><td class="markdownTableBodyCenter"><a class="el" href="operation.html#emb_fs">EFS</a>   </td><td class="markdownTableBodyLeft">NOR Flash drive 1   </td><td class="markdownTableBodyNone"> <script>link_ext('Flash-API');</script> (Memory Bus or  <script>link_ext('SPI-API');</script>)    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyLeft">"R:" or "R0:"   </td><td class="markdownTableBodyCenter"><a class="el" href="operation.html#fat_fs">FAT</a>   </td><td class="markdownTableBodyLeft">RAM drive   </td><td class="markdownTableBodyNone">N/A    </td></tr>
 <tr class="markdownTableRowEven">
@@ -193,22 +195,26 @@ File System Component: Media types and Drives</div></div>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyLeft">"N1:"   </td><td class="markdownTableBodyCenter"><a class="el" href="operation.html#fat_fs">FAT</a>   </td><td class="markdownTableBodyLeft">NAND Flash drive 1   </td><td class="markdownTableBodyNone"> <script>link_ext('NAND-API');</script> (Memory Bus)   </td></tr>
 </table>
-<dl class="section note"><dt>Note</dt><dd><ul>
+<blockquote class="doxtable">
+<p>&zwj;<b>Note</b></p>
+<ul>
 <li>NOR Flash is typically connected over Memory Bus or SPI. For using a NOR Flash drive, a Flash driver is required which encapsulates either the Memory Bus interface or SPI (in which case an SPI driver required in addition).</li>
 <li>The Middleware Component contains example drivers for Flash devices that can be used to implement other device drivers if required. The examples are: AM29x800BB/<a href="https://www.farnell.com/datasheets/40281.pdf">M29W640FB</a> (Flash with 16-bit memory bus interface), <a href="https://www.infineon.com/dgdl/Infineon-S29GL064N_S29GL032N_64_Mbit_32_Mbit_3_V_Page_Mode_MirrorBit_Flash-DataSheet-v03_00-EN.pdf">S29GL064Nx2</a> (Flash with 32-bit memory bus interface), and <a href="https://datasheet.octopart.com/AT45DB642D-CNU-Atmel-datasheet-9652374.pdf">AT45DB642D</a> (Flash with SPI interface using an SPI driver).</li>
 <li>Other drives (memory card, USB memory device, NAND Flash) require appropriate CMSIS-Driver for the microcontroller device. If no suitable CMSIS-Driver is available for your selected device, you may create the required Flash interface driver. Refer to the  <script>link_ext('CMSIS-Driver-Ref');</script> for details.</li>
-<li>Currently, using NAND Flash devices with SPI interface (Serial NAND) <em>is not supported</em>.</li>
+<li>Currently, using NAND Flash devices with SPI interface (Serial NAND) <em>is not supported</em>. </li>
 </ul>
-</dd></dl>
+</blockquote>
 <h2><a class="anchor" id="cur_sys_drive"></a>
 Current Drive</h2>
 <p>The <b>Current Drive</b> defines the drive used when the filename itself does not specify the drive or when functions that expect a drive are called with an empty ("") string.</p>
 <p>If there is only one drive enabled in the system then it automatically becomes the "Current Drive". Alternatively, when there are multiple drives enabled, the one with the drive letter that is first in alphabetical order is set as the "Current Drive". The <a class="el" href="operation.html#cur_sys_drive">Current Drive</a> can be changed during run-time using the function <a class="el" href="group__utility__routines.html#ga75a680af8cbd2e2fae87d99d9ab50e11">fchdrive</a>.</p>
-<dl class="section note"><dt>Note</dt><dd><ul>
+<blockquote class="doxtable">
+<p>&zwj;<b>Note</b></p>
+<ul>
 <li>Define <code>FS_INITIAL_CDRIVE</code> can be used to define initial current drive at build time.</li>
-<li>Set <code>FS_INITIAL_CDRIVE</code> to one of the following values: 0(F0), 1(F1), 2(M0), 3(M1), 4(N0), 5(N1), 6(R0), 9(R1), 7(U0), 8(U1)</li>
+<li>Set <code>FS_INITIAL_CDRIVE</code> to one of the following values: 0(F0), 1(F1), 2(M0), 3(M1), 4(N0), 5(N1), 6(R0), 9(R1), 7(U0), 8(U1) </li>
 </ul>
-</dd></dl>
+</blockquote>
 <h1><a class="anchor" id="fat_fs"></a>
 FAT File System</h1>
 <p>The FAT File System was initially used on PC operating systems such as MS-DOS and early versions of Microsoft Windows. Still, it is widely used on <b>USB memory sticks</b> or <b>memory cards</b> for file storage. It is simple, robust and offers good performance especially in embedded applications.</p>
@@ -216,7 +222,8 @@ FAT File System</h1>
 <p>Since the first implementation, the maximum number of clusters of a drive has increased dramatically, and so the number of bits used to identify each cluster has grown. The versions of the FAT format are named after the number of table element bits: <b>FAT12</b>, <b>FAT16</b>, and <b>FAT32</b>. Each of these variants is is supported by the File System Component.</p>
 <h2><a class="anchor" id="fat_layout"></a>
 Layout</h2>
-<p>The actual FAT file system is made up of four different sections: </p><table class="markdownTable">
+<p>The actual FAT file system is made up of four different sections:</p>
+<table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Section   </th><th class="markdownTableHeadLeft">Description    </th></tr>
 <tr class="markdownTableRowOdd">
@@ -272,16 +279,16 @@ Absolute and relative path</h3>
 Long and Short File Name handling</h2>
 <p>File System Component is provided with the long (LFN) and short (SFN or 8.3) filename support. Since there is no compulsory algorithm for creating the 8.3 name from an LFN, File System Component uses convention described below.</p>
 <ul>
-<li>Uppercased or lowercased name which is 8.3 valid, is stored uppercased in a single SFN entry<ul>
+<li>The name in uppercase or lowercase, which is 8.3 valid, is stored in uppercase in a single SFN entry<ul>
 <li>Example: "TEXTFILE.TXT" is stored as "TEXTFILE.TXT" (SFN)</li>
 <li>Example: "textfile.txt" is stored as "TEXTFILE.TXT" (SFN)</li>
 </ul>
 </li>
-<li>Mixedcase name which is 8.3 valid, is stored mixed-case in LFN entry and SFN entry is created, which is concluded with tilde and a numeric value.<ul>
+<li>A mixed-case name, which is 8.3 valid, is stored as mixed-case in LFN entry and SFN entry is created, which is concluded with tilde and a numeric value.<ul>
 <li>Example: "TextFile.txt" is stored as "TextFile.txt" (LFN) and "TEXTFI~1.TXT" (SFN)</li>
 </ul>
 </li>
-<li>Name which is not 8.3 valid is stored in LFN entry and SFN entry. Name writen in SFN entry is uppercased, stripped of invalid 8.3 characters which are replaced with underscore "_" and concluded with tilde and a numeric value.<ul>
+<li>Name which is not 8.3 valid is stored in LFN entry and SFN entry. Name written in SFN entry is in uppercase, stripped of invalid 8.3 characters, which are replaced with underscore "_" and concluded with tilde and a numeric value.<ul>
 <li>Example: "Tex+File.txt" is stored as "Tex+File.txt" (LFN) and "TEX_FI~1.TXT (SFN)"</li>
 </ul>
 </li>
@@ -444,6 +451,12 @@ Password protection</h3>
 <li>define lock operation by setting member <code>.flags</code> to <a class="el" href="rl__fs_8h.html#a615e2a30a6833ad0ad79e7186cbbad1b">FS_DEVICE_LOCK_UNLOCK</a></li>
 </ul>
 <p>When operation executes successfully, data access protection is activated. All read/write accesses are rejected.</p>
+<blockquote class="doxtable">
+<p>&zwj;<b>Note</b> It is possible to set password and lock the card in a single step:</p>
+<ul>
+<li>define set password and lock the card operation by setting member <code>.flags</code> to (<a class="el" href="rl__fs_8h.html#a4dcee13db9af51353d3509331d6ded8f">FS_DEVICE_SET_PASSWORD</a> | <a class="el" href="rl__fs_8h.html#a615e2a30a6833ad0ad79e7186cbbad1b">FS_DEVICE_LOCK_UNLOCK</a>) </li>
+</ul>
+</blockquote>
 <p><b>Unlock the card:</b></p>
 <ul>
 <li>assign password buffer to member <code>.password</code></li>
@@ -457,15 +470,13 @@ Password protection</h3>
 <li>define force erase operation by setting member <code>.flags</code> to <a class="el" href="rl__fs_8h.html#a94e215f84b9683736f1c6d7a574d8875">FS_DEVICE_ERASE</a></li>
 </ul>
 <p>When operation executes successfully, all the card data content is erased along with the current password.</p>
-<dl class="section note"><dt>Note</dt><dd>It is possible to set password and lock the card in a single step:</dd></dl>
+<blockquote class="doxtable">
+<p>&zwj;<b>Note</b></p>
 <ul>
-<li>define set password and lock the card operation by setting member <code>.flags</code> to (<a class="el" href="rl__fs_8h.html#a4dcee13db9af51353d3509331d6ded8f">FS_DEVICE_SET_PASSWORD</a> | <a class="el" href="rl__fs_8h.html#a615e2a30a6833ad0ad79e7186cbbad1b">FS_DEVICE_LOCK_UNLOCK</a>)</li>
-</ul>
-<dl class="section note"><dt>Note</dt><dd><ul>
 <li>SD and MMCA specification also allows to replace the password in a single step. This is not supported by the FileSystem library, since it is known that various devices have issues with the interpretation of this operation. Therefore, when changing the password, old one must be first cleared and then new password can be set.</li>
-<li>Is is also recommended to unlock the device before resetting the password.</li>
+<li>Is is also recommended to unlock the device before resetting the password. </li>
 </ul>
-</dd></dl>
+</blockquote>
 <p>To successfully <a class="el" href="group__system__routines.html#gade92b7c5b374fb1485f2f9faa7259f27">mount</a> locked memory card and gain read/write data access, password management information must be provided from the user application:</p>
 <ul>
 <li><a class="el" href="group__media__support__routines.html#gace19ffe245efca9f6ee93e744041b2f1">fs_mc_lock_unlock</a> function is used to return pointer to <a class="el" href="rl__fs_8h.html#structfsLockUnlock">fsLockUnlock</a> structure containing password information</li>

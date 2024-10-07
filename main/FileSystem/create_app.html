@@ -166,11 +166,13 @@ Using Drives</h1>
 <p>The section <a class="el" href="operation.html#drive">Drives, Memory Devices and Drivers</a> shows the relationship between drive - memory device - and driver/interface.</p>
 <h2><a class="anchor" id="nor_usage"></a>
 NOR Flash Drive</h2>
-<p>For using a NOR Flash drive, a  <script>link_ext('Flash-API');</script> driver is required, which encapsulates either the Memory Bus interface or SPI (in which case an  <script>link_ext('SPI-API');</script> driver is required in addition):</p><ul>
+<p>For using a NOR Flash drive, a  <script>link_ext('Flash-API');</script> driver is required, which encapsulates either the Memory Bus interface or SPI (in which case an  <script>link_ext('SPI-API');</script> driver is required in addition):</p>
+<ul>
 <li>Set <b>File System:Drive:NOR</b> to at least '1' to use a NOR Flash drive (independently if it is using a memory bus or SPI interface).</li>
 <li>From the <b>CMSIS-Driver</b> Component, select an appropriate <b>Flash (API)</b> device. If your NOR Flash uses an SPI interface, select <b>SPI (API)</b> additionally.</li>
 </ul>
-<p>If your NOR Flash device is not listed, use one of the examples as a reference to implement a driver for your specific device:</p><ul>
+<p>If your NOR Flash device is not listed, use one of the examples as a reference to implement a driver for your specific device:</p>
+<ul>
 <li>AM29x800BB/<a href="https://www.farnell.com/datasheets/40281.pdf">M29W640FB</a> (Flash with 16-bit memory bus interface)</li>
 <li><a href="https://www.infineon.com/dgdl/Infineon-S29GL064N_S29GL032N_64_Mbit_32_Mbit_3_V_Page_Mode_MirrorBit_Flash-DataSheet-v03_00-EN.pdf?fileId=8ac78c8c7d0d8da4017d0ed556fd548b">S29GL064Nx2</a> (Flash with 32-bit memory bus interface)</li>
 <li><a href="https://datasheet.octopart.com/AT45DB642D-CNU-Atmel-datasheet-9652374.pdf">AT45DB642D</a> (Flash with SPI interface using an SPI driver)</li>
@@ -206,12 +208,14 @@ Memory Card Drive</h2>
 <img src="fs_config_mc_0_h.png" alt=""/>
 <div class="caption">
 Memory Card Drive Configuration File</div></div>
-    <dl class="section note"><dt>Note</dt><dd><ul>
+    <blockquote class="doxtable">
+<p>&zwj;<b>Note</b></p>
+<ul>
 <li>If your microcontroller device does not have a <b>CMSIS-Driver</b> for the <b>MCI (API)</b> or <b>SPI (API)</b>, you can try to develop your own one based on the  <script>link_ext('CMSIS-Driver-Ref');</script> documentation.</li>
 <li>The page <a class="el" href="operation.html#mc_control_layer">Memory Card Control Layer</a> lists all supported memory card types and gives further details on how to use these cards.</li>
-<li>General <a class="el" href="create_app.html#system_configuration">System Resource Configuration</a> requirements apply.</li>
+<li>General <a class="el" href="create_app.html#system_configuration">System Resource Configuration</a> requirements apply. </li>
 </ul>
-</dd></dl>
+</blockquote>
 <h2><a class="anchor" id="usb_usage"></a>
 USB Flash Drive</h2>
 <ul>
@@ -224,11 +228,13 @@ USB Flash Drive</h2>
 <img src="fs_config_usb_0_h.png" alt=""/>
 <div class="caption">
 USB Host Mass Storage Class Drive Configuration File</div></div>
-    <dl class="section note"><dt>Note</dt><dd><ul>
+    <blockquote class="doxtable">
+<p>&zwj;<b>Note</b></p>
+<ul>
 <li>If your microcontroller device does not have a <b>CMSIS-Driver</b> for the <b>USB Host (API)</b>, you can try to develop your own one based on the  <script>link_ext('CMSIS-Driver-Ref');</script> documentation.</li>
-<li>General <a class="el" href="create_app.html#system_configuration">System Resource Configuration</a> requirements apply.</li>
+<li>General <a class="el" href="create_app.html#system_configuration">System Resource Configuration</a> requirements apply. </li>
 </ul>
-</dd></dl>
+</blockquote>
 <h2><a class="anchor" id="nand_usage"></a>
 NAND Flash Drive</h2>
 <ul>
@@ -240,14 +246,16 @@ NAND Flash Drive</h2>
 <img src="fs_config_nand_0_h.png" alt=""/>
 <div class="caption">
 NAND Flash Drive Configuration File</div></div>
-    <dl class="section note"><dt>Note</dt><dd><ul>
+    <blockquote class="doxtable">
+<p>&zwj;<b>Note</b></p>
+<ul>
 <li>If your microcontroller device does not have a <b>CMSIS-Driver</b> for the <b>NAND (API)</b>, you can try to develop your own one based on the  <script>link_ext('CMSIS-Driver-Ref');</script> documentation.</li>
 <li>The page <a class="el" href="operation.html#nand_flash_TL">NAND Flash Translation Layer</a> describes additional features specific to these devices.</li>
 <li>Using a <b>NAND (API)</b> driver, you can use any NAND Flash device with an 8-/16-bit memory bus interface for data storage.</li>
 <li>NAND Flashes with SPI interface (Serial NAND) are currently <em>not supported</em> by the File System Component.</li>
-<li>General <a class="el" href="create_app.html#system_configuration">System Resource Configuration</a> requirements apply.</li>
+<li>General <a class="el" href="create_app.html#system_configuration">System Resource Configuration</a> requirements apply. </li>
 </ul>
-</dd></dl>
+</blockquote>
 <h1><a class="anchor" id="fs_configuration"></a>
 File System Configuration</h1>
 <p>The File System configuration file <code>FS_Config.h</code> contains settings for the amount of files that can be open at the same time:</p>
@@ -266,7 +274,8 @@ Hardware Configuration Example using RTE_Device.h</div></div>
     <dl class="section note"><dt>Note</dt><dd>Consult the device's user manual or hardware reference guide for more details.</dd></dl>
 <h1><a class="anchor" id="system_configuration"></a>
 System Resource Configuration</h1>
-<p>For proper operation, the File System Component requires some system configuration settings. The requirements are:</p><ul>
+<p>For proper operation, the File System Component requires some system configuration settings. The requirements are:</p>
+<ul>
 <li>Minimum <b>heap size of 512 + 96 Bytes for each opened file</b>. If you want to be able to have three files open at the same time, you need to set a heap size of at least 3 * (512+96) Bytes = 1824 Bytes. This can be configured in the device's <code>startup_device.s</code> file (<code>Heap_Size</code>).</li>
 <li>As the File System Component is not creating any additional threads, you need to add thread stack size to the calling thread. This calling thread can be the main thread, a thread with a default stack size or a thread with a user provided stack size. Changing the size for these threads can be done in the  <script>link_ext('RTX-Conf-CM5');</script> file.</li>
 <li>Each opened file is protected with a mutex in order to ensure thread-safe operation. When working with file functions from the standard C library, you need to ensure enough mutex objects available for the file stream operations in the standard library system. File System component's <a class="el" href="resource_requirements.html">Resource Requirements</a> section explains how to determine the right setting in detail. Adjusting the number of mutex objects available for standard library system can be done in the  <script>link_ext('RTX-Conf-CM5');</script> file.</li>
@@ -284,7 +293,8 @@ Debugging</h1>
 Event Recorder Support</h2>
 <p> <script>link_ext('Event-Recorder-About');</script> is a powerful tool that provides visibility to the dynamic execution of the program.</p>
 <p>The File System Component generates <a class="el" href="group__evr__gr.html">a broad set of Debug Events</a> for the Event Recorder and implements required infrastructure to interface with it.</p>
-<p>To use the Event Recorder it is required to create an image with event generation support. The necessary steps are:</p><ol type="1">
+<p>To use the Event Recorder it is required to create an image with event generation support. The necessary steps are:</p>
+<ol type="1">
 <li> <script>link_ext('Event-Recorder-Enable');</script>: in the RTE management dialog enable the software component <b>CMSIS-View:Event Recorder</b>.</li>
 <li>Ensure that Event Recorder is initialized preferably by  <script>link_ext('RTX5-Event-Recorder-Config');</script> if CMSIS-RTOS2 RTX v5 is used, or alternatively by calling the function  <script>link_ext('Event-Recorder-Initialize-Func');</script> in the application code.</li>
 <li><a class="el" href="create_app.html#fsEvrConfig">Event Recorder Configuration</a>: if necessary, adjust default Event Recorder configuration.</li>
@@ -301,7 +311,8 @@ Event Recorder Configuration</h3>
 <img src="fs_debug_h.png" alt=""/>
 <div class="caption">
 FS_Debug.h file for event generation configuration</div></div>
-    <p>The following settings are available for event generation configuration of each module:</p><ul>
+    <p>The following settings are available for event generation configuration of each module:</p>
+<ul>
 <li><b>Off</b> means no events will be generated by the module</li>
 <li><b>Errors</b> means only error events will be generated by the module</li>
 <li><b>Errors + API</b> means error and API call events will be generated by the module</li>
