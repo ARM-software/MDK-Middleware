@@ -129,7 +129,8 @@ $(document).ready(function(){initNavTree('HTTP_Upload_Example.html',''); initRes
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_src_example_http_upload"></a> The HTTP Upload example implements a web based interface to an SD card attached to a development board.</p>
-<p>The user is able to list the contents of the memory card and to upload files to it. The following picture shows an exemplary connection of the development board and a Computer.</p>
+<p>The user is able to list the contents of the memory card and to upload files to it.</p>
+<p>The following picture shows an exemplary connection of the development board and a Computer.</p>
 <div class="image">
 <img src="http_upload_setup.png" alt=""/>
 <div class="caption">
@@ -172,7 +173,7 @@ Project Organization</h1>
 <p>In order to build the project it shall be extended with a compatible board layer that provides following interfaces as <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections">connections</a>:</p><ul>
 <li><code>CMSIS_ETH</code>: CMSIS-Driver for Ethernet interface</li>
 <li><code>CMSIS_MCI</code>: CMSIS-Driver for Memory Card Interface</li>
-<li><code>CMSIS_VIO</code>: CMSIS-Driver for virtual I/O interface</li>
+<li><code>CMSIS_VIO</code>: CMSIS-Driver for Virtual I/O interface</li>
 <li><code>STDOUT</code>: Standard Output redirection</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md17"></a>
@@ -187,7 +188,7 @@ Build the Project</h1>
 <h1><a class="anchor" id="autotoc_md18"></a>
 Run the Example</h1>
 <p><b>Setup</b></p>
-<p>Board-specific setup such as jumpers, Ethernet ports, power supply, etc. is documented in the board layer description (<code>README.md</code>) of your selected target.</p>
+<p>Board-specific hardware setup such as jumpers, Ethernet ports, power supply, etc. is documented in the board layer description (<code>README.md</code>) of your selected target.</p>
 <ol type="1">
 <li>Load the executable image to the target development board.</li>
 <li>Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already in this LAN.</li>

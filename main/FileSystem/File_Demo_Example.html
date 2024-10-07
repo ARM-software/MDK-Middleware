@@ -130,14 +130,15 @@ $(document).ready(function(){initNavTree('File_Demo_Example.html',''); initResiz
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_src_example_file_demo"></a> This example shows how to manipulate files on a memory drive using the File System Component.</p>
 <p>You can mount and format the drive and then perform operations like write, read, rename and delete to manage files and directories on any enabled drive. Example uses serial terminal connection to interact with the user.</p>
-<p>Typically one connects the development board to a computer via debug connection that also provides virtual COM port, downloads example application to a board and starts terminal application on computer. The following picture shows an exemplary connection of the development board and a computer:</p>
+<p>Typically one connects the development board to a computer via debug connection that also provides virtual COM port, downloads example application to a board and starts terminal application on computer.</p>
+<p>The following picture shows an exemplary connection of the development board and a computer:</p>
 <div class="image">
 <img src="fs_setup.png" alt=""/>
 <div class="caption">
 Hardware setup of the File Demo example</div></div>
     <h1><a class="anchor" id="autotoc_md1"></a>
 Project Organization</h1>
-<p>The File Demo project is available as part of <a class="el" href="examples.html">File System Reference examples</a>.</p>
+<p>The File Demo project is available as part of the <a class="el" href="examples.html">File System Reference examples</a>.</p>
 <h2>Application Source Files</h2>
 <p>Following files implement application-specific logic in the example:</p>
 <ul>
@@ -162,7 +163,7 @@ Project Organization</h1>
 <h2>Board Layer</h2>
 <p>In order to build the project it shall be extended with a compatible board layer that provides following interfaces as <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections">connections</a>:</p><ul>
 <li><code>CMSIS_MCI</code>: CMSIS-Driver for Memory Card Interface</li>
-<li><code>CMSIS_VIO</code>: CMSIS-Driver for virtual I/O interface</li>
+<li><code>CMSIS_VIO</code>: CMSIS-Driver for Virtual I/O interface</li>
 <li><code>STDIN</code>: Standard Input redirection</li>
 <li><code>STDOUT</code>: Standard Output redirection</li>
 </ul>
@@ -178,7 +179,7 @@ Build the Project</h1>
 <h1><a class="anchor" id="autotoc_md3"></a>
 Run the Example</h1>
 <p><b>Setup</b></p>
-<p>Board-specific setup such as jumpers, SD card ports, power supply, etc. is documented in the board layer description (<code>README.md</code>) of your selected target.</p>
+<p>Board-specific hardware setup such as jumpers, SD card ports, power supply, etc. is documented in the board layer description (<code>README.md</code>) of your selected target.</p>
 <ol type="1">
 <li>Load the executable image to the target development board.</li>
 <li>Insert an SD Card to the corresponding slot on the development board.</li>

@@ -129,19 +129,20 @@ $(document).ready(function(){initNavTree('usbd_example_msc.html',''); initResiza
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_src_usbd_example_msc"></a> This example implements a mass storage USB Device using <a class="el" href="USB_Classes.html#MSC">MSC: Mass Storage Class</a>.</p>
-<p>The implementation uses on-chip RAM as a storage device. The USB Host can access this memory drive using standard file access methods. The following picture shows an exemplary connection of the development board and the USB Host Computer.</p>
+<p>The implementation uses on-chip RAM as a storage media. The USB Host can access this memory drive using standard file access methods.</p>
+<p>The following picture shows an exemplary connection of the development board and the USB Host Computer.</p>
 <div class="image">
 <img src="msc_dev_example_setup.png" alt=""/>
 <div class="caption">
-USB device mass storage example hardware setup</div></div>
+USB Device Mass Storage example hardware setup</div></div>
     <h1><a class="anchor" id="autotoc_md7"></a>
 Project Organization</h1>
-<p>The USB Device Mass Storage project is available as part of <a class="el" href="usbd_examples.html">USB Device Reference examples</a>.</p>
+<p>The USB Device Mass Storage project is available as part of the <a class="el" href="usbd_examples.html">USB Device Reference examples</a>.</p>
 <h2>Application Source Files</h2>
 <p>Following files implement application-specific logic in the example:</p>
 <ul>
 <li><code>MassStorage.c</code>: contains the application main thread which initializes the USB Device Component.</li>
-<li><code>MemoryDiskImage.c</code>: a FAT12 disk image with small README.TXT file that gets copied to the RAM disk.</li>
+<li><code>MemoryDiskImage.c</code>: a FAT12 disk image with small README.TXT file that gets copied to the RAM and is used as storage media.</li>
 <li><code>USBD_User_MSC_0.c</code>: adapted code template that implements necessary file access functions. Refer to <a class="el" href="group__usbd__mscFunctions.html">MSC: Mass Storage Class</a> for details about these template functions.</li>
 </ul>
 <h2>Software Components Configuration Files</h2>
@@ -149,7 +150,7 @@ Project Organization</h1>
 <p>Following configuration files are provided with this example:</p>
 <ul>
 <li>For the USB component, in the <code>./RTE/USB/</code> folder:<ul>
-<li><code>USBD_Config_MSC_0.h</code>: <a class="el" href="group__usbd__mscFunctions__conf.html">USB Device MSC configuration</a></li>
+<li><code>USBD_Config_MSC_0.h</code>: <a class="el" href="group__usbd__mscFunctions__conf.html">USB Device MSC configuration</a>.</li>
 <li><code>USBD_Config_0.h</code>: <a class="el" href="group__usbd__coreFunctions__conf.html">USB Device Core configuration</a>.</li>
 <li><code>USB_Debug.h</code>: <a class="el" href="usbd_create_app.html#usbd_debugging">USB Device Debug configuration</a>.</li>
 </ul>
@@ -162,8 +163,8 @@ Project Organization</h1>
 <p>When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local <code>./Board/</code> directory.</p>
 <h2>Board Layer</h2>
 <p>In order to build the project it shall be extended with a compatible board layer that provides following interfaces as <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections">connections</a>:</p><ul>
-<li><code>CMSIS_USB_Device</code>: CMSIS-Driver for USB Device interface</li>
-<li><code>CMSIS_VIO</code>: CMSIS-Driver for virtual I/O interface</li>
+<li><code>CMSIS_USB_Device</code>: CMSIS-Driver for USB Device interface.</li>
+<li><code>CMSIS_VIO</code>: CMSIS-Driver for Virtual I/O interface.</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md8"></a>
 Build the Project</h1>
@@ -177,17 +178,17 @@ Build the Project</h1>
 <h1><a class="anchor" id="autotoc_md9"></a>
 Run the Example</h1>
 <p><b>Setup</b></p>
-<p>Board-specific setup such as jumpers, USB ports, power supply, etc. is documented in the board layer description (<code>README.md</code>) of your selected target.</p>
+<p>Board-specific hardware setup such as jumpers, USB ports, power supply, etc. is documented in the board layer description (<code>README.md</code>) of your selected target.</p>
 <ol type="1">
 <li>Load the executable image to the target development board.</li>
 <li>Connect a USB Device port on the development board with the USB port on a PC.</li>
-<li>Wait for the automatic driver installation on the PC to complete.</li>
+<li>Wait for USB disk <b>USB_Memory</b> to appear.</li>
 </ol>
 <p><b>Example execution</b></p>
-<p>After a successful driver installation on your host PC you can observe <b>USB_Memory</b> drive to become accessible from the PC operating system. For example on a Windows PC you should see it appear in the Windows Explorer.</p>
-<p>On this drive you can find a single file <code>README.txt</code> with the following content:</p>
+<p>After a successful disk mount on the host PC you can observe <b>USB_Memory</b> drive to become accessible from the PC operating system. For example on a Windows PC you should see it appear in the File Explorer.</p>
+<p>On this drive you can find a single file <code>README.TXT</code> with the following content:</p>
 <div class="fragment"><div class="line">This is a USB Memory Device Demonstration.</div>
-<div class="line">https:<span class="comment">//arm-software.github.io/MDK-Middleware/latest/USB/usbd_example_msc.html</span></div>
+<div class="line">https://arm-software.github.io/MDK-Middleware/latest/USB/usbd_example_msc.html</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

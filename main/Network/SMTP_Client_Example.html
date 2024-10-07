@@ -128,7 +128,8 @@ $(document).ready(function(){initNavTree('SMTP_Client_Example.html',''); initRes
   <div class="headertitle"><div class="title">SMTP Client </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_src_example_smtp_client"></a> SMTP is used to send e-mail notifications from an embedded system to various recipients. This example shows how to setup an SMTP client for this purpose. The following picture shows an exemplary connection of the development board and a Computer.</p>
+<div class="textblock"><p><a class="anchor" id="md_src_example_smtp_client"></a> SMTP is used to send e-mail notifications from an embedded system to various recipients. This example shows how to setup an SMTP client for this purpose.</p>
+<p>The following picture shows an exemplary connection of the development board and a Computer.</p>
 <div class="image">
 <img src="smtp_setup.png" alt=""/>
 <div class="caption">
@@ -139,7 +140,7 @@ Project Organization</h1>
 <h2>Application Source Files</h2>
 <p>Following files implement application-specific logic in the example:</p>
 <ul>
-<li><code>SMTPS_Client.c</code> contains the application main thread which initializes the Network Component and provides the information required to compose and send an email. The following changes are required:<ul>
+<li><code>SMTP_Client.c</code> contains the application main thread which initializes the Network Component and provides the information required to compose and send an email. The following changes are required:<ul>
 <li>Content of the email information in the structure <a href="group__smtp__structs.html#structNET__SMTP__MAIL"><em>mail</em></a>:<ul>
 <li>Email addresses: <em>From</em>, <em>To</em>, <em>Cc</em>, <em>Bcc</em></li>
 <li>Subject and the message (body) of the email</li>
@@ -178,7 +179,7 @@ Project Organization</h1>
 <h2>Board Layer</h2>
 <p>In order to build the project it shall be extended with a compatible board layer that provides following interfaces as <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections">connections</a>:</p><ul>
 <li><code>CMSIS_ETH</code>: CMSIS-Driver for Ethernet interface</li>
-<li><code>CMSIS_VIO</code>: CMSIS-Driver for virtual I/O interface</li>
+<li><code>CMSIS_VIO</code>: CMSIS-Driver for Virtual I/O interface</li>
 <li><code>STDOUT</code>: Standard Output redirection</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md26"></a>
@@ -193,7 +194,7 @@ Build the Project</h1>
 <h1><a class="anchor" id="autotoc_md27"></a>
 Run the Example</h1>
 <p><b>Setup</b></p>
-<p>Board-specific setup such as jumpers, Ethernet ports, power supply, etc. is documented in the board layer description (<code>README.md</code>) of your selected target.</p>
+<p>Board-specific hardware setup such as jumpers, Ethernet ports, power supply, etc. is documented in the board layer description (<code>README.md</code>) of your selected target.</p>
 <ol type="1">
 <li>Load the executable image to the target development board.</li>
 <li>Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already in this LAN.</li>

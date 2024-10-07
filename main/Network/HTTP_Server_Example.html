@@ -129,7 +129,8 @@ $(document).ready(function(){initNavTree('HTTP_Server_Example.html',''); initRes
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_src_example_http_server"></a> This example implements an HTTP Server on a device that can be accessed from a computer via network interface.</p>
-<p>The example uses a fixed set of web pages stored in ROM, but is capable of exchanging information with the underlying hardware by using the CGI interface. The following picture shows an exemplary connection of the development board and a Computer.</p>
+<p>The example uses a fixed set of web pages stored in ROM, but is capable of exchanging information with the underlying hardware by using the CGI interface.</p>
+<p>The following picture shows an exemplary connection of the development board and a Computer.</p>
 <div class="image">
 <img src="cws_setup.png" alt=""/>
 <div class="caption">
@@ -173,7 +174,7 @@ Project Organization</h1>
 <h2>Board Layer</h2>
 <p>In order to build the project it shall be extended with a compatible board layer that provides following interfaces as <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections">connections</a>:</p><ul>
 <li><code>CMSIS_ETH</code>: CMSIS-Driver for Ethernet interface</li>
-<li><code>CMSIS_VIO</code>: CMSIS-Driver for virtual I/O interface</li>
+<li><code>CMSIS_VIO</code>: CMSIS-Driver for Virtual I/O interface</li>
 <li><code>STDOUT</code>: standard output stream redirection</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md11"></a>
@@ -188,7 +189,7 @@ Build the Project</h1>
 <h1><a class="anchor" id="autotoc_md12"></a>
 Run the Example</h1>
 <p><b>Setup</b></p>
-<p>Board-specific setup such as jumpers, Ethernet ports, power supply, etc is documented in the board layer description (<code>README.md</code>) of your selected target.</p>
+<p>Board-specific hardware setup such as jumpers, Ethernet ports, power supply, etc is documented in the board layer description (<code>README.md</code>) of your selected target.</p>
 <ol type="1">
 <li>Load the executable image to the target development board.</li>
 <li>Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already in this LAN.</li>

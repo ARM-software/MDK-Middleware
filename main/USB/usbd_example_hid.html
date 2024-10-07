@@ -129,18 +129,19 @@ $(document).ready(function(){initNavTree('usbd_example_hid.html',''); initResiza
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_src_usbd_example_hid"></a> This example implements a USB Device that exchanges data with a USB Host using <a class="el" href="USB_Classes.html#HID">HID: Human Interface Device Class</a>.</p>
-<p>A graphical "HID Client" program is available for the USB Host Computer (Windows only) to interface with the LEDs and buttons on the target USB Device. The following picture shows an exemplary connection of a development board and the USB Host Computer.</p>
+<p>A graphical <b>HID Client</b> program is available for the USB Host Computer (Windows only) to interface with the LEDs and buttons on the target USB Device.</p>
+<p>The following picture shows an exemplary connection of the development board and the USB Host Computer.</p>
 <div class="image">
 <img src="hid_example_setup.png" alt=""/>
 <div class="caption">
-USB device HID example hardware setup</div></div>
+USB Device HID example hardware setup</div></div>
     <h1><a class="anchor" id="autotoc_md3"></a>
 Project Organization</h1>
 <p>The USB Device HID project is available as part of the <a class="el" href="usbd_examples.html">USB Device Reference examples</a>.</p>
 <h2>Application Source Files</h2>
 <p>Following files implement application-specific logic in the example:</p>
 <ul>
-<li><code>HID.c</code>: contains the application main thread which initializes the USB Device Component. It also sends the current input status (typical buttons) via <a class="el" href="group__usbd__hidFunctions__api.html#gad7e97151e60e0b12b3f331610f31c071">USBD_HID_GetReportTrigger</a> to the USB Host.</li>
+<li><code>HID.c</code>: contains the application main thread which initializes the USB Device Component. It also sends the current input status (typically buttons state) via <a class="el" href="group__usbd__hidFunctions__api.html#gad7e97151e60e0b12b3f331610f31c071">USBD_HID_GetReportTrigger</a> to the USB Host.</li>
 <li><code>USBD_User_HID_0.c</code>: adapted code template that implements necessary functions for I/O communication. Refer to <a class="el" href="group__usbd__hidFunctions.html">HID: Human Interface Class</a> for details.</li>
 </ul>
 <h2>Software Components Configuration Files</h2>
@@ -161,8 +162,8 @@ Project Organization</h1>
 <p>When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local <code>./Board/</code> directory.</p>
 <h2>Board Layer</h2>
 <p>In order to build the project it shall be extended with a compatible board layer that provides following interfaces as <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections">connections</a>:</p><ul>
-<li><code>CMSIS_USB_Device</code>: CMSIS-Driver for USB Device interface</li>
-<li><code>CMSIS_VIO</code>: CMSIS-Driver for virtual I/O interface</li>
+<li><code>CMSIS_USB_Device</code>: CMSIS-Driver for USB Device interface.</li>
+<li><code>CMSIS_VIO</code>: CMSIS-Driver for Virtual I/O interface.</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md4"></a>
 Build the Project</h1>
@@ -176,18 +177,18 @@ Build the Project</h1>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Run the Example</h1>
 <p><b>Setup</b></p>
-<p>Board-specific setup such as jumpers, USB ports, power supply, etc. is documented in the board layer description (<code>README.md</code>) of your selected target. It also lists supported IOs such as LEDs and Buttons.</p>
+<p>Board-specific hardware setup such as jumpers, USB ports, power supply, etc. is documented in the board layer description (<code>README.md</code>) of your selected target.</p>
 <ol type="1">
 <li>Load the executable image to the target development board.</li>
 <li>Connect a USB Device port on the development board with the USB port on a PC.</li>
-<li>Wait for the automatic driver installation on the PC to complete.</li>
+<li>The device should appear as Human Interface Device - <b>USB Input Device</b>.</li>
 </ol>
 <p><b>Example execution</b></p>
 <p>The USB Device HID example can be tested against a <a class="el" href="usbd_example_hid.html#hid_client_app">HID Client utility</a> that is available for Windows PCs only. The program runs stand-alone without installation.</p>
 <p>Steps to check the USB communication using the client utility:</p>
 <ol type="1">
-<li>Run <code>HIDClient.exe</code>.</li>
-<li>Select the <b>Keil USB Device</b> to establish the communication channel.</li>
+<li>Start the <code>HIDClient.exe</code> utility.</li>
+<li>Select the <b>Keil USB Device 0</b> to establish the communication channel.</li>
 <li>Press buttons on the target hardware and observe the checkmarks appear in corresponding check boxes in the HID Client utility.</li>
 <li>Use the LEDs check boxes in the HID Client and observe LED status changes on the board.</li>
 </ol>
@@ -200,7 +201,7 @@ HID Client</h1>
 <p>The HID Client utility is graphical application for Windows PC that can be used for testing the <a class="el" href="usbd_example_hid.html">USB Device HID</a> implementation. It is available as part of <a href="https://developer.arm.com/documentation/101407/latest/About-uVision/Installation">Keil MDK uVision</a> and is located in <code>&lt;install_dir&gt;\ARM\Utilities\HID_Client\Release\</code> folder, where <code>&lt;install_dir&gt;</code> refers to the Keil MDK uVision installation directory. The program runs stand-alone without installation.</p>
 <h2><a class="anchor" id="autotoc_md6"></a>
 HID Client Source Code</h2>
-<p>The source code of the HID Client application is available in <code>install_dir\ARM\Utilities\HID_Client</code>. Visual Studio 2005 and 2010 based projects are available (<code>HIDClient.vproj</code>).</p>
+<p>The source code of the HID Client application is available in <code>&lt;install_dir&gt;\ARM\Utilities\HID_Client</code>. Visual Studio 2005 and 2010 based projects are available (<code>HIDClient.vproj</code>).</p>
 <p><b>Header Files</b></p>
 <ul>
 <li><code>HID.h</code> includes the function declarations of the functions that are defined in <code>HID.cpp</code>.</li>
@@ -214,7 +215,7 @@ HID Client Source Code</h2>
 </ul>
 <p><b>Source Files</b></p>
 <ul>
-<li><code>HID.cpp</code> contains the necessary functions that are used in this example application to communicate with an USB HID device. All available functions in Windows for HID interaction are explained here: <a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/hid/introduction-to-hid-concepts" target="_blank">Introduction to HID Concepts</a>. The function:<ul>
+<li><code>HID.cpp</code> contains the necessary functions that are used in this example application to communicate with an USB HID device. All available functions in Windows for HID interaction are explained here: <a href="https://learn.microsoft.com/en-us/windows-hardware/drivers/hid/introduction-to-hid-concepts">Introduction to HID Concepts</a>. The function:<ul>
 <li><code>HID_Init</code> initializes the HID class to be used with the USB Host.</li>
 <li><code>HID_UnInit</code> de-initializes the HID class from the USB Host.</li>
 <li><code>HID_FindDevices</code> scans the USB Bus and lists all available HID devices for connection to the application. This information is obtained from the <a class="el" href="USB_Concepts.html#USB_Device_Descriptor">Device Descriptor</a> that is generated by the USB Component using the configuration files.</li>
@@ -231,7 +232,7 @@ HID Client Source Code</h2>
 </ul>
 </li>
 <li><code>HIDClient.cpp</code> is the main application source file that contains the application class <code>CHIDClientApp</code>.</li>
-<li><code>HIDClient.rc</code> is a listing of all of the Microsoft Windows resources that the program uses (located in the res subdirectory).</li>
+<li><code>HIDClient.rc</code> is a listing of all of the Microsoft Windows resources that the program uses (located in the <code>res</code> subdirectory).</li>
 <li><code>HIDClientDlg.cpp</code> implements the code of the client's dialog and calls the functions specified in <code>HID.cpp</code>. This is the actual place where the interaction between the USB Host and the USB Device is defined. </li>
 </ul>
 </div></div><!-- contents -->

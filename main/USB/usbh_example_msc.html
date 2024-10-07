@@ -128,13 +128,13 @@ $(document).ready(function(){initNavTree('usbh_example_msc.html',''); initResiza
   <div class="headertitle"><div class="title">USB Host Mass Storage </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_src_usbh_example_msc"></a> This examples implemens a USB Host device that accesses a USB Mass Storage Device (USB memory stick) using <a class="el" href="USB_Classes.html#MSC">MSC: Mass Storage Class</a>.</p>
-<p>This example will create or overwrite a <code>Test.txt</code> file on the connected USB Stick with the content "USB Host Mass Storage!".</p>
-<p>The following picture shows an exemplary connection of the development board and an USB memory stick.</p>
+<div class="textblock"><p><a class="anchor" id="md_src_usbh_example_msc"></a> This examples implements a USB Host that accesses a USB Mass Storage Device (USB memory stick) using <a class="el" href="USB_Classes.html#MSC">MSC: Mass Storage Class</a>.</p>
+<p>This example will create or overwrite a <code>Test.txt</code> file on the connected USB Stick with the content <code>USB Host Mass Storage!</code>.</p>
+<p>The following picture shows an exemplary connection of the development board and a USB memory stick.</p>
 <div class="image">
 <img src="usbh_msc_setup.png" alt=""/>
 <div class="caption">
-USB host mass storage example hardware setup</div></div>
+USB Host Mass Storage example hardware setup</div></div>
     <h1><a class="anchor" id="autotoc_md17"></a>
 Project Organization</h1>
 <p>The USB Host Mass Storage project is available as part of the <a class="el" href="usbh_examples.html">USB Host Reference examples</a>.</p>
@@ -149,9 +149,9 @@ Project Organization</h1>
 <p>Following configuration files are provided with this example:</p>
 <ul>
 <li>For the USB component, in the <code>./RTE/USB/</code> folder:<ul>
-<li><code>USBD_Config_MSC_0.h</code>: <a class="el" href="group__usbh__mscFunctions__conf.html">USB Host MSC configuration</a></li>
+<li><code>USBD_Config_MSC_0.h</code>: <a class="el" href="group__usbh__mscFunctions__conf.html">USB Host MSC configuration</a>.</li>
 <li><code>USBH_Config_0.h</code>: <a class="el" href="group__usbh__coreFunctions__conf.html">USB Host Core configuration</a>.</li>
-<li><code>USB_Debug.h</code>: <a class="el" href="usbh_create_app.html#usbHostEvrConfig">USB Host Debug configuration</a>.</li>
+<li><code>USB_Debug.h</code>: <a class="el" href="usbh_create_app.html#usbh_debugging">USB Host Debug configuration</a>.</li>
 </ul>
 </li>
 <li>For the File System component, in the <code>./RTE/File_System/</code> folder:<ul>
@@ -165,8 +165,8 @@ Project Organization</h1>
 </ul>
 <p>When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local <code>./Board/</code> directory.</p>
 <h2>Board Layer</h2>
-<p>In order to build the project it needs to be extended with a compatible board layer that provides following CMSIS-Driver interfaces as <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections">connections</a>:</p><ul>
-<li><code>CMSIS_USB_Host</code>: CMSIS-Driver for USB Host interface</li>
+<p>In order to build the project it shall be extended with a compatible board layer that provides following interfaces as <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections">connections</a>:</p><ul>
+<li><code>CMSIS_USB_Host</code>: CMSIS-Driver for USB Host interface.</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md18"></a>
 Build the Project</h1>

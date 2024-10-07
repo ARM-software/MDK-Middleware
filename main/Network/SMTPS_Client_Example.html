@@ -128,7 +128,8 @@ $(document).ready(function(){initNavTree('SMTPS_Client_Example.html',''); initRe
   <div class="headertitle"><div class="title">SMTPS Client </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_src_example_smtps_client"></a> SMTPS is used to send secure e-mail notifications from an embedded system to various recipients. This example shows how to setup an SMTPS client for this purpose. The following picture shows an exemplary connection of the development board and a Computer.</p>
+<div class="textblock"><p><a class="anchor" id="md_src_example_smtps_client"></a> SMTPS is used to send secure e-mail notifications from an embedded system to various recipients. This example shows how to setup an SMTPS client for this purpose.</p>
+<p>The following picture shows an exemplary connection of the development board and a Computer.</p>
 <div class="image">
 <img src="smtp_setup.png" alt=""/>
 <div class="caption">
@@ -183,7 +184,7 @@ Project Organization</h1>
 <h2>Board Layer</h2>
 <p>In order to build the project it shall be extended with a compatible board layer that provides following interfaces as <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections">connections</a>:</p><ul>
 <li><code>CMSIS_ETH</code>: CMSIS-Driver for Ethernet interface</li>
-<li><code>CMSIS_VIO</code>: CMSIS-Driver for virtual I/O interface</li>
+<li><code>CMSIS_VIO</code>: CMSIS-Driver for Virtual I/O interface</li>
 <li><code>STDOUT</code>: Standard Output redirection</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md29"></a>
@@ -198,7 +199,7 @@ Build the Project</h1>
 <h1><a class="anchor" id="autotoc_md30"></a>
 Run the Example</h1>
 <p><b>Setup</b></p>
-<p>Board-specific setup such as jumpers, Ethernet ports, power supply, etc. is documented in the board layer description (<code>README.md</code>) of your selected target.</p>
+<p>Board-specific hardware setup such as jumpers, Ethernet ports, power supply, etc. is documented in the board layer description (<code>README.md</code>) of your selected target.</p>
 <ol type="1">
 <li>Load the executable image to the target development board.</li>
 <li>Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already in this LAN.</li>
