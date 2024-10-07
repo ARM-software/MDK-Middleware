@@ -4,15 +4,15 @@ This example shows how to manipulate files on a memory drive using the File Syst
 
 You can mount and format the drive and then perform operations like write, read, rename and delete to manage files and directories on any enabled drive. Example uses serial terminal connection to interact with the user.
 
-Typically one connects the development board to a computer via debug connection that also provides virtual COM port, downloads
-example application to a board and starts terminal application on computer. The following picture shows an exemplary connection
-of the development board and a computer:
+Typically one connects the development board to a computer via debug connection that also provides virtual COM port, downloads example application to a board and starts terminal application on computer.
+
+The following picture shows an exemplary connection of the development board and a computer:
 
 ![Hardware setup of the File Demo example](fs_setup.png)
 
 ## Project Organization
 
-The File Demo project is available as part of \ref examples "File System Reference examples".
+The File Demo project is available as part of the \ref examples "File System Reference examples".
 
 <h2>Application Source Files</h2>
 
@@ -39,7 +39,7 @@ When a board layer is added to the project, corresponding configuration files fo
 
 In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
  - `CMSIS_MCI`: CMSIS-Driver for Memory Card Interface
- - `CMSIS_VIO`: CMSIS-Driver for virtual I/O interface
+ - `CMSIS_VIO`: CMSIS-Driver for Virtual I/O interface
  - `STDIN`: Standard Input redirection
  - `STDOUT`: Standard Output redirection
 
@@ -56,7 +56,7 @@ In order to build the project it shall be extended with a compatible board layer
 
 **Setup**
 
-Board-specific setup such as jumpers, SD card ports, power supply, etc. is documented in the board layer description (`README.md`) of your selected target.
+Board-specific hardware setup such as jumpers, SD card ports, power supply, etc. is documented in the board layer description (`README.md`) of your selected target.
 
  -# Load the executable image to the target development board.
  -# Insert an SD Card to the corresponding slot on the development board.

@@ -2,7 +2,9 @@
 
 The HTTP Upload example implements a web based interface to an SD card attached to a development board.
 
-The user is able to list the contents of the memory card and to upload files to it. The following picture shows an exemplary connection of the development board and a Computer.
+The user is able to list the contents of the memory card and to upload files to it.
+
+The following picture shows an exemplary connection of the development board and a Computer.
 
 ![HTTP upload example hardware setup](http_upload_setup.png)
 
@@ -44,7 +46,7 @@ When a board layer is added to the project, corresponding configuration files fo
 In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
  - `CMSIS_ETH`: CMSIS-Driver for Ethernet interface
  - `CMSIS_MCI`: CMSIS-Driver for Memory Card Interface
- - `CMSIS_VIO`: CMSIS-Driver for virtual I/O interface
+ - `CMSIS_VIO`: CMSIS-Driver for Virtual I/O interface
  - `STDOUT`: Standard Output redirection
 
 ## Build the Project
@@ -60,7 +62,7 @@ In order to build the project it shall be extended with a compatible board layer
 
 **Setup**
 
-Board-specific setup such as jumpers, Ethernet ports, power supply, etc. is documented in the board layer description (`README.md`) of your selected target.
+Board-specific hardware setup such as jumpers, Ethernet ports, power supply, etc. is documented in the board layer description (`README.md`) of your selected target.
 
  -# Load the executable image to the target development board.
  -# Use an Ethernet cable to connect your development board to the local area network. The PC is assumed to be already in this LAN.

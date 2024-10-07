@@ -1,6 +1,6 @@
 # FTP Server Example
 
-This program is an example of an **FTP server**. It allows you to manage files on your SD card from your PC using an FTP client.
+This MDK-Middleware example project implements a **FTP server**. It allows you to manage files on your SD card from your PC using an FTP client.
 
 For detailed description see [FTP Server Example section in MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/Network/FTP_Server_Example.html).
 

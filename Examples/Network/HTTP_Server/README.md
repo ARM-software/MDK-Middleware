@@ -1,6 +1,6 @@
 # HTTP Server Example
 
-This MDK-Middleware example implements a compact Web-Server on a device that can be accessed from a computer via network interface.
+This MDK-Middleware example project implements a compact Web-Server on a device that can be accessed from a computer via network interface.
 
 For detailed description see [HTTP Server Example section in MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/Network/HTTP_Server_Example.html).
 

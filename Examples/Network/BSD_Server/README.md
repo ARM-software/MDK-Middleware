@@ -1,6 +1,6 @@
 # BSD Server Example
 
-This MDK-Middleware example project implements a **BSD Server** device. You can control the LEDs on the server board using requests from BSD clients.
+This MDK-Middleware example project implements a **BSD Server**. You can control the LEDs on the server board using requests from BSD clients.
 
 For detailed description see [BSD Server Example section in MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/Network/BSD_Server_Example.html).
 
