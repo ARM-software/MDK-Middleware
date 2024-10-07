@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB
- * Copyright (c) 2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    USB_Debug.h
  * Purpose: USB Host/Device Debug Configuration
