@@ -111,9 +111,9 @@ the secure Web server.
 
 #### Creating your own certificates and keys {#cert_creation}
 
-The Network Component's HTTPS service adds the file `Net_Security.c` to the project. This file contains generic test
-keys/certificates which enable the application to run out of the box. If you want to adapt the keys/certificates to your
-needs, you need utilities `gen_key` and `cert_write` that are in the `MDK-toolbox`.
+The Network Component's HTTPS service adds the file `Net_Security.c` to the project. This file contains generic test keys/certificates
+which enable the application to run out of the box. If you want to adapt the keys/certificates to your needs, you need utilities
+`gen_key` and `cert_write` which are available as part of the [Arm MDK-toolbox](https://www.keil.arm.com/artifacts/#tools/arm/mdk-toolbox).
 
 The certificates and keys are generated using bash shell commands:
 
@@ -166,9 +166,9 @@ The certificates and keys are generated using bash shell commands:
 
 The certificates and crypto keys are created and their contents must be copied to the file `Net_Security.c`:
 
-- `ca.crt` into the array *NetSecurity_ServerCA[]*, with a leading \" and a trailing \\n\" inserted for each line.
-- `server.crt` into the array *NetSecurity_ServerCert[]*, with a leading \" and a trailing \\n\" inserted for each line.
-- `server.key` into the array *NetSecurity_ServerKey[]*, with a leading \" and a trailing \\n\" inserted for each line.
+- `ca.crt` into the array *NetSecurity_ServerCA[]*, with a leading `"` and a trailing `\n"` inserted for each line.
+- `server.crt` into the array *NetSecurity_ServerCert[]*, with a leading `"` and a trailing `\n"` inserted for each line.
+- `server.key` into the array *NetSecurity_ServerKey[]*, with a leading `"` and a trailing `\n"` inserted for each line.
 
 **Code Example**
 
@@ -227,8 +227,7 @@ const uint8_t NetSecurity_EmailServerCA[] =
 ```
 
 Verifying the e-mail server is required by default to increase e-mail security. If you do not want to verify the server, you
-can disable server verification by defining the **SMTPS_SERVER_VERIFY_NONE** in your project (Options for Component Class Network -
-SMTP_Client - C/C++ Preprocessor Symbols - Define).
+can disable server verification by defining the **SMTPS_SERVER_VERIFY_NONE** in your project (C/C++ define).
 
 > **Note**
 > It is not necessary to create your own certificates or keys to send secure e-mail using SMTPS.
