@@ -165,9 +165,7 @@ File System Component can be easily configured to generate debug events and prov
 File System supports event annotations for the \urlout{Event-Recorder-About} and make it very easy to analyze the internal operation
 of the File System Component during application debug. The \ref evr_gr describes the events implemented in the File System Component.
 
-\ref fsEvrSupport "Event Recorder Support" below explains how to configure File System for debugging.
-
-### Event Recorder Support {#fsEvrSupport}
+### Event Recorder {#fsEvr}
 
 \urlout{Event-Recorder-About} is a powerful tool that provides visibility to the dynamic execution of the program.
 
@@ -184,7 +182,7 @@ To use the Event Recorder it is required to create an image with event generatio
 
 Now, when the File System generates event information, it can be viewed in the \urlout{uv4-Event-Recorder}.
 
-#### Event Recorder Configuration {#fsEvrConfig}
+#### Configuration {#fsEvrConfig}
 
 This section describes the configuration settings for the Event Recorder.
 
