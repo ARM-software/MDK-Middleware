@@ -35,7 +35,7 @@ Every middleware component has specific configuration files that need to be adap
 In addition, you need to set drive specific settings in the **FS_Config_<i>Drive</i>_0.h** file, such as page and block sizes
 for Flash memories, general disk sizes for a RAM drive, and the hardware driver number for connecting the drive to the appropriate hardware peripheral driver.
 
-![File System Configuration Files FS_Config.H AND FS_Config_MC_0.h](./images/file_system_conf.png)
+![File System Configuration Files FS_Config.h and FS_Config_MC_0.h](./images/file_system_conf.png)
 
 ### Configure Drivers {#conf_drivers}
 

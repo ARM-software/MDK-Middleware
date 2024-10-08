@@ -48,12 +48,12 @@ In order to perform the SSL or TLS protocol, a number of supporting functionalit
 - needs to perform symmetric cryptographic operations, such as
   [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard), to encrypt the data over the
   connection.
-- uses asymmetric cryptographic operations, such as 
+- uses asymmetric cryptographic operations, such as
   [RSA](https://en.wikipedia.org/wiki/RSA_%28cryptosystem%29), for identifying and authenticating
   the parties of the connection.
 - uses message digest operations, such as the
   [SHA-256](https://en.wikipedia.org/wiki/SHA-2) hash algorithm, to protect the integrity of
-  the information sent over the wire. 
+  the information sent over the wire.
 - needs to be able to parse, understand and use
   [X.509](https://en.wikipedia.org/wiki/X.509) certificates.
 - has to perform network operations to send and receive the protocol packets.
@@ -85,7 +85,7 @@ part of the Network Component.
 The Network Component offers secure software components that are using \ref use_mbed_tls "Mbed TLS". The user of the
 Network Component does not see the Mbed TLS API as it is hidden by the standard API of the secure component.
 
-Currently, the following component is available in a secure variant:
+The following components are currently available in a secure variant:
 
 - \ref https_server
 - \ref smtps_client
@@ -95,332 +95,128 @@ explains how to achieve this for the secure components by using additional tools
 
 ### HTTPS Server {#https_server}
 
-The web server and the compact web server have secure variants available. In the **Manage Run-Time Environment** window
-simply select the appropriate variant:
+The web server and the compact web server have secure variants available. The example \ref HTTPS_Server_Example implements
+the secure Web server.
 
-![Selecting HTTPS for the web server](select_https.png)
-
-#### Converting the HTTP server to HTTPS {#add_ssl_to_http}
-
-It is also possible to convert an already existing (compact) web server to a secure HTTPS web server. A few simple steps are
-required to achieve this:
-
--# Download and install the **ARM:mbedTLS** Software Pack (see \ref add_mbedtls).
--# Change the following software components in the Manage Run-Time Environment:
-   - Set **Network:Service:Web Server (Compact)** variant to **HTTPS**. This adds the file `Net_Security.c` to the
-     project which contains test keys/certificates. To change them, follow the steps provided in \ref cert_creation.
-   - Enable **Security:mbed TLS** or resolve this dependency automatically.
--# Update the `mbedTLS_Config.h` configuration file with the following (a copy named `mbedTLS_config_HTTPS.h` is available
-   in the **Template** folder):
-
-```c
-/*
- *  Copyright The Mbed TLS Contributors
- *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
- */
-
-#define MBEDTLS_CONFIG_VERSION 0x03060000
-
-/* System support */
-
-/* mbed TLS feature support */
-#define MBEDTLS_ENTROPY_HARDWARE_ALT
-#define MBEDTLS_AES_ROM_TABLES
-#define MBEDTLS_CIPHER_MODE_CBC
-#define MBEDTLS_CIPHER_MODE_CFB
-#define MBEDTLS_CIPHER_MODE_CTR
-#define MBEDTLS_CIPHER_PADDING_PKCS7
-#define MBEDTLS_CIPHER_PADDING_ONE_AND_ZEROS
-#define MBEDTLS_CIPHER_PADDING_ZEROS_AND_LEN
-#define MBEDTLS_CIPHER_PADDING_ZEROS
-#define MBEDTLS_KEY_EXCHANGE_PSK_ENABLED
-#define MBEDTLS_KEY_EXCHANGE_DHE_PSK_ENABLED
-#define MBEDTLS_KEY_EXCHANGE_RSA_PSK_ENABLED
-#define MBEDTLS_KEY_EXCHANGE_RSA_ENABLED
-#define MBEDTLS_KEY_EXCHANGE_DHE_RSA_ENABLED
-#define MBEDTLS_GENPRIME
-#define MBEDTLS_NO_PLATFORM_ENTROPY
-#define MBEDTLS_PK_RSA_ALT_SUPPORT
-#define MBEDTLS_PKCS1_V15
-#define MBEDTLS_PKCS1_V21
-#define MBEDTLS_SSL_ALL_ALERT_MESSAGES
-#define MBEDTLS_SSL_ENCRYPT_THEN_MAC
-#define MBEDTLS_SSL_EXTENDED_MASTER_SECRET
-#define MBEDTLS_SSL_RENEGOTIATION
-#define MBEDTLS_SSL_MAX_FRAGMENT_LENGTH
-#define MBEDTLS_SSL_PROTO_TLS1_2
-#define MBEDTLS_SSL_ALPN
-#define MBEDTLS_SSL_SESSION_TICKETS
-#define MBEDTLS_SSL_SERVER_NAME_INDICATION
-#define MBEDTLS_X509_RSASSA_PSS_SUPPORT
-
-/* mbed TLS modules */
-#define MBEDTLS_AES_C
-#define MBEDTLS_ASN1_PARSE_C
-#define MBEDTLS_BASE64_C
-#define MBEDTLS_BIGNUM_C
-#define MBEDTLS_CAMELLIA_C
-#define MBEDTLS_CCM_C
-#define MBEDTLS_CIPHER_C
-#define MBEDTLS_CTR_DRBG_C
-//#define MBEDTLS_DEBUG_C
-#define MBEDTLS_DES_C
-#define MBEDTLS_DHM_C
-#define MBEDTLS_ENTROPY_C
-#define MBEDTLS_GCM_C
-#define MBEDTLS_HMAC_DRBG_C
-#define MBEDTLS_MD_C
-#define MBEDTLS_MD5_C
-#define MBEDTLS_OID_C
-#define MBEDTLS_PEM_PARSE_C
-#define MBEDTLS_PK_C
-#define MBEDTLS_PK_PARSE_C
-#define MBEDTLS_PKCS5_C
-#define MBEDTLS_PKCS12_C
-#define MBEDTLS_PLATFORM_C
-#define MBEDTLS_RIPEMD160_C
-#define MBEDTLS_RSA_C
-#define MBEDTLS_SHA1_C
-#define MBEDTLS_SHA224_C
-#define MBEDTLS_SHA256_C
-#define MBEDTLS_SHA512_C
-#define MBEDTLS_SSL_CACHE_C
-#define MBEDTLS_SSL_COOKIE_C
-#define MBEDTLS_SSL_TICKET_C
-#define MBEDTLS_SSL_SRV_C
-#define MBEDTLS_SSL_TLS_C
-#define MBEDTLS_X509_USE_C
-#define MBEDTLS_X509_CRT_PARSE_C
-#define MBEDTLS_X509_CSR_PARSE_C
-
-/* SSL options */
-#define MBEDTLS_SSL_IN_CONTENT_LEN      4096 /**< Maximum length (in bytes) of incoming plaintext fragments. */
-#define MBEDTLS_SSL_OUT_CONTENT_LEN     4096 /**< Maximum length (in bytes) of outgoing plaintext fragments. */
-```
-
--# Set your device's heap to 90KB or more, depending on the application. Open the file `startup_xxx.s` and set
-   ```c
-   Heap_Size = 0x16000
-   ```
-   or alternatively modify the **linker script** file
-   ```c
-   #define __HEAP_SIZE     0x00016000
-   ```
-   
--# Configure the RTX threads
-   - If you use **RTX v5**, you do not need to change the **RTX settings**, because all resources are statically allocated.
--# Update the HTTP Server configuration file (`Net_Config_HTTP_Server.h`):
-   - Change the **Port Number** to `443` or to `0` (auto-selects 443 for HTTPS or 80 for HTTP)
--# Build the example and download to Flash. If it fails, please check your "Read/Write Memory Areas" in your target options.
--# You can test the example from a browser by connecting to "https://board_name" or "https://ip_address" (depending on your
-   settings in `Net_Config.h` file.
-
-\note
-- The first connection might take a while (a few seconds up to 10s) and depends on the browser and how many sockets/sessions
-  it initially opens (differs in Edge, Chrome, Firefox, etc.). This delay is normal and due to the time required for
-  asymmetric cryptography calculations on the target. After the initial delay, the HTTPS server works almost as fast the HTTP
-  server.
-- Your browser will complain during the connection that the certificate has a problem or is not trusted. You will need to add
-  the certificate to your browser's trusted certificate storage manually.
-- Do not use the test certificate in productive environments as it is not secret. Before shipping your product, make sure
-  that you have added your \ref cert_creation "own certificates and keys".
+> **Note**
+>
+> - The first connection might take a while (a few seconds up to 10s) and depends on the browser and how many sockets/sessions
+>   it initially opens (differs in Edge, Chrome, Firefox, etc.). This delay is normal and due to the time required for
+>   asymmetric cryptography calculations on the target. After the initial delay, the HTTPS server works almost as fast the HTTP
+>   server.
+> - Your browser will complain during the connection that the certificate has a problem or is not trusted. You will need to add
+>   the certificate to your browser's trusted certificate storage manually.
+> - Do not use the test certificate in productive environments as it is not secret. Before shipping your product, make sure
+>   that you have added your \ref cert_creation "own certificates and keys".
 
 #### Creating your own certificates and keys {#cert_creation}
 
-The Network Component's HTTPS service adds the file `Net_Security.c` to the project. This file contains generic test
-keys/certificates which enable the application to run out of the box. If you want to adapt the keys/certificates to your
-needs, you can do this by modifying this file or by executing the batch file `Net_Security.bat` that is part of the Network
-Component.
+The Network Component's HTTPS service adds the file `Net_Security.c` to the project. This file contains generic test keys/certificates
+which enable the application to run out of the box. If you want to adapt the keys/certificates to your needs, you need utilities
+`gen_key` and `cert_write` which are available as part of the [Arm MDK-toolbox](https://www.keil.arm.com/artifacts/#tools/arm/mdk-toolbox).
 
-`Net_Security.bat` can be registered in µVision under **Tools** for general usage:
+The certificates and keys are generated using bash shell commands:
 
-- Go to **Tools** --> **Customize Tools Menu**
-- Click the **New (Insert)** button and enter a meaningful name, for example "Net_Security Keys"
-- In the **Command** box enter `$PRTE\\Network\\Net_Security.bat`
-- In the **Initial Folder** box enter `$PRTE\\Network`
-- In the **Arguments** box enter `\@K`
-- Enable **Run Independent**
+- Generate random CA and Server Private Keys
 
-![Settings required for the Net_Security.bat file](Net_Security_Keys.PNG)
+  ```bash
+  gen_key \
+    type=rsa \
+    rsa_keysize=2048 \
+    format=pem \
+    filename=ca.key
+  ```
 
-This setting is needed only once in µVision and will work for any project since it uses project related folders.
+  ```bash
+  gen_key \
+    type=rsa \
+    rsa_keysize=2048 \
+    format=pem \
+    filename=server.key
+  ```
 
-The file `Net_Security.bat` is copied to the project (.\\RTE\\Network) folder together with `Net_Security.c`. As it is
-project specific, the batch file can be customized to reflect your specific values for the certificates:
+- Generate Self-signed CA Certificate
 
-- CA and Server Private Keys: type (default: RSA) and key_size (default: 2048)
-- CA certificate: issuer_name (default:CN="Test CA",O="Unknown",C=US), serial (default: 0), not_before (default:
-  20200101000000), not_after (20301231235959)
-- Server certificate: subject_name (default: CN="localhost",O="MyOrganization",C=US), serial (default: 1), not_before
-  (default: 20200101000000), not_after (20301231235959)
+  ```bash
+  cert_write \
+    selfsign=1 \
+    issuer_key=ca.key \
+    issuer_name="CN=Test CA,O=MyOrganization,C=US" \
+    not_before=20200101000000 \
+    not_after=20301231235959 \
+    is_ca=1 \
+    output_file=ca.crt \
+    san="DNS:my_host"
+  ```
 
-\note
-- Replace CN="localhost" with your hostname so that you can add the server's root CA certificate to your "Trusted
-  Root Certification Authorities". Then the browser will not complain that the website is not trusted.
+- Generate Server Certificate
 
-The beginning of the file contains some environment settings that can also be changed:
+  ```bash
+  cert_write \
+    subject_key=server.key \
+    subject_name="CN=my_host,O=MyOrganization,C=US" \
+    issuer_key=ca.key \
+    issuer_crt=ca.crt \
+    serial=2 \
+    not_before=20200101000000 \
+    not_after=20301231235959 \
+    output_file=server.crt \
+    san="DNS:my_host" 
+  ```
 
-- RTEPATH: specifies the path to Software Packs. This is required if the batch file is executed directly from Windows. When
-  it is executed from µVision, it is set automatically.
-- Pack Versions (MDK-MW and mbedTLS): only required if you want to select a specific Pack version. By default, the latest
-  available Pack is used.
+The certificates and crypto keys are created and their contents must be copied to the file `Net_Security.c`:
 
-As soon as you run the batch file from the **Tools** menu, it will create the keys/certificates and change the
-`Net_Security.c` automatically to reflect the changes. You can then continue building the project.
-
-\note
-- The Net_Security.bat file calls the pem2mw.exe utility. This utility does not support all kinds of certificates.
-- If you are using an unsupported certificate, you can bypass pem2mw easily by manually creating the output Net_Security.c
-  file:
-  - Adapt Net_Security.bat to skip calling pem2mw (optional)
-  - Copy the contents of ca.crt into NetSecurity_ServerCA structure in Net_Security.c and add leading \" and trailing \\n\"
-    to each line
-  - Copy the contents of server.crt into NetSecurity_ServerCert structure in Net_Security.c and add leading \" and trailing
-    \\n\" to each line
-  - Copy the contents of server.key into NetSecurity_ServerKey structure in Net_Security.c and add leading \" and trailing
-    \\n\" to each line
+- `ca.crt` into the array *NetSecurity_ServerCA[]*, with a leading `"` and a trailing `\n"` inserted for each line.
+- `server.crt` into the array *NetSecurity_ServerCert[]*, with a leading `"` and a trailing `\n"` inserted for each line.
+- `server.key` into the array *NetSecurity_ServerKey[]*, with a leading `"` and a trailing `\n"` inserted for each line.
 
 **Code Example**
 
-*Server.key*
+*ca.crt*
 
-```c
------BEGIN PUBLIC KEY-----
-MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEd3Jlb4FLOZJ51eHxeB+sbwmaPFyh
-sONTUYNLCLZeC1clkM2vj3aTYbzzSs/BHl4HToQmvd4Evm5lOUVElhfeRQ==
------END PUBLIC KEY-----
+```text
+-----BEGIN CERTIFICATE-----
+MIIDUjCCAjqgAwIBAgIBATANBgkqhkiG9w0BAQsFADA4MRAwDgYDVQQDDAdUZXN0
+IENBMRcwFQYDVQQKDA5NeU9yZ2FuaXphdGlvbjELMAkGA1UEBhMCVVMwHhcNMjAw
+ ...
+r3bk5HaVy8YUXog0H8mHTIp7x+i1Tq8QavMa/2bF3SOcNhvvEecG59zG9IfULqNv
+fdCx0rfQujoMEHnwZjwEzBq5NdpPZi7heMYJKXlqHbHo+0itw9w=
+-----END CERTIFICATE-----
 ```
 
 *Net_Security.c*
 
 ```c
-const uint8_t NetSecurity_ServerKey[] =
-"-----BEGIN PUBLIC KEY-----\n"
-"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEd3Jlb4FLOZJ51eHxeB+sbwmaPFyh\n"
-"sONTUYNLCLZeC1clkM2vj3aTYbzzSs/BHl4HToQmvd4Evm5lOUVElhfeRQ==\n"
-"-----END PUBLIC KEY-----\n"
-;
+const uint8_t NetSecurity_ServerCA[] =
+"-----BEGIN CERTIFICATE-----\n"
+"MIIDUjCCAjqgAwIBAgIBATANBgkqhkiG9w0BAQsFADA4MRAwDgYDVQQDDAdUZXN0\n"
+"IENBMRcwFQYDVQQKDA5NeU9yZ2FuaXphdGlvbjELMAkGA1UEBhMCVVMwHhcNMjAw\n"
+ ...
+"r3bk5HaVy8YUXog0H8mHTIp7x+i1Tq8QavMa/2bF3SOcNhvvEecG59zG9IfULqNv\n"
+"fdCx0rfQujoMEHnwZjwEzBq5NdpPZi7heMYJKXlqHbHo+0itw9w=\n"
+"-----END CERTIFICATE-----\n"
 ```
+
+> **Note for Windows users**
+>
+> - You must add the test CA certificate `ca.crt` to the Trusted Root Certificate store on your computer
+    to avoid the *Your connection is not private* error in the Chrome or Microsoft Edge browser.
+> - You need administrator rights for adding a certificate.
+> - To install a `ca.crt` certificate on your computer, double-click on it and select
+    **Install Certificate...**, then select **Local Machine** for the store location.
+> - Select **Trusted Root Certification Authorities** as the location for the certificate.
 
 ### SMTPS Client {#smtps_client}
 
-The e-mail client is available in a secure variant. In the **Manage Run-Time Environment** window, simply select the
-appropriate variant:
-
-![Select the SMTPS variant](select_smtps.png)
-
-#### Converting the SMTP client to SMTPS {#add_ssl_to_smtp}
-
-It is also possible to convert an already existing e-mail client to a secure SMTPS e-mail client. A few simple steps are
-required to achieve this:
-
--# Download and install the **ARM:mbedTLS** Software Pack (see \ref add_mbedtls).
--# Change the following software components in the Manage Run-Time Environment:
-   - Set **Network:Service:SMTP Client** variant to SMTPS.  This adds the file `Net_Security.c` to the
-     project which contains an empty CA certificate. To define it, follow the steps provided in \ref cert_adding.
-   - Enable **Security:mbed TLS** or resolve this dependency automatically.
--# Update the `mbedTLS_Config.h` configuration file with the following (a copy named `mbedTLS_config_SMTPS.h` is available
-   in the **Template** folder):
-
-   ```c
-   /*
-    *  Copyright The Mbed TLS Contributors
-    *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
-    */
-   
-   #define MBEDTLS_CONFIG_VERSION 0x03060000
-   
-   /* System support */
-   
-   /* mbed TLS feature support */
-   #define MBEDTLS_ENTROPY_HARDWARE_ALT
-   #define MBEDTLS_AES_ROM_TABLES
-   #define MBEDTLS_CIPHER_MODE_CBC
-   #define MBEDTLS_CIPHER_PADDING_PKCS7
-   #define MBEDTLS_ECP_DP_SECP256R1_ENABLED
-   #define MBEDTLS_ECP_DP_SECP384R1_ENABLED
-   #define MBEDTLS_ECP_NIST_OPTIM
-   #define MBEDTLS_ECDSA_DETERMINISTIC
-   #define MBEDTLS_KEY_EXCHANGE_PSK_ENABLED
-   #define MBEDTLS_KEY_EXCHANGE_ECDHE_PSK_ENABLED
-   #define MBEDTLS_KEY_EXCHANGE_RSA_PSK_ENABLED
-   #define MBEDTLS_KEY_EXCHANGE_ECDHE_RSA_ENABLED
-   #define MBEDTLS_KEY_EXCHANGE_ECDHE_ECDSA_ENABLED
-   #define MBEDTLS_ERROR_STRERROR_DUMMY
-   #define MBEDTLS_NO_PLATFORM_ENTROPY
-   #define MBEDTLS_PK_RSA_ALT_SUPPORT
-   #define MBEDTLS_PKCS1_V15
-   #define MBEDTLS_PKCS1_V21
-   #define MBEDTLS_SSL_ALL_ALERT_MESSAGES
-   #define MBEDTLS_SSL_ENCRYPT_THEN_MAC
-   #define MBEDTLS_SSL_EXTENDED_MASTER_SECRET
-   #define MBEDTLS_SSL_RENEGOTIATION
-   #define MBEDTLS_SSL_MAX_FRAGMENT_LENGTH
-   #define MBEDTLS_SSL_PROTO_TLS1_2
-   #define MBEDTLS_SSL_ALPN
-   #define MBEDTLS_SSL_SESSION_TICKETS
-   #define MBEDTLS_SSL_SERVER_NAME_INDICATION
-   
-   /* mbed TLS modules */
-   #define MBEDTLS_AES_C
-   #define MBEDTLS_ASN1_PARSE_C
-   #define MBEDTLS_ASN1_WRITE_C
-   #define MBEDTLS_BASE64_C
-   #define MBEDTLS_BIGNUM_C
-   #define MBEDTLS_CCM_C
-   #define MBEDTLS_CIPHER_C
-   #define MBEDTLS_CTR_DRBG_C
-   //#define MBEDTLS_DEBUG_C
-   #define MBEDTLS_ECDH_C
-   #define MBEDTLS_ECDSA_C
-   #define MBEDTLS_ECP_C
-   #define MBEDTLS_ENTROPY_C
-   #define MBEDTLS_GCM_C
-   #define MBEDTLS_HMAC_DRBG_C
-   #define MBEDTLS_MD_C
-   #define MBEDTLS_OID_C
-   #define MBEDTLS_PEM_PARSE_C
-   #define MBEDTLS_PK_C
-   #define MBEDTLS_PK_PARSE_C
-   #define MBEDTLS_PLATFORM_C
-   #define MBEDTLS_RSA_C
-   #define MBEDTLS_SHA1_C
-   #define MBEDTLS_SHA224_C
-   #define MBEDTLS_SHA256_C
-   #define MBEDTLS_SHA512_C
-   #define MBEDTLS_SSL_CACHE_C
-   #define MBEDTLS_SSL_COOKIE_C
-   #define MBEDTLS_SSL_TICKET_C
-   #define MBEDTLS_SSL_CLI_C
-   #define MBEDTLS_SSL_TLS_C
-   #define MBEDTLS_X509_USE_C
-   #define MBEDTLS_X509_CRT_PARSE_C
-   #define MBEDTLS_X509_CRL_PARSE_C
-   
-   /* SSL options */
-   #define MBEDTLS_SSL_IN_CONTENT_LEN      4096 /**< Maximum length (in bytes) of incoming plaintext fragments. */
-   #define MBEDTLS_SSL_OUT_CONTENT_LEN     4096 /**< Maximum length (in bytes) of outgoing plaintext fragments. */
-   ```
--# Set your device's heap to 49KB or more, depending on the application. Open the file `startup_xxx.s` and set
-   ```c
-   Heap_Size = 0xC000
-   ```
-   or alternatively modify the **linker script** file
-   ```c
-   #define __HEAP_SIZE     0x0000C000
-   ```
-
--# Configure the RTX threads
-   - If you use **RTX v5**, you do not need to change the **RTX settings**, because all resources are statically allocated.
--# Build the example and download to Flash. If it fails, please check your "Read/Write Memory Areas" in your target options.
--# You can test the example by sending an e-mail to your e-mail account, for example to Gmail or Yahoo.
+The e-mail client is available in a secure variant. The \ref SMTPS_Client_Example example implements
+the secure email client.
 
 #### Adding server root CA certificate {#cert_adding}
 
 The SMTPS service of the Network Component adds the `Net_Security.c` file to the project. This file contains an empty section
 for the e-mail server root CA certificate, so you cannot initially build the application. You must provide a valid root CA certificate
 for the server that you use to send e-mail. The certificate must be provided in PEM-encoding. Copy the contents of the certificate
-into the NetSecurity_EmailServerCA structure in `Net_Security.c` and add a leading " and a trailing \n" to each line. 
+into the NetSecurity_EmailServerCA structure in `Net_Security.c` and add a leading " and a trailing \n" to each line.
 
 ```c
 // Email Server root CA certificate
@@ -431,7 +227,7 @@ const uint8_t NetSecurity_EmailServerCA[] =
 ```
 
 Verifying the e-mail server is required by default to increase e-mail security. If you do not want to verify the server, you
-can disable server verification by defining the **SMTPS_SERVER_VERIFY_NONE** in your project (Options for Component Class Network -
-SMTP_Client - C/C++ Preprocessor Symbols - Define).
+can disable server verification by defining the **SMTPS_SERVER_VERIFY_NONE** in your project (C/C++ define).
 
-\note It is not necessary to create your own certificates or keys to send secure e-mail using SMTPS.
+> **Note**
+> It is not necessary to create your own certificates or keys to send secure e-mail using SMTPS.
