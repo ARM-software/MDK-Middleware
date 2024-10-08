@@ -165,7 +165,7 @@ CMake-script</h2>
 <div class="line"><span class="stringliteral">endif()</span></div>
 </div><!-- fragment --><p>In the csolution project file <code>cproject.yml</code> add a list of all web resources under <code>executes:</code> node.</p>
 <div class="fragment"><div class="line">executes:</div>
-<div class="line">  - execute: Run FCARM</div>
+<div class="line">  - execute: Run_FCARM</div>
 <div class="line">    run: ${CMAKE_COMMAND} -P $input(0)$ $input$ $output$</div>
 <div class="line">    always:</div>
 <div class="line">    input:</div>
@@ -240,7 +240,7 @@ CMake-project</h2>
 <div class="line"><span class="comment">)</span></div>
 </div><!-- fragment --><p>In the csolution project file <code>cproject.yml</code> add command and parameters to invoke the FCARM file converter.</p>
 <div class="fragment"><div class="line">executes:</div>
-<div class="line">  - execute: Run FCARM</div>
+<div class="line">  - execute: Run_FCARM</div>
 <div class="line">    run: ${CMAKE_COMMAND} -G Ninja -S $input(0)$ -B ${CMAKE_BINARY_DIR}/FCARM/$Project$.$BuildType$+$TargetType$ -DINPUT_DIRECTORY=$input(1)$ -DOUTPUT=$output$ &amp;&amp; ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}/FCARM/$Project$.$BuildType$+$TargetType$ -- --quiet</div>
 <div class="line">    always:</div>
 <div class="line">    input:</div>
