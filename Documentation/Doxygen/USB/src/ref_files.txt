@@ -20,7 +20,7 @@ Directory                  | Description
 
 <b>Header Files</b>
 
-The API interface of the USB Component is provided in the header file %rl_usb.h.
+The API interface of the USB Component is provided in the header file **%rl_usb.h**.
 The table below provides a complete overview of all public header files.
 
 Header File         | Used by                            | Description

@@ -3,7 +3,7 @@
 \ingroup usbd
 \brief Event Recorder functions
 \details
-The USB Device interfaces to the \urlout{Event-Recorder} to provided event information which help you to understand and analyse the operation.
+The USB Device interfaces to the \urlout{Event-Recorder} to provided event information which help you to understand and analyze the operation.
 
 See \ref usbd_debugging for the details on how to configure the USB Device Component to support the \ref usbd_evr in the Event Recorder.
 

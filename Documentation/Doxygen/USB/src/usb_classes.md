@@ -79,7 +79,6 @@ The documents available at
 [Communications Device Class](https://www.usb.org/documents?search=&category%5B%5D=49&type%5B%5D=55&items_per_page=50)
 describe the nine available request types for the Abstract Control Model (ACM). All requests specified for the Network
 Control Model (NCM) by the documents in ECM120.pdf and NCM10.pdf are supported.
-are not supported.
 
 ### USB Descriptors {#CDC_Descriptors}
 
