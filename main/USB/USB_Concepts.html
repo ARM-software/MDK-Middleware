@@ -183,7 +183,7 @@ Tier Network</div></div>
 <li>An imaging device such as a scanner, printer, or camera.</li>
 <li>A mass storage device such as a CD-ROM drive, floppy drive, or DVD drive.</li>
 </ul>
-<p>The <b>logical USB network</b> appears as a star network to the developer with the host at the centre. Hubs do not introduce any programming complexity and are transparent as far as the programmer is concerned. An USB device will work the same way whether connected directly to a root-hub or whether connected via intermediate hubs. All USB devices are available as addressable nodes in this master/slave network. Only the host can initiate a data transfer in the network.</p>
+<p>The <b>logical USB network</b> appears as a star network to the developer with the host at the center. Hubs do not introduce any programming complexity and are transparent as far as the programmer is concerned. An USB device will work the same way whether connected directly to a root-hub or whether connected via intermediate hubs. All USB devices are available as addressable nodes in this master/slave network. Only the host can initiate a data transfer in the network.</p>
 <div class="image">
 <img src="starnetwork.png" alt=""/>
 <div class="caption">
@@ -347,7 +347,7 @@ Device Configuration</div></div>
 <li>One audio class interface with 2 isochronous endpoints for transferring audio data in each direction.</li>
 <li>One HID interface with a single IN interrupt endpoint for a built-in keypad.</li>
 </ul>
-<p>Provisions have been made in the USB component to give the user the option to <a class="el" href="usbd_create_app.html#Overriding_Descriptors">override the USB descriptors</a> if necessary. This can be the case when the device class needs to be changed at runtime or other reports need to be created.</p>
+<p>Provisions have been made in the USB component to give the user the option to <a class="el" href="usbd_create_app.html#Overriding_Descriptors">override the USB descriptors</a> if necessary. This can be the case when the device class needs to be changed at run-time or other reports need to be created.</p>
 <h2><a class="anchor" id="USB_Device_Descriptor"></a>
 Device Descriptor</h2>
 <p>The <b>Device Descriptor</b> (<a class="el" href="group__usbh__data__types.html#structUSB__DEVICE__DESCRIPTOR" title="USB Device Descriptor structure.">USB_DEVICE_DESCRIPTOR</a>) is the root of the descriptor tree and contains basic device information. The unique numbers, <em><b>idVendor</b></em> and <em><b>idProduct</b></em>, identify the connected device. The Windows operating system uses these numbers to determine which device driver must be loaded.</p>
@@ -430,7 +430,7 @@ Configuration Descriptor</h2>
 <li>D5: Remote Wakeup</li>
 <li>D4...0: Reserved (reset to zero)</li>
 </ul>
-<p class="endtd">A device configuration that uses power from the bus and a local source reports a non-zero value in <em>bMaxPower</em> to indicate the amount of bus power required and sets D6. The actual power source at runtime can be determined using the GetStatus(DEVICE) request. If a device configuration supports remote wakeup, D5 is set to 1.  </p>
+<p class="endtd">A device configuration that uses power from the bus and a local source reports a non-zero value in <em>bMaxPower</em> to indicate the amount of bus power required and sets D6. The actual power source at run-time can be determined using the GetStatus(DEVICE) request. If a device configuration supports remote wakeup, D5 is set to 1.  </p>
 </td></tr>
 <tr>
 <td>8 </td><td>bMaxPower </td><td>uint8_t </td><td>1 </td><td>mA </td><td>Maximum power consumption of the USB device from the bus in this specific configuration when the device is fully operational. Expressed in 2mA units (i.e., 50 = 100mA).  </td></tr>

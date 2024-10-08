@@ -140,25 +140,26 @@ $(document).ready(function(){initNavTree('usbh_create_app.html',''); initResizab
 </ol>
 <h1><a class="anchor" id="RTE_Software_Component_Selection_USBH"></a>
 RTE Component Selection</h1>
-<p>The RTE Component selection is done in a few steps:</p>
+<p>Only a few steps are necessary to complete the RTE Component selection:</p>
 <ol type="1">
-<li>From the USB Component:<ul>
-<li>Select <b>USB:CORE</b> that provides the basic functionality required for USB communication.</li>
-<li>Set <b>USB:Host</b> to '1'. This creates one USB Host for communication with attached USB Devices.</li>
-<li>Select the desired support for USB Classes (HID/MSC/CDC/Custom Class). For example, select <b>USB:Host:HID</b> to support HID Class Devices only.</li>
+<li>From the <b>USB</b> group:<ul>
+<li>Select <b>USB:CORE</b> component that provides the basic functionality required for USB communication.</li>
+<li>Set <b>USB:Host</b> component instances to '1'. This creates one USB Host for communication with the attached USB Devices.</li>
+<li>Select the desired USB Classes (HID/MSC/CDC/Custom Class) components. For example, select <b>USB:Host:HID</b> to support HID Class Devices only.</li>
 </ul>
 </li>
-<li>From the Drivers Component:<ul>
-<li>Select an appropriate USB Host driver suitable for your application.</li>
+<li>From the <b>CMSIS Driver</b> group:<ul>
+<li>Select an appropriate <b>USB Host driver</b> component suitable for your microcontroller.</li>
 </ul>
 </li>
-<li>From the Device Component:<ul>
-<li>Additional device specific drivers may be required according to the validation output.</li>
+<li>From the <b>Device</b> group:<ul>
+<li>Select the target <b>microcontroller device</b> component.</li>
+<li>Additional device specific driver components may be required according to the validation output.</li>
 </ul>
 </li>
-<li>From the CMSIS Component:<ul>
-<li>Select the <b>CMSIS:CORE</b> to provide the core interface to the processor.</li>
-<li>Select a suitable <b>CMSIS:RTOS2</b> that is a required for the application.</li>
+<li>From the <b>CMSIS</b> group:<ul>
+<li>Select the <b>CMSIS:CORE</b> component to provide the core interface to the processor.</li>
+<li>Select a suitable <b>CMSIS:RTOS2</b> component that is required by the application.</li>
 </ul>
 </li>
 </ol>
@@ -167,7 +168,7 @@ USB Driver and Controller</h1>
 <p>The USB Host Driver and the USB Controller of the microcontroller need to be correctly configured. In particular this means:</p>
 <ul>
 <li>The USB Host Driver selected under the Drivers Component is typically configured with a driver specific configuration header file. Some microcontrollers may require settings that related to a physical layer interface (<b>PHY</b>), the USB <b>VBUS</b> power and <b>Overcurrent</b> protection.</li>
-<li>The USB Controller of the microcontroller needs typically specific clock settings. Consult the user's guide of the microcontroller to understand the requirements. Alternatively you may copy the setup of an USB Host example that is provided for various evaluation boards.</li>
+<li>The USB Controller of the microcontroller needs typically specific clock settings. Consult the user's guide of the microcontroller to understand the requirements. Alternatively you may copy the setup of a similar USB Host configuration provided for various evaluation boards (BSP).</li>
 </ul>
 <h1><a class="anchor" id="USB_Host_Configuration_USBH"></a>
 USB Host Configuration</h1>
@@ -206,25 +207,27 @@ User Code Implementation</h1>
 </table>
 <h1><a class="anchor" id="usbh_debugging"></a>
 Debugging</h1>
-<p>USB Host Component is distributed in a source form and it allows direct code debug. Also debug events are available (via Event Recorder) which provide non-intrusive debugging during runtime.</p>
+<p>USB Host Component is distributed in a source form and it allows direct code debug. Also debug events are available (via Event Recorder) which provide non-intrusive debugging during run-time.</p>
 <p><code>USB_Debug.h</code> configuration file is used to configure the level of debug events.</p>
 <p>The <a class="el" href="group__usbh__evr.html">USB Host:Debug Events</a> describes the events implemented in the USB Device Component.</p>
 <h2><a class="anchor" id="usbHostEvrSupport"></a>
 Event Recorder Support</h2>
 <p> <script>link_ext('Event-Recorder-About');</script> is a powerful tool that provides visibility to the dynamic execution of the program.</p>
-<p>The USB Host Component generates <a class="el" href="group__usbh__evr.html">a broad set of Debug Events</a> for the Event Recorder and implements required infrastructure to interface with it.</p>
+<p>The USB Host Component generates a broad set of <a class="el" href="group__usbh__evr.html">Debug Events</a> for the Event Recorder and implements required infrastructure to interface with it.</p>
 <p>To use the Event Recorder it is required to create an image with event generation support. The necessary steps are:</p>
 <ol type="1">
 <li> <script>link_ext('Event-Recorder-Enable');</script>: in the RTE management dialog enable the software component <b>CMSIS-View:Event Recorder</b>.</li>
 <li>Ensure that Event Recorder is initialized preferably by  <script>link_ext('RTX5-Event-Recorder-Config');</script> if CMSIS-RTOS2 RTX v5 is used, or alternatively by calling the function  <script>link_ext('Event-Recorder-Initialize-Func');</script> in the application code.</li>
 <li><a class="el" href="usbh_create_app.html#usbHostEvrConfig">Event Recorder Configuration</a>: if necessary, adjust default Event Recorder configuration.</li>
+<li><a class="el" href="usbh_create_app.html#usbHostDbgConfig">Configure Event Generation</a> in the <code>USB_Debug.h</code> configuration file.</li>
 <li>Build the application code, download it to the target hardware and start debug session.</li>
 </ol>
 <p>Now, when the USB Host generates event information, it can be viewed in the  <script>link_ext('uv4-Event-Recorder');</script>.</p>
 <h2><a class="anchor" id="usbHostEvrConfig"></a>
 Event Recorder Configuration</h2>
 <p>This section describes the configuration settings for the Event Recorder; refer to  <script>link_ext('RTX5-Event-Recorder-Config');</script> for more information.</p>
-<p><b>USB Event Generation Configuration</b></p>
+<h3><a class="anchor" id="usbHostDbgConfig"></a>
+USB Event Generation Configuration</h3>
 <p>Selecting the <b>USB:CORE</b> will add the file <code>USB_Debug.h</code> to your project. Use this file to set the event generation configuration for USB core, drivers, and device classes separately. The file is common for USB Device and Host components.</p>
 <div class="image">
 <img src="USBH_USB_Debug_h.png" alt=""/>

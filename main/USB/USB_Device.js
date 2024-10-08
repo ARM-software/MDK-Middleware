@@ -14,7 +14,9 @@ var USB_Device =
       ] ],
       [ "Debugging", "usbd_create_app.html#usbd_debugging", [
         [ "Event Recorder Support", "usbd_create_app.html#usbDevEvrSupport", null ],
-        [ "Event Recorder Configuration", "usbd_create_app.html#usbDevEvrConfig", null ],
+        [ "Event Recorder Configuration", "usbd_create_app.html#usbDevEvrConfig", [
+          [ "USB Event Generation Configuration", "usbd_create_app.html#usbDevDbgConfig", null ]
+        ] ],
         [ "Event IDs", "usbd_create_app.html#autotoc_md2", null ]
       ] ]
     ] ],

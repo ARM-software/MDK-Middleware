@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('usb_migration.html',''); initResizable
 </li>
 <li><b>USB Host specific</b>:<ul>
 <li><b>changed source configuration files to headers</b> (<code>USBH_Config_0..3.c</code> -&gt; <code>USBH_Config_0..3.h</code>).</li>
-<li><b>removed OHCI and EHCI drivers (moved to CMSIS-Driver pack)</b>.</li>
+<li><b>removed OHCI and EHCI drivers</b> (moved to <a href="https://github.com/ARM-software/CMSIS-Driver">CMSIS-Driver</a> pack).</li>
 </ul>
 </li>
 </ul>
@@ -198,11 +198,11 @@ USB Host</h2>
 <ul>
 <li>compare the existing <b>USBH_Config_0..3.c</b> files with the new <b>USBH_Config_0..3.h</b> files and copy old values into the new files:<ul>
 <li>the <b>USBH_Config_0..3.h</b> does not contain separate settings for <b>Custom</b>, <b>OHCI</b> or <b>EHCI</b> controllers anymore, so to migrate to the new configuration file note which <b>Controller Interface</b> was selected in the old <b>USBH_Config_0..3.c</b> file and copy appropriate controller's previous settings to the new configuration file.</li>
-<li>for <b>Memory Pool Size</b> update the new value by <b>adding 128</b> since old setting did not include additional necessary space for memory pool internal operation. <img src="usbh_config_migrate.png" alt="" class="inline" title="Old USBD_Config_0..3.c to new USBD_Config_0..3.h"/>    </li>
+<li>for <b>Memory Pool Size</b> update the new value by <b>adding 128</b> since old setting did not include additional space necessary for memory pool internal operation. <img src="usbh_config_migrate.png" alt="" class="inline" title="Old USBD_Config_0..3.c to new USBD_Config_0..3.h"/>    </li>
 </ul>
 </li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd><b>OHCI</b> and <b>EHCI</b> drivers are not a part of the <b>MDK-Middleware</b> anymore but are distributed separately via the <b>CMSIS-Driver</b> pack, so please consult CMSIS-Driver documentation on how to configure and use those drivers. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd><b>OHCI</b> and <b>EHCI</b> drivers are not a part of the <b>MDK-Middleware</b> anymore but are distributed separately via the <a href="https://github.com/ARM-software/CMSIS-Driver">CMSIS-Driver</a> pack, so please consult CMSIS-Driver documentation on how to configure and use those drivers. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

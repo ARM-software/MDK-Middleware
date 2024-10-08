@@ -10,7 +10,9 @@ var USB_Host =
       [ "User Code Implementation", "usbh_create_app.html#USBH_User_Code_Implementation", null ],
       [ "Debugging", "usbh_create_app.html#usbh_debugging", [
         [ "Event Recorder Support", "usbh_create_app.html#usbHostEvrSupport", null ],
-        [ "Event Recorder Configuration", "usbh_create_app.html#usbHostEvrConfig", null ],
+        [ "Event Recorder Configuration", "usbh_create_app.html#usbHostEvrConfig", [
+          [ "USB Event Generation Configuration", "usbh_create_app.html#usbHostDbgConfig", null ]
+        ] ],
         [ "Event IDs", "usbh_create_app.html#autotoc_md13", null ]
       ] ]
     ] ],

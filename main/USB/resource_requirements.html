@@ -141,8 +141,8 @@ Stack Requirements</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyLeft">Stack Size (in Bytes)   </td><td class="markdownTableBodyLeft">+ 512 for USB Device Driver   </td></tr>
 </table>
-<dl class="section note"><dt>Note</dt><dd>The stack size requirements depend on the maximum nesting of exception and ISR execution and therefore on the priority settings of the various interrupt and exception sources.</dd></dl>
-<p>User code that calls API functions of the USB Device Component should have a minimum of 512 Bytes of stack space available. Since API functions are frequently called from threads, the thread stack size should be at least 512 Bytes (see below).</p>
+<p>Stack size for the ISRs is typically configured in the application <code>linker script</code> or device's <code>startup_device.s</code> file. The stack size for the ISRs configures only the stack space that is used by exception and interrupt service routines of the drivers. The stack size requirements depend on the maximum nesting of exception and ISR execution and therefore on the priority settings of the various interrupt and exception sources.</p>
+<p>Stack size for threads is configured in the CMSIS-RTOS2 configuration file. The stack size of the thread that calls USB Device API functions should be at least 512 bytes large.</p>
 <h2><a class="anchor" id="usbd_rtos_req"></a>
 CMSIS-RTOS2 Requirements</h2>
 <p>Currently, the USB Device component works in two different RTOS configurations:</p>
@@ -176,7 +176,7 @@ CMSIS-RTOS2 Requirements</h2>
 </dd></dl>
 <h2><a class="anchor" id="usbd_mem_req"></a>
 Memory Requirements</h2>
-<p>The following table shows the memory requirements for read-only (Flash) and read-write (RAM) memory. These numbers may be used to estimate the total size requirements of the application, but the actual numbers depend on compiler optimizations and target processor and may be therefore slightly different.</p>
+<p>The following table shows the memory requirements for read-only (Flash) and read-write (RAM) memory. These numbers may be used to estimate the total size requirements of the application, but the actual numbers depend on compiler optimizations and target processor and may therefore slightly differ.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Component   </th><th class="markdownTableHeadCenter">RO Memory [Bytes]   </th><th class="markdownTableHeadLeft">RW Memory (Data) [Bytes]    </th></tr>
@@ -200,15 +200,15 @@ USB Host Resource Requirements</h1>
 <p>The following section documents the requirements for the <b>USB Host</b> component. The actual requirements depend on the components used in the application and the configuration of these components.</p>
 <h2><a class="anchor" id="usbh_stack_req"></a>
 Stack Requirements</h2>
-<p>The USB Host Core receives events sent from the interrupt service routine (ISR) of the USB Host Driver. The stack requirements for the ISR are typically less than 512 Bytes. The total stack space required for ISR depends on the interrupt nesting and therefore on the priority settings of these ISR.</p>
+<p>The USB Host Core receives events sent from the interrupt service routine (ISR) of the <b>USB Host Driver</b>. The stack requirements for the ISR are typically less than 512 Bytes. The total stack space required for ISR depends on the interrupt nesting and therefore on the priority settings of these ISR.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Option (under section Stack Configuration)   </th><th class="markdownTableHeadLeft">Increase Value by    </th></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyLeft">Stack Size (in Bytes)   </td><td class="markdownTableBodyLeft">+ 512 for USB Host Driver   </td></tr>
 </table>
-<dl class="section note"><dt>Note</dt><dd>The stack size requirements depend on the maximum nesting of exception and ISR execution and therefore on the priority settings of the various interrupt and exception sources.</dd></dl>
-<p>User code that calls API functions of the USB Host Component should have a minimum of 512 Bytes of stack space available. Since API functions are frequently called from threads, the thread stack size should be at least 512 Bytes.</p>
+<p>Stack size for the ISRs is typically configured in the application <code>linker script</code> or device's <code>startup_device.s</code> file. The stack size for the ISRs configures only the stack space that is used by exception and interrupt service routines of the drivers. The stack size requirements depend on the maximum nesting of exception and ISR execution and therefore on the priority settings of the various interrupt and exception sources.</p>
+<p>Stack size for threads is configured in the CMSIS-RTOS2 configuration file. The stack size of the thread that calls USB Host API functions should be at least 512 bytes large.</p>
 <h2><a class="anchor" id="usbh_rtos_req"></a>
 CMSIS-RTOS2 Requirements</h2>
 <p>Currently, the USB Host component works in two different RTOS configurations:</p>
@@ -236,7 +236,7 @@ CMSIS-RTOS2 Requirements</h2>
 </dd></dl>
 <h2><a class="anchor" id="usbh_mem_req"></a>
 Memory Requirements</h2>
-<p>The following table shows the memory requirements for read-only (Flash) and read-write (RAM) memory. These numbers may be used to estimate the total size requirements of the application, but the actual numbers depend on compiler optimizations and target processor and may be therefore slightly different.</p>
+<p>The following table shows the memory requirements for read-only (Flash) and read-write (RAM) memory. These numbers may be used to estimate the total size requirements of the application, but the actual numbers depend on compiler optimizations and target processor and may therefore slightly differ.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Component   </th><th class="markdownTableHeadCenter">RO Memory [Bytes]   </th><th class="markdownTableHeadCenter">RW Memory (Data) [Bytes]    </th></tr>
