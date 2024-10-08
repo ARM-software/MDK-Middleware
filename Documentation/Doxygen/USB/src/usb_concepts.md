@@ -52,7 +52,7 @@ Examples of functions:
 - An imaging device such as a scanner, printer, or camera.
 - A mass storage device such as a CD-ROM drive, floppy drive, or  DVD drive.
 
-The **logical USB network** appears as a star network to the developer with the host at the centre. Hubs do not introduce
+The **logical USB network** appears as a star network to the developer with the host at the center. Hubs do not introduce
 any programming complexity and are transparent as far as the programmer is concerned. An USB device will work the same way
 whether connected directly to a root-hub or whether connected via intermediate hubs. All USB devices are available as
 addressable nodes in this master/slave network. Only the host can initiate a data transfer in the network.
@@ -277,7 +277,7 @@ voice-over-IP phone might have:
 
 Provisions have been made in the USB component to give the user the option to
 \ref Overriding_Descriptors "override the USB descriptors" if necessary. This can be the case when the device class needs
-to be changed at runtime or other reports need to be created.
+to be changed at run-time or other reports need to be created.
 
 ### Device Descriptor {#USB_Device_Descriptor}
 
@@ -522,7 +522,7 @@ configuration that best matches the requirements of the application software.
       - D4...0: Reserved (reset to zero)
      
       A device configuration that uses power from the bus and a local source reports a non-zero value in *bMaxPower* to indicate the
-      amount of bus power required and sets D6. The actual power source at runtime can be determined using the GetStatus(DEVICE)
+      amount of bus power required and sets D6. The actual power source at run-time can be determined using the GetStatus(DEVICE)
       request. If a device configuration supports remote wakeup, D5 is set to 1.</td>
     </tr>
     <tr>

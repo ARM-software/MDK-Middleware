@@ -2,7 +2,7 @@
 
 This chapter describes the software structure of the USB Host Component and explains its use for creating an USB Host application.
 
-The USB Host Component simplifies software development of microcontroller systems that allow to connect USB Devices.
+The USB Host Component simplifies software development of microcontroller systems that can communicate with USB Devices.
 
 **Attributes of the USB Host Component:**
 

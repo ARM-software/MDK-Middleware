@@ -3,7 +3,7 @@
 \ingroup usbh 
 \brief Event Recorder functions and definitions
 \details
-The USB Host interfaces to the \urlout{Event-Recorder} to provided event information which help you to understand and analyse the operation.
+The USB Host interfaces to the \urlout{Event-Recorder} to provided event information which help you to understand and analyze the operation.
 
 See \ref usbh_debugging for the details on how to configure the USB Host Component to support the \ref usbh_evr in the Event Recorder.
 

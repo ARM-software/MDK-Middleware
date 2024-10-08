@@ -17,7 +17,7 @@
 
 - **USB Host specific**:
   - **changed source configuration files to headers** (`USBH_Config_0..3.c` -> `USBH_Config_0..3.h`).
-  - **removed OHCI and EHCI drivers (moved to CMSIS-Driver pack)**.
+  - **removed OHCI and EHCI drivers** (moved to [CMSIS-Driver](https://github.com/ARM-software/CMSIS-Driver) pack).
 
 The following sections show how to migrate projects from previous version of the MDK-Middleware (v7):
 
@@ -102,8 +102,9 @@ can be seen on the right-hand side.
     was selected in the old **USBH_Config_0..3.c** file and copy appropriate controller's previous settings
     to the new configuration file.
   - for **Memory Pool Size** update the new value by **adding 128** since old setting did not include
-    additional necessary space for memory pool internal operation.
+    additional space necessary for memory pool internal operation.
   ![Old USBD_Config_0..3.c to new USBD_Config_0..3.h](usbh_config_migrate.png)
 
 \note **OHCI** and **EHCI** drivers are not a part of the **MDK-Middleware** anymore but are distributed separately
-      via the **CMSIS-Driver** pack, so please consult CMSIS-Driver documentation on how to configure and use those drivers.
+      via the [CMSIS-Driver](https://github.com/ARM-software/CMSIS-Driver) pack, so please consult CMSIS-Driver documentation
+      on how to configure and use those drivers.

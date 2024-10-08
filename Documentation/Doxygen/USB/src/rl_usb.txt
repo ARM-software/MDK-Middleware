@@ -72,8 +72,8 @@ be used before any class specific functions are called:
 - Initialize the USB Device Controller, Hardware Driver and a specific USB Device using \ref USBD_Initialize.
 - Connect a specific USB Device to the USB Bus by calling \ref USBD_Connect.
 
-These two functions are accompanied \ref USBD_Disconnect and \ref USBD_Uninitialize. Use them to properly disconnect and
-uninitialize the device from the USB bus.
+These two functions are accompanied by the \ref USBD_Disconnect and \ref USBD_Uninitialize functions. 
+Use them to properly disconnect and uninitialize the device from the USB bus.
 
 Static and Run-Time Configuration
 ---------------------------------

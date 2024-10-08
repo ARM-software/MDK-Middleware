@@ -17,12 +17,13 @@ on the interrupt nesting and therefore on the priority settings of these ISR.
 | :---------------------------------------------------------------- | :----------------------
 | Stack Size (in Bytes)                                             | + 512 for USB Device Driver
 
-\note
-The stack size requirements depend on the maximum nesting of exception and ISR execution and therefore on the priority settings
-of the various interrupt and exception sources.
+Stack size for the ISRs is typically configured in the application `linker script` or device's `startup_device.s` file.
+The stack size for the ISRs configures only the stack space that is used by exception and interrupt service routines
+of the drivers. The stack size requirements depend on the maximum nesting of exception and ISR execution and therefore
+on the priority settings of the various interrupt and exception sources.
 
-User code that calls API functions of the USB Device Component should have a minimum of 512 Bytes of stack space available.
-Since API functions are frequently called from threads, the thread stack size should be at least 512 Bytes (see below).
+Stack size for threads is configured in the CMSIS-RTOS2 configuration file.
+The stack size of the thread that calls USB Device API functions should be at least 512 bytes large.
 
 ### CMSIS-RTOS2 Requirements {#usbd_rtos_req}
 
@@ -64,7 +65,7 @@ n is the instance number, m is the endpoint number 1...15
 
 The following table shows the memory requirements for read-only (Flash) and read-write (RAM) memory.
 These numbers may be used to estimate the total size requirements of the application, but the actual numbers depend
-on compiler optimizations and target processor and may be therefore slightly different.
+on compiler optimizations and target processor and may therefore slightly differ.
 
 | Component                   | RO Memory [Bytes] | RW Memory (Data) [Bytes]                                                                                 |
 | :-------------------------- | :---------------: | :--------------------------------------------------------------------------------------------------------|
@@ -83,7 +84,7 @@ components used in the application and the configuration of these components.
 
 ### Stack Requirements {#usbh_stack_req}
 
-The USB Host Core receives events sent from the interrupt service routine (ISR) of the USB Host Driver.
+The USB Host Core receives events sent from the interrupt service routine (ISR) of the **USB Host Driver**.
 The stack requirements for the ISR are typically less than 512 Bytes. The total stack space required for ISR depends
 on the interrupt nesting and therefore on the priority settings of these ISR.
 
@@ -91,12 +92,13 @@ on the interrupt nesting and therefore on the priority settings of these ISR.
 | :---------------------------------------------------------------- | :----------------------
 | Stack Size (in Bytes)                                             | + 512 for USB Host Driver
 
-\note
-The stack size requirements depend on the maximum nesting of exception and ISR execution and therefore on the priority settings
-of the various interrupt and exception sources.
+Stack size for the ISRs is typically configured in the application `linker script` or device's `startup_device.s` file.
+The stack size for the ISRs configures only the stack space that is used by exception and interrupt service routines
+of the drivers. The stack size requirements depend on the maximum nesting of exception and ISR execution and therefore
+on the priority settings of the various interrupt and exception sources.
 
-User code that calls API functions of the USB Host Component should have a minimum of 512 Bytes of stack space available.
-Since API functions are frequently called from threads, the thread stack size should be at least 512 Bytes.
+Stack size for threads is configured in the CMSIS-RTOS2 configuration file.
+The stack size of the thread that calls USB Host API functions should be at least 512 bytes large.
 
 ### CMSIS-RTOS2 Requirements {#usbh_rtos_req}
 
@@ -135,7 +137,7 @@ n is the instance number
 
 The following table shows the memory requirements for read-only (Flash) and read-write (RAM) memory.
 These numbers may be used to estimate the total size requirements of the application, but the actual numbers depend
-on compiler optimizations and target processor and may be therefore slightly different.
+on compiler optimizations and target processor and may therefore slightly differ.
 
 | Component                   | RO Memory [Bytes] | RW Memory (Data) [Bytes]
 | :---------------------------| :---------------: | :-----------------------:
