@@ -288,9 +288,8 @@ User Code Implementation</h1>
 Debugging</h1>
 <p>File System Component can be easily configured to generate debug events and provide dynamic visibility to the component operation.</p>
 <p>File System supports event annotations for the  <script>link_ext('Event-Recorder-About');</script> and make it very easy to analyze the internal operation of the File System Component during application debug. The <a class="el" href="group__evr__gr.html">Debug Events</a> describes the events implemented in the File System Component.</p>
-<p><a class="el" href="create_app.html#fsEvrSupport">Event Recorder Support</a> below explains how to configure File System for debugging.</p>
-<h2><a class="anchor" id="fsEvrSupport"></a>
-Event Recorder Support</h2>
+<h2><a class="anchor" id="fsEvr"></a>
+Event Recorder</h2>
 <p> <script>link_ext('Event-Recorder-About');</script> is a powerful tool that provides visibility to the dynamic execution of the program.</p>
 <p>The File System Component generates <a class="el" href="group__evr__gr.html">a broad set of Debug Events</a> for the Event Recorder and implements required infrastructure to interface with it.</p>
 <p>To use the Event Recorder it is required to create an image with event generation support. The necessary steps are:</p>
@@ -303,7 +302,7 @@ Event Recorder Support</h2>
 </ol>
 <p>Now, when the File System generates event information, it can be viewed in the  <script>link_ext('uv4-Event-Recorder');</script>.</p>
 <h3><a class="anchor" id="fsEvrConfig"></a>
-Event Recorder Configuration</h3>
+Configuration</h3>
 <p>This section describes the configuration settings for the Event Recorder.</p>
 <p><b>File System Event Generation Configuration</b></p>
 <p>Selecting the <b>File System:CORE</b> will add the file <code>FS_Debug.h</code> to your project. Use this file to set the event generation configuration for File System core and drivers separately.</p>

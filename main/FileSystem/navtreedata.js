@@ -41,8 +41,8 @@ var NAVTREE =
       [ "System Resource Configuration", "create_app.html#system_configuration", null ],
       [ "User Code Implementation", "create_app.html#User_Code_Implementation", null ],
       [ "Debugging", "create_app.html#fs_debugging", [
-        [ "Event Recorder Support", "create_app.html#fsEvrSupport", [
-          [ "Event Recorder Configuration", "create_app.html#fsEvrConfig", null ],
+        [ "Event Recorder", "create_app.html#fsEvr", [
+          [ "Configuration", "create_app.html#fsEvrConfig", null ],
           [ "Event IDs", "create_app.html#autotoc_md0", null ]
         ] ]
       ] ]

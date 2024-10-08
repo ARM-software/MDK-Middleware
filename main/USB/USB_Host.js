@@ -9,11 +9,10 @@ var USB_Host =
       [ "Configuration of Attachable USB Devices", "usbh_create_app.html#USB_Device_Class_Configuration_USBH", null ],
       [ "User Code Implementation", "usbh_create_app.html#USBH_User_Code_Implementation", null ],
       [ "Debugging", "usbh_create_app.html#usbh_debugging", [
-        [ "Event Recorder Support", "usbh_create_app.html#usbHostEvrSupport", null ],
-        [ "Event Recorder Configuration", "usbh_create_app.html#usbHostEvrConfig", [
-          [ "USB Event Generation Configuration", "usbh_create_app.html#usbHostDbgConfig", null ]
-        ] ],
-        [ "Event IDs", "usbh_create_app.html#autotoc_md13", null ]
+        [ "Event Recorder", "usbh_create_app.html#usbHostEvr", [
+          [ "Configuration", "usbh_create_app.html#usbHostEvrConfig", null ],
+          [ "Event IDs", "usbh_create_app.html#autotoc_md13", null ]
+        ] ]
       ] ]
     ] ],
     [ "Examples", "usbh_examples.html", "usbh_examples" ]

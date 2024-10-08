@@ -13,11 +13,10 @@ var USB_Device =
         [ "Dynamic change", "usbd_create_app.html#autotoc_md1", null ]
       ] ],
       [ "Debugging", "usbd_create_app.html#usbd_debugging", [
-        [ "Event Recorder Support", "usbd_create_app.html#usbDevEvrSupport", null ],
-        [ "Event Recorder Configuration", "usbd_create_app.html#usbDevEvrConfig", [
-          [ "USB Event Generation Configuration", "usbd_create_app.html#usbDevDbgConfig", null ]
-        ] ],
-        [ "Event IDs", "usbd_create_app.html#autotoc_md2", null ]
+        [ "Event Recorder", "usbd_create_app.html#usbDevEvr", [
+          [ "Configuration", "usbd_create_app.html#usbDevEvrConfig", null ],
+          [ "Event IDs", "usbd_create_app.html#autotoc_md2", null ]
+        ] ]
       ] ]
     ] ],
     [ "Examples", "usbd_examples.html", "usbd_examples" ]
