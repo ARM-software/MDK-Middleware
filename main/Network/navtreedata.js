@@ -73,11 +73,9 @@ var NAVTREE =
       ] ],
       [ "Using Secure Services", "secure_communication.html#use_secure_components", [
         [ "HTTPS Server", "secure_communication.html#https_server", [
-          [ "Converting the HTTP server to HTTPS", "secure_communication.html#add_ssl_to_http", null ],
           [ "Creating your own certificates and keys", "secure_communication.html#cert_creation", null ]
         ] ],
         [ "SMTPS Client", "secure_communication.html#smtps_client", [
-          [ "Converting the SMTP client to SMTPS", "secure_communication.html#add_ssl_to_smtp", null ],
           [ "Adding server root CA certificate", "secure_communication.html#cert_adding", null ]
         ] ]
       ] ]

@@ -1,6 +1,6 @@
 var NAVTREEINDEX8 =
 {
-"index.html":[0],
+"index.html":[],
 "index.html#doc_structure":[0,0],
 "migration_guide.html":[9],
 "migration_guide.html#mig_nw_configuration":[9,1],
@@ -174,13 +174,11 @@ var NAVTREEINDEX8 =
 "rl__net_8h.html#gaf58ca452912a3840e742297d4e799508ad7e29075fb900f020a10b9ea7a888ab6":[10,3,2,3,0,1],
 "secure_communication.html":[4],
 "secure_communication.html#add_mbedtls":[4,0,3],
-"secure_communication.html#add_ssl_to_http":[4,1,0,0],
-"secure_communication.html#add_ssl_to_smtp":[4,1,1,0],
 "secure_communication.html#autotoc_md4":[4,0,0],
 "secure_communication.html#autotoc_md5":[4,0,1],
 "secure_communication.html#autotoc_md6":[4,0,2],
-"secure_communication.html#cert_adding":[4,1,1,1],
-"secure_communication.html#cert_creation":[4,1,0,1],
+"secure_communication.html#cert_adding":[4,1,1,0],
+"secure_communication.html#cert_creation":[4,1,0,0],
 "secure_communication.html#https_server":[4,1,0],
 "secure_communication.html#smtps_client":[4,1,1],
 "secure_communication.html#use_mbed_tls":[4,0],

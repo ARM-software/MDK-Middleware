@@ -245,8 +245,8 @@ var NAVTREEINDEX6 =
 "group__net__evr__wifi__func.html#gaf7f9edac017ba43472e03cd70cb72400":[10,8,3,40],
 "group__net__evr__wifi__func.html#gafe0fa2a38cf3c37ad899236dfb15e620":[10,8,3,43],
 "group__network__structs.html":[10,4,1],
-"group__network__structs.html#a0444de3555073772ebd025a838b9a911":[10,4,1,0,1],
 "group__network__structs.html#a0444de3555073772ebd025a838b9a911":[10,4,1,1,1],
+"group__network__structs.html#a0444de3555073772ebd025a838b9a911":[10,4,1,0,1],
 "group__network__structs.html#a110c5dd7725b86823c9408661a3f854b":[10,4,1,0,0],
 "group__network__structs.html#a8e0798404bf2cf5dabb84c5ba9a4f236":[10,4,1,0,2],
 "group__network__structs.html#a8e0798404bf2cf5dabb84c5ba9a4f236":[10,4,1,1,2]

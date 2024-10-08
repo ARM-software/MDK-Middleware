@@ -249,5 +249,5 @@ var NAVTREEINDEX7 =
 "group__ws__user__api.html#gaed5c02387e7f21bbcd0114620297c08f":[10,1,0,2,8],
 "group__ws__web__pages.html":[10,1,0,1],
 "group__ws__web__technologies.html":[10,1,0,0],
-"index.html":[]
+"index.html":[0]
 };
