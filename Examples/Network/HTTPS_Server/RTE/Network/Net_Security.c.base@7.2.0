@@ -21,37 +21,37 @@ extern const uint8_t NetSecurity_ServerCA[];
 //NS_SERVER_CA_START
 #warning "Using a test Server CA certificate!"
 /*
-  To disable this warning, either provide your own certificates and keys,
-  or run the "Net_Security.bat" batch file that regenerates the server
-  certificates and keys in this file.
+  To disable this warning, provide your own server CA certificate.
 */
-// Issuer:    CN="PolarSSL Test CA", O="PolarSSL", C="NL"
-// Subject:   CN="PolarSSL Test CA", O="PolarSSL", C="NL"
-// Valid To:  Feb 12 14:44:00 2021 GMT
-// Serial No: 0
-// CA Cert:   Yes
-// Key Size:  2048-bit (RSA)
-"-----BEGIN CERTIFICATE-----\r\n"
-"MIIDhzCCAm+gAwIBAgIBADANBgkqhkiG9w0BAQUFADA7MQswCQYDVQQGEwJOTDER\r\n"
-"MA8GA1UEChMIUG9sYXJTU0wxGTAXBgNVBAMTEFBvbGFyU1NMIFRlc3QgQ0EwHhcN\r\n"
-"MTEwMjEyMTQ0NDAwWhcNMjEwMjEyMTQ0NDAwWjA7MQswCQYDVQQGEwJOTDERMA8G\r\n"
-"A1UEChMIUG9sYXJTU0wxGTAXBgNVBAMTEFBvbGFyU1NMIFRlc3QgQ0EwggEiMA0G\r\n"
-"CSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDA3zf8F7vglp0/ht6WMn1EpRagzSHx\r\n"
-"mdTs6st8GFgIlKXsm8WL3xoemTiZhx57wI053zhdcHgH057Zk+i5clHFzqMwUqny\r\n"
-"50BwFMtEonILwuVA+T7lpg6z+exKY8C4KQB0nFc7qKUEkHHxvYPZP9al4jwqj+8n\r\n"
-"YMPGn8u67GB9t+aEMr5P+1gmIgNb1LTV+/Xjli5wwOQuvfwu7uJBVcA0Ln0kcmnL\r\n"
-"R7EUQIN9Z/SG9jGr8XmksrUuEvmEF/Bibyc+E1ixVA0hmnM3oTDPb5Lc9un8rNsu\r\n"
-"KNF+AksjoBXyOGVkCeoMbo4bF6BxyLObyavpw/LPh5aPgAIynplYb6LVAgMBAAGj\r\n"
-"gZUwgZIwDAYDVR0TBAUwAwEB/zAdBgNVHQ4EFgQUtFrkpbPe0lL2udWmlQ/rPrzH\r\n"
-"/f8wYwYDVR0jBFwwWoAUtFrkpbPe0lL2udWmlQ/rPrzH/f+hP6Q9MDsxCzAJBgNV\r\n"
-"BAYTAk5MMREwDwYDVQQKEwhQb2xhclNTTDEZMBcGA1UEAxMQUG9sYXJTU0wgVGVz\r\n"
-"dCBDQYIBADANBgkqhkiG9w0BAQUFAAOCAQEAuP1U2ABUkIslsCfdlc2i94QHHYeJ\r\n"
-"SsR4EdgHtdciUI5I62J6Mom+Y0dT/7a+8S6MVMCZP6C5NyNyXw1GWY/YR82XTJ8H\r\n"
-"DBJiCTok5DbZ6SzaONBzdWHXwWwmi5vg1dxn7YxrM9d0IjxM27WNKs4sDQhZBQkF\r\n"
-"pjmfs2cb4oPl4Y9T9meTx/lvdkRYEug61Jfn6cA+qHpyPYdTH+UshITnmp5/Ztkf\r\n"
-"m/UTSLBNFNHesiTZeH31NcxYGdHSme9Nc/gfidRa0FLOCfWxRlFqAI47zG9jAQCZ\r\n"
-"7Z2mCGDNMhjQc+BYcdnl0lPXjdDK6V0qCg1dVewhUBcW5gZKzV7e9+DpVA==\r\n"
-"-----END CERTIFICATE-----\r\n";
+// Subject:       CN=Test CA, O=MyOrganization, C=US
+// Issuer:        CN=Test CA, O=MyOrganization, C=US
+// Valid From:    2020-01-01 00:00:00
+// Valid To:      2030-12-31 23:59:59
+// Key Size:      2048
+// Key Algorithm: RSA
+// Signature:     sha256RSA
+// Serial Number: 1
+"-----BEGIN CERTIFICATE-----\n"
+"MIIDUjCCAjqgAwIBAgIBATANBgkqhkiG9w0BAQsFADA4MRAwDgYDVQQDDAdUZXN0\n"
+"IENBMRcwFQYDVQQKDA5NeU9yZ2FuaXphdGlvbjELMAkGA1UEBhMCVVMwHhcNMjAw\n"
+"MTAxMDAwMDAwWhcNMzAxMjMxMjM1OTU5WjA4MRAwDgYDVQQDDAdUZXN0IENBMRcw\n"
+"FQYDVQQKDA5NeU9yZ2FuaXphdGlvbjELMAkGA1UEBhMCVVMwggEiMA0GCSqGSIb3\n"
+"DQEBAQUAA4IBDwAwggEKAoIBAQDJ3ix/lcTQTXRxjoDuc0pDY2/Kx1qTA6R7INQT\n"
+"FcZ7T2Y2+pHhMBPh/yDYzvqjEQHfD/nHbaw7oigo0opjeQV1XIROgGI4JLT6G5Pi\n"
+"1HVIb/5SxVI5/3AS6gpKr+RHXBNqlgfhcSAMR9jqaP5fojy0cNEOU6okBmHzn1Dp\n"
+"9mVIBR8/LMl02oHSjS1myDIFJutmEu2+mL7fap6AverGEj/4uz4NPMAQpWhPO+rh\n"
+"cEYhz0tgmC3so22Dsvb9WSns0+YVNJhT2e3IHALfCroDeRQ23QQ91Y64b07HOCO+\n"
+"n7KkWjo6zo2mV6XPdXjxKPzoKypUut5ak724vvg/QioT3ZBPAgMBAAGjZzBlMA8G\n"
+"A1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFCjnB0BpoPKCptJNs0vCPzDZ5Dg0MB8G\n"
+"A1UdIwQYMBaAFCjnB0BpoPKCptJNs0vCPzDZ5Dg0MBIGA1UdEQQLMAmCB215X2hv\n"
+"c3QwDQYJKoZIhvcNAQELBQADggEBALQ5/sitrGD/yKS1NDetii5pbj185JodKzHh\n"
+"K9JJXDGYXUVVt6sl/ZNsQ3MM+Y6xmfjF3wpTj+3NOV4vF4blCrzDUvUPuMl4jIXC\n"
+"I9VceSxJWPaMp/RCvgOlYyxtBIDQGGdqdj563DENswsw/Kj8LfVjmn7qVcRj8sVT\n"
+"n1rg5k05UrJ8YDSK6bQW4dGrHTW6zcLCgrvHW2KrcxmsDpWjcN586og9jPfDvwOE\n"
+"+vPtXrZNtBKwNrvRbjGJPVro1Alflnr065K039uJpvSF/sEEEMI4e8nyYPvOjmHu\n"
+"pv1+rKQ13wYvuGf9460TsLsC+cw+m1ViJDl+a4CW14AfwAXm0Gs=\n"
+"-----END CERTIFICATE-----\n"
+;
 //NS_SERVER_CA_END
 
 // Server certificate
@@ -60,36 +60,37 @@ extern const uint8_t NetSecurity_ServerCert[];
 //NS_SERVER_CERT_START
 #warning "Using a test Server certificate!"
 /*
-  To disable this warning, either provide your own certificates and keys,
-  or run the "Net_Security.bat" batch file that regenerates the server
-  certificates and keys in this file.
+  To disable this warning, provide your own server certificate.
 */
-// Issuer:    CN="PolarSSL Test CA", O="PolarSSL", C="NL"
-// Subject:   CN="localhost",        O="PolarSSL", C="NL"
-// Valid To:  Feb 12 14:44:06 2021 GMT
-// Serial No: 2
-// CA Cert:   No
-// Key Size:  2048-bit (RSA)
-"-----BEGIN CERTIFICATE-----\r\n"
-"MIIDNzCCAh+gAwIBAgIBAjANBgkqhkiG9w0BAQUFADA7MQswCQYDVQQGEwJOTDER\r\n"
-"MA8GA1UEChMIUG9sYXJTU0wxGTAXBgNVBAMTEFBvbGFyU1NMIFRlc3QgQ0EwHhcN\r\n"
-"MTEwMjEyMTQ0NDA2WhcNMjEwMjEyMTQ0NDA2WjA0MQswCQYDVQQGEwJOTDERMA8G\r\n"
-"A1UEChMIUG9sYXJTU0wxEjAQBgNVBAMTCWxvY2FsaG9zdDCCASIwDQYJKoZIhvcN\r\n"
-"AQEBBQADggEPADCCAQoCggEBAMFNo93nzR3RBNdJcriZrA545Do8Ss86ExbQWuTN\r\n"
-"owCIp+4ea5anUrSQ7y1yej4kmvy2NKwk9XfgJmSMnLAofaHa6ozmyRyWvP7BBFKz\r\n"
-"NtSj+uGxdtiQwWG0ZlI2oiZTqqt0Xgd9GYLbKtgfoNkNHC1JZvdbJXNG6AuKT2kM\r\n"
-"tQCQ4dqCEGZ9rlQri2V5kaHiYcPNQEkI7mgM8YuG0ka/0LiqEQMef1aoGh5EGA8P\r\n"
-"hYvai0Re4hjGYi/HZo36Xdh98yeJKQHFkA4/J/EwyEoO79bex8cna8cFPXrEAjya\r\n"
-"HT4P6DSYW8tzS1KW2BGiLICIaTla0w+w3lkvEcf36hIBMJcCAwEAAaNNMEswCQYD\r\n"
-"VR0TBAIwADAdBgNVHQ4EFgQUpQXoZLjc32APUBJNYKhkr02LQ5MwHwYDVR0jBBgw\r\n"
-"FoAUtFrkpbPe0lL2udWmlQ/rPrzH/f8wDQYJKoZIhvcNAQEFBQADggEBAJxnXClY\r\n"
-"oHkbp70cqBrsGXLybA74czbO5RdLEgFs7rHVS9r+c293luS/KdliLScZqAzYVylw\r\n"
-"UfRWvKMoWhHYKp3dEIS4xTXk6/5zXxhv9Rw8SGc8qn6vITHk1S1mPevtekgasY5Y\r\n"
-"iWQuM3h4YVlRH3HHEMAD1TnAexfXHHDFQGe+Bd1iAbz1/sH9H8l4StwX6egvTK3M\r\n"
-"wXRwkKkvjKaEDA9ATbZx0mI8LGsxSuCqe9r9dyjmttd47J1p1Rulz3CLzaRcVIuS\r\n"
-"RRQfaD8neM9c1S/iJ/amTVqJxA1KOdOS5780WhPfSArA+g4qAmSjelc3p4wWpha8\r\n"
-"zhuYwjVuX6JHG0c=\r\n"
-"-----END CERTIFICATE-----\r\n";
+// Subject:       CN=my_host, O=MyOrganization, C=US
+// Issuer:        CN=Test CA, O=MyOrganization, C=US
+// Valid From:    2020-01-01 00:00:00
+// Valid To:      2030-12-31 23:59:59
+// Key Size:      2048
+// Key Algorithm: RSA
+// Signature:     sha256RSA
+// Serial Number: 2
+"-----BEGIN CERTIFICATE-----\n"
+"MIIDTDCCAjSgAwIBAgIBAjANBgkqhkiG9w0BAQsFADA4MRAwDgYDVQQDDAdUZXN0\n"
+"IENBMRcwFQYDVQQKDA5NeU9yZ2FuaXphdGlvbjELMAkGA1UEBhMCVVMwHhcNMjAw\n"
+"MTAxMDAwMDAwWhcNMzAxMjMxMjM1OTU5WjA4MRAwDgYDVQQDDAdteV9ob3N0MRcw\n"
+"FQYDVQQKDA5NeU9yZ2FuaXphdGlvbjELMAkGA1UEBhMCVVMwggEiMA0GCSqGSIb3\n"
+"DQEBAQUAA4IBDwAwggEKAoIBAQDLSSC7xVIin0z13QAzJpJXMFCTEunT0n3r8onh\n"
+"7OfAGNTWI6nbrPKGdmlvGdhm7wr40X1bvKyVl2UVuHB8FcUuZcIdoskZKczCMgo4\n"
+"03Lze9Vf2mH/e8stwSL24s5kNomy7JHuhqXnaConi3PWMYi3jnMhI3DEypU9GDYb\n"
+"bzihrgv6mwjjtMWH0Z2FWeQmPmXIupEozwpeen5TfnEuE7AhOLy7juViUPdod6HE\n"
+"DLkf0sJ0ubZKCPJRxboCZmVL2H7AJJf58kBhj2DT3OrsaEmGSBaPGNwEpsaqi0Tc\n"
+"+y8l5aDr0h5qmKpI7Ae0x1pYKKD+EzEl1j1VadNN56L2DWLFAgMBAAGjYTBfMAkG\n"
+"A1UdEwQCMAAwHQYDVR0OBBYEFBVBouVm0owt0mTjLvnla4Tm/2svMB8GA1UdIwQY\n"
+"MBaAFCjnB0BpoPKCptJNs0vCPzDZ5Dg0MBIGA1UdEQQLMAmCB215X2hvc3QwDQYJ\n"
+"KoZIhvcNAQELBQADggEBAE87JMPsEHxIX4VuSfB8QTQHWQ003ypRQm2uA5mXyIda\n"
+"blIDKmgO/dRnZCwXyRBHg2bZr7C6n3GEh87xJNSTx5BYBsDmfVE2iIsuF4ACLt/W\n"
+"U0N3/mXEUxFi3ImISEVSecsB7zdJ3jkGGK4HtKiFNFnDCmBiLIH8G2RUcm1WCvsh\n"
+"1r4L/lw7GfaZkd34rvYaMdq6DMw9e1YJ8AeJUYet9CyFEuJINORd5iKT3GIdeoap\n"
+"bxJPNa2vea4vb79/88b7C8NbertLPLYs2M8+uyGajcwMmjGSrv8x2qTm5dMLOWLO\n"
+"Vy9JQ8kD9vFPN2DfNovTIukNbRGw0nRC0qlpWVnPXBo=\n"
+"-----END CERTIFICATE-----\n"
+;
 //NS_SERVER_CERT_END
 
 // Server private key
@@ -98,37 +99,36 @@ extern const uint8_t NetSecurity_ServerKey[];
 //NS_SERVER_KEY_START
 #warning "Using a test Server private key!"
 /*
-  To disable this warning, either provide your own certificates and keys,
-  or run the "Net_Security.bat" batch file that regenerates the server
-  certificates and keys in this file.
+  To disable this warning, generate your own server keys.
 */
-"-----BEGIN RSA PRIVATE KEY-----\r\n"
-"MIIEpAIBAAKCAQEAwU2j3efNHdEE10lyuJmsDnjkOjxKzzoTFtBa5M2jAIin7h5r\r\n"
-"lqdStJDvLXJ6PiSa/LY0rCT1d+AmZIycsCh9odrqjObJHJa8/sEEUrM21KP64bF2\r\n"
-"2JDBYbRmUjaiJlOqq3ReB30Zgtsq2B+g2Q0cLUlm91slc0boC4pPaQy1AJDh2oIQ\r\n"
-"Zn2uVCuLZXmRoeJhw81ASQjuaAzxi4bSRr/QuKoRAx5/VqgaHkQYDw+Fi9qLRF7i\r\n"
-"GMZiL8dmjfpd2H3zJ4kpAcWQDj8n8TDISg7v1t7HxydrxwU9esQCPJodPg/oNJhb\r\n"
-"y3NLUpbYEaIsgIhpOVrTD7DeWS8Rx/fqEgEwlwIDAQABAoIBAQCXR0S8EIHFGORZ\r\n"
-"++AtOg6eENxD+xVs0f1IeGz57Tjo3QnXX7VBZNdj+p1ECvhCE/G7XnkgU5hLZX+G\r\n"
-"Z0jkz/tqJOI0vRSdLBbipHnWouyBQ4e/A1yIJdlBtqXxJ1KE/ituHRbNc4j4kL8Z\r\n"
-"/r6pvwnTI0PSx2Eqs048YdS92LT6qAv4flbNDxMn2uY7s4ycS4Q8w1JXnCeaAnYm\r\n"
-"WYI5wxO+bvRELR2Mcz5DmVnL8jRyml6l6582bSv5oufReFIbyPZbQWlXgYnpu6He\r\n"
-"GTc7E1zKYQGG/9+DQUl/1vQuCPqQwny0tQoX2w5tdYpdMdVm+zkLtbajzdTviJJa\r\n"
-"TWzL6lt5AoGBAN86+SVeJDcmQJcv4Eq6UhtRr4QGMiQMz0Sod6ettYxYzMgxtw28\r\n"
-"CIrgpozCc+UaZJLo7UxvC6an85r1b2nKPCLQFaggJ0H4Q0J/sZOhBIXaoBzWxveK\r\n"
-"nupceKdVxGsFi8CDy86DBfiyFivfBj+47BbaQzPBj7C4rK7UlLjab2rDAoGBAN2u\r\n"
-"AM2gchoFiu4v1HFL8D7lweEpi6ZnMJjnEu/dEgGQJFjwdpLnPbsj4c75odQ4Gz8g\r\n"
-"sw9lao9VVzbusoRE/JGI4aTdO0pATXyG7eG1Qu+5Yc1YGXcCrliA2xM9xx+d7f+s\r\n"
-"mPzN+WIEg5GJDYZDjAzHG5BNvi/FfM1C9dOtjv2dAoGAF0t5KmwbjWHBhcVqO4Ic\r\n"
-"BVvN3BIlc1ue2YRXEDlxY5b0r8N4XceMgKmW18OHApZxfl8uPDauWZLXOgl4uepv\r\n"
-"whZC3EuWrSyyICNhLY21Ah7hbIEBPF3L3ZsOwC+UErL+dXWLdB56Jgy3gZaBeW7b\r\n"
-"vDrEnocJbqCm7IukhXHOBK8CgYEAwqdHB0hqyNSzIOGY7v9abzB6pUdA3BZiQvEs\r\n"
-"3LjHVd4HPJ2x0N8CgrBIWOE0q8+0hSMmeE96WW/7jD3fPWwCR5zlXknxBQsfv0gP\r\n"
-"3BC5PR0Qdypz+d+9zfMf625kyit4T/hzwhDveZUzHnk1Cf+IG7Q+TOEnLnWAWBED\r\n"
-"ISOWmrUCgYAFEmRxgwAc/u+D6t0syCwAYh6POtscq9Y0i9GyWk89NzgC4NdwwbBH\r\n"
-"4AgahOxIxXx2gxJnq3yfkJfIjwf0s2DyP0kY2y6Ua1OeomPeY9mrIS4tCuDQ6LrE\r\n"
-"TB6l9VGoxJL4fyHnZb8L5gGvnB1bbD8cL6YPaDiOhcRseC9vBiEuVg==\r\n"
-"-----END RSA PRIVATE KEY-----\r\n";
+"-----BEGIN RSA PRIVATE KEY-----\n"
+"MIIEpAIBAAKCAQEAy0kgu8VSIp9M9d0AMyaSVzBQkxLp09J96/KJ4eznwBjU1iOp\n"
+"26zyhnZpbxnYZu8K+NF9W7yslZdlFbhwfBXFLmXCHaLJGSnMwjIKONNy83vVX9ph\n"
+"/3vLLcEi9uLOZDaJsuyR7oal52gqJ4tz1jGIt45zISNwxMqVPRg2G284oa4L+psI\n"
+"47TFh9GdhVnkJj5lyLqRKM8KXnp+U35xLhOwITi8u47lYlD3aHehxAy5H9LCdLm2\n"
+"SgjyUcW6AmZlS9h+wCSX+fJAYY9g09zq7GhJhkgWjxjcBKbGqotE3PsvJeWg69Ie\n"
+"apiqSOwHtMdaWCig/hMxJdY9VWnTTeei9g1ixQIDAQABAoIBAERDJynGheE4awh4\n"
+"kNOcVTHP+I6aoEhP+5bal/B0tBGuhPHvgd9RgRMj+h2jqSZPiPiqqBTBE5ccAoa7\n"
+"q5IPYWpGI1v+SNcZUTe4w/P3FTer0qfgVl4LPNv9afdLjBDcu3qItCxLrLQ7J0Sm\n"
+"MFyxv34b6I8tLnX2rQyZ77lgrLylcwlDer1wFnbPEqnT47AHd3Vik8jxFGMaUnp7\n"
+"2obrwqW5Bi4OS/rcfEzvS22y0s7BDgjgO8pIOUXDegRS9fLt9rEalZDFzCBeZ8bm\n"
+"yIN8eMSjnxp1Usg0NHBImypTZourb9d3M5Ia8u5vjbs6ZdxPH/XUWvtVzgg67fBc\n"
+"C+V0mzUCgYEA5zdGbYbXgK9sFupKwzoB3uhKOLLahvKVt+TalVdYL6yatyoPobt2\n"
+"DctwaLr1TuuP1F9BIEu8LfnG3wn62DSdhFQsrBt7UQ4kCbOHbbyTjAlkBGQFJp8J\n"
+"YMKPKs+WLATXPRiHU5NuGBbsf0MF9B3zU4bSPX7nHCHuEBD0DywYPycCgYEA4RNt\n"
+"UIrcpFPQGUh47u0zPQLTF97EWa5smlu4tFBKWCGQWsDfFQO8jKbiwwWxGYZgxS8q\n"
+"Gq5fJtlpbLrfOSChbnTvG48LT4aqp7yxlHjoVph9nQy476WtEkjxRzYLTXj/1N9p\n"
+"sy0UP2C+hB6ai5JWYfyDihDmBF0DMyQUvTIBgjMCgYEAjLnH08HOSDR8xTW0az5T\n"
+"BSi8g+XXu2rKVTKlF2Ah/GJBiFnBSd6e66Z2tEeWJoKY99lB+jYeQp1TvUyFsDHV\n"
+"7USOK/JOC/dfV8g9FT1BUGomxcVanTcOriW8nYHbFM+dcUIMm4GP8HmDV7GjXgEc\n"
+"qCnWrDcg0q6UBpNK+DEOUOECgYEAjJvEWOLHQGmTwZfC5RCOR/kxwuHKLHSJKE1Q\n"
+"sGTQbQpa0jdXphs1eXDwjQFLSDTo04bJeO2iR/TepayAs4GtGAI5NjBA0qfAiRWa\n"
+"orR+AUs2fhxqlFweKSQkh2Y93WJQAL6pm+P3mDhqDMPJrJP5HzHPQzuXVvZ8f0B1\n"
+"LFTHGH0CgYAXFoowvsSO7WfxOAzNOczJk0h/ElZHhzSMG6ucOualSqFvpZrh1PNO\n"
+"JkPwjqgJ+TPE1WsswYIhsIt0pNW9vEm97sw22LlHBsN6obnX4Mxx+nV83/CpMiVl\n"
+"6A9XBJ+eis/Thz3Wt3Bkq1KnaABoWdUgxmh7QMQmsqpWrzWxNkhOTQ==\n"
+"-----END RSA PRIVATE KEY-----\n"
+;
 //NS_SERVER_KEY_END
 
 extern const uint32_t NetSecurity_ServerCA_Len;
