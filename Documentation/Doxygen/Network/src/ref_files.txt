@@ -60,7 +60,6 @@ Directory                      | Description
 ./Components/Network/Interface | Interface files to other Middleware Components. Files are included when a related component is selected (\b read-only).
 ./Components/Network/Source    | Source files for the Network component.
 ./Components/Network/Template  | \urlout{uv4_ca_sourcefiles} simplify creating application specific functionality. Adapt the template functions to the application's needs.
-./Components/Network/Tool      | Utilities for creating your own secure certificates and keys.
 
 
 \b Header \b Files
