@@ -39,7 +39,7 @@ project:
       type: Board
 
   executes:
-    - execute: Run FCARM
+    - execute: Run_FCARM
       run: ${CMAKE_COMMAND} -G Ninja -S $input(0)$ -B ${CMAKE_BINARY_DIR}/FCARM/$Project$.$BuildType$+$TargetType$ -DINPUT_DIRECTORY=$input(1)$ -DOUTPUT=$output$ && ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}/FCARM/$Project$.$BuildType$+$TargetType$ -- --quiet
       always:
       input:
