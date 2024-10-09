@@ -929,6 +929,7 @@ INPUT                  = src/usb.md \
                          src/usbd_example_hid.md \
                          src/usbd_example_msc.md \
                          src/usbd_example_cdc.md \
+                         src/usbd_host_app.md \
                          src/usb_host.md \
                          src/usbh_create_app.md \
                          src/usbh_examples.md \

@@ -1,62 +1,133 @@
-# USB Host Computer Applications {#usb_sw_utilities}
+# PC Utilities {#usbd_pc_utilities}
 
-Most of the available USB Device Classes are directly supported in operating systems. There is no need to install a particular driver on the USB Host Computer to connect to the USB Device peripheral.
+The USB Component comes with a set of software utilities that you can use as templates to create your own programs for a PC. The utilities are specific for the different USB Device Classes. These are the available utilities:
 
-Some software needs to be written for the USB Host Computer when USB Driver classes are used to provide application specific functionality. For example, the USB HID Device Class may be used for generic data exchange. Therefore the data exchange interface needs to be developed at the USB Host Computer.
+ - The \ref hid_client_app  can be used to interact with a USB HID Device. You can toggle LEDs on the development board and check the state of the on-board push-buttons.
+\if WINUSB_APP
+ - The \ref winusb_app can be used to test the connection between a PC and the USB Device. This application uses WinUSB driver on a PC and demonstrates the basics of using the Microsoft Foundation Classes and can be used as a starting point for writing your application.
+\endif
 
-Refer to the following web pages for more information on USB Host software development:
+## HID Client {#hid_client_app}
 
- - [USB Serial Bus (USB)](https://learn.microsoft.com/en-us/windows-hardware/drivers/) for Microsoft Windows.
- - [Linux USB Project](http://www.linux-usb.org/) for Linux based operating systems.
- - [DriverKit](https://developer.apple.com/documentation/driverkit) for Apple OS.
+The **HID Client** utility is a graphical application for a PC (running Microsoft Windows) that can be used for testing the \ref usbd_example_hid implementation.
+It is available as a part of [Keil MDK uVision](https://developer.arm.com/documentation/101407/latest/About-uVision/Installation)
+and the executable file `HID_Client.exe` is available in the `<mdk_install_dir>/ARM/Utilities/HID_Client/Release` folder, where `<mdk_install_dir>`
+refers to the Keil MDK uVision installation directory.
+This program runs stand-alone without installation.
 
-## Software Utilities
+To check the **HID Client** utility with your board, do the following:
 
-The USB Component comes with a set of software utilities that you can use as templates to create your own programs for the USB Host computer. The utilities are specific for the different USB Device Classes. These are the available utilities:
+-# Download the \ref usbd_example_hid example application to your board.
+-# Verify all jumper settings on the board.
+-# Connect the board to a PC. The PC should recognize the HID device and install the correct driver automatically.
+-# Run `HIDClient.exe` application.
+-# Select the **Device** to establish the communication channel.
+-# Test the application and HID device operation by pressing the buttons on your development board and watch **Inputs** change
+   and/or check/un-check the check-boxes in the **Outputs** to see the LEDs on the board change state.
 
- - The \ref hid_client_app  can be used to interact with an USB HID Device. You can toggle LEDs on the development board and check the state of the on-board push-buttons.
- - The \ref winusb_app can be used to test the connection between the USB Host PC and the client device. This application uses WinUSB driver on the USB Host PC and demonstrates the basics of using the Microsoft Foundation Classes and can be used as a starting point for writing your application.
+![HID Client app](hid_client_test.png)
+
+### Source Code
+
+The source code of the HID Client application is available in `<install_dir>/ARM/Utilities/HID_Client`.
+A Visual Studio 2010 (or later) based solution named `HIDClient_VS2010.sln` is available.
+The following is a summary of what you will find in each of the files that make up your **HID Client** application.
+
+![HID Client app solution view](HIDClientSolutionExplorer.png)
+
+**Header Files**
+
+- `HID.h` includes the function declarations of the functions that are defined in `HID.cpp`.
+- `HIDClient.h` is the main header file for the application. It includes other project specific headers (including Resource.h)
+  and declares the `CHIDClientApp` application class.
+- `HIDClientDlg.h` defines the behavior of the application's main dialog.
+
+**Resource Files**
+
+- `HIDClient.ico` is an icon file, which is used as the application's icon. This icon is included by the main resource file
+  `HIDClient.rc`.
+- `HIDClient.rc2` contains resources that are not edited by Microsoft Visual C++. You should place all resources not editable
+  by the resource editor in this file.
+
+**Source Files**
+
+- `HID.cpp` contains the necessary functions that are used in this example application to communicate with an USB HID device.
+  All available functions in Windows for HID interaction are explained here:
+  [Introduction to HID Concepts](https://learn.microsoft.com/en-us/windows-hardware/drivers/hid/introduction-to-hid-concepts).
+  The function:
+  - `HID_Init` initializes the HID class to be used with the USB Host.
+  - `HID_UnInit` de-initializes the HID class from the USB Host.
+  - `HID_FindDevices` scans the USB Bus and lists all available HID devices for connection to the application. This
+    information is obtained from the \ref USB_Device_Descriptor that is generated by the USB Component using the configuration files.
+  - `HID_GetName` evaluates the \ref prod_string "Product String" of the device to be shown in the drop down box
+    of the application.
+  - `HID_GetInputReportSize` extracts the value of `USBD_HIDn_IN_REPORT_MAX_SZ` as specified in the
+    \ref usbd_hidFunctions_conf "USBD_Config_HID_n.h" file.
+  - `HID_GetOutputReportSize` extracts the value of `USBD_HIDn_OUT_REPORT_MAX_SZ` as specified in the
+    \ref usbd_hidFunctions_conf "USBD_Config_HID_n.h" file.
+  - `HID_GetFeatureReportSize` extracts the value of `USBD_HIDn_FEAT_REPORT_MAX_SZ` as specified in the
+    \ref usbd_hidFunctions_conf "USBD_Config_HID_n.h" file.
+  - `HID_Open` opens the device.
+  - `HID_GetSelectedDevice` returns the selected device.
+  - `HID_Close` closes the device.
+  - `HID_Read` initiates a \ref USBD_HIDn_GetReport within the device to send data to the USB Host.
+  - `HID_Write` triggers a \ref USBD_HIDn_SetReport within the device to read data sent from the USB Host.
+  - `HID_GetFeature` and `HID_SetFeature` work on the USB HID Device's feature report (which is optional).
+- `HIDClient.cpp` is the main application source file that contains the application class `CHIDClientApp`.
+- `HIDClient.rc` is a listing of all of the Microsoft Windows resources that the program uses (located in the `res` subdirectory).
+- `HIDClientDlg.cpp` implements the code of the client's dialog and calls the functions specified in `HID.cpp`. This is
+  the actual place where the interaction between the USB Host and the USB Device is defined.
+
+\if WINUSB_APP
 
 ## WinUSB Test {#winusb_app}
 
-If you are following the \ref dev_cc_tutorial tutorial, you can test the connection between your custom class USB device and a Microsoft Windows PC with this application. The binary `WinUSB_Test.exe` (which does not require installation) is available in the `install_dir\ARM\PACK\Keil\MDK-Middleware\x.y.z\Utilities\WinUSB_Test\Release` folder (where `install_dir` refers to the installation directory of Arm Keil MDK uVision).
+The **WinUSB Test** utility is a graphical application for a PC (running Microsoft Windows) that can be used for testing the USB Custom Class device implementation.
+The executable file `WinUSB_Test.exe` is available in the `<CMSIS_PACK_ROOT>/ARM/PACK/Keil/MDK-Middleware/x.y.z/Utilities/WinUSB_Test/Release` folder (where `<CMSIS_PACK_ROOT>`
+refers to the root directory of CMSIS Packs installation).
+This program runs stand-alone without installation.
 
-To check the WinUSB utility with your board, do the following:
- -# Download the USB Device `WinUSB_Echo` application to your board.
- -# Verify all jumper settings on the board.
- -# Connect the board to a Windows PC. The PC should recognize the WinUSB device and install the correct driver automatically.
- -# Run `WinUSB_Test.exe`.
- -# Select the **Device** to establish the communication channel. 
- -# For further settings and tests refer to \ref dev_cc_tutorial
+To check the **WinUSB Test** utility with your board, do the following:
 
-![WinUSB test app](WinUSB_Test_application.png)
+-# Download the USB Device `WinUSB_Echo` example application to your board.
+-# Verify all jumper settings on the board.
+-# Connect the board to a PC. The PC should recognize the WinUSB device and install the correct driver automatically.
+-# Run `WinUSB_Test.exe` application.
+-# Select the **Device** to establish the communication channel.
+-# Test the application and WinUSB device operation by executing following steps:
+   - activate reception on the IN Endpoint (click on the **Start Reception to Buffer** button)
+   - enter some data in hex format to data edit box for the OUT Transfer (for example **AA BB CC**)
+   - send some data on the OUT Endpoint (click on the **Start Transmission from Buffer** button)
+   - check if received data on the IN Endpoint is the same as data that was sent on the OUT Endpoint
 
-### WinUSB application source code {#winusb_app_cpp}
+![WinUSB Test app](WinUSB_Test_application.png)
 
-The WinUSB source code can be found in `install_dir\ARM\PACK\Keil\MDK-Middleware\x.y.z\Utilities\WinUSB_Test`.
-A Visual Studio 2010 (or later) based solution named WinUSB_Test.sln is available. The following is a summary of what you
-will find in each of the files that make up your WinUSB_Test application.
+### Source Code
 
-![WinUSB app solutions view](WinUSB_test_sln.png)
+The source code of the WinUSB Test application is available in `<CMSIS_PACK_ROOT>/ARM/PACK/Keil/MDK-Middleware/x.y.z/Utilities/WinUSB_Test`.
+A Visual Studio 2010 (or later) based solution named `WinUSB_Test.sln` is available.
+The following is a summary of what you will find in each of the files that make up your **WinUSB Test** application.
 
-#### Header Files
+![WinUSB Test app solution view](WinUSB_test_sln.png)
 
-- `.\USB\WinUsbIF.h` includes the function declarations of the functions that are defined in `.\USB\WinUsbIF.cpp`.
-- `.\WinUSB_Test\WinUSB_Test.h` is the main header file for the application. It includes other project specific headers
+**Header Files**
+
+- `./USB/WinUsbIF.h` includes the function declarations of the functions that are defined in `./USB/WinUsbIF.cpp`.
+- `./WinUSB_Test/WinUSB_Test.h` is the main header file for the application. It includes other project specific headers
   (including resource.h) and declares the `CWinUSB_TestApp` application class.
-- `.\WinUSB_Test\WinUSB_TestDlg.h` defines the behavior of the application's main dialog.
+- `./WinUSB_Test/WinUSB_TestDlg.h` defines the behavior of the application's main dialog.
 
-### Resource Files
+**Resource Files**
 
-- `.\WinUSB_Test\res\WinUSB_Test.ico` is an icon file, which is used as the application's icon. This icon is included
-  by the main resource file `.\WinUSB_Test\WinUSB_Test.rc`.
-- `.\WinUSB_Test\res\Refresh_grey.ico` is an icon file, which is used for the refresh button in the application.
-- `.\WinUSB_Test\res\WinUSB_Test.rc2` contains resources that are not edited by Microsoft Visual C++. You should
+- `./WinUSB_Test/res/WinUSB_Test.ico` is an icon file, which is used as the application's icon. This icon is included
+  by the main resource file `./WinUSB_Test/WinUSB_Test.rc`.
+- `./WinUSB_Test/res/Refresh_grey.ico` is an icon file, which is used for the refresh button in the application.
+- `./WinUSB_Test/res/WinUSB_Test.rc2` contains resources that are not edited by Microsoft Visual C++. You should
   place all resources not editable by the resource editor in this file.
 
-#### Source Files
+**Source Files**
 
-- `.\USB\WinUsbIF.cpp` contains the necessary functions that are used in this example application to communicate with
+- `./USB/WinUsbIF.cpp` contains the necessary functions that are used in this example application to communicate with
   a USB device via the WinUSB interface. Refer to the
   <a href="https://learn.microsoft.com/en-us/windows/win32/api/winusb/" target=_blank>WinUSB Functions</a>
   documentation for an overview of the available functions.	The function:
@@ -85,10 +156,12 @@ will find in each of the files that make up your WinUSB_Test application.
   - `WinUsbIF_FlushPipe` flushes the cached data of a pipe.
   - `WinUsbIF_ResetPipe` resets a pipe.
   - `WinUsbIF_GetOverlappedResult` retrieves the overlapped result.
-- `.\WinUSB_Test\WinUSB_Test.cpp` is the main application source file that contains the application class
+- `./WinUSB_Test/WinUSB_Test.cpp` is the main application source file that contains the application class
   `CWinUSB_TestApp`.
-- `.\WinUSB_Test\WinUSB_Test.rc` is a listing of all of the Microsoft Windows resources that the program uses (located
-  in the `.\WinUSB_Test\res` subdirectory).
-- `.\WinUSB_Test\WinUSB_TestDlg.cpp` implements the code of the client's dialog and calls the functions specified in
-  `.\USB\WinUsbIF.cpp`. This is the actual place where the interaction between the USB Host and the USB Device is
+- `./WinUSB_Test/WinUSB_Test.rc` is a listing of all of the Microsoft Windows resources that the program uses (located
+  in the `./WinUSB_Test/res` subdirectory).
+- `./WinUSB_Test/WinUSB_TestDlg.cpp` implements the code of the client's dialog and calls the functions specified in
+  `./USB/WinUsbIF.cpp`. This is the actual place where the interaction between the USB Host and the USB Device is
   defined.
+
+\endif
