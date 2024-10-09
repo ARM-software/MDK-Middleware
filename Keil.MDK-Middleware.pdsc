@@ -380,6 +380,7 @@
       Documents Middleware Resource Requirements
       (see Revision History for further details)
     </release>
+    <!--
     <release version="5.1.6" date="2014-06-13">
       File System: added absacc.h to include folder for MDK 5.11 compatibility
     </release>
@@ -439,6 +440,7 @@
     <release version="5.0.0">
       Initial release
     </release>
+    -->
   </releases>
 
   <requirements>
