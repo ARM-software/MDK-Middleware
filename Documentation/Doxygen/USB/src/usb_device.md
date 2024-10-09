@@ -15,6 +15,7 @@ The USB Device Component simplifies the software development of microcontroller 
 - Flexibly assigns \ref USB_Endpoints "USB Endpoints" to the microcontroller USB Device peripheral.
 - Explains how to \subpage usbd_create_app "Create a new application" from scratch.
 - Provides \subpage usbd_examples implementing different USB Device use cases.
+- Provides \subpage usbd_pc_utilities for testing USB Device functionality.
 
 ## RTE Components {#usbd_rte_components}
 
