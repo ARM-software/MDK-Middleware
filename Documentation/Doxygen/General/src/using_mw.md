@@ -32,7 +32,7 @@ Using the **CMSIS Component Manager** window, you need to select the required so
 
 Every middleware component has specific configuration files that need to be adapted to the needs of the application. Depending on the component, more than one file might need to be adapted. For example, the **File System** component needs to be configured for the amount of files that can be opened simultaneously.
 
-In addition, you need to set drive specific settings in the **FS_Config_<i>Drive</i>_0.h** file, such as page and block sizes
+In addition, you need to set drive specific settings in the <b>FS_Config_<i>Drive</i>_0.h</b> file, such as page and block sizes
 for Flash memories, general disk sizes for a RAM drive, and the hardware driver number for connecting the drive to the appropriate hardware peripheral driver.
 
 ![File System Configuration Files FS_Config.h and FS_Config_MC_0.h](./images/file_system_conf.png)
@@ -46,7 +46,7 @@ Usually, the device driver related to a software component and the associated co
 ### Configure System Resources {#conf_sys_req}
 
 Every software component has resource requirements for stack, heap, and memory. Configuration files such as
-**startup_<i>device</i>.s** and \urlout{RTX-Conf-CM5} file need to be adapted to these requirements. Every middleware component has a section that explains the resource requirements and gives examples on how to calculate the resulting values for adaption of the configuration files. The section \ref mw_using_stack_and_heap gives you more information about the background and the configuration files that need to be touched.
+<b>startup_<i>device</i>.s</b> and \urlout{RTX-Conf-CM5} file need to be adapted to these requirements. Every middleware component has a section that explains the resource requirements and gives examples on how to calculate the resulting values for adaption of the configuration files. The section \ref mw_using_stack_and_heap gives you more information about the background and the configuration files that need to be touched.
 
 ![RTX_Config.h and startup_device.s for System Resource Configuration](./images/rtx_startup.png)
 

@@ -6,10 +6,10 @@ only and the actual numbers may differ.
 
 \section nw_mem_req Stack Requirements
 
-The Network Core receives events sent from the interrupt service routine (ISR) of the Ethernet (or Serial)  **Driver**.
+The Network Core receives events sent from the interrupt service routine (ISR) of the Ethernet (or Serial) **Driver**.
 The stack requirements for the ISR are typically less than 512 Bytes. The total stack space required for ISR depends
 on the interrupt nesting and therefore on the priority settings of these ISR.
-The stack requirements for ISR is configured in the `startup_device.s` file located under the  **Device** component class.
+The stack requirements for ISR is configured in the `startup_device.s` file located under the **Device** component class.
 If the stack settings are not available there, the stack settings must be configured in the **linker script** file.
 
 | Option (under section Stack Configuration)  | Increase Value by

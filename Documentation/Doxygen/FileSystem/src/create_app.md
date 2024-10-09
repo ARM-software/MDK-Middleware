@@ -140,7 +140,7 @@ For proper operation, the File System Component requires some system configurati
 
 - Minimum **heap size of 512 + 96 Bytes for each opened file**. If you want to be able to have three files open
   at the same time, you need to set a heap size of at least 3 * (512+96) Bytes = 1824 Bytes. This can be configured in the device's
-  `startup_device.s` file (`Heap_Size`).
+  `startup_device.s` file (`Heap_Size`) or `linker script`.
 - As the File System Component is not creating any additional threads, you need to add thread stack size to the calling
   thread. This calling thread can be the main thread, a thread with a default stack size or a thread with a user provided
   stack size. Changing the size for these threads can be done in the
