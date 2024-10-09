@@ -5,6 +5,7 @@
 #
 # Pre-requisites:
 # - bash shell (for Windows: install git for Windows)
+# - curl
 # - doxygen 1.9.6
 # - mscgen 0.20
 # - linkchecker (can be skipped with -s)
@@ -14,7 +15,7 @@ set -o pipefail
 # Set version of gen pack library
 # For available versions see https://github.com/Open-CMSIS-Pack/gen-pack/tags.
 # Use the tag name without the prefix "v", e.g., 0.7.0
-REQUIRED_GEN_PACK_LIB="0.9.1"
+REQUIRED_GEN_PACK_LIB="0.11.1"
 
 DIRNAME=$(dirname "$(readlink -f "$0")")
 GENDIR=../html
@@ -90,7 +91,7 @@ function generate() {
     projectNumberFull=$(grep -E "PROJECT_NUMBER\s+=" "$1.dxy.in" | sed -r -e 's/[^"]*"[^0-9]*(([0-9]+\.[0-9]+(\.[0-9]+)?(-.+)?)?)".*/\1/')
   fi
   if [ -z "${projectNumberFull}" ]; then
-    projectNumberFull="$(git rev-parse --short HEAD)"
+    projectNumberFull=$(grep -E "<bundle Cbundle=\"MDK\"" "../../../Keil.MDK-Middleware.pdsc" | grep -E "${1:0:3}" | sed -r -e 's/[^"]*"[^0-9]*(([0-9]+\.[0-9]+(\.[0-9]+)?(-.+)?)?)".*/\1/')
   fi
   projectNumber="${projectNumberFull%+*}"
   datetime=$(date -u +'%a %b %e %Y %H:%M:%S')
@@ -140,8 +141,8 @@ generate "USB"
 
 cp -f "${DIRNAME}/index.html" "${DIRNAME}/../html/"
 
-[[ ${RUN_LINKCHECKER} != 0 ]] && check_links --timeout 120 "${DIRNAME}/../html/index.html" "${DIRNAME}"
-
 popd > /dev/null || exit 1
+
+[[ ${RUN_LINKCHECKER} != 0 ]] && check_links --timeout 120 "${DIRNAME}/../html/index.html" "${DIRNAME}"
 
 exit 0
