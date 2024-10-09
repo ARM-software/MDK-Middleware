@@ -159,7 +159,7 @@ CMSIS Component Manager Window with Validation Errors</div></div>
     <h2><a class="anchor" id="conf_mw"></a>
 Configure Middleware</h2>
 <p>Every middleware component has specific configuration files that need to be adapted to the needs of the application. Depending on the component, more than one file might need to be adapted. For example, the <b>File System</b> component needs to be configured for the amount of files that can be opened simultaneously.</p>
-<p>In addition, you need to set drive specific settings in the **FS_Config_<em>Drive</em>_0.h** file, such as page and block sizes for Flash memories, general disk sizes for a RAM drive, and the hardware driver number for connecting the drive to the appropriate hardware peripheral driver.</p>
+<p>In addition, you need to set drive specific settings in the <b>FS_Config_<em>Drive</em>_0.h</b> file, such as page and block sizes for Flash memories, general disk sizes for a RAM drive, and the hardware driver number for connecting the drive to the appropriate hardware peripheral driver.</p>
 <div class="image">
 <img src="file_system_conf.png" alt=""/>
 <div class="caption">
@@ -173,7 +173,7 @@ Configure Drivers</h2>
 RTE_Device.h File for Driver Configuration</div></div>
     <h2><a class="anchor" id="conf_sys_req"></a>
 Configure System Resources</h2>
-<p>Every software component has resource requirements for stack, heap, and memory. Configuration files such as **startup_<em>device</em>.s** and  <script>link_ext('RTX-Conf-CM5');</script> file need to be adapted to these requirements. Every middleware component has a section that explains the resource requirements and gives examples on how to calculate the resulting values for adaption of the configuration files. The section <a class="el" href="mw_using.html#mw_using_stack_and_heap">Stack, Heap and RTOS Configuration</a> gives you more information about the background and the configuration files that need to be touched.</p>
+<p>Every software component has resource requirements for stack, heap, and memory. Configuration files such as <b>startup_<em>device</em>.s</b> and  <script>link_ext('RTX-Conf-CM5');</script> file need to be adapted to these requirements. Every middleware component has a section that explains the resource requirements and gives examples on how to calculate the resulting values for adaption of the configuration files. The section <a class="el" href="mw_using.html#mw_using_stack_and_heap">Stack, Heap and RTOS Configuration</a> gives you more information about the background and the configuration files that need to be touched.</p>
 <div class="image">
 <img src="rtx_startup.png" alt=""/>
 <div class="caption">
