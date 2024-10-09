@@ -26,7 +26,7 @@ var NAVTREE =
 [
   [ "File System Component", "index.html", [
     [ "Overview", "index.html", "index" ],
-    [ "Revision History", "rev_history.html", null ],
+    [ "Revision History", "rev_hist.html", null ],
     [ "Create a File System Application", "create_app.html", [
       [ "RTE Component Selection", "create_app.html#RTE_Component_Selection", null ],
       [ "Using Drives", "create_app.html#fs_drives", [

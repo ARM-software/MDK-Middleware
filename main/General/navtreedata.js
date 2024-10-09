@@ -26,6 +26,7 @@ var NAVTREE =
 [
   [ "MDK-Middleware", "index.html", [
     [ "Overview", "index.html", "index" ],
+    [ "Revision History", "rev_hist.html", null ],
     [ "Using Middleware", "mw_using.html", [
       [ "Driver Interface", "mw_using.html#DriverInterface", null ],
       [ "Generic Steps", "mw_using.html#mw_using_generic_steps", [

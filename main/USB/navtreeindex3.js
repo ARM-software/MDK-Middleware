@@ -164,7 +164,7 @@ var NAVTREEINDEX3 =
 "resource_requirements.html#usbh_res_req":[7,1],
 "resource_requirements.html#usbh_rtos_req":[7,1,1],
 "resource_requirements.html#usbh_stack_req":[7,1,0],
-"rev_history.html":[1],
+"rev_hist.html":[1],
 "rl__usb_8h.html#ga8196235c97e113f17993c7b4baff5f8fa04d90b6c664286645056211e32077a71":[9,3,1,3],
 "rl__usb_8h.html#ga8196235c97e113f17993c7b4baff5f8fa075d552a9eb0fef37279d3ca3aa53559":[9,3,1,9],
 "rl__usb_8h.html#ga8196235c97e113f17993c7b4baff5f8fa0af6f658df17f224328242dc236971ea":[9,3,1,6],

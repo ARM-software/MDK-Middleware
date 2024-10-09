@@ -26,7 +26,7 @@ var NAVTREE =
 [
   [ "USB Component", "index.html", [
     [ "Overview", "index.html", "index" ],
-    [ "Revision History", "rev_history.html", null ],
+    [ "Revision History", "rev_hist.html", null ],
     [ "USB Device", "USB_Device.html", "USB_Device" ],
     [ "USB Host", "USB_Host.html", "USB_Host" ],
     [ "USB Concepts", "USB_Concepts.html", [

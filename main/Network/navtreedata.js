@@ -26,7 +26,7 @@ var NAVTREE =
 [
   [ "Network Component", "index.html", [
     [ "Overview", "index.html", "index" ],
-    [ "Revision History", "rev_history.html", null ],
+    [ "Revision History", "rev_hist.html", null ],
     [ "Creating a Network Application", "create_app.html", [
       [ "RTE Component Selection", "create_app.html#nw_RTE_Software_Component_Selection", null ],
       [ "Network Driver and Controller Configuration", "create_app.html#nw_Driver_Configuration", null ],
