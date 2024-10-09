@@ -1,4 +1,4 @@
-# Revision History {#rev_history}
+# Revision History {#rev_hist}
 
 <table class="cmtable" summary="Revision History">
     <tr>

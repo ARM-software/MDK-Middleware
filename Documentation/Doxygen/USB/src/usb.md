@@ -22,6 +22,7 @@ The **USB Component** is structured as follows:
 
 This user's guide contains the following chapters:
 
+- \ref rev_hist lists the changes made in each version of the USB Component.
 - \ref USB_Device explains how to implement a **USB Device** with a microcontroller.
 - \ref USB_Host explains how to implement a **USB Host** with a microcontroller.
 - \ref USB_Concepts contains general information about the USB.

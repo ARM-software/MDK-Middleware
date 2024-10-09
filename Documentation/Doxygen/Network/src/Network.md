@@ -67,6 +67,7 @@ An \ref RFC_list "list of implemented RFCs" is also available.
 
 This user's guide contains the following chapters:
 
+- \ref rev_hist lists the changes made in each version of the Network Component.
 - \ref create_app explains the necessary steps to develop a network project from scratch.
 - \ref troubleshoot shows best practice when debugging general network/connection issues.
 - \ref secure_communication shows how to use **mbed TLS** together with the Network Component to secure your communication

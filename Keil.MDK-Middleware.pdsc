@@ -132,7 +132,7 @@
       - USB Host: fixed USBH_HID_Read function to return all data received on the Interrupt IN pipe
       - USB Device: enabled automatic driver installation on Microsoft Windows 8.1 and later for full-speed devices
       - USB Device: fixed Mass Storage device mounting as read-only on MAC OS
-      Graphics component Segger emWin removed (moved to standalone MDK-Middleware_Graphics pack)
+      Graphics Component Segger emWin removed (moved to standalone MDK-Middleware_Graphics pack)
     </release>
     <release version="7.13.0" date="2021-05-25">
       Network Component Version 7.15.0 (see revision history for details)
@@ -159,68 +159,75 @@
       - USB Host: Fixed sporadic crash when disconnecting device from port 1
       - USB Host: Fixed OHCI driver causing HardFault during debugging
       - USB Device: ClearEndpointFeature request passes to low level driver even if endpoint was not in halt state
-      Graphics Component Segger emWin to version 6.16.3  (see revision history for details)
+      Graphics Component Segger emWin Version 6.16.3  (see revision history for details)
     </release>
     <release version="7.12.0" date="2020-07-01">
       Network Component Version 7.14.0 (see revision history for details)
       Network Component Version 6.7.7 (unchanged)
       FileSystem Component Version 6.13.8 (see revision history for details)
       USB Component Version 6.14.1 (see revision history for details)
-      Graphics Component Segger emWin to version 6.10.8 (unchanged)
+      Graphics Component Segger emWin Version 6.10.8 (unchanged)
     </release>
     <release version="7.11.1" date="2020-04-28">
       Network Component Version 7.13.1 (see revision history for details)
       - fixed backward compatibility with a few older versions of network configurations, causing build failures.
       Network Component Version 6.7.7 (unchanged)
-      FileSystem Component Version 6.13.5 (unchanged)
+      FileSystem Component Version 6.13.6 (unchanged)
       USB Component Version 6.14.0 (unchanged)
-      Graphics Component Segger emWin to version 6.10.8 (unchanged)
+      Graphics Component Segger emWin Version 6.10.8 (unchanged)
     </release>
     <release version="7.11.0" date="2020-04-21">
       Network Component Version 7.13.0 (see revision history for details)
       Network Component Version 6.7.7 (see revision history for details)
-      FileSystem Component Version 6.13.5 (see revision history for details)
+      FileSystem Component Version 6.13.6 (see revision history for details)
       USB Component Version 6.14.0 (see revision history for details)
-      Graphics Component Segger emWin to version 6.10.8 (see revision history for details)
+      Graphics Component Segger emWin Version 6.10.8 (see revision history for details)
     </release>
     <release version="7.10.0" date="2019-11-08">
       Network Component Version 7.12.0 (see revision history for details)
       Network Component Version 6.7.6 (see revision history for details)
       FileSystem Component Version 6.13.0 (see revision history for details)
       USB Component Version 6.13.7 (see revision history for details)
-      Graphics Component Segger emWin to version 5.50.0 (unchanged)
+      Graphics Component Segger emWin Version 5.50.0 (unchanged)
     </release>
     <release version="7.9.0" date="2019-07-15">
       Network Component Version 7.11.0 (see revision history for details)
+      Network Component Version 6.7.5 (unchanged)
       FileSystem Component Version 6.12.0 (see revision history for details)
       USB Component Version 6.13.6 (see revision history for details)
-      Graphics Component Segger emWin to version 5.50.0 (see revision history for details)
+      Graphics Component Segger emWin Version 5.50.0 (see revision history for details)
       Updated WinUSB_Test application to handle multiple interfaces.
     </release>
     <release version="7.8.0" date="2018-11-12">
       Added support for Arm Cortex-M1 processor based devices.
-      FileSystem Component Version 6.11.0 (see revision history for details)
       Network Component Version 7.10.0 (see revision history for details)
+      Network Component Version 6.7.5 (unchanged)
+      FileSystem Component Version 6.11.0 (see revision history for details)
+      Graphics Component Segger emWin Version 5.46.4 (unchanged)
       USB Component Version 6.13.0 (see revision history for details)
     </release>
     <release version="7.7.0" date="2018-05-25">
       Network Component Version 7.9.0 (see revision history for details)
+      Network Component Version 6.7.5 (unchanged)
       FileSystem Component Version 6.10.1 (see revision history for details)
       USB Component Version 6.12.8 (see revision history for details)
+      Graphics Component Segger emWin Version 5.46.4 (unchanged)
     </release>
     <release version="7.6.0" date="2018-02-22">
       Removed CMSIS Drivers for Ethernet, Ethernet PHY and Flash from this pack.
       Please install the ARM.CMSIS-Driver pack if required!
       Network Component Version 7.8.0 (see revision history for details)
+      Network Component Version 6.7.5 (unchanged)
       FileSystem Component Version 6.10.0 (unchanged)
       USB Component Version 6.12.4 (see revision history for details)
-      Segger emWin 5.46e (see revision history for details)
+      Graphics Component Segger emWin Version 5.46.4 (see revision history for details)
     </release>
     <release version="7.5.0" date="2017-12-14">
       Network Component Version 7.7.0 (see revision history for details)
+      Network Component Version 6.7.5 (unchanged)
       FileSystem Component Version 6.10.0 (see revision history for details)
       USB Component Version 6.12.0 (see revision history for details)
-      Segger emWin 5.42i (see revision history for details)
+      Graphics Component Segger emWin Version 5.42.9 (see revision history for details)
       CMSIS driver
       - added LAN8710A Ethernet PHY driver
       - added N25Q032A Flash driver
@@ -228,42 +235,46 @@
     </release>
     <release version="7.4.1" date="2017-04-21">
       Network Component Version 7.5.0 (see revision history for details)
+      Network Component Version 6.7.5 (unchanged)
       FileSystem Component Version 6.9.8 (see revision history for details)
       USB Component Version 6.11.0 (see revision history for details)
+      Graphics Component Segger emWin Version 5.36.5 (unchanged)
       Updated BSP Touchscreen API (minor compatible change - added padding to remove compiler warning)
     </release>
     <release version="7.4.0" date="2017-02-06">
       Added CMSIS-RTOS2 support in addition to CMSIS-RTOS version 1
       Network Component Version 7.4.0 (see revision history for details)
-      - V6 API Network Component Version 6.7.5
-      USB Component Version 6.10.0 (see revision history for details)
+      Network Component Version 6.7.5 (see revision history for details)
       FileSystem Component Version 6.9.4 (see revision history for details)
+      USB Component Version 6.10.0 (see revision history for details)
       Segger emWin: added file IMAGE_Private.h.
     </release>
     <release version="7.3.0" date="2016-11-11">
+      Added support for Cortex-M23/33 and ARMv8M
       Network Component Version 7.3.0 (see revision history for details)
+      Network Component Version 6.7.5 (unchanged)
       FileSystem Component Version 6.9.0 (see revision history for details)
       USB Component Version 6.9.0 (see revision history for details)
-      Segger emWin 5.36f (see revision history for details)
-      Added support for Cortex-M23/33 and ARMv8M
+      Graphics Component Segger emWin Version 5.36.5 (see revision history for details)
     </release>
     <release version="7.2.0" date="2016-08-11">
       Network Component Version 7.2.0 (see revision history for details)
+      Network Component Version 6.7.0 (IPv4 only) added to "MDK-Pro Net_v6" bundle
       FileSystem Component Version 6.8.0 (see revision history for details)
       USB Component Version 6.8.0 (see revision history for details)
+      Graphics Component Segger emWin Version 5.32.1 (unchanged)
       CMSIS Flash driver
       - corrected power handling for ARM_POWER_FULL in all drivers
       - uniform sector description added for M29EW 128Mb (16-bit) driver
-      Added Network Version 6.7.0 (IPv4 only) in "MDK-Pro Net_v6" bundle
     </release>
     <release version="7.1.0" date="2016-05-09">
+      Introducing the MDK-Plus Bundles for Network, FileSystem, USB and emWin
       Network Component Version 7.1.0 (see revision history for details)
       File System Component Version 6.7.0 (see revision history for details)
       USB Component Version 6.7.0 (see revision history for details)
-      Segger emWin 5.32b (see revision history for details)
+      Graphics Component Segger emWin Version 5.32.1 (see revision history for details)
       CMSIS Flash driver
       - corrected addressing in AT45DB641E driver
-      Introducing the MDK-Plus Bundles for Network, FileSystem, USB and emWin
     </release>
     <release version="7.0.0" date="2015-12-08">
       Network Dual Stack Component (IPv4/IPv6) Version 7.0.0
@@ -273,28 +284,16 @@
       - added driver flow control flags
       - updated KSZ8851SNL power safe state procedure
       - corrected KSZ8061RNB driver tracking initialization and power state
+      File System Component Version 6.6.0
+      - see revision history for details
       USB Component Version 6.6.10
       - see revision history for details
       - USB documentation updated for USB Device NCM
-      File System Component Version 6.6.0
-      - see revision history for details
+      Graphics Component Segger emWin Version 5.30.0
       CMSIS Flash driver
       - added CMSIS Flash AT45DB641E driver
       - added driver flow control flags
     </release>
-    <!--
-    <release version="7.0.0-beta" date="2015-07-22">
-      This is the Beta version of the MDK-Middleware PACK containing the new Dual Stack Network component.
-      If you are not planning to migrate your applications to the new Network 7.0 interface, please install
-      MDK-Middleware Version 6.5.0.
-      File System 6.5.0 (see revision history for details)
-      USB 6.5.0 (see revision history for details)
-      Network 7.0.0 Beta3 (see revision history for details)
-      Segger emWin 5.30.0 (see revision history for details)
-      Added Ethernet PHY LAN8742A Driver
-      Corrected Ethernet KSZ8851SNL driver (MAC_ReadFrame)
-    </release>
-    -->
     <!-- not published -->
     <!--
     <release version="6.7.0">
@@ -316,29 +315,31 @@
       - added driver flow control flags
       - updated KSZ8851SNL power safe state procedure
       - corrected KSZ8061RNB driver tracking initialization and power state
+      File System Component Version 6.6.0
+      - see revision history for details
       USB Component Version 6.6.10
       - see revision history for details
       - USB documentation updated for USB Device NCM
-      File System Component Version 6.6.0
-      - see revision history for details
+      Graphics Component Segger emWin Version 5.30.0 
       CMSIS Flash driver
       - added CMSIS Flash AT45DB641E driver
       - added driver flow control flags
     </release>
     <release version="6.5.0" date="2015-07-16">
+      Network 6.5.0 (see revision history for details)
       File System 6.5.0 (see revision history for details)
       USB 6.5.0 (see revision history for details)
-      Network 6.5.0 (see revision history for details)
       Segger emWin 5.30.0 (see revision history for details)
       Added M29EW 128Mb (16-bit) Flash driver
       Added Ethernet PHY LAN8742A Driver
       Corrected Ethernet KSZ8851SNL driver (MAC_ReadFrame)
     </release>
     <release version="6.4.0" date="2015-04-24">
-      Supporting Cortex-M7 based devices
+      Added support for Cortex-M7 based devices
+      Network 6.4.0 (see revision history for details)
       File System 6.4.0 (see revision history for details)
       USB 6.4.0 (see revision history for details)
-      Network 6.4.0 (see revision history for details)
+      Segger emWin 5.26.1 (unchanged)
       Added Ethernet PHY KSZ8061RNB Driver
     </release>
     <release version="6.3.0" date="2015-03-20">
@@ -352,10 +353,11 @@
       Network 6.3.0 (see revision history for details)
       File System 6.3.0 (see revision history for details)
       USB 6.3.0 (see revision history for details)
+      Segger emWin 5.26.1 (unchanged)
     </release>
     <release version="6.2.0" date="2014-10-24">
-      File System 6.2.0 (see revision history for details)
       Network 6.2.0 (see revision history for details)
+      File System 6.2.0 (see revision history for details)
       USB 6.2.0 (see revision history for details)
       Segger emWin 5.26.1
       Corrected Ethernet KSZ8851SNL driver (Power Status)
@@ -364,11 +366,11 @@
       Patch Release for 6.1.0:
       Network/Driver/ETH_KSZ8851SNL.c: invalid power status in MAC_PowerControl corrected
     </release>
-    <release version="6.1.0">
-      File System 6.1.0 (see revision history for details)
+    <release version="6.1.0" date="2014-07-12">
       Network 6.1.0 (see revision history for details)
+      File System 6.1.0 (see revision history for details)
       USB 6.1.0 (see revision history for details)
-      Graphics:
+      Segger emWin 5.24.0:
       - moved GUI Builder component to "Tools" group
       - moved VNC Server component to standalone group
     </release>

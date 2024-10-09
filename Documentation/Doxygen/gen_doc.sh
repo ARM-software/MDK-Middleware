@@ -114,7 +114,10 @@ function generate() {
   fi
 
   mkdir -p "${DIRNAME}/${GENDIR}/$1/"
-  # git_changelog -f html -p "v" > src/history.txt
+
+  # if [ $1 == "General" ]; then
+  #   git_changelog -f html -p "v" > src/revision_history.txt
+  # fi
 
   echo_log "\"${UTILITY_DOXYGEN}\" \"$1.dxy\""
   "${UTILITY_DOXYGEN}" "$1.dxy"

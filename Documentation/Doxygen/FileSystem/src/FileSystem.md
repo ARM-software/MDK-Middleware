@@ -25,6 +25,7 @@ The File System Component is structured as follows:
 
 This user's guide contains the following chapters:
 
+- \ref rev_hist lists the changes made in each version of the File System Component.
 - \ref create_app explains the necessary steps to develop a project containing a file system from scratch.
 - \ref examples are a good starting point for implementing your own storage device.
 - \ref operation gives more detail on the basics of the File System Component.
