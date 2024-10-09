@@ -15,10 +15,11 @@ var searchData=
   ['usbd_5fexample_5fmsc_2emd_12',['usbd_example_msc.md',['../usbd__example__msc_8md.html',1,'']]],
   ['usbd_5fexamples_2emd_13',['usbd_examples.md',['../usbd__examples_8md.html',1,'']]],
   ['usbd_5fmsc_2eh_14',['USBD_MSC.h',['../USBD__MSC_8h.html',1,'']]],
-  ['usbh_5fcreate_5fapp_2emd_15',['usbh_create_app.md',['../usbh__create__app_8md.html',1,'']]],
-  ['usbh_5fevr_2eh_16',['usbh_evr.h',['../usbh__evr_8h.html',1,'']]],
-  ['usbh_5fevr_2etxt_17',['usbh_evr.txt',['../usbh__evr_8txt.html',1,'']]],
-  ['usbh_5fexample_5fhid_2emd_18',['usbh_example_hid.md',['../usbh__example__hid_8md.html',1,'']]],
-  ['usbh_5fexample_5fmsc_2emd_19',['usbh_example_msc.md',['../usbh__example__msc_8md.html',1,'']]],
-  ['usbh_5fexamples_2emd_20',['usbh_examples.md',['../usbh__examples_8md.html',1,'']]]
+  ['usbd_5fpc_5futilities_2emd_15',['usbd_pc_utilities.md',['../usbd__pc__utilities_8md.html',1,'']]],
+  ['usbh_5fcreate_5fapp_2emd_16',['usbh_create_app.md',['../usbh__create__app_8md.html',1,'']]],
+  ['usbh_5fevr_2eh_17',['usbh_evr.h',['../usbh__evr_8h.html',1,'']]],
+  ['usbh_5fevr_2etxt_18',['usbh_evr.txt',['../usbh__evr_8txt.html',1,'']]],
+  ['usbh_5fexample_5fhid_2emd_19',['usbh_example_hid.md',['../usbh__example__hid_8md.html',1,'']]],
+  ['usbh_5fexample_5fmsc_2emd_20',['usbh_example_msc.md',['../usbh__example__msc_8md.html',1,'']]],
+  ['usbh_5fexamples_2emd_21',['usbh_examples.md',['../usbh__examples_8md.html',1,'']]]
 ];

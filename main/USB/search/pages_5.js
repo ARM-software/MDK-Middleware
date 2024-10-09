@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['resource_20requirements_0',['Resource Requirements',['../resource_requirements.html',1,'']]],
-  ['revision_20history_1',['Revision History',['../rev_history.html',1,'']]]
+  ['pc_20utilities_0',['PC Utilities',['../usbd_pc_utilities.html',1,'USB_Device']]]
 ];

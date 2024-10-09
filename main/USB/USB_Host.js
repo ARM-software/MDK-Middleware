@@ -11,7 +11,7 @@ var USB_Host =
       [ "Debugging", "usbh_create_app.html#usbh_debugging", [
         [ "Event Recorder", "usbh_create_app.html#usbHostEvr", [
           [ "Configuration", "usbh_create_app.html#usbHostEvrConfig", null ],
-          [ "Event IDs", "usbh_create_app.html#autotoc_md13", null ]
+          [ "Event IDs", "usbh_create_app.html#autotoc_md14", null ]
         ] ]
       ] ]
     ] ],

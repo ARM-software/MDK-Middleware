@@ -19,5 +19,10 @@ var USB_Device =
         ] ]
       ] ]
     ] ],
-    [ "Examples", "usbd_examples.html", "usbd_examples" ]
+    [ "Examples", "usbd_examples.html", "usbd_examples" ],
+    [ "PC Utilities", "usbd_pc_utilities.html", [
+      [ "HID Client", "usbd_pc_utilities.html#hid_client_app", [
+        [ "Source Code", "usbd_pc_utilities.html#autotoc_md12", null ]
+      ] ]
+    ] ]
 ];

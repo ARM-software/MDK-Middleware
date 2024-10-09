@@ -99,9 +99,9 @@ var NAVTREE =
     [ "Migration Guide", "usb_migration.html", [
       [ "Component Selection", "usb_migration.html#usb_migration_component", null ],
       [ "Configuration", "usb_migration.html#usb_migration_config", [
-        [ "Debug", "usb_migration.html#autotoc_md20", null ],
-        [ "USB Device", "usb_migration.html#autotoc_md21", null ],
-        [ "USB Host", "usb_migration.html#autotoc_md22", null ]
+        [ "Debug", "usb_migration.html#autotoc_md21", null ],
+        [ "USB Device", "usb_migration.html#autotoc_md22", null ],
+        [ "USB Host", "usb_migration.html#autotoc_md23", null ]
       ] ]
     ] ],
     [ "API Reference", "modules.html", "modules" ]
