@@ -3,7 +3,7 @@
 The MDK-Middleware examples are implemented as [CMSIS-Toolbox Reference Applications](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md)
 that use [CMSIS-Driver](https://arm-software.github.io/CMSIS_6/latest/Driver/index.html) interfaces. These Reference Applications are hardware agnostic and need to be extended with a compatible [board layer](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#board-layer) to run on a specific hardware target.
 
-Several CMSIS Board Support Packs (BSP) available in [github.com/Open-CMSIS-Pack](https://github.com/Open-CMSIS-Pack) contain  board layers that support the MDK-Middleware components. When such a board layer is not available, it is possible to [create a compatible board layer](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#structure).
+Several [Board Support Packs (BSP)](https://www.keil.arm.com/packs/) contain board layers that support the MDK-Middleware components. Refer to the *Overview* page of the pack to check the *Provided connection API Interface* of the layers. When such a board layer is not available, it is possible to [create a compatible board layer](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#structure).
 
 ## Available examples
 
@@ -11,10 +11,10 @@ The examples are provided as part of the MDK-Middleware pack and maintained as p
 
 For detailed list of available examples and their detailed description, see the **Examples** section in the component documentation.
 
- - [**File System examples**](../FileSystem/examples.html)
- - [**Network examples**](../Network/examples.html)
- - [**USB Device examples**](../USB/usbd_examples.html)
- - [**USB Host examples**](../USB/usbh_examples.html)
+- [**File System examples**](../FileSystem/examples.html)
+- [**Network examples**](../Network/examples.html)
+- [**USB Device examples**](../USB/usbd_examples.html)
+- [**USB Host examples**](../USB/usbh_examples.html)
 
 This chapter gives a generic overview on how to access, configure and build an MDK-Middleware example project for your target hardware.
 
@@ -81,7 +81,7 @@ The steps to add a custom hardware configuration are:
 
    > **Note:**
    >
-   > - You may copy an existing board layer as starting point. But typically the support a range of reference applications and therefore several interfaces may be removed.
+   > - You may copy an existing board layer as starting point. But typically these board layers support a range of reference applications and contain driver API interfaces that may be removed.
 
 ### Using uVision for Debug
 
@@ -109,5 +109,76 @@ Refer to [Application Note 320: Using Event Recorder for debugging a network per
 
 ## Using uVision IDE
 
-This section explains how to create applications using the uVision IDE.
+The [uVision v5.41](https://www.keil.arm.com/mdk-community/) IDE or higher allows to directly work with *csolution projects*. Source code can be modified, build commands can be executed, and after configuration the [uVision Debugger](https://developer.arm.com/documentation/101407/0541/Debugging) can be used. Adding files or software components is possible by modifying the *csolution project yml files*. It is not directly supported with a user interface.
 
+![Import csolution project in uVision](Use-uVision.png)
+
+### Create a native uVision Project
+
+As uVision IDE is easy-to-use and powerful many developers want to use this IDE for productive software development. Once configured with a compatible board layer, the Reference Applications can be recreated as clean, native uVision project using these steps.
+
+1. Create a new folder and copy the source files of the reference application and the software layer. It it recommended to keep the folder structure. In this new folder create a new uVision project and select the target device.
+2. Add source files and software components listed in the `cproject.yml` and `clayer.yml` using the uVision dialogs.
+3. Copy the existing configuration files to the RTE directory of the new uVision project.
+4. Configure tool settings using the uVision options dialogs and add linker script.
+
+These steps are described in more detail below.
+
+Once the new project is created, it may be expanded with additional software components or modified to custom hardware as shown in the picture below. Note that uVision projects have no dependency on specify hardware boards.
+
+![Create new project in uVision](Create-uVision-Project.png)
+
+#### Create new Project Folder
+
+Reference Applications contain typically a collection of projects. In a bespoke uVision project, most likely only a subset is required. Choose the example that to want to start from, then create a new folder and copy the source files from the Reference Application. Below this is exemplified on USB Device HID.
+
+*csolution project*        | copy to new uVision project folder      | Notes
+:--------------------------|:----------------------------------------|:-------------
+`./HID`                    | `<MyFolder>/HID`                        | Only copy content from root.
+`./Board/<board>`          | `<MyFolder>/Board/<board>`              | Only copy source files (`*.c` and `*.h`).
+
+From the uVision menu use *Project - New uVision Project...* dialog to select the device that you are using.
+
+#### Add Source Files and Components
+
+The `cproject.yml` and `clayer.yml` contains a list of source files and components that should be added to the new uVision project.
+
+- Add source files: In the uVision Project Window, click on a file group and *Add Existing Files to Group*. Feel free to add more file groups to structure your project.
+  
+- Add components: From the uVision menu use *Project - Manage - Run Time Environment...* and select the components.
+
+> **Note:**
+>
+> - Do not start a generator such as CubeMX as the configuration is copied in the next step.
+
+#### Copy Config Files
+
+The RTE configuration files and generator files (for CubeMX or MCUXpresso Config) are fully compatible with uVision. However the folder structure is different.
+
+*csolution project*      | copy to new uVision project folder       | Notes
+:------------------------|:-----------------------------------------|:------------
+`./HID/RTE`              | `<MyFolder>/RTE`                         | Only copy component folders; exclude folders that start with `_` .
+`./Board/RTE`            | `<MyFolder>/RTE`                         | Only copy component folders; exclude folders that start with `_` .
+`./Board/<board>`        | `<MyFolder>/STM32CubeMX/<target>`        | Rename the `*.cgen.yml` file.
+
+> **Note:**
+>
+> - The `*.cgen.yml` file has a different name that is derived from your project name, i.e. `<MyProject>.cgen.yml`.
+
+#### Configure Tool Settings
+
+The settings of the *csolution project* are in the `*.yml` files. Adjust these settings in uVision using the tabs of the *Options* dialog:
+
+- *Target*: verify that hardware settings are correctly reflected, i.e. `Software Model: TrustZone Off`.
+
+- *C/C++ (AC6)*: Adjust Language / Code Generation as the default settings of the CMSIS-Toolbox differ.
+  - Typical settings: Optimization: `-O1` (for Debug), `-O3` (for Release), Warnings: `AC5-like`, Language C: `C11`.
+  - Defines that are in the *csolution project* should be reflected. Typically there is a define of `CMSIS_target_header` in the `Board.clayer.yml` that also requires an include path.
+
+  ![Typical Compiler Options Settings](Options-C.png)
+
+- *Linker*: Configure Scatter File and adjust warnings.
+  - The native uVision project manager does not offer the same [linker script management](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-overview.md#linker-script-management). Copy therefore the preprocessor output of the CMSIS-Toolbox, typically the file `.\tmp\1\ac6_linker_script.sct` to `<MyFolder>/Board/<board>`.
+  - In `cdefault.yml` there may be some linker controls that should be reflected in this dialog, for example `--diag_suppress=L6314W`.
+
+  ![Typical Linker Options Settings](Options-Linker.png)
