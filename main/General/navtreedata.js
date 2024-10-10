@@ -50,7 +50,14 @@ var NAVTREE =
         [ "Compile for Custom Hardware", "working_with_examples.html#autotoc_md5", null ],
         [ "Using uVision for Debug", "working_with_examples.html#autotoc_md6", null ]
       ] ],
-      [ "Using uVision IDE", "working_with_examples.html#autotoc_md7", null ]
+      [ "Using uVision IDE", "working_with_examples.html#autotoc_md7", [
+        [ "Create a native uVision Project", "working_with_examples.html#autotoc_md8", [
+          [ "Create new Project Folder", "working_with_examples.html#autotoc_md9", null ],
+          [ "Add Source Files and Components", "working_with_examples.html#autotoc_md10", null ],
+          [ "Copy Config Files", "working_with_examples.html#autotoc_md11", null ],
+          [ "Configure Tool Settings", "working_with_examples.html#autotoc_md12", null ]
+        ] ]
+      ] ]
     ] ]
   ] ]
 ];

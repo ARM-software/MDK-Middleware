@@ -129,7 +129,7 @@ $(document).ready(function(){initNavTree('working_with_examples.html',''); initR
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_src_work_with_examples"></a> The MDK-Middleware examples are implemented as <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md">CMSIS-Toolbox Reference Applications</a> that use <a href="https://arm-software.github.io/CMSIS_6/latest/Driver/index.html">CMSIS-Driver</a> interfaces. These Reference Applications are hardware agnostic and need to be extended with a compatible <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#board-layer">board layer</a> to run on a specific hardware target.</p>
-<p>Several CMSIS Board Support Packs (BSP) available in <a href="https://github.com/Open-CMSIS-Pack">github.com/Open-CMSIS-Pack</a> contain board layers that support the MDK-Middleware components. When such a board layer is not available, it is possible to <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#structure">create a compatible board layer</a>.</p>
+<p>Several <a href="https://www.keil.arm.com/packs/">Board Support Packs (BSP)</a> contain board layers that support the MDK-Middleware components. Refer to the <em>Overview</em> page of the pack to check the <em>Provided connection API Interface</em> of the layers. When such a board layer is not available, it is possible to <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#structure">create a compatible board layer</a>.</p>
 <h1><a class="anchor" id="autotoc_md0"></a>
 Available examples</h1>
 <p>The examples are provided as part of the MDK-Middleware pack and maintained as part of its GitHub repository, see <a class="el" href="index.html#mw_access">Access to MDK-Middleware</a>.</p>
@@ -219,7 +219,7 @@ Compile for Custom Hardware</h2>
 <blockquote class="doxtable">
 <p>&zwj;<b>Note:</b></p>
 <ul>
-<li>You may copy an existing board layer as starting point. But typically the support a range of reference applications and therefore several interfaces may be removed. </li>
+<li>You may copy an existing board layer as starting point. But typically these board layers support a range of reference applications and contain driver API interfaces that may be removed. </li>
 </ul>
 </blockquote>
 <h2><a class="anchor" id="autotoc_md6"></a>
@@ -241,8 +241,97 @@ Using uVision for Debug</h2>
 <p>Refer to <a href="https://developer.arm.com/documentation/kan320/latest/">Application Note 320: Using Event Recorder for debugging a network performance issue</a> for an tutorial on how to analyze MDK Middleware issues.</p>
 <h1><a class="anchor" id="autotoc_md7"></a>
 Using uVision IDE</h1>
-<p>This section explains how to create applications using the uVision IDE. </p>
-</div></div><!-- contents -->
+<p>The <a href="https://www.keil.arm.com/mdk-community/">uVision v5.41</a> IDE or higher allows to directly work with <em>csolution projects</em>. Source code can be modified, build commands can be executed, and after configuration the <a href="https://developer.arm.com/documentation/101407/0541/Debugging">uVision Debugger</a> can be used. Adding files or software components is possible by modifying the <em>csolution project yml files</em>. It is not directly supported with a user interface.</p>
+<div class="image">
+<img src="Use-uVision.png" alt=""/>
+<div class="caption">
+Import csolution project in uVision</div></div>
+    <h2><a class="anchor" id="autotoc_md8"></a>
+Create a native uVision Project</h2>
+<p>As uVision IDE is easy-to-use and powerful many developers want to use this IDE for productive software development. Once configured with a compatible board layer, the Reference Applications can be recreated as clean, native uVision project using these steps.</p>
+<ol type="1">
+<li>Create a new folder and copy the source files of the reference application and the software layer. It it recommended to keep the folder structure. In this new folder create a new uVision project and select the target device.</li>
+<li>Add source files and software components listed in the <code>cproject.yml</code> and <code>clayer.yml</code> using the uVision dialogs.</li>
+<li>Copy the existing configuration files to the RTE directory of the new uVision project.</li>
+<li>Configure tool settings using the uVision options dialogs and add linker script.</li>
+</ol>
+<p>These steps are described in more detail below.</p>
+<p>Once the new project is created, it may be expanded with additional software components or modified to custom hardware as shown in the picture below. Note that uVision projects have no dependency on specify hardware boards.</p>
+<div class="image">
+<img src="Create-uVision-Project.png" alt=""/>
+<div class="caption">
+Create new project in uVision</div></div>
+    <h3><a class="anchor" id="autotoc_md9"></a>
+Create new Project Folder</h3>
+<p>Reference Applications contain typically a collection of projects. In a bespoke uVision project, most likely only a subset is required. Choose the example that to want to start from, then create a new folder and copy the source files from the Reference Application. Below this is exemplified on USB Device HID.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft"><em>csolution project</em>   </th><th class="markdownTableHeadLeft">copy to new uVision project folder   </th><th class="markdownTableHeadLeft">Notes    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>./HID</code>   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/HID</code>   </td><td class="markdownTableBodyLeft">Only copy content from root.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>./Board/&lt;board&gt;</code>   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/Board/&lt;board&gt;</code>   </td><td class="markdownTableBodyLeft">Only copy source files (<code>*.c</code> and <code>*.h</code>).   </td></tr>
+</table>
+<p>From the uVision menu use <em>Project - New uVision Project...</em> dialog to select the device that you are using.</p>
+<h3><a class="anchor" id="autotoc_md10"></a>
+Add Source Files and Components</h3>
+<p>The <code>cproject.yml</code> and <code>clayer.yml</code> contains a list of source files and components that should be added to the new uVision project.</p>
+<ul>
+<li>Add source files: In the uVision Project Window, click on a file group and <em>Add Existing Files to Group</em>. Feel free to add more file groups to structure your project.</li>
+<li>Add components: From the uVision menu use <em>Project - Manage - Run Time Environment...</em> and select the components.</li>
+</ul>
+<blockquote class="doxtable">
+<p>&zwj;<b>Note:</b></p>
+<ul>
+<li>Do not start a generator such as CubeMX as the configuration is copied in the next step. </li>
+</ul>
+</blockquote>
+<h3><a class="anchor" id="autotoc_md11"></a>
+Copy Config Files</h3>
+<p>The RTE configuration files and generator files (for CubeMX or MCUXpresso Config) are fully compatible with uVision. However the folder structure is different.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft"><em>csolution project</em>   </th><th class="markdownTableHeadLeft">copy to new uVision project folder   </th><th class="markdownTableHeadLeft">Notes    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>./HID/RTE</code>   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/RTE</code>   </td><td class="markdownTableBodyLeft">Only copy component folders; exclude folders that start with <code>_</code> .    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>./Board/RTE</code>   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/RTE</code>   </td><td class="markdownTableBodyLeft">Only copy component folders; exclude folders that start with <code>_</code> .    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>./Board/&lt;board&gt;</code>   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/STM32CubeMX/&lt;target&gt;</code>   </td><td class="markdownTableBodyLeft">Rename the <code>*.cgen.yml</code> file.   </td></tr>
+</table>
+<blockquote class="doxtable">
+<p>&zwj;<b>Note:</b></p>
+<ul>
+<li>The <code>*.cgen.yml</code> file has a different name that is derived from your project name, i.e. <code>&lt;MyProject&gt;.cgen.yml</code>. </li>
+</ul>
+</blockquote>
+<h3><a class="anchor" id="autotoc_md12"></a>
+Configure Tool Settings</h3>
+<p>The settings of the <em>csolution project</em> are in the <code>*.yml</code> files. Adjust these settings in uVision using the tabs of the <em>Options</em> dialog:</p>
+<ul>
+<li><em>Target</em>: verify that hardware settings are correctly reflected, i.e. <code>Software Model: TrustZone Off</code>.</li>
+<li><em>C/C++ (AC6)</em>: Adjust Language / Code Generation as the default settings of the CMSIS-Toolbox differ.<ul>
+<li>Typical settings: Optimization: <code>-O1</code> (for Debug), <code>-O3</code> (for Release), Warnings: <code>AC5-like</code>, Language C: <code>C11</code>.</li>
+<li>Defines that are in the <em>csolution project</em> should be reflected. Typically there is a define of <code>CMSIS_target_header</code> in the <code>Board.clayer.yml</code> that also requires an include path.</li>
+</ul>
+</li>
+</ul>
+<div class="image">
+<img src="Options-C.png" alt=""/>
+<div class="caption">
+Typical Compiler Options Settings</div></div>
+    <ul>
+<li><em>Linker</em>: Configure Scatter File and adjust warnings.<ul>
+<li>The native uVision project manager does not offer the same <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-overview.md#linker-script-management">linker script management</a>. Copy therefore the preprocessor output of the CMSIS-Toolbox, typically the file <code>.\tmp\1\ac6_linker_script.sct</code> to <code>&lt;MyFolder&gt;/Board/&lt;board&gt;</code>.</li>
+<li>In <code>cdefault.yml</code> there may be some linker controls that should be reflected in this dialog, for example <code>--diag_suppress=L6314W</code>.</li>
+</ul>
+</li>
+</ul>
+<div class="image">
+<img src="Options-Linker.png" alt=""/>
+<div class="caption">
+Typical Linker Options Settings</div></div>
+     </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
