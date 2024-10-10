@@ -1,6 +1,6 @@
 # Overview {#mainpage}
 
-The free-to-use **MDK-Middleware** contains software components for IPv4 and IPv6 networking, USB Host and Device
+The **MDK-Middleware** contains software components for IPv4 and IPv6 networking, USB Host and Device
 communication, and file system for data storage. The components can for example be used by the user's application, IoT
 connectors for cloud connectivity, or the \urlout{SDS}.
 
@@ -37,10 +37,11 @@ MDK-Middleware components are available as source code and will work with all ma
 
 ## Documentation Structure {#mw_using_mw}
 
-This user's guide contains the following chapters:
+This chapter contains the following sections:
 
-- \ref mw_using_generic_steps explains the necessary steps to create from scratch a project containing a Middleware component.
-- \ref mw_using_stack_and_heap describes how to configure a project to meet the resource requirements of the Middleware.
+- [Revision History](revision_history.md) contains an overview of the revisions.
+- [Using Middleware](using_mw.md) explains the steps to create from scratch a project containing a Middleware component and how configure resources.
+- [Working with Examples](work_with_examples.md) explains how to run the device-agnostic middleware reference applications on boards.
 
 Every middleware component has a section on the following topics to explain how to create an application:
 

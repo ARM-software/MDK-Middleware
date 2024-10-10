@@ -1,5 +1,9 @@
 # Revision History {#rev_hist}
 
+> **Note:**
+>
+> - Refer to [Version History](https://www.keil.arm.com/packs/mdk-middleware-keil/versions/) of the Software Pack for a detailed list of the changes.
+
 <table class="cmtable" summary="Revision History">
   <tr>
     <th>Version</th>
