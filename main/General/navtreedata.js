@@ -41,7 +41,7 @@ var NAVTREE =
         [ "Configuring CMSIS-RTOS2 using RTX_Config.h", "mw_using.html#mw_using_rtx_conf", null ]
       ] ]
     ] ],
-    [ "Working with MDK-Middleware Examples", "working_with_examples.html", [
+    [ "Working with Examples", "working_with_examples.html", [
       [ "Available examples", "working_with_examples.html#autotoc_md0", null ],
       [ "Using VS Code", "working_with_examples.html#autotoc_md1", [
         [ "Explore MDK-Middleware Examples", "working_with_examples.html#autotoc_md2", null ],
