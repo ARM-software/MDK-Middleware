@@ -2,7 +2,7 @@
 
 The MDK-Middleware software pack contains components for IPv4 and IPv6 networking, USB Host and Device communication, as well as file system for data storage. It is restricted for commercial free-of-charge usage with Arm-based devices.
 
-![MDK-Middleware](./Doxygen/General/src/images/MDK-Middleware.svg)
+![MDK-Middleware](./MDK-Middleware.svg)
 
 The MDK-Middleware can be used by any user application. It is used by the [Synchronous Data Streaming Framework](https://github.com/ARM-software/SDS-Framework) to save data recorded from sensors. IoT Connectors can use the *Network* component to connect to the Internet.
 
