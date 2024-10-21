@@ -6,7 +6,7 @@ TCP and UDP protocol servers.
 
 Use the **netio client** running on a PC to measure the transmit and receive rates.
 The client is available for download at
-[github](https://github.com/kai-uwe-rommel/netio/tree/master) repository.
+[github](https://github.com/kai-uwe-rommel/netio/releases/tag/1.33) repository.
 
 ### TCP test
 
