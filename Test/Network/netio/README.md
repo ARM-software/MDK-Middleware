@@ -6,7 +6,7 @@ TCP and UDP protocol servers.
 
 Use the **netio client** running on a PC to measure the transmit and receive rates.
 The client is available for download at
-[github repository](https://github.com/kai-uwe-rommel/netio/tree/master).
+[github](https://github.com/kai-uwe-rommel/netio/tree/master) repository.
 
 ### TCP test
 
@@ -20,7 +20,7 @@ netio -t -b1k my_host
 netio -u -b1k my_host  
 ```
 
-### Test results
+### Test results for STM32H743I-EVAL board
 
 - using ARM compiler 6
 
@@ -48,6 +48,5 @@ netio -u -b1k my_host
 >   to process all data in real time, so it is normal for some packets to be dropped,
 >   especially during the UDP receive test.
 > - The standard clib function **memcpy** used in the GCC variant is not optimized
->   and uses byte copies. Therefore, the application spends most of the CPU time in this
->   function during the test. This is the main reason why the results are not as good
->   when compiled with the GCC compiler.
+>   and uses byte copies. This is the main reason why the results are better with
+>   the ARM Compiler 6, which uses an optimized **memcpy** function.
