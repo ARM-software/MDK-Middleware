@@ -9,6 +9,8 @@ solution:
     - compiler: IAR
     - compiler: CLANG
 
+  compiler: AC6
+
   target-types:
     # - type: <target_name>
     #   board: <board_name>

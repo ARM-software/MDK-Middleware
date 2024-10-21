@@ -2,8 +2,6 @@ default:
   misc:
     - for-compiler: AC6
       C-CPP:
-        - -fshort-enums
-        - -fshort-wchar
         - -ffunction-sections
         - -fdata-sections
         - -Wno-macro-redefined
@@ -25,8 +23,6 @@ default:
       ASM:
         - -gdwarf-4
       C-CPP:
-        - -fshort-enums
-        - -fshort-wchar
         - -masm-syntax-unified
         - -fomit-frame-pointer
         - -ffunction-sections

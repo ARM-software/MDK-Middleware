@@ -1,6 +1,10 @@
-/*----------------------------------------------------------------------------
- * NETIO: Server for socket benchmark using BSD sockets
- *---------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------
+ * MDK Middleware - Component ::Network
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ *------------------------------------------------------------------------------
+ * Name:    netio.c
+ * Purpose: Server for socket benchmark using BSD sockets
+ *----------------------------------------------------------------------------*/
 
 #include <stdio.h>
 #include <string.h>
