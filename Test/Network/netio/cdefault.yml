@@ -2,8 +2,6 @@ default:
   misc:
     - for-compiler: AC6
       C-CPP:
-        - -ffunction-sections
-        - -fdata-sections
         - -Wno-macro-redefined
         - -Wno-pragma-pack
         - -Wno-parentheses-equality
