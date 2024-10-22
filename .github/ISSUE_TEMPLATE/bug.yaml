@@ -1,7 +1,7 @@
 name: Bug Report
 description: File a bug report.
 title: "[Bug]: "
-labels: ["bug"]
+labels: ["bug", "triage"]
 body:
   - type: checkboxes
     attributes:
@@ -46,6 +46,15 @@ body:
           required: false
         - label: USB_Host
           required: false
+  - type: textarea
+    attributes:
+      label: Version
+      description: Version of the pack and component you are using.
+      placeholder: |
+        1. Pack Version <major>.<minor>.<patch>
+        1. Component Version <major>.<minor>.<patch>
+    validations:
+      required: false
   - type: checkboxes
     attributes:
       label: Severity of the bug
