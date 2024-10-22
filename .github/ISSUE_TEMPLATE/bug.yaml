@@ -57,8 +57,8 @@ body:
       required: false
   - type: checkboxes
     attributes:
-      label: Severity of the bug
-      description: Is the bug blocking you or is the a workaround available? 
+      label: Blocker
+      description: Indicate that this bug is blocking the use and there is no viable workaround available?
       options:
         - label: blocker
           required: false
