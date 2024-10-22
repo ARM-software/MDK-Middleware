@@ -4,9 +4,9 @@ The MDK-Middleware software pack contains components for IPv4 and IPv6 networkin
 
 ![MDK-Middleware](./MDK-Middleware.svg)
 
-The MDK-Middleware can be used by any user application. It is used by the [Synchronous Data Streaming Framework](https://github.com/ARM-software/SDS-Framework) to save data recorded from sensors. IoT Connectors can use the *Network* component to connect to the Internet.
+The [MDK-Middleware](https://arm-software.github.io/MDK-Middleware/latest/General/index.html) can be used by any user application. It is used by the [Synchronous Data Streaming Framework](https://github.com/ARM-software/SDS-Framework) to save data recorded from sensors. IoT Connectors can use the *Network* component to connect to the Internet.
 
-MDK-Middleware uses a CMSIS-RTOS2-based real-time operating system for task scheduling, for example [Keil RTX5](https://github.com/ARM-software/CMSIS-RTX) or [CMSIS-FreeRTOS](https://github.com/arm-software/CMSIS-freertos).
+[MDK-Middleware](https://arm-software.github.io/MDK-Middleware/latest/General/index.html) uses a CMSIS-RTOS2-based real-time operating system for task scheduling, for example [Keil RTX5](https://github.com/ARM-software/CMSIS-RTX) or [CMSIS-FreeRTOS](https://github.com/arm-software/CMSIS-freertos).
 
 The *Network* component uses the [Arm Mbed TLS](https://www.keil.com/pack/ARM.mbedTLS.3.1.0.pack) stack to secure the TCP/IP communication. [CMSIS-Drivers](https://arm-software.github.io/CMSIS_6/latest/Driver/index.html) are a required for the components to work with the underlying hardware.
 
