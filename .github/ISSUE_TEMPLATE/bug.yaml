@@ -1,0 +1,55 @@
+name: Bug Report
+description: File a bug report.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the bug you encountered.
+      options:
+      - label: I have searched the existing issues
+        required: true
+  - type: textarea
+    attributes:
+      label: Current Behavior
+      description: A concise description of what you're experiencing.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: A concise description of what you expected to happen.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Steps To Reproduce
+      description: Steps to reproduce the bug. You may want to attach a reproducer.
+      placeholder: |
+        1. In this environment...
+        1. With this config...
+        1. Run '...'
+        1. See error...
+    validations:
+      required: false
+  - type: checkboxes
+    attributes:
+      label: Affected components
+      description: Which MDK-Middleware components are affected by this bug?
+      options:
+        - label: Filesystem
+          required: false
+        - label: Network
+          required: false
+        - label: USB_Device
+          required: false
+        - label: USB_Host
+          required: false
+  - type: checkboxes
+    attributes:
+      label: Severity of the bug
+      description: Is the bug blocking you or is the a workaround available? 
+      options:
+        - label: blocker
+          required: false
