@@ -3,7 +3,7 @@ description: File a bug report.
 title: "[Bug]: "
 labels: ["bug", "triage"]
 projects: "arm-software/12"
-assignees: "andbararm"
+assignees: ["andbararm", "HansSchneebauer"]
 body:
   - type: checkboxes
     attributes:
