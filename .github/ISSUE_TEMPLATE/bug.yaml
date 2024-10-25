@@ -2,7 +2,7 @@ name: Bug Report
 description: File a bug report.
 title: "[Bug]: "
 labels: ["bug", "triage"]
-projects: "arm-software/12"
+projects: ["ARM-software/12"]
 assignees: ["andbararm", "HansSchneebauer"]
 body:
   - type: checkboxes
