@@ -9,7 +9,7 @@ Several [Board Support Packs (BSP)](https://www.keil.arm.com/packs/) contain boa
 
 The examples are provided as part of the MDK-Middleware pack and maintained as part of its GitHub repository, see \ref mw_access.
 
-For detailed list of available examples and their detailed description, see the **Examples** section in the component documentation.
+For a detailed list of available examples and their detailed description, see the **Examples** section in the component documentation.
 
 - [**File System examples**](../FileSystem/examples.html)
 - [**Network examples**](../Network/examples.html)
@@ -35,7 +35,7 @@ Once the *csolution project* is loaded the VS Code IDE presents you with a dialo
 > **Notes:**
 >
 > - The **Add Software Layer** dialog only appears when the BSP contains a board layer with compatible API Interfaces (see next section).
-> - ST board layers are configured for the Arm Compiler (AC6) using CubeMX.  However it is easy to reconfigure for different compilers. The steps are provided in the BSP overview.
+> - ST board layers are configured for the Arm Compiler (AC6) using CubeMX.  However, it is easy to reconfigure for different compilers. The steps are provided in the BSP overview.
 
 ### API Interfaces
 
