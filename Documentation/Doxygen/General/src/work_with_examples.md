@@ -117,7 +117,7 @@ The [uVision v5.41](https://www.keil.arm.com/mdk-community/) IDE or higher allow
 
 As uVision IDE is easy-to-use and powerful many developers want to use this IDE for productive software development. Once configured with a compatible board layer, the Reference Applications can be recreated as clean, native uVision project using these steps.
 
-1. Create a new folder and copy the source files of the reference application and the software layer. It it recommended to keep the folder structure. In this new folder create a new uVision project and select the target device.
+1. Create a new folder and copy the source files of the reference application and the software layer. It is recommended to keep the folder structure. In this new folder create a new uVision project and select the target device.
 2. Add source files and software components listed in the `cproject.yml` and `clayer.yml` using the uVision dialogs.
 3. Copy the existing configuration files to the RTE directory of the new uVision project.
 4. Configure tool settings using the uVision options dialogs and add linker script.
