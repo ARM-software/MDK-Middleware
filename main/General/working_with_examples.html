@@ -322,8 +322,14 @@ Configure Tool Settings</h3>
 Typical Compiler Options Settings</div></div>
     <ul>
 <li><em>Linker</em>: Configure Scatter File and adjust warnings.<ul>
-<li>The native uVision project manager does not offer the same <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-overview.md#linker-script-management">linker script management</a>. Copy therefore the preprocessor output of the CMSIS-Toolbox, typically the file <code>.\tmp\1\ac6_linker_script.sct</code> to <code>&lt;MyFolder&gt;/Board/&lt;board&gt;</code>.</li>
-<li>In <code>cdefault.yml</code> there may be some linker controls that should be reflected in this dialog, for example <code>--diag_suppress=L6314W</code>.</li>
+<li>The native uVision project manager does not offer the same <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-overview.md#linker-script-management">linker script management</a> as a CMSIS Solution project in VS Code IDE. Therefore follow these steps to configure a scatter file.<ol type="1">
+<li>Copy Linker Script Templates file e.g. <code>ac6_linker_script.sct.src</code> from the directory &lt;cmsis-toolbox-installation-dir&gt;/etc of the CMSIS-Toolbox or from the RTE directory of the BSP pack to <code>&lt;MyFolder&gt;/Board/&lt;board&gt;</code>.</li>
+<li>Copy the memory regions header file e.g. regions_xxx.h from the RTE directory of the BSP pack to <code>&lt;MyFolder&gt;/Board/&lt;board&gt;</code>.</li>
+<li>Add C preprocessor, such as <code>#! armclang --target=arm-arm-none-eabi -march=armv7-m -E -x c</code>, to the first line of <code>ac6_linker_script.sct.src</code></li>
+<li>Add <code>#include "regions_xxx.h"</code> to <code>ac6_linker_script.sct.src</code></li>
+</ol>
+</li>
+<li>In <code>cdefault.yml</code> included in some reference applications there may be some linker controls that should be reflected in this dialog, for example <code>--diag_suppress=L6314W</code>.</li>
 </ul>
 </li>
 </ul>
