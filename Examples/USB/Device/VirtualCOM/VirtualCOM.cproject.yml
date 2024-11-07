@@ -2,9 +2,9 @@ project:
   description: USB Device Virtual COM example demonstrating Communication Device Class (CDC) Abstract Control Model (ACM)
 
   packs:
-    - pack: Keil::MDK-Middleware@>=8.0.0-0
-    - pack: ARM::CMSIS@>=6.1.0
-    - pack: ARM::CMSIS-RTX@>=5.9.0
+    - pack: Keil::MDK-Middleware@^8.0.0-0
+    - pack: ARM::CMSIS@^6.1.0
+    - pack: ARM::CMSIS-RTX@^5.9.0
 
   connections:
     - connect: USB Device Virtual COM
