@@ -2,12 +2,12 @@ project:
   description: USB Host Keyboard example demonstrating Human Interface Device (HID)
 
   packs:
-    - pack: Keil::MDK-Middleware@>=8.0.0-0
-    - pack: ARM::CMSIS@>=6.1.0
-    - pack: ARM::CMSIS-RTX@>=5.9.0
+    - pack: Keil::MDK-Middleware@^8.0.0-0
+    - pack: ARM::CMSIS@^6.1.0
+    - pack: ARM::CMSIS-RTX@^5.9.0
 
   connections:
-    - connect: USB Device HID
+    - connect: USB Host HID
       provides:
         - CMSIS-RTOS2
       consumes:

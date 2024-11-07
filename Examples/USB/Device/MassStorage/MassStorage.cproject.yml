@@ -2,9 +2,9 @@ project:
   description: USB Device Mass Storage example demonstrating Mass Storage Class (MSC)
 
   packs:
-    - pack: Keil::MDK-Middleware@>=8.0.0-0
-    - pack: ARM::CMSIS@>=6.1.0
-    - pack: ARM::CMSIS-RTX@>=5.9.0
+    - pack: Keil::MDK-Middleware@^8.0.0-0
+    - pack: ARM::CMSIS@^6.1.0
+    - pack: ARM::CMSIS-RTX@^5.9.0
 
   connections:
     - connect: USB Device Mass Storage
