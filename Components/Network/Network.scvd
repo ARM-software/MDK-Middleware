@@ -1096,7 +1096,7 @@
   <objects>
     <object name="Network Component">
       <!-- Network library variant -->
-      <var   name="debug"          type="int32_t"    value="__Symbol_exists(&quot;net_dbg_proc&quot;) || __Symbol_exists(&quot;net_evr_init&quot;)"/>
+      <var   name="debug"          type="int32_t"    value="__Symbol_exists(&quot;net_debug_proc&quot;) || __Symbol_exists(&quot;net_evr_init&quot;)"/>
       <var   name="dual_stack"     type="int32_t"    value="__Symbol_exists(&quot;net_ip6_init&quot;)"/>
       <var   name="net_lib"        type="NetLib"     value="dual_stack"/>
       <read  name="net_ver"        type="NetVal"     symbol="net_lib_version"       const="1"/>
