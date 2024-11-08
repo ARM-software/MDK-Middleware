@@ -1930,7 +1930,7 @@ void Resolver_Thread (void *arg) {
     else if (host->h_addrtype == AF_INET) {
       for (j = 0; host->h_addr_list[j]; j++) {
         addr = (IN_ADDR *)host->h_addr_list[j];
-        printf("IP Address: %s\n", inet_ntoa(addr->sin_addr));
+        printf("IP Address: %s\n", inet_ntoa(addr->s_addr));
       }
     }
     osDelay (300);
