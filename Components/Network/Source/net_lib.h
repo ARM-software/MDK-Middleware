@@ -237,7 +237,7 @@ typedef struct net_udp_info {
 
 /// TCP Socket info
 typedef struct net_tcp_info {
-  netTCP_State State;                   ///< Socket state
+  uint8_t  State;                       ///< Socket state
   uint8_t  Type;                        ///< Socket type
   uint8_t  Flags;                       ///< State flags
   uint16_t LocPort;                     ///< Local TCP port

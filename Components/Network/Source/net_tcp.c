@@ -235,7 +235,7 @@ netStatus net_tcp_listen (int32_t socket, uint16_t port) {
     return (netInvalidParameter);
   }
   tcp_s = &tcp->Scb[socket-1];
-  switch ((int32_t)tcp_s->State) {
+  switch (tcp_s->State) {
     case netTCP_StateLISTEN:
     case netTCP_StateCLOSED:
     case netTCP_StateTIME_WAIT:
@@ -299,7 +299,7 @@ netStatus net_tcp_connect (int32_t socket, const __ADDR *addr, uint16_t local_po
   DEBUGF (TCP," IpAddr [%s], port %d\n",net_addr_ntoa(addr),addr->port);
   EvrNetTCP_ShowNetAddress (addr);
   tcp_s = &tcp->Scb[socket-1];
-  switch ((int32_t)tcp_s->State) {
+  switch (tcp_s->State) {
     case netTCP_StateLISTEN:
       /* Listening socket, restricted local_port values */
       if (local_port == 0 || local_port == tcp_s->LocPort) {
@@ -525,7 +525,7 @@ netStatus net_tcp_close (int32_t socket) {
   }
 
   tcp_s = &tcp->Scb[socket-1];
-  switch ((int32_t)tcp_s->State) {
+  switch (tcp_s->State) {
     case netTCP_StateCLOSED:
       break;
 
@@ -608,7 +608,7 @@ netStatus net_tcp_abort (int32_t socket) {
   }
 
   tcp_s = &tcp->Scb[socket-1];
-  switch ((int32_t)tcp_s->State) {
+  switch (tcp_s->State) {
     case netTCP_StateCLOSED:
       break;
 
@@ -1053,7 +1053,7 @@ void net_tcp_socket_run (void) {
     }
 
     tcp_s = &tcp->Scb[socket-1];
-    switch ((int32_t)tcp_s->State) {
+    switch (tcp_s->State) {
       case netTCP_StateUNUSED:
       case netTCP_StateCLOSED:
       case netTCP_StateLISTEN:
@@ -1375,7 +1375,7 @@ void net_tcp_process (NET_IF_CFG *net_if, NET_FRAME *frame, uint8_t ip_ver) {
   acknr = get_u32(&tcp_hdr->AckNr);
 
   /* Process the packet on TCP state machine */
-  switch ((int32_t)tcp_s->State) {
+  switch (tcp_s->State) {
     case netTCP_StateESTABLISHED:
       /* Check for RESET frame */
       if (tcp_hdr->Flags & TCP_FLAG_RST) {
@@ -2738,7 +2738,7 @@ static NET_TCP_INFO *tcp_map_socket (NET_IF_CFG *net_if, NET_FRAME *frame,
 static void tcp_transit (NET_TCP_INFO *tcp_s, netTCP_State state) {
   tcp_s->State = state;
   /* In some states we don't want to wait for many retries */
-  switch ((int32_t)tcp_s->State) {
+  switch (tcp_s->State) {
     case netTCP_StateTIME_WAIT:
       tcp_s->RetryTimer = SYS_TICK_T200MS;
       tcp_s->Retries    = 0;
