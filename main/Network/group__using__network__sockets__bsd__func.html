@@ -763,7 +763,7 @@ BSD Client</h2>
 <div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (host-&gt;<a class="code hl_variable" href="group__bsd__structs.html#aa94ed2e671740aa0ccd82e8d18abccae" title="Address Type: AF_INET, AF_NETBIOS.">h_addrtype</a> == <a class="code hl_define" href="rl__net_8h.html#a9930604d0e32588eae76f43ca38e7826" title="Internet Address Family.">AF_INET</a>) {</div>
 <div class="line">      <span class="keywordflow">for</span> (j = 0; host-&gt;<a class="code hl_variable" href="group__bsd__structs.html#a058204dad180c9850b3ffaf6b32f5b4c" title="Pointer to an array of IPv4 addresses.">h_addr_list</a>[j]; j++) {</div>
 <div class="line">        addr = (<a class="code hl_struct" href="group__bsd__structs.html#structIN__ADDR" title="Generic IPv4 Address structure.">IN_ADDR</a> *)host-&gt;<a class="code hl_variable" href="group__bsd__structs.html#a058204dad180c9850b3ffaf6b32f5b4c" title="Pointer to an array of IPv4 addresses.">h_addr_list</a>[j];</div>
-<div class="line">        printf(<span class="stringliteral">&quot;IP Address: %s\n&quot;</span>, <a class="code hl_function" href="group__using__network__sockets__bsd__func.html#ga9123668788ba0c48c7ee439f325e728a" title="Convert from network address to a text string. [not_thread-safe].">inet_ntoa</a>(addr-&gt;sin_addr));</div>
+<div class="line">        printf(<span class="stringliteral">&quot;IP Address: %s\n&quot;</span>, <a class="code hl_function" href="group__using__network__sockets__bsd__func.html#ga9123668788ba0c48c7ee439f325e728a" title="Convert from network address to a text string. [not_thread-safe].">inet_ntoa</a>(addr-&gt;s_addr));</div>
 <div class="line">      }</div>
 <div class="line">    }</div>
 <div class="line">    osDelay (300);</div>
