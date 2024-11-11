@@ -66,6 +66,7 @@ Directory                   | Description
 [Components](https://github.com/ARM-software/MDK-Middleware/tree/main/Components)                | Source code of MDK-Middleware components.
 [Documentation](https://github.com/ARM-software/MDK-Middleware/tree/main/Documentation)          | Doxygen source of the [documentation](https://arm-software.github.io/MDK-Middleware/latest/General/index.html).
 [Examples](https://github.com/ARM-software/MDK-Middleware/tree/main/Examples)                    | Reference applications that show the usage of MDK-Middleware.
+[Test](https://github.com/ARM-software/MDK-Middleware/tree/main/Test)                            | Test applications.
 [license_terms](https://github.com/ARM-software/MDK-Middleware/tree/main/license_terms)          | Standard Arm Tools license with MDK-Middleware usage permission.
 
 ## License
