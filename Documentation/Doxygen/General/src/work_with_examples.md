@@ -134,11 +134,19 @@ MDK-Middleware Reference Applications contain a collection of projects. Taking t
  Create a new folder for the µVision project and copy the source files from the MDK-Middleware Reference Application.
 
 
+Case 1: from csolution project | copy to new uVision project folder   | Notes
+:------------------------------|:-------------------------------------|:------
+`./HID`                        | `<MyFolder>/HID`                     | Only copy content from the root directory without subfolders
+`./Board/<board_name>`         | `<MyFolder>/Board/<board_name>`      | Only copy source files (`*.c` and `*.h`) from the root directory without subfolders
 
-Case 1: from csolution project | Case 2: from packs                | copy to new uVision project folder   | Notes
-:------------------------------|:----------------------------------|:-------------------------------------|:------
-`./HID`                        |`./Examples/USB/Device/HID` from MDK-Middleware pack| `<MyFolder>/HID`                     | Only copy content from the root directory without subfolders
-`./Board/<board_name>`         |`./Layers/Default/` from a BSP pack| `<MyFolder>/Board/<board_name>`      | Only copy source files (`*.c` and `*.h`) from the root directory without subfolders
+Case 2: from packs             | copy to new uVision project folder   | Notes
+:------------------------------|:-------------------------------------|:------
+`./Examples/USB/Device/HID` from MDK-Middleware pack| `<MyFolder>/HID`| Only copy content from the root directory without subfolders
+`./Layers/Default/` from a BSP pack| `<MyFolder>/Board/<board_name>`  | Only copy source files (`*.c` and `*.h`) from the root directory without subfolders
+
+> **Note:**
+>
+> - Different BSP pack may have different folder struture other than `./Layers/Default/` that contains board layer files.
 
 From the uVision menu use *Project - New uVision Project...* dialog to select the device that you are using and create a new µVision project.
 
@@ -158,15 +166,22 @@ The `*.cproject.yml` of the reference application and `*.clayer.yml` of the soft
 
 The RTE configuration files and generator files (for STM32CubeMX or MCUXpresso Config) are fully compatible with uVision. Follow the table below to copy these configuration files to the µVision project folder
 
-Case 1: from csolution project   | Case 2: from packs  | copy to new uVision project folder       | Notes
-:--------------------------------|:--------------------|:-----------------------------------------|:------------
-`./HID/RTE`                      |`./Examples/USB/Device/HID/RTE` from MDK-Middleware pack| `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
-`./Board/<board_name>/RTE`       |`./Layers/Default/RTE` from a BSP pack  | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
-`./Board/<board_name/CubeMX>`    |`./Layers/Default/CubeMX` from a BSP pack | `<MyFolder>/STM32CubeMX/<uVision_target_name>` | Rename the `*.cgen.yml` file
+Case 1: from csolution project   | copy to new uVision project folder       | Notes
+:--------------------------------|:-----------------------------------------|:------------
+`./HID/RTE`                      | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
+`./Board/<board_name>/RTE`       | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
+`./Board/<board_name/CubeMX>`    | `<MyFolder>/STM32CubeMX/<uVision_target_name>` | Rename the `*.cgen.yml` file
+
+Case 2: from packs  | copy to new uVision project folder       | Notes
+:--------------------|:-----------------------------------------|:------------
+`./Examples/USB/Device/HID/RTE` from MDK-Middleware pack| `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
+`./Layers/Default/RTE` from a BSP pack  | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
+`./Layers/Default/CubeMX` from a BSP pack | `<MyFolder>/STM32CubeMX/<uVision_target_name>` | Rename the `*.cgen.yml` file
 
 > **Note:**
 >
 > - The `*.cgen.yml` file copied from the existing csoution project or from the BSP pack must be renamed to match your µVision project name, i.e. `<MyProject>.cgen.yml`.
+> - Different BSP pack may have different folder struture other than `./Layers/Default/` that contains board layer files.
 
 #### Configure Tool Settings
 
