@@ -24,6 +24,7 @@ var NAVTREEINDEX0 =
 "working_with_examples.html#autotoc_md10":[3,2,0,1],
 "working_with_examples.html#autotoc_md11":[3,2,0,2],
 "working_with_examples.html#autotoc_md12":[3,2,0,3],
+"working_with_examples.html#autotoc_md13":[3,2,0,4],
 "working_with_examples.html#autotoc_md2":[3,1,0],
 "working_with_examples.html#autotoc_md3":[3,1,1],
 "working_with_examples.html#autotoc_md4":[3,1,2],

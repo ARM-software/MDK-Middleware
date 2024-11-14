@@ -160,12 +160,12 @@ Configure Solution</div></div>
 <p>&zwj;<b>Notes:</b></p>
 <ul>
 <li>The <b>Add Software Layer</b> dialog only appears when the BSP contains a board layer with compatible API Interfaces (see next section).</li>
-<li>ST board layers are configured for the Arm Compiler (AC6) using CubeMX. However, it is easy to reconfigure for different compilers. The steps are provided in the BSP overview. </li>
+<li>ST board layers are configured for the Arm Compiler (AC6) using STM32CubeMX. However, it is easy to reconfigure for different compilers. The steps are provided in the BSP overview. </li>
 </ul>
 </blockquote>
 <h2><a class="anchor" id="autotoc_md3"></a>
 API Interfaces</h2>
-<p>The MDK Middleware reference applications are hardware agnostic but require API Interfaces that are expressed using the <em>csolution project</em> <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/YML-Input-Format.md#connections">connections:</a> node. The various reference applications consume the following API Interfaces. These <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections">interfaces should be provided by the board layer</a> that is part of the Board Support Pack (BSP).</p>
+<p>The MDK-Middleware Reference Applications are hardware agnostic but require API Interfaces that are expressed using the <em>csolution project</em> <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/YML-Input-Format.md#connections">connections:</a> node. The various reference applications consume the following API Interfaces. These <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections">interfaces should be provided by the board layer</a> that is part of the Board Support Pack (BSP).</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Consumed API Interface   </th><th class="markdownTableHeadLeft">Description    </th></tr>
@@ -238,7 +238,7 @@ Using uVision for Debug</h2>
 <div class="line">    }</div>
 <div class="line">]</div>
 </div><!-- fragment --><p>Use the VS Code menu command <b>Terminal - Run Task...</b> to Start uVision. uVision can directly load <em>csolution projects</em>. After you have configured the debugger for your target system you may use the <a href="https://developer.arm.com/documentation/101407/0541/Debugging/Debug-Windows-and-Dialogs">Debug Windows and Dialogs</a> to validate your application.</p>
-<p>Refer to <a href="https://developer.arm.com/documentation/kan320/latest/">Application Note 320: Using Event Recorder for debugging a network performance issue</a> for an tutorial on how to analyze MDK Middleware issues.</p>
+<p>Refer to <a href="https://developer.arm.com/documentation/kan320/latest/">Application Note 320: Using Event Recorder for debugging a network performance issue</a> for an tutorial on how to analyze MDK-Middleware issues.</p>
 <h1><a class="anchor" id="autotoc_md7"></a>
 Using uVision IDE</h1>
 <p>The <a href="https://www.keil.arm.com/mdk-community/">uVision v5.41</a> IDE or higher allows to directly work with <em>csolution projects</em>. Source code can be modified, build commands can be executed, and after configuration the <a href="https://developer.arm.com/documentation/101407/0541/Debugging">uVision Debugger</a> can be used. Adding files or software components is possible by modifying the <em>csolution project yml files</em>. It is not directly supported with a user interface.</p>
@@ -248,34 +248,44 @@ Using uVision IDE</h1>
 Import csolution project in uVision</div></div>
     <h2><a class="anchor" id="autotoc_md8"></a>
 Create a native uVision Project</h2>
-<p>As uVision IDE is easy-to-use and powerful many developers want to use this IDE for productive software development. Once configured with a compatible board layer, the Reference Applications can be recreated as clean, native uVision project using these steps.</p>
+<p>As uVision IDE is easy-to-use and powerful many developers want to use this IDE for productive software development. The MDK-Middleware Reference Applications can be recreated as clean, native uVision project by following the steps listed below, once configured with a compatible board layer. Such a board layer can be copied from an existing working csolution project in VS Code by following the section <a href="https://arm-software.github.io/MDK-Middleware/latest/General/working_with_examples.html#autotoc_md1">Using VS Code</a> above, or from an exisitng BSP pack that contains a board layer.</p>
 <ol type="1">
-<li>Create a new folder and copy the source files of the reference application and the software layer. It is recommended to keep the folder structure. In this new folder create a new uVision project and select the target device.</li>
-<li>Add source files and software components listed in the <code>cproject.yml</code> and <code>clayer.yml</code> using the uVision dialogs.</li>
-<li>Copy the existing configuration files to the RTE directory of the new uVision project.</li>
-<li>Configure tool settings using the uVision options dialogs and add linker script.</li>
+<li>Create a new folder and copy the source files of the MDK-Middleware Reference Application and the software layer, e.g. the board layer. It is recommended to keep the folder structure. In this new folder create a new uVision project for the selected target device.</li>
+<li>Add source files and software components listed in the <code>*.cproject.yml</code> of the MDK-Middleware Reference Application and <code>*.clayer.yml</code> of the software layer e.g. the board layer into the new µVision project using the uVision dialogs.</li>
+<li>Copy the existing Run-Time-Environment (RTE) configuration files as well as the board layer files to the correct subdirectory of the new uVision project.</li>
+<li>Configure tool settings using the uVision <em>Options for Target</em> dialogs and add linker script.</li>
 </ol>
-<p>These steps are described in more detail below.</p>
-<p>Once the new project is created, it may be expanded with additional software components or modified to custom hardware as shown in the picture below. Note that uVision projects have no dependency on specify hardware boards.</p>
-<div class="image">
-<img src="Create-uVision-Project.png" alt=""/>
-<div class="caption">
-Create new project in uVision</div></div>
-    <h3><a class="anchor" id="autotoc_md9"></a>
+<p><b>These steps are described in more detail below.</b></p>
+<p>MDK-Middleware Reference Applications contain a collection of projects. Taking the USB Device HID project from the MDK-Middleware Reference Applications as an example. Case 1 represents the case with an existing csolution project created in VS Code by following the section <a href="https://arm-software.github.io/MDK-Middleware/latest/General/working_with_examples.html#autotoc_md1">Using VS Code</a> above. Case 2 represents the case without an existing csolution project when copying from the Examples subfolder of the MDK-Middleware pack v8.x as well as from a BSP pack containing the board layer.</p>
+<h3><a class="anchor" id="autotoc_md9"></a>
 Create new Project Folder</h3>
-<p>Reference Applications contain typically a collection of projects. In a bespoke uVision project, most likely only a subset is required. Choose the example that to want to start from, then create a new folder and copy the source files from the Reference Application. Below this is exemplified on USB Device HID.</p>
+<p>Create a new folder for the µVision project and copy the source files from the MDK-Middleware Reference Application.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadLeft"><em>csolution project</em>   </th><th class="markdownTableHeadLeft">copy to new uVision project folder   </th><th class="markdownTableHeadLeft">Notes    </th></tr>
+<th class="markdownTableHeadLeft">Case 1: from csolution project   </th><th class="markdownTableHeadLeft">copy to new uVision project folder   </th><th class="markdownTableHeadLeft">Notes    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>./HID</code>   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/HID</code>   </td><td class="markdownTableBodyLeft">Only copy content from root.    </td></tr>
+<td class="markdownTableBodyLeft"><code>./HID</code>   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/HID</code>   </td><td class="markdownTableBodyLeft">Only copy content from the root directory without subfolders    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><code>./Board/&lt;board&gt;</code>   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/Board/&lt;board&gt;</code>   </td><td class="markdownTableBodyLeft">Only copy source files (<code>*.c</code> and <code>*.h</code>).   </td></tr>
+<td class="markdownTableBodyLeft"><code>./Board/&lt;board_name&gt;</code>   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/Board/&lt;board_name&gt;</code>   </td><td class="markdownTableBodyLeft">Only copy source files (<code>*.c</code> and <code>*.h</code>) from the root directory without subfolders   </td></tr>
 </table>
-<p>From the uVision menu use <em>Project - New uVision Project...</em> dialog to select the device that you are using.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft">Case 2: from packs   </th><th class="markdownTableHeadLeft">copy to new uVision project folder   </th><th class="markdownTableHeadLeft">Notes    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>./Examples/USB/Device/HID</code> from MDK-Middleware pack   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/HID</code>   </td><td class="markdownTableBodyLeft">Only copy content from the root directory without subfolders    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>./Layers/Default/</code> from a BSP pack   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/Board/&lt;board_name&gt;</code>   </td><td class="markdownTableBodyLeft">Only copy source files (<code>*.c</code> and <code>*.h</code>) from the root directory without subfolders   </td></tr>
+</table>
+<blockquote class="doxtable">
+<p>&zwj;<b>Note:</b></p>
+<ul>
+<li>Different BSP pack may have different folder struture other than <code>./Layers/Default/</code> that contains board layer files. </li>
+</ul>
+</blockquote>
+<p>From the uVision menu use <em>Project - New uVision Project...</em> dialog to select the device that you are using and create a new µVision project.</p>
 <h3><a class="anchor" id="autotoc_md10"></a>
 Add Source Files and Components</h3>
-<p>The <code>cproject.yml</code> and <code>clayer.yml</code> contains a list of source files and components that should be added to the new uVision project.</p>
+<p>The <code>*.cproject.yml</code> of the reference application and <code>*.clayer.yml</code> of the software layer, e.g. board layer contain a list of source files and components that should be added to the new uVision project.</p>
 <ul>
 <li>Add source files: In the uVision Project Window, click on a file group and <em>Add Existing Files to Group</em>. Feel free to add more file groups to structure your project.</li>
 <li>Add components: From the uVision menu use <em>Project - Manage - Run Time Environment...</em> and select the components.</li>
@@ -283,36 +293,48 @@ Add Source Files and Components</h3>
 <blockquote class="doxtable">
 <p>&zwj;<b>Note:</b></p>
 <ul>
-<li>Do not start a generator such as CubeMX as the configuration is copied in the next step. </li>
+<li>Do not start a generator such as STM32CubeMX at this step as the configuration files are copied in the next step. </li>
 </ul>
 </blockquote>
 <h3><a class="anchor" id="autotoc_md11"></a>
 Copy Config Files</h3>
-<p>The RTE configuration files and generator files (for CubeMX or MCUXpresso Config) are fully compatible with uVision. However the folder structure is different.</p>
+<p>The RTE configuration files and generator files (for STM32CubeMX or MCUXpresso Config) are fully compatible with uVision. Follow the table below to copy these configuration files to the µVision project folder</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadLeft"><em>csolution project</em>   </th><th class="markdownTableHeadLeft">copy to new uVision project folder   </th><th class="markdownTableHeadLeft">Notes    </th></tr>
+<th class="markdownTableHeadLeft">Case 1: from csolution project   </th><th class="markdownTableHeadLeft">copy to new uVision project folder   </th><th class="markdownTableHeadLeft">Notes    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>./HID/RTE</code>   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/RTE</code>   </td><td class="markdownTableBodyLeft">Only copy component folders; exclude folders that start with <code>_</code> .    </td></tr>
+<td class="markdownTableBodyLeft"><code>./HID/RTE</code>   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/RTE</code>   </td><td class="markdownTableBodyLeft">Only copy component folders excluding folders that start with <code>_</code>    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft"><code>./Board/RTE</code>   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/RTE</code>   </td><td class="markdownTableBodyLeft">Only copy component folders; exclude folders that start with <code>_</code> .    </td></tr>
+<td class="markdownTableBodyLeft"><code>./Board/&lt;board_name&gt;/RTE</code>   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/RTE</code>   </td><td class="markdownTableBodyLeft">Only copy component folders excluding folders that start with <code>_</code>    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft"><code>./Board/&lt;board&gt;</code>   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/STM32CubeMX/&lt;target&gt;</code>   </td><td class="markdownTableBodyLeft">Rename the <code>*.cgen.yml</code> file.   </td></tr>
+<td class="markdownTableBodyLeft"><code>./Board/&lt;board_name/CubeMX&gt;</code>   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/STM32CubeMX/&lt;uVision_target_name&gt;</code>   </td><td class="markdownTableBodyLeft">Rename the <code>*.cgen.yml</code> file   </td></tr>
+</table>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft">Case 2: from packs   </th><th class="markdownTableHeadLeft">copy to new uVision project folder   </th><th class="markdownTableHeadLeft">Notes    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>./Examples/USB/Device/HID/RTE</code> from MDK-Middleware pack   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/RTE</code>   </td><td class="markdownTableBodyLeft">Only copy component folders excluding folders that start with <code>_</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>./Layers/Default/RTE</code> from a BSP pack   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/RTE</code>   </td><td class="markdownTableBodyLeft">Only copy component folders excluding folders that start with <code>_</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>./Layers/Default/CubeMX</code> from a BSP pack   </td><td class="markdownTableBodyLeft"><code>&lt;MyFolder&gt;/STM32CubeMX/&lt;uVision_target_name&gt;</code>   </td><td class="markdownTableBodyLeft">Rename the <code>*.cgen.yml</code> file   </td></tr>
 </table>
 <blockquote class="doxtable">
 <p>&zwj;<b>Note:</b></p>
 <ul>
-<li>The <code>*.cgen.yml</code> file has a different name that is derived from your project name, i.e. <code>&lt;MyProject&gt;.cgen.yml</code>. </li>
+<li>The <code>*.cgen.yml</code> file copied from the existing csoution project or from the BSP pack must be renamed to match your µVision project name, i.e. <code>&lt;MyProject&gt;.cgen.yml</code>.</li>
+<li>Different BSP pack may have different folder struture other than <code>./Layers/Default/</code> that contains board layer files. </li>
 </ul>
 </blockquote>
 <h3><a class="anchor" id="autotoc_md12"></a>
 Configure Tool Settings</h3>
-<p>The settings of the <em>csolution project</em> are in the <code>*.yml</code> files. Adjust these settings in uVision using the tabs of the <em>Options</em> dialog:</p>
+<p>In the Case 1 the compiler toolchain relevant settings of the <em>csolution project</em> are in the <code>*.csolution.yml</code> and <code>*.cproject.yml</code> files. Based on these settings configure compiler toolchain in uVision using the tabs of the <em>Options</em> dialog:</p>
 <ul>
 <li><em>Target</em>: verify that hardware settings are correctly reflected, i.e. <code>Software Model: TrustZone Off</code>.</li>
-<li><em>C/C++ (AC6)</em>: Adjust Language / Code Generation as the default settings of the CMSIS-Toolbox differ.<ul>
+<li><em>C/C++ (AC6)</em>: Adjust Language / Code Generation.<ul>
 <li>Typical settings: Optimization: <code>-O1</code> (for Debug), <code>-O3</code> (for Release), Warnings: <code>AC5-like</code>, Language C: <code>C11</code>.</li>
-<li>Defines that are in the <em>csolution project</em> should be reflected. Typically there is a define of <code>CMSIS_target_header</code> in the <code>Board.clayer.yml</code> that also requires an include path.</li>
+<li>Board layer specific definitions are defined in a header file, such as <code>board_name.h</code>, which can be found in <code>./Board/&lt;board_name&gt;</code> of the <em>csolution project</em> in the Case 1 or in the <code>./Layers/Default/</code> of the BSP pack in the Case 2. This <code>board_name.h</code> should be set as the value of a preprocessor symbol <code>CMSIS_target_header</code> in <em>Options for Target - C/C++(AC6) - Preprocessor Symbols</em> <br  />
+</li>
 </ul>
 </li>
 </ul>
@@ -322,14 +344,14 @@ Configure Tool Settings</h3>
 Typical Compiler Options Settings</div></div>
     <ul>
 <li><em>Linker</em>: Configure Scatter File and adjust warnings.<ul>
-<li>The native uVision project manager does not offer the same <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-overview.md#linker-script-management">linker script management</a> as a CMSIS Solution project in VS Code IDE. Therefore follow these steps to configure a scatter file.<ol type="1">
-<li>Copy Linker Script Templates file e.g. <code>ac6_linker_script.sct.src</code> from the directory &lt;cmsis-toolbox-installation-dir&gt;/etc of the CMSIS-Toolbox or from the RTE directory of the BSP pack to <code>&lt;MyFolder&gt;/Board/&lt;board&gt;</code>.</li>
-<li>Copy the memory regions header file e.g. regions_xxx.h from the RTE directory of the BSP pack to <code>&lt;MyFolder&gt;/Board/&lt;board&gt;</code>.</li>
-<li>Add C preprocessor, such as <code>#! armclang --target=arm-arm-none-eabi -march=armv7-m -E -x c</code>, to the first line of <code>ac6_linker_script.sct.src</code></li>
-<li>Add <code>#include "regions_xxx.h"</code> to <code>ac6_linker_script.sct.src</code></li>
+<li>In the Case 1 with an existing csolution project, a read-to-use linker scatter file that has already been preprocessed by CMSIS-Toolbox in VS Code, typically located in <code>.\tmp\1\ac6_linker_script.sct</code>, should be copied to <code>&lt;MyFolder&gt;/Board/&lt;board_name&gt;</code> . In the Case 2 without an existing csolution project, since the native uVision project manager does not offer the same <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-overview.md#linker-script-management">linker script management</a> as a csoution project in VS Code IDE. follow these steps to configure a scatter file in µVision.<ol type="1">
+<li>Copy Linker Script Templates file e.g. <code>ac6_linker_script.sct.src</code> from the directory &lt;cmsis-toolbox-installation-dir&gt;/etc of the CMSIS-Toolbox or from the RTE directory of the BSP pack, such as <code>./Layers/Default/RTE</code>, to <code>&lt;MyFolder&gt;/Board/&lt;board_name&gt;</code>.</li>
+<li>Copy the memory regions header file e.g. regions_xxx.h from the same RTE directory of the BSP pack to <code>&lt;MyFolder&gt;/Board/&lt;board_name&gt;</code>.</li>
+<li>Add C preprocessor, such as <code>#! armclang --target=arm-arm-none-eabi -march=armv7-m -E -x c</code>, as the first line of <code>ac6_linker_script.sct.src</code></li>
+<li>Add <code>#include "regions_xxx.h"</code> as the second line to <code>ac6_linker_script.sct.src</code></li>
 </ol>
 </li>
-<li>In <code>cdefault.yml</code> included in some reference applications there may be some linker controls that should be reflected in this dialog, for example <code>--diag_suppress=L6314W</code>.</li>
+<li>In <code>cdefault.yml</code> included in some MDK-Middleware Reference Applications there may be some linker controls that should be reflected in this dialog, for example <code>--diag_suppress=L6314W</code>.</li>
 </ul>
 </li>
 </ul>
@@ -337,6 +359,13 @@ Typical Compiler Options Settings</div></div>
 <img src="Options-Linker.png" alt=""/>
 <div class="caption">
 Typical Linker Options Settings</div></div>
+    <h3><a class="anchor" id="autotoc_md13"></a>
+Expand with additional components</h3>
+<p>Once the new project is created, it may be expanded with additional software components or modified to custom hardware as shown in the picture below. Note that uVision projects have no dependency on specify hardware boards.</p>
+<div class="image">
+<img src="Create-uVision-Project.png" alt=""/>
+<div class="caption">
+Create new project in uVision</div></div>
      </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
