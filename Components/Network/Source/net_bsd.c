@@ -1613,7 +1613,7 @@ static void bsd_evt_unsubscribe (NETOS_ID thread, int32_t n_max) {
   \return      number of ready sockets or status information on error.
 */
 int32_t select (int32_t nfds, fd_set *readfds, fd_set *writefds,
-                              fd_set *errorfds, struct timeval *timeout) {
+                              fd_set *errorfds, const timeval *timeout) {
   /* Use "static" to avoid using a local stack */
   static fd_set scan_fds[3];
   int32_t n_max, retv;
