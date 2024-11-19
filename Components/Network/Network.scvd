@@ -234,6 +234,7 @@
     <!-- Network Interface identifier -->
     <typedef name="NetIf"  size="2" info="Network interface identifier (class and number)">
       <member name="id"            type="uint16_t"   offset="0">
+        <enum name="LOOP"            value="0x0000"    info="Loopback interface"/>
         <enum name="ETH0"            value="0x0100"    info="Ethernet interface 0"/>
         <enum name="ETH1"            value="0x0101"    info="Ethernet interface 1"/>
         <enum name="WIFI0"           value="0x0200"    info="WiFi interface 0"/>
