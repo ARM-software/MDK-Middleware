@@ -1229,7 +1229,7 @@ extern int32_t ioctlsocket (int32_t sock, long cmd, unsigned long *argp);
 ///              - 0                   = Operation timed out.
 ///              - BSD_EINVAL          = Invalid parameter.
 ///              - BSD_ERROR           = Suspend operation failed.
-extern int32_t select (int32_t nfds, fd_set *readfds, fd_set *writefds, fd_set *errorfds, struct timeval *timeout);
+extern int32_t select (int32_t nfds, fd_set *readfds, fd_set *writefds, fd_set *errorfds, const timeval *timeout);
 
 /// \brief Retrieve host IP address from host name. [\ref thread-safe]
 /// \param[in]     name          host name.

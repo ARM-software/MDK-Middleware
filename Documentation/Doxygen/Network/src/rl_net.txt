@@ -1804,7 +1804,7 @@ if (optval != 0) {
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn int32_t select (int32_t nfds, fd_set *readfds, fd_set *writefds, fd_set *errorfds, struct timeval *timeout)
+\fn int32_t select (int32_t nfds, fd_set *readfds, fd_set *writefds, fd_set *errorfds, const timeval *timeout)
 \details
 The function \b select indicates which of the specified sockets is ready for reading, ready for writing, or has an error
 condition pending. If the specified condition is false for all of the specified sockets, \b select blocks, up to the 
