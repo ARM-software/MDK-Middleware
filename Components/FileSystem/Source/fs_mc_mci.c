@@ -1510,6 +1510,33 @@ static uint32_t mc_select_bus_width (MC_MCI *mc) {
   return (err);
 }
 
+/**
+    Switches signalling voltage to 1.8V.
+    Shall not be called if card or driver does not support 1.8V signalling.
+*/
+static uint32_t voltage_switch_1v8(MC_MCI *mc) {
+    int32_t stat = 0;
+    uint32_t arg = 0;
+    uint32_t r1[4];
+    stat = mc->Driver->SendCommand(MC_CMD_VOLTAGE_SWITCH, arg, ARM_MCI_RESPONSE_SHORT, r1);
+    if (stat == ARM_DRIVER_OK) {
+        // Wait for event
+        mc_wfe(MC_CMD_EVENTS, mc);
+        if ((mc->Event & MC_CMD_EVENTS) == ARM_MCI_EVENT_COMMAND_COMPLETE) {
+            stat = mc->Driver->Control(ARM_MCI_BUS_SPEED_MODE, ARM_MCI_BUS_UHS_SDR12);
+            if (stat == ARM_DRIVER_OK) {
+                // Idle clock 10ms
+                mci_idle_clock (true, mc);
+                fs_set_rtos_delay(10);
+                mci_idle_clock (false, mc);
+                return 0; // OK
+            }
+        }
+    }
+    EvrFsMcMCI_SendCommandError (mc->Instance, MC_CMD_SEND_OP_COND, arg);
+    return 1; // Error
+}
+
 
 /**
   Initialize memory card in native mode (non SPI)
@@ -1579,6 +1606,14 @@ static uint32_t mc_native_init (MC_MCI *mc) {
           if (r[0] & R3_S18A) {
             /* Switching to 1.8V Accepted, this is UHS-I card */
             mc->Property |= MC_PROP_SPEED_UHSI;
+            if (mc->Capabilities.uhs_signaling) {
+              // Actually switch to 1.8V
+              err = voltage_switch_1v8(mc);
+              if (err != 0) {
+                  // Voltage switch failed.
+                  return (false);
+              }
+            }
           }
           break;
         }
@@ -1798,7 +1833,12 @@ static uint32_t mc_native_init (MC_MCI *mc) {
             fs_set_rtos_delay(2);
             /* High-Speed mode enabled */
             speed = 50000000U;
-            mci_bus_speed_mode (ARM_MCI_BUS_HIGH_SPEED, mc);
+            if ((mc->Property & MC_PROP_SPEED_UHSI) && mc->Capabilities.uhs_signaling) {
+                mci_bus_speed_mode (ARM_MCI_BUS_UHS_SDR25, mc);
+            }
+            else {
+                mci_bus_speed_mode (ARM_MCI_BUS_HIGH_SPEED, mc);
+            }
             mci_bus_speed      (speed, mc);
             fs_set_rtos_delay(2);
           }
