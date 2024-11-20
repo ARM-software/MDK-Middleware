@@ -187,9 +187,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5bcdb9de12a6f30c3b404b9b54d74c1f"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__using__network__sockets__bsd__func.html#ga5bcdb9de12a6f30c3b404b9b54d74c1f">getsockopt</a> (int32_t sock, int32_t level, int32_t optname, char *optval, int32_t *optlen)</td></tr>
 <tr class="memdesc:ga5bcdb9de12a6f30c3b404b9b54d74c1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve options for the socket. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  <br /></td></tr>
 <tr class="separator:ga5bcdb9de12a6f30c3b404b9b54d74c1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2b756e98541d55081c99a70ef8f5ad43"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__using__network__sockets__bsd__func.html#ga2b756e98541d55081c99a70ef8f5ad43">select</a> (int32_t nfds, <a class="el" href="group__bsd__structs.html#structfd__set">fd_set</a> *readfds, <a class="el" href="group__bsd__structs.html#structfd__set">fd_set</a> *writefds, <a class="el" href="group__bsd__structs.html#structfd__set">fd_set</a> *errorfds, struct <a class="el" href="group__bsd__structs.html#structtimeval">timeval</a> *timeout)</td></tr>
-<tr class="memdesc:ga2b756e98541d55081c99a70ef8f5ad43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the status of one or more sockets. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  <br /></td></tr>
-<tr class="separator:ga2b756e98541d55081c99a70ef8f5ad43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga54ae5d6756952f2844efec876e6290e9"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__using__network__sockets__bsd__func.html#ga54ae5d6756952f2844efec876e6290e9">select</a> (int32_t nfds, <a class="el" href="group__bsd__structs.html#structfd__set">fd_set</a> *readfds, <a class="el" href="group__bsd__structs.html#structfd__set">fd_set</a> *writefds, <a class="el" href="group__bsd__structs.html#structfd__set">fd_set</a> *errorfds, const <a class="el" href="group__bsd__structs.html#structtimeval">timeval</a> *timeout)</td></tr>
+<tr class="memdesc:ga54ae5d6756952f2844efec876e6290e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the status of one or more sockets. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  <br /></td></tr>
+<tr class="separator:ga54ae5d6756952f2844efec876e6290e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga960a2fca6713ffbd8889a41f15e5c0ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__bsd__structs.html#structHOSTENT">HOSTENT</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__using__network__sockets__bsd__func.html#ga960a2fca6713ffbd8889a41f15e5c0ac">gethostbyname</a> (const char *name, int32_t *err)</td></tr>
 <tr class="memdesc:ga960a2fca6713ffbd8889a41f15e5c0ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve host IP address from host name. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  <br /></td></tr>
 <tr class="separator:ga960a2fca6713ffbd8889a41f15e5c0ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -242,7 +242,7 @@ Functions</h2></td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><a class="el" href="group__using__network__sockets__bsd__func.html#ga931d8f601c812a4497fc9e00f7e11936">recvmsg</a>   </td><td class="markdownTableBodyNone">Receives a message from a socket.    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><a class="el" href="group__using__network__sockets__bsd__func.html#ga2b756e98541d55081c99a70ef8f5ad43">select</a>   </td><td class="markdownTableBodyNone">Tests sockets if ready for reading, writing or have an error pending.    </td></tr>
+<td class="markdownTableBodyNone"><a class="el" href="group__using__network__sockets__bsd__func.html#ga54ae5d6756952f2844efec876e6290e9">select</a>   </td><td class="markdownTableBodyNone">Tests sockets if ready for reading, writing or have an error pending.    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><a class="el" href="group__using__network__sockets__bsd__func.html#ga4cc5678cb81694afc224221063fda9cd">send</a>   </td><td class="markdownTableBodyNone">Sends outgoing data on a socket.    </td></tr>
 <tr class="markdownTableRowEven">
@@ -1916,8 +1916,8 @@ BSD Client</h2>
 </div><!-- fragment --> 
 </div>
 </div>
-<a id="ga2b756e98541d55081c99a70ef8f5ad43" name="ga2b756e98541d55081c99a70ef8f5ad43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2b756e98541d55081c99a70ef8f5ad43">&#9670;&#160;</a></span>select()</h2>
+<a id="ga54ae5d6756952f2844efec876e6290e9" name="ga54ae5d6756952f2844efec876e6290e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga54ae5d6756952f2844efec876e6290e9">&#9670;&#160;</a></span>select()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1949,7 +1949,7 @@ BSD Client</h2>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">struct <a class="el" href="group__bsd__structs.html#structtimeval">timeval</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="group__bsd__structs.html#structtimeval">timeval</a> *&#160;</td>
           <td class="paramname"><em>timeout</em>&#160;</td>
         </tr>
         <tr>
@@ -2037,7 +2037,7 @@ BSD Client</h2>
 <div class="line">    <span class="keywordflow">while</span> (1) {</div>
 <div class="line">      <a class="code hl_define" href="rl__net_8h.html#a13ea72abe5159156453a8a957d8880cb">FD_ZERO</a> (&amp;read_fds);</div>
 <div class="line">      <a class="code hl_define" href="rl__net_8h.html#ac9a6234e30e3cb64542eca6dab921a93" title="BSD initialize and test fd_set macros.">FD_SET</a> (sock, &amp;read_fds);</div>
-<div class="line">      res = <a class="code hl_function" href="group__using__network__sockets__bsd__func.html#ga2b756e98541d55081c99a70ef8f5ad43" title="Check the status of one or more sockets. [thread-safe].">select</a> (sock+1, &amp;read_fds, NULL, NULL, NULL);</div>
+<div class="line">      res = <a class="code hl_function" href="group__using__network__sockets__bsd__func.html#ga54ae5d6756952f2844efec876e6290e9" title="Check the status of one or more sockets. [thread-safe].">select</a> (sock+1, &amp;read_fds, NULL, NULL, NULL);</div>
 <div class="line">      <span class="keywordflow">if</span> (res &lt;= 0) {</div>
 <div class="line">        <span class="keywordflow">break</span>;</div>
 <div class="line">      }</div>

@@ -207,7 +207,7 @@ $(document).ready(function(){initNavTree('rev_hist.html',''); initResizable(); }
 <li>updated for use with the FuSa C Library, sprintf and sscanf are no longer used in the network library</li>
 <li>fixed duplicate AutoIP addresses if the same firmware is deployed on multiple devices</li>
 <li>fixed nonce caching issue in HTTP Digest authentication</li>
-<li>corrected <a class="el" href="group__using__network__sockets__bsd__func.html#ga2b756e98541d55081c99a70ef8f5ad43">select</a> function to report a socket closed by a peer as readable</li>
+<li>corrected <a class="el" href="group__using__network__sockets__bsd__func.html#ga54ae5d6756952f2844efec876e6290e9">select</a> function to report a socket closed by a peer as readable</li>
 <li>fixed an Ethernet connectivity issue when the ARP cache table is fully utilized</li>
 <li>added functions in the user API that enable or disable echo response at runtime</li>
 <li>fixed Ethernet driver handling so that the receive function is not called before the link-up</li>
@@ -297,7 +297,7 @@ $(document).ready(function(){initNavTree('rev_hist.html',''); initResizable(); }
 </td></tr>
 <tr>
 <td>V7.9.0 </td><td><ul>
-<li>added <a class="el" href="group__using__network__sockets__bsd__func.html#ga2b756e98541d55081c99a70ef8f5ad43">select</a> function to BSD sockets</li>
+<li>added <a class="el" href="group__using__network__sockets__bsd__func.html#ga54ae5d6756952f2844efec876e6290e9">select</a> function to BSD sockets</li>
 <li>added address conversion functions: <a class="el" href="group__using__network__sockets__bsd__func.html#ga57fbb43943b1a1226814c7acf881bf1c">inet_addr</a>, <a class="el" href="group__using__network__sockets__bsd__func.html#gada37f8d9ecd2195bcad7717a295d2ad2">inet_aton</a>, <a class="el" href="group__using__network__sockets__bsd__func.html#ga9123668788ba0c48c7ee439f325e728a">inet_ntoa</a>, <a class="el" href="group__using__network__sockets__bsd__func.html#gaadac07d29a87adfc6435582c989cdbc2">inet_pton</a> and <a class="el" href="group__using__network__sockets__bsd__func.html#ga0bd214382fd14e4428076d88ced3748b">inet_ntop</a> to BSD sockets</li>
 <li>updated BSD sockets functionality and return codes to make them more consistent with standard BSD sockets</li>
 <li>added blocking functions: <a class="el" href="group__starting__sntp.html#ga04422104fd2213e360bb4fdadc9eadec">netSNTPc_GetTimeX</a>, <a class="el" href="group__netPing__Func.html#gafa780e952aeb5a2e19987ca24a1c620e">netPing_EchoX</a> and <a class="el" href="group__starting__dns.html#gabdfb833d5ee0ce0be704b3dceb00fecd">netDNSc_GetHostByNameX</a> for easy use</li>
