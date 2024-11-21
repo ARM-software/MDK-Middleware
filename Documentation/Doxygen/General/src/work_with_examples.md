@@ -197,7 +197,7 @@ From csolution project         | Copy to new uVision project folder   | Notes
 .                              | .                                    | .
 **From packs**                 | **copy to new uVision project folder**   | **Notes**
 `./Examples/USB/Device/HID` from MDK-Middleware pack| `<MyFolder>/HID`| Only copy content from the root directory without subfolders
-`./Layers/.../` from a BSP pack| `<MyFolder>/Board/<board_name>`  | Only copy source files (`*.c` and `*.h`) from the root directory without subfolders
+`./Layers/.../` from BSP pack| `<MyFolder>/Board/<board_name>`  | Only copy source files (`*.c` and `*.h`) from the root directory without subfolders
 
 From the uVision menu use *Project - New uVision Project...* dialog to select the device that you are using and create a new µVision project.
 
@@ -219,14 +219,14 @@ The RTE configuration files and generator files (for STM32CubeMX or MCUXpresso C
 
 From csolution project   | copy to new uVision project folder       | Notes
 :--------------------------------|:-----------------------------------------|:------------
-`./HID/RTE`                      | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
-`./Board/<board_name>/RTE`       | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
+`./HID/RTE`                      | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_`
+`./Board/<board_name>/RTE`       | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_`
 `./Board/<board_name/CubeMX>`    | `<MyFolder>/STM32CubeMX/<uVision_target_name>` | Rename the `*.cgen.yml` file
 .                              | .                                    | .
 **From packs**                 | **copy to new uVision project folder**   | **Notes**
 `./Examples/USB/Device/HID/RTE` from MDK-Middleware pack| `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
-`./Layers/Default/RTE` from a BSP pack  | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
-`./Layers/Default/CubeMX` from a BSP pack | `<MyFolder>/STM32CubeMX/<uVision_target_name>` | Rename the `*.cgen.yml` file
+`./Layers/Default/RTE` from BSP pack  | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
+`./Layers/Default/CubeMX` from BSP pack | `<MyFolder>/STM32CubeMX/<uVision_target_name>` | Rename the `*.cgen.yml` file (see note below)
 
 > **Note:**
 >
@@ -244,17 +244,25 @@ In the Case 1 the compiler toolchain relevant settings of the *csolution project
 
   ![Typical Compiler Options Settings](Options-C.png)
 
-- *Linker*: Configure Scatter File and adjust warnings.
-  - In the Case 1 with an existing csolution project, a read-to-use linker scatter file that has already been preprocessed by CMSIS-Toolbox in VS Code, typically located in `.\tmp\1\ac6_linker_script.sct`, should be copied to `<MyFolder>/Board/<board_name>` . In the Case 2 without an existing csolution project, since the native uVision project manager does not offer the same [linker script management](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-overview.md#linker-script-management) as a csoution project in VS Code IDE. follow these steps to configure a scatter file in µVision.
-        1. Copy Linker Script Templates file e.g. `ac6_linker_script.sct.src` from the directory <cmsis-toolbox-installation-dir>/etc of the CMSIS-Toolbox or from the RTE directory of the BSP pack, such as `./Layers/Default/RTE`, to `<MyFolder>/Board/<board_name>`.
-        2. Copy the memory regions header file e.g. regions_xxx.h from the same RTE directory of the BSP pack to `<MyFolder>/Board/<board_name>`.
-        3. Add C preprocessor, such as `#! armclang --target=arm-arm-none-eabi -march=armv7-m -E -x c`, as the first line of `ac6_linker_script.sct.src`
-        4. Add `#include "regions_xxx.h"` as the second line to `ac6_linker_script.sct.src`
+- *Linker*: Configure Scatter File and adjust warnings: The native uVision project manager does not offer the same [linker script management](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-overview.md#linker-script-management) that is available in the CMSIS-Toolbox. Follow these steps to import the linker settings.
+  - When copying files **from a csolution project**, the preprocessed linker scatter file that is ready-to-use is typically located in `.\tmp\1\ac6_linker_script.sct`. Copy this file to `<MyFolder>/Board/<board_name>` and add it as *Scatter File*.
+
+  - Without an existing csolution project, follow these steps to configure a linker scatter file in µVision.
+     1. Copy the [Linker Script Template](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-overview.md#linker-script-templates) file  `ac6_linker_script.sct.src` from the directory `<cmsis-toolbox-installation-dir>/etc` of the CMSIS-Toolbox.
+     2. Copy the memory regions header file e.g. regions_xxx.h from the same RTE directory of the BSP pack to `<MyFolder>/Board/<board_name>`.
+     3. Add at the beginning of the file `ac6_linker_script.sct.src` the following statements to enable the linker integrated C preprocessor:
+
+```c
+       #! armclang --target=arm-arm-none-eabi -march=armv7-m -E -x c
+       #include "regions_xxx.h"          // defines the memory available to the application
+```
+
   - In `cdefault.yml` included in some MDK-Middleware Reference Applications there may be some linker controls that should be reflected in this dialog, for example `--diag_suppress=L6314W`.
 
   ![Typical Linker Options Settings](Options-Linker.png)
 
 #### Expand with additional components
+
 Once the new project is created, it may be expanded with additional software components or modified to custom hardware as shown in the picture below. Note that uVision projects have no dependency on specify hardware boards.
 
 ![Create new project in uVision](Create-uVision-Project.png)
