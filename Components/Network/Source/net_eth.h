@@ -24,6 +24,8 @@
 /* ETH State flags */
 #define ETH_FLAG_PHY_OK     0x01        // Phy initialized successfully
 #define ETH_FLAG_POLLING    0x02        // MAC driver in polling mode
+#define ETH_FLAG_MCAST_NONE 0x04        // Multicasts not used in application
+#define ETH_FLAG_MCAST_ALL  0x08        // Receive all multicast frames
 
 /* ETH Control info */
 typedef struct net_eth_ctrl {

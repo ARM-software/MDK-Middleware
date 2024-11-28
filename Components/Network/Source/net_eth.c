@@ -145,6 +145,19 @@ static void eth_iface_init (NET_ETH_CFG *h) {
     }
   }
 
+  /* Disable hardware multicast hash filtering */
+  if ((h->If->Ip4Cfg && h->If->Ip4Cfg->IgmpCfg) || h->If->Ip6Cfg) {
+    /* For IPv4-IGMP enabled or IPv6 enabled only */
+    rc = drv_mac->SetAddressFilter (NULL, 0);
+    if (rc == ARM_DRIVER_ERROR_UNSUPPORTED) {
+      /* Multicast hash filtering not supported in the driver */
+      h->Ctrl->Flags |= ETH_FLAG_MCAST_ALL;
+    }
+  }
+  else {
+    h->Ctrl->Flags |= ETH_FLAG_MCAST_NONE;
+  }
+
   /* Set MTU */
   ctrl->Mtu = (ctrl->VlanId) ? (ETH_MAX_FRAME_SIZE + 4) : ETH_MAX_FRAME_SIZE;
 
@@ -743,10 +756,13 @@ static void eth_config_mcast (uint32_t if_num) {
   uint8_t *buf;
   uint32_t n;
 
-  if (h == NULL || ctrl->th.LinkState == ARM_ETH_LINK_DOWN) {
+  if ((h == NULL) || (ctrl->th.LinkState == ARM_ETH_LINK_DOWN)) {
     return;
   }
-
+  if (ctrl->Flags & (ETH_FLAG_MCAST_ALL | ETH_FLAG_MCAST_NONE)) {
+    /* Multicasts: all accepted or not used, no filtering */
+    return;
+  }
   /* Provide buffer big enough (add one more for safety) */
   buf = (uint8_t *)net_mem_alloc ((ctrl->n_mcast + 1) * NET_ADDR_ETH_LEN);
   n   = 0;
@@ -858,6 +874,9 @@ static void eth_check_link (NET_ETH_CFG *h) {
           (uint32_t)info.duplex << ARM_ETH_MAC_DUPLEX_Pos;
     if (h->If->Ip4Cfg) {
       arg |= ARM_ETH_MAC_ADDRESS_BROADCAST;
+    }
+    if (ctrl->Flags & ETH_FLAG_MCAST_ALL) {
+      arg |= ARM_ETH_MAC_ADDRESS_MULTICAST;
     }
     if (h->If->State->Offload & SYS_OFFL_RX_ALL) {
       arg |= ARM_ETH_MAC_CHECKSUM_OFFLOAD_RX;
@@ -1162,7 +1181,7 @@ static void eth_iface_run (NET_ETH_CFG *h) {
       /* Multicast addresses changed */
       h->If->State->ConfigMcast = false;
       eth_config_mcast (h->IfNum);
-    }      
+    }
   }
   else if (ctrl->th.ChangeSt) {
     if (ctrl->th.LinkState == ARM_ETH_LINK_UP) {
