@@ -1,13 +1,14 @@
 //--- list of versions‚ ---
 const versions = {
     "General": {
-        "main": "8.0.1-dev26",
+        "main": "8.0.1-dev27",
         "latest": "8.0.0"
     },
     "FileSystem": {
         "latest": "8.0.0"
     },
     "Network": {
+        "main": "8.0.1",
         "latest": "8.0.0"
     },
     "USB": {
