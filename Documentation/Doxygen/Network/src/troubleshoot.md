@@ -31,7 +31,7 @@ The following assumes that you are using \ref netEvrSupport "Event Recorder" bas
 
 ### Check the Ethernet interface {#trbl_verify_eth}
 
-\urlout{CMSIS-View} shows you static information about the operation of a software component. In the µVision
+\urlout{Component-Viewer-About} shows you static information about the operation of a software component. In the µVision
 debugger, go to **Debug -> View -> Watch windows -> Network** to see the status information of the network library:
 
 ![Component Viewer for the Network library](trbl_cv_nw.png)
