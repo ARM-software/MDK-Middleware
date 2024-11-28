@@ -11,38 +11,10 @@
     </licenseSet>
   </licenseSets>
   <releases>
-    <release version="8.0.0-dev">
-      MDK bundle with source code replaces MDK-Pro and MDK-Plus bundles with pre-built libraries.
-      Removed Board Support APIs.
-      Added Middleware examples.
-      Added requirement for C compiler version 11 (C11).
-      Network Component Version 8.0.0
-      - removed CORE component variants
-      - changed source config files to headers
-      - removed support for legacy Arm Compiler 5
-      - removed support for CMSIS-RTOS version 1
-      - removed legacy API interface version 6
-      - corrected handling of a half-closed TCP socket, data delivery added
-      - fixed DHCP client issue with relay agent causing "ServerAddressNotSelected" error
-      - added function netARP_AddCache to manually add an entry to the ARP cache table
-      - added option for updating mbedTLS certificates at runtime
-      - added IPv6 Multicasting with MLD, Multicast Listener Discovery Protocol
-      - added BSD socket option SO_BINDTODEVICE to bind socket to a network interface
-      FileSystem Component Version 8.0.0
-      - removed CORE component variants
-      - changed source config files to headers
-      - removed support for legacy Arm Compiler 5
-      - removed support for CMSIS-RTOS version 1
-      - removed support for legacy fdelete function
-      - fixed allocation table write access (regression) when using FAT12
-      - fixed FAT volume label character checking
-      - corrected ffind error code for FAT on repeated search without wildcard
-      USB Component Version 8.0.0
-      - removed CORE component variants
-      - changed source config files to headers
-      - removed support for legacy Arm Compiler 5
-      - removed support for CMSIS-RTOS version 1
-      - USB Host: removed OHCI and EHCI drivers (moved to CMSIS-Driver pack)
+    <release version="8.0.1-dev">
+      Active development ...
+      Network Component Version 8.0.1
+      - fixed handling of Ethernet drivers not supporting multicast address filtering
     </release>
     <release version="7.17.0" date="2024-01-17">
       Network Component Version 7.19.0
@@ -710,7 +682,7 @@
   <components>
 
     <!-- Network (MDK) -->
-    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.0.0">
+    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.0.1">
       <description>IPv4/IPv6 Networking using Ethernet or Serial protocols</description>
       <doc>Documentation/html/Network/index.html</doc>
       <component Cgroup="CORE" condition="CMSIS Core with RTOS">

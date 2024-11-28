@@ -6,6 +6,12 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V8.0.1</td>
+      <td>
+        - fixed handling of Ethernet drivers not supporting multicast address filtering
+      </td>
+    </tr>
+    <tr>
       <td>V8.0.0</td>
       <td>
         - removed CORE component variants

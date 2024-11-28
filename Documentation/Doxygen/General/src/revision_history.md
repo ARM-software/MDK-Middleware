@@ -10,6 +10,12 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V8.0.1-dev</td>
+    <td>
+      - Network Component Version 8.0.1
+    </td>
+  </tr>
+  <tr>
     <td>V8.0.0</td>
     <td>
       - MDK bundle with source code replaces MDK-Pro and MDK-Plus bundles with pre-built libraries
