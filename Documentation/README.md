@@ -24,3 +24,9 @@ The software components that are part of this [CMSIS-Pack](https://open-cmsis-pa
 ## Availability
 
 The MDK-Middleware is available free-of-charge to all users of Arm Cortex-M-based processors. It does not require a specific toolchain or IDE license and can be built with major toolchains, such as Arm Compiler 6, GCC, and LLVM.
+
+## Links
+
+- [Documentation](https://arm-software.github.io/MDK-Middleware/latest/General/index.html)
+- [Repository](https://github.com/ARM-software/MDK-Middleware)
+- [Issues](https://github.com/ARM-software/MDK-Middleware/issues)
