@@ -1824,8 +1824,55 @@ static uint32_t mc_native_init (MC_MCI *mc) {
       sw_arg.access_mode     = CMD6_ACCESS_MODE_SDR25;
 
       if (mc_switch_func (sw_arg, mc->ExtCSD, mc) == 0) {
+        // Check if SDR104 support bit is set
+        if (mc->ExtCSD[13] & (1U << CMD6_ACCESS_MODE_SDR104)) {
+          sw_arg.mode = CMD6_MODE_SET;
+          sw_arg.access_mode = CMD6_ACCESS_MODE_SDR104;
+          if (mc_switch_func(sw_arg, mc->ExtCSD, mc) == 0) {
+            fs_set_rtos_delay(2);
+            speed = 200000000;
+            mci_bus_speed_mode(ARM_MCI_BUS_UHS_SDR104, mc);
+            mci_bus_speed(speed, mc);
+            fs_set_rtos_delay(2);
+            mc->Driver->Control(ARM_MCI_UHS_TUNING_OPERATION, 1);
+            while (mc->Driver->Control(ARM_MCI_UHS_TUNING_RESULT) == 1) {
+              // Is the middleware now responsible for feeding CMD19, or should this be handled
+              // automatically by the driver?
+            }
+          }
+          else {
+            /* Failed to switch to high-speed mode */
+            EvrFsMcMCI_HighSpeedSwitchError (mc->Instance);
+
+            /* Abort incomplete data transfer */
+            EvrFsMcMCI_TransferAbort (mc->Instance);
+            mc->Driver->AbortTransfer();
+          }
+        }
+        // Check if SDR50 support bit is set
+        else if (mc->ExtCSD[13] & (1U << CMD6_ACCESS_MODE_SDR50)) {
+          sw_arg.mode = CMD6_MODE_SET;
+          sw_arg.access_mode = CMD6_ACCESS_MODE_SDR50;
+          if (mc_switch_func(sw_arg, mc->ExtCSD, mc) == 0) {
+            fs_set_rtos_delay(2);
+            speed = 100000000;
+            mci_bus_speed_mode(ARM_MCI_BUS_UHS_SDR50, mc);
+            mci_bus_speed(speed, mc);
+            fs_set_rtos_delay(2);
+            // Tuning is officially required for SDR50 in SD spec, but communications seems to work without
+            // on the MIMXRT1176-EVK
+          }
+          else {
+            /* Failed to switch to high-speed mode */
+            EvrFsMcMCI_HighSpeedSwitchError (mc->Instance);
+
+            /* Abort incomplete data transfer */
+            EvrFsMcMCI_TransferAbort (mc->Instance);
+            mc->Driver->AbortTransfer();
+          }
+        }
         /* Check if High-Speed/SDR25 support bit is set */
-        if (mc->ExtCSD[13] & (1U << CMD6_ACCESS_MODE_SDR25)) {
+        else if (mc->ExtCSD[13] & (1U << CMD6_ACCESS_MODE_SDR25)) {
           /* Switch to SDR25 (High-Speed mode) */
           sw_arg.mode = CMD6_MODE_SET;
 
