@@ -14,7 +14,7 @@
 
 #define MW_FS_VERSION_MAJOR      8
 #define MW_FS_VERSION_MINOR      0
-#define MW_FS_VERSION_PATCH      0
+#define MW_FS_VERSION_PATCH      1
 
 // ==== Enumeration, structures, defines ====
 
