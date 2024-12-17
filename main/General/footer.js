@@ -1,7 +1,7 @@
 function writeHeader() {
-    document.write('Version 8.0.1-dev27');
+    document.write('Version 8.0.1-dev28');
 };
 
 function writeFooter()  {
-    document.write('Generated on Thu Nov 28 2024 12:31:03 for MDK-Middleware 8.0.1-dev27+ge972120. Copyright &copy; 2024 Arm Limited (or its affiliates). All rights reserved.');
+    document.write('Generated on Tue Dec 17 2024 08:58:17 for MDK-Middleware 8.0.1-dev28+g0760add. Copyright &copy; 2024 Arm Limited (or its affiliates). All rights reserved.');
 };
