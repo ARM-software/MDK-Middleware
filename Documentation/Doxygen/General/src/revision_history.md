@@ -13,6 +13,7 @@
     <td>V8.0.1-dev</td>
     <td>
       - Network Component Version 8.0.1
+      - FileSystem Component Version 8.0.1
     </td>
   </tr>
   <tr>

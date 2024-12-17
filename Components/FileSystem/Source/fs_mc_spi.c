@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_mc_spi.c
  * Purpose: MMC/SD Card SPI-Mode Interface
@@ -1194,7 +1194,7 @@ static fsStatus mc_parse_csd (fsCSD_Register *csd, const uint8_t *b) {
       csd->BlCnt = (v + 1) << (m + 2);
       break;
     case 1:                             /* SD card,  CSD v2.0 */
-      v =  ((b[7] << 16) | (b[8] << 8) | b[9]) & 0xFFFF;
+      v =  ((b[7] << 16) | (b[8] << 8) | b[9]) & 0x00FFFFFF;
       csd->BlCnt = (v + 1) << 10;
       break;
     default:

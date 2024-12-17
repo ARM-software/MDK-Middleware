@@ -6,6 +6,12 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V8.0.1</td>
+      <td>
+        - fixed bug in memory card layer for SPI mode that prevented correct device size recognition
+      </td>
+    </tr>
+    <tr>
       <td>V8.0.0</td>
       <td>
         - removed CORE component variants
