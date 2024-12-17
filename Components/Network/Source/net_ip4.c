@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ip4.c
  * Purpose: Internet Protocol Version 4
@@ -483,6 +483,11 @@ NET_IF_CFG *net_ip4_find_route (NET_IF_CFG *net_if, const uint8_t *dst_addr) {
     }
   }
   /* Address is external */
+  if (net_if != NULL) {
+    /* Use desired interface */
+    return (net_if);
+  }
+  /* Use default interface */
   return (ip4->DefNetIf);
 }
 

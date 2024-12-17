@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_udp.c
  * Purpose: User Datagram Protocol
@@ -278,7 +278,7 @@ netStatus net_udp_set_option (int32_t socket, netUDP_Option option, uint32_t val
 #endif
 
     case netUDP_OptionInterface:
-      net_if = net_if_map_lan (val);
+      net_if = net_if_map_all (val);
       if (net_if == NULL) break;
       DEBUGF (UDP," Interface=%s\n",net_if->Name);
       EvrNetUDP_SetOptionInterface (socket, net_if->Id);
