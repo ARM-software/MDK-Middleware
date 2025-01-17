@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <component_viewer schemaVersion="0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
-  <component name="Network" shortname="NET" version="8.0.1"/>    <!-- name and version of the component  -->
+  <component name="Network" shortname="NET" version="8.1.0"/>    <!-- name and version of the component  -->
 
   <typedefs>
     <!-- Network Library variant -->
@@ -745,7 +745,7 @@
         <enum name="TTL"             value="1"         info="IPv4 Multi-cast Time to Live"/>
         <enum name="TrafficClass"    value="2"         info="IPv6 Traffic Class"/>
         <enum name="HopLimit"        value="3"         info="IPv6 Multi-cast Hop limit"/>
-        <enum name="Interface"       value="4"         info="Broadcast Network interface"/>
+        <enum name="Interface"       value="4"         info="Bound Network interface"/>
         <enum name="Checksum"        value="5"         info="Checksum Options"/>
       </member>
     </typedef>
@@ -808,10 +808,11 @@
       <member name="id"            type="uint8_t"    offset="0">
         <enum name="TOS"             value="0"         info="IPv4 Type of Service"/>
         <enum name="TrafficClass"    value="1"         info="IPv6 Traffic Class"/>
-        <enum name="Timeout"         value="2"         info="TCP Idle Timeout"/>
-        <enum name="KeepAlive"       value="3"         info="TCP Keep Alive"/>
-        <enum name="FlowControl"     value="4"         info="TCP Flow Control"/>
-        <enum name="DelayedACK"      value="5"         info="TCP Delayed Acknowledgment"/>
+        <enum name="Interface"       value="2"         info="Bound Network interface"/>
+        <enum name="Timeout"         value="3"         info="TCP Idle Timeout"/>
+        <enum name="KeepAlive"       value="4"         info="TCP Keep Alive"/>
+        <enum name="FlowControl"     value="5"         info="TCP Flow Control"/>
+        <enum name="DelayedACK"      value="6"         info="TCP Delayed Acknowledgment"/>
       </member>
     </typedef>
 
@@ -2110,7 +2111,7 @@
     <event id="19 + 0xD000" level="Detail" property="SetOptionTclass"           value="socket=%d[val1], tclass=%d[val2]" info="Set socket option traffic class for IPv6"/>
     <event id="20 + 0xD000" level="Detail" property="SetOptionHopLimit"         value="socket=%d[val1], hop_limit=%d[val2]" info="Set socket option hop limit for IPv6"/>
     <event id="21 + 0xD000" level="Detail" property="SetOptionChecksum"         value="socket=%d[val1], send=%t[val2 &amp; 1 ? &quot;On&quot; : &quot;Off&quot;], verify=%t[val2 &amp; 2 ? &quot;On&quot; : &quot;Off&quot;]" info="Set socket checksum calculation options"/>
-    <event id="42 + 0xD000" level="Detail" property="SetOptionInterface"        value="socket=%d[val1], netif=%E[val2, NetIf:id]" info="Set Network Interface for broadcasts and multicasts"/>
+    <event id="42 + 0xD000" level="Detail" property="SetOptionInterface"        value="socket=%d[val1], netif=%E[val2, NetIf:id]" info="Set Network Interface for broadcasts, multicasts and internet access"/>
     <event id="22 + 0xD000" level="Error"  property="SetOptionWrongOption"      value="socket=%d[val1], opt=%E[val2, UDP_Opt:id]" info="Invalid option requested"/>
     <event id="23 + 0xD000" level="Error"  property="SetOptionWrongValue"       value="socket=%d[val1], value=%d[val2]" info="Invalid value for option provided"/>
     <event id="24 + 0xD000" level="Error"  property="GetBufferFailed"           value="size=%d[val1]" info="GetBuffer failed, out of memory error"/>
@@ -2189,6 +2190,7 @@
     <event id="50 + 0xD100" level="Detail" property="SetOptionKeepAlive"        value="socket=%d[val1], enable=%d[val2]" info="Set socket option keep-alive"/>
     <event id="51 + 0xD100" level="Detail" property="SetOptionFlowControl"      value="socket=%d[val1], enable=%d[val2]" info="Set socket option flow-control"/>
     <event id="52 + 0xD100" level="Detail" property="SetOptionDelayedAck"       value="socket=%d[val1], enable=%d[val2]" info="Set socket option delayed-acknowledge"/>
+    <event id="116+ 0xD100" level="Detail" property="SetOptionInterface"        value="socket=%d[val1], netif=%E[val2, NetIf:id]" info="Set Network Interface for internet connections"/>
     <event id="53 + 0xD100" level="Error"  property="SetOptionWrongOption"      value="socket=%d[val1], opt=%E[val2, TCP_Opt:id]" info="Invalid option requested"/>
     <event id="54 + 0xD100" level="Error"  property="SetOptionWrongValue"       value="socket=%d[val1], value=%d[val2]" info="Invalid value for option provided"/>
     <event id="55 + 0xD100" level="Op"     property="SendDelayedAck"            value="socket=%d[val1]" info="Send delayed-acknowledge"/>

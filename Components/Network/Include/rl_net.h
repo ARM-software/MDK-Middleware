@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    rl_net.h
  * Purpose: Network API
@@ -17,7 +17,7 @@
 
 /// Network component version
 #define MW_NET_VERSION_MAJOR    8
-#define MW_NET_VERSION_MINOR    0
+#define MW_NET_VERSION_MINOR    1
 #define MW_NET_VERSION_PATCH    0
 
 #ifdef __cplusplus
@@ -136,6 +136,7 @@ typedef enum {
 typedef enum {
   netTCP_OptionTOS            = 0,      ///< IPv4 Type of Service; val=TOS
   netTCP_OptionTrafficClass,            ///< IPv6 Traffic Class; val=TrafficClass
+  netTCP_OptionInterface,               ///< Network interface to bind; val=if_id (class and number)
   netTCP_OptionTimeout,                 ///< TCP Idle Timeout; val=timeout (in seconds)
   netTCP_OptionKeepAlive,               ///< TCP Keep Alive; val: 0=disabled (default), 1=enabled
   netTCP_OptionFlowControl,             ///< TCP Flow Control; val: 0=disabled (default), 1=enabled

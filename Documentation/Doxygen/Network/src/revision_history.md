@@ -6,8 +6,9 @@
       <th>Description</th>
     </tr>
     <tr>
-      <td>V8.0.1</td>
+      <td>V8.1.0</td>
       <td>
+        - added support for simultaneous outgoing connections via different network interfaces
         - fixed handling of Ethernet drivers not supporting multicast address filtering
       </td>
     </tr>
