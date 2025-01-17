@@ -18,7 +18,7 @@ For a detailed list of available examples and their detailed description, see th
 
 This chapter gives a generic overview on how to access, configure and build an MDK-Middleware example project for your target hardware.
 
-## Using VS Code
+## Using VS Code {#using-vs-code}
 
 This section explains how to use MDK-Middleware with the [Arm CMSIS Solution](https://marketplace.visualstudio.com/items?itemName=Arm.cmsis-csolution) for VS Code. This extension is for example part of [Keil Studio](https://www.keil.arm.com/).
 
@@ -107,6 +107,59 @@ Use the VS Code menu command **Terminal - Run Task...** to Start uVision.  uVisi
 
 Refer to [Application Note 320: Using Event Recorder for debugging a network performance issue](https://developer.arm.com/documentation/kan320/latest/) for an tutorial on how to analyze MDK-Middleware issues.
 
+### Configure for Debugging
+
+The MDK-Middleware components have extensive debug capabilities. For example, the Network component offers [debug output via STDOUT (printf) and/or annotations for the Event Recorder](../Network/create_app.html#nw_debugging). Each component has therefore a section **Create Applications &raquo; Debugging**. These debug features are today fully supported by the uVision Debugger.
+
+By default, the MDK-Middleware examples are not configured for debugging. The steps below explain how to add these debug capablities.
+
+**Enable Event Recorder:**
+
+To Event Recorder functionality is provided by the pack `ARM::CMSIS-View`. Add this pack and the related software component to the `cproject.yml` file:
+
+```yml
+  packs:
+    - pack: ARM::CMSIS-View
+    :
+  components:
+    - component: ARM::CMSIS-View:Event Recorder&DAP
+```
+
+- Each MDK Middleware component has options to [enable Debug via Event Recorder](../Network/create_app.html#nw_debugging) in the `<component>_Debug.h` (for example `Network_Debug.h`) configuration file.
+
+- Initialize and start the [Event Recorder](https://arm-software.github.io/CMSIS-View/latest/evr.html). When using RTX this can be configured in the file [`RTX_Config.h`](https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html#evtrecConfig).
+
+### Redirect STDOUT to Event Recorder
+
+The board layers may configure STDOUT to a UART port. In some cases, it might be desired to [redirect printf output to the Event Recorder](https://arm-software.github.io/CMSIS-View/latest/er_use.html#printf_redirect).
+
+**Disable "Custom" Output:**
+
+Remove the following components and the related file `retarget_stdio.c` in the `*.clayer.yml` or `*.cproject.yml` file. 
+
+```yml
+#   - component: CMSIS-Compiler:STDERR:Custom
+#   - component: CMSIS-Compiler:STDOUT:Custom
+#   - component: CMSIS-Compiler:STDIN:Custom
+
+#   - file: ./retarget_stdio.c
+```
+
+In the source code of the application (usually in the file `main.c`) remove the call to `stdio_init()`.
+
+Add the pack `ARM::CMSIS-Compiler` and the related components to the file `*.clayer.yml` or `*.cproject.yml` as shown below.
+
+```yml
+  packs:
+    - pack: ARM::CMSIS-Compiler
+    :
+  components:
+    - component: CMSIS-Compiler:STDERR:Event Recorder
+    - component: CMSIS-Compiler:STDOUT:Event Recorder
+```
+
+Refer to [CMSIS-Compiler](https://arm-software.github.io/CMSIS-Compiler/latest/index.html) for more information about I/O retargeting.
+
 ## Using uVision IDE
 
 The [uVision v5.41](https://www.keil.arm.com/mdk-community/) IDE or higher allows to directly work with *csolution projects*. Source code can be modified, build commands can be executed, and after configuration the [uVision Debugger](https://developer.arm.com/documentation/101407/0541/Debugging) can be used. Adding files or software components is possible by modifying the *csolution project yml files*. It is not directly supported with a user interface.
@@ -115,7 +168,7 @@ The [uVision v5.41](https://www.keil.arm.com/mdk-community/) IDE or higher allow
 
 ### Create a native uVision Project
 
-As uVision IDE is easy-to-use and powerful many developers want to use this IDE for productive software development. The MDK-Middleware Reference Applications can be recreated as clean, native uVision project by following the steps listed below, once configured with a compatible board layer. Such a board layer can be copied from an existing working csolution project in VS Code by following the section [Using VS Code](https://arm-software.github.io/MDK-Middleware/latest/General/working_with_examples.html#autotoc_md1) above, or from an exisitng BSP pack that contains a board layer.
+As uVision IDE is easy-to-use and powerful many developers want to use this IDE for productive software development. The MDK-Middleware Reference Applications can be recreated as clean, native uVision project by following the steps listed below, once configured with a compatible board layer. Such a board layer can be copied from an existing working csolution project in VS Code by following the section [Using VS Code](#using-vs-code) above, or from an existing BSP pack that contains a board layer.
 
 1. Create a new folder and copy the source files of the MDK-Middleware Reference Application and the software layer, e.g. the board layer. It is recommended to keep the folder structure. In this new folder create a new uVision project for the selected target device.
 2. Add source files and software components listed in the `*.cproject.yml` of the MDK-Middleware Reference Application and `*.clayer.yml` 
@@ -123,30 +176,28 @@ of the software layer e.g. the board layer into the new µVision project using t
 3. Copy the existing Run-Time-Environment (RTE) configuration files as well as the board layer files to the correct subdirectory of the new uVision project.
 4. Configure tool settings using the uVision *Options for Target* dialogs and add linker script.
 
-
-
 **These steps are described in more detail below.**
 
-MDK-Middleware Reference Applications contain a collection of projects. Taking the USB Device HID project from the MDK-Middleware Reference Applications as an example. Case 1 represents the case with an existing csolution project created in VS Code by following the section [Using VS Code](https://arm-software.github.io/MDK-Middleware/latest/General/working_with_examples.html#autotoc_md1) above. Case 2 represents the case without an existing csolution project when copying from the Examples subfolder of the MDK-Middleware pack v8.x as well as from a BSP pack containing the board layer.
+MDK-Middleware Reference Applications contain a collection of projects. The steps below are exemplified on the USB Device HID project.
+
+The tables contain two different use cases:
+
+- **From csolution project**: assumes that a working csolution project is created [Using VS Code](#using-vs-code).
+  
+- **From packs**: assumes that the user has located the source code of the packs. The term BSP refers to the Board Support Pack. The BSP may have different folder structure, typically  `./Layers/Default/` contains board layer files.
 
 #### Create new Project Folder
 
- Create a new folder for the µVision project and copy the source files from the MDK-Middleware Reference Application.
+Create a new folder for the µVision project and copy the source files from the MDK-Middleware Reference Application.
 
-
-Case 1: from csolution project | copy to new uVision project folder   | Notes
+From csolution project         | Copy to new uVision project folder   | Notes
 :------------------------------|:-------------------------------------|:------
 `./HID`                        | `<MyFolder>/HID`                     | Only copy content from the root directory without subfolders
 `./Board/<board_name>`         | `<MyFolder>/Board/<board_name>`      | Only copy source files (`*.c` and `*.h`) from the root directory without subfolders
-
-Case 2: from packs             | copy to new uVision project folder   | Notes
-:------------------------------|:-------------------------------------|:------
+.                              | .                                    | .
+**From packs**                 | **copy to new uVision project folder**   | **Notes**
 `./Examples/USB/Device/HID` from MDK-Middleware pack| `<MyFolder>/HID`| Only copy content from the root directory without subfolders
-`./Layers/Default/` from a BSP pack| `<MyFolder>/Board/<board_name>`  | Only copy source files (`*.c` and `*.h`) from the root directory without subfolders
-
-> **Note:**
->
-> - Different BSP pack may have different folder struture other than `./Layers/Default/` that contains board layer files.
+`./Layers/.../` from BSP pack| `<MyFolder>/Board/<board_name>`  | Only copy source files (`*.c` and `*.h`) from the root directory without subfolders
 
 From the uVision menu use *Project - New uVision Project...* dialog to select the device that you are using and create a new µVision project.
 
@@ -166,22 +217,20 @@ The `*.cproject.yml` of the reference application and `*.clayer.yml` of the soft
 
 The RTE configuration files and generator files (for STM32CubeMX or MCUXpresso Config) are fully compatible with uVision. Follow the table below to copy these configuration files to the µVision project folder
 
-Case 1: from csolution project   | copy to new uVision project folder       | Notes
+From csolution project   | copy to new uVision project folder       | Notes
 :--------------------------------|:-----------------------------------------|:------------
-`./HID/RTE`                      | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
-`./Board/<board_name>/RTE`       | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
+`./HID/RTE`                      | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_`
+`./Board/<board_name>/RTE`       | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_`
 `./Board/<board_name/CubeMX>`    | `<MyFolder>/STM32CubeMX/<uVision_target_name>` | Rename the `*.cgen.yml` file
-
-Case 2: from packs  | copy to new uVision project folder       | Notes
-:--------------------|:-----------------------------------------|:------------
+.                              | .                                    | .
+**From packs**                 | **copy to new uVision project folder**   | **Notes**
 `./Examples/USB/Device/HID/RTE` from MDK-Middleware pack| `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
-`./Layers/Default/RTE` from a BSP pack  | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
-`./Layers/Default/CubeMX` from a BSP pack | `<MyFolder>/STM32CubeMX/<uVision_target_name>` | Rename the `*.cgen.yml` file
+`./Layers/Default/RTE` from BSP pack  | `<MyFolder>/RTE`                         | Only copy component folders excluding folders that start with `_` 
+`./Layers/Default/CubeMX` from BSP pack | `<MyFolder>/STM32CubeMX/<uVision_target_name>` | Rename the `*.cgen.yml` file (see note below)
 
 > **Note:**
 >
 > - The `*.cgen.yml` file copied from the existing csoution project or from the BSP pack must be renamed to match your µVision project name, i.e. `<MyProject>.cgen.yml`.
-> - Different BSP pack may have different folder struture other than `./Layers/Default/` that contains board layer files.
 
 #### Configure Tool Settings
 
@@ -195,17 +244,25 @@ In the Case 1 the compiler toolchain relevant settings of the *csolution project
 
   ![Typical Compiler Options Settings](Options-C.png)
 
-- *Linker*: Configure Scatter File and adjust warnings.
-  - In the Case 1 with an existing csolution project, a read-to-use linker scatter file that has already been preprocessed by CMSIS-Toolbox in VS Code, typically located in `.\tmp\1\ac6_linker_script.sct`, should be copied to `<MyFolder>/Board/<board_name>` . In the Case 2 without an existing csolution project, since the native uVision project manager does not offer the same [linker script management](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-overview.md#linker-script-management) as a csoution project in VS Code IDE. follow these steps to configure a scatter file in µVision.
-        1. Copy Linker Script Templates file e.g. `ac6_linker_script.sct.src` from the directory <cmsis-toolbox-installation-dir>/etc of the CMSIS-Toolbox or from the RTE directory of the BSP pack, such as `./Layers/Default/RTE`, to `<MyFolder>/Board/<board_name>`.
-        2. Copy the memory regions header file e.g. regions_xxx.h from the same RTE directory of the BSP pack to `<MyFolder>/Board/<board_name>`.
-        3. Add C preprocessor, such as `#! armclang --target=arm-arm-none-eabi -march=armv7-m -E -x c`, as the first line of `ac6_linker_script.sct.src`
-        4. Add `#include "regions_xxx.h"` as the second line to `ac6_linker_script.sct.src`
+- *Linker*: Configure Scatter File and adjust warnings: The native uVision project manager does not offer the same [linker script management](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-overview.md#linker-script-management) that is available in the CMSIS-Toolbox. Follow these steps to import the linker settings.
+  - When copying files **from a csolution project**, the preprocessed linker scatter file that is ready-to-use is typically located in `.\tmp\1\ac6_linker_script.sct`. Copy this file to `<MyFolder>/Board/<board_name>` and add it as *Scatter File*.
+
+  - Without an existing csolution project, follow these steps to configure a linker scatter file in µVision.
+     1. Copy the [Linker Script Template](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-overview.md#linker-script-templates) file  `ac6_linker_script.sct.src` from the directory `<cmsis-toolbox-installation-dir>/etc` of the CMSIS-Toolbox.
+     2. Copy the memory regions header file e.g. regions_xxx.h from the same RTE directory of the BSP pack to `<MyFolder>/Board/<board_name>`.
+     3. Add at the beginning of the file `ac6_linker_script.sct.src` the following statements to enable the linker integrated C preprocessor:
+
+```c
+       #! armclang --target=arm-arm-none-eabi -march=armv7-m -E -x c
+       #include "regions_xxx.h"          // defines the memory available to the application
+```
+
   - In `cdefault.yml` included in some MDK-Middleware Reference Applications there may be some linker controls that should be reflected in this dialog, for example `--diag_suppress=L6314W`.
 
   ![Typical Linker Options Settings](Options-Linker.png)
 
 #### Expand with additional components
+
 Once the new project is created, it may be expanded with additional software components or modified to custom hardware as shown in the picture below. Note that uVision projects have no dependency on specify hardware boards.
 
 ![Create new project in uVision](Create-uVision-Project.png)
