@@ -115,7 +115,7 @@ By default, the MDK-Middleware examples are not configured for debugging. The st
 
 **Enable Event Recorder:**
 
-To Event Recorder functionality is provided by the pack `ARM::CMSIS-View`. Add this pack and the related software component to the `cproject.yml` file:
+The Event Recorder functionality is provided by the pack `ARM::CMSIS-View`. Add this pack and the related software component to the `cproject.yml` file:
 
 ```yml
   packs:
@@ -234,13 +234,13 @@ From csolution project   | copy to new uVision project folder       | Notes
 
 #### Configure Tool Settings
 
-In the Case 1 the compiler toolchain relevant settings of the *csolution project* are in the `*.csolution.yml` and `*.cproject.yml` files. Based on these settings configure compiler toolchain in uVision using the tabs of the *Options* dialog:
+The compiler toolchain relevant settings of the *csolution project* are in the `*.csolution.yml` and `*.cproject.yml` files. Based on these settings configure compiler toolchain in uVision using the tabs of the *Options* dialog:
 
 - *Target*: verify that hardware settings are correctly reflected, i.e. `Software Model: TrustZone Off`.
 
 - *C/C++ (AC6)*: Adjust Language / Code Generation.
   - Typical settings: Optimization: `-O1` (for Debug), `-O3` (for Release), Warnings: `AC5-like`, Language C: `C11`.
-  - Board layer specific definitions are defined in a header file, such as `board_name.h`, which can be found in `./Board/<board_name>` of the *csolution project* in the Case 1 or in the `./Layers/Default/` of the BSP pack in the Case 2. This `board_name.h` should be set as the value of a preprocessor symbol `CMSIS_target_header` in *Options for Target - C/C++(AC6) - Preprocessor Symbols*  
+  - Board layer specific definitions are defined in a header file, such as `board_name.h`, which can be found in `./Board/<board_name>`. This `board_name.h` should be set as the value of a preprocessor symbol `CMSIS_target_header` in *Options for Target - C/C++(AC6) - Preprocessor Symbols*  
 
   ![Typical Compiler Options Settings](Options-C.png)
 
