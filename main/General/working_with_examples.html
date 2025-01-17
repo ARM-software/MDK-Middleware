@@ -244,7 +244,7 @@ Configure for Debugging</h2>
 <p>The MDK-Middleware components have extensive debug capabilities. For example, the Network component offers <a href="../Network/create_app.html#nw_debugging">debug output via STDOUT (printf) and/or annotations for the Event Recorder</a>. Each component has therefore a section <b>Create Applications &raquo; Debugging</b>. These debug features are today fully supported by the uVision Debugger.</p>
 <p>By default, the MDK-Middleware examples are not configured for debugging. The steps below explain how to add these debug capablities.</p>
 <p><b>Enable Event Recorder:</b></p>
-<p>To Event Recorder functionality is provided by the pack <code>ARM::CMSIS-View</code>. Add this pack and the related software component to the <code>cproject.yml</code> file:</p>
+<p>The Event Recorder functionality is provided by the pack <code>ARM::CMSIS-View</code>. Add this pack and the related software component to the <code>cproject.yml</code> file:</p>
 <div class="fragment"><div class="line">packs:</div>
 <div class="line">  - pack: ARM::CMSIS-View</div>
 <div class="line">  :</div>
@@ -360,12 +360,12 @@ Copy Config Files</h3>
 </blockquote>
 <h3><a class="anchor" id="autotoc_md13"></a>
 Configure Tool Settings</h3>
-<p>In the Case 1 the compiler toolchain relevant settings of the <em>csolution project</em> are in the <code>*.csolution.yml</code> and <code>*.cproject.yml</code> files. Based on these settings configure compiler toolchain in uVision using the tabs of the <em>Options</em> dialog:</p>
+<p>The compiler toolchain relevant settings of the <em>csolution project</em> are in the <code>*.csolution.yml</code> and <code>*.cproject.yml</code> files. Based on these settings configure compiler toolchain in uVision using the tabs of the <em>Options</em> dialog:</p>
 <ul>
 <li><em>Target</em>: verify that hardware settings are correctly reflected, i.e. <code>Software Model: TrustZone Off</code>.</li>
 <li><em>C/C++ (AC6)</em>: Adjust Language / Code Generation.<ul>
 <li>Typical settings: Optimization: <code>-O1</code> (for Debug), <code>-O3</code> (for Release), Warnings: <code>AC5-like</code>, Language C: <code>C11</code>.</li>
-<li>Board layer specific definitions are defined in a header file, such as <code>board_name.h</code>, which can be found in <code>./Board/&lt;board_name&gt;</code> of the <em>csolution project</em> in the Case 1 or in the <code>./Layers/Default/</code> of the BSP pack in the Case 2. This <code>board_name.h</code> should be set as the value of a preprocessor symbol <code>CMSIS_target_header</code> in <em>Options for Target - C/C++(AC6) - Preprocessor Symbols</em> <br  />
+<li>Board layer specific definitions are defined in a header file, such as <code>board_name.h</code>, which can be found in <code>./Board/&lt;board_name&gt;</code>. This <code>board_name.h</code> should be set as the value of a preprocessor symbol <code>CMSIS_target_header</code> in <em>Options for Target - C/C++(AC6) - Preprocessor Symbols</em> <br  />
 </li>
 </ul>
 </li>
