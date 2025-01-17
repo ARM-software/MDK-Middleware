@@ -11,6 +11,7 @@ var group__netTCP__Enums =
     [ "netTCP_Option", "group__netTCP__Enums.html#ga5866dd2ae379ba30a83a9ea1a0c82fdd", [
       [ "netTCP_OptionTOS", "rl__net_8h.html#ga5866dd2ae379ba30a83a9ea1a0c82fddae17aaeb0052a27b86a5c1ad4d8aa8d8e", null ],
       [ "netTCP_OptionTrafficClass", "rl__net_8h.html#ga5866dd2ae379ba30a83a9ea1a0c82fddaa7b658f261b40fab119396388f345378", null ],
+      [ "netTCP_OptionInterface", "rl__net_8h.html#ga5866dd2ae379ba30a83a9ea1a0c82fdda7a97839a6cbf30c3656d70f7fe378358", null ],
       [ "netTCP_OptionTimeout", "rl__net_8h.html#ga5866dd2ae379ba30a83a9ea1a0c82fdda0cad30d4ee5b7884adb46b5bdebd3e4d", null ],
       [ "netTCP_OptionKeepAlive", "rl__net_8h.html#ga5866dd2ae379ba30a83a9ea1a0c82fdda7f8b8c982fe5cc4b9dec2f586e7a58c7", null ],
       [ "netTCP_OptionFlowControl", "rl__net_8h.html#ga5866dd2ae379ba30a83a9ea1a0c82fddaed7c5b139229da185839e79f99961d36", null ],

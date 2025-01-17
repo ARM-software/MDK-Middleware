@@ -1390,14 +1390,17 @@ Stopping TCP Communication</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="XML-Token">netTCP_OptionTrafficClass</span>   </td><td class="markdownTableBodyNone">IPv6 Traffic Class   </td><td class="markdownTableBodyNone">val=TrafficClass    </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="XML-Token">netTCP_OptionInterface</span>   </td><td class="markdownTableBodyNone">Network interface to bind   </td><td class="markdownTableBodyNone">val=if_id (class and number)    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="XML-Token">netTCP_OptionTimeout</span>   </td><td class="markdownTableBodyNone">TCP Idle Timeout   </td><td class="markdownTableBodyNone">val=timeout (in seconds)    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="XML-Token">netTCP_OptionKeepAlive</span>   </td><td class="markdownTableBodyNone">TCP Keep Alive   </td><td class="markdownTableBodyNone">val: 0=disabled (default), 1=enabled    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="XML-Token">netTCP_OptionFlowControl</span>   </td><td class="markdownTableBodyNone">TCP Flow Control   </td><td class="markdownTableBodyNone">val: 0=disabled (default), 1=enabled    </td></tr>
+<td class="markdownTableBodyNone"><span class="XML-Token">netTCP_OptionKeepAlive</span>   </td><td class="markdownTableBodyNone">TCP Keep Alive   </td><td class="markdownTableBodyNone">val: 0=disabled (default), 1=enabled    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="XML-Token">netTCP_OptionFlowControl</span>   </td><td class="markdownTableBodyNone">TCP Flow Control   </td><td class="markdownTableBodyNone">val: 0=disabled (default), 1=enabled    </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="XML-Token">netTCP_OptionDelayedACK</span>   </td><td class="markdownTableBodyNone">TCP Delayed Acknowledgment   </td><td class="markdownTableBodyNone">val: 0=disabled (default), 1=enabled   </td></tr>
 </table>
+<p>The option <span class="XML-Token">netTCP_OptionInterface</span> specifies the network interface used for outgoing external connections. By default, the connection is established via the default network interface. You can use this option to change the network interface for this socket.</p>
 <p>Possible <a class="el" href="group__netStatusErrorCodes.html#ga5675a3b88ee02986ae15ae3bb8135551">netStatus</a> return values:</p><ul>
 <li><em>netOK:</em> Option successfully set.</li>
 <li><em>netInvalidParameter:</em> Invalid parameter provided.</li>
@@ -1409,8 +1412,12 @@ Stopping TCP Communication</h2>
 <div class="line"><span class="keywordflow">if</span> (tcp_sock &gt;= 0) {</div>
 <div class="line">  <span class="comment">// Set disconnect timeout to 30 seconds</span></div>
 <div class="line">  <a class="code hl_function" href="group__tcp__user__api.html#ga574cc756d0ab2fb8e4719befd7c56913" title="Set TCP socket IP option. [thread-safe].">netTCP_SetOption</a> (tcp_sock, <a class="code hl_enumvalue" href="rl__net_8h.html#ga5866dd2ae379ba30a83a9ea1a0c82fdda0cad30d4ee5b7884adb46b5bdebd3e4d" title="TCP Idle Timeout; val=timeout (in seconds)">netTCP_OptionTimeout</a>, 30);</div>
+<div class="line"> </div>
 <div class="line">  <span class="comment">// Enable Keep Alive</span></div>
 <div class="line">  <a class="code hl_function" href="group__tcp__user__api.html#ga574cc756d0ab2fb8e4719befd7c56913" title="Set TCP socket IP option. [thread-safe].">netTCP_SetOption</a> (tcp_sock, <a class="code hl_enumvalue" href="rl__net_8h.html#ga5866dd2ae379ba30a83a9ea1a0c82fdda7f8b8c982fe5cc4b9dec2f586e7a58c7" title="TCP Keep Alive; val: 0=disabled (default), 1=enabled.">netTCP_OptionKeepAlive</a>, 1);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// Change network interface to PPP</span></div>
+<div class="line">  <a class="code hl_function" href="group__tcp__user__api.html#ga574cc756d0ab2fb8e4719befd7c56913" title="Set TCP socket IP option. [thread-safe].">netTCP_SetOption</a> (tcp_sock, <a class="code hl_enumvalue" href="rl__net_8h.html#ga5866dd2ae379ba30a83a9ea1a0c82fdda7a97839a6cbf30c3656d70f7fe378358" title="Network interface to bind; val=if_id (class and number)">netTCP_OptionInterface</a>, <a class="code hl_define" href="rl__net_8h.html#a817ebe8c82d835aa88bc9dad70c1d223" title="PPP interface.">NET_IF_CLASS_PPP</a>);</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>

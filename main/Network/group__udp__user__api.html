@@ -718,7 +718,7 @@ Sending Data via UDP in Multicast Mode</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="XML-Token">netUDP_OptionChecksum</span>   </td><td class="markdownTableBodyNone">UDP Checksum Options   </td><td class="markdownTableBodyNone">val=Options   </td></tr>
 </table>
-<p>The option <span class="XML-Token">netUDP_OptionInterface</span> specifies the network interface to be used for sending the broadcast message in the local network. By default the broadcast message is routed to the first LAN interface from the list where IPv4 is enabled. You can use this option to change the default interface for sending broadcast messages. Only used in IPv4.</p>
+<p>The option <span class="XML-Token">netUDP_OptionInterface</span> specifies the network interface to be used for sending broadcast messages in the local network or for sending unicast messages to the Internet. By default, the broadcast messages are forwarded to the first LAN interface in the list where IPv4 is enabled. You can use this option to change the network interface for this socket.</p>
 <p>For the option <span class="XML-Token">netUDP_OptionChecksum</span> the argument <em>val</em> is a combination of:</p><ul>
 <li><a class="el" href="rl__net_8h.html#aa8e173af4c4b9ca9155105ff9aa55257">NET_UDP_CHECKSUM_SEND</a> - calculate the checksum for transmit packets,</li>
 <li><a class="el" href="rl__net_8h.html#a8497adeb3534bca2a8de1962edc9c27d">NET_UDP_CHECKSUM_VERIFY</a> - calculate the checksum for received packets.</li>
@@ -732,11 +732,14 @@ Sending Data via UDP in Multicast Mode</h2>
 <div class="line"> </div>
 <div class="line">udp_sock = <a class="code hl_function" href="group__udp__user__api.html#gad087599bfea6f4d6c9e7bb601352fd16" title="Allocate a free UDP socket. [thread-safe].">netUDP_GetSocket</a> (udp_cb_func);</div>
 <div class="line"><span class="keywordflow">if</span> (udp_sock &gt;= 0) {</div>
-<div class="line">  <span class="comment">// Open UDP port 1000 for communication.</span></div>
+<div class="line">  <span class="comment">// Open UDP port 1000 for communication</span></div>
 <div class="line">  <a class="code hl_function" href="group__udp__user__api.html#ga688c8b42295a8bbe177f0eab181f9871" title="Open UDP socket for communication. [thread-safe].">netUDP_Open</a> (udp_sock, 1000);</div>
 <div class="line"> </div>
-<div class="line">  <span class="comment">// Let UDP Multicast datagrams cross a router. </span></div>
+<div class="line">  <span class="comment">// Let UDP Multicast datagrams cross a router</span></div>
 <div class="line">  <a class="code hl_function" href="group__udp__user__api.html#ga93496cfeb5f324f09dc81211243093cb" title="Set UDP socket IP option. [thread-safe].">netUDP_SetOption</a> (udp_sock, <a class="code hl_enumvalue" href="rl__net_8h.html#gae1f17f41d866b528526d55ea58ba162eaed47e059088bb5ed25630721c60f3291" title="IPv4 Multi-cast Time to Live; val=TTL.">netUDP_OptionTTL</a>, 2);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// Send broadcast messages on ETH1</span></div>
+<div class="line">  <a class="code hl_function" href="group__udp__user__api.html#ga93496cfeb5f324f09dc81211243093cb" title="Set UDP socket IP option. [thread-safe].">netUDP_SetOption</a> (udp_sock, <a class="code hl_enumvalue" href="rl__net_8h.html#gae1f17f41d866b528526d55ea58ba162ea8bdf05712ccca7b024c805eddeb95934" title="Network interface to bind; val=if_id (class and number)">netUDP_OptionInterface</a>, <a class="code hl_define" href="rl__net_8h.html#a005856112372179cbbdb9f815a563a6c" title="Interface Class.">NET_IF_CLASS_ETH</a> | 1);</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>

@@ -87,6 +87,7 @@ var group__net__evr__tcp__func =
     [ "EvrNetTCP_SendZeroLengthFrame", "group__net__evr__tcp__func.html#ga9cceb4554b1e724e1dca5d2561520d43", null ],
     [ "EvrNetTCP_SetOptionDelayedAck", "group__net__evr__tcp__func.html#ga07ca87cbe117998c1a7088f1d8877e4d", null ],
     [ "EvrNetTCP_SetOptionFlowControl", "group__net__evr__tcp__func.html#ga5fb736e03519df4ff454aa002f05cc0d", null ],
+    [ "EvrNetTCP_SetOptionInterface", "group__net__evr__tcp__func.html#ga8c6db1265e74245e463155447b68099a", null ],
     [ "EvrNetTCP_SetOptionKeepAlive", "group__net__evr__tcp__func.html#ga6884ad095ecc56f1a676c51ad49b5584", null ],
     [ "EvrNetTCP_SetOptionSocket", "group__net__evr__tcp__func.html#ga753b2d11bb803db1a9bf4f27b3d457d5", null ],
     [ "EvrNetTCP_SetOptionSocketNotValid", "group__net__evr__tcp__func.html#ga80d73b5d799778015fa330500bd5bdcd", null ],

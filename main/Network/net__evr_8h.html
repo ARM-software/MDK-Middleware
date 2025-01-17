@@ -1643,6 +1643,8 @@ Macros</h2></td></tr>
 <tr class="separator:a6d8099cca26bee43c4dd1f67bd83dd76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4cf1e79a146072d8d8c8a2ab6513508d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="net__evr_8h.html#a4cf1e79a146072d8d8c8a2ab6513508d">EvtNetTCP_SetOptionDelayedAck</a>&#160;&#160;&#160;EventID (EventLevelDetail,<a class="el" href="net__evr_8h.html#a3dcc4477dd073f7eb9484ce87ee45047">EvtNetTCP</a>, 52)</td></tr>
 <tr class="separator:a4cf1e79a146072d8d8c8a2ab6513508d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ec99ac3c2680e9c96e961dc260ffba0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="net__evr_8h.html#a8ec99ac3c2680e9c96e961dc260ffba0">EvtNetTCP_SetOptionInterface</a>&#160;&#160;&#160;EventID (EventLevelDetail,<a class="el" href="net__evr_8h.html#a3dcc4477dd073f7eb9484ce87ee45047">EvtNetTCP</a>,116)</td></tr>
+<tr class="separator:a8ec99ac3c2680e9c96e961dc260ffba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6e7706c3419c1471307926226cad351"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="net__evr_8h.html#ae6e7706c3419c1471307926226cad351">EvtNetTCP_SetOptionWrongOption</a>&#160;&#160;&#160;EventID (EventLevelError, <a class="el" href="net__evr_8h.html#a3dcc4477dd073f7eb9484ce87ee45047">EvtNetTCP</a>, 53)</td></tr>
 <tr class="separator:ae6e7706c3419c1471307926226cad351"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86615df517b26b3b00c8420cff60d2ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="net__evr_8h.html#a86615df517b26b3b00c8420cff60d2ad">EvtNetTCP_SetOptionWrongValue</a>&#160;&#160;&#160;EventID (EventLevelError, <a class="el" href="net__evr_8h.html#a3dcc4477dd073f7eb9484ce87ee45047">EvtNetTCP</a>, 54)</td></tr>
@@ -4774,7 +4776,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga141d4809b51eef08fb3a402d040a7f46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on UDP set socket option checksum calculation options (Detail)  <br /></td></tr>
 <tr class="separator:ga141d4809b51eef08fb3a402d040a7f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa4dbec14a1db1d4150a942c854e28046"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__udp__func.html#gaa4dbec14a1db1d4150a942c854e28046">EvrNetUDP_SetOptionInterface</a> (int32_t <a class="el" href="group__using__network__sockets__bsd__func.html#gac01ac0611ef0f7d743e0eb464e7786a9">socket</a>, uint16_t if_id)</td></tr>
-<tr class="memdesc:gaa4dbec14a1db1d4150a942c854e28046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on UDP set socket option broadcast interface (Detail)  <br /></td></tr>
+<tr class="memdesc:gaa4dbec14a1db1d4150a942c854e28046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on UDP set socket option bind to interface (Detail)  <br /></td></tr>
 <tr class="separator:gaa4dbec14a1db1d4150a942c854e28046"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac6b5e84107988dcb62d4e19363e0d32c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__udp__func.html#gac6b5e84107988dcb62d4e19363e0d32c">EvrNetUDP_SetOptionWrongOption</a> (int32_t <a class="el" href="group__using__network__sockets__bsd__func.html#gac01ac0611ef0f7d743e0eb464e7786a9">socket</a>, int32_t udp_option)</td></tr>
 <tr class="memdesc:gac6b5e84107988dcb62d4e19363e0d32c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on UDP wrong set socket option (Error)  <br /></td></tr>
@@ -4983,6 +4985,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga9960e0b3c5e88954e55efc03fb18960d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__tcp__func.html#ga9960e0b3c5e88954e55efc03fb18960d">EvrNetTCP_SetOptionTclass</a> (int32_t <a class="el" href="group__using__network__sockets__bsd__func.html#gac01ac0611ef0f7d743e0eb464e7786a9">socket</a>, uint8_t ip6_tclass)</td></tr>
 <tr class="memdesc:ga9960e0b3c5e88954e55efc03fb18960d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on TCP set socket option Traffic Class for IPv6 (Detail)  <br /></td></tr>
 <tr class="separator:ga9960e0b3c5e88954e55efc03fb18960d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c6db1265e74245e463155447b68099a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__tcp__func.html#ga8c6db1265e74245e463155447b68099a">EvrNetTCP_SetOptionInterface</a> (int32_t <a class="el" href="group__using__network__sockets__bsd__func.html#gac01ac0611ef0f7d743e0eb464e7786a9">socket</a>, uint16_t if_id)</td></tr>
+<tr class="memdesc:ga8c6db1265e74245e463155447b68099a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on TCP set socket option bind to interface (Detail)  <br /></td></tr>
+<tr class="separator:ga8c6db1265e74245e463155447b68099a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5db93183863758c46ab59ce0c2f3aa24"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__tcp__func.html#ga5db93183863758c46ab59ce0c2f3aa24">EvrNetTCP_SetOptionTimeout</a> (int32_t <a class="el" href="group__using__network__sockets__bsd__func.html#gac01ac0611ef0f7d743e0eb464e7786a9">socket</a>, uint16_t timeout)</td></tr>
 <tr class="memdesc:ga5db93183863758c46ab59ce0c2f3aa24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on TCP set socket option connection timeout (Detail)  <br /></td></tr>
 <tr class="separator:ga5db93183863758c46ab59ce0c2f3aa24"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -22692,6 +22697,20 @@ type</td>
       <table class="memname">
         <tr>
           <td class="memname">#define EvtNetTCP_SetOptionFlowControl&#160;&#160;&#160;EventID (EventLevelDetail,<a class="el" href="net__evr_8h.html#a3dcc4477dd073f7eb9484ce87ee45047">EvtNetTCP</a>, 51)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8ec99ac3c2680e9c96e961dc260ffba0" name="a8ec99ac3c2680e9c96e961dc260ffba0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ec99ac3c2680e9c96e961dc260ffba0">&#9670;&#160;</a></span>EvtNetTCP_SetOptionInterface</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define EvtNetTCP_SetOptionInterface&#160;&#160;&#160;EventID (EventLevelDetail,<a class="el" href="net__evr_8h.html#a3dcc4477dd073f7eb9484ce87ee45047">EvtNetTCP</a>,116)</td>
         </tr>
       </table>
 </div><div class="memdoc">

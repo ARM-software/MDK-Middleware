@@ -203,7 +203,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga141d4809b51eef08fb3a402d040a7f46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on UDP set socket option checksum calculation options (Detail)  <br /></td></tr>
 <tr class="separator:ga141d4809b51eef08fb3a402d040a7f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa4dbec14a1db1d4150a942c854e28046"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__udp__func.html#gaa4dbec14a1db1d4150a942c854e28046">EvrNetUDP_SetOptionInterface</a> (int32_t <a class="el" href="group__using__network__sockets__bsd__func.html#gac01ac0611ef0f7d743e0eb464e7786a9">socket</a>, uint16_t if_id)</td></tr>
-<tr class="memdesc:gaa4dbec14a1db1d4150a942c854e28046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on UDP set socket option broadcast interface (Detail)  <br /></td></tr>
+<tr class="memdesc:gaa4dbec14a1db1d4150a942c854e28046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on UDP set socket option bind to interface (Detail)  <br /></td></tr>
 <tr class="separator:gaa4dbec14a1db1d4150a942c854e28046"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac6b5e84107988dcb62d4e19363e0d32c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__udp__func.html#gac6b5e84107988dcb62d4e19363e0d32c">EvrNetUDP_SetOptionWrongOption</a> (int32_t <a class="el" href="group__using__network__sockets__bsd__func.html#gac01ac0611ef0f7d743e0eb464e7786a9">socket</a>, int32_t udp_option)</td></tr>
 <tr class="memdesc:gac6b5e84107988dcb62d4e19363e0d32c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on UDP wrong set socket option (Error)  <br /></td></tr>
@@ -1371,7 +1371,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Event on UDP set socket option broadcast interface (Detail) </p>
+<p>Event on UDP set socket option bind to interface (Detail) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">socket</td><td>socket handle </td></tr>
@@ -1379,7 +1379,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>SetOptionInterface</b> is created, when the internal function <em>udp_set_option</em> sets the network interface for the socket that is used when the <a class="el" href="group__udp__user__api.html#ga7a82db98b82300e5fd03ce1b7afb6cba">netUDP_Send</a> sends data to a broadcast or a multicast address. This usually happens when the <a class="el" href="group__udp__user__api.html#ga93496cfeb5f324f09dc81211243093cb">netUDP_SetOption</a> function is executed.</p>
+<p>The event <b>SetOptionInterface</b> is created, when the internal function <em>udp_set_option</em> sets the network interface for the socket that is used when the <a class="el" href="group__udp__user__api.html#ga7a82db98b82300e5fd03ce1b7afb6cba">netUDP_Send</a> sends data to a broadcast, multicast or external address. This usually happens when the <a class="el" href="group__udp__user__api.html#ga93496cfeb5f324f09dc81211243093cb">netUDP_SetOption</a> function is executed.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>socket:</b> UDP socket handle for setting the option.</li>
 <li><b>netif:</b> network interface identifier. </li>

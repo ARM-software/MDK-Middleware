@@ -133,8 +133,8 @@ var NAVTREEINDEX =
 "group__net__evr__eth__func.html#gac51f8d76778823738f2c76b9484c8d20",
 "group__net__evr__igmp__func.html#gaa3cd0b47b66a64de1137c7070f0c4ebb",
 "group__net__evr__ppp__func.html#gad858ed9c7a88e3bec4ca048ac05c1aa0",
-"group__net__evr__tcp__func.html#gab93d8ea699c093dd05560f3d9c7d4d3a",
-"group__network__structs.html#af4dc31d32c4f19d27a280e4de946058d",
+"group__net__evr__tcp__func.html#gab71d12870266f7dbebf936a9ccbe2b6c",
+"group__network__structs.html#a8e0798404bf2cf5dabb84c5ba9a4f236",
 "index.html"
 ];
 

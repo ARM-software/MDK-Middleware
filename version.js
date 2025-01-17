@@ -1,7 +1,7 @@
 //--- list of versions‚ ---
 const versions = {
     "General": {
-        "main": "8.0.1-dev30",
+        "main": "8.0.1-dev31",
         "latest": "8.0.0"
     },
     "FileSystem": {
@@ -9,7 +9,7 @@ const versions = {
         "latest": "8.0.0"
     },
     "Network": {
-        "main": "8.0.1",
+        "main": "8.1.0",
         "latest": "8.0.0"
     },
     "USB": {

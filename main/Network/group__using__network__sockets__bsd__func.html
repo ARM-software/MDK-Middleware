@@ -667,7 +667,7 @@ BSD Client</h2>
 <div class="line">      <span class="keywordflow">if</span> (p2val == 0x80) lshift = 0;</div>
 <div class="line">      <span class="keywordflow">if</span> (p2val == 0x01) lshift = 1;</div>
 <div class="line">    </div>
-<div class="line">      <span class="comment">// Send the data to LED Server.</span></div>
+<div class="line">      <span class="comment">// Send the data to LED Server</span></div>
 <div class="line">      dbuf[0] = BLINKLED;</div>
 <div class="line">      dbuf[1] = p2val;</div>
 <div class="line">      res = <a class="code hl_function" href="group__using__network__sockets__bsd__func.html#ga4cc5678cb81694afc224221063fda9cd" title="Send data on already connected socket. [thread-safe].">send</a> (sock, (<span class="keywordtype">char</span> *)&amp;dbuf, 2, 0);</div>
@@ -2395,7 +2395,7 @@ BSD Client</h2>
 <div class="line">      <span class="keywordflow">if</span> (p2val == 0x80) lshift = 0;</div>
 <div class="line">      <span class="keywordflow">if</span> (p2val == 0x01) lshift = 1;</div>
 <div class="line"> </div>
-<div class="line">      <span class="comment">// Send the data to LED Server.</span></div>
+<div class="line">      <span class="comment">// Send the data to LED Server</span></div>
 <div class="line">      dbuf[0] = BLINKLED;</div>
 <div class="line">      dbuf[1] = p2val;</div>
 <div class="line">      res = <a class="code hl_function" href="group__using__network__sockets__bsd__func.html#gab9207ae37f46c2999ac5765fc6736535" title="Send data to endpoint node. [thread-safe].">sendto</a> (sock, (<span class="keywordtype">char</span> *)&amp;dbuf, 2, 0, (<a class="code hl_struct" href="group__bsd__structs.html#structSOCKADDR" title="Generic Socket Address structure.">SOCKADDR</a> *)&amp;addr, <span class="keyword">sizeof</span> (addr));</div>

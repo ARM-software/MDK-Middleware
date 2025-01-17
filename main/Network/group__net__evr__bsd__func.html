@@ -989,7 +989,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>BindSocketAlreadyBound</b> is created when the BSD socket can not bind, because the required socket is bound already. This happens when the <a class="el" href="group__using__network__sockets__bsd__func.html#ga371b442b92e67a6046b168521d4a1b4a">bind</a> function is executed.</p>
+<p>The event <b>BindSocketAlreadyBound</b> is created when the BSD socket can not bind, because the required socket is bound already. This happens when the <a class="el" href="group__using__network__sockets__bsd__func.html#ga371b442b92e67a6046b168521d4a1b4a">bind</a> or <a class="el" href="group__using__network__sockets__bsd__func.html#ga7a19e669b6bf6f4f82b68d01ff6d4be7">setsockopt</a> function is executed.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>sock:</b> BSD socket descriptor for binding. </li>
 </ul>

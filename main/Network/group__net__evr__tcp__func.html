@@ -292,6 +292,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga07ca87cbe117998c1a7088f1d8877e4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__tcp__func.html#ga07ca87cbe117998c1a7088f1d8877e4d">EvrNetTCP_SetOptionDelayedAck</a> (int32_t <a class="el" href="group__using__network__sockets__bsd__func.html#gac01ac0611ef0f7d743e0eb464e7786a9">socket</a>, uint32_t enable)</td></tr>
 <tr class="memdesc:ga07ca87cbe117998c1a7088f1d8877e4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on TCP set socket delayed-acknowledge option (Detail)  <br /></td></tr>
 <tr class="separator:ga07ca87cbe117998c1a7088f1d8877e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c6db1265e74245e463155447b68099a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__tcp__func.html#ga8c6db1265e74245e463155447b68099a">EvrNetTCP_SetOptionInterface</a> (int32_t <a class="el" href="group__using__network__sockets__bsd__func.html#gac01ac0611ef0f7d743e0eb464e7786a9">socket</a>, uint16_t if_id)</td></tr>
+<tr class="memdesc:ga8c6db1265e74245e463155447b68099a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on TCP set socket option bind to interface (Detail)  <br /></td></tr>
+<tr class="separator:ga8c6db1265e74245e463155447b68099a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2831613b19062dbc90ea2719cd0dfd6f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__tcp__func.html#ga2831613b19062dbc90ea2719cd0dfd6f">EvrNetTCP_SetOptionWrongOption</a> (int32_t <a class="el" href="group__using__network__sockets__bsd__func.html#gac01ac0611ef0f7d743e0eb464e7786a9">socket</a>, int32_t tcp_option)</td></tr>
 <tr class="memdesc:ga2831613b19062dbc90ea2719cd0dfd6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on TCP wrong set socket option (Error)  <br /></td></tr>
 <tr class="separator:ga2831613b19062dbc90ea2719cd0dfd6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -3464,6 +3467,48 @@ Functions</h2></td></tr>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>socket:</b> TCP socket handle for setting the option.</li>
 <li><b>enable:</b> controlling the TCP flow control mode (1= enable, 0= disable). </li>
+</ul>
+
+</div>
+</div>
+<a id="ga8c6db1265e74245e463155447b68099a" name="ga8c6db1265e74245e463155447b68099a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8c6db1265e74245e463155447b68099a">&#9670;&#160;</a></span>EvrNetTCP_SetOptionInterface()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void EvrNetTCP_SetOptionInterface </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>socket</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>if_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event on TCP set socket option bind to interface (Detail) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">socket</td><td>socket handle </td></tr>
+    <tr><td class="paramname">if_id</td><td>network interface identifier</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The event <b>SetOptionInterface</b> is created, when the internal function <em>tcp_set_option</em> sets the network interface for the socket used to connect to an external address. This usually happens when the <a class="el" href="group__tcp__user__api.html#ga574cc756d0ab2fb8e4719befd7c56913">netTCP_SetOption</a> function is executed.</p>
+<p><b>Value</b> in the Event Recorder shows:</p><ul>
+<li><b>socket:</b> TCP socket handle for setting the option.</li>
+<li><b>netif:</b> network interface identifier. </li>
 </ul>
 
 </div>
