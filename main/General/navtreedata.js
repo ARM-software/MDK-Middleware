@@ -43,20 +43,22 @@ var NAVTREE =
     ] ],
     [ "Working with Examples", "working_with_examples.html", [
       [ "Available examples", "working_with_examples.html#autotoc_md0", null ],
-      [ "Using VS Code", "working_with_examples.html#autotoc_md1", [
-        [ "Explore MDK-Middleware Examples", "working_with_examples.html#autotoc_md2", null ],
-        [ "API Interfaces", "working_with_examples.html#autotoc_md3", null ],
-        [ "Compile for Board", "working_with_examples.html#autotoc_md4", null ],
-        [ "Compile for Custom Hardware", "working_with_examples.html#autotoc_md5", null ],
-        [ "Using uVision for Debug", "working_with_examples.html#autotoc_md6", null ]
+      [ "Using VS Code", "working_with_examples.html#using-vs-code", [
+        [ "Explore MDK-Middleware Examples", "working_with_examples.html#autotoc_md1", null ],
+        [ "API Interfaces", "working_with_examples.html#autotoc_md2", null ],
+        [ "Compile for Board", "working_with_examples.html#autotoc_md3", null ],
+        [ "Compile for Custom Hardware", "working_with_examples.html#autotoc_md4", null ],
+        [ "Using uVision for Debug", "working_with_examples.html#autotoc_md5", null ],
+        [ "Configure for Debugging", "working_with_examples.html#autotoc_md6", null ],
+        [ "Redirect STDOUT to Event Recorder", "working_with_examples.html#autotoc_md7", null ]
       ] ],
-      [ "Using uVision IDE", "working_with_examples.html#autotoc_md7", [
-        [ "Create a native uVision Project", "working_with_examples.html#autotoc_md8", [
-          [ "Create new Project Folder", "working_with_examples.html#autotoc_md9", null ],
-          [ "Add Source Files and Components", "working_with_examples.html#autotoc_md10", null ],
-          [ "Copy Config Files", "working_with_examples.html#autotoc_md11", null ],
-          [ "Configure Tool Settings", "working_with_examples.html#autotoc_md12", null ],
-          [ "Expand with additional components", "working_with_examples.html#autotoc_md13", null ]
+      [ "Using uVision IDE", "working_with_examples.html#autotoc_md8", [
+        [ "Create a native uVision Project", "working_with_examples.html#autotoc_md9", [
+          [ "Create new Project Folder", "working_with_examples.html#autotoc_md10", null ],
+          [ "Add Source Files and Components", "working_with_examples.html#autotoc_md11", null ],
+          [ "Copy Config Files", "working_with_examples.html#autotoc_md12", null ],
+          [ "Configure Tool Settings", "working_with_examples.html#autotoc_md13", null ],
+          [ "Expand with additional components", "working_with_examples.html#autotoc_md14", null ]
         ] ]
       ] ]
     ] ]
