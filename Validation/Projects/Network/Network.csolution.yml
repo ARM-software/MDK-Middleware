@@ -1,0 +1,25 @@
+solution:
+  description: Network Validation
+  created-for: CMSIS-Toolbox@2.6.0
+  cdefault:
+
+  select-compiler:  # list of tested compilers that can be selected
+    - compiler: AC6
+    - compiler: GCC
+
+  target-types:
+    # - type: <target_name>
+    #   board: <board_name>
+    #   variables:
+    #     - Board-Layer: <board_layer>.clayer.yml
+
+  build-types:
+    - type: Debug
+      debug: on
+      optimize: debug
+    - type: Release
+      debug: off
+      optimize: balanced
+
+  projects:
+    - project: BSD_Sockets/BSD_Sockets.cproject.yml
