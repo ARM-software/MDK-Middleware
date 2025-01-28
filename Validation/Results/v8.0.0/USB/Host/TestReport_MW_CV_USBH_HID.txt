@@ -1,4 +1,4 @@
-MDK Middleware Component Test Suite v1.0.0   Jan 28 2025   07:50:23 
+MDK Middleware Component Test Suite v1.0.0   Jan 28 2025   14:20:37 
 
 Unit Test 01: MDK Middleware: USB Host - HID   v8.0.0
 Test Case 01: CB : USBH_HID_Initialize                  (PASSED)

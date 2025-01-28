@@ -1,4 +1,4 @@
-MDK Middleware Component Test Suite v1.0.0   Jan 27 2025   13:31:11 
+MDK Middleware Component Test Suite v1.0.0   Jan 28 2025   14:15:17 
 
 Unit Test 01: MDK Middleware: USB Device - Core v8.0.0
 Test Case 01: API: USBD_GetVersion                      : Reported component version 8.0.0
