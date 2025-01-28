@@ -1,0 +1,26 @@
+MDK Middleware Component Test Suite v1.0.0   Jan 27 2025   13:34:55 
+
+Unit Test 01: MDK Middleware: USB Host - Core  v8.0.0
+Test Case 01: API: USBH_GetVersion                      : Reported component version 8.0.0
+                                                        (PASSED)
+Test Case 02: API: USBH_Initialize                      (PASSED)
+Test Case 03: API: USBH_Port_Suspend                    : USBH_Port_Suspend(0, 0) != usbOK, possibly Host Driver does not support Suspend
+                                                        : USBH_Port_Suspend(0, 0) != usbOK (2nd call), possibly Host Driver does not support Suspend
+                                                        (PASSED)
+Test Case 04: API: USBH_Port_Resume                     : USBH_Port_Resume(0, 0) != usbOK, possibly Host Driver does not support Resume
+                                                        : USBH_Port_Resume(0, 0) != usbOK (2nd call), possibly Host Driver does not support Resume
+                                                        (PASSED)
+Test Case 05: API: USBH_Device_GetController            (PASSED)
+Test Case 06: API: USBH_Device_GetPort                  (PASSED)
+Test Case 07: API: USBH_Device_GetStatus                (PASSED)
+Test Case 08: API: USBH_Device_GetSpeed                 (PASSED)
+Test Case 09: API: USBH_Device_GetAddress               (PASSED)
+Test Case 10: API: USBH_Device_GetVID                   (PASSED)
+Test Case 11: API: USBH_Device_GetPID                   (PASSED)
+Test Case 12: API: USBH_Device_GetStringDescriptor      (PASSED)
+Test Case 13: API: USBH_Uninitialize                    (PASSED)
+Test Case 14: CB : USBH_Notify                          (PASSED)
+
+Unit Test Time:    0 min 5 sec
+Unit Test Summary: 14 Tests, 14 Executed, 14 Passed, 0 Failed.
+Unit Test Result:  PASSED
