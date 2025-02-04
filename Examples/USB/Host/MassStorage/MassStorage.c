@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    MassStorage.c
  * Purpose: USB Host - Mass Storage example
@@ -14,14 +14,6 @@
 #include "rl_usb.h"
 
 #include "USBH_MSC.h"
-
-// Main stack size must be multiple of 8 Bytes
-#define APP_MAIN_STK_SZ (4096U)
-static uint64_t app_main_stk[APP_MAIN_STK_SZ / 8];
-static const osThreadAttr_t app_main_attr = {
-  .stack_mem  = &app_main_stk[0],
-  .stack_size = sizeof(app_main_stk)
-};
 
 /*-----------------------------------------------------------------------------
  * Application main thread
@@ -37,7 +29,6 @@ __NO_RETURN void app_main_thread (void *argument) {
   printf("USB Host Mass Storage example\n");
 
   usb_status = USBH_Initialize (0U);    // Initialize USB Host 0
-
   if (usb_status != usbOK) {
     for (;;) {}                         // Handle USB Host 0 init failure
   }
@@ -76,7 +67,7 @@ __NO_RETURN void app_main_thread (void *argument) {
  *----------------------------------------------------------------------------*/
 int app_main (void) {
   osKernelInitialize();
-  osThreadNew(app_main_thread, NULL, &app_main_attr);
+  osThreadNew(app_main_thread, NULL, NULL);
   osKernelStart();
   return 0;
 }
