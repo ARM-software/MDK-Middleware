@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_fat.c
  * Purpose: FAT File System Implementation
@@ -3315,8 +3315,8 @@ static fsStatus label_read (fsFAT_Volume *vol, char *buf) {
   while (entry_pos_inc (&pos, 1, vol));
 
   #ifdef FS_DEBUG
-  if (strlen(buf) != 0) {
-    EvrFsFAT_LabelString (buf, strlen(buf));
+  if (fs_strlen(buf) != 0) {
+    EvrFsFAT_LabelString (buf, fs_strlen(buf));
   } else {
     EvrFsFAT_LabelNotSet (vol->DrvLet);
   }
@@ -4002,7 +4002,7 @@ static fsStatus path_create (PATH_INFO *pinfo, bool mkdir, fsFAT_Volume *vol) {
         if (name_nt_gen (sn, num++) == false) {
           return (fsError);
         }
-        pinfo_nt.fn_len = (uint8_t)strlen (sn);
+        pinfo_nt.fn_len = (uint8_t)fs_strlen (sn);
         stat = frec_find_elink (&pinfo_nt, vol);
         if (stat == fsFileNotFound) {
           stat = frec_find (&pinfo_nt, vol);
@@ -4380,8 +4380,8 @@ __WEAK fsStatus fat_format (fsFAT_Volume *vol, const char *opt) {
   /* Formatting drive */
   EvrFsFAT_FormatDrive (vol->DrvLet);
   #ifdef FS_DEBUG
-  if (strlen(opt) != 0) {
-    EvrFsFAT_OptionsString (opt, strlen(opt));
+  if (fs_strlen(opt) != 0) {
+    EvrFsFAT_OptionsString (opt, fs_strlen(opt));
   }
   #endif
 
@@ -4772,7 +4772,7 @@ __WEAK fsStatus fat_open (int32_t handle, const char *path, int32_t openmode) {
   uint16_t  mode;
 
   EvrFsFAT_FileOpen (handle, path, openmode);
-  EvrFsFAT_PathName (path, strlen(path));
+  EvrFsFAT_PathName (path, fs_strlen(path));
 
   if ((handle < 0) || (handle >= fs_fat_fh_cnt)) {
     /* Invalid parameter: handle number out of range */
@@ -5547,10 +5547,10 @@ __WEAK fsStatus fat_delete (const char *path, const char *options, fsFAT_Volume 
 
   /* Deleting file */
   EvrFsFAT_FileDelete (vol->DrvLet, path);
-  EvrFsFAT_PathName (path, strlen(path));
+  EvrFsFAT_PathName (path, fs_strlen(path));
   #ifdef FS_DEBUG
-  if (strlen(options) != 0) {
-    EvrFsFAT_OptionsString (options, strlen(options));
+  if (fs_strlen(options) != 0) {
+    EvrFsFAT_OptionsString (options, fs_strlen(options));
   }
   #endif
 
@@ -5831,8 +5831,8 @@ __WEAK fsStatus fat_rename (const char *path, const char *newname, fsFAT_Volume 
 
   /* Renaming file */
   EvrFsFAT_FileRename (vol->DrvLet, path, newname);
-  EvrFsFAT_PathName (path, strlen(path));
-  EvrFsFAT_PathName (newname, strlen(newname));
+  EvrFsFAT_PathName (path, fs_strlen(path));
+  EvrFsFAT_PathName (newname, fs_strlen(newname));
 
   if ((path == NULL) || (newname == NULL)) {
     /* Invalid parameters */
@@ -5842,7 +5842,7 @@ __WEAK fsStatus fat_rename (const char *path, const char *newname, fsFAT_Volume 
   if (path_validate (path)) {
     return (fsInvalidPath);
   }
-  if (name_validate (newname, strlen(newname)) == 0U) {
+  if (name_validate (newname, fs_strlen(newname)) == 0U) {
     return (fsInvalidPath);
   }
 
@@ -5948,7 +5948,7 @@ __WEAK fsStatus fat_mkdir (const char *path, fsFAT_Volume *vol) {
 
   /* Creating directory */
   EvrFsFAT_DirCreate (vol->DrvLet, path);
-  EvrFsFAT_PathName (path, strlen(path));
+  EvrFsFAT_PathName (path, fs_strlen(path));
 
   if (path == NULL) {
     /* Invalid parameters */
@@ -6009,10 +6009,10 @@ __WEAK fsStatus fat_rmdir (const char *path, const char *options, fsFAT_Volume *
 
   /* Removing directory */
   EvrFsFAT_DirRemove (vol->DrvLet, path, options);
-  EvrFsFAT_PathName (path, strlen(path));
+  EvrFsFAT_PathName (path, fs_strlen(path));
   #ifdef FS_DEBUG
-  if (strlen(options) != 0) {
-    EvrFsFAT_OptionsString (options, strlen(options));
+  if (fs_strlen(options) != 0) {
+    EvrFsFAT_OptionsString (options, fs_strlen(options));
   }
   #endif
 
@@ -6271,7 +6271,7 @@ __WEAK fsStatus fat_chdir (const char *path, fsFAT_Volume *vol) {
 
   /* Setting current directory */
   EvrFsFAT_ChDir (vol->DrvLet, path);
-  EvrFsFAT_PathName (path, strlen(path));
+  EvrFsFAT_PathName (path, fs_strlen(path));
 
   if (path == NULL) {
     /* Invalid parameters */
@@ -6417,7 +6417,7 @@ __WEAK fsStatus fat_pwd (char *path, uint32_t len, fsFAT_Volume *vol) {
     }
     while (clus != child);
 
-    sz = strlen(&path[1]);
+    sz = fs_strlen(&path[1]);
 
     if ((offs - sz) < 2) {
       /* Input buffer to small */
@@ -6475,7 +6475,7 @@ __WEAK fsStatus fat_attrib (fsFAT_Volume *vol, const char *path, uint32_t attrib
 
   /* Setting file attributes */
   EvrFsFAT_AttribSet (vol->DrvLet, path, attrib);
-  EvrFsFAT_PathName (path, strlen(path));
+  EvrFsFAT_PathName (path, fs_strlen(path));
 
   if ((path == NULL) || (attrib == 0U)) {
     /* Invalid parameters */

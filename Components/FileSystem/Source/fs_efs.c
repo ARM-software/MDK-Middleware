@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_efs.c
  * Purpose: Embedded File System Implementation
@@ -452,7 +452,7 @@ static const char *file_name_validate (const char *path) {
     }
   }
   /* Path is not valid */
-  EvrFsEFS_FileNameInvalid (p, strlen(p));
+  EvrFsEFS_FileNameInvalid (p, fs_strlen(p));
   return (NULL);
 }
 
@@ -546,7 +546,7 @@ static fsStatus file_create (fsEFS_Handle *fh, const char *fname) {
   }
 
   /* Determine amount of free space required to store file name */
-  fn_len = strlen (fname) + 1U;
+  fn_len = fs_strlen (fname) + 1U;
 
   /* Align file name length */
   fn_len = (fn_len + 3U) & ~3U;
@@ -1769,7 +1769,7 @@ __WEAK fsStatus efs_open (int32_t handle, const char *fn, int32_t openmode) {
   fsStatus status;
 
   EvrFsEFS_FileOpen (handle, fn, openmode);
-  EvrFsEFS_FileName (fn, strlen(fn));
+  EvrFsEFS_FileName (fn, fs_strlen(fn));
 
   if ((handle < 0) || (handle >= fs_efs_fh_cnt)) {
     /* Invalid parameter: handle number out of range */
@@ -2245,7 +2245,7 @@ __WEAK fsStatus efs_delete (const char *path, fsEFS_Volume *vol) {
 
   /* Deleting file */
   EvrFsEFS_FileDelete (vol->DrvLet, path);
-  EvrFsEFS_FileName  (path, strlen(path));
+  EvrFsEFS_FileName  (path, fs_strlen(path));
 
   path = file_name_validate (path);
   if (path == NULL) {
@@ -2378,8 +2378,8 @@ __WEAK fsStatus efs_rename (const char *fn, const char *newname, fsEFS_Volume *v
 
   /* Renaming file fn to newname */
   EvrFsEFS_FileRename (vol->DrvLet, fn, newname);
-  EvrFsEFS_FileName  (fn, strlen(fn));
-  EvrFsEFS_FileName  (newname, strlen(newname));
+  EvrFsEFS_FileName  (fn, fs_strlen(fn));
+  EvrFsEFS_FileName  (newname, fs_strlen(newname));
 
   stat = efs_vol_chk (EFS_STATUS_MOUNT, vol);
   if (stat != fsOK) {
