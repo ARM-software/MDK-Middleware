@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    rl_fs.h
  * Purpose: File System API
@@ -14,7 +14,7 @@
 
 #define MW_FS_VERSION_MAJOR      8
 #define MW_FS_VERSION_MINOR      0
-#define MW_FS_VERSION_PATCH      1
+#define MW_FS_VERSION_PATCH      2
 
 // ==== Enumeration, structures, defines ====
 

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_common.c 
  * Purpose: Common file system functions
@@ -205,8 +205,8 @@ uint32_t fs_strmatch (const char s1[], const char s2[], uint32_t len1, uint32_t 
     }
 
     if (len2 != 0U) {
-      n1 = strlen (s1);
-      n2 = strlen (s2);
+      n1 = fs_strlen (s1);
+      n2 = fs_strlen (s2);
 
       if ((n1 >= len2) && (n2 >= len2)) {
         n1 -= len2;
@@ -224,6 +224,23 @@ uint32_t fs_strmatch (const char s1[], const char s2[], uint32_t len1, uint32_t 
   return (match);
 }
 
+/**
+  Get length of a string
+
+  \param[in] sp  string pointer
+  \return    length of the string
+ */
+uint32_t fs_strlen (const char sp[]) {
+  uint32_t i;
+
+  i = 0U;
+  if (sp != NULL) {
+    while (sp[i] != '\0') {
+      i++;
+    }
+  }
+  return (i);
+}
 
 /**
   Read U16 byte-aligned from LE byte order

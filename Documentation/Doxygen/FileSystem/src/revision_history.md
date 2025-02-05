@@ -6,8 +6,9 @@
       <th>Description</th>
     </tr>
     <tr>
-      <td>V8.0.1</td>
+      <td>V8.0.2</td>
       <td>
+        - fixed bug that could cause strlen being called with NULL pointer in debug build
         - fixed bug in memory card layer for SPI mode that prevented correct device size recognition
       </td>
     </tr>
