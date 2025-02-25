@@ -6,4 +6,4 @@ MDK-Middleware provides a USB Device Reference Example that contains following p
  - \subpage usbd_example_msc example implements a mass storage USB device using internal RAM as storage media.
  - \subpage usbd_example_cdc example provides a virtual communication port to UART bridge to the USB Host.
 
-See [CMSIS-Toolbox - Reference Applications](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md) to learn more about the reference application concept in Open CMSIS Pack used by these examples.
+See [CMSIS-Toolbox - Reference Applications](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/) to learn more about the reference application concept in Open CMSIS Pack used by these examples.

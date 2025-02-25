@@ -13,4 +13,4 @@ MDK-Middleware provides a Network Reference Example that contains following proj
 - \subpage BSD_Client_Example shows how to use BSD sockets for network communication from a client side.
 - \subpage BSD_Server_Example shows how to use BSD sockets for network communication from a server side.
 
-See [CMSIS-Toolbox - Reference Applications](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md) to learn more about the reference application concept.
+See [CMSIS-Toolbox - Reference Applications](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/) to learn more about the reference application concept.

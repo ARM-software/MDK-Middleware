@@ -9,4 +9,4 @@
 
 For more details refer to [USB Host Examples section in the MDK-Middleware documentation](https://arm-software.github.io/MDK-Middleware/latest/USB/usbh_examples.html).
 
-Also see [CMSIS-Toolbox - Reference Applications](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md) to learn more about the concept of reference application in Open CMSIS Pack used by these examples.
+Also see [CMSIS-Toolbox - Reference Applications](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/) to learn more about the concept of reference application in Open CMSIS Pack used by these examples.

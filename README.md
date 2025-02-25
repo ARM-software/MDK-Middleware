@@ -22,11 +22,11 @@ The MDK-Middleware is annotated for the [CMSIS-View](https://arm-software.github
 - [ARM::CMSIS-Compiler](https://www.keil.arm.com/packs/cmsis-compiler-arm) version 2.0.0 or higher.
 - [ARM::CMSIS-View](https://www.keil.arm.com/packs/cmsis-view-arm) version 1.0.0 or higher.
 
-The MDK-Middleware examples use the *csolution project* format of the [CMSIS-Toolbox](https://github.com/Open-CMSIS-Pack/cmsis-toolbox) and are framed as [Reference Applications](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md) that require an additional software layer to run on an evaluation board. The CMSIS-Toolbox is developed under the [Open-CMSIS-Pack project](https://github.com/Open-CMSIS-Pack) and an integral part of several IDEs.
+The MDK-Middleware examples use the *csolution project* format of the [CMSIS-Toolbox](https://github.com/Open-CMSIS-Pack/cmsis-toolbox) and are framed as [Reference Applications](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/) that require an additional software layer to run on an evaluation board. The CMSIS-Toolbox is developed under the [Open-CMSIS-Pack project](https://github.com/Open-CMSIS-Pack) and an integral part of several IDEs.
 
 ### Using the development repository
 
-This development repository of the MDK-Middleware can be used in a local directory and [mapped as software pack](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-tools.md#install-a-repository) using for example `cpackget` with:
+This development repository of the MDK-Middleware can be used in a local directory and [mapped as software pack](https://open-cmsis-pack.github.io/cmsis-toolbox/build-tools#install-a-repository) using for example `cpackget` with:
 
     cpackget add <path>/Keil.MDK-Middleware.pdsc
 

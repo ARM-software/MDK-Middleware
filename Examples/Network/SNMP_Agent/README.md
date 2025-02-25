@@ -6,7 +6,7 @@ For detailed description see [SNMP Agent Example section in MDK-Middleware docum
 
 ## Key usage aspects
 
-For successful build and operation the project needs to be extended with a board layer that implements required [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections) to the target hardware interfaces. For details see example documentation referenced above.
+For successful build and operation the project needs to be extended with a board layer that implements required [connections](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/#connections) to the target hardware interfaces. For details see example documentation referenced above.
 
 To use this example, connect an evaluation board to a LAN with a DHCP server (most LANs have one). This example automatically configures the network parameters via a DHCP protocol.
 

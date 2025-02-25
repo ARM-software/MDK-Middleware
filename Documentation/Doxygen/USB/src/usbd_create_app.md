@@ -73,8 +73,8 @@ The configuration file **USBD_Config_n.h** contains a number of important settin
   for more information on how to apply for a valid Vendor ID.
 - Every device variant needs an unique **Product ID**. Together with the **Vendor ID**, it is used by the Host computer's operating system
   to find a driver for your device.
-- The **Device Release Number** will be shown in Windows and Linux systems as “Firmware Revision”. The number will
-  be interpreted as “binary coded decimal”, meaning that 0x0101 will be shown as firmware revision 1.01.
+- The **Device Release Number** will be shown in Windows and Linux systems as "Firmware Revision". The number will
+  be interpreted as "binary coded decimal", meaning that 0x0101 will be shown as firmware revision 1.01.
 - The **Manufacturer**, **Product** and the **Serial Number String** can be set to identify the USB Device from the USB Host.
 
 Refer to \ref usbd_coreFunctions_conf "USB Core Configuration" for more configuration options of the USB Device.

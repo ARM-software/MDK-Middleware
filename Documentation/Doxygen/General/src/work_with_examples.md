@@ -1,9 +1,9 @@
 # Working with Examples {#working_with_examples}
 
-The MDK-Middleware examples are implemented as [CMSIS-Toolbox Reference Applications](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md)
-that use [CMSIS-Driver](https://arm-software.github.io/CMSIS_6/latest/Driver/index.html) interfaces. These Reference Applications are hardware agnostic and need to be extended with a compatible [board layer](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#board-layer) to run on a specific hardware target.
+The MDK-Middleware examples are implemented as [CMSIS-Toolbox Reference Applications](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/)
+that use [CMSIS-Driver](https://arm-software.github.io/CMSIS_6/latest/Driver/index.html) interfaces. These Reference Applications are hardware agnostic and need to be extended with a compatible [board layer](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/#board-layer) to run on a specific hardware target.
 
-Several [Board Support Packs (BSP)](https://www.keil.arm.com/packs/) contain board layers that support the MDK-Middleware components. Refer to the *Overview* page of the pack to check the *Provided connection API Interface* of the layers. When such a board layer is not available, it is possible to [create a compatible board layer](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#structure).
+Several [Board Support Packs (BSP)](https://www.keil.arm.com/packs/) contain board layers that support the MDK-Middleware components. Refer to the *Overview* page of the pack to check the *Provided connection API Interface* of the layers. When such a board layer is not available, it is possible to [create a compatible board layer](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/#structure).
 
 ## Available examples
 
@@ -39,7 +39,7 @@ Once the *csolution project* is loaded the VS Code IDE presents you with a dialo
 
 ### API Interfaces
 
-The MDK-Middleware Reference Applications are hardware agnostic but require API Interfaces that are expressed using the *csolution project* [connections:](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/YML-Input-Format.md#connections) node. The various reference applications consume the following API Interfaces. These [interfaces should be provided by the board layer](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections) that is part of the Board Support Pack (BSP).
+The MDK-Middleware Reference Applications are hardware agnostic but require API Interfaces that are expressed using the *csolution project* [connections:](https://open-cmsis-pack.github.io/cmsis-toolbox/YML-Input-Format#connections) node. The various reference applications consume the following API Interfaces. These [interfaces should be provided by the board layer](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/#connections) that is part of the Board Support Pack (BSP).
 
 Consumed API Interface      | Description
 :---------------------------|:----------------
@@ -196,7 +196,7 @@ In the Case 1 the compiler toolchain relevant settings of the *csolution project
   ![Typical Compiler Options Settings](Options-C.png)
 
 - *Linker*: Configure Scatter File and adjust warnings.
-  - In the Case 1 with an existing csolution project, a read-to-use linker scatter file that has already been preprocessed by CMSIS-Toolbox in VS Code, typically located in `.\tmp\1\ac6_linker_script.sct`, should be copied to `<MyFolder>/Board/<board_name>` . In the Case 2 without an existing csolution project, since the native uVision project manager does not offer the same [linker script management](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-overview.md#linker-script-management) as a csoution project in VS Code IDE. follow these steps to configure a scatter file in µVision.
+  - In the Case 1 with an existing csolution project, a read-to-use linker scatter file that has already been preprocessed by CMSIS-Toolbox in VS Code, typically located in `.\tmp\1\ac6_linker_script.sct`, should be copied to `<MyFolder>/Board/<board_name>` . In the Case 2 without an existing csolution project, since the native uVision project manager does not offer the same [linker script management](https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview#linker-script-management) as a csoution project in VS Code IDE. follow these steps to configure a scatter file in µVision.
         1. Copy Linker Script Templates file e.g. `ac6_linker_script.sct.src` from the directory <cmsis-toolbox-installation-dir>/etc of the CMSIS-Toolbox or from the RTE directory of the BSP pack, such as `./Layers/Default/RTE`, to `<MyFolder>/Board/<board_name>`.
         2. Copy the memory regions header file e.g. regions_xxx.h from the same RTE directory of the BSP pack to `<MyFolder>/Board/<board_name>`.
         3. Add C preprocessor, such as `#! armclang --target=arm-arm-none-eabi -march=armv7-m -E -x c`, as the first line of `ac6_linker_script.sct.src`
