@@ -1,6 +1,6 @@
 # MDK-Middleware Build Test
 
-This directory contains CMSIS Solution projects for build tests that generate libraries and examples (for a dummy device) using various compilers and the [CMSIS-Toolbox](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/README.md) as build system.
+This directory contains CMSIS Solution projects for build tests that generate libraries and examples (for a dummy device) using various compilers and the [CMSIS-Toolbox](https://open-cmsis-pack.github.io/cmsis-toolbox/) as build system.
 
 ## CI Test with GitHub Actions
 

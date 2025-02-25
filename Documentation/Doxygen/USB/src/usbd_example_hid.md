@@ -36,7 +36,7 @@ When a board layer is added to the project, corresponding configuration files fo
 
 <h2>Board Layer</h2>
 
-In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
+In order to build the project it shall be extended with a compatible board layer that provides following interfaces as [connections](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/#connections):
  - `CMSIS_USB_Device`: CMSIS-Driver for USB Device interface.
  - `CMSIS_VIO`: CMSIS-Driver for Virtual I/O interface.
 
