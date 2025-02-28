@@ -87,21 +87,26 @@ The steps to add a custom hardware configuration are:
 
 The [uVision Debugger](https://developer.arm.com/documentation/101407/0541/Debugging) offers advanced debug features such as Event Recorder and Component Viewer to analyze the MDK-Middleware.
 
-To call uVision with the *csolution project* that you are using in VS Code, add to the file `.vscode\tasks.json` the following task. The `command:` is the path to the uVision executable on your computer.
+To call uVision with the *csolution project* that you are using in VS Code, create a file `.vscode/tasks.json` with the content as in the code snippet below.
+The `command:` is the path to the uVision executable on your computer.
 
 ```json
+{
     "tasks": [
         {
             "label": "Start uVision",
             "type": "process",
-            "command": "C:\\Keil_v5\\UV4\\UV4.exe",
+            "command": "C:/Keil_v5/UV4/UV4.exe",
             "args": [
                 "${command:cmsis-csolution.getSolutionPath}"
             ],
             "problemMatcher": []
         }
     ]
+}
 ```
+
+> Note: If the file `.vscode/tasks.json` already exists then just add the part between `{` and `}` from the code snippet above.
 
 Use the VS Code menu command **Terminal - Run Task...** to Start uVision.  uVision can directly load *csolution projects*. After you have configured the debugger for your target system you may use the [Debug Windows and Dialogs](https://developer.arm.com/documentation/101407/0541/Debugging/Debug-Windows-and-Dialogs) to validate your application.
 
