@@ -225,19 +225,24 @@ Compile for Custom Hardware</h2>
 <h2><a class="anchor" id="autotoc_md5"></a>
 Using uVision for Debug</h2>
 <p>The <a href="https://developer.arm.com/documentation/101407/0541/Debugging">uVision Debugger</a> offers advanced debug features such as Event Recorder and Component Viewer to analyze the MDK-Middleware.</p>
-<p>To call uVision with the <em>csolution project</em> that you are using in VS Code, add to the file <code>.vscode\tasks.json</code> the following task. The <code>command:</code> is the path to the uVision executable on your computer.</p>
-<div class="fragment"><div class="line">&quot;tasks&quot;: [</div>
-<div class="line">    {</div>
-<div class="line">        &quot;label&quot;: &quot;Start uVision&quot;,</div>
-<div class="line">        &quot;type&quot;: &quot;process&quot;,</div>
-<div class="line">        &quot;command&quot;: &quot;C:\\Keil_v5\\UV4\\UV4.exe&quot;,</div>
-<div class="line">        &quot;args&quot;: [</div>
-<div class="line">            &quot;${command:cmsis-csolution.getSolutionPath}&quot;</div>
-<div class="line">        ],</div>
-<div class="line">        &quot;problemMatcher&quot;: []</div>
-<div class="line">    }</div>
-<div class="line">]</div>
-</div><!-- fragment --><p>Use the VS Code menu command <b>Terminal - Run Task...</b> to Start uVision. uVision can directly load <em>csolution projects</em>. After you have configured the debugger for your target system you may use the <a href="https://developer.arm.com/documentation/101407/0541/Debugging/Debug-Windows-and-Dialogs">Debug Windows and Dialogs</a> to validate your application.</p>
+<p>To call uVision with the <em>csolution project</em> that you are using in VS Code, create a file <code>.vscode/tasks.json</code> with the content as in the code snippet below. The <code>command:</code> is the path to the uVision executable on your computer.</p>
+<div class="fragment"><div class="line">{</div>
+<div class="line">    &quot;tasks&quot;: [</div>
+<div class="line">        {</div>
+<div class="line">            &quot;label&quot;: &quot;Start uVision&quot;,</div>
+<div class="line">            &quot;type&quot;: &quot;process&quot;,</div>
+<div class="line">            &quot;command&quot;: &quot;C:/Keil_v5/UV4/UV4.exe&quot;,</div>
+<div class="line">            &quot;args&quot;: [</div>
+<div class="line">                &quot;${command:cmsis-csolution.getSolutionPath}&quot;</div>
+<div class="line">            ],</div>
+<div class="line">            &quot;problemMatcher&quot;: []</div>
+<div class="line">        }</div>
+<div class="line">    ]</div>
+<div class="line">}</div>
+</div><!-- fragment --><blockquote class="doxtable">
+<p>&zwj;Note: If the file <code>.vscode/tasks.json</code> already exists then just add the part between <code>{</code> and <code>}</code> from the code snippet above. </p>
+</blockquote>
+<p>Use the VS Code menu command <b>Terminal - Run Task...</b> to Start uVision. uVision can directly load <em>csolution projects</em>. After you have configured the debugger for your target system you may use the <a href="https://developer.arm.com/documentation/101407/0541/Debugging/Debug-Windows-and-Dialogs">Debug Windows and Dialogs</a> to validate your application.</p>
 <p>Refer to <a href="https://developer.arm.com/documentation/kan320/latest/">Application Note 320: Using Event Recorder for debugging a network performance issue</a> for an tutorial on how to analyze MDK-Middleware issues.</p>
 <h2><a class="anchor" id="autotoc_md6"></a>
 Configure for Debugging</h2>
