@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_evr.h
  * Purpose: Network definitions for Event Recorder
@@ -9140,7 +9140,7 @@ typedef struct evr_addr {
 #endif
 
 /**
-  \brief  Event on UDP set socket option broadcast interface (Detail)
+  \brief  Event on UDP set socket option bind to interface (Detail)
   \param  socket        socket handle
   \param  if_id         network interface identifier
  */
@@ -9426,7 +9426,7 @@ typedef struct evr_addr {
 #define EvtNetTCP_ConnectLocalPortInvalid   EventID (EventLevelError, EvtNetTCP, 17)
 #define EvtNetTCP_AssignLocalPort           EventID (EventLevelOp,    EvtNetTCP, 18)
 #define EvtNetTCP_ConnectSocketWrongState   EventID (EventLevelError, EvtNetTCP, 19)
-#define EvtNetTCP_ConnectNoRouteFound       EventID (EventLevelError, EvtNetTCP,115) // End
+#define EvtNetTCP_ConnectNoRouteFound       EventID (EventLevelError, EvtNetTCP,115)
 #define EvtNetTCP_ShowRttVariables          EventID (EventLevelDetail,EvtNetTCP, 20)
 #define EvtNetTCP_GetBufferFailed           EventID (EventLevelError, EvtNetTCP, 21)
 #define EvtNetTCP_SendFrame                 EventID (EventLevelOp,    EvtNetTCP, 22)
@@ -9460,6 +9460,7 @@ typedef struct evr_addr {
 #define EvtNetTCP_SetOptionKeepAlive        EventID (EventLevelDetail,EvtNetTCP, 50)
 #define EvtNetTCP_SetOptionFlowControl      EventID (EventLevelDetail,EvtNetTCP, 51)
 #define EvtNetTCP_SetOptionDelayedAck       EventID (EventLevelDetail,EvtNetTCP, 52)
+#define EvtNetTCP_SetOptionInterface        EventID (EventLevelDetail,EvtNetTCP,116) // End
 #define EvtNetTCP_SetOptionWrongOption      EventID (EventLevelError, EvtNetTCP, 53)
 #define EvtNetTCP_SetOptionWrongValue       EventID (EventLevelError, EvtNetTCP, 54)
 #define EvtNetTCP_SendDelayedAck            EventID (EventLevelOp,    EvtNetTCP, 55)
@@ -10137,6 +10138,19 @@ typedef struct evr_addr {
   }
 #else
   #define EvrNetTCP_SetOptionTclass(socket, ip6_tclass)
+#endif
+
+/**
+  \brief  Event on TCP set socket option bind to interface (Detail)
+  \param  socket        socket handle
+  \param  if_id         network interface identifier
+ */
+#ifdef Network_Debug_EVR
+  __STATIC_INLINE void EvrNetTCP_SetOptionInterface(int32_t socket, uint16_t if_id) {
+    EventRecord2 (EvtNetTCP_SetOptionInterface, (uint32_t)socket, if_id);
+  }
+#else
+  #define EvrNetTCP_SetOptionInterface(socket, if_id)
 #endif
 
 /**

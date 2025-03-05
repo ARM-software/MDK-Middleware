@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_bsd.c
  * Purpose: Berkeley Socket API
@@ -1793,6 +1793,7 @@ int32_t getsockname (int32_t sock, SOCKADDR *name, int32_t *namelen) {
 int32_t setsockopt (int32_t sock, int32_t level,
                                   int32_t optname, const char *optval, int32_t optlen) {
   NET_BSD_INFO *bsd_s;
+  netStatus retv;
   uint32_t bval;
   uint16_t bval16;
 
@@ -1896,15 +1897,23 @@ not_supp:   ERRORF (BSD,"Setsockopt, Socket %d opt not supported\n",sock);
           break;
 
         case SO_BINDTODEVICE:
-          /* Bind a socket to network interface */
-          if (bsd_s->Type != SOCK_DGRAM) {
-            goto not_supp;
+          /* Bind socket to network interface */
+          if (bsd_s->Type == SOCK_STREAM) {
+            if (bsd_s->State > BSD_STATE_CREATED) {
+              ERRORF (BSD,"Setsockopt, Socket %d already bound\n",sock);
+              EvrNetBSD_SetoptSocketBound (sock);
+              RETURN (BSD_ERROR);
+            }
+            retv = net_tcp_set_option (bsd_s->Socket, netTCP_OptionInterface, bval);
           }
-          if (net_udp_set_option (bsd_s->Socket, netUDP_OptionInterface, bval) != netOK) {
+          else {
+            retv = net_udp_set_option (bsd_s->Socket, netUDP_OptionInterface, bval);
+          }
+          if (retv != netOK) {
             /* Invalid interface id */
             goto inv_arg;
           }
-          DEBUGF (BSD," Bind to %s\n", net_if_map_lan(bval)->Name);
+          DEBUGF (BSD," Bind to %s\n", net_if_map_all(bval)->Name);
           EvrNetBSD_SetoptBindToDevice (sock, bval);
           break;
 
@@ -2116,8 +2125,9 @@ not_supp:   ERRORF (BSD,"Getsockopt, Socket %d opt not supported\n",sock);
 
         case SO_BINDTODEVICE:
           /* Bound network interface */
-          if (bsd_s->Type != SOCK_DGRAM) {
-            goto not_supp;
+          if (bsd_s->Type == SOCK_STREAM) {
+            retv = net_tcp_get_option (bsd_s->Socket, netTCP_OptionInterface);
+            break;
           }
           retv = net_udp_get_option (bsd_s->Socket, netUDP_OptionInterface);
           break;

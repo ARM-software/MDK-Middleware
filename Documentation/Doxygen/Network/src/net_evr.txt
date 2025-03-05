@@ -7190,7 +7190,7 @@ This usually happens when the \ref netUDP_SetOption function is executed.
 \details
 The event \b SetOptionInterface is created, when the internal function \e udp_set_option
 sets the network interface for the socket that is used when the \ref netUDP_Send sends data
-to a broadcast or a multicast address. This usually happens when the \ref netUDP_SetOption
+to a broadcast, multicast or external address. This usually happens when the \ref netUDP_SetOption
 function is executed.
 
 \b Value in the Event Recorder shows:
@@ -8033,6 +8033,18 @@ when the \ref netTCP_SetOption function is executed.
 */
 
 /**
+\fn __STATIC_INLINE void EvrNetTCP_SetOptionInterface(int32_t socket, uint16_t if_id)
+\details
+The event \b SetOptionInterface is created, when the internal function \e tcp_set_option
+sets the network interface for the socket used to connect to an external address.
+This usually happens when the \ref netTCP_SetOption function is executed.
+
+\b Value in the Event Recorder shows:
+  - \b socket: TCP socket handle for setting the option.
+  - \b netif:  network interface identifier.
+*/
+
+/**
 \fn __STATIC_INLINE void EvrNetTCP_SetOptionWrongOption(int32_t socket, int32_t tcp_option)
 \details
 The event \b SetOptionWrongOption is created, when the internal function \e tcp_set_option
@@ -8830,8 +8842,8 @@ the required socket is not created. This happens when the \ref bind function is 
 \fn __STATIC_INLINE void EvrNetBSD_BindSocketAlreadyBound(int32_t sock)
 \details
 The event \b BindSocketAlreadyBound is created when the BSD socket can not bind,
-because the required socket is bound already. This happens when the \ref bind function
-is executed.
+because the required socket is bound already. This happens when the \ref bind or
+\ref setsockopt function is executed.
 
 \b Value in the Event Recorder shows:
   - \b sock: BSD socket descriptor for binding.

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_tcp.c
  * Purpose: Transmission Control Protocol
@@ -276,6 +276,7 @@ netStatus net_tcp_listen (int32_t socket, uint16_t port) {
 */
 netStatus net_tcp_connect (int32_t socket, const __ADDR *addr, uint16_t local_port) {
   NET_TCP_INFO *tcp_s;
+  NET_IF_CFG *out_if;
 
   DEBUGF (TCP,"Connect Socket %d, LocPort %d\n",socket,local_port);
   EvrNetTCP_ConnectSocket (socket, local_port);
@@ -323,14 +324,16 @@ netStatus net_tcp_connect (int32_t socket, const __ADDR *addr, uint16_t local_po
       EvrNetTCP_ConnectSocketWrongState (socket, tcp_s->State);
       return (netWrongState);
   }
-  /* Assign an interface for the connection */
-  tcp_s->net_if = net_addr_find_route (NULL, addr);
-  if (tcp_s->net_if == NULL) {
-    /* No route to destination, also fails for IP6 in IP4_only variant */
+
+  /* Check the interface routing */
+  out_if = net_addr_find_route (tcp_s->net_if, addr);
+  if (!out_if || (tcp_s->net_if && (out_if != tcp_s->net_if))) {
+    /* No route or the route differs from the requested */
     ERRORF (TCP,"Connect, Socket %d no route found\n",socket);
     EvrNetTCP_ConnectNoRouteFound (socket);
     return (netError);
   }
+  tcp_s->net_if = out_if;
 
   /* Socket mode is Client now */
   tcp_s->Type      &= ~TCP_TYPE_SERVER;
@@ -885,6 +888,7 @@ netStatus net_tcp_reset_window (int32_t socket) {
 */
 netStatus net_tcp_set_option (int32_t socket, netTCP_Option option, uint32_t val) {
   NET_TCP_INFO *tcp_s;
+  NET_IF_CFG *net_if;
 
   DEBUGF (TCP,"SetOption Socket %d\n",socket);
   EvrNetTCP_SetOptionSocket (socket, option, val);
@@ -895,6 +899,7 @@ netStatus net_tcp_set_option (int32_t socket, netTCP_Option option, uint32_t val
   }
   tcp_s = &tcp->Scb[socket-1];
   if (tcp_s->State == netTCP_StateUNUSED) {
+wrong_state:
     ERRORF (TCP,"SetOption, Socket %d wrong state\n",socket);
     EvrNetTCP_SetOptionSocketWrongState (socket, tcp_s->State);
     return (netWrongState);
@@ -915,6 +920,17 @@ netStatus net_tcp_set_option (int32_t socket, netTCP_Option option, uint32_t val
       tcp_s->TClass = val & 0xFF;
       return (netOK);
 #endif
+
+    case netTCP_OptionInterface:
+      if (tcp_s->State != netTCP_StateCLOSED) {
+        goto wrong_state;
+      }
+      net_if = net_if_map_all (val);
+      if (net_if == NULL) break;
+      DEBUGF (TCP," Interface=%s\n",net_if->Name);
+      EvrNetTCP_SetOptionInterface (socket, net_if->Id);
+      tcp_s->net_if = net_if;
+      return (netOK);
 
     case netTCP_OptionTimeout:
       if (val > 65535) break;
@@ -991,6 +1007,13 @@ uint32_t net_tcp_get_option (int32_t socket, netTCP_Option option) {
     case netTCP_OptionTrafficClass:
       return (tcp_s->TClass);
 #endif
+
+    case netTCP_OptionInterface:
+      if (!tcp_s->net_if) {
+        /* Network interface not assigned */
+        return (0);
+      }
+      return (tcp_s->net_if->Id);
 
     case netTCP_OptionTimeout:
       return (tcp_s->ConnTout);

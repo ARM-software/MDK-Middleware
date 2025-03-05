@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_mapi.c
  * Purpose: File Maintenance API Functions
@@ -330,7 +330,7 @@ fsStatus ffind (const char *pattern, fsFileInfo *info) {
       len2 = 0U;
     }
     else {
-      len2  = strlen (p);
+      len2  = fs_strlen (p);
       len2 -= (uint32_t)(len1 + 1);
     }
   }
@@ -367,7 +367,7 @@ fsStatus ffind (const char *pattern, fsFileInfo *info) {
     }
     else {
       /* No wildcard, must exactly match (case insensitive) */
-      if (fs_strncasecmp (&info->name[0], &p[0], strlen(info->name)) == 0) {
+      if (fs_strncasecmp (&info->name[0], &p[0], fs_strlen(info->name)) == 0) {
         /* Exact match */
         RETURN (fsOK);
       }

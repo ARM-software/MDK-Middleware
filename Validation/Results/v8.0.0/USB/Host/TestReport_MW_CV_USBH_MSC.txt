@@ -1,0 +1,15 @@
+MDK Middleware Component Test Suite v1.0.0   Jan 28 2025   14:21:22 
+
+Unit Test 01: MDK Middleware: USB Host - MSC   v8.0.0
+Test Case 01: CB : USBH_MSC_Initialize                  (PASSED)
+Test Case 02: API: USBH_MSC_GetDevice                   (PASSED)
+Test Case 03: API: USBH_MSC_GetStatus                   (PASSED)
+Test Case 04: API: USBH_MSC_Write/Read                  : Write speed: 0.52 MB/s, Read speed: 0.62 MB/s
+                                                        (PASSED)
+Test Case 05: API: USBH_MSC_ReadCapacity                : Device capacity is 3781.50 MB
+                                                        (PASSED)
+Test Case 06: CB : USBH_MSC_Uninitialize                (PASSED)
+
+Unit Test Time:    0 min 56 sec
+Unit Test Summary: 6 Tests, 6 Executed, 6 Passed, 0 Failed.
+Unit Test Result:  PASSED

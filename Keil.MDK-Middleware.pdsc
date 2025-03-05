@@ -11,11 +11,13 @@
     </licenseSet>
   </licenseSets>
   <releases>
-    <release version="8.0.1-dev">
+    <release version="8.1.0-dev">
       Active development ...
-      Network Component Version 8.0.1
+      Network Component Version 8.1.0
+      - added support for simultaneous outgoing connections via different network interfaces
       - fixed handling of Ethernet drivers not supporting multicast address filtering
-      FileSystem Component Version 8.0.1
+      FileSystem Component Version 8.0.2
+      - fixed bug that could cause strlen being called with NULL pointer in debug build
       - fixed bug in memory card layer for SPI mode that prevented correct device size recognition
     </release>
     <release version="7.17.0" date="2024-01-17">
@@ -684,7 +686,7 @@
   <components>
 
     <!-- Network (MDK) -->
-    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.0.1">
+    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.1.0">
       <description>IPv4/IPv6 Networking using Ethernet or Serial protocols</description>
       <doc>Documentation/html/Network/index.html</doc>
       <component Cgroup="CORE" condition="CMSIS Core with RTOS">
@@ -1157,7 +1159,7 @@
     </bundle>
 
     <!-- File System (MDK) -->
-    <bundle Cbundle="MDK" Cclass="File System" Cversion="8.0.1">
+    <bundle Cbundle="MDK" Cclass="File System" Cversion="8.0.2">
       <description>File Access on various storage devices</description>
       <doc>Documentation/html/FileSystem/index.html</doc>
       <component Cgroup="CORE" condition="CMSIS Core with RTOS and File System I/O">

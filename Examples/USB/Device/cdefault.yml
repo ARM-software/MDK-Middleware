@@ -1,4 +1,5 @@
 default:
+
   misc:
     - for-compiler: AC6
       C-CPP:
@@ -31,7 +32,9 @@ default:
       Link:
         - --specs=nano.specs
         - -Wl,-Map=$elf()$.map
+        - -Wl,-print-memory-usage
         - -Wl,--gc-sections
+        - -Wl,--no-warn-rwx-segments   # suppress incorrect linker warning
 
     - for-compiler: CLANG
       ASM:
@@ -46,6 +49,7 @@ default:
       Link:
         - -lcrt0
         - -Wl,-Map=$elf()$.map
+        - -Wl,-print-memory-usage
         - -Wl,--gc-sections
 
     - for-compiler: IAR
