@@ -128,8 +128,8 @@ $(document).ready(function(){initNavTree('working_with_examples.html',''); initR
   <div class="headertitle"><div class="title">Working with Examples </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_src_work_with_examples"></a> The MDK-Middleware examples are implemented as <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md">CMSIS-Toolbox Reference Applications</a> that use <a href="https://arm-software.github.io/CMSIS_6/latest/Driver/index.html">CMSIS-Driver</a> interfaces. These Reference Applications are hardware agnostic and need to be extended with a compatible <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#board-layer">board layer</a> to run on a specific hardware target.</p>
-<p>Several <a href="https://www.keil.arm.com/packs/">Board Support Packs (BSP)</a> contain board layers that support the MDK-Middleware components. Refer to the <em>Overview</em> page of the pack to check the <em>Provided connection API Interface</em> of the layers. When such a board layer is not available, it is possible to <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#structure">create a compatible board layer</a>.</p>
+<div class="textblock"><p><a class="anchor" id="md_src_work_with_examples"></a> The MDK-Middleware examples are implemented as <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/">CMSIS-Toolbox Reference Applications</a> that use <a href="https://arm-software.github.io/CMSIS_6/latest/Driver/index.html">CMSIS-Driver</a> interfaces. These Reference Applications are hardware agnostic and need to be extended with a compatible <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/#board-layer">board layer</a> to run on a specific hardware target.</p>
+<p>Several <a href="https://www.keil.arm.com/packs/">Board Support Packs (BSP)</a> contain board layers that support the MDK-Middleware components. Refer to the <em>Overview</em> page of the pack to check the <em>Provided connection API Interface</em> of the layers. When such a board layer is not available, it is possible to <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/#structure">create a compatible board layer</a>.</p>
 <h1><a class="anchor" id="autotoc_md0"></a>
 Available examples</h1>
 <p>The examples are provided as part of the MDK-Middleware pack and maintained as part of its GitHub repository, see <a class="el" href="index.html#mw_access">Access to MDK-Middleware</a>.</p>
@@ -165,7 +165,7 @@ Configure Solution</div></div>
 </blockquote>
 <h2><a class="anchor" id="autotoc_md2"></a>
 API Interfaces</h2>
-<p>The MDK-Middleware Reference Applications are hardware agnostic but require API Interfaces that are expressed using the <em>csolution project</em> <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/YML-Input-Format.md#connections">connections:</a> node. The various reference applications consume the following API Interfaces. These <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections">interfaces should be provided by the board layer</a> that is part of the Board Support Pack (BSP).</p>
+<p>The MDK-Middleware Reference Applications are hardware agnostic but require API Interfaces that are expressed using the <em>csolution project</em> <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/YML-Input-Format#connections">connections:</a> node. The various reference applications consume the following API Interfaces. These <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/#connections">interfaces should be provided by the board layer</a> that is part of the Board Support Pack (BSP).</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">Consumed API Interface   </th><th class="markdownTableHeadLeft">Description    </th></tr>
@@ -380,10 +380,10 @@ Configure Tool Settings</h3>
 <div class="caption">
 Typical Compiler Options Settings</div></div>
     <ul>
-<li><em>Linker</em>: Configure Scatter File and adjust warnings: The native uVision project manager does not offer the same <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-overview.md#linker-script-management">linker script management</a> that is available in the CMSIS-Toolbox. Follow these steps to import the linker settings.<ul>
+<li><em>Linker</em>: Configure Scatter File and adjust warnings: The native uVision project manager does not offer the same <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview#linker-script-management">linker script management</a> that is available in the CMSIS-Toolbox. Follow these steps to import the linker settings.<ul>
 <li>When copying files <b>from a csolution project</b>, the preprocessed linker scatter file that is ready-to-use is typically located in <code>.\tmp\1\ac6_linker_script.sct</code>. Copy this file to <code>&lt;MyFolder&gt;/Board/&lt;board_name&gt;</code> and add it as <em>Scatter File</em>.</li>
 <li>Without an existing csolution project, follow these steps to configure a linker scatter file in µVision.<ol type="1">
-<li>Copy the <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/build-overview.md#linker-script-templates">Linker Script Template</a> file <code>ac6_linker_script.sct.src</code> from the directory <code>&lt;cmsis-toolbox-installation-dir&gt;/etc</code> of the CMSIS-Toolbox.</li>
+<li>Copy the <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview#linker-script-templates">Linker Script Template</a> file <code>ac6_linker_script.sct.src</code> from the directory <code>&lt;cmsis-toolbox-installation-dir&gt;/etc</code> of the CMSIS-Toolbox.</li>
 <li>Copy the memory regions header file e.g. regions_xxx.h from the same RTE directory of the BSP pack to <code>&lt;MyFolder&gt;/Board/&lt;board_name&gt;</code>.</li>
 <li>Add at the beginning of the file <code>ac6_linker_script.sct.src</code> the following statements to enable the linker integrated C preprocessor:</li>
 </ol>
