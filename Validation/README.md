@@ -43,7 +43,7 @@ The selection and configuration of Components for testing is done via [MW_CV_Con
 ### Board layer
 
 In order to build the validation project it shall be extended with a compatible board layer that provides the following interfaces as
-[connections](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md#connections):
+[connections](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/#connections):
 
 - `CMSIS_ETH`:        CMSIS-Driver for Ethernet interface.
 - `CMSIS_MCI`:        CMSIS-Driver for MCI interface.

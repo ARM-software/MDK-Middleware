@@ -9,4 +9,4 @@
 | [USB Device HID](./HID)                       | USB Device Human Interface Device (HID) Component validation.                                 |
 | [USB Device MSC](./MSC)                       | USB Device Mass Storage Class (MSC) device Component validation.                              |
 
-Also see [CMSIS-Toolbox - Reference Applications](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/blob/main/docs/ReferenceApplications.md) to learn more about the concept of reference application in Open CMSIS Pack used by these examples.
+Also see [CMSIS-Toolbox - Reference Applications](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/) to learn more about the concept of reference application in Open CMSIS Pack used by these examples.
