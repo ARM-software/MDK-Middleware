@@ -213,7 +213,7 @@ void app_main_thread (void *argument) {
 ### User Code Templates
 
 \urlout{uv4_ca_sourcefiles} files provide access to all functions that are required to communicate over the Network. The available
-functions are explained in the [Reference](./modules.html) section of the Network
+functions are explained in the [Reference](./topics.html) section of the Network
 Component. These routines can be adapted to the needs of the microcontroller application, in case more functionality is
 needed.
 

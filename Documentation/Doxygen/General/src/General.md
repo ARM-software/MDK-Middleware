@@ -81,8 +81,8 @@ The following table gives you links to the respective sections of each middlewar
   </tr>
   <tr>
     <td>**Reference**</td>
-    <td>[**File System**](../FileSystem/modules.html)</td>
-    <td>[**Network**](../Network/modules.html)</td>
+    <td>[**File System**](../FileSystem/topics.html)</td>
+    <td>[**Network**](../Network/topics.html)</td>
     <td>[**USB Device**](../USB/group__usbd.html)</td>
     <td>[**USB Host**](../USB/group__usbh.html)</td>
   </tr>

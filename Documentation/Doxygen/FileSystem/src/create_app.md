@@ -154,7 +154,7 @@ For more information, check the File System component's \ref resource_requiremen
 
 ## User Code Implementation{#User_Code_Implementation}
 
-All available functions are documented in the [Reference](./modules.html) section of the File System
+All available functions are documented in the [Reference](./topics.html) section of the File System
 Component. These routines can be adapted to the needs of the microcontroller application, in case more functionality is
 needed.
 

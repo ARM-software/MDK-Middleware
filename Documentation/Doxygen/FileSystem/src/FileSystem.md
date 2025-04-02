@@ -32,4 +32,4 @@ This user's guide contains the following chapters:
 - \ref function_overview lists the complete API of the File System Component.
 - \ref resource_requirements shows the configuration of system resources for the File System Component in detail.
 - \ref migration_guide contains information how to migrate projects to latest version of the File System Component (v8).
-- [**API Reference**](./modules.html) shows the directory and file organization and contains the detailed API description.
+- [**API Reference**](./topics.html) shows the directory and file organization and contains the detailed API description.

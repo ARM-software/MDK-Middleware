@@ -7,13 +7,13 @@
   <license>license_terms/license_agreement.txt</license>
   <licenseSets>
     <licenseSet id="all" default="true" gating="true">
-      <license name="license_terms/license_agreement.txt" title="END USER LICENSE AGREEMENT FOR ARM SOFTWARE DEVELOPMENT TOOLS"/>
+    <license name="license_terms/license_agreement.txt" title="END USER LICENSE AGREEMENT FOR ARM SOFTWARE DEVELOPMENT TOOLS"/>
     </licenseSet>
   </licenseSets>
   <releases>
-    <release version="8.1.0-dev">
-      Active development ...
-      Network Component Version 8.1.0
+    <release version="8.2.0" date="2025-04-02">
+      Active development
+      Network Component Version 8.2.0
       - added support for simultaneous outgoing connections via different network interfaces
       - fixed handling of Ethernet drivers not supporting multicast address filtering
       FileSystem Component Version 8.0.2
