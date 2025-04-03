@@ -7,7 +7,7 @@
   <license>license_terms/license_agreement.txt</license>
   <licenseSets>
     <licenseSet id="all" default="true" gating="true">
-      <license name="license_terms/license_agreement.txt" title="END USER LICENSE AGREEMENT FOR ARM SOFTWARE DEVELOPMENT TOOLS"/>
+    <license name="license_terms/license_agreement.txt" title="END USER LICENSE AGREEMENT FOR ARM SOFTWARE DEVELOPMENT TOOLS"/>
     </licenseSet>
   </licenseSets>
   <releases>

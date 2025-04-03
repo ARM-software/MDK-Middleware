@@ -33,9 +33,9 @@ var arrurl = [];
  arrurl.push( new urlKey( "MDK",                            "https://www.keil.arm.com/keil-mdk/",                                                              "Keil MDK") );
 
  arrurl.push( new urlKey( "CMSIS-Driver",                   "https://arm-software.github.io/CMSIS_6/latest/Driver/index.html",                                 "CMSIS-Driver")     );
- arrurl.push( new urlKey( "CMSIS-Driver-Ref",               "https://arm-software.github.io/CMSIS_6/latest/Driver/modules.html",                               "CMSIS-Driver Reference"));
+ arrurl.push( new urlKey( "CMSIS-Driver-Ref",               "https://arm-software.github.io/CMSIS_6/latest/Driver/topics.html",                               "CMSIS-Driver Reference"));
  arrurl.push( new urlKey( "CMSIS-RTOS2",                    "https://arm-software.github.io/CMSIS_6/latest/RTOS2/index.html",                                  "CMSIS-RTOS v2 API")     );
- arrurl.push( new urlKey( "CMSIS-RTOS2-Ref",                "https://arm-software.github.io/CMSIS_6/latest/RTOS2/modules.html",                                "CMSIS-RTOS v2 API Reference")     );
+ arrurl.push( new urlKey( "CMSIS-RTOS2-Ref",                "https://arm-software.github.io/CMSIS_6/latest/RTOS2/topics.html",                                "CMSIS-RTOS v2 API Reference")     );
  arrurl.push( new urlKey( "CMSIS-RTX5",                     "https://arm-software.github.io/CMSIS-RTX/latest/index.html",                                      "CMSIS-RTOS v2")     );
  arrurl.push( new urlKey( "CMSIS-Compiler",                 "https://arm-software.github.io/CMSIS-Compiler/latest/",                                           "CMSIS-Compiler")    );
  arrurl.push( new urlKey( "CMSIS-View",                     "https://arm-software.github.io/CMSIS-View/latest/",                                               "CMSIS-View")     );

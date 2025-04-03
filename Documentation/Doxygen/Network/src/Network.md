@@ -78,4 +78,4 @@ This user's guide contains the following chapters:
 - \ref function_overview list provides a brief overview of all Network Component functions.
 - \ref resource_requirements describes the resource requirements of the Network Component.
 - \ref migration_guide section contains information how to migrate from previous versions to the Network Component v8.
-- <a class=el href="./modules.html">API Reference</a> describes the functional interface of the Network Component in detail.
+- <a class=el href="./topics.html">API Reference</a> describes the functional interface of the Network Component in detail.
