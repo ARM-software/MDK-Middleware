@@ -64,3 +64,9 @@ project:
   layers:
     - layer: $Board-Layer$
       type: Board
+
+  output:
+    type:
+      - elf
+      - hex
+      - map
