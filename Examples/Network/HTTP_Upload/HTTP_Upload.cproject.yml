@@ -53,3 +53,8 @@ project:
       output:
         - Web.c   # Output file for FCARM
 
+  output:
+    type:
+      - elf
+      - hex
+      - map
