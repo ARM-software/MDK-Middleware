@@ -1310,25 +1310,25 @@ bool USBD_CDC_ACM_CoreGetEncapsulatedResponse (uint8_t instance, uint16_t max_le
   return result;
 }
 
-bool USBD_CDC_ACM_CoreSetCommFeature (uint8_t instance, uint16_t feat) {
+__WEAK bool USBD_CDC_ACM_CoreSetCommFeature (uint8_t instance, uint16_t feat) {
   (void)instance;
   (void)feat;
 
   return false;
 }
-bool USBD_CDC_ACM_CoreGetCommFeature (uint8_t instance, uint16_t feat) {
+__WEAK bool USBD_CDC_ACM_CoreGetCommFeature (uint8_t instance, uint16_t feat) {
   (void)instance;
   (void)feat;
 
   return false;
 }
-bool USBD_CDC_ACM_CoreClearCommFeature (uint8_t instance, uint16_t feat) {
+__WEAK bool USBD_CDC_ACM_CoreClearCommFeature (uint8_t instance, uint16_t feat) {
   (void)instance;
   (void)feat;
 
   return false;
 }
-bool USBD_CDC_ACM_CoreSendBreak (uint8_t instance, uint16_t dur) {
+__WEAK bool USBD_CDC_ACM_CoreSendBreak (uint8_t instance, uint16_t dur) {
   (void)instance;
   (void)dur;
 
