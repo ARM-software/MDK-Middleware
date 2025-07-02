@@ -3,11 +3,20 @@ solution:
   created-for: CMSIS-Toolbox@2.6.0
   cdefault:
 
-  select-compiler:  # list of tested compilers that can be selected
+  # List of tested compilers that can be selected
+  select-compiler:
     - compiler: AC6
     - compiler: GCC
     - compiler: IAR
     - compiler: CLANG
+
+  # List of miscellaneous tool-specific controls
+  misc:
+    - for-compiler: AC6      # GDB requires DWARF 5, remove when using uVision Debugger
+      C-CPP:
+        - -gdwarf-5
+      ASM:
+        - -gdwarf-5
 
   target-types:
     # - type: <target_name>
