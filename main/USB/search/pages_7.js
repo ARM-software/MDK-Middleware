@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['supported_20usb_20classes_0',['Supported USB Classes',['../USB_Classes.html',1,'']]]
+  ['keyboard_0',['USB Host Keyboard',['../usbh_example_hid.html',1,'usbh_examples']]]
 ];

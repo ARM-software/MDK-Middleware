@@ -1,6 +1,6 @@
 var group__usbh__coreFunctions__api =
 [
-    [ "USBH_Device_GetAddress", "group__usbh__coreFunctions__api.html#ga9c80b0ca79ceba904ca61cf39a5918eb", null ],
+    [ "USBH_Device_GetAddress", "group__usbh__coreFunctions__api.html#ga7b68dc646786ce25c3687aef06c361d6", null ],
     [ "USBH_Device_GetController", "group__usbh__coreFunctions__api.html#ga7bf4b21cd95d93392bd2a4603482c626", null ],
     [ "USBH_Device_GetPID", "group__usbh__coreFunctions__api.html#gab3663f913abc1d64a764c88b8019005f", null ],
     [ "USBH_Device_GetPort", "group__usbh__coreFunctions__api.html#ga81deef9423a241a9a057f924b2c12675", null ],

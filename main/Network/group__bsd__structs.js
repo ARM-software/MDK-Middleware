@@ -5,10 +5,10 @@ var group__bsd__structs =
       [ "sa_family", "group__bsd__structs.html#a4df9597bca2a0bd5d0f51e93f3b762e7", null ]
     ] ],
     [ "IN_ADDR", "group__bsd__structs.html#structIN__ADDR", [
-      [ "u", "group__bsd__structs.html#a0fed58a7158850363d223386439d1ff4", null ]
+      [ "u", "group__bsd__structs.html#a93986bfac3b3498cf6af08c9c335beb5", null ]
     ] ],
     [ "IN6_ADDR", "group__bsd__structs.html#structIN6__ADDR", [
-      [ "u", "group__bsd__structs.html#ae2ab77679a232ba09ec876e41619497c", null ]
+      [ "u", "group__bsd__structs.html#aae996e91bf84077a47e11a8b507b1e0d", null ]
     ] ],
     [ "SOCKADDR_IN", "group__bsd__structs.html#structSOCKADDR__IN", [
       [ "sin_addr", "group__bsd__structs.html#a92b552b33b68a46c97a8d27a13a8bfb6", null ],

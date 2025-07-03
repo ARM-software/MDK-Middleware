@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['tcp_20socket_0',['TCP Socket',['../group__netTCP__Func.html',1,'']]],
-  ['telnet_20server_1',['Telnet Server',['../group__netTELNET__Func.html',1,'']]],
-  ['tftp_20client_2',['TFTP Client',['../group__netTFTPc__Func.html',1,'']]],
-  ['tftp_20server_3',['TFTP Server',['../group__netTFTPs__Func.html',1,'']]]
+  ['resolution_0',['NetARP: ARP Address Resolution',['../group__net__evr__arp__func.html',1,'']]],
+  ['rfcs_1',['Implemented RFCs',['../group__RFC__list.html',1,'']]]
 ];

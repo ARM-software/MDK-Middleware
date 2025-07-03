@@ -46,16 +46,6 @@ var group__usbh__data__types =
       [ "wValue", "group__usbd__data__types.html#a7383d0165ad8eab48aa239c005199121", null ]
     ] ],
     [ "USBH_PIPE_HANDLE", "group__usbh__data__types.html#ga98c1a0cd2cf7e047d714fd23dfba5e53", null ],
-    [ "USBH_PipeEvent_t", "group__usbh__data__types.html#ga975e4cbe15686153438f14d54134c0f9", null ],
-    [ "USBH_NOTIFY", "group__usbh__data__types.html#gac1c5bd4e4bbd4de40f06a5f120ed4c01", [
-      [ "USBH_NOTIFY_CONNECT", "group__usbh__data__types.html#gac1c5bd4e4bbd4de40f06a5f120ed4c01a25a6d26e7aed8449746e80b01c51367a", null ],
-      [ "USBH_NOTIFY_DISCONNECT", "group__usbh__data__types.html#gac1c5bd4e4bbd4de40f06a5f120ed4c01a47a34de8e82d0e9b3bc04c6a2b4f83dd", null ],
-      [ "USBH_NOTIFY_OVERCURRENT", "group__usbh__data__types.html#gac1c5bd4e4bbd4de40f06a5f120ed4c01af964aa796d30fb48578531cd09600524", null ],
-      [ "USBH_NOTIFY_REMOTE_WAKEUP", "group__usbh__data__types.html#gac1c5bd4e4bbd4de40f06a5f120ed4c01a07499e5ea3b3309d780939c59bd5f321", null ],
-      [ "USBH_NOTIFY_READY", "group__usbh__data__types.html#gac1c5bd4e4bbd4de40f06a5f120ed4c01a69c867816559b3dd79e0e125a6657f0b", null ],
-      [ "USBH_NOTIFY_UNKNOWN_DEVICE", "group__usbh__data__types.html#gac1c5bd4e4bbd4de40f06a5f120ed4c01a97c819eef0552b24682fa6df12c7a902", null ],
-      [ "USBH_NOTIFY_INSUFFICIENT_POWER", "group__usbh__data__types.html#gac1c5bd4e4bbd4de40f06a5f120ed4c01a3b6c1fe4ef787b5ec16265d8aa167b62", null ],
-      [ "USBH_NOTIFY_CONFIGURATION_FAILED", "group__usbh__data__types.html#gac1c5bd4e4bbd4de40f06a5f120ed4c01a5b120e82dbe83001f4a037944799ac1a", null ],
-      [ "USBH_NOTIFY_INITIALIZATION_FAILED", "group__usbh__data__types.html#gac1c5bd4e4bbd4de40f06a5f120ed4c01aa639f603ccc873aa2c488d154766bcc4", null ]
-    ] ]
+    [ "USBH_PipeEvent_t", "group__usbh__data__types.html#ga152ab5ef460727b9a684c12f0a6f2d7e", null ],
+    [ "USBH_NOTIFY", "group__usbh__data__types.html#gac1c5bd4e4bbd4de40f06a5f120ed4c01", null ]
 ];

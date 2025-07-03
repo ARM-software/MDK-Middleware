@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['_5f_5fss_5falign_0',['__ss_align',['../group__bsd__structs.html#a33dbf41811b455aa105582b6280459fd',1,'SOCKADDR_STORAGE']]],
-  ['_5f_5fss_5fpad1_1',['__ss_pad1',['../group__bsd__structs.html#ab4a2ff6add0fe86a08373c6ed906df3a',1,'SOCKADDR_STORAGE']]],
-  ['_5f_5fss_5fpad2_2',['__ss_pad2',['../group__bsd__structs.html#a6ebf4de25ca3c8f7eccc0fdf40a40929',1,'SOCKADDR_STORAGE']]],
-  ['_5f_5fstatic_5finline_3',['__STATIC_INLINE',['../net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c',1,'net_evr.h']]]
+  ['16_0',['Unicast 6to4 address (2002::/16)',['../group__using__ethernet__interfaces__ipv6__fundamentals.html#autotoc_md103',1,'']]]
 ];

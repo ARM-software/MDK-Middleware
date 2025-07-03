@@ -115,7 +115,7 @@ var NAVTREE =
       [ "Component Selection", "migration_guide.html#migrate_components", null ],
       [ "Configuration", "migration_guide.html#migrate_config", null ]
     ] ],
-    [ "API Reference", "modules.html", "modules" ]
+    [ "API Reference", "topics.html", "topics" ]
   ] ]
 ];
 
@@ -123,8 +123,8 @@ var NAVTREEINDEX =
 [
 "File_Demo_Example.html",
 "group__evr__fsmcmci.html#gad325a4955199a83e5bc9036f8b80d425",
-"operation.html#fat_layout"
+"operation.html#fat_path_handling"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+var SYNCONMSG = 'click to disable panel synchronization';
+var SYNCOFFMSG = 'click to enable panel synchronization';

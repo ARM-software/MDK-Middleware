@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['migration_20guide_0',['Migration Guide',['../usb_migration.html',1,'']]]
+  ['examples_0',['Examples',['../usbd_examples.html',1,'Examples'],['../usbh_examples.html',1,'Examples']]]
 ];

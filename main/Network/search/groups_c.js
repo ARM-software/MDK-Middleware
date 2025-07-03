@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['ping_20client_0',['Ping Client',['../group__netPing__Func.html',1,'']]],
-  ['ppp_20interface_1',['PPP Interface',['../group__netPPP__Func.html',1,'']]]
+  ['option_20negotiation_0',['Option Negotiation',['../group__telnet__server__options.html',1,'']]],
+  ['overview_1',['Overview',['../group__function__categories.html',1,'']]]
 ];

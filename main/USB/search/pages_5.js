@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pc_20utilities_0',['PC Utilities',['../usbd_pc_utilities.html',1,'USB_Device']]]
+  ['guide_0',['Migration Guide',['../usb_migration.html',1,'']]]
 ];

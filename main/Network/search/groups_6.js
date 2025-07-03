@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['http_20server_0',['HTTP Server',['../group__netHTTP__Func.html',1,'']]]
+  ['gateway_20interface_20cgi_0',['Common Gateway Interface (CGI)',['../group__ws__cgi__script.html',1,'']]]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['u_0',['u',['../group__bsd__structs.html#a0fed58a7158850363d223386439d1ff4',1,'IN_ADDR::u()'],['../group__bsd__structs.html#ae2ab77679a232ba09ec876e41619497c',1,'IN6_ADDR::u()']]],
+  ['u_0',['u',['../group__bsd__structs.html#a93986bfac3b3498cf6af08c9c335beb5',1,'IN_ADDR::u'],['../group__bsd__structs.html#aae996e91bf84077a47e11a8b507b1e0d',1,'IN6_ADDR::u']]],
   ['u16_1',['u16',['../net__evr_8h.html#ab50851069a9dd1408be60ccf08b178ac',1,'evr_access']]],
   ['u32_2',['u32',['../net__evr_8h.html#a7f5c214a3b5369cbb8b514d375500efb',1,'evr_access']]],
   ['u8_3',['u8',['../net__evr_8h.html#a2325ae3355fbce42b25a35ec67f4efdf',1,'evr_access']]],

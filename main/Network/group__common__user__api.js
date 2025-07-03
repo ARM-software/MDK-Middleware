@@ -1,7 +1,7 @@
 var group__common__user__api =
 [
-    [ "netARP_cb_t", "group__common__user__api.html#gacda6fae287c7a7ee12381544815203ff", null ],
-    [ "netNDP_cb_t", "group__common__user__api.html#gac17e7206f38acdfd35a01f5113ea9f58", null ],
+    [ "netARP_cb_t", "group__common__user__api.html#ga95d9f3162d46be58bbf0dbf42f77b6e1", null ],
+    [ "netNDP_cb_t", "group__common__user__api.html#gaa2d57e2e6e49378df6d2b4b60b54504a", null ],
     [ "netARP_AddCache", "group__common__user__api.html#ga3c5d2f67acd4038c69cbceaedbb878a2", null ],
     [ "netARP_CacheIP", "group__common__user__api.html#ga2ef41d262467109292e7e96eb4b6e399", null ],
     [ "netARP_CacheMAC", "group__common__user__api.html#ga0517419c7d4cf9bdb9133a26314f4fb9", null ],

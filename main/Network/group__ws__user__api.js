@@ -13,7 +13,7 @@ var group__ws__user__api =
     [ "netHTTPs_Running", "group__ws__user__api.html#gac5af75b3945d3b6d72e2f6600ab73fb0", null ],
     [ "netHTTPs_SetPassword", "group__ws__user__api.html#ga81de241aa2a180471e6d957e5d78a0c0", null ],
     [ "netHTTPs_SetPort", "group__ws__user__api.html#ga114f3bda7e4c71c8db73a0bab1a609e5", null ],
-    [ "netHTTPs_SetRootPath", "group__ws__user__api.html#gaca3fbf412d379669e61a1a5fc72950b0", null ],
+    [ "netHTTPs_SetRootPath", "group__ws__user__api.html#ga1e765e607e56d4d8f861379bbd773a8f", null ],
     [ "netHTTPs_SetUsername", "group__ws__user__api.html#ga7c8ed9136a8b5186762c44371482a7ad", null ],
     [ "netHTTPs_Start", "group__ws__user__api.html#ga59dfc887436030c13ecbf186c233843f", null ],
     [ "netHTTPs_Stop", "group__ws__user__api.html#ga3839c51b949e6a2b3c978fe045db1f0c", null ]

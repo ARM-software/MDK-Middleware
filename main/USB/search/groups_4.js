@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['msc_3a_20mass_20storage_20class_0',['MSC: Mass Storage Class',['../group__usbd__mscFunctions.html',1,'(Global Namespace)'],['../group__usbh__mscFunctions.html',1,'(Global Namespace)']]]
+  ['error_20codes_0',['Status and Error Codes',['../group__status__error__codes__usb.html',1,'']]],
+  ['events_1',['Events',['../group__usbd__evr.html',1,'Debug Events'],['../group__usbh__evr.html',1,'Debug Events']]]
 ];

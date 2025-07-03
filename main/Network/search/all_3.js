@@ -1,29 +1,5 @@
 var searchData=
 [
-  ['cb_5ffunc_0',['cb_func',['../group__snmp__structs.html#a5703a31250fbcc8d773b4506126225b4',1,'NET_SNMP_MIB_INFO']]],
-  ['cc_1',['Cc',['../group__smtp__structs.html#adf5a95f1fe450811b5c0118af4feeb2c',1,'NET_SMTP_MAIL']]],
-  ['cgi_20programming_2',['CGI Programming',['../group__ws__script__langugage.html',1,'']]],
-  ['channel_3',['channel',['../group__Wifi__structs.html#a715f5cb061d11eb75981741eda4dafcd',1,'NET_WIFI_CONFIG::channel()'],['../group__Wifi__structs.html#a715f5cb061d11eb75981741eda4dafcd',1,'NET_WIFI_NET_INFO::channel()'],['../group__Wifi__structs.html#a715f5cb061d11eb75981741eda4dafcd',1,'NET_WIFI_SCAN_INFO::channel()']]],
-  ['closesocket_4',['closesocket',['../group__using__network__sockets__bsd__func.html#ga50c4d62065c117f425ae2734e7979f21',1,'rl_net.h']]],
-  ['cmsg_5falign_5',['CMSG_ALIGN',['../rl__net_8h.html#a907a77978127b9622f23f2778b0324a0',1,'rl_net.h']]],
-  ['cmsg_5fdata_6',['CMSG_DATA',['../rl__net_8h.html#a5ab6d56e410ac0904107e84aeb1484cc',1,'rl_net.h']]],
-  ['cmsg_5ffirsthdr_7',['CMSG_FIRSTHDR',['../rl__net_8h.html#a326c46eb0fceb09b6ebb075804fd1e0c',1,'rl_net.h']]],
-  ['cmsg_5flen_8',['CMSG_LEN',['../rl__net_8h.html#a1cf31f7d0320e1fa024ebced6d54c8b9',1,'rl_net.h']]],
-  ['cmsg_5flen_9',['cmsg_len',['../group__bsd__structs.html#ab95d194fb714ad22462c761116dcc906',1,'CMSGHDR']]],
-  ['cmsg_5flevel_10',['cmsg_level',['../group__bsd__structs.html#a46f8b43dd9e6f87f8608bbab68b4cd90',1,'CMSGHDR']]],
-  ['cmsg_5fnxthdr_11',['CMSG_NXTHDR',['../rl__net_8h.html#a4f70853d9633fb80428189cd7bb292d0',1,'rl_net.h']]],
-  ['cmsg_5fspace_12',['CMSG_SPACE',['../rl__net_8h.html#a6a6d1e8e926f5b43e45353c7e8c3c7fa',1,'rl_net.h']]],
-  ['cmsg_5ftype_13',['cmsg_type',['../group__bsd__structs.html#a37777698440998ee072c7fb05b98df8b',1,'CMSGHDR']]],
-  ['cmsghdr_14',['CMSGHDR',['../group__bsd__structs.html#structCMSGHDR',1,'']]],
-  ['code_15',['code',['../group__Common__structs.html#a966576744a473fafb7687f8e5649941f',1,'NET_DHCP_OPTION_ITEM']]],
-  ['common_20gateway_20interface_20_28cgi_29_16',['Common Gateway Interface (CGI)',['../group__ws__cgi__script.html',1,'']]],
-  ['common_20interface_17',['Common Interface',['../group__netInterfaces__Common.html',1,'']]],
-  ['configuration_18',['Configuration',['../group__telnet__server__conf.html',1,'(Global Namespace)'],['../group__using__dns__client__conf.html',1,'(Global Namespace)'],['../group__using__ethernet__interfaces__conf.html',1,'(Global Namespace)'],['../group__using__ftp__server__conf.html',1,'(Global Namespace)'],['../group__using__ftpc__conf.html',1,'(Global Namespace)'],['../group__using__network__sockets__bsd__conf.html',1,'(Global Namespace)'],['../group__using__network__sockets__tcp__conf.html',1,'(Global Namespace)'],['../group__using__network__sockets__udp__conf.html',1,'(Global Namespace)'],['../group__using__ppp__interfaces__conf.html',1,'(Global Namespace)'],['../group__using__slip__interfaces__conf.html',1,'(Global Namespace)'],['../group__using__smtpc__conf.html',1,'(Global Namespace)'],['../group__using__snmp__agent__conf.html',1,'(Global Namespace)'],['../group__using__sntp__client__conf.html',1,'(Global Namespace)'],['../group__using__tftp__server__conf.html',1,'(Global Namespace)'],['../group__using__tftpc__conf.html',1,'(Global Namespace)'],['../group__using__wifi__interfaces__conf.html',1,'(Global Namespace)'],['../group__ws__configuration.html',1,'(Global Namespace)']]],
-  ['connect_19',['connect',['../group__using__network__sockets__bsd__func.html#ga9feed17ea4fc7449b8159eabc131ed5b',1,'rl_net.h']]],
-  ['control_20interface_20',['Control Interface',['../group__ftp__user__api.html',1,'(Global Namespace)'],['../group__ftpc__user__api.html',1,'(Global Namespace)'],['../group__smtpc__user__api.html',1,'(Global Namespace)'],['../group__snmp__user__api.html',1,'(Global Namespace)'],['../group__starting__dns.html',1,'(Global Namespace)'],['../group__starting__sntp.html',1,'(Global Namespace)'],['../group__telnet__user__api.html',1,'(Global Namespace)'],['../group__tftp__server__user__api.html',1,'(Global Namespace)'],['../group__tftpc__user__api.html',1,'(Global Namespace)'],['../group__ws__user__api.html',1,'(Global Namespace)']]],
-  ['conversion_20functions_21',['Conversion Functions',['../group__netGen__AddrConvFunc.html',1,'']]],
-  ['create_5fapp_2emd_22',['create_app.md',['../create__app_8md.html',1,'']]],
-  ['creating_20a_20network_20application_23',['Creating a Network Application',['../create_app.html',1,'']]],
-  ['cyber_20security_24',['Cyber Security',['../cyber_security.html',1,'']]],
-  ['cyber_5fsecurity_2emd_25',['cyber_security.md',['../cyber__security_8md.html',1,'']]]
+  ['64_0',['Unicast link-local addresses (FE80::/64)',['../group__using__ethernet__interfaces__ipv6__fundamentals.html#autotoc_md101',1,'']]],
+  ['6to4_20address_202002_3a_3a_2016_1',['Unicast 6to4 address (2002::/16)',['../group__using__ethernet__interfaces__ipv6__fundamentals.html#autotoc_md103',1,'']]]
 ];

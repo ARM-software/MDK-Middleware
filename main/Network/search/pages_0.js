@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['bsd_20client_0',['BSD Client',['../BSD_Client_Example.html',1,'examples']]],
-  ['bsd_20server_1',['BSD Server',['../BSD_Server_Example.html',1,'examples']]]
+  ['a_20network_20application_0',['a Network Application',['../create_app.html',1,'Creating a Network Application'],['../troubleshoot.html',1,'Troubleshooting a Network Application']]],
+  ['agent_1',['SNMP Agent',['../SNMP_Agent_Example.html',1,'examples']]],
+  ['application_2',['Application',['../create_app.html',1,'Creating a Network Application'],['../troubleshoot.html',1,'Troubleshooting a Network Application']]]
 ];

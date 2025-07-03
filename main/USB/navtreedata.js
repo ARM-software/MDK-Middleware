@@ -104,7 +104,7 @@ var NAVTREE =
         [ "USB Host", "usb_migration.html#autotoc_md23", null ]
       ] ]
     ] ],
-    [ "API Reference", "modules.html", "modules" ]
+    [ "API Reference", "topics.html", "topics" ]
   ] ]
 ];
 
@@ -113,8 +113,8 @@ var NAVTREEINDEX =
 "USB_Classes.html",
 "group__usbd__evr__adc__func.html#ga1ccb91620b8d3b067cbb462feaf7a485",
 "group__usbd__evr__msc__func.html#ga733e733d85493019fb3ae08a414ebe3e",
-"group__usbh__evr__core__func.html#gac91e11435ced63f367d9c5900d69275c"
+"group__usbh__evr__core__func.html#gaebd18d0608cc543c9684f9beceb47cfc"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+var SYNCONMSG = 'click to disable panel synchronization';
+var SYNCOFFMSG = 'click to enable panel synchronization';

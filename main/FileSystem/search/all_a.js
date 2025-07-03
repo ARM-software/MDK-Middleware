@@ -1,13 +1,11 @@
 var searchData=
 [
-  ['mdt_0',['MDT',['../rl__fs_8h.html#a71d882934b994b2187a42419b56f41e1',1,'fsCID_Register']]],
-  ['media_20support_20routines_1',['Media Support Routines',['../group__media__support__routines.html',1,'']]],
-  ['mid_2',['MID',['../rl__fs_8h.html#a74b374f094f3637dde09b84a823203e1',1,'fsCID_Register']]],
-  ['migration_20guide_3',['Migration Guide',['../migration_guide.html',1,'']]],
-  ['migration_5fguide_2emd_4',['migration_guide.md',['../migration__guide_8md.html',1,'']]],
-  ['min_5',['min',['../rl__fs_8h.html#a7fb43d8c0a1704bab50921f94e4746fe',1,'fsTime']]],
-  ['mon_6',['mon',['../rl__fs_8h.html#a9bc467bf75e5202a3edfc1ec4e12642c',1,'fsTime']]],
-  ['mw_5ffs_5fversion_5fmajor_7',['MW_FS_VERSION_MAJOR',['../rl__fs_8h.html#aaf76bfd9e5305fa38d937c9b57555651',1,'rl_fs.h']]],
-  ['mw_5ffs_5fversion_5fminor_8',['MW_FS_VERSION_MINOR',['../rl__fs_8h.html#a8635894782e8651313dabd84aad7750e',1,'rl_fs.h']]],
-  ['mw_5ffs_5fversion_5fpatch_9',['MW_FS_VERSION_PATCH',['../rl__fs_8h.html#a3a885b530c93188f5359f6be683c57b7',1,'rl_fs.h']]]
+  ['layer_0',['Layer',['../group__evr__fsnftl.html',1,'FsNFTL: NAND Flash Translation Layer'],['../operation.html#mc_control_layer',1,'Memory Card Control Layer'],['../operation.html#nand_flash_TL',1,'NAND Flash Translation Layer']]],
+  ['layout_1',['Layout',['../operation.html#fat_layout',1,'']]],
+  ['length_2',['length',['../rl__fs_8h.html#a4ea0c21c051070a4f7f2192f6a480ff3',1,'fsLockUnlock']]],
+  ['leveling_3',['Wear Leveling',['../operation.html#wear_leveling',1,'']]],
+  ['limitations_4',['Limitations',['../operation.html#fat_imp_limitations',1,'FAT Implementation Limitations'],['../operation.html#fat_sys_design_limitations',1,'FAT System Design Limitations'],['../operation.html#efs_limits',1,'Limitations']]],
+  ['list_20of_20supported_20devices_5',['List of Supported Devices',['../operation.html#mci_list_of_devices',1,'']]],
+  ['list_20of_20supported_20mci_20driver_20capabilities_6',['List of Supported MCI Driver Capabilities',['../operation.html#mci_list_of_mci_capabilities',1,'']]],
+  ['long_20and_20short_20file_20name_20handling_7',['Long and Short File Name handling',['../operation.html#lfn_sfn_handling',1,'']]]
 ];

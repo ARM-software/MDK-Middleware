@@ -672,7 +672,7 @@ var searchData=
   ['evrnetmld_5fsenddelayedreport_669',['EvrNetMLD_SendDelayedReport',['../group__net__evr__mld__func.html#gaa0f0281485c0254f8465537bb90e8143',1,'net_evr.h']]],
   ['evrnetmld_5fsendleave_670',['EvrNetMLD_SendLeave',['../group__net__evr__mld__func.html#ga3cea8c2b4047a982442d21b540c03995',1,'net_evr.h']]],
   ['evrnetmld_5fsendreport_671',['EvrNetMLD_SendReport',['../group__net__evr__mld__func.html#gaf2eec0bc376ec125f094881f530a2234',1,'net_evr.h']]],
-  ['evrnetmld_5funinitnode_672',['EvrNetMLD_UninitNode',['../group__net__evr__mld__func.html#gad85f92b0f59d4e0510460c2eaa401c7f',1,'net_evr.h']]],
+  ['evrnetmld_5funinitnode_672',['EvrNetMLD_UninitNode',['../group__net__evr__mld__func.html#ga63cc4b3c498202f5961914df3b1cdb62',1,'net_evr.h']]],
   ['evrnetnbns_5fclearcache_673',['EvrNetNBNS_ClearCache',['../group__net__evr__nbns__func.html#ga1ed5a01770b1f1aa086fff0d03955afd',1,'net_evr.h']]],
   ['evrnetnbns_5fclearcacheclientbusy_674',['EvrNetNBNS_ClearCacheClientBusy',['../group__net__evr__nbns__func.html#gaf8143676faa70c532fa1fd35e080c573',1,'net_evr.h']]],
   ['evrnetnbns_5fclearcacheinvalidparam_675',['EvrNetNBNS_ClearCacheInvalidParam',['../group__net__evr__nbns__func.html#ga1327c8afd1aa134229fc07b2d2d92c4b',1,'net_evr.h']]],

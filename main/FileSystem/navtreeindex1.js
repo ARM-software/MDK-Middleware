@@ -177,7 +177,7 @@ var NAVTREEINDEX1 =
 "group__retarget__interface__routines.html#gaa2d76cb9d5b7fe837080c758fb4e8d21":[8,9,6],
 "group__retarget__interface__routines.html#gad630493f1a8c99a34167b899aed6ec19":[8,9,5],
 "group__status__error__codes__fs.html":[8,10],
-"group__status__error__codes__fs.html#gad871e37ea72fced1b09e65f119d4e441":[8,10,0],
+"group__status__error__codes__fs.html#ga326dc89f0e8665e419766e90c691b8d7":[8,10,0],
 "group__stdio__routines.html":[8,1],
 "group__stdio__routines.html#ga035ff3f250bb8d87973f9fb1c3c76f9c":[8,1,12],
 "group__stdio__routines.html#ga0f0929f348d0667d83ec3cd5a7672e93":[8,1,18],
@@ -228,7 +228,6 @@ var NAVTREEINDEX1 =
 "migration_guide.html":[7],
 "migration_guide.html#migrate_components":[7,0],
 "migration_guide.html#migrate_config":[7,1],
-"modules.html":[8],
 "operation.html":[4],
 "operation.html#autotoc_md10":[4,5,1,1],
 "operation.html#autotoc_md11":[4,5,2,0],
@@ -249,5 +248,6 @@ var NAVTREEINDEX1 =
 "operation.html#emb_fs":[4,5],
 "operation.html#fat_abs_rel_path":[4,2,2,0],
 "operation.html#fat_fs":[4,2],
-"operation.html#fat_imp_limitations":[4,2,7]
+"operation.html#fat_imp_limitations":[4,2,7],
+"operation.html#fat_layout":[4,2,0]
 };

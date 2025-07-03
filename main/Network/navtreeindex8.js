@@ -1,14 +1,7 @@
 var NAVTREEINDEX8 =
 {
-"index.html":[],
-"index.html":[0],
-"index.html#doc_structure":[0,0],
-"migration_guide.html":[9],
-"migration_guide.html#mig_nw_configuration":[9,1],
-"migration_guide.html#mig_nw_configuration_net_config_c":[9,1,0],
 "migration_guide.html#mig_nw_configuration_net_debug":[9,1,1],
 "migration_guide.html#nw_diffs_component":[9,0],
-"modules.html":[10],
 "pages.html":[],
 "resource_requirements.html":[8],
 "resource_requirements.html#autotoc_md42":[8,3,0],
@@ -185,6 +178,7 @@ var NAVTREEINDEX8 =
 "secure_communication.html#smtps_client":[4,1,1],
 "secure_communication.html#use_mbed_tls":[4,0],
 "secure_communication.html#use_secure_components":[4,1],
+"topics.html":[10],
 "troubleshoot.html":[3],
 "troubleshoot.html#trbl_bestpractice":[3,1],
 "troubleshoot.html#trbl_nw_hierachry":[3,0],

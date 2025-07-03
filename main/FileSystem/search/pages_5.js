@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['resource_20requirements_0',['Resource Requirements',['../resource_requirements.html',1,'']]],
-  ['revision_20history_1',['Revision History',['../rev_hist.html',1,'']]]
+  ['guide_0',['Migration Guide',['../migration_guide.html',1,'']]]
 ];

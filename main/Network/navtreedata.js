@@ -121,7 +121,7 @@ var NAVTREE =
         [ "Net_Debug.h", "migration_guide.html#mig_nw_configuration_net_debug", null ]
       ] ]
     ] ],
-    [ "API Reference", "modules.html", "modules" ]
+    [ "API Reference", "topics.html", "topics" ]
   ] ]
 ];
 
@@ -129,14 +129,14 @@ var NAVTREEINDEX =
 [
 "BSD_Client_Example.html",
 "group__ftp__fs__interface.html#ga058e1483a1bf2d52e7fe296b52d88901",
-"group__net__evr__bsd__func.html#ga733db0e72bd7a8bf4f1922e2e71103f6",
-"group__net__evr__eth__func.html#gac51f8d76778823738f2c76b9484c8d20",
-"group__net__evr__igmp__func.html#gaa3cd0b47b66a64de1137c7070f0c4ebb",
-"group__net__evr__ppp__func.html#gad858ed9c7a88e3bec4ca048ac05c1aa0",
-"group__net__evr__tcp__func.html#gab71d12870266f7dbebf936a9ccbe2b6c",
-"group__network__structs.html#a8e0798404bf2cf5dabb84c5ba9a4f236",
-"index.html"
+"group__net__evr__bsd__func.html#ga766100eebc0d12ea7a622a57b3f979cf",
+"group__net__evr__eth__func.html#gae41e57a4d89c24163bdb6712e359de24",
+"group__net__evr__igmp__func.html#gaf2e7bb4d1674a20d462ecb738bc9ca32",
+"group__net__evr__ppp__func.html#gaea2182b9f98c9c572c21f2b6abd225c4",
+"group__net__evr__tcp__func.html#gac4b46b4a2e8a72ef1e0b30b401b3fa3b",
+"group__ppp__user__api.html#ga19e5b83c645aec7b967d4a1e06e05e65",
+"migration_guide.html#mig_nw_configuration_net_debug"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+var SYNCONMSG = 'click to disable panel synchronization';
+var SYNCOFFMSG = 'click to enable panel synchronization';
