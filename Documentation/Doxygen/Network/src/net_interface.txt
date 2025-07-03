@@ -456,7 +456,7 @@ The IPv6 addresses for the Ethernet network interface are assigned in several wa
 \note
 - Stateless Address Autoconfiguration is always active, no matter if DHCPv6 client is enabled in the system configuration or not.
 - All available functions for using Ethernet are explained in \ref netETH_Func section of the
-  <a class=el href="./modules.html">API Reference</a>.
+  <a class=el href="./topics.html">API Reference</a>.
 - <a href="https://en.wikipedia.org/wiki/Link-local_Multicast_Name_Resolution" target="_blank">Link-local Multicast Name Resolution</a>
   is not supported.
 */
@@ -881,7 +881,7 @@ The IP address for the PPP network interface is assigned using the following mod
   settings are ignored.
 
 \note All available functions for using PPP are explained in \ref netPPP_Func section of the
-<a class=el href="./modules.html">API Reference</a>.
+<a class=el href="./topics.html">API Reference</a>.
 */
 
 
@@ -1037,7 +1037,7 @@ This is a simple protocol and does not allow automatic configuration, therefore 
 \note
 - If both SLIP and Ethernet interfaces are used simultaneously, you must not set the same network address for both.
 - All available functions for using SLIP are explained in \ref netSLIP_Func section of the
-  <a class=el href="./modules.html">API Reference</a>.
+  <a class=el href="./topics.html">API Reference</a>.
 */
 
 

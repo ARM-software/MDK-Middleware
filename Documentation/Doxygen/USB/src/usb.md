@@ -30,7 +30,7 @@ This user's guide contains the following chapters:
 - \ref function_overview lists the complete API of the USB Component.
 - \ref resource_requirements shows the configuration of system resources for USB Component in detail.
 - \ref usb_migration contains information how to migrate projects to latest version of USB Component (v8).
-- [**API Reference**](./modules.html) shows the directory and file organization and contains the detailed API description.
+- [**API Reference**](./topics.html) shows the directory and file organization and contains the detailed API description.
 
 The [USB-IF Document Library](https://www.usb.org/documents) contains the complete
 [USB 2.0 Specification](https://www.usb.org/document-library/usb-20-specification) and additional

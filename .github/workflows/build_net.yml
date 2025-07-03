@@ -26,7 +26,7 @@ jobs:
       matrix:
         compiler: [AC6, GCC]
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout MDK-Middleware
