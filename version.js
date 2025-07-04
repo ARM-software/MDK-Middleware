@@ -1,16 +1,16 @@
 //--- list of versions‚ ---
 const versions = {
     "General": {
-        "gen_pack": "8.0.1-dev46",
+        "doc_update": "8.0.1-dev46",
         "main": "8.0.1-dev45",
         "latest": "8.0.0"
     },
     "FileSystem": {
-        "gen_pack": "8.0.2",
+        "doc_update": "8.0.2",
         "latest": "8.0.0"
     },
     "Network": {
-        "gen_pack": "8.1.0",
+        "doc_update": "8.1.0",
         "latest": "8.0.0"
     },
     "USB": {
