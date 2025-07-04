@@ -67,6 +67,7 @@ PACKCHK_DEPS="
   ARM.CMSIS-Compiler.pdsc
   ARM.CMSIS-View.pdsc
   ARM.mbedTLS.pdsc
+  Keil.ARM_Compiler.pdsc
 "
 
 # Optional: restrict fallback modes for changelog generation
