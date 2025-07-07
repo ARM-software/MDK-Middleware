@@ -1,0 +1,15 @@
+MDK Middleware Component Test Suite v1.0.0   Jul  7 2025   09:19:18 
+
+Unit Test 01: MDK Middleware: USB Device - MSC v8.0.0
+Test Case 01: CB : USBD_MSC0_Initialize                 (PASSED)
+Test Case 02: CB : USBD_MSC0_GetCacheInfo               (PASSED)
+Test Case 03: CB : USBD_MSC0_GetMediaCapacity           : Device capacity is 3781.50 MB
+                                                        (PASSED)
+Test Case 04: CB : USBD_MSC0_Write/Read                 : Write speed: 0.51 MB/s, Read speed: 0.62 MB/s
+                                                        (PASSED)
+Test Case 05: CB : USBD_MSC0_CheckMedia                 (PASSED)
+Test Case 06: CB : USBD_MSC0_Uninitialize               (PASSED)
+
+Unit Test Time:    0 min 57 sec
+Unit Test Summary: 6 Tests, 6 Executed, 6 Passed, 0 Failed.
+Unit Test Result:  PASSED

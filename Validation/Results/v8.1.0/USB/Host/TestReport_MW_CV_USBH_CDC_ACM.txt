@@ -1,0 +1,15 @@
+MDK Middleware Component Test Suite v1.0.0   Jul  7 2025   09:22:25 
+
+Unit Test 01: MDK Middleware: USB Host - CDC ACM v8.0.0
+Test Case 01: CB : USBH_CDC_ACM_Initialize              (PASSED)
+Test Case 02: API: USBH_CDC_ACM_GetDevice               (PASSED)
+Test Case 03: API: USBH_CDC_ACM_GetStatus               (PASSED)
+Test Case 04: API: USBH_CDC_ACM_Send/Receive            (PASSED)
+Test Case 05: API: USBH_CDC_ACM_Set/GetLineCoding       (PASSED)
+Test Case 06: API: USBH_CDC_ACM_SetControlLineState     (PASSED)
+Test Case 07: API: USBH_CDC_ACM_Notify                  (PASSED)
+Test Case 08: CB : USBH_CDC_ACM_Uninitialize            (PASSED)
+
+Unit Test Time:    0 min 4 sec
+Unit Test Summary: 8 Tests, 8 Executed, 8 Passed, 0 Failed.
+Unit Test Result:  PASSED

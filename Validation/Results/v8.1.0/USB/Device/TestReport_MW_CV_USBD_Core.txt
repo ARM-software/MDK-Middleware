@@ -1,0 +1,29 @@
+MDK Middleware Component Test Suite v1.0.0   Jul  7 2025   09:13:58 
+
+Unit Test 01: MDK Middleware: USB Device - Core v8.0.0
+Test Case 01: API: USBD_GetVersion                      : Reported component version 8.0.0
+                                                        (PASSED)
+Test Case 02: API: USBD_Initialize                      (PASSED)
+Test Case 03: API: USBD_Connect                         (PASSED)
+Test Case 04: API: USBD_Configured                      (PASSED)
+Test Case 05: API: USBD_GetState                        (PASSED)
+Test Case 06: API: USBD_SetSerialNumber                 (PASSED)
+Test Case 07: API: USBD_Disconnect                      (PASSED)
+Test Case 08: API: USBD_Uninitialize                    (PASSED)
+Test Case 09: CB : USBD_Device0_Initialize              (PASSED)
+Test Case 10: CB : USBD_Device0_VbusChanged             : USBD_Device0_VbusChanged(0) callback was not called, possibly driver does not support VBUS change detection
+                                                        (SKIPPED)
+Test Case 11: CB : USBD_Device0_Reset                   (PASSED)
+Test Case 12: CB : USBD_Device0_HighSpeedActivated      : USBD_Device0_HighSpeedActivated(0) callback was not called, possibly only one port is high-speed capable
+                                                        (SKIPPED)
+Test Case 13: CB : USBD_Device0_Suspended               (PASSED)
+Test Case 14: CB : USBD_Device0_Resumed                 : USBD_Device0_Resumed(0) callback was not called, possibly driver does not support resume signal detection
+                                                        (SKIPPED)
+Test Case 15: CB : USBD_Device0_ConfigurationChanged    (PASSED)
+Test Case 16: CB : USBD_Device0_EnableRemoteWakeup      (PASSED)
+Test Case 17: CB : USBD_Device0_DisableRemoteWakeup     (PASSED)
+Test Case 18: CB : USBD_Device0_Uninitialize            (PASSED)
+
+Unit Test Time:    0 min 9 sec
+Unit Test Summary: 18 Tests, 15 Executed, 15 Passed, 0 Failed.
+Unit Test Result:  PASSED

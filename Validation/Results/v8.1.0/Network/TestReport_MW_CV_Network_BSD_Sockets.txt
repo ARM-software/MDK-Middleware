@@ -1,0 +1,43 @@
+MDK Middleware Component Test Suite v1.0.0   Jul  7 2025   09:03:54 
+
+Unit Test 01: MDK Middleware: Network          v8.1.0
+Test Case 01: BSD_Initialize                            (PASSED)
+Test Case 02: BSD_SocketCreate                          (PASSED)
+Test Case 03: BSD_SocketBind                            (PASSED)
+Test Case 04: BSD_SocketListen                          (PASSED)
+Test Case 05: BSD_SocketAccept                          (PASSED)
+Test Case 06: BSD_SocketAccept_nbio                     (PASSED)
+Test Case 07: BSD_SocketConnect                         (PASSED)
+Test Case 08: BSD_SocketConnect_nbio                    (PASSED)
+Test Case 09: BSD_SocketRecv                            (PASSED)
+Test Case 10: BSD_SocketRecv_nbio                       (PASSED)
+Test Case 11: BSD_SocketRecvFrom                        (PASSED)
+Test Case 12: BSD_SocketRecvFrom_nbio                   (PASSED)
+Test Case 13: BSD_SocketRecvMsg                         (PASSED)
+Test Case 14: BSD_SocketSend                            (PASSED)
+Test Case 15: BSD_SocketSendTo                          (PASSED)
+Test Case 16: BSD_SocketSendMsg                         (PASSED)
+Test Case 17: BSD_SocketGetSockName                     (PASSED)
+Test Case 18: BSD_SocketGetPeerName                     (PASSED)
+Test Case 19: BSD_SocketGetOpt                          (PASSED)
+Test Case 20: BSD_SocketSetOpt                          (PASSED)
+Test Case 21: BSD_SocketClose                           (PASSED)
+Test Case 22: BSD_SocketIoctl                           (PASSED)
+Test Case 23: BSD_SocketSelect                          (PASSED)
+Test Case 24: BSD_GetHostByName                         (PASSED)
+Test Case 25: BSD_PingEcho                              (PASSED)
+Test Case 26: BSD_Transfer_Fixed                        (PASSED)
+Test Case 27: BSD_Transfer_Incremental                  (PASSED)
+Test Case 28: BSD_Send_Fragmented                       (PASSED)
+Test Case 29: BSD_Recv_Fragmented                       (PASSED)
+Test Case 30: BSD_Test_Speed                            (PASSED)
+Test Case 31: BSD_Concurrent_Socket                     (PASSED)
+Test Case 32: BSD_Downstream_Rate                       : Speed 3194 KB/s
+                                                        (PASSED)
+Test Case 33: BSD_Upstream_Rate                         : Speed 9528 KB/s
+                                                        (PASSED)
+Test Case 34: BSD_Uninitialize                          (PASSED)
+
+Unit Test Time:    1 min 15 sec
+Unit Test Summary: 34 Tests, 34 Executed, 34 Passed, 0 Failed.
+Unit Test Result:  PASSED
