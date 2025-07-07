@@ -2,15 +2,14 @@
 const versions = {
     "General": {
         "main": "8.0.1-dev52",
-        "doc_update": "8.0.1-dev46",
         "latest": "8.0.0"
     },
     "FileSystem": {
-        "doc_update": "8.0.2",
+        "main": "8.0.2",
         "latest": "8.0.0"
     },
     "Network": {
-        "doc_update": "8.1.0",
+        "main": "8.1.0",
         "latest": "8.0.0"
     },
     "USB": {
