@@ -10,10 +10,11 @@
     <th>Description</th>
   </tr>
   <tr>
-    <td>V8.0.1-dev</td>
+    <td>V8.1.0</td>
     <td>
       - Network Component Version 8.1.0
       - FileSystem Component Version 8.0.2
+      - USB Component Version 8.0.0 (unchanged)
     </td>
   </tr>
   <tr>
