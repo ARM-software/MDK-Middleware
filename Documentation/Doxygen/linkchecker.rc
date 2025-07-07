@@ -4,12 +4,19 @@ ignoreerrors=
     mag_sel.svg
     mag_d.svg
     mag_seld.svg
+    doc.png
+    docd.png
     ../tab_a.png
     ../tab_ad.png
-    
+    ../plus.svg
+    ../plusd.svg
+    ../minus.svg
+    ../minusd.svg
+
 [filtering]
 ignorewarnings=
     http-redirected
+
 ignore=
     ^http://my_host
     ^https://my_host
