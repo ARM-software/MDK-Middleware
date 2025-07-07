@@ -3,5 +3,5 @@ function writeHeader() {
 };
 
 function writeFooter()  {
-    document.write('Generated on Mon Jul  7 2025 07:46:26 for USB Component 8.0.0. Copyright &copy; 2025 Arm Limited (or its affiliates). All rights reserved.');
+    document.write('Generated on Mon Jul  7 2025 07:53:05 for USB Component 8.0.0. Copyright &copy; 2025 Arm Limited (or its affiliates). All rights reserved.');
 };
