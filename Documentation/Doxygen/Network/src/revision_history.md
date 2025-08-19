@@ -6,6 +6,12 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V8.1.1</td>
+      <td>
+        - added weak attribute to File System interface functions
+      </td>
+    </tr>
+    <tr>
       <td>V8.1.0</td>
       <td>
         - added support for simultaneous outgoing connections via different network interfaces
