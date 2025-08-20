@@ -8,7 +8,7 @@
     <tr>
       <td>V8.1.1</td>
       <td>
-        - added weak attribute to File System interface functions
+        - modified FS interface functions to be weakly linked, allowing user overrides
       </td>
     </tr>
     <tr>

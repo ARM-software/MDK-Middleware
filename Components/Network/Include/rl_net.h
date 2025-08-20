@@ -18,7 +18,7 @@
 /// Network component version
 #define MW_NET_VERSION_MAJOR    8
 #define MW_NET_VERSION_MINOR    1
-#define MW_NET_VERSION_PATCH    0
+#define MW_NET_VERSION_PATCH    1
 
 #ifdef __cplusplus
 extern "C"  {
