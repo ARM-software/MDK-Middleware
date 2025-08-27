@@ -14,7 +14,7 @@
     <release version="8.1.1-dev">
       Active development ...
       Network Component Version 8.1.1
-      - modified FS interface functions to be weakly linked, allowing user overrides
+      - modified File System interface functions to be weakly linked, allowing user overrides
     </release>
     <release version="7.17.0" date="2024-01-17">
       Network Component Version 7.19.0
