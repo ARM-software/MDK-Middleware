@@ -6,6 +6,12 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V8.1.1</td>
+      <td>
+        - modified File System interface functions to be weakly linked, allowing user overrides
+      </td>
+    </tr>
+    <tr>
       <td>V8.1.0</td>
       <td>
         - added support for simultaneous outgoing connections via different network interfaces
