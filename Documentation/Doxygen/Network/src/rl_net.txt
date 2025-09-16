@@ -1689,9 +1689,6 @@ The argument \a cmd specifies a command to perform on a socket. The following co
 |Command               |Description                                                       |
 |----------------------|------------------------------------------------------------------|
 |\token{FIONBIO}       |Sets the blocking or non-blocking socket I/O mode                 |
-|\token{FIO_DELAY_ACK} |Sets the delay-ack or normal mode for the stream socket           |
-|\token{FIO_KEEP_ALIVE}|Sets the keep-alive or timeout mode for the stream socket         |
-|\token{FIO_FLOW_CTRL} |Sets the receive flow-control or normal mode for the stream socket|
 
 The argument \a argp specifies a pointer to the command's parameter.
 \n For the command \b FIONBIO the argument values are:
@@ -1699,24 +1696,6 @@ The argument \a argp specifies a pointer to the command's parameter.
 |---------------|-----------------|
 |\token{0}      |Blocking mode    |
 |\token{nonzero}|Non-blocking mode|
-
-For the command \b FIO_DELAY_ACK the argument values are:
-|*argp value    |Socket mode   |Description|
-|---------------|--------------|-----------|
-|\token{0}      |Normal mode   |Waits for an ACK after each sending packet|
-|\token{nonzero}|Delay-ack mode|Eliminates the delayed acknowledge impact and improves the performance for applications sending large amount of data|
-
-For the command \b FIO_KEEP_ALIVE the argument values are:
-|*argp value    |Socket mode   |Description|
-|---------------|--------------|-----------|
-|\token{0}      |Timeout mode  |After a timeout a stream socket is disconnected|
-|\token{nonzero}|Keep-alive mode|Stream socket sends keep alive segments on timeout to keep a connection alive|
-
-For the command \b FIO_FLOW_CTRL the argument values are:
-|*argp value    |Socket mode      |Description|
-|---------------|-----------------|-----------|
-|\token{0}      |Normal mode      |Stream socket dumps excess data, if the receiving buffer is full|
-|\token{nonzero}|Flow-control mode|Stream socket controls the window size and stops the transmitter, if the receiving buffer is full|
 
 \note
 - You must call the \ref socket function before any other function calls to the BSD socket.
