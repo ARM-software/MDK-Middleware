@@ -1398,13 +1398,7 @@ BSD Client</h2>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Command   </th><th class="markdownTableHeadNone">Description    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="XML-Token">FIONBIO</span>   </td><td class="markdownTableBodyNone">Sets the blocking or non-blocking socket I/O mode    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="XML-Token">FIO_DELAY_ACK</span>   </td><td class="markdownTableBodyNone">Sets the delay-ack or normal mode for the stream socket    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="XML-Token">FIO_KEEP_ALIVE</span>   </td><td class="markdownTableBodyNone">Sets the keep-alive or timeout mode for the stream socket    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="XML-Token">FIO_FLOW_CTRL</span>   </td><td class="markdownTableBodyNone">Sets the receive flow-control or normal mode for the stream socket   </td></tr>
+<td class="markdownTableBodyNone"><span class="XML-Token">FIONBIO</span>   </td><td class="markdownTableBodyNone">Sets the blocking or non-blocking socket I/O mode   </td></tr>
 </table>
 <p>The argument <em class="arg">argp</em> specifies a pointer to the command's parameter. <br  />
  For the command <b>FIONBIO</b> the argument values are: </p><table class="markdownTable">
@@ -1414,30 +1408,6 @@ BSD Client</h2>
 <td class="markdownTableBodyNone"><span class="XML-Token">0</span>   </td><td class="markdownTableBodyNone">Blocking mode    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><span class="XML-Token">nonzero</span>   </td><td class="markdownTableBodyNone">Non-blocking mode   </td></tr>
-</table>
-<p>For the command <b>FIO_DELAY_ACK</b> the argument values are: </p><table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">*argp value   </th><th class="markdownTableHeadNone">Socket mode   </th><th class="markdownTableHeadNone">Description    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="XML-Token">0</span>   </td><td class="markdownTableBodyNone">Normal mode   </td><td class="markdownTableBodyNone">Waits for an ACK after each sending packet    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="XML-Token">nonzero</span>   </td><td class="markdownTableBodyNone">Delay-ack mode   </td><td class="markdownTableBodyNone">Eliminates the delayed acknowledge impact and improves the performance for applications sending large amount of data   </td></tr>
-</table>
-<p>For the command <b>FIO_KEEP_ALIVE</b> the argument values are: </p><table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">*argp value   </th><th class="markdownTableHeadNone">Socket mode   </th><th class="markdownTableHeadNone">Description    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="XML-Token">0</span>   </td><td class="markdownTableBodyNone">Timeout mode   </td><td class="markdownTableBodyNone">After a timeout a stream socket is disconnected    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="XML-Token">nonzero</span>   </td><td class="markdownTableBodyNone">Keep-alive mode   </td><td class="markdownTableBodyNone">Stream socket sends keep alive segments on timeout to keep a connection alive   </td></tr>
-</table>
-<p>For the command <b>FIO_FLOW_CTRL</b> the argument values are: </p><table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">*argp value   </th><th class="markdownTableHeadNone">Socket mode   </th><th class="markdownTableHeadNone">Description    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="XML-Token">0</span>   </td><td class="markdownTableBodyNone">Normal mode   </td><td class="markdownTableBodyNone">Stream socket dumps excess data, if the receiving buffer is full    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="XML-Token">nonzero</span>   </td><td class="markdownTableBodyNone">Flow-control mode   </td><td class="markdownTableBodyNone">Stream socket controls the window size and stops the transmitter, if the receiving buffer is full   </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>You must call the <a class="el" href="#gac01ac0611ef0f7d743e0eb464e7786a9">socket</a> function before any other function calls to the BSD socket.</li>
