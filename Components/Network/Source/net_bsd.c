@@ -2281,24 +2281,6 @@ inv_arg:/* Invalid argument provided */
   }
 
   /* Check command parameter */
-  switch (cmd) {
-    case FIONBIO:
-      break;
-
-    case FIO_DELAY_ACK:
-    case FIO_KEEP_ALIVE:
-    case FIO_FLOW_CTRL:
-      if (bsd_s->Type == SOCK_STREAM) {
-        break;
-      }
-      ERRORF (BSD,"Ioctl, Socket %d not STREAM type\n",sock);
-      EvrNetBSD_IoctlSocketNotStreamType (sock);
-      RETURN (BSD_ENOTSUP);
-
-    default:
-      goto inv_arg;
-  }
-
   bval = *argp;
   switch (cmd) {
     case FIONBIO:
@@ -2311,38 +2293,8 @@ inv_arg:/* Invalid argument provided */
       }
       break;
 
-    case FIO_DELAY_ACK:
-      /* Enable/disable delay-ack mode */
-      DEBUGF (BSD," %sable Delay-ack mode\n", bval ? "En" : "Dis");
-      EvrNetBSD_IoctlDelayAck (sock, bval);
-      bsd_s->Flags &= ~BSD_FLAG_DACK;
-      if (bval) {
-        bsd_s->Flags |= BSD_FLAG_DACK;
-      }
-      set_sock_type (bsd_s);
-      break;
-
-    case FIO_KEEP_ALIVE:
-      /* Enable/disable keep-alive mode. */
-      DEBUGF (BSD," %sable Keep-alive mode\n", bval ? "En" : "Dis");
-      EvrNetBSD_IoctlKeepAlive (sock, bval);
-      bsd_s->Flags &= ~BSD_FLAG_KEEP;
-      if (bval) {
-        bsd_s->Flags |= BSD_FLAG_KEEP;
-      }
-      set_sock_type (bsd_s);
-      break;
-
-    case FIO_FLOW_CTRL:
-      /* Enable/disable flow-control mode */
-      DEBUGF (BSD," %sable Flow-control mode\n", bval ? "En" : "Dis");
-      EvrNetBSD_IoctlFlowControl (sock, bval);
-      bsd_s->Flags &= ~BSD_FLAG_FLOW;
-      if (bval) {
-        bsd_s->Flags |= BSD_FLAG_FLOW;
-      }
-      set_sock_type (bsd_s);
-      break;
+    default:
+      goto inv_arg;
   }
   RETURN (0);
 

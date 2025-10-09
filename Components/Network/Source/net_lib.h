@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_lib.h
  * Purpose: Network Library Definitions
@@ -82,9 +82,6 @@
 
 /// BSD Socket ioctl commands
 #define FIONBIO             1           ///< Set mode (blocking/non-blocking)
-#define FIO_DELAY_ACK       2           ///< Set DELAY_ACK mode for stream socket
-#define FIO_KEEP_ALIVE      3           ///< Set KEEP_ALIVE mode for stream socket
-#define FIO_FLOW_CTRL       4           ///< Set FLOW_CTRL mode for stream socket
 
 #ifdef __cplusplus
 extern "C"  {

@@ -1212,7 +1212,6 @@ extern int32_t setsockopt (int32_t sock, int32_t level, int32_t optname, const c
 ///              - 0                   = Operation successful.
 ///              - BSD_ESOCK           = Invalid socket descriptor or socket not created.
 ///              - BSD_EINVAL          = Invalid parameter.
-///              - BSD_ENOTSUP         = Option not supported for this socket type.
 extern int32_t ioctlsocket (int32_t sock, long cmd, unsigned long *argp);
 
 /// \brief Check the status of one or more sockets. [\ref thread-safe]
