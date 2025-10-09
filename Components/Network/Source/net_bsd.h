@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_bsd.h
  * Purpose: Berkeley Socket API Definitions
@@ -27,8 +27,8 @@
 #define SOCK_RAW            3           // Raw protocol on the network layer
 
 /* BSD Socket Protocol */
-#define IPPROTO_TCP         1           // TCP Protocol
-#define IPPROTO_UDP         2           // UDP Protocol
+#define IPPROTO_TCP         4           // TCP Protocol
+#define IPPROTO_UDP         5           // UDP Protocol
 
 /* BSD Internet Addresses */
 #define INADDR_ANY          0x00000000  // All IP addresses accepted
@@ -50,16 +50,16 @@
 #define BSD_FLAG_IP6ONLY    0x02        // Restricted IPv6 communication only
 #define BSD_FLAG_FILTER     0x04        // Dgram:  frame filtering active
 /* Overlapping flags for Stream or Datagram socket */
-#define BSD_FLAG_TIMEOUT    0x10        // Stream: connect timeout
+#define BSD_FLAG_CONNTOUT   0x10        // Stream: connect timeout
 #define BSD_FLAG_OPEN       0x10        // Dgram:  associated UDP socket opened
-#define BSD_FLAG_DACK       0x20        // Stream: Delay-ack mode active
+#define BSD_FLAG_QUICKACK   0x20        // Stream: Quick-Ack mode active
 #define BSD_FLAG_DESTIP4    0x20        // Dgram:  receive IPv4 destination address
-#define BSD_FLAG_KEEP       0x40        // Stream: Keep-alive mode active
+#define BSD_FLAG_KEEPALIVE  0x40        // Stream: Keep-alive mode active
 #define BSD_FLAG_DESTIP6    0x40        // Dgram:  receive IPv6 destination address
-#define BSD_FLAG_FLOW       0x80        // Stream: Flow-control mode active
+#define BSD_FLAG_FLOWCTRL   0x80        // Stream: Flow-control mode active
 
-#define BSD_FLAGS_CHILD     (BSD_FLAG_KEEP     | BSD_FLAG_DACK | \
-                             BSD_FLAG_NONBLOCK | BSD_FLAG_FLOW)
+#define BSD_FLAGS_CHILD     (BSD_FLAG_KEEPALIVE | BSD_FLAG_QUICKACK | \
+                             BSD_FLAG_NONBLOCK  | BSD_FLAG_FLOWCTRL)
 
 /* BSD Events */
 #define BSD_EVT_CONNECT     0x01        // Socket connected

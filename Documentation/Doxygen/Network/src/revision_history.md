@@ -6,8 +6,9 @@
       <th>Description</th>
     </tr>
     <tr>
-      <td>V8.1.1</td>
+      <td>V8.2.0</td>
       <td>
+        - improved BSD socket control with enhanced setsockopt and getsockopt functions
         - modified File System interface functions to be weakly linked, allowing user overrides
       </td>
     </tr>

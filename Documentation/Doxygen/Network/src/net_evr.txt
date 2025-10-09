@@ -10173,6 +10173,43 @@ bound. This option must be set before the socket is bound to the address.
 */
 
 /**
+\fn __STATIC_INLINE void EvrNetBSD_SetoptQuickAck(int32_t sock, uint32_t enable)
+\details
+The event \b SetoptQuickAck is created, when the function \ref setsockopt manipulates
+the I/O mode of the socket. This option enables or disables the quick acknowledge mode
+for the stream socket. The delayed acknowledge mode is essentially the opposite of QuickAck.
+
+\b Value in the Event Recorder shows:
+  - \b sock:   BSD socket descriptor for manipulating I/O mode.
+  - \b enable: enable or disable the option (1= enable, 0= disable).
+*/
+
+/**
+\fn __STATIC_INLINE void EvrNetBSD_SetoptFlowControl(int32_t sock, uint32_t enable)
+\details
+The event \b SetoptFlowControl is created, when the function \ref setsockopt manipulates
+the I/O mode of the socket. This option enables or disables the flow-control mode for
+the stream socket.
+
+\b Value in the Event Recorder shows:
+  - \b sock:   BSD socket descriptor for manipulating I/O mode.
+  - \b enable: enable or disable the option (1= enable, 0= disable).
+*/
+
+/**
+\fn __STATIC_INLINE void EvrNetBSD_SetoptKeepIdleTimeout(int32_t sock, uint32_t timeout)
+\details
+The event \b SetoptKeepIdleTimeout is created, when the function \ref setsockopt sets
+the operating option for a BSD socket. This option assigns the socket a keep-idle timeout
+that is used when the socket is connected. When this timeout expires, the socket starts sending
+keep-alive frames if keep-alive mode is enabled; otherwise, the socket is disconnected.
+
+\b Value in the Event Recorder shows:
+  - \b sock: BSD socket descriptor for setting the option.
+  - \b tout: keep-idle timeout in seconds.
+*/
+
+/**
 \fn __STATIC_INLINE void EvrNetBSD_Getsockopt(int32_t sock, int32_t level, int32_t optname)
 \details
 The event \b Getsockopt is created, when the function \ref getsockopt retrieves the operating

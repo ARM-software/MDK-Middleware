@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <component_viewer schemaVersion="0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
-  <component name="Network" shortname="NET" version="8.1.1"/>    <!-- name and version of the component  -->
+  <component name="Network" shortname="NET" version="8.2.0"/>    <!-- name and version of the component  -->
 
   <typedefs>
     <!-- Network Library variant -->
@@ -830,6 +830,8 @@
         <enum name="SOL_SOCKET"      value="1"         info="Socket Level"/>
         <enum name="IPPROTO_IP"      value="2"         info="IPv4 Level"/>
         <enum name="IPPROTO_IPV6"    value="3"         info="IPv6 Level"/>
+        <enum name="IPPROTO_TCP"     value="4"         info="TCP Level"/>
+        <enum name="IPPROTO_UDP"     value="5"         info="UDP Level"/>
       </member>
     </typedef>
 
@@ -848,6 +850,9 @@
         <enum name="IPV6_MULTICAST_HOPS" value="0x32"  info="Multi-cast Hop limit"/>
         <enum name="IPV6_RECVDSTADDR"    value="0x33"  info="Receive destination IPv6 address"/>
         <enum name="IPV6_V6ONLY"         value="0x34"  info="Restrict to IPv6 communication only"/>
+        <enum name="TCP_QUICKACK"        value="0x41"  info="Disable delayed acknowledgement"/>
+        <enum name="TCP_FLOWCTRL"        value="0x42"  info="Enable flow control"/>
+        <enum name="TCP_KEEPIDLE"        value="0x43"  info="Timeout before sending keepalives"/>
       </member>
     </typedef>
 
@@ -2380,24 +2385,23 @@
     <event id="111+ 0xD200" level="Op"     property="SetoptIp4Ttl"              value="sock=%d[val1], ttl=%d[val2]" info="Set socket option: multicast time-to-live for IPv4"/>
     <event id="112+ 0xD200" level="Op"     property="SetoptIp4RecvDstAddr"      value="sock=%d[val1], enable=%d[val2]" info="Set socket option: receive-destination-address for IPv4"/>
     <event id="113+ 0xD200" level="Op"     property="SetoptIp6Tclass"           value="sock=%d[val1], tclass=%d[val2]" info="Set socket option: traffic class for IPv6"/>
-    <event id="114+ 0xD200" level="Op"     property="SetoptIp6HopLimit"         value="sock=%d[val1], hop_limit=%d[val2]" info="Set socket option hop limit for IPv6"/>
+    <event id="114+ 0xD200" level="Op"     property="SetoptIp6HopLimit"         value="sock=%d[val1], hop_limit=%d[val2]" info="Set socket option: hop limit for IPv6"/>
     <event id="115+ 0xD200" level="Op"     property="SetoptIp6RecvDstAddr"      value="sock=%d[val1], enable=%d[val2]" info="Set socket option: receive-destination-address for IPv6"/>
     <event id="150+ 0xD200" level="Op"     property="SetoptIp6Only"             value="sock=%d[val1], enable=%d[val2]" info="Set socket option: restrict-communication to IPv6 only"/>
     <event id="151+ 0xD200" level="Error"  property="SetoptSocketBound"         value="sock=%d[val1]" info="Setsockopt failed, socket already bound"/>
-    <event id="116+ 0xD200" level="API"    property="Getsockopt"                value="sock=%d[val1], level=%E[val2 >> 4, BSD_Level:id], name=%E[val2, BSD_Optname:id]" info="Get socket options"/>
-    <event id="117+ 0xD200" level="Error"  property="GetoptSocketNotValid"      value="sock=%d[val1]" info="Getsockopt failed, socket not valid"/>
-    <event id="118+ 0xD200" level="Error"  property="GetoptInvalidParameter"    value="sock=%d[val1]" info="Getsockopt failed, invalid parameter provided"/>
-    <event id="119+ 0xD200" level="Error"  property="GetoptSocketNotCreated"    value="sock=%d[val1]" info="Getsockopt failed, socket not created"/>
-    <event id="120+ 0xD200" level="Error"  property="GetoptOptionNotSupported"  value="sock=%d[val1], level=%E[val2 >> 4, BSD_Level:id], name=%E[val2, BSD_Optname:id]" info="Getsockopt failed, option not supported by the protocol"/>
-    <event id="121+ 0xD200" level="API"    property="Ioctlsocket"               value="sock=%d[val1]" info="Ioctl socket"/>
-    <event id="122+ 0xD200" level="Error"  property="IoctlSocketNotValid"       value="sock=%d[val1]" info="Ioctlsocket failed, socket not valid"/>
-    <event id="123+ 0xD200" level="Error"  property="IoctlInvalidParameter"     value="sock=%d[val1]" info="Ioctlsocket failed, invalid parameter provided"/>
-    <event id="124+ 0xD200" level="Error"  property="IoctlSocketNotCreated"     value="sock=%d[val1]" info="Ioctlsocket failed, socket not created"/>
-    <event id="125+ 0xD200" level="Error"  property="IoctlSocketNotStreamType"  value="sock=%d[val1]" info="Ioctlsocket failed, socket not stream type"/>
-    <event id="126+ 0xD200" level="Op"     property="IoctlNonBlocking"          value="sock=%d[val1], enable=%d[val2]" info="Ioctl socket set blocking mode"/>
-    <event id="127+ 0xD200" level="Op"     property="IoctlDelayAck"             value="sock=%d[val1], enable=%d[val2]" info="Ioctl socket set delayed-acknowledge mode"/>
-    <event id="128+ 0xD200" level="Op"     property="IoctlKeepAlive"            value="sock=%d[val1], enable=%d[val2]" info="Ioctl socket set keep-alive mode"/>
-    <event id="129+ 0xD200" level="Op"     property="IoctlFlowControl"          value="sock=%d[val1], enable=%d[val2]" info="Ioctl socket set flow-control mode"/>
+    <event id="116+ 0xD200" level="Op"     property="SetoptQuickAck"            value="sock=%d[val1], enable=%d[val2]" info="Set socket option: quick-acknowledge mode"/>
+    <event id="117+ 0xD200" level="Op"     property="SetoptFlowControl"         value="sock=%d[val1], enable=%d[val2]" info="Set socket option: flow-control mode"/>
+    <event id="118+ 0xD200" level="Op"     property="SetoptKeepIdleTimeout"     value="sock=%d[val1], tout=%d[val2]s"  info="Set socket option: keep-idle timeout"/>
+    <event id="119+ 0xD200" level="API"    property="Getsockopt"                value="sock=%d[val1], level=%E[val2 >> 4, BSD_Level:id], name=%E[val2, BSD_Optname:id]" info="Get socket options"/>
+    <event id="120+ 0xD200" level="Error"  property="GetoptSocketNotValid"      value="sock=%d[val1]" info="Getsockopt failed, socket not valid"/>
+    <event id="121+ 0xD200" level="Error"  property="GetoptInvalidParameter"    value="sock=%d[val1]" info="Getsockopt failed, invalid parameter provided"/>
+    <event id="122+ 0xD200" level="Error"  property="GetoptSocketNotCreated"    value="sock=%d[val1]" info="Getsockopt failed, socket not created"/>
+    <event id="123+ 0xD200" level="Error"  property="GetoptOptionNotSupported"  value="sock=%d[val1], level=%E[val2 >> 4, BSD_Level:id], name=%E[val2, BSD_Optname:id]" info="Getsockopt failed, option not supported by the protocol"/>
+    <event id="124+ 0xD200" level="API"    property="Ioctlsocket"               value="sock=%d[val1]" info="Ioctl socket"/>
+    <event id="125+ 0xD200" level="Error"  property="IoctlSocketNotValid"       value="sock=%d[val1]" info="Ioctlsocket failed, socket not valid"/>
+    <event id="126+ 0xD200" level="Error"  property="IoctlInvalidParameter"     value="sock=%d[val1]" info="Ioctlsocket failed, invalid parameter provided"/>
+    <event id="127+ 0xD200" level="Error"  property="IoctlSocketNotCreated"     value="sock=%d[val1]" info="Ioctlsocket failed, socket not created"/>
+    <event id="128+ 0xD200" level="Op"     property="IoctlNonBlocking"          value="sock=%d[val1], enable=%d[val2]" info="Ioctl socket set blocking mode"/>
     <event id="130+ 0xD200" level="Op"     property="CbfuncTcpEvent"            value="sock=%d[val1], event=%E[val2, TCP_Event:id]" info="Callback notification of TCP event"/>
     <event id="131+ 0xD200" level="Op"     property="CbfuncTcpQueueAdd"         value="sock=%d[val1], len=%d[val2]" info="Received TCP data added to socket queue"/>
     <event id="132+ 0xD200" level="Error"  property="CbfuncTcpNoMemory"         value="sock=%d[val1]" info="Memory allocation to buffer received TCP data failed"/>

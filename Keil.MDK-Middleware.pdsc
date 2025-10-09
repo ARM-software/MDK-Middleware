@@ -11,9 +11,10 @@
     </licenseSet>
   </licenseSets>
   <releases>
-    <release version="8.1.1-dev">
+    <release version="8.2.0-dev">
       Active development ...
-      Network Component Version 8.1.1
+      Network Component Version 8.2.0
+      - improved BSD socket control with enhanced setsockopt and getsockopt functions
       - modified File System interface functions to be weakly linked, allowing user overrides
     </release>
     <release version="7.17.0" date="2024-01-17">
@@ -682,7 +683,7 @@
   <components>
 
     <!-- Network (MDK) -->
-    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.1.1">
+    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.2.0">
       <description>IPv4/IPv6 Networking using Ethernet or Serial protocols</description>
       <doc>Documentation/html/Network/index.html</doc>
       <component Cgroup="CORE" condition="CMSIS Core with RTOS">

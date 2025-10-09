@@ -17,8 +17,8 @@
 
 /// Network component version
 #define MW_NET_VERSION_MAJOR    8
-#define MW_NET_VERSION_MINOR    1
-#define MW_NET_VERSION_PATCH    1
+#define MW_NET_VERSION_MINOR    2
+#define MW_NET_VERSION_PATCH    0
 
 #ifdef __cplusplus
 extern "C"  {
@@ -167,8 +167,8 @@ typedef uint32_t (*netTCP_cb_t)(int32_t socket, netTCP_Event event, const NET_AD
 #define SOCK_DGRAM              2       ///< Datagram Socket (Connectionless)
 
 /// BSD Socket Protocol.
-#define IPPROTO_TCP             1       ///< TCP Protocol
-#define IPPROTO_UDP             2       ///< UDP Protocol
+#define IPPROTO_TCP             4       ///< TCP Protocol
+#define IPPROTO_UDP             5       ///< UDP Protocol
 
 /// BSD Internet Addresses IPv4.
 #define INADDR_ANY              0x00000000  ///< All IP addresses accepted
@@ -188,6 +188,8 @@ typedef uint32_t (*netTCP_cb_t)(int32_t socket, netTCP_Event event, const NET_AD
 #define SOL_SOCKET              1       ///< Socket Level
 #define IPPROTO_IP              2       ///< IPv4 Level
 #define IPPROTO_IPV6            3       ///< IPv6 Level
+#define IPPROTO_TCP             4       ///< TCP Level
+#define IPPROTO_UDP             5       ///< UDP Level
 
 /// BSD Socket options.
 #define SO_KEEPALIVE            1       ///< Keep Alive
@@ -206,6 +208,11 @@ typedef uint32_t (*netTCP_cb_t)(int32_t socket, netTCP_Event event, const NET_AD
 #define IPV6_MULTICAST_HOPS     2       ///< Multi-cast Hop Limit
 #define IPV6_RECVDSTADDR        3       ///< Receive destination IPv6 address
 #define IPV6_V6ONLY             4       ///< Restrict to IPv6 communications only (default on)
+
+/// BSD Socket TCP options.
+#define TCP_QUICKACK            1       ///< Disable delayed acknowledgements
+#define TCP_FLOWCTRL            2       ///< Enable flow control
+#define TCP_KEEPIDLE            3       ///< Timeout before sending keepalives (in seconds)
 
 /// BSD Socket Error codes.
 #define BSD_ERROR               (-1)    ///< Unspecified error
@@ -1153,6 +1160,7 @@ extern int32_t getsockname (int32_t sock, SOCKADDR *name, int32_t *namelen);
 ///                              - SOL_SOCKET   = Socket level.
 ///                              - IPPROTO_IP   = IPv4 protocol level.
 ///                              - IPPROTO_IPV6 = IPv6 protocol level.
+///                              - IPPROTO_TCP  = TCP protocol level.
 /// \param[in]     optname       socket option for which the value is to be retrieved:
 ///                              - SO_TYPE             = Type of a socket.
 ///                              - SO_KEEPALIVE        = Keep Alive.
@@ -1166,6 +1174,9 @@ extern int32_t getsockname (int32_t sock, SOCKADDR *name, int32_t *namelen);
 ///                              - IPV6_MULTICAST_HOPS = Multi-cast Hop Limit.
 ///                              - IPV6_RECVDSTADDR    = Receive Destination IPv6 Address.
 ///                              - IPV6_V6ONLY         = Restrict to IPv6 communications only.
+///                              - TCP_QUICKACK        = Disable delayed acknowledgements.
+///                              - TCP_FLOWCTRL        = Flow Control.
+///                              - TCP_KEEPIDLE        = Timeout for Keep Alive.
 /// \param[out]    optval        pointer to the buffer that will receive the option value.
 /// \param[in,out] optlen        input length of buffer, return length of the data.
 /// \return      status information:
@@ -1181,6 +1192,7 @@ extern int32_t getsockopt (int32_t sock, int32_t level, int32_t optname, char *o
 ///                              - SOL_SOCKET   = Socket level.
 ///                              - IPPROTO_IP   = IPv4 protocol level.
 ///                              - IPPROTO_IPV6 = IPv6 protocol level.
+///                              - IPPROTO_TCP  = TCP protocol level.
 /// \param[in]     optname       socket option for which the value is to be set:
 ///                              - SO_KEEPALIVE        = Keep Alive.
 ///                              - SO_RCVTIMEO         = Timeout for blocking receive (in ms).
@@ -1193,6 +1205,9 @@ extern int32_t getsockopt (int32_t sock, int32_t level, int32_t optname, char *o
 ///                              - IPV6_MULTICAST_HOPS = Multi-cast Hop Limit.
 ///                              - IPV6_RECVDSTADDR    = Receive Destination IPv6 Address.
 ///                              - IPV6_V6ONLY         = Restrict to IPv6 communications only.
+///                              - TCP_QUICKACK        = Disable delayed acknowledgements.
+///                              - TCP_FLOWCTRL        = Flow Control.
+///                              - TCP_KEEPIDLE        = Timeout for Keep Alive.
 /// \param[in]     optval        pointer to the buffer containing the option value.
 /// \param[in]     optlen        size of the buffer containing the option value.
 /// \return      status information:
