@@ -164,7 +164,7 @@ inv_arg:/* Invalid argument provided */
       }
       bsd_s->Family   = family & 0xFF;
       bsd_s->Type     = type & 0xFF;
-      bsd_s->Flags    = (family == AF_INET6)  ? BSD_FLAG_IP6ONLY  : 0;
+      bsd_s->Flags    = BSD_FLAG_QUICKACK | ((family == AF_INET6)  ? BSD_FLAG_IP6ONLY  : 0);
       bsd_s->Tos      = (type == SOCK_STREAM) ? TCP_TOS_NORMAL    : UDP_TOS_NORMAL;
       bsd_s->TClass   = (type == SOCK_STREAM) ? TCP_TCLASS_NORMAL : UDP_TCLASS_NORMAL;
       bsd_s->RecvTout = bsd->RecvTout;
@@ -271,6 +271,7 @@ inv_arg:
 */
 int32_t listen (int32_t sock, int32_t backlog) {
   NET_BSD_INFO *srv_s,*bsd_s;
+  uint32_t idle_tout,netif_id;
   int32_t i,sck;
 
   START_LOCK(int32_t);
@@ -314,7 +315,13 @@ int32_t listen (int32_t sock, int32_t backlog) {
     RETURN (BSD_EINVAL);
   }
 
-  /* Server socket does not need assigned TCP socket */
+  /* Fetch socket idle timeout */
+  idle_tout = net_tcp_get_option (srv_s->Socket, netTCP_OptionTimeout);
+
+  /* Fetch network interface */
+  netif_id  = net_tcp_get_option (srv_s->Socket, netTCP_OptionInterface);
+
+  /* Server socket does not require a native TCP socket */
   net_tcp_release_socket (srv_s->Socket);
   srv_s->State  = BSD_STATE_SERVER;
   srv_s->Socket = 0;
@@ -335,6 +342,12 @@ int32_t listen (int32_t sock, int32_t backlog) {
       sck = net_tcp_get_socket (bsd_cb_tcp);
       if (sck < 0) sck = 0;
       bsd_s->Socket   = sck & 0xFF;
+      /* Update child socket idle timeout */
+      net_tcp_set_option (bsd_s->Socket, netTCP_OptionTimeout, idle_tout);
+      /* Update assigned network interface */
+      if (netif_id) {
+        net_tcp_set_option (bsd_s->Socket, netTCP_OptionInterface, netif_id);
+      }
       /* If listen fails here, will be restarted in net_bsd_socket_run() */
       net_tcp_listen (bsd_s->Socket, bsd_s->LocHost.port);
       if (--backlog == 0) {
@@ -567,7 +580,7 @@ inv_arg:
   }
   if (evt & BSD_EVT_CLOSE) {
 closed:/* A socket has been closed */
-    if (bsd_s->Flags & BSD_FLAG_TIMEOUT) {
+    if (bsd_s->Flags & BSD_FLAG_CONNTOUT) {
       /* Timeout, target not responding */
       ERRORF (BSD,"Connect, Socket %d timeout\n",sock);
       EvrNetBSD_ConnectStreamTimeout (sock);
@@ -1184,7 +1197,7 @@ closed:/* A socket has been closed */
         /* End of list or user buffer full */
         if (!(flags & MSG_PEEK)) {
           bsd_s->buf_list = netbuf;
-          if ((netbuf == NULL) && (bsd_s->Flags & BSD_FLAG_FLOW)) {
+          if ((netbuf == NULL) && (bsd_s->Flags & BSD_FLAG_FLOWCTRL)) {
             /* Flow-control enabled and no data, reset receive window */
             net_tcp_reset_window (bsd_s->Socket);
           }
@@ -1858,13 +1871,16 @@ not_supp:   ERRORF (BSD,"Setsockopt, Socket %d opt not supported\n",sock);
             EvrNetBSD_SetoptOptionNotSupported (sock, level, optname);
             RETURN (BSD_ENOTSUP);
           }
-          bsd_s->Flags &= ~BSD_FLAG_KEEP;
+          bsd_s->Flags &= ~BSD_FLAG_KEEPALIVE;
           if (bval) {
-            bsd_s->Flags |= BSD_FLAG_KEEP;
+            bsd_s->Flags |= BSD_FLAG_KEEPALIVE;
             bval = 1;
           }
           DEBUGF (BSD," %sable Keep-alive mode\n", bval ? "En" : "Dis");
           EvrNetBSD_SetoptKeepAlive (sock, bval);
+          if (bsd_s->State == BSD_STATE_SERVER) {
+            break;
+          }
           net_tcp_set_option (bsd_s->Socket, netTCP_OptionKeepAlive, bval);
           break;
 
@@ -1936,11 +1952,10 @@ not_supp:   ERRORF (BSD,"Setsockopt, Socket %d opt not supported\n",sock);
           DEBUGF (BSD," IP4-TOS=%d\n", bval);
           EvrNetBSD_SetoptIp4Tos (sock, bval & 0xFF);
           bsd_s->Tos = bval & 0xFF;
-          if (bsd_s->Socket == 0) {
-            /* Stream server socket */
-            break;
-          }
           if (bsd_s->Type == SOCK_STREAM) {
+            if (bsd_s->State == BSD_STATE_SERVER) {
+              break;
+            }
             net_tcp_set_option (bsd_s->Socket, netTCP_OptionTOS, bval & 0xFF);
             break;
           }
@@ -1988,11 +2003,10 @@ not_supp:   ERRORF (BSD,"Setsockopt, Socket %d opt not supported\n",sock);
           DEBUGF (BSD," IP6-TrafficClass=%d\n", bval);
           EvrNetBSD_SetoptIp6Tclass (sock, bval & 0xFF);
           bsd_s->TClass = bval & 0xFF;
-          if (bsd_s->Socket == 0) {
-            /* Stream server socket */
-            break;
-          }
           if (bsd_s->Type == SOCK_STREAM) {
+            if (bsd_s->State == BSD_STATE_SERVER) {
+              break;
+            }
             net_tcp_set_option (bsd_s->Socket, netTCP_OptionTrafficClass, bval & 0xFF);
             break;
           }
@@ -2036,6 +2050,56 @@ not_supp:   ERRORF (BSD,"Setsockopt, Socket %d opt not supported\n",sock);
           }
           DEBUGF (BSD," %sable IP6-Only\n", bval ? "En" : "Dis");
           EvrNetBSD_SetoptIp6Only (sock, bval);
+          break;
+
+        default:
+          goto inv_arg;
+      }
+    case IPPROTO_TCP:
+      /* TCP protocol level */
+      if (bsd_s->Type != SOCK_STREAM) {
+        goto not_supp;
+      }
+      switch (optname) {
+        case TCP_QUICKACK:
+          /* Enable/disable Quick-Ack mode */
+          bsd_s->Flags &= ~BSD_FLAG_QUICKACK;
+          if (bval) {
+            bsd_s->Flags |= BSD_FLAG_QUICKACK;
+            bval = 1;
+          }
+          DEBUGF (BSD," %sable Quick-Ack mode\n", bval ? "En" : "Dis");
+          EvrNetBSD_SetoptQuickAck (sock, bval);
+          if (bsd_s->State == BSD_STATE_SERVER) {
+            break;
+          }
+          /* DACK is essentially the opposite of QUICKACK */
+          net_tcp_set_option (bsd_s->Socket, netTCP_OptionDelayedACK, bval^1);
+          break;
+
+        case TCP_FLOWCTRL:
+          /* Enable/disable Flow-Control mode */
+          bsd_s->Flags &= ~BSD_FLAG_FLOWCTRL;
+          if (bval) {
+            bsd_s->Flags |= BSD_FLAG_FLOWCTRL;
+            bval = 1;
+          }
+          DEBUGF (BSD," %sable Flow-Control mode\n", bval ? "En" : "Dis");
+          EvrNetBSD_SetoptFlowControl (sock, bval);
+          if (bsd_s->State == BSD_STATE_SERVER) {
+            break;
+          }
+          net_tcp_set_option (bsd_s->Socket, netTCP_OptionFlowControl, bval);
+          break;
+
+        case TCP_KEEPIDLE:
+          /* Set Keep-Idle timeout */
+          DEBUGF (BSD," KeepIdle=%ds\n", bval);
+          EvrNetBSD_SetoptKeepIdleTimeout (sock, bval);
+          if (bsd_s->State == BSD_STATE_SERVER) {
+            goto inv_arg;
+          }
+          net_tcp_set_option (bsd_s->Socket, netTCP_OptionTimeout, bval);
           break;
 
         default:
@@ -2105,7 +2169,7 @@ not_supp:   ERRORF (BSD,"Getsockopt, Socket %d opt not supported\n",sock);
             EvrNetBSD_GetoptOptionNotSupported (sock, level, optname);
             RETURN (BSD_ENOTSUP);
           }
-          retv = (bsd_s->Flags & BSD_FLAG_KEEP) ? 1 : 0;
+          retv = (bsd_s->Flags & BSD_FLAG_KEEPALIVE) ? 1 : 0;
           break;
 
         case SO_RCVTIMEO:
@@ -2126,6 +2190,9 @@ not_supp:   ERRORF (BSD,"Getsockopt, Socket %d opt not supported\n",sock);
         case SO_BINDTODEVICE:
           /* Bound network interface */
           if (bsd_s->Type == SOCK_STREAM) {
+            if (bsd_s->State == BSD_STATE_SERVER) {
+              goto inv_arg;
+            }
             retv = net_tcp_get_option (bsd_s->Socket, netTCP_OptionInterface);
             break;
           }
@@ -2204,6 +2271,32 @@ not_supp:   ERRORF (BSD,"Getsockopt, Socket %d opt not supported\n",sock);
       }
       break;
 #endif
+
+    case IPPROTO_TCP:
+      /* TCP protocol level */
+      if (bsd_s->Type != SOCK_STREAM) {
+        goto not_supp;
+      }
+      switch (optname) {
+        case TCP_QUICKACK:
+          retv = (bsd_s->Flags & BSD_FLAG_QUICKACK) ? 1 : 0;
+          break;
+
+        case TCP_FLOWCTRL:
+          retv = (bsd_s->Flags & BSD_FLAG_FLOWCTRL) ? 1 : 0;
+          break;
+
+        case TCP_KEEPIDLE:
+          if (bsd_s->State == BSD_STATE_SERVER) {
+            goto inv_arg;
+          }
+          retv = net_tcp_get_option (bsd_s->Socket, netTCP_OptionTimeout);
+          break;
+
+        default:
+          goto inv_arg;
+      }
+      break;
 
     default:
       goto inv_arg;
@@ -2502,7 +2595,7 @@ static uint32_t bsd_cb_tcp (int32_t socket, netTCP_Event event, const NET_ADDR *
       if (buf != NULL) {
         /* Non-null on net_tcp_connect() timeout */
         /* Timeout signalled only in client mode */
-        bsd_s->Flags |= BSD_FLAG_TIMEOUT;
+        bsd_s->Flags |= BSD_FLAG_CONNTOUT;
       }
       __FALLTHROUGH;
 
@@ -2989,13 +3082,14 @@ static void set_sock_type (NET_BSD_INFO *bsd_s) {
   uint32_t ip_opt;
   uint8_t  type = 0x00;
 
-  if (bsd_s->Flags & BSD_FLAG_DACK) {
+  /* DACK is essentially the opposite of QUICKACK */
+  if (!(bsd_s->Flags & BSD_FLAG_QUICKACK)) {
     type |= TCP_TYPE_DELAY_ACK;
   }
-  if (bsd_s->Flags & BSD_FLAG_KEEP) {
+  if (bsd_s->Flags & BSD_FLAG_KEEPALIVE) {
     type |= TCP_TYPE_KEEP_ALIVE;
   }
-  if (bsd_s->Flags & BSD_FLAG_FLOW) {
+  if (bsd_s->Flags & BSD_FLAG_FLOWCTRL) {
     type |= TCP_TYPE_FLOW_CTRL;
   }
   ip_opt = (uint32_t)bsd_s->TClass << 8 | bsd_s->Tos;

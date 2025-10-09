@@ -11118,16 +11118,20 @@ typedef struct evr_addr {
 #define EvtNetBSD_SetoptIp6RecvDstAddr      EventID (EventLevelOp,    EvtNetBSD,115)
 #define EvtNetBSD_SetoptIp6Only             EventID (EventLevelOp,    EvtNetBSD,150)
 #define EvtNetBSD_SetoptSocketBound         EventID (EventLevelError, EvtNetBSD,151)
-#define EvtNetBSD_Getsockopt                EventID (EventLevelAPI,   EvtNetBSD,116)
-#define EvtNetBSD_GetoptSocketNotValid      EventID (EventLevelError, EvtNetBSD,117)
-#define EvtNetBSD_GetoptInvalidParameter    EventID (EventLevelError, EvtNetBSD,118)
-#define EvtNetBSD_GetoptSocketNotCreated    EventID (EventLevelError, EvtNetBSD,119)
-#define EvtNetBSD_GetoptOptionNotSupported  EventID (EventLevelError, EvtNetBSD,120)
-#define EvtNetBSD_Ioctlsocket               EventID (EventLevelAPI,   EvtNetBSD,121)
-#define EvtNetBSD_IoctlSocketNotValid       EventID (EventLevelError, EvtNetBSD,122)
-#define EvtNetBSD_IoctlInvalidParameter     EventID (EventLevelError, EvtNetBSD,123)
-#define EvtNetBSD_IoctlSocketNotCreated     EventID (EventLevelError, EvtNetBSD,124)
-#define EvtNetBSD_IoctlNonBlocking          EventID (EventLevelOp,    EvtNetBSD,126)
+#define EvtNetBSD_SetoptQuickAck            EventID (EventLevelOp,    EvtNetBSD,116)
+#define EvtNetBSD_SetoptFlowControl         EventID (EventLevelOp,    EvtNetBSD,117)
+#define EvtNetBSD_SetoptKeepIdleTimeout     EventID (EventLevelOp,    EvtNetBSD,118)
+#define EvtNetBSD_Getsockopt                EventID (EventLevelAPI,   EvtNetBSD,119)
+#define EvtNetBSD_GetoptSocketNotValid      EventID (EventLevelError, EvtNetBSD,120)
+#define EvtNetBSD_GetoptInvalidParameter    EventID (EventLevelError, EvtNetBSD,121)
+#define EvtNetBSD_GetoptSocketNotCreated    EventID (EventLevelError, EvtNetBSD,122)
+#define EvtNetBSD_GetoptOptionNotSupported  EventID (EventLevelError, EvtNetBSD,123)
+#define EvtNetBSD_Ioctlsocket               EventID (EventLevelAPI,   EvtNetBSD,124)
+#define EvtNetBSD_IoctlSocketNotValid       EventID (EventLevelError, EvtNetBSD,125)
+#define EvtNetBSD_IoctlInvalidParameter     EventID (EventLevelError, EvtNetBSD,126)
+#define EvtNetBSD_IoctlSocketNotCreated     EventID (EventLevelError, EvtNetBSD,127)
+#define EvtNetBSD_IoctlNonBlocking          EventID (EventLevelOp,    EvtNetBSD,128)
+// Gap
 #define EvtNetBSD_CbfuncTcpEvent            EventID (EventLevelOp,    EvtNetBSD,130)
 #define EvtNetBSD_CbfuncTcpQueueAdd         EventID (EventLevelOp,    EvtNetBSD,131)
 #define EvtNetBSD_CbfuncTcpNoMemory         EventID (EventLevelError, EvtNetBSD,132)
@@ -12709,6 +12713,51 @@ typedef struct evr_addr {
   }
 #else
   #define EvrNetBSD_SetoptSocketBound(sock)
+#endif
+
+/**
+  \brief  Event on BSD \ref setsockopt enable TCP quick-ack mode (Op)
+  \param  sock          socket descriptor
+  \param  enable        quick-ack state value
+                         - 0: disable
+                         - 1: enable
+ */
+#ifdef Network_Debug_EVR
+  __STATIC_INLINE void EvrNetBSD_SetoptQuickAck(int32_t sock, uint32_t enable) {
+    if (enable) enable = 1;
+    EventRecord2 (EvtNetBSD_SetoptQuickAck, (uint32_t)sock, enable);
+  }
+#else
+  #define EvrNetBSD_SetoptQuickAck(sock, enable)
+#endif
+
+/**
+  \brief  Event on BSD \ref setsockopt enable TCP flow-control mode (Op)
+  \param  sock          socket descriptor
+  \param  enable        flow-control state value
+                         - 0: disable
+                         - 1: enable
+ */
+#ifdef Network_Debug_EVR
+  __STATIC_INLINE void EvrNetBSD_SetoptFlowControl(int32_t sock, uint32_t enable) {
+    if (enable) enable = 1;
+    EventRecord2 (EvtNetBSD_SetoptFlowControl, (uint32_t)sock, enable);
+  }
+#else
+  #define EvrNetBSD_SetoptFlowControl(sock, enable)
+#endif
+
+/**
+  \brief  Event on BSD \ref setsockopt set TCP keep-idle timeout (Op)
+  \param  sock          socket descriptor
+  \param  timeout       keep-idle timeout in seconds
+ */
+#ifdef Network_Debug_EVR
+  __STATIC_INLINE void EvrNetBSD_SetoptKeepIdleTimeout(int32_t sock, uint32_t timeout) {
+    EventRecord2 (EvtNetBSD_SetoptKeepIdleTimeout, (uint32_t)sock, timeout);
+  }
+#else
+  #define EvrNetBSD_SetoptKeepIdleTimeout(sock, timeout)
 #endif
 
 /**
