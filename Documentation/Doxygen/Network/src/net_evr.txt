@@ -10270,60 +10270,11 @@ manipulate the I/O mode of the socket because the required socket is not created
 */
 
 /**
-\fn __STATIC_INLINE void EvrNetBSD_IoctlSocketNotStreamType(int32_t sock)
-\details
-The event \b IoctlSocketNotStreamType is created, when the function \ref ioctlsocket can not
-manipulate the I/O mode of the socket because the required socket is not stream socket.
-
-This event is generated when an error occurs while using the \e legacy socket control for
-stream socket.
-
-\b Value in the Event Recorder shows:
-  - \b sock: BSD socket descriptor for manipulating I/O mode.
-*/
-
-/**
 \fn __STATIC_INLINE void EvrNetBSD_IoctlNonBlocking(int32_t sock, uint32_t enable)
 \details
 The event \b IoctlNonBlocking is created, when the function \ref ioctlsocket manipulates
 the I/O mode of the socket. This option enables or disables the non-blocking I/O mode of
 the socket.
-
-\b Value in the Event Recorder shows:
-  - \b sock:   BSD socket descriptor for manipulating I/O mode.
-  - \b enable: enable or disable the option (1= enable, 0= disable).
-*/
-
-/**
-\fn __STATIC_INLINE void EvrNetBSD_IoctlDelayAck(int32_t sock, uint32_t enable)
-\details
-The event \b IoctlDelayAck is created, when the function \ref ioctlsocket manipulates
-the I/O mode of the socket. This is the \e legacy way for enabling or disabling the delayed
-acknowledge mode for the stream socket.
-
-\b Value in the Event Recorder shows:
-  - \b sock:   BSD socket descriptor for manipulating I/O mode.
-  - \b enable: enable or disable the option (1= enable, 0= disable).
-*/
-
-/**
-\fn __STATIC_INLINE void EvrNetBSD_IoctlKeepAlive(int32_t sock, uint32_t enable)
-\details
-The event \b IoctlKeepAlive is created, when the function \ref ioctlsocket manipulates
-the I/O mode of the socket. This is the \e legacy way for enabling or disabling the
-keepalive mode for the stream socket.
-
-\b Value in the Event Recorder shows:
-  - \b sock:   BSD socket descriptor for manipulating I/O mode.
-  - \b enable: enable or disable the option (1= enable, 0= disable).
-*/
-
-/**
-\fn __STATIC_INLINE void EvrNetBSD_IoctlFlowControl(int32_t sock, uint32_t enable)
-\details
-The event \b IoctlFlowControl is created, when the function \ref ioctlsocket manipulates
-the I/O mode of the socket. This is the \e legacy way for enabling or disabling the
-flow-control mode for the stream socket.
 
 \b Value in the Event Recorder shows:
   - \b sock:   BSD socket descriptor for manipulating I/O mode.

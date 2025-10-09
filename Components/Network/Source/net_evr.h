@@ -11127,11 +11127,7 @@ typedef struct evr_addr {
 #define EvtNetBSD_IoctlSocketNotValid       EventID (EventLevelError, EvtNetBSD,122)
 #define EvtNetBSD_IoctlInvalidParameter     EventID (EventLevelError, EvtNetBSD,123)
 #define EvtNetBSD_IoctlSocketNotCreated     EventID (EventLevelError, EvtNetBSD,124)
-#define EvtNetBSD_IoctlSocketNotStreamType  EventID (EventLevelError, EvtNetBSD,125)
 #define EvtNetBSD_IoctlNonBlocking          EventID (EventLevelOp,    EvtNetBSD,126)
-#define EvtNetBSD_IoctlDelayAck             EventID (EventLevelOp,    EvtNetBSD,127)
-#define EvtNetBSD_IoctlKeepAlive            EventID (EventLevelOp,    EvtNetBSD,128)
-#define EvtNetBSD_IoctlFlowControl          EventID (EventLevelOp,    EvtNetBSD,129)
 #define EvtNetBSD_CbfuncTcpEvent            EventID (EventLevelOp,    EvtNetBSD,130)
 #define EvtNetBSD_CbfuncTcpQueueAdd         EventID (EventLevelOp,    EvtNetBSD,131)
 #define EvtNetBSD_CbfuncTcpNoMemory         EventID (EventLevelError, EvtNetBSD,132)
@@ -12830,18 +12826,6 @@ typedef struct evr_addr {
 #endif
 
 /**
-  \brief  Event on BSD \ref ioctlsocket control failed, socket not stream type (Error)
-  \param  sock          socket descriptor
- */
-#ifdef Network_Debug_EVR
-  __STATIC_INLINE void EvrNetBSD_IoctlSocketNotStreamType(int32_t sock) {
-    EventRecord2 (EvtNetBSD_IoctlSocketNotStreamType, (uint32_t)sock, 0);
-  }
-#else
-  #define EvrNetBSD_IoctlSocketNotStreamType(sock)
-#endif
-
-/**
   \brief  Event on BSD \ref ioctlsocket enable non-blocking mode (Op)
   \param  sock          socket descriptor
   \param  enable        non-blocking state value
@@ -12855,54 +12839,6 @@ typedef struct evr_addr {
   }
 #else
   #define EvrNetBSD_IoctlNonBlocking(sock, enable)
-#endif
-
-/**
-  \brief  Event on BSD \ref ioctlsocket enable TCP delay-ack mode (Op)
-  \param  sock          socket descriptor
-  \param  enable        delay-ack state value
-                         - 0: disable
-                         - 1: enable
- */
-#ifdef Network_Debug_EVR
-  __STATIC_INLINE void EvrNetBSD_IoctlDelayAck(int32_t sock, uint32_t enable) {
-    if (enable) enable = 1;
-    EventRecord2 (EvtNetBSD_IoctlDelayAck, (uint32_t)sock, enable);
-  }
-#else
-  #define EvrNetBSD_IoctlDelayAck(sock, enable)
-#endif
-
-/**
-  \brief  Event on BSD \ref ioctlsocket enable TCP keep-alive mode (Op)
-  \param  sock          socket descriptor
-  \param  enable        keep-alive state value
-                         - 0: disable
-                         - 1: enable
- */
-#ifdef Network_Debug_EVR
-  __STATIC_INLINE void EvrNetBSD_IoctlKeepAlive(int32_t sock, uint32_t enable) {
-    if (enable) enable = 1;
-    EventRecord2 (EvtNetBSD_IoctlKeepAlive, (uint32_t)sock, enable);
-  }
-#else
-  #define EvrNetBSD_IoctlKeepAlive(sock, enable)
-#endif
-
-/**
-  \brief  Event on BSD \ref ioctlsocket enable TCP flow-control mode (Op)
-  \param  sock          socket descriptor
-  \param  enable        flow-control state value
-                         - 0: disable
-                         - 1: enable
- */
-#ifdef Network_Debug_EVR
-  __STATIC_INLINE void EvrNetBSD_IoctlFlowControl(int32_t sock, uint32_t enable) {
-    if (enable) enable = 1;
-    EventRecord2 (EvtNetBSD_IoctlFlowControl, (uint32_t)sock, enable);
-  }
-#else
-  #define EvrNetBSD_IoctlFlowControl(sock, enable)
 #endif
 
 /**
