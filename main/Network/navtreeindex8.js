@@ -1,6 +1,5 @@
 var NAVTREEINDEX8 =
 {
-"migration_guide.html#mig_nw_configuration_net_debug":[9,1,1],
 "migration_guide.html#nw_diffs_component":[9,0],
 "pages.html":[],
 "resource_requirements.html":[8],

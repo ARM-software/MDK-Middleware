@@ -1018,7 +1018,8 @@ BSD Client</h2>
     <tr><td class="paramdir">[in]</td><td class="paramname">level</td><td>level at which the option is defined:<ul>
 <li>SOL_SOCKET = Socket level.</li>
 <li>IPPROTO_IP = IPv4 protocol level.</li>
-<li>IPPROTO_IPV6 = IPv6 protocol level. </li>
+<li>IPPROTO_IPV6 = IPv6 protocol level.</li>
+<li>IPPROTO_TCP = TCP protocol level. </li>
 </ul>
 </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">optname</td><td>socket option for which the value is to be retrieved:<ul>
@@ -1033,7 +1034,10 @@ BSD Client</h2>
 <li>IPV6_TCLASS = Traffic Class.</li>
 <li>IPV6_MULTICAST_HOPS = Multi-cast Hop Limit.</li>
 <li>IPV6_RECVDSTADDR = Receive Destination IPv6 Address.</li>
-<li>IPV6_V6ONLY = Restrict to IPv6 communications only. </li>
+<li>IPV6_V6ONLY = Restrict to IPv6 communications only.</li>
+<li>TCP_QUICKACK = Disable delayed acknowledgements.</li>
+<li>TCP_FLOWCTRL = Flow Control.</li>
+<li>TCP_KEEPIDLE = Timeout for Keep Alive. </li>
 </ul>
 </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">optval</td><td>pointer to the buffer that will receive the option value. </td></tr>
@@ -1389,7 +1393,6 @@ BSD Client</h2>
 <li>0 = Operation successful.</li>
 <li>BSD_ESOCK = Invalid socket descriptor or socket not created.</li>
 <li>BSD_EINVAL = Invalid parameter.</li>
-<li>BSD_ENOTSUP = Option not supported for this socket type.</li>
 </ul>
 </dd></dl>
 <p>The function <b>ioctlsocket</b> controls the I/O mode of a socket. It can be used on any socket in any state to set or retrieve some operating parameters of the socket.</p>
@@ -2445,7 +2448,8 @@ BSD Client</h2>
     <tr><td class="paramdir">[in]</td><td class="paramname">level</td><td>level at which the option is defined:<ul>
 <li>SOL_SOCKET = Socket level.</li>
 <li>IPPROTO_IP = IPv4 protocol level.</li>
-<li>IPPROTO_IPV6 = IPv6 protocol level. </li>
+<li>IPPROTO_IPV6 = IPv6 protocol level.</li>
+<li>IPPROTO_TCP = TCP protocol level. </li>
 </ul>
 </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">optname</td><td>socket option for which the value is to be set:<ul>
@@ -2459,7 +2463,10 @@ BSD Client</h2>
 <li>IPV6_TCLASS = Traffic Class.</li>
 <li>IPV6_MULTICAST_HOPS = Multi-cast Hop Limit.</li>
 <li>IPV6_RECVDSTADDR = Receive Destination IPv6 Address.</li>
-<li>IPV6_V6ONLY = Restrict to IPv6 communications only. </li>
+<li>IPV6_V6ONLY = Restrict to IPv6 communications only.</li>
+<li>TCP_QUICKACK = Disable delayed acknowledgements.</li>
+<li>TCP_FLOWCTRL = Flow Control.</li>
+<li>TCP_KEEPIDLE = Timeout for Keep Alive. </li>
 </ul>
 </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">optval</td><td>pointer to the buffer containing the option value. </td></tr>
