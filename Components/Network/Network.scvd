@@ -1448,8 +1448,9 @@
 
     <!-- NetSYS: System Core events -->
     <event id=" 0 + 0xC000" level="Op"     property="InitSystem"                value="ver=%d[val1>>8].%d[val1&amp;0xFF].%d[val2]" info="Initialize network start"/>
+    <event id="10 + 0xC000" level="Error"  property="MutexCreateFailed"         value="mutex=netCore_Mutex" info="Failed to create network core mutex"/>
     <event id=" 1 + 0xC000" level="Error"  property="ThreadCreateFailed"        value="thread=netCore_Thread" info="Failed to create network core thread"/>
-    <event id=" 2 + 0xC000" level="Error"  property="TimerCreateFailed"         value="timer=net_tick" info="Failed to create network interval timer"/>
+    <event id=" 2 + 0xC000" level="Error"  property="TimerCreateFailed"         value="timer=netCore_Timer" info="Failed to create network interval timer"/>
     <event id=" 3 + 0xC000" level="Op"     property="InitComplete"              value="success" info="Initialize network completed"/>
     <event id=" 4 + 0xC000" level="API"    property="GetOption"                 value="netif=%E[val1, NetIf:id], opt=%E[val2, Netif_Opt:id]" info="Get interface option"/>
     <event id=" 5 + 0xC000" level="API"    property="SetOption"                 value="netif=%E[val1, NetIf:id], opt=%E[val2, Netif_Opt:id]" info="Set interface option"/>
@@ -1460,6 +1461,7 @@
 
     <!-- NetMEM: Dynamic Memory Management events -->
     <event id=" 0 + 0xC100" level="Op"     property="InitMemory"                value="base=%x[val1], size=%d[val2] (limit_0=%d[val3], limit_1=%d[val4])" info="Initialize memory management"/>
+    <event id=" 9 + 0xC100" level="Error"  property="MutexCreateFailed"         value="mutex=netMemory_Mutex" info="Failed to create memory management mutex"/>
     <event id=" 1 + 0xC100" level="Op"     property="AllocMemory"               value="mem=%x[val1], size=%d[val2] (used=%d[val3], blocks=%d[val4])" info="Allocate a memory block"/>
     <event id=" 2 + 0xC100" level="Op"     property="AllocLimitExceeded"        value="size=%d[val1] (used=%d[val2], blocks=%d[val3])" info="Allocation failed at level 0"/>
     <event id=" 3 + 0xC100" level="Error"  property="AllocOutOfMemory"          value="size=%d[val1] (used=%d[val2], blocks=%d[val3])" info="Out of memory error"/>

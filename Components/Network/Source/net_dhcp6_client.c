@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_dhcp6_client.c
  * Purpose: Dynamic Host Configuration Client for IPv6
@@ -86,7 +86,7 @@ void net_dhcp6_client_init (void) {
   if (sock < 0) {
     ERRORF (DHCP6,"Get_socket failed\n");
     EvrNetDHCP6_GetSocketFailed ();
-    net_sys_error (NET_ERROR_UDP_ALLOC);
+    netHandleError (netErrorUdpAlloc);
     return;
   }
   dhcp6_socket = sock & 0xFF;

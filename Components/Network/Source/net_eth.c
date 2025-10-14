@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_eth.c
  * Purpose: Ethernet Interface
@@ -117,7 +117,7 @@ static void eth_iface_init (NET_ETH_CFG *h) {
       /* Invalid MAC address format, or Multicast bit is set in MAC0 */
       ERRORF (ETH,"Init %d, MAC config error\n",h->IfNum);
       EvrNetETH_MacAddressConfigError (h->IfNum);
-      net_sys_error (NET_ERROR_CONFIG);
+      netHandleError (netErrorConfig);
     }
   }
   drv_mac->SetMacAddress ((ARM_ETH_MAC_ADDR *)h->MacAddr);
@@ -137,7 +137,7 @@ static void eth_iface_init (NET_ETH_CFG *h) {
     else if (rc == ARM_DRIVER_ERROR_UNSUPPORTED) {
       ERRORF (ETH,"Init %d, VLAN config error\n",h->IfNum);
       EvrNetETH_VlanConfigError (h->IfNum);
-      net_sys_error (NET_ERROR_CONFIG);
+      netHandleError (netErrorConfig);
     }
     else {
       ERRORF (ETH,"Init %d, VLAN init failed\n",h->IfNum);
@@ -172,7 +172,7 @@ static void eth_iface_init (NET_ETH_CFG *h) {
   else if (rc == ARM_DRIVER_ERROR_UNSUPPORTED) {
     ERRORF (ETH,"Init %d, PHY config error\n",h->IfNum);
     EvrNetETH_PhyDriverConfigError (h->IfNum);
-    net_sys_error (NET_ERROR_CONFIG);
+    netHandleError (netErrorConfig);
   }
   else {
     ERRORF (ETH,"Init %d, PHY init failed\n",h->IfNum);
@@ -188,7 +188,7 @@ static void eth_iface_init (NET_ETH_CFG *h) {
         !net_addr4_aton (h->If->Ip4Cfg->SecDNS, LocM.SecDNS)) {
       ERRORF (ETH,"Init %d, IPv4 config error\n",h->IfNum);
       EvrNetETH_Ip4ConfigError (h->IfNum);
-      net_sys_error (NET_ERROR_CONFIG);
+      netHandleError (netErrorConfig);
     }
   }
 
@@ -204,7 +204,7 @@ static void eth_iface_init (NET_ETH_CFG *h) {
         !net_addr6_aton (h->If->Ip6Cfg->SecDNS, LocM6.SecDNS)) {
       ERRORF (ETH,"Init %d, IPv6 config error\n",h->IfNum);
       EvrNetETH_Ip6ConfigError (h->IfNum);
-      net_sys_error (NET_ERROR_CONFIG);
+      netHandleError (netErrorConfig);
     }
   }
 #endif
@@ -301,12 +301,12 @@ static void eth_iface_init (NET_ETH_CFG *h) {
   if (ctrl->thread == NULL) {
     ERRORF (ETH,"Init %d, Thread create failed\n",h->IfNum);
     EvrNetETH_ThreadCreateFailed (h->IfNum);
-    net_sys_error (NET_ERROR_CONFIG);
+    netHandleError (netErrorRtosCreate);
   }
   if (ctrl->semaphore == NULL) {
     ERRORF (ETH,"Init %d, Semaphore create failed\n",h->IfNum);
     EvrNetETH_SemaphoreCreateFailed (h->IfNum);
-    net_sys_error (NET_ERROR_CONFIG);
+    netHandleError (netErrorRtosCreate);
   }
 
   /* Send a notification at the end of initialization */

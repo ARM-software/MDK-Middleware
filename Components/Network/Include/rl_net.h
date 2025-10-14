@@ -89,6 +89,18 @@ typedef enum {
   netTimeout                            ///< Operation timeout
 } netStatus;
 
+/// System Error code values.
+typedef enum {
+  netErrorMemAlloc,                     ///< Memory allocation failed, out of memory
+  netErrorMemFree,                      ///< Memory release failed, memory slot is invalid
+  netErrorMemCorrupt,                   ///< Memory corruption detected
+  netErrorConfig,                       ///< Network configuration error found
+  netErrorRtosCreate,                   ///< RTOS object creation failed
+  netErrorUdpAlloc,                     ///< No free UDP sockets available
+  netErrorTcpAlloc,                     ///< No free TCP sockets available
+  netErrorTcpState                      ///< TCP socket in undefined state
+} netErrorCode;
+
 /// UDP Checksum Options.
 #define NET_UDP_CHECKSUM_SEND   0x01    ///< Calculate Checksum for UDP send frames (default)
 #define NET_UDP_CHECKSUM_VERIFY 0x02    ///< Verify Checksum for received UDP frames (default)
@@ -746,6 +758,10 @@ extern netStatus netInitialize (void);
 /// \brief De-initialize Network Component and interfaces. [\ref not_thread-safe]
 /// \return      status code that indicates the execution status of the function.
 extern netStatus netUninitialize (void);
+
+/// \brief Handle Network Component critical error. [\ref user-provided]
+/// \param[in]     error         system error code.
+extern void netHandleError (netErrorCode error);
 
 /// \brief Retrieve localhost name.  [\ref thread-safe]
 /// \return        pointer to localhost name, a null-terminated string.

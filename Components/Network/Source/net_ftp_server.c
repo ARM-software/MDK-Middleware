@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ftp_server.c
  * Purpose: File Transfer Server
@@ -85,7 +85,7 @@ void net_ftp_server_init (void) {
       ftp_s->State = FTP_STATE_ERROR;
       ERRORF (FTP,"Session %d, Get socket failed\n",i);
       EvrNetFTPs_GetSocketFailed (i & 0xFF);
-      net_sys_error (NET_ERROR_TCP_ALLOC);
+      netHandleError (netErrorTcpAlloc);
       return;
     }
     ftp_s->Id = i & 0xFF;

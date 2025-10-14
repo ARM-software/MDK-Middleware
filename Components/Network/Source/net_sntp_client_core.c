@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_sntp_client.c
  * Purpose: Simple Network Time Protocol Client
@@ -62,7 +62,7 @@ void net_sntp_client_init (void) {
   if (sntp->Socket == 0) {
     ERRORF (SNTP,"Get socket failed\n");
     EvrNetSNTP_GetSocketFailed ();
-    net_sys_error (NET_ERROR_UDP_ALLOC);
+    netHandleError (netErrorUdpAlloc);
     return;
   }
 }

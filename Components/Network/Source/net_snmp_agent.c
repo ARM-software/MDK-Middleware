@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_snmp_agent.c
  * Purpose: Simple Network Management Agent
@@ -69,7 +69,7 @@ void net_snmp_agent_init (void) {
   if (snmp->Socket == 0) {
     ERRORF (SNMP,"Get socket failed\n");
     EvrNetSNMP_GetSocketFailed ();
-    net_sys_error (NET_ERROR_UDP_ALLOC);
+    netHandleError (netErrorUdpAlloc);
     return;
   }
   /* Open UDP port for communication */

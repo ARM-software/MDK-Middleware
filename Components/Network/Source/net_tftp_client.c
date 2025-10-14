@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_tftp_client.c
  * Purpose: Trivial File Transfer Protocol Client
@@ -49,7 +49,7 @@ void net_tftp_client_init (void) {
   if (tftpc_s->Socket == 0) {
     ERRORF (TFTPC,"Get socket failed\n");
     EvrNetTFTPc_GetSocketFailed ();
-    net_sys_error (NET_ERROR_UDP_ALLOC);
+    netHandleError (netErrorUdpAlloc);
     return;
   }
 }

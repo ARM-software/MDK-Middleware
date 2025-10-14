@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ppp.c
  * Purpose: Point to Point Interface
@@ -70,12 +70,12 @@ void net_ppp_iface_init (void) {
   if (ctrl->thread == NULL) {
     ERRORF (PPP,"Init, Thread create failed\n");
     EvrNetPPP_ThreadCreateFailed ();
-    net_sys_error (NET_ERROR_CONFIG);
+    netHandleError (netErrorRtosCreate);
   }
   if (ctrl->semaphore == NULL) {
     ERRORF (PPP,"Init, Semaphore create failed\n");
     EvrNetPPP_SemaphoreCreateFailed ();
-    net_sys_error (NET_ERROR_CONFIG);
+    netHandleError (netErrorRtosCreate);
   }
 }
 

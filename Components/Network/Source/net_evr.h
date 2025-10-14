@@ -75,16 +75,17 @@ typedef struct evr_addr {
 
 // NetSYS event identifiers ----------------------------------------------------
 #ifdef Network_Debug_EVR
-#define EvtNetSYS_InitSystem            EventID (EventLevelOp,    EvtNetSYS, 0)
-#define EvtNetSYS_ThreadCreateFailed    EventID (EventLevelError, EvtNetSYS, 1)
-#define EvtNetSYS_TimerCreateFailed     EventID (EventLevelError, EvtNetSYS, 2)
-#define EvtNetSYS_InitComplete          EventID (EventLevelOp,    EvtNetSYS, 3)
-#define EvtNetSYS_GetOption             EventID (EventLevelAPI,   EvtNetSYS, 4)
-#define EvtNetSYS_SetOption             EventID (EventLevelAPI,   EvtNetSYS, 5)
-#define EvtNetSYS_SetDefault            EventID (EventLevelAPI,   EvtNetSYS, 6)
-#define EvtNetSYS_SetHostName           EventID (EventLevelAPI,   EvtNetSYS, 7)
-#define EvtNetSYS_UninitSystem          EventID (EventLevelOp,    EvtNetSYS, 8)
-#define EvtNetSYS_UninitComplete        EventID (EventLevelOp,    EvtNetSYS, 9)
+#define EvtNetSYS_InitSystem            EventID (EventLevelOp,    EvtNetSYS,  0)
+#define EvtNetSYS_MutexCreateFailed     EventID (EventLevelError, EvtNetSYS, 10) // End
+#define EvtNetSYS_ThreadCreateFailed    EventID (EventLevelError, EvtNetSYS,  1)
+#define EvtNetSYS_TimerCreateFailed     EventID (EventLevelError, EvtNetSYS,  2)
+#define EvtNetSYS_InitComplete          EventID (EventLevelOp,    EvtNetSYS,  3)
+#define EvtNetSYS_GetOption             EventID (EventLevelAPI,   EvtNetSYS,  4)
+#define EvtNetSYS_SetOption             EventID (EventLevelAPI,   EvtNetSYS,  5)
+#define EvtNetSYS_SetDefault            EventID (EventLevelAPI,   EvtNetSYS,  6)
+#define EvtNetSYS_SetHostName           EventID (EventLevelAPI,   EvtNetSYS,  7)
+#define EvtNetSYS_UninitSystem          EventID (EventLevelOp,    EvtNetSYS,  8)
+#define EvtNetSYS_UninitComplete        EventID (EventLevelOp,    EvtNetSYS,  9)
 #endif
 
 /**
@@ -102,6 +103,17 @@ typedef struct evr_addr {
   }
 #else
   #define EvrNetSYS_InitSystem(lib_version)
+#endif
+
+/**
+  \brief  Event on failure to create network core mutex (Error)
+ */
+#ifdef Network_Debug_EVR
+  __STATIC_INLINE void EvrNetSYS_MutexCreateFailed(void) {
+    EventRecord2 (EvtNetSYS_MutexCreateFailed, 0, 0);
+  }
+#else
+  #define EvrNetSYS_MutexCreateFailed()
 #endif
 
 /**
@@ -215,6 +227,7 @@ typedef struct evr_addr {
 // NetMEM event identifiers ----------------------------------------------------
 #ifdef Network_Debug_EVR
 #define EvtNetMEM_InitMemory                EventID (EventLevelOp,    EvtNetMEM,  0)
+#define EvtNetMEM_MutexCreateFailed         EventID (EventLevelError, EvtNetMEM,  9) // End
 #define EvtNetMEM_AllocMemory               EventID (EventLevelOp,    EvtNetMEM,  1)
 #define EvtNetMEM_AllocLimitExceeded        EventID (EventLevelOp,    EvtNetMEM,  2)
 #define EvtNetMEM_AllocOutOfMemory          EventID (EventLevelError, EvtNetMEM,  3)
@@ -238,6 +251,17 @@ typedef struct evr_addr {
   }
 #else
   #define EvrNetMEM_InitMemory(base, size, limit0, limit1)
+#endif
+
+/**
+  \brief  Event on failure to create memory management mutex (Error)
+ */
+#ifdef Network_Debug_EVR
+  __STATIC_INLINE void EvrNetMEM_MutexCreateFailed(void) {
+    EventRecord2 (EvtNetMEM_MutexCreateFailed, 0, 0);
+  }
+#else
+  #define EvrNetMEM_MutexCreateFailed()
 #endif
 
 /**

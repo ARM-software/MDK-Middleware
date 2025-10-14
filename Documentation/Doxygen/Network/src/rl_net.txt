@@ -20,12 +20,33 @@ The address conversion functions are used for conversion of IP or MAC addresses 
 
 /**
 \defgroup netSys_Func System Functions (User)
-\brief Core system functions to be called by user
+\brief Core system functions to be called by user.
 \details
 System Functions represent the core of the protocol stack. They form an operating system that calls all other protocol
 module functions. The functions require a CMSIS-RTOS compatible RTOS to run and are not reentrant.
 
 The functions are part of the Network Component library and are defined in \b %rl_net.h.
+*/
+
+/**
+\defgroup system_user_api User API
+\ingroup netSys_Func
+\brief Core system functions to be called by user.
+\details
+
+The network system functions provide the core mechanisms for initializing, managing, and handling events within
+the network stack. These functions support essential operations such as initialization, configuration, error management,
+and shutdown procedures. Include a callback function to handle critical, unrecoverable errors.
+*/
+
+/**
+\defgroup system_callbacks User Callback
+\ingroup netSys_Func
+\brief Function to notify the user application of critical errors in the network core.
+\details
+After a critical error, normal operation of the network component is not possible. The function \ref netHandleError reports
+a critical error. The network component provides a weak implementation of this function, but you can supply your own implementation
+to replace the default one from the library.
 */
 
 
@@ -367,6 +388,19 @@ uint32_t udp_cb_func (int32_t socket, const NET_ADDR *addr, const uint8_t *buf, 
 @}
 */
 
+//  ==== System Core Enumerations;  ====
+/**
+\defgroup netSys_Enums Enumerations
+\ingroup netSys_Func
+\brief Enumerations of the System Core
+@{
+\typedef netErrorCode
+\details
+<b>Parameter for:</b>
+ - \ref netHandleError
+@}
+*/
+
 /**
 \ingroup common_user_api
 */
@@ -640,7 +674,7 @@ The argument \a seconds_fraction signals the fraction of seconds.
 //  ==== Network native API ====
 
 /**
-\addtogroup netSys_Func
+\addtogroup system_user_api
 @{
 */
 
@@ -4219,6 +4253,61 @@ void netETH_ReceiveRaw (uint32_t if_num, const uint8_t *buf, uint32_t len) {
   if (ether_type == 0x888E) {                   // EAPoL protocol
     // Process the frame here
   }
+}
+\endcode
+*/
+
+/**
+@}
+*/
+
+/**
+\addtogroup system_callbacks
+@{
+*/
+
+//  ==== System Callbacks ====
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn void netHandleError (netErrorCode error)
+\details
+The \b netHandleError callback function serves as a critical error handler. It is invoked when the system encounters an
+unrecoverable error. In such cases, the typical response is to restart the network component.
+
+The argument \a error specifies the type of error that caused the function to be called.
+
+\b Code \b Example
+\code
+void netHandleError (netErrorCode error) {
+  switch (error) {
+    case netErrorMemAlloc:
+      /* Out of memory */
+      break;
+    case netErrorMemFree:
+      /* Trying to release non existing memory block */
+      break;
+    case netErrorMemCorrupt:
+      /* Memory Link pointer corrupted */
+      /* More data written than the size of allocated memory block */
+      break;
+    case netErrorConfig:
+      /* Network configuration error found */
+      break;
+    case netErrorRtosCreate:
+      /* RTOS object creation failed (thread, semaphore, mutex) */
+      break;
+    case netErrorUdpAlloc:
+      /* Out of UDP Sockets */
+      break;
+    case netErrorTcpAlloc:
+      /* Out of TCP Sockets */
+      break;
+    case netErrorTcpState:
+      /* TCP State machine in undefined state */
+      break;
+  }
+  while (1);
 }
 \endcode
 */

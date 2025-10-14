@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_wifi.c
  * Purpose: WiFi Interface
@@ -103,7 +103,7 @@ init_err:
     /* Initialize driver error */
     ERRORF (WIFI,"Init %d, Driver init failed\n",h->IfNum);
     EvrNetWiFi_DriverInitFailed (h->IfNum);
-    net_sys_error (NET_ERROR_CONFIG);
+    netHandleError (netErrorConfig);
   }
 
   /* Enable bypass mode */
@@ -113,7 +113,7 @@ bypass_err:
     /* Initialize bypass mode error */
     ERRORF (WIFI,"Init %d, Bypass mode error\n",h->IfNum);
     EvrNetWiFi_SetBypassModeFailed (h->IfNum);
-    net_sys_error (NET_ERROR_CONFIG);
+    netHandleError (netErrorConfig);
   }
 
   /* Manage MAC address */
@@ -124,7 +124,7 @@ bypass_err:
     if ((rc != ARM_DRIVER_OK) || (mac_len != NET_ADDR_ETH_LEN)) {
       ERRORF (WIFI,"Init %d, Get MAC failed\n",h->IfNum);
       EvrNetWiFi_GetMacAddressFailed (h->IfNum);
-      net_sys_error (NET_ERROR_CONFIG);
+      netHandleError (netErrorConfig);
     }
     /* Driver provides MAC address */
     DEBUGF (WIFI," Driver MAC (%s)\n",net_mac_ntoa(h->MacAddr));
@@ -137,14 +137,14 @@ bypass_err:
       /* Invalid MAC address format, or Multicast bit is set in MAC0 */
       ERRORF (WIFI,"Init %d, MAC config error\n",h->IfNum);
       EvrNetWiFi_MacAddressConfigError (h->IfNum);
-      net_sys_error (NET_ERROR_CONFIG);
+      netHandleError (netErrorConfig);
     }
     rc = drv_wifi->SetOption (WIFI_IF_STA,
                               ARM_WIFI_MAC, h->MacAddr, NET_ADDR_ETH_LEN);
     if (rc != ARM_DRIVER_OK) {
       ERRORF (WIFI,"Init %d, Set MAC failed\n",h->IfNum);
       EvrNetWiFi_SetMacAddressFailed (h->IfNum);
-      net_sys_error (NET_ERROR_CONFIG);
+      netHandleError (netErrorConfig);
     }
     /* Set MAC successful */
     DEBUGF (WIFI," MAC (%s)\n",net_mac_ntoa(h->MacAddr));
@@ -164,7 +164,7 @@ bypass_err:
         !net_addr4_aton (h->If->Ip4Cfg->SecDNS, LocM.SecDNS)) {
       ERRORF (WIFI,"Init %d, IPv4 config error\n",h->IfNum);
       EvrNetWiFi_Ip4ConfigError (h->IfNum);
-      net_sys_error (NET_ERROR_CONFIG);
+      netHandleError (netErrorConfig);
     }
   }
 
@@ -180,7 +180,7 @@ bypass_err:
         !net_addr6_aton (h->If->Ip6Cfg->SecDNS, LocM6.SecDNS)) {
       ERRORF (WIFI,"Init %d, IPv6 config error\n",h->IfNum);
       EvrNetWiFi_Ip6ConfigError (h->IfNum);
-      net_sys_error (NET_ERROR_CONFIG);
+      netHandleError (netErrorConfig);
     }
   }
 #endif
@@ -201,12 +201,12 @@ bypass_err:
   if (ctrl->thread == NULL) {
     ERRORF (WIFI,"Init %d, Thread create failed\n",h->IfNum);
     EvrNetWiFi_ThreadCreateFailed (h->IfNum);
-    net_sys_error (NET_ERROR_CONFIG);
+    netHandleError (netErrorRtosCreate);
   }
   if (ctrl->semaphore == NULL) {
     ERRORF (WIFI,"Init %d, Semaphore create failed\n",h->IfNum);
     EvrNetWiFi_SemaphoreCreateFailed (h->IfNum);
-    net_sys_error (NET_ERROR_CONFIG);
+    netHandleError (netErrorRtosCreate);
   }
 }
 

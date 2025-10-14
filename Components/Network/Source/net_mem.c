@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_mem.c
  * Purpose: Dynamic Memory Management
@@ -35,6 +35,11 @@ void net_mem_init (void) {
   mem->load      = 0;
   mem->count     = 0;
   mem->mutex     = netos_mutex_create (1);
+  if (mem->mutex == NULL) {
+    ERRORF (MEM,"Init, Mutex create failed\n");
+    EvrNetMEM_MutexCreateFailed ();
+    netHandleError (netErrorRtosCreate);
+  }
 
   /* Usage limit for non critical allocations.     */
   /*   Limit[0] - ethernet & bsd receive buffering */
@@ -90,7 +95,7 @@ NET_FRAME *net_mem_alloc (uint32_t byte_size) {
 
   DEBUGF (MEM,"Alloc %d bytes\n",req_size);
   if (byte_size & 0xC0000000) {
-    /* Ethernet or BSD socket, keep at least 25% of the Pool free. */
+    /* Ethernet and BSD socket, keep at least 25% of the Pool free. */
     if ((mem->load + req_size) > mem->limit[0]) {
       DEBUGF (MEM," Failed, limit_0 exceeded\n");
       EvrNetMEM_AllocLimitExceeded (req_size, mem->load, mem->count);
@@ -114,9 +119,9 @@ NET_FRAME *net_mem_alloc (uint32_t byte_size) {
       ERRORF (MEM,"Alloc, No memory (used=%d, blocks=%d)\n",mem->load,mem->count);
       EvrNetMEM_AllocOutOfMemory (req_size, mem->load, mem->count);
       mem_unlock ();
+      /* Check if the ErrorHandler call was prevented (Ethernet, BSD socket) */
       if (!(byte_size & 0xC0000000)) {
-        /* No sys_error trap for Ethernet or BSD socket */
-        net_sys_error (NET_ERROR_MEM_ALLOC);
+        netHandleError (netErrorMemAlloc);
       }
       return (NULL);
     }
@@ -206,7 +211,7 @@ void net_mem_free (NET_FRAME *mem_ptr) {
       EvrNetMEM_FreeInvalidBlock (return_ptr);
 
       mem_unlock ();
-      net_sys_error (NET_ERROR_MEM_FREE);
+      netHandleError (netErrorMemFree);
       return;
     }
     if ((search_ptr <= (NET_MEMP *)&prev_ptr->content) ||
@@ -216,7 +221,7 @@ void net_mem_free (NET_FRAME *mem_ptr) {
       EvrNetMEM_FreeLinkCorrupted (search_ptr);
 
       mem_unlock ();
-      net_sys_error (NET_ERROR_MEM_CORRUPT);
+      netHandleError (netErrorMemCorrupt);
       return;
     }
   }

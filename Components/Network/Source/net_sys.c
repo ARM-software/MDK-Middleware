@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_sys.c
  * Purpose: System Module
@@ -54,6 +54,11 @@ netStatus netInitialize (void) {
 
   /* Create sys protection mutex */
   os_id.mutex = netos_mutex_create (0);
+  if (os_id.mutex == NULL) {
+    ERRORF (SYS,"Init, Mutex create failed\n");
+    EvrNetSYS_MutexCreateFailed ();
+    netHandleError (netErrorRtosCreate);
+  }
   net_sys_lock ();
 
 #ifdef Network_Debug_EVR
@@ -79,14 +84,14 @@ netStatus netInitialize (void) {
   if (os_id.thread == NULL) {
     ERRORF (SYS,"Init, Thread create failed\n");
     EvrNetSYS_ThreadCreateFailed ();
-    net_sys_error (NET_ERROR_CONFIG);
+    netHandleError (netErrorRtosCreate);
   }
 
   os_id.timer = netos_timer_create ();
   if (os_id.timer == NULL) {
     ERRORF (SYS,"Init, Timer create failed\n");
     EvrNetSYS_TimerCreateFailed ();
-    net_sys_error (NET_ERROR_CONFIG);
+    netHandleError (netErrorRtosCreate);
   }
 
   DEBUGF (SYS,"Init complete\n");

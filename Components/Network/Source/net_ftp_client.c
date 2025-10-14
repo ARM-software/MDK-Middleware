@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ftp_client.c
  * Purpose: File Transfer Client
@@ -61,7 +61,7 @@ void net_ftp_client_init (void) {
   if (ftpc_s->Socket == 0 || ftpc_s->DSocket == 0) {
     ERRORF (FTPC,"Get socket failed\n");
     EvrNetFTPc_GetSocketFailed ();
-    net_sys_error (NET_ERROR_TCP_ALLOC);
+    netHandleError (netErrorTcpAlloc);
     return;
   }
 }

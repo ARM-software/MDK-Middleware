@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_dns_client.c
  * Purpose: Domain Name Resolver Client
@@ -89,7 +89,7 @@ void net_dns_client_init (void) {
   if (dns->Socket == 0) {
     ERRORF (DNS,"Get socket failed\n");
     EvrNetDNS_GetSocketFailed ();
-    net_sys_error (NET_ERROR_UDP_ALLOC);
+    netHandleError (netErrorUdpAlloc);
     return;
   }
 }

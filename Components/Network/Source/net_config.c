@@ -2473,29 +2473,32 @@ __WEAK void netHTTPs_fstat (const char *fname, uint32_t *fsize, uint32_t *ftime)
   (void)fname; (void)fsize; (void)ftime; }
 #endif
 
-/* System error handler */
-__WEAK void net_sys_error (NET_ERROR error) {
+/* Handle critical system error */
+__WEAK void netHandleError (netErrorCode error) {
   switch (error) {
-    case NET_ERROR_MEM_ALLOC:
+    case netErrorMemAlloc:
       /* Out of memory */
       break;
-    case NET_ERROR_MEM_FREE:
+    case netErrorMemFree:
       /* Trying to release non existing memory block */
       break;
-    case NET_ERROR_MEM_CORRUPT:
+    case netErrorMemCorrupt:
       /* Memory Link pointer corrupted */
       /* More data written than the size of allocated memory block */
       break;
-    case NET_ERROR_CONFIG:
-      /* Network configuration error detected */
+    case netErrorConfig:
+      /* Network configuration error found */
       break;
-    case NET_ERROR_UDP_ALLOC:
+    case netErrorRtosCreate:
+      /* RTOS object creation failed (thread, semaphore, mutex) */
+      break;
+    case netErrorUdpAlloc:
       /* Out of UDP Sockets */
       break;
-    case NET_ERROR_TCP_ALLOC:
+    case netErrorTcpAlloc:
       /* Out of TCP Sockets */
       break;
-    case NET_ERROR_TCP_STATE:
+    case netErrorTcpState:
       /* TCP State machine in undefined state */
       break;
   }
