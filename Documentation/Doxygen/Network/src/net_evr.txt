@@ -35,7 +35,7 @@ The event \b InitSystem is created when the function \ref netInitialize is execu
 \fn __STATIC_INLINE void EvrNetSYS_MutexCreateFailed(void)
 \details
 The event \b MutexCreateFailed is generated, if the function \ref netInitialize could
-not create the mutex for the Network Memory Management.
+not create the mutex for the Network Core.
 
 \b Value in the Event Recorder shows:
   - \b mutex: netCore_Mutex.
