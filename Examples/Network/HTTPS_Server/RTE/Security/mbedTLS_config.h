@@ -6,7 +6,7 @@
  *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
  */
 
-#define MBEDTLS_CONFIG_VERSION 0x03060000
+#define MBEDTLS_CONFIG_VERSION 0x03060400
 
 /* System support */
 
