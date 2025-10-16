@@ -282,7 +282,7 @@ TCP Server Mode</h1>
 <div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>) {</div>
 <div class="line">  int32_t tcp_sock;</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_function" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
+<div class="line">  <a class="code hl_function" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Initialize TCP Socket and start listening on port 2000</span></div>
 <div class="line">  tcp_sock = <a class="code hl_function" href="#ga19247901cf1062d474d767ac68277ed3" title="Allocate a free TCP socket. [thread-safe].">netTCP_GetSocket</a> (tcp_cb_func);</div>
@@ -380,7 +380,7 @@ Stopping TCP Communication</h2>
 <div class="line"><span class="comment">// Allocate and initialize the socket.</span></div>
 <div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>) {</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_function" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
+<div class="line">  <a class="code hl_function" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Allocate a free TCP socket.</span></div>
 <div class="line">  tcp_sock = <a class="code hl_function" href="#ga19247901cf1062d474d767ac68277ed3" title="Allocate a free TCP socket. [thread-safe].">netTCP_GetSocket</a> (tcp_cb_client);</div>
@@ -1273,7 +1273,7 @@ Stopping TCP Communication</h2>
 <div class="line">  uint32_t head, tail;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Initialize the Network Core</span></div>
-<div class="line">  <a class="code hl_function" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
+<div class="line">  <a class="code hl_function" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
 <div class="line">  tcp_sock = <a class="code hl_function" href="#ga19247901cf1062d474d767ac68277ed3" title="Allocate a free TCP socket. [thread-safe].">netTCP_GetSocket</a> (tcp_cb_func);</div>
 <div class="line">  <span class="keywordflow">if</span> (tcp_sock &gt;= 0) {</div>
 <div class="line">    <span class="comment">// Start listening on TCP port 8080 </span></div>

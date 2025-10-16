@@ -7,6 +7,7 @@ var group__net__evr__mem__func =
     [ "EvrNetMEM_FreeLinkCorrupted", "group__net__evr__mem__func.html#ga45961fc10aaf94153ce5bdad58d1a3d1", null ],
     [ "EvrNetMEM_FreeMemory", "group__net__evr__mem__func.html#ga8bdf58659df2ae89b8eae6059e2171d1", null ],
     [ "EvrNetMEM_InitMemory", "group__net__evr__mem__func.html#ga8c1117588d7fb365641978f687385a9e", null ],
+    [ "EvrNetMEM_MutexCreateFailed", "group__net__evr__mem__func.html#ga6b961b01b423bab37c0a4ed8ff1672a5", null ],
     [ "EvrNetMEM_ShrinkMemory", "group__net__evr__mem__func.html#gaf05b0fe1664c4567510445b35a67969e", null ],
     [ "EvrNetMEM_UninitMemory", "group__net__evr__mem__func.html#gaf26becd85b6b9bd2deec02564950ce10", null ]
 ];

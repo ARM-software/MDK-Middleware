@@ -485,7 +485,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>DriverInitFailed</b> is created when the WiFi interface fails to initialize and turn on the WiFi driver due to an internal error in the WiFi driver. The event is generated when the function <a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed and is a critical failure.</p>
+<p>The event <b>DriverInitFailed</b> is created when the WiFi interface fails to initialize and turn on the WiFi driver due to an internal error in the WiFi driver. The event is generated when the function <a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed and is a critical failure.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>if_num:</b> WiFi interface number. </li>
 </ul>
@@ -519,7 +519,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>DriverMacAddress</b> is created when the MAC address for the WiFi interface is available in the driver. The MAC address is read-only and can not be changed from the user application. The event is generated when the function <a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed.</p>
+<p>The event <b>DriverMacAddress</b> is created when the MAC address for the WiFi interface is available in the driver. The MAC address is read-only and can not be changed from the user application. The event is generated when the function <a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>if_num:</b> WiFi interface number.</li>
 <li><b>mac:</b> MAC address retrieved from the driver. </li>
@@ -591,7 +591,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>GetMacAddressFailed</b> is created when the the WiFi interface failed to retrieve the MAC address while the WiFi interface is initializing. The MAC address is available in the WiFi module, but can not be retrieved. The event is generated when the function <a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed and is a critical failure.</p>
+<p>The event <b>GetMacAddressFailed</b> is created when the the WiFi interface failed to retrieve the MAC address while the WiFi interface is initializing. The MAC address is available in the WiFi module, but can not be retrieved. The event is generated when the function <a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed and is a critical failure.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>if_num:</b> WiFi interface number. </li>
 </ul>
@@ -781,7 +781,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>InitInterface</b> is created when the WiFi interface is initialized, that is, when the function <a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed.</p>
+<p>The event <b>InitInterface</b> is created when the WiFi interface is initialized, that is, when the function <a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>if_num:</b> WiFi interface number. </li>
 </ul>
@@ -857,7 +857,7 @@ Functions</h2></td></tr>
 <li>Primary DNS Server</li>
 <li>Secondary DNS Server</li>
 </ul>
-<p>The event is created when the function <a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed and is a critical failure.</p>
+<p>The event is created when the function <a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed and is a critical failure.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>if_num:</b> WiFi interface number. </li>
 </ul>
@@ -987,7 +987,7 @@ Functions</h2></td></tr>
 <li>Primary DNS Server</li>
 <li>Secondary DNS Server</li>
 </ul>
-<p>The event is created when the function <a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed and is a critical failure.</p>
+<p>The event is created when the function <a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed and is a critical failure.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>if_num:</b> WiFi interface number. </li>
 </ul>
@@ -1149,7 +1149,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>MacAddressConfigError</b> is created when an error is found in the WiFi MAC configuration while the WiFi interface is initializing. The event is generated when the function <a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed and is a critical failure.</p>
+<p>The event <b>MacAddressConfigError</b> is created when an error is found in the WiFi MAC configuration while the WiFi interface is initializing. The event is generated when the function <a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed and is a critical failure.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>if_num:</b> WiFi interface number. </li>
 </ul>
@@ -1479,7 +1479,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>SemaphoreCreateFailed</b> is generated, if the function <a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> could not create the semaphore for the WiFi interface.</p>
+<p>The event <b>SemaphoreCreateFailed</b> is generated, if the function <a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> could not create the semaphore for the WiFi interface.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>if_num:</b> WiFi interface number. </li>
 </ul>
@@ -1654,7 +1654,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>SetBypassModeFailed</b> is created when the WiFi interface failed to initialize the WiFi driver in bypass mode, because the requested features are not supported in the driver. The event is generated when the function <a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed and is a critical failure.</p>
+<p>The event <b>SetBypassModeFailed</b> is created when the WiFi interface failed to initialize the WiFi driver in bypass mode, because the requested features are not supported in the driver. The event is generated when the function <a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed and is a critical failure.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>if_num:</b> WiFi interface number. </li>
 </ul>
@@ -2146,7 +2146,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>SetMacAddressFailed</b> is created when the WiFi interface failed to set the MAC address while the WiFi interface is initializing. The MAC address that is configured in the WiFi configuration can not be set up in the WiFi module. The event is generated when the function <a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed and is a critical failure.</p>
+<p>The event <b>SetMacAddressFailed</b> is created when the WiFi interface failed to set the MAC address while the WiFi interface is initializing. The MAC address that is configured in the WiFi configuration can not be set up in the WiFi module. The event is generated when the function <a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed and is a critical failure.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>if_num:</b> WiFi interface number. </li>
 </ul>
@@ -2275,7 +2275,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>ThreadCreateFailed</b> is generated, if the function <a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> failed to create the WiFi interface thread.</p>
+<p>The event <b>ThreadCreateFailed</b> is generated, if the function <a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> failed to create the WiFi interface thread.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>if_num:</b> WiFi interface number. </li>
 </ul>
@@ -2333,7 +2333,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>UninitInterface</b> is created when the function <a class="el" href="group__netSys__Func.html#gaeccbc594239e8a091514b5c225a642bf">netUninitialize</a> is executed.</p>
+<p>The event <b>UninitInterface</b> is created when the function <a class="el" href="group__system__user__api.html#gaeccbc594239e8a091514b5c225a642bf">netUninitialize</a> is executed.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>wifi:</b> WiFi interface name. </li>
 </ul>

@@ -139,6 +139,7 @@ $(function(){initNavTree('rev_hist.html',''); initResizable(true); });
 <th>Version </th><th>Description  </th></tr>
 <tr>
 <td>V8.2.0 </td><td><ul>
+<li>added <a class="el" href="group__system__callbacks.html#gaf02a1f2b5eede7988b3d29441d58acf2">netHandleError</a> system error handler to the user API</li>
 <li>improved BSD socket control with enhanced setsockopt and getsockopt functions</li>
 <li>modified File System interface functions to be weakly linked, allowing user overrides </li>
 </ul>
@@ -235,7 +236,7 @@ $(function(){initNavTree('rev_hist.html',''); initResizable(true); });
 </td></tr>
 <tr>
 <td>V7.14.0 </td><td><ul>
-<li>fixed a problem in the <a class="el" href="group__netSys__Func.html#gaeccbc594239e8a091514b5c225a642bf">netUninitialize</a> function that active BSD sockets remain blocked when the function is called by a low priority thread</li>
+<li>fixed a problem in the <a class="el" href="group__system__user__api.html#gaeccbc594239e8a091514b5c225a642bf">netUninitialize</a> function that active BSD sockets remain blocked when the function is called by a low priority thread</li>
 <li>fixed a problem with the HTTP server when uploading files from the Firefox browser</li>
 <li>corrected OS layer timeouts for RTOS2, if the RTOS tick frequency is not 1000 Hz</li>
 <li>fixed a build error when IPv6 was disabled in all LAN interfaces</li>
@@ -331,7 +332,7 @@ $(function(){initNavTree('rev_hist.html',''); initResizable(true); });
 <li>changed return code <a class="el" href="rl__net_8h.html#ga5675a3b88ee02986ae15ae3bb8135551ad906d7fb3096320999fe7cc1779f6ef3">netError</a> to <a class="el" href="rl__net_8h.html#ga5675a3b88ee02986ae15ae3bb8135551ab81542c1e69712c9790edfebac66d254">netFileError</a> where appropriate in TFTP client</li>
 <li>corrected <a class="el" href="group__smtpc__user__api.html#gabb5265fa948e0bfded49cc7bf695ab5d">netSMTPc_SendMail</a> functionality, if the requested attachment does not exist, the function fails with error code <a class="el" href="rl__net_8h.html#ga5675a3b88ee02986ae15ae3bb8135551ab81542c1e69712c9790edfebac66d254">netFileError</a>, rather than send a dummy attachment</li>
 <li>corrected a failure in <a class="el" href="group__smtpc__user__api.html#gabb5265fa948e0bfded49cc7bf695ab5d">netSMTPc_SendMail</a> function, when sending an email with a large attachment</li>
-<li>added <a class="el" href="group__netSys__Func.html#gaeccbc594239e8a091514b5c225a642bf">netUninitialize</a> function to uninitialize the Network component </li>
+<li>added <a class="el" href="group__system__user__api.html#gaeccbc594239e8a091514b5c225a642bf">netUninitialize</a> function to uninitialize the Network component </li>
 </ul>
 </td></tr>
 <tr>
@@ -424,7 +425,7 @@ $(function(){initNavTree('rev_hist.html',''); initResizable(true); });
 <li>added IPv6 FTP extensions in FTP server and FTP client</li>
 <li>added MIME type ".pdf" in HTTP server supported file types</li>
 <li>added <a class="el" href="group__ws__cgi__script.html#gacab375c8f4d2516a1774c2dc37207eaa" title="Add custom MIME type for unsupported file types. [user-provided].">netCGI_ContentType()</a> function for custom MIME types</li>
-<li>added system configuration check in <a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize()</a>, signal NET_ERROR_CONFIG on error</li>
+<li>added system configuration check in <a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize()</a>, signal NET_ERROR_CONFIG on error</li>
 <li>added system created network Core and interface threads in a library</li>
 <li>added mutex protection to network API functions, these functions are now thread-safe</li>
 <li>added adaptive time polling in ETH thread when ETH driver is used in polling mode</li>

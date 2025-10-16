@@ -264,13 +264,13 @@ System Resource Configuration</h1>
 <p>For more information, check the Network Component's <a class="el" href="resource_requirements.html">Resource Requirements</a> section.</p>
 <h1><a class="anchor" id="nw_User_Code_Implementation"></a>
 User Code Implementation</h1>
-<p>Before using the networking communications, the Network Core must be initialized with the function <a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a>. The function initializes the Network system resources and creates threads and other RTOS objects. The initialization is usually executed from the <b>app_main</b> thread.</p>
+<p>Before using the networking communications, the Network Core must be initialized with the function <a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a>. The function initializes the Network system resources and creates threads and other RTOS objects. The initialization is usually executed from the <b>app_main</b> thread.</p>
 <p>The initialization process is different depending on which network interface is used:</p>
 <ul>
 <li><b>Ethernet interface</b> <div class="fragment"><div class="line"><span class="keywordtype">void</span> app_main_thread (<span class="keywordtype">void</span> *argument) {</div>
 <div class="line">  (void)argument;</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_function" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
+<div class="line">  <a class="code hl_function" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
 <div class="line"> </div>
 <div class="line">  osThreadExit();</div>
 <div class="line">}</div>
@@ -279,7 +279,7 @@ User Code Implementation</h1>
 <div class="line">  <a class="code hl_struct" href="group__Wifi__structs.html#structNET__WIFI__CONFIG" title="WiFi Configuration.">NET_WIFI_CONFIG</a> wifi_config;</div>
 <div class="line">  (void)argument;</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_function" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
+<div class="line">  <a class="code hl_function" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Configure wireless parameters</span></div>
 <div class="line">  wifi_config.<a class="code hl_variable" href="group__Wifi__structs.html#a587ba0cb07f02913598610049a3bbb79" title="Network name, a null-terminated string.">ssid</a>       = <span class="stringliteral">&quot;GuestAccess&quot;</span>;</div>
@@ -297,7 +297,7 @@ User Code Implementation</h1>
 <li><b>PPP interface</b> <div class="fragment"><div class="line"><span class="keywordtype">void</span> app_main_thread (<span class="keywordtype">void</span> *argument) {</div>
 <div class="line">  (void)argument;</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_function" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
+<div class="line">  <a class="code hl_function" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Connect to remote PPP server</span></div>
 <div class="line">  <a class="code hl_function" href="group__ppp__user__api.html#gaff5343f51863e458736684f4d6bc5e91" title="Start a dial-up connection to remote PPP server. [thread-safe].">netPPP_Connect</a> (<span class="stringliteral">&quot;04213372&quot;</span>, <span class="stringliteral">&quot;Guest&quot;</span>, <span class="stringliteral">&quot;test&quot;</span>)</div>
@@ -600,7 +600,7 @@ Runtime Configuration</h1>
 <li><a class="el" href="group__common__user__api.html#ga7e16ce8f65945bfc49bee15172d6ad41">netIF_SetDefault</a> function to set default interface for internet access</li>
 </ul>
 <p>The options which can be changed are defined in the <a class="el" href="group__netInterfaces__Enums.html#ga2e0460c920b348a8633c2e54ceecbed5">netIF_Option</a> enumerator. However, some interfaces do not support the complete set of available options. For example, the PPP interface does not have a MAC address. If you try to modify an unsupported option, an error is returned.</p>
-<p>The <a href="https://en.wikipedia.org/wiki/Localhost">localhost</a> name is used to access the embedded system without knowledge of its IP address. <a class="el" href="group__netSys__Func.html#ga6eda1bb2895a98252a851160c15111a5">netSYS_GetHostName</a> is used to retrieve the localhost name, whereas <a class="el" href="group__netSys__Func.html#ga141ae4581698cb95e5fc5c8458fa9710">netSYS_SetHostName</a> changes the localhost name.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Localhost">localhost</a> name is used to access the embedded system without knowledge of its IP address. <a class="el" href="group__system__user__api.html#ga6eda1bb2895a98252a851160c15111a5">netSYS_GetHostName</a> is used to retrieve the localhost name, whereas <a class="el" href="group__system__user__api.html#ga141ae4581698cb95e5fc5c8458fa9710">netSYS_SetHostName</a> changes the localhost name.</p>
 <p>The <a href="https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol">DHCP</a> client can be disabled or enabled at runtime. When disabled, the user provided network parameters defined in the <code>Net_Config_ETH_0.h</code> or <code>Net_Config_WiFi_0.h</code> configuration files are used. Switch the state of the DHCP client using <a class="el" href="group__common__user__api.html#gad8ddb783cbb076297f64c3aa13a7d930">netDHCP_Disable</a> and <a class="el" href="group__common__user__api.html#gace7634f951ec523cccc505b5d2ffd5a7">netDHCP_Enable</a>.</p>
 <dl class="section note"><dt>Note</dt><dd>Each embedded Ethernet device must have a unique <b>MAC address</b>, <b>IP address</b>, and <b>hostname</b>. This is very important when multiple devices are connected to the same LAN. Otherwise, the system might not work (due to collisions or disturbed network communications).</dd></dl>
 <p><b>Code Example</b></p>
@@ -619,10 +619,10 @@ Runtime Configuration</h1>
 <div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>) {</div>
 <div class="line">  uint8_t buf[8];</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_function" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
+<div class="line">  <a class="code hl_function" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73" title="Initialize Network Component and interfaces. [not_thread-safe].">netInitialize</a> ();</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Change host name */</span></div>
-<div class="line">  <a class="code hl_function" href="group__netSys__Func.html#ga141ae4581698cb95e5fc5c8458fa9710" title="Set localhost name. [thread-safe].">netSYS_SetHostName</a> (host_name);</div>
+<div class="line">  <a class="code hl_function" href="group__system__user__api.html#ga141ae4581698cb95e5fc5c8458fa9710" title="Set localhost name. [thread-safe].">netSYS_SetHostName</a> (host_name);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">/* Change MAC address */</span></div>
 <div class="line">  <a class="code hl_function" href="group__netGen__AddrConvFunc.html#ga8f9dc823db5abb2bc6ccd8e1788c92da" title="Convert MAC address from text to binary form. [thread-safe].">netMAC_aton</a> (mac_addr, buf);</div>

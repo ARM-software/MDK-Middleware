@@ -108,11 +108,9 @@ var NAVTREEINDEX1 =
 "group__netSockets.html":[10,2],
 "group__netStatusErrorCodes.html":[10,6],
 "group__netStatusErrorCodes.html#ga5675a3b88ee02986ae15ae3bb8135551":[10,6,0],
+"group__netSys__Enums.html":[10,5,2],
+"group__netSys__Enums.html#gacbdb47f5db69b26d449c22fdcf0ee90e":[10,5,2,0],
 "group__netSys__Func.html":[10,5],
-"group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73":[10,5,0],
-"group__netSys__Func.html#ga141ae4581698cb95e5fc5c8458fa9710":[10,5,2],
-"group__netSys__Func.html#ga6eda1bb2895a98252a851160c15111a5":[10,5,1],
-"group__netSys__Func.html#gaeccbc594239e8a091514b5c225a642bf":[10,5,3],
 "group__netTCP__Enums.html":[10,2,1,2],
 "group__netTCP__Enums.html#ga5866dd2ae379ba30a83a9ea1a0c82fdd":[10,2,1,2,1],
 "group__netTCP__Enums.html#gae7e975a8c916be95da5cf6279aee4909":[10,2,1,2,2],
@@ -249,5 +247,7 @@ var NAVTREEINDEX1 =
 "group__net__evr__bsd__func.html#ga741a636def8b81843ca2780d192adb38":[10,8,20,5],
 "group__net__evr__bsd__func.html#ga74ed765b12faa590df5aaa1cb3a68c45":[10,8,20,129],
 "group__net__evr__bsd__func.html#ga766100eebc0d12ea7a622a57b3f979cf":[10,8,20,104],
-"group__net__evr__bsd__func.html#ga789eb134af93ea4fe04bb0da42f311a9":[10,8,20,103]
+"group__net__evr__bsd__func.html#ga789eb134af93ea4fe04bb0da42f311a9":[10,8,20,103],
+"group__net__evr__bsd__func.html#ga79a0fd798e1a45a7ea2d3b0e40b5fb17":[10,8,20,142],
+"group__net__evr__bsd__func.html#ga7aab69bb5ba0aa77386c1bc21593f492":[10,8,20,87]
 };

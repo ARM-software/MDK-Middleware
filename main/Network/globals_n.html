@@ -240,6 +240,15 @@ $(function(){initNavTree('globals_n.html',''); initResizable(true); });
 <li>netDnsResolverError&#160;:&#160;<a class="el" href="rl__net_8h.html#ga5675a3b88ee02986ae15ae3bb8135551a99aa23b8123fec90523143165737a553">rl_net.h</a></li>
 <li>netDriverError&#160;:&#160;<a class="el" href="rl__net_8h.html#ga5675a3b88ee02986ae15ae3bb8135551a5a4e8ef10a9facffa5c66c0094ca4722">rl_net.h</a></li>
 <li>netError&#160;:&#160;<a class="el" href="rl__net_8h.html#ga5675a3b88ee02986ae15ae3bb8135551ad906d7fb3096320999fe7cc1779f6ef3">rl_net.h</a></li>
+<li>netErrorCode&#160;:&#160;<a class="el" href="group__netSys__Enums.html#gacbdb47f5db69b26d449c22fdcf0ee90e">rl_net.h</a></li>
+<li>netErrorConfig&#160;:&#160;<a class="el" href="rl__net_8h.html#gacbdb47f5db69b26d449c22fdcf0ee90ea0f7f74dce19fa9cb7a6f40849fb9dbbf">rl_net.h</a></li>
+<li>netErrorMemAlloc&#160;:&#160;<a class="el" href="rl__net_8h.html#gacbdb47f5db69b26d449c22fdcf0ee90ea44ec7d45e7bf3969942300041a4f6ffd">rl_net.h</a></li>
+<li>netErrorMemCorrupt&#160;:&#160;<a class="el" href="rl__net_8h.html#gacbdb47f5db69b26d449c22fdcf0ee90eab0fe9f1ae7b0f149a914acd8e341eec9">rl_net.h</a></li>
+<li>netErrorMemFree&#160;:&#160;<a class="el" href="rl__net_8h.html#gacbdb47f5db69b26d449c22fdcf0ee90ea8e8ff5afaa82e77fcd50be1d675705e9">rl_net.h</a></li>
+<li>netErrorRtosCreate&#160;:&#160;<a class="el" href="rl__net_8h.html#gacbdb47f5db69b26d449c22fdcf0ee90eaa1008513316729cccbbb518427ace62b">rl_net.h</a></li>
+<li>netErrorTcpAlloc&#160;:&#160;<a class="el" href="rl__net_8h.html#gacbdb47f5db69b26d449c22fdcf0ee90eae69744411821bf7eefda9428349fba79">rl_net.h</a></li>
+<li>netErrorTcpState&#160;:&#160;<a class="el" href="rl__net_8h.html#gacbdb47f5db69b26d449c22fdcf0ee90ea69804790270433cdf193be240978e01d">rl_net.h</a></li>
+<li>netErrorUdpAlloc&#160;:&#160;<a class="el" href="rl__net_8h.html#gacbdb47f5db69b26d449c22fdcf0ee90ea1d24ee4f36509e5a3e497955cae68621">rl_net.h</a></li>
 <li>netETH_Event&#160;:&#160;<a class="el" href="group__netETH__Enums.html#ga91c7668b025ba3e42dab01ff59e67a5f">rl_net.h</a></li>
 <li>netETH_LinkDown&#160;:&#160;<a class="el" href="rl__net_8h.html#ga91c7668b025ba3e42dab01ff59e67a5faa6f12b9d6752175e9dc6ba3def7d187c">rl_net.h</a></li>
 <li>netETH_LinkUp&#160;:&#160;<a class="el" href="rl__net_8h.html#ga91c7668b025ba3e42dab01ff59e67a5fa29918779e446e948c7afc8730b0ce128">rl_net.h</a></li>
@@ -327,6 +336,7 @@ $(function(){initNavTree('globals_n.html',''); initResizable(true); });
 <li>netFTPs_SetUsername()&#160;:&#160;<a class="el" href="group__ftp__user__api.html#ga6b069500415b52d9c55503a466415c60">rl_net.h</a></li>
 <li>netFTPs_Start()&#160;:&#160;<a class="el" href="group__ftp__user__api.html#gafba2740613dff7fcc32d5bebca976ae5">rl_net.h</a></li>
 <li>netFTPs_Stop()&#160;:&#160;<a class="el" href="group__ftp__user__api.html#gae45c5e8638f0b2b73aecc48340d3ea25">rl_net.h</a></li>
+<li>netHandleError()&#160;:&#160;<a class="el" href="group__system__callbacks.html#gaf02a1f2b5eede7988b3d29441d58acf2">rl_net.h</a></li>
 <li>netHTTPs_AcceptClient()&#160;:&#160;<a class="el" href="group__ws__access__filtering__mui.html#gaf36a37f99a76e8ca958fbde377cee73d">rl_net.h</a></li>
 <li>netHTTPs_CalcHashHA1()&#160;:&#160;<a class="el" href="group__ws__access__filtering__mui.html#gab61405012e910162d511208ab1d2bc3f">rl_net.h</a></li>
 <li>netHTTPs_CheckAccount()&#160;:&#160;<a class="el" href="group__ws__access__filtering__mui.html#gaee074414cedf60bc3d259f6647d67e0d">rl_net.h</a></li>
@@ -382,7 +392,7 @@ $(function(){initNavTree('globals_n.html',''); initResizable(true); });
 <li>netIF_VersionIP6&#160;:&#160;<a class="el" href="rl__net_8h.html#ga54e92b1a1aa37b7d5c3389309eab95efa68063e7dceb6a903c89dfc4fdb15d5de">rl_net.h</a></li>
 <li>netIGMP_Join()&#160;:&#160;<a class="el" href="group__common__user__api.html#ga7f3207be0b4b9a6aac320ddfe4c5937f">rl_net.h</a></li>
 <li>netIGMP_Leave()&#160;:&#160;<a class="el" href="group__common__user__api.html#gab0deb90dddf3ac4471d513c6a501b641">rl_net.h</a></li>
-<li>netInitialize()&#160;:&#160;<a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">rl_net.h</a></li>
+<li>netInitialize()&#160;:&#160;<a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">rl_net.h</a></li>
 <li>netInvalidParameter&#160;:&#160;<a class="el" href="rl__net_8h.html#ga5675a3b88ee02986ae15ae3bb8135551ac9c846926779787c13c01746e745adc1">rl_net.h</a></li>
 <li>netIP_aton()&#160;:&#160;<a class="el" href="group__netGen__AddrConvFunc.html#ga39518491393bd2b4c6f32df03768b6b8">rl_net.h</a></li>
 <li>netIP_ntoa()&#160;:&#160;<a class="el" href="group__netGen__AddrConvFunc.html#ga546c7611025489af14f2b37dbda445c2">rl_net.h</a></li>
@@ -449,8 +459,8 @@ $(function(){initNavTree('globals_n.html',''); initResizable(true); });
 <li>netSNTPc_ModeUnicast&#160;:&#160;<a class="el" href="rl__net_8h.html#ga0fabbbfc103aa1295be788d7559113a0a43bd46b41ea6fc3e5b5ec356afd5fe47">rl_net.h</a></li>
 <li>netSNTPc_SetMode()&#160;:&#160;<a class="el" href="group__starting__sntp.html#ga49dec604e375bb532e8458f6e0041db5">rl_net.h</a></li>
 <li>netStatus&#160;:&#160;<a class="el" href="group__netStatusErrorCodes.html#ga5675a3b88ee02986ae15ae3bb8135551">rl_net.h</a></li>
-<li>netSYS_GetHostName()&#160;:&#160;<a class="el" href="group__netSys__Func.html#ga6eda1bb2895a98252a851160c15111a5">rl_net.h</a></li>
-<li>netSYS_SetHostName()&#160;:&#160;<a class="el" href="group__netSys__Func.html#ga141ae4581698cb95e5fc5c8458fa9710">rl_net.h</a></li>
+<li>netSYS_GetHostName()&#160;:&#160;<a class="el" href="group__system__user__api.html#ga6eda1bb2895a98252a851160c15111a5">rl_net.h</a></li>
+<li>netSYS_SetHostName()&#160;:&#160;<a class="el" href="group__system__user__api.html#ga141ae4581698cb95e5fc5c8458fa9710">rl_net.h</a></li>
 <li>netTCP_Abort()&#160;:&#160;<a class="el" href="group__tcp__user__api.html#ga621b26f6da519678dd6a660fce012668">rl_net.h</a></li>
 <li>netTCP_cb_t&#160;:&#160;<a class="el" href="group__tcp__user__api.html#ga9b54602817e82e6cce05f2f322a99f50">rl_net.h</a></li>
 <li>netTCP_Close()&#160;:&#160;<a class="el" href="group__tcp__user__api.html#gad3b70b023f209cd7687f15f553219185">rl_net.h</a></li>
@@ -571,7 +581,7 @@ $(function(){initNavTree('globals_n.html',''); initResizable(true); });
 <li>netUDP_ReleaseSocket()&#160;:&#160;<a class="el" href="group__udp__user__api.html#gaef522f5e090220f72350a8aa0984bbd9">rl_net.h</a></li>
 <li>netUDP_Send()&#160;:&#160;<a class="el" href="group__udp__user__api.html#ga7a82db98b82300e5fd03ce1b7afb6cba">rl_net.h</a></li>
 <li>netUDP_SetOption()&#160;:&#160;<a class="el" href="group__udp__user__api.html#ga93496cfeb5f324f09dc81211243093cb">rl_net.h</a></li>
-<li>netUninitialize()&#160;:&#160;<a class="el" href="group__netSys__Func.html#gaeccbc594239e8a091514b5c225a642bf">rl_net.h</a></li>
+<li>netUninitialize()&#160;:&#160;<a class="el" href="group__system__user__api.html#gaeccbc594239e8a091514b5c225a642bf">rl_net.h</a></li>
 <li>netWiFi_Activate()&#160;:&#160;<a class="el" href="group__wifi__user__api.html#gad5f9a8d136edec8f731af4c0f43e5b15">rl_net.h</a></li>
 <li>netWiFi_Deactivate()&#160;:&#160;<a class="el" href="group__wifi__user__api.html#gab40ccc77f430e8642884ed2448f76972">rl_net.h</a></li>
 <li>netWiFi_GetNetInfo()&#160;:&#160;<a class="el" href="group__wifi__user__api.html#gafa56f8f1d3da36c2f27de72c0dfdc21c">rl_net.h</a></li>

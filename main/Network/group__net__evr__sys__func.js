@@ -3,6 +3,7 @@ var group__net__evr__sys__func =
     [ "EvrNetSYS_GetOption", "group__net__evr__sys__func.html#gaf5d4a4112bae02d9b39d163de4ebd796", null ],
     [ "EvrNetSYS_InitComplete", "group__net__evr__sys__func.html#ga2e90b9d019bd3160f5301de9d0251b32", null ],
     [ "EvrNetSYS_InitSystem", "group__net__evr__sys__func.html#ga79dc70ac9196fa208633a3aab6fb3187", null ],
+    [ "EvrNetSYS_MutexCreateFailed", "group__net__evr__sys__func.html#ga4b3581e5c978e8f1df0952655783b209", null ],
     [ "EvrNetSYS_SetDefault", "group__net__evr__sys__func.html#ga4aa0b35dd313183a0227ca5aa3d5bea7", null ],
     [ "EvrNetSYS_SetHostName", "group__net__evr__sys__func.html#gab7104b8e1d69e32fb33918308d542129", null ],
     [ "EvrNetSYS_SetOption", "group__net__evr__sys__func.html#ga8acdaf2d1b4356a2a14e283e851ecaf3", null ],

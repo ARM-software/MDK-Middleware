@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Network Component: System Functions (User)</title>
+<title>Network Component: Enumerations</title>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -104,7 +104,7 @@ $(function() { codefold.init(0); });
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('group__netSys__Func.html',''); initResizable(true); });
+$(function(){initNavTree('group__netSys__Enums.html',''); initResizable(true); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -131,30 +131,77 @@ $(function(){initNavTree('group__netSys__Func.html',''); initResizable(true); })
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Content</a>  </div>
-  <div class="headertitle"><div class="title">System Functions (User)</div></div>
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle"><div class="title">Enumerations<div class="ingroups"><a class="el" href="group__netSys__Func.html">System Functions (User)</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Core system functions to be called by user.  
+<p>Enumerations of the System Core.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="groups" name="groups"></a>
-Content</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__system__user__api.html">User API</a></td></tr>
-<tr class="memdesc:group__system__user__api"><td class="mdescLeft">&#160;</td><td class="mdescRight">Core system functions to be called by user. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__system__callbacks.html">User Callback</a></td></tr>
-<tr class="memdesc:group__system__callbacks"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to notify the user application of critical errors in the network core. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__netSys__Enums.html">Enumerations</a></td></tr>
-<tr class="memdesc:group__netSys__Enums"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerations of the System Core. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gacbdb47f5db69b26d449c22fdcf0ee90e" id="r_gacbdb47f5db69b26d449c22fdcf0ee90e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gacbdb47f5db69b26d449c22fdcf0ee90e">netErrorCode</a> { <br />
+&#160;&#160;<a class="el" href="#gacbdb47f5db69b26d449c22fdcf0ee90ea44ec7d45e7bf3969942300041a4f6ffd">netErrorMemAlloc</a>
+, <br />
+&#160;&#160;<a class="el" href="#gacbdb47f5db69b26d449c22fdcf0ee90ea8e8ff5afaa82e77fcd50be1d675705e9">netErrorMemFree</a>
+, <br />
+&#160;&#160;<a class="el" href="#gacbdb47f5db69b26d449c22fdcf0ee90eab0fe9f1ae7b0f149a914acd8e341eec9">netErrorMemCorrupt</a>
+, <br />
+&#160;&#160;<a class="el" href="#gacbdb47f5db69b26d449c22fdcf0ee90ea0f7f74dce19fa9cb7a6f40849fb9dbbf">netErrorConfig</a>
+, <br />
+&#160;&#160;<a class="el" href="#gacbdb47f5db69b26d449c22fdcf0ee90eaa1008513316729cccbbb518427ace62b">netErrorRtosCreate</a>
+, <br />
+&#160;&#160;<a class="el" href="#gacbdb47f5db69b26d449c22fdcf0ee90ea1d24ee4f36509e5a3e497955cae68621">netErrorUdpAlloc</a>
+, <br />
+&#160;&#160;<a class="el" href="#gacbdb47f5db69b26d449c22fdcf0ee90eae69744411821bf7eefda9428349fba79">netErrorTcpAlloc</a>
+, <br />
+&#160;&#160;<a class="el" href="#gacbdb47f5db69b26d449c22fdcf0ee90ea69804790270433cdf193be240978e01d">netErrorTcpState</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:gacbdb47f5db69b26d449c22fdcf0ee90e"><td class="mdescLeft">&#160;</td><td class="mdescRight">System Error code values.  <a href="#gacbdb47f5db69b26d449c22fdcf0ee90e">More...</a><br /></td></tr>
+<tr class="separator:gacbdb47f5db69b26d449c22fdcf0ee90e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>Core system functions to be called by user. </p>
-<p>System Functions represent the core of the protocol stack. They form an operating system that calls all other protocol module functions. The functions require a CMSIS-RTOS compatible RTOS to run and are not reentrant.</p>
-<p>The functions are part of the Network Component library and are defined in <b>rl_net.h</b>. </p>
+<p>Enumerations of the System Core. </p>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="gacbdb47f5db69b26d449c22fdcf0ee90e" name="gacbdb47f5db69b26d449c22fdcf0ee90e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacbdb47f5db69b26d449c22fdcf0ee90e">&#9670;&#160;</a></span>netErrorCode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#gacbdb47f5db69b26d449c22fdcf0ee90e">netErrorCode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>System Error code values. </p>
+<p><b>Parameter for:</b></p><ul>
+<li><a class="el" href="group__system__callbacks.html#gaf02a1f2b5eede7988b3d29441d58acf2">netHandleError</a> </li>
+</ul>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gacbdb47f5db69b26d449c22fdcf0ee90ea44ec7d45e7bf3969942300041a4f6ffd" name="gacbdb47f5db69b26d449c22fdcf0ee90ea44ec7d45e7bf3969942300041a4f6ffd"></a>netErrorMemAlloc&#160;</td><td class="fielddoc"><p>Memory allocation failed, out of memory. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gacbdb47f5db69b26d449c22fdcf0ee90ea8e8ff5afaa82e77fcd50be1d675705e9" name="gacbdb47f5db69b26d449c22fdcf0ee90ea8e8ff5afaa82e77fcd50be1d675705e9"></a>netErrorMemFree&#160;</td><td class="fielddoc"><p>Memory release failed, memory slot is invalid. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gacbdb47f5db69b26d449c22fdcf0ee90eab0fe9f1ae7b0f149a914acd8e341eec9" name="gacbdb47f5db69b26d449c22fdcf0ee90eab0fe9f1ae7b0f149a914acd8e341eec9"></a>netErrorMemCorrupt&#160;</td><td class="fielddoc"><p>Memory corruption detected. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gacbdb47f5db69b26d449c22fdcf0ee90ea0f7f74dce19fa9cb7a6f40849fb9dbbf" name="gacbdb47f5db69b26d449c22fdcf0ee90ea0f7f74dce19fa9cb7a6f40849fb9dbbf"></a>netErrorConfig&#160;</td><td class="fielddoc"><p>Network configuration error found. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gacbdb47f5db69b26d449c22fdcf0ee90eaa1008513316729cccbbb518427ace62b" name="gacbdb47f5db69b26d449c22fdcf0ee90eaa1008513316729cccbbb518427ace62b"></a>netErrorRtosCreate&#160;</td><td class="fielddoc"><p>RTOS object creation failed. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gacbdb47f5db69b26d449c22fdcf0ee90ea1d24ee4f36509e5a3e497955cae68621" name="gacbdb47f5db69b26d449c22fdcf0ee90ea1d24ee4f36509e5a3e497955cae68621"></a>netErrorUdpAlloc&#160;</td><td class="fielddoc"><p>No free UDP sockets available. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gacbdb47f5db69b26d449c22fdcf0ee90eae69744411821bf7eefda9428349fba79" name="gacbdb47f5db69b26d449c22fdcf0ee90eae69744411821bf7eefda9428349fba79"></a>netErrorTcpAlloc&#160;</td><td class="fielddoc"><p>No free TCP sockets available. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gacbdb47f5db69b26d449c22fdcf0ee90ea69804790270433cdf193be240978e01d" name="gacbdb47f5db69b26d449c22fdcf0ee90ea69804790270433cdf193be240978e01d"></a>netErrorTcpState&#160;</td><td class="fielddoc"><p>TCP socket in undefined state. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

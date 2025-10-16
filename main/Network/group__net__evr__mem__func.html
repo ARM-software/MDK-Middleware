@@ -144,6 +144,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga8c1117588d7fb365641978f687385a9e" id="r_ga8c1117588d7fb365641978f687385a9e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga8c1117588d7fb365641978f687385a9e">EvrNetMEM_InitMemory</a> (void *base, uint32_t size, uint32_t limit0, uint32_t limit1)</td></tr>
 <tr class="memdesc:ga8c1117588d7fb365641978f687385a9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on initialize memory management (Op)  <br /></td></tr>
 <tr class="separator:ga8c1117588d7fb365641978f687385a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b961b01b423bab37c0a4ed8ff1672a5" id="r_ga6b961b01b423bab37c0a4ed8ff1672a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga6b961b01b423bab37c0a4ed8ff1672a5">EvrNetMEM_MutexCreateFailed</a> (void)</td></tr>
+<tr class="memdesc:ga6b961b01b423bab37c0a4ed8ff1672a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on failure to create memory management mutex (Error)  <br /></td></tr>
+<tr class="separator:ga6b961b01b423bab37c0a4ed8ff1672a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab911958f0d9b335a303d13182fcc891d" id="r_gab911958f0d9b335a303d13182fcc891d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gab911958f0d9b335a303d13182fcc891d">EvrNetMEM_AllocMemory</a> (void *mem, uint32_t size, uint32_t used, uint32_t blocks)</td></tr>
 <tr class="memdesc:gab911958f0d9b335a303d13182fcc891d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on request to allocate memory (Op)  <br /></td></tr>
 <tr class="separator:gab911958f0d9b335a303d13182fcc891d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -453,12 +456,35 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The event <b>InitMemory</b> is created when the Network Memory Management is initialized, that is, when the function <a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed.</p>
+<p>The event <b>InitMemory</b> is created when the Network Memory Management is initialized, that is, when the function <a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> is executed.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>base:</b> memory pool base address.</li>
 <li><b>size:</b> size of the memory pool in bytes.</li>
 <li><b>limit_0:</b> upper limit for ethernet and BSD receive buffering in bytes.</li>
 <li><b>limit_1:</b> upper limit for TCP send buffering in bytes. </li>
+</ul>
+
+</div>
+</div>
+<a id="ga6b961b01b423bab37c0a4ed8ff1672a5" name="ga6b961b01b423bab37c0a4ed8ff1672a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6b961b01b423bab37c0a4ed8ff1672a5">&#9670;&#160;</a></span>EvrNetMEM_MutexCreateFailed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void EvrNetMEM_MutexCreateFailed </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event on failure to create memory management mutex (Error) </p>
+<p>The event <b>MutexCreateFailed</b> is generated, if the function <a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> could not create the mutex for the Network Memory Management.</p>
+<p><b>Value</b> in the Event Recorder shows:</p><ul>
+<li><b>mutex:</b> netMemory_Mutex. </li>
 </ul>
 
 </div>
@@ -514,7 +540,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Event on de-initialize memory management (Op) </p>
-<p>The event <b>UninitMemory</b> is created when the function <a class="el" href="group__netSys__Func.html#gaeccbc594239e8a091514b5c225a642bf">netUninitialize</a> is executed. </p>
+<p>The event <b>UninitMemory</b> is created when the function <a class="el" href="group__system__user__api.html#gaeccbc594239e8a091514b5c225a642bf">netUninitialize</a> is executed. </p>
 
 </div>
 </div>

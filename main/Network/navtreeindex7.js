@@ -57,6 +57,13 @@ var NAVTREEINDEX7 =
 "group__starting__sntp.html#ga49dec604e375bb532e8458f6e0041db5":[10,1,8,0,3],
 "group__starting__sntp.html#ga5fb2de3e22a5aac8c29e1e7efdb567ca":[10,1,8,0,1],
 "group__starting__sntp.html#ga8dc2f92ecc5cce12552598ce50267ac9":[10,1,8,0,0],
+"group__system__callbacks.html":[10,5,1],
+"group__system__callbacks.html#gaf02a1f2b5eede7988b3d29441d58acf2":[10,5,1,0],
+"group__system__user__api.html":[10,5,0],
+"group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73":[10,5,0,0],
+"group__system__user__api.html#ga141ae4581698cb95e5fc5c8458fa9710":[10,5,0,2],
+"group__system__user__api.html#ga6eda1bb2895a98252a851160c15111a5":[10,5,0,1],
+"group__system__user__api.html#gaeccbc594239e8a091514b5c225a642bf":[10,5,0,3],
 "group__tcp__user__api.html":[10,2,1,0],
 "group__tcp__user__api.html#ga0177787edfb88661613c15cd1d10947a":[10,2,1,0,10],
 "group__tcp__user__api.html#ga0b32a74e8fc2d3d3fcea041d3958f4e6":[10,2,1,0,14],
@@ -242,12 +249,5 @@ var NAVTREEINDEX7 =
 "group__ws__user__api.html#gad81dac7ce74d989520bb3c0a176f4b83":[10,1,0,2,4],
 "group__ws__user__api.html#gaed5c02387e7f21bbcd0114620297c08f":[10,1,0,2,8],
 "group__ws__web__pages.html":[10,1,0,1],
-"group__ws__web__technologies.html":[10,1,0,0],
-"index.html":[],
-"index.html":[0],
-"index.html#doc_structure":[0,0],
-"migration_guide.html":[9],
-"migration_guide.html#mig_nw_configuration":[9,1],
-"migration_guide.html#mig_nw_configuration_net_config_c":[9,1,0],
-"migration_guide.html#mig_nw_configuration_net_debug":[9,1,1]
+"group__ws__web__technologies.html":[10,1,0,0]
 };

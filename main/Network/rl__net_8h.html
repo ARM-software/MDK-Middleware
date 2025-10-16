@@ -657,6 +657,26 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ga5675a3b88ee02986ae15ae3bb8135551"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status code values returned by Network library functions.  <a href="group__netStatusErrorCodes.html#ga5675a3b88ee02986ae15ae3bb8135551">More...</a><br /></td></tr>
 <tr class="separator:ga5675a3b88ee02986ae15ae3bb8135551"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacbdb47f5db69b26d449c22fdcf0ee90e" id="r_gacbdb47f5db69b26d449c22fdcf0ee90e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__netSys__Enums.html#gacbdb47f5db69b26d449c22fdcf0ee90e">netErrorCode</a> { <br />
+&#160;&#160;<a class="el" href="group__netSys__Enums.html#gacbdb47f5db69b26d449c22fdcf0ee90ea44ec7d45e7bf3969942300041a4f6ffd">netErrorMemAlloc</a>
+, <br />
+&#160;&#160;<a class="el" href="group__netSys__Enums.html#gacbdb47f5db69b26d449c22fdcf0ee90ea8e8ff5afaa82e77fcd50be1d675705e9">netErrorMemFree</a>
+, <br />
+&#160;&#160;<a class="el" href="group__netSys__Enums.html#gacbdb47f5db69b26d449c22fdcf0ee90eab0fe9f1ae7b0f149a914acd8e341eec9">netErrorMemCorrupt</a>
+, <br />
+&#160;&#160;<a class="el" href="group__netSys__Enums.html#gacbdb47f5db69b26d449c22fdcf0ee90ea0f7f74dce19fa9cb7a6f40849fb9dbbf">netErrorConfig</a>
+, <br />
+&#160;&#160;<a class="el" href="group__netSys__Enums.html#gacbdb47f5db69b26d449c22fdcf0ee90eaa1008513316729cccbbb518427ace62b">netErrorRtosCreate</a>
+, <br />
+&#160;&#160;<a class="el" href="group__netSys__Enums.html#gacbdb47f5db69b26d449c22fdcf0ee90ea1d24ee4f36509e5a3e497955cae68621">netErrorUdpAlloc</a>
+, <br />
+&#160;&#160;<a class="el" href="group__netSys__Enums.html#gacbdb47f5db69b26d449c22fdcf0ee90eae69744411821bf7eefda9428349fba79">netErrorTcpAlloc</a>
+, <br />
+&#160;&#160;<a class="el" href="group__netSys__Enums.html#gacbdb47f5db69b26d449c22fdcf0ee90ea69804790270433cdf193be240978e01d">netErrorTcpState</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:gacbdb47f5db69b26d449c22fdcf0ee90e"><td class="mdescLeft">&#160;</td><td class="mdescRight">System Error code values.  <a href="group__netSys__Enums.html#gacbdb47f5db69b26d449c22fdcf0ee90e">More...</a><br /></td></tr>
+<tr class="separator:gacbdb47f5db69b26d449c22fdcf0ee90e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae1f17f41d866b528526d55ea58ba162e" id="r_gae1f17f41d866b528526d55ea58ba162e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__netUDP__Enums.html#gae1f17f41d866b528526d55ea58ba162e">netUDP_Option</a> { <br />
 &#160;&#160;<a class="el" href="group__netUDP__Enums.html#gae1f17f41d866b528526d55ea58ba162ea094cc7471980a31862e4018d33bdf062">netUDP_OptionTOS</a> = 0
 , <br />
@@ -1050,16 +1070,19 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga0c68e74df79a37750413f72518f63f73" id="r_ga0c68e74df79a37750413f72518f63f73"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__netStatusErrorCodes.html#ga5675a3b88ee02986ae15ae3bb8135551">netStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__netSys__Func.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> (void)</td></tr>
+<tr class="memitem:ga0c68e74df79a37750413f72518f63f73" id="r_ga0c68e74df79a37750413f72518f63f73"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__netStatusErrorCodes.html#ga5675a3b88ee02986ae15ae3bb8135551">netStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__system__user__api.html#ga0c68e74df79a37750413f72518f63f73">netInitialize</a> (void)</td></tr>
 <tr class="memdesc:ga0c68e74df79a37750413f72518f63f73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize Network Component and interfaces. [<a class="el" href="group__function__categories.html#not_thread-safe">not_thread-safe</a>].  <br /></td></tr>
 <tr class="separator:ga0c68e74df79a37750413f72518f63f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeccbc594239e8a091514b5c225a642bf" id="r_gaeccbc594239e8a091514b5c225a642bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__netStatusErrorCodes.html#ga5675a3b88ee02986ae15ae3bb8135551">netStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__netSys__Func.html#gaeccbc594239e8a091514b5c225a642bf">netUninitialize</a> (void)</td></tr>
+<tr class="memitem:gaeccbc594239e8a091514b5c225a642bf" id="r_gaeccbc594239e8a091514b5c225a642bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__netStatusErrorCodes.html#ga5675a3b88ee02986ae15ae3bb8135551">netStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__system__user__api.html#gaeccbc594239e8a091514b5c225a642bf">netUninitialize</a> (void)</td></tr>
 <tr class="memdesc:gaeccbc594239e8a091514b5c225a642bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initialize Network Component and interfaces. [<a class="el" href="group__function__categories.html#not_thread-safe">not_thread-safe</a>].  <br /></td></tr>
 <tr class="separator:gaeccbc594239e8a091514b5c225a642bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6eda1bb2895a98252a851160c15111a5" id="r_ga6eda1bb2895a98252a851160c15111a5"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__netSys__Func.html#ga6eda1bb2895a98252a851160c15111a5">netSYS_GetHostName</a> (void)</td></tr>
+<tr class="memitem:gaf02a1f2b5eede7988b3d29441d58acf2" id="r_gaf02a1f2b5eede7988b3d29441d58acf2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__system__callbacks.html#gaf02a1f2b5eede7988b3d29441d58acf2">netHandleError</a> (<a class="el" href="group__netSys__Enums.html#gacbdb47f5db69b26d449c22fdcf0ee90e">netErrorCode</a> error)</td></tr>
+<tr class="memdesc:gaf02a1f2b5eede7988b3d29441d58acf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle Network Component critical error. [<a class="el" href="group__function__categories.html#user-provided">user-provided</a>].  <br /></td></tr>
+<tr class="separator:gaf02a1f2b5eede7988b3d29441d58acf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6eda1bb2895a98252a851160c15111a5" id="r_ga6eda1bb2895a98252a851160c15111a5"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__system__user__api.html#ga6eda1bb2895a98252a851160c15111a5">netSYS_GetHostName</a> (void)</td></tr>
 <tr class="memdesc:ga6eda1bb2895a98252a851160c15111a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve localhost name. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  <br /></td></tr>
 <tr class="separator:ga6eda1bb2895a98252a851160c15111a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga141ae4581698cb95e5fc5c8458fa9710" id="r_ga141ae4581698cb95e5fc5c8458fa9710"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__netStatusErrorCodes.html#ga5675a3b88ee02986ae15ae3bb8135551">netStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__netSys__Func.html#ga141ae4581698cb95e5fc5c8458fa9710">netSYS_SetHostName</a> (const char *hostname)</td></tr>
+<tr class="memitem:ga141ae4581698cb95e5fc5c8458fa9710" id="r_ga141ae4581698cb95e5fc5c8458fa9710"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__netStatusErrorCodes.html#ga5675a3b88ee02986ae15ae3bb8135551">netStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__system__user__api.html#ga141ae4581698cb95e5fc5c8458fa9710">netSYS_SetHostName</a> (const char *hostname)</td></tr>
 <tr class="memdesc:ga141ae4581698cb95e5fc5c8458fa9710"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set localhost name. [<a class="el" href="group__function__categories.html#thread-safe">thread-safe</a>].  <br /></td></tr>
 <tr class="separator:ga141ae4581698cb95e5fc5c8458fa9710"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad087599bfea6f4d6c9e7bb601352fd16" id="r_gad087599bfea6f4d6c9e7bb601352fd16"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__udp__user__api.html#gad087599bfea6f4d6c9e7bb601352fd16">netUDP_GetSocket</a> (<a class="el" href="group__udp__user__api.html#gabcd039ca388ad7cb287d4e928cc9c334">netUDP_cb_t</a> cb_func)</td></tr>
