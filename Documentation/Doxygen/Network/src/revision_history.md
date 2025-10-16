@@ -8,7 +8,7 @@
     <tr>
       <td>V8.2.0</td>
       <td>
-        - improved \ref netHandleError system error handler
+        - added \ref netHandleError system error handler to the user API
         - improved BSD socket control with enhanced setsockopt and getsockopt functions
         - modified File System interface functions to be weakly linked, allowing user overrides
       </td>
