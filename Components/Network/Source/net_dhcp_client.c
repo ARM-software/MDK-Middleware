@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_dhcp_client.c
  * Purpose: Dynamic Host Configuration Client
@@ -78,7 +78,7 @@ void net_dhcp_client_init (void) {
   if (sock < 0) {
     ERRORF (DHCP,"Get_socket failed\n");
     EvrNetDHCP_GetSocketFailed ();
-    net_sys_error (NET_ERROR_UDP_ALLOC);
+    netHandleError (netErrorUdpAlloc);
     return;
   }
   dhcp_socket = sock & 0xFF;

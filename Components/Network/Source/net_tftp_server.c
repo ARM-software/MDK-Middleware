@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_tftp_server.c
  * Purpose: Trivial File Transfer Protocol Server
@@ -75,7 +75,7 @@ void net_tftp_server_init (void) {
   if (tftp_Socket == 0) {
     ERRORF (TFTP,"Get socket failed\n");
     EvrNetTFTPs_GetSocketFailed (0);
-    net_sys_error (NET_ERROR_UDP_ALLOC);
+    netHandleError (netErrorUdpAlloc);
     return;
   }
   for (i = 1, tftp_s = &tftp->Scb[0]; i <= tftp->NumSess; tftp_s++, i++) {
@@ -91,7 +91,7 @@ void net_tftp_server_init (void) {
       if (tftp_s->Socket == 0) {
         ERRORF (TFTP,"Session %d, Get socket failed\n",i);
         EvrNetTFTPs_GetSocketFailed (i & 0xFF);
-        net_sys_error (NET_ERROR_UDP_ALLOC);
+        netHandleError (netErrorUdpAlloc);
         return;
       }
     }

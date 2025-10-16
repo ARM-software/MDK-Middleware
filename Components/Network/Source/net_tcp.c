@@ -2027,7 +2027,7 @@ conn_reset:
       /* We should never come up to here! */
       ERRORF (TCP,"Socket %d, Invalid state\n",tcp_s->Id);
       EvrNetTCP_InvalidState (tcp_s->Id);
-      net_sys_error (NET_ERROR_TCP_STATE);
+      netHandleError (netErrorTcpState);
       break;
   }
 } /* End of net_tcp_process () */

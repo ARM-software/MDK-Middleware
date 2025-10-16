@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_telnet_server.c
  * Purpose: Telnet Server
@@ -71,7 +71,7 @@ void net_telnet_server_init (void) {
       teln_s->State = TELN_STATE_ERROR;
       ERRORF (TELNET,"Session %d, Get socket failed\n",i);
       EvrNetTeln_GetSocketFailed (i & 0xFF);
-      net_sys_error (NET_ERROR_TCP_ALLOC);
+      netHandleError (netErrorTcpAlloc);
       return;
     }
     teln_s->Id = i & 0xFF;

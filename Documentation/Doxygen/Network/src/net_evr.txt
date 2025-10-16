@@ -32,6 +32,16 @@ The event \b InitSystem is created when the function \ref netInitialize is execu
 */
 
 /**
+\fn __STATIC_INLINE void EvrNetSYS_MutexCreateFailed(void)
+\details
+The event \b MutexCreateFailed is generated, if the function \ref netInitialize could
+not create the mutex for the Network Core.
+
+\b Value in the Event Recorder shows:
+  - \b mutex: netCore_Mutex.
+*/
+
+/**
 \fn __STATIC_INLINE void EvrNetSYS_ThreadCreateFailed(void)
 \details
 The event \b ThreadCreateFailed is generated, if the function \ref netInitialize failed
@@ -48,7 +58,7 @@ The event \b TimerCreateFailed is generated, if the function \ref netInitialize 
 to create the Network Tick timer.
 
 \b Value in the Event Recorder shows:
-  - \b timer: net_tick.
+  - \b timer: netCore_Timer.
 */
 
 /**
@@ -134,6 +144,16 @@ that is, when the function \ref netInitialize is executed.
   - \b size:    size of the memory pool in bytes.
   - \b limit_0: upper limit for ethernet and BSD receive buffering in bytes.
   - \b limit_1: upper limit for TCP send buffering in bytes.
+*/
+
+/**
+\fn __STATIC_INLINE void EvrNetMEM_MutexCreateFailed(void)
+\details
+The event \b MutexCreateFailed is generated, if the function \ref netInitialize could
+not create the mutex for the Network Memory Management.
+
+\b Value in the Event Recorder shows:
+  - \b mutex: netMemory_Mutex.
 */
 
 /**

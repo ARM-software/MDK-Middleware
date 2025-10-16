@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_nbns_client.c
  * Purpose: NetBIOS Name Service Client
@@ -58,7 +58,7 @@ void net_nbns_client_init (void) {
   if (sock < 0) {
     ERRORF (NBNS,"Get_socket failed\n");
     EvrNetNBNS_GetSocketFailed ();
-    net_sys_error (NET_ERROR_UDP_ALLOC);
+    netHandleError (netErrorUdpAlloc);
     return;
   }
   nbns->Socket = sock & 0xFF;

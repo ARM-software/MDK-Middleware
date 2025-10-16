@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_http_server.c
  * Purpose: Web Server
@@ -99,7 +99,7 @@ void net_http_server_init (void) {
       http_s->State = HTTP_STATE_ERROR;
       ERRORF (HTTP,"Session %d, Get socket failed\n",i);
       EvrNetHTTPs_GetSocketFailed (i & 0xFF);
-      net_sys_error (NET_ERROR_TCP_ALLOC);
+      netHandleError (netErrorTcpAlloc);
       return;
     }
     if (tls_io) {

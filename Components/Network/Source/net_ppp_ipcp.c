@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ppp_ipcp.c
  * Purpose: PPP Internet Protocol Control
@@ -53,7 +53,7 @@ void net_ipcp_init (NET_PPP_CFG *h) {
       !net_addr4_aton (h->If->Ip4Cfg->SecDNS, LocM.SecDNS)) {
     ERRORF (PPP,"Init, IPv4 config error\n");
     EvrNetPPP_IpcpIp4ConfigError ();
-    net_sys_error (NET_ERROR_CONFIG);
+    netHandleError (netErrorConfig);
   }
   net_addr4_copy (ipcp_ctl->MyIP, LocM.IpAddr);
   __ALIGNED_UINT32(LocM.NetMask) = HTONL(PPP_NET_MASK);

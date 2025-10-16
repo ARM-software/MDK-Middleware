@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_smtp_client_core.c
  * Purpose: Mail Transfer Client core
@@ -57,7 +57,7 @@ void net_smtp_client_init (void) {
   if (smtp->Socket == 0) {
     ERRORF (SMTP,"Get socket failed\n");
     EvrNetSMTP_GetSocketFailed ();
-    net_sys_error (NET_ERROR_TCP_ALLOC);
+    netHandleError (netErrorTcpAlloc);
     return;
   }
   if (tls_io) {

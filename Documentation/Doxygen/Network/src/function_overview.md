@@ -386,6 +386,7 @@ The following list provides a brief overview of all Network Component functions.
 
 - \ref netInitialize &mdash; \copybrief netInitialize
 - \ref netUninitialize &mdash; \copybrief netUninitialize
+- \ref netHandleError &mdash; \copybrief netHandleError
 - \ref netSYS_GetHostName &mdash; \copybrief netSYS_GetHostName
 - \ref netSYS_SetHostName &mdash; \copybrief netSYS_SetHostName
 

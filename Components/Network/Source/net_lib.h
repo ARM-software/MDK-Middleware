@@ -93,17 +93,6 @@ typedef void *NETOS_ID;
 /// Network scheduler function type
 typedef void (*net_sys_fn_t) (void);
 
-/// System Error codes
-typedef enum net_error {
-  NET_ERROR_MEM_ALLOC,                  ///< Alloc memory failed, out of memory
-  NET_ERROR_MEM_FREE,                   ///< Free memory failed, memory slot invalid
-  NET_ERROR_MEM_CORRUPT,                ///< Memory corruption detected
-  NET_ERROR_CONFIG,                     ///< Network configuration error detected
-  NET_ERROR_UDP_ALLOC,                  ///< No free UDP sockets available
-  NET_ERROR_TCP_ALLOC,                  ///< No free TCP sockets available
-  NET_ERROR_TCP_STATE                   ///< TCP socket in undefined state
-} NET_ERROR;
-
 /// Frame buffer structure
 typedef struct net_frame {
   uint16_t length;                      ///< Length of data in frame
@@ -919,10 +908,6 @@ extern void netCore_Thread (void *arg);
 /// \brief Network core tick timer callback.
 /// \param[in]     arg           dummy parameter.
 extern void net_sys_tick (void *arg);
-
-/// \brief Signal Network Component error.
-/// \param[in]     error         system error code.
-extern void net_sys_error (NET_ERROR error);
 
 /// \brief Acquire Network core protection mutex.
 extern void net_sys_lock   (void);
