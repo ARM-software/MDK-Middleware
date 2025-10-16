@@ -4277,6 +4277,10 @@ unrecoverable error. In such cases, the typical response is to restart the netwo
 
 The argument \a error specifies the type of error that caused the function to be called.
 
+\note
+For recovery, the \a error is typically stored in a global variable, while cleanup and restart are handled asynchronously
+by another thread. This involves deinitializing the network component and its associated drivers, followed by reinitialization.
+
 \b Code \b Example
 \code
 void netHandleError (netErrorCode error) {
