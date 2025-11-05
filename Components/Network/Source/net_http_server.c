@@ -631,7 +631,7 @@ t_rep:        len += (uint32_t)http_strcpy ((char *)sendbuf+len, &http_s->Script
                 /* First execution of the script line */
                 http_s->CGIvar = 0;
               }
-c_rep:        v = netCGI_Script (&http_s->Script[2], (char *)sendbuf+len, 
+c_rep:        v = netCGI_Script (&http_s->Script[2], (char *)sendbuf+len,
                                  max_dsize-len, &http_s->CGIvar);
               len += (v & 0xFFFF);
               if (v & 0x80000000) {
@@ -984,7 +984,7 @@ uint32_t net_http_time (uint8_t hr, uint8_t min, uint8_t sec,
 
   /* Time zone correction */
   // utc += (int32_t)http_TZone * 3600;
-  
+
   /* Time in UTC format */
   return (utc);
 }
@@ -1363,7 +1363,7 @@ static int32_t http_add_header (NET_HTTP_INFO *http_s, char *buf) {
       tp = "application/octet-stream";
       break;
   }
-  /* Add Status Code OK, HTTP version is 1.1 */ 
+  /* Add Status Code OK, HTTP version is 1.1 */
   len  = net_strcpy (buf, "HTTP/1.1 200 OK\r\n");
   len += add_server_id (buf+len);
 
@@ -1969,7 +1969,7 @@ static uint32_t http_to_utc (const char *buf) {
   \description Date format "Thu, 10 Sep 2009 07:49:57 GMT"
 */
 static uint32_t utc_to_http (uint32_t utc, char *buf) {
-  static const uint16_t DYear[3] = {365,365,366};
+  static const uint16_t DYear[4] = {365,365,366,999};
   uint32_t hr,min,sec;
   uint32_t day,mon,year;
   uint32_t i,d;
@@ -1982,7 +1982,7 @@ static uint32_t utc_to_http (uint32_t utc, char *buf) {
   utc = utc / 60;
   hr  = utc % 24;
   utc = utc / 24;
-  
+
   /* Day of week */
   d = (utc + 3) % 7;
 
@@ -1991,14 +1991,14 @@ static uint32_t utc_to_http (uint32_t utc, char *buf) {
   utc  = utc % (4*365+1);
 
   /* Get current year */
-  for (i = 0; utc >= DYear[i]; ) {
-    utc -= DYear[i++];
+  for (i = 0; utc >= DYear[i]; i++) {
+    utc -= DYear[i];
   }
-  year += i; 
+  year += i;
 
   for (mon = 12; ; mon--) {
     day = DMonth[mon-1];
-    if (mon > 2 && (i == 2)) day++;
+    if ((mon > 2) && (i == 2)) day++;
     if (utc >= day) break;
   }
   day = utc - day + 1;
@@ -2403,7 +2403,7 @@ static int32_t http_strcpy (char *dp, const char *sp, int32_t max_len) {
 
   for (i = 0; i < max_len; i++) {
     char ch = dp[i] = sp[i];
-    if (ch == 0) {  
+    if (ch == 0) {
       break;
     }
     if (ch == '\n') {
