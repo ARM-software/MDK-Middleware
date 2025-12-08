@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    rl_usb.h
  * Purpose: USB User API
@@ -16,7 +16,7 @@
 
 #define MW_USB_VERSION_MAJOR           (8U)
 #define MW_USB_VERSION_MINOR           (0U)
-#define MW_USB_VERSION_PATCH           (0U)
+#define MW_USB_VERSION_PATCH           (1U)
 #define MW_USB_VERSION                ((MW_USB_VERSION_MAJOR * 10000000U) + \
                                        (MW_USB_VERSION_MINOR * 10000U)    + \
                                        (MW_USB_VERSION_PATCH))

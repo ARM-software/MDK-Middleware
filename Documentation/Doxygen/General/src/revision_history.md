@@ -14,7 +14,7 @@
     <td>
       - Network Component Version 8.2.0
       - FileSystem Component Version 8.0.2 (unchanged)
-      - USB Component Version 8.0.0 (unchanged)
+      - USB Component Version 8.0.1
     </td>
   </tr>
   <tr>

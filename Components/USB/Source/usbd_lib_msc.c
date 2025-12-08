@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_msc.c
  * Purpose: USB Device - Mass Storage device Class (MSC) module
@@ -385,7 +385,10 @@ static void USBD_MSC_ClrStallEP (uint8_t instance, uint8_t ep_addr) {
 
     // Compliance Test: rewrite CSW after clear halt
     if (ptr_msc_data->csw.dSignature == MSC_CSW_Signature) {
-      (void)USBD_DriverEndpointTransfer (device, USB_ENDPOINT_IN(ep_bulk_in), (uint8_t *)&ptr_msc_data->csw, sizeof(ptr_msc_data->csw));
+      // Copy CSW to bulk_buf
+      memcpy(ptr_msc_cfg->bulk_buf, &ptr_msc_data->csw, sizeof(ptr_msc_data->csw));
+
+      (void)USBD_DriverEndpointTransfer (device, USB_ENDPOINT_IN(ep_bulk_in), ptr_msc_cfg->bulk_buf, sizeof(ptr_msc_data->csw));
     }
   }
 }
@@ -1578,7 +1581,11 @@ static void USBD_MSC_SetCSW (uint8_t instance) {
   ptr_msc_data = ptr_msc_cfg->data_ptr;
 
   ptr_msc_data->csw.dSignature = MSC_CSW_Signature;
-  (void)USBD_DriverEndpointTransfer (ptr_msc_cfg->dev_num, USB_ENDPOINT_IN(ptr_msc_cfg->ep_bulk_in), (uint8_t *)&ptr_msc_data->csw, sizeof(ptr_msc_data->csw));
+
+  // Copy CSW to bulk_buf
+  memcpy(ptr_msc_cfg->bulk_buf, &ptr_msc_data->csw, sizeof(ptr_msc_data->csw));
+
+  (void)USBD_DriverEndpointTransfer (ptr_msc_cfg->dev_num, USB_ENDPOINT_IN(ptr_msc_cfg->ep_bulk_in), ptr_msc_cfg->bulk_buf, sizeof(ptr_msc_data->csw));
   ptr_msc_data->bulk_stage = MSC_BS_CSW;
 }
 

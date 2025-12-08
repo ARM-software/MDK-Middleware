@@ -6,6 +6,12 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V8.0.1</td>
+      <td>
+        - USB Device: updated USB transfer handling to use only buffers from USB data buffers memory section
+      </td>
+    </tr>
+    <tr>
       <td>V8.0.0</td>
       <td>
         - removed CORE component variants
