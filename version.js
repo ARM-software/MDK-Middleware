@@ -1,6 +1,7 @@
 //--- list of versions‚ ---
 const versions = {
     "General": {
+        "usb_upd": "8.1.1-dev11",
         "main": "8.1.1-dev10",
         "latest": "8.1.0",
         "v8.0.0": "8.0.0"
