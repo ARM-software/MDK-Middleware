@@ -1816,8 +1816,8 @@ out_ok:
         break;
     }
 stall:
-    (void)USBD_DriverEndpointStall (device, 0x00U, true);       // Stall data   OUT direction
-    (void)USBD_DriverEndpointStall (device, 0x80U, true);       // Stall status IN  direction
+    (void)USBD_DriverEndpointStall (device, 0x00U, true);       // Stall OUT direction
+    (void)USBD_DriverEndpointStall (device, 0x80U, true);       // Stall IN  direction
     ptr_dev_data->ep0_data.cnt = 0U;                            // Clear expected data phase data
     return;
 setup_ok:                                                       // SETUP packet processed successfully
