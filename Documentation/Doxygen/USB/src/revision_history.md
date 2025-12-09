@@ -9,6 +9,7 @@
       <td>V8.0.1</td>
       <td>
         - USB Device: updated USB transfer handling to use only buffers from USB data buffers memory section
+        - USB Device: improved USB MSC compliance
       </td>
     </tr>
     <tr>

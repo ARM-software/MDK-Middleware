@@ -1816,19 +1816,8 @@ out_ok:
         break;
     }
 stall:
-    if (ptr_dev_data->setup_packet.bmRequestType.Dir == USB_REQUEST_HOST_TO_DEVICE) {
-      if (ptr_dev_data->setup_packet.wLength != 0U) {
-        (void)USBD_DriverEndpointStall (device, 0x00U, true);   // Stall data   OUT direction
-      } else {
-        (void)USBD_DriverEndpointStall (device, 0x80U, true);   // Stall status IN  direction
-      }
-    } else {
-      if (ptr_dev_data->setup_packet.wLength != 0U) {
-        (void)USBD_DriverEndpointStall (device, 0x80U, true);   // Stall data   IN  direction
-      } else {
-        (void)USBD_DriverEndpointStall (device, 0x00U, true);   // Stall status OUT direction
-      }
-    }
+    (void)USBD_DriverEndpointStall (device, 0x00U, true);       // Stall data   OUT direction
+    (void)USBD_DriverEndpointStall (device, 0x80U, true);       // Stall status IN  direction
     ptr_dev_data->ep0_data.cnt = 0U;                            // Clear expected data phase data
     return;
 setup_ok:                                                       // SETUP packet processed successfully
