@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_core.c
  * Purpose: USB Device - Core module
@@ -838,7 +838,9 @@ static bool USBD_ReqGetStatus (uint8_t device) {
   switch (ptr_dev_data->setup_packet.bmRequestType.Recipient) {
     case USB_REQUEST_TO_DEVICE:
       if (ptr_dev_data->setup_packet.wIndex == 0U) {
-        ptr_ep0_data->data = (uint8_t *)&ptr_dev_data->device_status;
+        ptr_ep0_buf[0] = ptr_dev_data->device_status & 0xFFU;
+        ptr_ep0_buf[1] = (ptr_dev_data->device_status >> 8) & 0xFFU;
+        ptr_ep0_data->data = ptr_ep0_buf;
         ptr_ep0_data->cnt  = 2U;
         return true;
       }
@@ -1184,12 +1186,14 @@ static bool USBD_ReqGetMSDescriptor (uint8_t device) {
 /// \return        true                 success
 /// \return        false                fail
 static bool USBD_ReqGetConfiguration (uint8_t device) {
-  usbd_data_t *ptr_dev_data;
+  const usbd_dev_t  *ptr_dev_cfg;
+        usbd_data_t *ptr_dev_data;
 
   if (device >= usbd_dev_num) { return false; }         // Check if device exists
 
   // Check all necessary pointers
-  ptr_dev_data = usbd_dev_ptr[device]->data_ptr; if (ptr_dev_data == NULL) { return false; }
+  ptr_dev_cfg  = usbd_dev_ptr[device];  if (ptr_dev_cfg  == NULL) { return false; }
+  ptr_dev_data = ptr_dev_cfg->data_ptr; if (ptr_dev_data == NULL) { return false; }
 
   // Check the request parameters
   if ((ptr_dev_data->setup_packet.wValue  != 0U) ||
@@ -1200,7 +1204,8 @@ static bool USBD_ReqGetConfiguration (uint8_t device) {
 
   // Execute request
   if (ptr_dev_data->setup_packet.bmRequestType.Recipient == USB_REQUEST_TO_DEVICE) {
-    ptr_dev_data->ep0_data.data = (uint8_t *)((uint32_t)&ptr_dev_data->configuration);
+    ptr_dev_cfg->ep0_buf[0]     = ptr_dev_data->configuration;
+    ptr_dev_data->ep0_data.data = ptr_dev_cfg->ep0_buf;
     ptr_dev_data->ep0_data.cnt  = 1U;
     return true;
   }
@@ -1393,7 +1398,8 @@ static bool USBD_ReqGetInterface (uint8_t device) {
     if (ptr_dev_data->setup_packet.wIndex >= (uint16_t)ptr_dev_cfg->if_num) {
       return false;
     }
-    ptr_dev_data->ep0_data.data = &ptr_dev_cfg->alt_setting[ptr_dev_data->setup_packet.wIndex];
+    ptr_dev_cfg->ep0_buf[0]     = ptr_dev_cfg->alt_setting[ptr_dev_data->setup_packet.wIndex];
+    ptr_dev_data->ep0_data.data = ptr_dev_cfg->ep0_buf;
     ptr_dev_data->ep0_data.cnt  = 1U;
     return true;
   }
