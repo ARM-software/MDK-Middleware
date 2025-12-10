@@ -2055,6 +2055,9 @@ not_supp:   ERRORF (BSD,"Setsockopt, Socket %d opt not supported\n",sock);
         default:
           goto inv_arg;
       }
+      break;
+#endif
+
     case IPPROTO_TCP:
       /* TCP protocol level */
       if (bsd_s->Type != SOCK_STREAM) {
@@ -2106,7 +2109,6 @@ not_supp:   ERRORF (BSD,"Setsockopt, Socket %d opt not supported\n",sock);
           goto inv_arg;
       }
       break;
-#endif
 
     default:
       goto inv_arg;
