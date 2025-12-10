@@ -4934,6 +4934,15 @@ void BSD_SocketGetOpt (void) {
     /* Should be different from the initial value */
     TH_ASSERT  ((optval != 0x72A5A2E1) && (optlen == 4));
 
+    /* Get option BINDTODEVICE */
+    optlen = sizeof(optval) + 1;
+    optval = 0x72A5A2E1;
+    ARG_GETOPT (sock, SOL_SOCKET, SO_BINDTODEVICE, (char *)&optval, &optlen);
+    TH_EXECUTE (F_GETOPT, BSD_TIMEOUT);
+    TH_ASSERT  (io.rc == 0);
+    /* Should be unassigned device */
+    TH_ASSERT  ((optval == 0) && (optlen == 4));
+
     /* Get option socket TYPE */
     optlen = sizeof(optval) + 1;
     optval = UINT32_MAX;
@@ -4942,6 +4951,33 @@ void BSD_SocketGetOpt (void) {
     TH_ASSERT  (io.rc == 0);
     /* Should be SOCK_STREAM type */
     TH_ASSERT  ((optval == SOCK_STREAM) && (optlen == 4));
+
+    /* Get option TCP_QUICKACK */
+    optlen = sizeof(optval) + 1;
+    optval = 0x72A5A2E1;
+    ARG_GETOPT (sock, IPPROTO_TCP , TCP_QUICKACK, (char *)&optval,  &optlen);
+    TH_EXECUTE (F_GETOPT, BSD_TIMEOUT);
+    TH_ASSERT  (io.rc == 0);
+    /* Should be enabled (default) */
+    TH_ASSERT  ((optval == 1) && (optlen == 4));
+
+    /* Get option TCP_FLOWCTRL */
+    optlen = sizeof(optval) + 1;
+    optval = 0x72A5A2E1;
+    ARG_GETOPT (sock, IPPROTO_TCP , TCP_FLOWCTRL , (char *)&optval, &optlen);
+    TH_EXECUTE (F_GETOPT, BSD_TIMEOUT);
+    TH_ASSERT  (io.rc == 0);
+    /* Should be disabled (default) */
+    TH_ASSERT  ((optval == 0) && (optlen == 4));
+
+    /* Get option TCP_KEEPIDLE */
+    optlen = sizeof(optval) + 1;
+    optval = 0x72A5A2E1;
+    ARG_GETOPT (sock, IPPROTO_TCP , TCP_KEEPIDLE , (char *)&optval, &optlen);
+    TH_EXECUTE (F_GETOPT, BSD_TIMEOUT);
+    TH_ASSERT  (io.rc == 0);
+    /* Should be 120 sec (default) */
+    TH_ASSERT  ((optval == 120) && (optlen == 4));
 
     /* Close stream socket */
     io.sock = sock;
@@ -5178,11 +5214,35 @@ void BSD_SocketSetOpt (void) {
     TH_EXECUTE (F_SETOPT, BSD_TIMEOUT);
     TH_ASSERT  (io.rc == 0);
 
+    /* Set option BINDTODEVICE */
+    optval = NET_IF_CLASS_ETH+0;
+    ARG_SETOPT (sock, SOL_SOCKET, SO_BINDTODEVICE, (char *)&optval, sizeof(optval));
+    TH_EXECUTE (F_SETOPT, BSD_TIMEOUT);
+    TH_ASSERT  (io.rc == 0);
+
     /* Set option socket TYPE (get only) */
     optval = SOCK_STREAM;
     ARG_SETOPT (sock, SOL_SOCKET, SO_TYPE, (char *)&optval, sizeof(optval));
     TH_EXECUTE (F_SETOPT, BSD_TIMEOUT);
     TH_ASSERT  (io.rc == BSD_EINVAL);
+
+    /* Set option TCP_QUICKACK */
+    optval = 1;
+    ARG_SETOPT (sock, IPPROTO_TCP, TCP_QUICKACK, (char *)&optval, sizeof(optval));
+    TH_EXECUTE (F_SETOPT, BSD_TIMEOUT);
+    TH_ASSERT  (io.rc == 0);
+
+    /* Set option TCP_FLOWCTRL */
+    optval = 1;
+    ARG_SETOPT (sock, IPPROTO_TCP, TCP_FLOWCTRL , (char *)&optval, sizeof(optval));
+    TH_EXECUTE (F_SETOPT, BSD_TIMEOUT);
+    TH_ASSERT  (io.rc == 0);
+
+    /* Set option TCP_KEEPIDLE */
+    optval = 600;
+    ARG_SETOPT (sock, IPPROTO_TCP, TCP_KEEPIDLE , (char *)&optval, sizeof(optval));
+    TH_EXECUTE (F_SETOPT, BSD_TIMEOUT);
+    TH_ASSERT  (io.rc == 0);
 
     /* Close stream socket */
     io.sock = sock;
@@ -7131,11 +7191,11 @@ __NO_RETURN static void Th_StreamRate (IO_STREAMRATE *io) {
         io->rc = bsd->socket (AF_INET, SOCK_STREAM, IPPROTO_TCP);
         break;
 
-      case F_DOWNLOAD:
+      case F_DOWNLOAD: {
         /* Downstream test, server is sender */
         /* Enable delayed acknowledge */
-        val = 1;
-        bsd->ioctlsocket (io->sock, 2, (unsigned long *)&val);
+        char optval = 0;
+        bsd->setsockopt (io->sock, IPPROTO_TCP, TCP_QUICKACK, (char *)&optval, sizeof(optval));
 
         for (n = 0; ; n += rc) {
           rc = bsd->recv (io->sock, buffer, TEST_BSIZE, 0);
@@ -7148,12 +7208,13 @@ __NO_RETURN static void Th_StreamRate (IO_STREAMRATE *io) {
           if (rc <= 0) break;
         }
         io->rc = n;
-        break;
+      } break;
 
       case F_UPLOAD:
         /* Upstream test, server is receiver */
         n = net_strcpy (buffer, "Block[0]");
         memset (buffer+n, 'a', TEST_BSIZE-n);
+        osDelay (20);
         tout  = SYSTICK_MS(4000);
         ticks = GET_SYSTICK();
         i = n = 0;
