@@ -2,7 +2,6 @@
 const versions = {
     "General": {
         "latest": "8.2.0",
-        "usb_upd": "8.1.1-dev12",
         "v8.1.0": "8.1.0",
         "v8.0.0": "8.0.0"
     },
