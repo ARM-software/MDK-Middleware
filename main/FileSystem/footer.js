@@ -3,5 +3,5 @@ function writeHeader() {
 };
 
 function writeFooter()  {
-    document.write('Generated on Thu Dec 11 2025 09:18:28 for File System Component 8.0.2. Copyright &copy; 2025 Arm Limited (or its affiliates). All rights reserved.');
+    document.write('Generated on Thu Dec 11 2025 09:54:38 for File System Component 8.0.2. Copyright &copy; 2025 Arm Limited (or its affiliates). All rights reserved.');
 };
