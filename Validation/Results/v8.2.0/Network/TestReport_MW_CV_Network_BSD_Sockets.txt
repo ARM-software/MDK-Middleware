@@ -1,4 +1,4 @@
-MDK Middleware Component Test Suite v1.0.0   Dec  9 2025   13:11:06 
+MDK Middleware Component Test Suite v1.0.0   Dec 11 2025   08:43:56
 
 Unit Test 01: MDK Middleware: Network          v8.2.0
 Test Case 01: BSD_Initialize                            (PASSED)
@@ -32,12 +32,12 @@ Test Case 28: BSD_Send_Fragmented                       (PASSED)
 Test Case 29: BSD_Recv_Fragmented                       (PASSED)
 Test Case 30: BSD_Test_Speed                            (PASSED)
 Test Case 31: BSD_Concurrent_Socket                     (PASSED)
-Test Case 32: BSD_Downstream_Rate                       : Speed 3972 KB/s
+Test Case 32: BSD_Downstream_Rate                       : Speed 3170 KB/s
                                                         (PASSED)
-Test Case 33: BSD_Upstream_Rate                         : Speed 8813 KB/s
+Test Case 33: BSD_Upstream_Rate                         : Speed 8844 KB/s
                                                         (PASSED)
 Test Case 34: BSD_Uninitialize                          (PASSED)
 
-Unit Test Time:    1 min 16 sec
+Unit Test Time:    1 min 15 sec
 Unit Test Summary: 34 Tests, 34 Executed, 34 Passed, 0 Failed.
 Unit Test Result:  PASSED
