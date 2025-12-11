@@ -1,0 +1,20 @@
+MDK Middleware Component Test Suite v1.0.0   Dec  9 2025   12:50:54 
+
+Unit Test 01: MDK Middleware: USB Device - CDC ACM v8.0.1
+Test Case 01: CB : USBD_CDC0_ACM_Initialize             (PASSED)
+Test Case 02: CB : USBD_CDC0_ACM_Reset                  (PASSED)
+Test Case 03: CB : USBD_CDC0_ACM_SetLineCoding          (PASSED)
+Test Case 04: CB : USBD_CDC0_ACM_GetLineCoding          (PASSED)
+Test Case 05: CB : USBD_CDC0_ACM_SetControlLineState    (PASSED)
+Test Case 06: CB : USBD_CDC0_ACM_DataReceived           (PASSED)
+Test Case 07: CB : USBD_CDC0_ACM_DataSent               (PASSED)
+Test Case 08: API: USBD_CDC_ACM_GetChar                 (PASSED)
+Test Case 09: API: USBD_CDC_ACM_PutChar                 (PASSED)
+Test Case 10: API: USBD_CDC_ACM_WriteData               (PASSED)
+Test Case 11: API: USBD_CDC_ACM_DataAvailable           (PASSED)
+Test Case 12: API: USBD_CDC_ACM_Notify                  (PASSED)
+Test Case 13: CB : USBD_CDC0_ACM_Uninitialize           (PASSED)
+
+Unit Test Time:    0 min 4 sec
+Unit Test Summary: 13 Tests, 13 Executed, 13 Passed, 0 Failed.
+Unit Test Result:  PASSED
