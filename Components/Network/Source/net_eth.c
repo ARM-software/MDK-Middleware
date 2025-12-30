@@ -872,9 +872,8 @@ static void eth_check_link (NET_ETH_CFG *h) {
     /* Enable checksum offload, based on capabilities */
     arg = (uint32_t)info.speed  << ARM_ETH_MAC_SPEED_Pos |
           (uint32_t)info.duplex << ARM_ETH_MAC_DUPLEX_Pos;
-    if (h->If->Ip4Cfg) {
-      arg |= ARM_ETH_MAC_ADDRESS_BROADCAST;
-    }
+    /* Enable broadcast for DHCP and general communication */
+    arg |= ARM_ETH_MAC_ADDRESS_BROADCAST;
     if (ctrl->Flags & ETH_FLAG_MCAST_ALL) {
       arg |= ARM_ETH_MAC_ADDRESS_MULTICAST;
     }
