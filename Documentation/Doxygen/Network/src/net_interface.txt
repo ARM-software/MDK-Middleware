@@ -409,7 +409,7 @@ can replicate the stateful address assignment trough a single authority on the n
 similar to DHCP on IPv4 networks also advertising additional information like time servers, name servers and bootfile servers
 which would be missing using SLAAC only.
 
-\note MDK-Pro supports both, SLAAC and DHCPv6 dynamic address discovery methods.
+\note The IPv4/IPv6 dual-stack variant supports both SLAAC and DHCPv6 dynamic address discovery methods.
 */
 
 
