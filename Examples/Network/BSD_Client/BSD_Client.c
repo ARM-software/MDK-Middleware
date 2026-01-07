@@ -86,7 +86,7 @@ static __NO_RETURN void Client (void *argument) {
 #endif
 
 #if (IP6_ENABLE)
-    /* Create IPv6 socket address (MDK-Pro only) */
+    /* Create IPv6 socket address (IPv4/IPv6 dual-stack only) */
     SOCKADDR_IN6 addr6;
     addr6.sin6_family   = AF_INET6;
     addr6.sin6_port     = htons(SOCK_PORT);

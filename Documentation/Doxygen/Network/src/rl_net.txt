@@ -2,12 +2,10 @@
 \defgroup netGen_Func IP Address
 \brief IP Address functions can be used for various purposes.
 \details
-MDK Middleware is now part of two MDK editions: MDK-Professional and MDK-Plus. While users of MDK-Professional can use the
-IPv4/IPv6 dual-stack, users of MDK-Plus have access to the IPv4 implementation only. This is important when working with IP
-addresses. MDK-Plus users can still provide an IPv6 address (\ref NET_ADDR_IP6) as a function parameter. But in this case,
-the IPv4-only library will fail with the error code \ref netInvalidParameter.
-
-The following routines are not reentrant.
+When IPv4/IPv6 dual-stack support is enabled in the network component configuration, users may supply either
+IPv4 or IPv6 addresses. If the network configuration is limited to IPv4-only, an IPv6 address (\ref NET_ADDR_IP6)
+may still be provided as a function parameter; however, the IPv4-only library does not support IPv6 addressing
+and will return the error code \ref netInvalidParameter.
 */
 
 /**
@@ -33,7 +31,6 @@ The functions are part of the Network Component library and are defined in \b %r
 \ingroup netSys_Func
 \brief Core system functions to be called by user.
 \details
-
 The network system functions provide the core mechanisms for initializing, managing, and handling events within
 the network stack. These functions support essential operations such as initialization, configuration, error management,
 and shutdown procedures. Include a callback function to handle critical, unrecoverable errors.
@@ -5724,7 +5721,7 @@ This function returns the following values:
 |\token{0}                     |No entry found                  |
 
 \note
-Currently, the function \b netFTPs_ffind requires the File System Component of the MDK-Professional Middleware to be present.
+Currently, the function \b netFTPs_ffind requires the File System Component of the MDK-Middleware to be present.
 
 The function interfaces to the File System Component and will be called by the Network Component automatically. If another
 file system will be used, refer to the reference implementation in the \b %FTP_Server_FS.c module.
