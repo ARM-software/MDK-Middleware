@@ -150,8 +150,7 @@ Content</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>IP Address functions can be used for various purposes. </p>
-<p>MDK Middleware is now part of two MDK editions: MDK-Professional and MDK-Plus. While users of MDK-Professional can use the IPv4/IPv6 dual-stack, users of MDK-Plus have access to the IPv4 implementation only. This is important when working with IP addresses. MDK-Plus users can still provide an IPv6 address (<a class="el" href="rl__net_8h.html#a5af8b5fa13b653a73d397cabe75ca4bb">NET_ADDR_IP6</a>) as a function parameter. But in this case, the IPv4-only library will fail with the error code <a class="el" href="rl__net_8h.html#ga5675a3b88ee02986ae15ae3bb8135551ac9c846926779787c13c01746e745adc1">netInvalidParameter</a>.</p>
-<p>The following routines are not reentrant. </p>
+<p>When IPv4/IPv6 dual-stack support is enabled in the network component configuration, users may supply either IPv4 or IPv6 addresses. If the network configuration is limited to IPv4-only, an IPv6 address (<a class="el" href="rl__net_8h.html#a5af8b5fa13b653a73d397cabe75ca4bb">NET_ADDR_IP6</a>) may still be provided as a function parameter; however, the IPv4-only library does not support IPv6 addressing and will return the error code <a class="el" href="rl__net_8h.html#ga5675a3b88ee02986ae15ae3bb8135551ac9c846926779787c13c01746e745adc1">netInvalidParameter</a>. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
