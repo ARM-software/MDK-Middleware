@@ -12,16 +12,8 @@
     </licenseSet>
   </licenseSets>
   <releases>
-    <release version="8.2.0-dev">
+    <release version="8.2.1-dev">
       Active development ...
-      Network Component Version 8.2.0
-      - fixed conversion from Unix time to HTTP-date format
-      - added netHandleError system error handler to the user API
-      - improved BSD socket control with enhanced setsockopt and getsockopt functions
-      - modified File System interface functions to be weakly linked, allowing user overrides
-      USB Component Version 8.0.1
-      - USB Device: updated USB transfer handling to use only buffers from USB data buffers memory section
-      - USB Device: improved USB MSC compliance
     </release>
     <release version="7.17.0" date="2024-01-17">
       Network Component Version 7.19.0
