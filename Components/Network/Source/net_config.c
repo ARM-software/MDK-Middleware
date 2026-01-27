@@ -1632,7 +1632,7 @@ NET_ICMP_CFG *const net_icmp_list[] = {
   &ppp0_icmp_config,
  #endif
  #if (SLIP_ENABLE)
-  slip0_icmp_config,
+  &slip0_icmp_config,
  #endif
   NULL
 };
