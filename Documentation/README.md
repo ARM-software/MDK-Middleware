@@ -8,7 +8,7 @@ The [MDK-Middleware](https://arm-software.github.io/MDK-Middleware/latest/Genera
 
 [MDK-Middleware](https://arm-software.github.io/MDK-Middleware/latest/General/index.html) uses a CMSIS-RTOS2-based real-time operating system for task scheduling, for example [Keil RTX5](https://github.com/ARM-software/CMSIS-RTX) or [CMSIS-FreeRTOS](https://github.com/arm-software/CMSIS-freertos).
 
-The *Network* component uses the [Arm Mbed TLS](https://www.keil.com/pack/ARM.mbedTLS.3.1.0.pack) stack to secure the TCP/IP communication. [CMSIS-Drivers](https://arm-software.github.io/CMSIS_6/latest/Driver/index.html) are a required for the components to work with the underlying hardware.
+The *Network* component uses the [Arm Mbed TLS](https://www.keil.arm.com/packs/mbedtls-arm/overview/) stack to secure the TCP/IP communication. [CMSIS-Drivers](https://arm-software.github.io/CMSIS_6/latest/Driver/index.html) are a required for the components to work with the underlying hardware.
 
 The [CMSIS-Compiler](https://github.com/arm-software/cmsis-compiler) and [CMSIS-View](https://github.com/arm-software/cmsis-view) components can display events and static information from all MDK-Middleware components.
 
