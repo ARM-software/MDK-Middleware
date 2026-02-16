@@ -118,9 +118,6 @@ function postprocess() {
   # add custom steps here to be executed
   # after populating the pack build folder
   # but before archiving the pack into output folder
-  rm -rf ./Documentation/html
-  rm -f ./linkchecker-out.csv
-  find ./Documentation -type f -name "*.dxy" -delete
   return 0
 }
 
