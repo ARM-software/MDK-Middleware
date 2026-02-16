@@ -6,6 +6,12 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V8.2.1</td>
+      <td>
+        - fixed TCP retry counter handling during timeout recovery in \ref netTCP_Send
+      </td>
+    </tr>
+    <tr>
       <td>V8.2.0</td>
       <td>
         - fixed conversion from Unix time to HTTP-date format
