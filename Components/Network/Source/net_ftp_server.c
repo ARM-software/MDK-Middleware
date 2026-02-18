@@ -34,6 +34,10 @@ static netStatus ftp_dopen_req (NET_FTP_INFO *ftp_s);
 static NET_FTP_INFO *ftp_map_session (int32_t socket);
 static void ftp_kill_session (NET_FTP_INFO *ftp_s);
 static uint16_t ftp_scan_dport (const char *buf, uint8_t type);
+static bool ftp_parse_port_ip (const char *buf, uint8_t *ip);
+static bool ftp_parse_eprt_ip (const char *buf, uint8_t *ip);
+static bool ftp_validate_port_ip (const uint8_t *port_ip, const NET_ADDR *client_addr);
+static bool ftp_validate_port_range (uint16_t port);
 static char *make_path (NET_FTP_INFO *ftp_s, const char *name);
 static void free_name (NET_FTP_INFO *ftp_s);
 static void close_file (NET_FTP_INFO *ftp_s);
@@ -645,9 +649,50 @@ denied:       DEBUGF (FTP," Access denied\n");
           }
           if ((cmd.sel == FTP_CMD_PORT) ||
               (cmd.sel == FTP_CMD_EPRT)) {
-            /* Change FTP data port */
+            /* Change FTP data port, validate IP to prevent bounce attack */
+            uint8_t port_ip[4];
+            bool ip_valid;
+
+            /* Parse IP address from command */
+            if (cmd.sel == FTP_CMD_PORT) {
+              ip_valid = ftp_parse_port_ip ((const char *)&buf[5], port_ip);
+            }
+            else {
+              /* FTP_CMD_EPRT */
+              ip_valid = ftp_parse_eprt_ip ((const char *)&buf[5], port_ip);
+            }
+
+            if (ip_valid == false) {
+              /* Failed to parse IP from command */
+              ERRORF (FTP,"Session %d, %s format invalid\n",ftp_s->Id,
+                      (cmd.sel == FTP_CMD_PORT) ? "PORT" : "EPRT");
+              /* EvrNetFTPs_InvalidCommandFormat (ftp_s->Id, cmd.sel); */
+              ftp_s->Resp = FTP_RESP_BADPARAM;
+              break;
+            }
+
+            /* Validate IP matches client (RFC 2577 - prevent bounce attack) */
+            if (ftp_validate_port_ip (port_ip, &ftp_s->Client) == false) {
+              /* IP mismatch, FTP bounce attack attempt (CVE-1999-0017) */
+              ERRORF (FTP,"Session %d, Bounce attack blocked\n",ftp_s->Id);
+              /* EvrNetFTPs_BounceAttackBlocked (ftp_s->Id); */
+              ftp_s->Resp = FTP_RESP_NOTIMPL;
+              break;
+            }
+
+            /* Extract and validate port number */
             net_tcp_abort (ftp_s->DSocket);
             ftp_s->DPort = ftp_scan_dport ((const char *)&buf[5], cmd.sel);
+
+            if (ftp_validate_port_range (ftp_s->DPort) == false) {
+              /* Invalid port number */
+              ERRORF (FTP,"Session %d, Invalid port\n",ftp_s->Id);
+              /* EvrNetFTPs_InvalidPort (ftp_s->Id, ftp_s->DPort); */
+              ftp_s->Resp = FTP_RESP_BADPARAM;
+              break;
+            }
+
+            /* All validations passed */
             DEBUGF (FTP," Data port is %d\n",ftp_s->DPort);
             EvrNetFTPs_ActiveModeStart (ftp_s->Id, ftp_s->DPort);
             ftp_s->Flags &= ~FTP_FLAG_PASSIVE;
@@ -1165,6 +1210,9 @@ static void ftp_server_run (void) {
         case FTP_RESP_USERFIRST:
           len = LSTR(tp,"503 Login with USER first\r\n");
           break;
+        case FTP_RESP_NOTIMPL:
+          len = LSTR(tp,"504 Command not implemented for that parameter\r\n");
+          break;
         case FTP_RESP_LOGINFAIL:
           len = LSTR(tp,"530 Login incorrect\r\n");
           break;
@@ -1185,6 +1233,9 @@ static void ftp_server_run (void) {
           break;
         case FTP_RESP_DISKFULL:
           len = LSTR(tp,"552 Exceeded storage allocation\r\n");
+          break;
+        case FTP_RESP_BADPARAM:
+          len = LSTR(tp,"501 Syntax error in parameters\r\n");
           break;
         default:
           len = LSTR(tp,"500 Unknown command\r\n");
@@ -1595,6 +1646,151 @@ static NET_FTP_INFO *ftp_map_session (int32_t socket) {
     }
   }
   return (NULL);
+}
+
+/**
+  \brief       Parse IP address from PORT command.
+  \param[in]   buf  buffer containing PORT command parameters.
+  \param[out]  ip   extracted IP address (4 bytes).
+  \return      status:
+               - true  = IP address parsed successfully
+               - false = invalid format
+  \note        PORT format: "h1,h2,h3,h4,p1,p2" (RFC 959)
+*/
+static bool ftp_parse_port_ip (const char *buf, uint8_t *ip) {
+  uint32_t h1,h2,h3,h4,p1,p2;
+  int32_t n,len;
+
+  /* Parse PORT parameters: h1,h2,h3,h4,p1,p2 */
+  n  = net_atoi (buf, &len);
+  h1 = (uint32_t)n; buf += len + 1;
+  n  = net_atoi (buf, &len);
+  h2 = (uint32_t)n; buf += len + 1;
+  n  = net_atoi (buf, &len);
+  h3 = (uint32_t)n; buf += len + 1;
+  n  = net_atoi (buf, &len);
+  h4 = (uint32_t)n; buf += len + 1;
+  n  = net_atoi (buf, &len);
+  p1 = (uint32_t)n; buf += len + 1;
+  n  = net_atoi (buf, &len);
+  p2 = (uint32_t)n;
+
+  /* Validate IP address components (0-255) */
+  if ((h1 > 255) || (h2 > 255) || (h3 > 255) || (h4 > 255)) {
+    return (false);
+  }
+
+  /* Store IP address */
+  ip[0] = (uint8_t)h1;
+  ip[1] = (uint8_t)h2;
+  ip[2] = (uint8_t)h3;
+  ip[3] = (uint8_t)h4;
+  return (true);
+}
+
+/**
+  \brief       Parse IP address from EPRT command.
+  \param[in]   buf  buffer containing EPRT command parameters.
+  \param[out]  ip   extracted IP address (4 bytes for IPv4).
+  \return      status:
+               - true  = IP address parsed successfully
+               - false = invalid format or unsupported address family
+  \note        EPRT IPv4 format: "|1|h1.h2.h3.h4|port|" (RFC 2428)
+*/
+static bool ftp_parse_eprt_ip (const char *buf, uint8_t *ip) {
+  char delim;
+  uint32_t h1,h2,h3,h4;
+  int32_t family,i,j;
+
+  /* Parse delimiter and address family */
+  delim = buf[0];
+  if ((delim == 0) || (buf[1] < '1') || (buf[1] > '2')) {
+    return (false);
+  }
+  family = buf[1] - '0';
+
+  /* Only IPv4 (family 1) is supported */
+  if (family != 1) {
+    return (false);
+  }
+
+  /* Find IP address between 2nd and 3rd delimiters */
+  for (i = 2; buf[i] != 0; i++) {
+    if (buf[i] == delim) break;
+  }
+  if (buf[i] != delim) {
+    return (false);
+  }
+
+  /* Parse IPv4 address: h1.h2.h3.h4 */
+  i++;
+  h1 = 0;
+  for (j = 0; j < 4; j++) {
+    h2 = 0;
+    while ((buf[i] >= '0') && (buf[i] <= '9')) {
+      h2 = h2 * 10 + (uint32_t)(buf[i] - '0');
+      i++;
+    }
+    if (h2 > 255) {
+      return (false);
+    }
+    ip[j] = (uint8_t)h2;
+    if (j < 3) {
+      if (buf[i] != '.') {
+        return (false);
+      }
+      i++;
+    }
+  }
+  return (buf[i] == delim);
+}
+
+/**
+  \brief       Validate PORT/EPRT IP address matches client IP.
+  \param[in]   port_ip       IP address from PORT/EPRT command.
+  \param[in]   client_addr   client connection address.
+  \return      status:
+               - true  = IP address matches client (legitimate)
+               - false = IP mismatch (bounce attack attempt)
+  \note        Implements RFC 2577 security requirement to prevent
+               FTP bounce attacks (CVE-1999-0017).
+*/
+static bool ftp_validate_port_ip (const uint8_t *port_ip, const NET_ADDR *client_addr) {
+
+  if (client_addr->addr_type != NET_ADDR_IP4) {
+    /* Only IPv4 supported */
+    return (false);
+  }
+
+  /* Compare IP address (4 bytes) */
+  if (memcmp (port_ip, client_addr->addr, 4) != 0) {
+    /* IP mismatch detected, potential bounce attack */
+    ERRORF (FTP,"PORT IP mismatch, client=%d.%d.%d.%d, requested=%d.%d.%d.%d\n",
+            client_addr->addr[0], client_addr->addr[1], 
+            client_addr->addr[2], client_addr->addr[3],
+            port_ip[0], port_ip[1], port_ip[2], port_ip[3]);
+    /* EvrNetFTPs_PortIpMismatch (port_ip, client_addr->addr); */
+    return (false);
+  }
+  return (true);
+}
+
+/**
+  \brief       Validate port number is in valid range.
+  \param[in]   port  port number to validate.
+  \return      status:
+               - true  = port number is valid
+               - false = port number out of range
+  \note        Valid port range is 1-65535 per RFC 959.
+*/
+static bool ftp_validate_port_range (uint16_t port) {
+
+  if ((port == 0) || (port > 65535)) {
+    ERRORF (FTP,"Invalid port number: %d\n",port);
+    /* EvrNetFTPs_InvalidPortNumber (port); */
+    return (false);
+  }
+  return (true);
 }
 
 /**

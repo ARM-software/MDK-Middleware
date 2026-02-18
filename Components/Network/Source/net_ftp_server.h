@@ -106,6 +106,8 @@
 #define FTP_RESP_EPSVOK     26          // Entering Extended Passive mode
 #define FTP_RESP_FEAT       27          // Print supported extended features
 #define FTP_RESP_CWDERR     28          // Change working directory failed
+#define FTP_RESP_BADPARAM   29          // Syntax error in parameters
+#define FTP_RESP_NOTIMPL    30          // Command not implemented for parameter
 
 /* FTP Command type */
 typedef struct net_ftp_ctype {
