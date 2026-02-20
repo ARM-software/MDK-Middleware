@@ -1,5 +1,12 @@
 # Revision History {#rev_hist}
 
+> **Attention:**
+>
+> All versions of the network component up to and including V8.2.0 are vulnerable to
+> [CVE-1999-0017](https://www.cve.org/CVERecord?id=CVE-1999-0017).
+
+&nbsp;
+
 <table class="cmtable" summary="Revision History">
     <tr>
       <th>Version</th>
