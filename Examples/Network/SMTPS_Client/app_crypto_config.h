@@ -1,11 +1,14 @@
 /**
- * PSA crypto configuration template
+ * PSA crypto configuration template for SMTPS
  */
 /*
  *  Copyright The Mbed TLS Contributors
  *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
  */
 
+#define TF_PSA_CRYPTO_CONFIG_VERSION 0x01000000
+
+/* Cryptographic mechanism selection (PSA API) */ 
 #define PSA_WANT_ALG_CBC_NO_PADDING             1
 #define PSA_WANT_ALG_CBC_PKCS7                  1
 #define PSA_WANT_ALG_CCM                        1
@@ -53,12 +56,8 @@
 #define PSA_WANT_ECC_BRAINPOOL_P_R1_512         1
 #define PSA_WANT_ECC_MONTGOMERY_255             1
 #define PSA_WANT_ECC_MONTGOMERY_448             1
-#define PSA_WANT_ECC_SECP_K1_192                1
 #define PSA_WANT_ECC_SECP_K1_256                1
-#define PSA_WANT_ECC_SECP_R1_192                1
-#define PSA_WANT_ECC_SECP_R1_224                1
-/* For secp256r1, consider enabling #MBEDTLS_PSA_P256M_DRIVER_ENABLED
- * (see the description in mbedtls/mbedtls_config.h for details). */
+
 #define PSA_WANT_ECC_SECP_R1_256                1
 #define PSA_WANT_ECC_SECP_R1_384                1
 #define PSA_WANT_ECC_SECP_R1_521                1
@@ -77,35 +76,47 @@
 #define PSA_WANT_KEY_TYPE_ARIA                  1
 #define PSA_WANT_KEY_TYPE_CAMELLIA              1
 #define PSA_WANT_KEY_TYPE_CHACHA20              1
-#define PSA_WANT_KEY_TYPE_DES                   1
-//#define PSA_WANT_KEY_TYPE_ECC_KEY_PAIR          1 /* Deprecated */
 #define PSA_WANT_KEY_TYPE_ECC_PUBLIC_KEY        1
 #define PSA_WANT_KEY_TYPE_DH_PUBLIC_KEY         1
 #define PSA_WANT_KEY_TYPE_RAW_DATA              1
-//#define PSA_WANT_KEY_TYPE_RSA_KEY_PAIR          1 /* Deprecated */
 #define PSA_WANT_KEY_TYPE_RSA_PUBLIC_KEY        1
 
-/*
- * The following symbols extend and deprecate the legacy
- * PSA_WANT_KEY_TYPE_xxx_KEY_PAIR ones. They include the usage of that key in
- * the name's suffix. "_USE" is the most generic and it can be used to describe
- * a generic suport, whereas other ones add more features on top of that and
- * they are more specific.
- */
-#define PSA_WANT_KEY_TYPE_ECC_KEY_PAIR_BASIC      1
+#define PSA_WANT_KEY_TYPE_ECC_KEY_PAIR_BASIC    1
 #define PSA_WANT_KEY_TYPE_ECC_KEY_PAIR_IMPORT   1
 #define PSA_WANT_KEY_TYPE_ECC_KEY_PAIR_EXPORT   1
 #define PSA_WANT_KEY_TYPE_ECC_KEY_PAIR_GENERATE 1
 #define PSA_WANT_KEY_TYPE_ECC_KEY_PAIR_DERIVE   1
 
-#define PSA_WANT_KEY_TYPE_RSA_KEY_PAIR_BASIC      1
+#define PSA_WANT_KEY_TYPE_RSA_KEY_PAIR_BASIC    1
 #define PSA_WANT_KEY_TYPE_RSA_KEY_PAIR_IMPORT   1
 #define PSA_WANT_KEY_TYPE_RSA_KEY_PAIR_EXPORT   1
 #define PSA_WANT_KEY_TYPE_RSA_KEY_PAIR_GENERATE 1
-//#define PSA_WANT_KEY_TYPE_RSA_KEY_PAIR_DERIVE   1 /* Not supported */
 
-#define PSA_WANT_KEY_TYPE_DH_KEY_PAIR_BASIC       1
+#define PSA_WANT_KEY_TYPE_DH_KEY_PAIR_BASIC     1
 #define PSA_WANT_KEY_TYPE_DH_KEY_PAIR_IMPORT    1
 #define PSA_WANT_KEY_TYPE_DH_KEY_PAIR_EXPORT    1
 #define PSA_WANT_KEY_TYPE_DH_KEY_PAIR_GENERATE  1
-//#define PSA_WANT_KEY_TYPE_DH_KEY_PAIR_DERIVE    1 /* Not supported */
+
+/* Platform abstraction layer */
+#define MBEDTLS_PLATFORM_C
+
+/* Cryptographic mechanism selection (extended API) */
+#define MBEDTLS_MD_C
+#define MBEDTLS_PK_C
+#define MBEDTLS_PK_PARSE_C
+
+/* Data format support */
+#define MBEDTLS_ASN1_PARSE_C
+#define MBEDTLS_ASN1_WRITE_C
+#define MBEDTLS_BASE64_C
+#define MBEDTLS_PEM_PARSE_C
+
+/* PSA core */
+#define MBEDTLS_CTR_DRBG_C
+#define MBEDTLS_HMAC_DRBG_C
+#define MBEDTLS_PSA_CRYPTO_C
+#define MBEDTLS_PSA_DRIVER_GET_ENTROPY
+
+/* Builtin drivers */
+#define MBEDTLS_AES_ROM_TABLES
+#define MBEDTLS_ECP_NIST_OPTIM
