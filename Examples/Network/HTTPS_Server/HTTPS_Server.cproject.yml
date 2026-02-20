@@ -2,10 +2,10 @@ project:
   description: HTTPS Web Server example
 
   packs:
-    - pack: Keil::MDK-Middleware@^8.0.0-0
+    - pack: Keil::MDK-Middleware@^8.3.0-0
     - pack: ARM::CMSIS@^6.1.0
     - pack: ARM::CMSIS-RTX@^5.9.0
-    - pack: ARM::mbedTLS@^3.6.0
+    - pack: ARM::mbedTLS@^4.0.0
 
   connections:
     - connect: HTTPS Server
@@ -16,6 +16,10 @@ project:
         - CMSIS_VIO
         - STDOUT
 
+  define:
+    - MBEDTLS_CONFIG_FILE: \"app_mbedtls_config.h\"
+    - TF_PSA_CRYPTO_CONFIG_FILE: \"app_crypto_config.h\"
+
   groups:
     - group: Documentation
       files:
@@ -24,6 +28,8 @@ project:
       files:
         - file: HTTPS_Server.c
         - file: HTTPS_Server_CGI.c
+        - file: app_mbedtls_config.h
+        - file: app_crypto_config.h
         - file: Web.c
 
   components:
