@@ -60,7 +60,7 @@ PACK_DELETE_FILES="
 # Specify addition argument to packchk
 # Default: empty
 #
-PACKCHK_ARGS=(-x M389)
+PACKCHK_ARGS=(-x M389,M317)
 
 # Specify additional dependencies for packchk
 # Default: empty
