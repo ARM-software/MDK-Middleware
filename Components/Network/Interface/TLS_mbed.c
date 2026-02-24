@@ -1,38 +1,55 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    TLS_mbed.c
  * Purpose: TLS Interface for mbedTLS
  *----------------------------------------------------------------------------*/
 
 #include <string.h>
-#include "mbedTLS_config.h"
+
+/* Check mbedTLS library version */
+#ifdef MBEDTLS_CONFIG_FILE
+  #define MBEDTLS_DECLARE_PRIVATE_IDENTIFIERS
+  #include "mbedtls/build_info.h"
+  #if (MBEDTLS_VERSION_MAJOR != 4)
+    #error "Invalid mbedTLS version, version 4 needed"
+  #endif
+  #include "mbedtls/private/entropy.h"
+  #include "mbedtls/private/ctr_drbg.h"
+#else
+  #include "mbedtls/build_info.h"
+  #if (MBEDTLS_VERSION_MAJOR != 3)
+    #error "Invalid mbedTLS version, version 3 needed"
+  #endif
+  #include "mbedtls/entropy.h"
+  #include "mbedtls/ctr_drbg.h"
+#endif
+
 #include "mbedtls/debug.h"
+#include "mbedtls/x509.h"
 #include "mbedtls/ssl.h"
-#include "mbedtls/entropy.h"
-#include "mbedtls/ctr_drbg.h"
 #include "mbedtls/net_sockets.h"
 #if defined(MBEDTLS_SSL_CACHE_C)
-#include "mbedtls/ssl_cache.h"
+  #include "mbedtls/ssl_cache.h"
 #endif
 #if defined(MBEDTLS_DEBUG_C)
-#include <stdio.h>
+  #include <stdio.h>
 #endif
 
 #include "TLS_mbed.h"
 
 #ifndef TLS_THREAD_STACK_SIZE
-#define TLS_THREAD_STACK_SIZE   4096
+  #define TLS_THREAD_STACK_SIZE 4096
 #endif
 
 #ifndef TLS_THREAD_PRIORITY
-#define TLS_THREAD_PRIORITY     osPriorityNormal
+  #define TLS_THREAD_PRIORITY   osPriorityNormal
 #endif
 
 /* mbedTLS debug level */
 #ifndef DEBUG_LEVEL
-#define DEBUG_LEVEL             1
+  #define DEBUG_LEVEL           1
 #endif
 
 /* Local variables */
@@ -363,7 +380,15 @@ static int32_t tls_init (void) {
 #endif
 #endif
 
-/* Configure mbedTLS debug */
+#if (MBEDTLS_VERSION_MAJOR == 4) 
+  ret = psa_crypto_init();
+  if (ret != PSA_SUCCESS) {
+    /* PSA Crypto initialization failed */
+    return (ret);
+  }
+#endif
+
+  /* Configure mbedTLS debug */
 #if defined(MBEDTLS_DEBUG_C)
   mbedtls_debug_set_threshold (DEBUG_LEVEL);
 #ifdef __TLS_SERVER
@@ -406,17 +431,28 @@ static int32_t tls_init (void) {
 
   buf = netTLS_GetServerKey (&buf_len);
   if (buf == NULL) {
+#if (MBEDTLS_VERSION_MAJOR == 3)
     ret = mbedtls_pk_parse_key (&pkey_srv,  NetSecurity_ServerKey,
                                             NetSecurity_ServerKey_Len,
                                             NULL, 0,
-                                            mbedtls_ctr_drbg_random,
-                                            &ctr_drbg);
+                                            mbedtls_ctr_drbg_random, &ctr_drbg);
+#endif
+#if (MBEDTLS_VERSION_MAJOR == 4) 
+    ret = mbedtls_pk_parse_key (&pkey_srv,  NetSecurity_ServerKey,
+                                            NetSecurity_ServerKey_Len,
+                                            NULL, 0);
+#endif
   }
   else {
+#if (MBEDTLS_VERSION_MAJOR == 3) 
     ret = mbedtls_pk_parse_key (&pkey_srv,  buf, buf_len,
                                             NULL, 0,
-                                            mbedtls_ctr_drbg_random,
-                                            &ctr_drbg);
+                                            mbedtls_ctr_drbg_random, &ctr_drbg);
+#endif
+#if (MBEDTLS_VERSION_MAJOR == 4) 
+    ret = mbedtls_pk_parse_key (&pkey_srv,  buf, buf_len,
+                                            NULL, 0);
+#endif
     netTLS_ReleaseMemory (buf);
   }
   if (ret != 0) {
@@ -476,14 +512,14 @@ static int32_t tls_init (void) {
 #endif
 
 #ifdef __TLS_SERVER
+#if (MBEDTLS_VERSION_MAJOR == 3)
   mbedtls_ssl_conf_rng (&conf_srv, mbedtls_ctr_drbg_random, &ctr_drbg);
-
+#endif
 #if defined(MBEDTLS_SSL_CACHE_C)
   mbedtls_ssl_conf_session_cache (&conf_srv, &cache,
                                   mbedtls_ssl_cache_get,
                                   mbedtls_ssl_cache_set);
 #endif
-
   mbedtls_ssl_conf_ca_chain (&conf_srv, srvcert.next, NULL);
   ret = mbedtls_ssl_conf_own_cert (&conf_srv, &srvcert, &pkey_srv);
   if (ret != 0) {
@@ -493,7 +529,9 @@ static int32_t tls_init (void) {
 #endif
 
 #ifdef __TLS_CLIENT
+#if (MBEDTLS_VERSION_MAJOR == 3)
   mbedtls_ssl_conf_rng (&conf_cli, mbedtls_ctr_drbg_random, &ctr_drbg);
+#endif
 #ifdef __TLS_CLIENT_CA
   mbedtls_ssl_conf_ca_chain (&conf_cli, &cacert, NULL);
 #endif
