@@ -39,10 +39,12 @@ Following configuration files are provided with this example:
    - `Net_Config.h`: \ref nw_Network_Core "Network Core configuration"
    - `Net_Security.c`: file with keys and certificates. Default values are used by default, for changing them refer to \ref cert_adding
    - `Net_Debug.h`: \ref netDebugConfig "Network Debug configuration"
- - For mbedTLS component, in `./RTE/Security/` folder:
-   - `mbedTLS_config.h`, `mbedTLS_crypto_config.h`: [mbedTLS configuration files](https://github.com/ARM-software/CMSIS-mbedTLS)
  - For the CMSIS components, in the `./RTE/CMSIS/` folder:
    - `RTX_Config.h` and `RTX_Config.c`: [CMSIS-RTX Configuration files](https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html) for the RTOS Kernel
+
+Configuration files for the [mbedTLS](https://github.com/ARM-software/CMSIS-mbedTLS) are located in the `./` folder:
+ - `app_mbedtls_config.h`: main mbedTLS configuration file
+ - `app_crypto_config.h`: crypto features configuration file
 
 When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local `./Board/` directory.
 
