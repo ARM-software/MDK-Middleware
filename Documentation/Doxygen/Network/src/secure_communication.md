@@ -73,12 +73,46 @@ To use the Mbed TLS library in your own projects, follow these steps:
 -# Open or create a project using the **Network Component**.
 -# Configure the Network Component as required by your application (Ethernet settings, TCP/IP communication, etc.).
 -# In the **Manage Run-Time Environment** window expand **Security** and enable **mbed TLS**:
-![Add mbed TLS](add_mbedTLS.png)
--# Configure Mbed TLS using the `mbedTLS_config.h` file.
+   \image html add_mbedTLS.png
+-# Configure Mbed TLS using the `app_mbedtls_config.h` and `app_crypto_config.h` files.
 -# Use the **mbed TLS** API to secure your communication.
 
 \note You can use the Mbed TLS API in parallel to any of the \ref use_secure_components "secure services" that are
 part of the Network Component.
+
+#### Configuration of mbed TLS {#mbedtls_v4}
+
+Mbed TLS v4 requires the project to explicitly define configuration header macros so the library knows which
+configuration files to include.
+
+The following macros must be defined:
+- MBEDTLS_CONFIG_FILE
+- TF_PSA_CRYPTO_CONFIG_FILE
+ 
+These macros instruct Mbed TLS to use your project-specific configuration headers instead of the default internal configuration.
+
+##### Add preprocessor definitions
+
+Add the following definitions to the project configuration (e.g., `cproject.yml`):
+
+```yml
+  define:
+    - MBEDTLS_CONFIG_FILE: \"app_mbedtls_config.h\"
+    - TF_PSA_CRYPTO_CONFIG_FILE: \"app_crypto_config.h\"
+```
+
+##### Add configuration files to the project:
+
+Ensure both configuration headers are included in the project:
+
+```yml
+  files:
+    - file: app_mbedtls_config.h
+    - file: app_crypto_config.h
+```
+
+Adding these files to the project also ensures their directories are added to the compiler's include path.
+If the headers are not accessible via the include path, the build will fail due to missing configuration definitions.
 
 ## Using Secure Services {#use_secure_components}
 
