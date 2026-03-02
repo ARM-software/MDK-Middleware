@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_addr.c
  * Purpose: Address Handling
@@ -49,6 +49,7 @@ static const char *ip6_ntoa (const uint8_t *ip6_addr, char *buf);
 */
 bool net_addr4_aton (const char *cp, uint8_t *ip4_addr) {
   int32_t i,j,d,n;
+  uint8_t ip4[4];
 
   if (ip4_addr == NULL) {
     return (false);
@@ -72,11 +73,18 @@ bool net_addr4_aton (const char *cp, uint8_t *ip4_addr) {
   if ((i > 15) || (d != 3) || (j == 0)) {
     return (false);
   }
-  /* Sanity check is ok */
+  /* Range check of IP address octets */
   for (i = j = 0; i < 4; i++) {
-    ip4_addr[i] = net_atoi (&cp[j], &n) & 0xFF;
+    d = net_atoi (&cp[j], &n);
+    if (d > 255) {
+      /* Out of range 0-255 */
+      return (false);
+    }
+    ip4[i] = d & 0xFF;
     j += (n + 1);
   }
+  /* IPv4 address is valid */
+  net_addr4_copy (ip4_addr, ip4);
   return (true);
 }
 
