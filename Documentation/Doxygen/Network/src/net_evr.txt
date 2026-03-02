@@ -11338,13 +11338,37 @@ data transfer method that will start.
 */
 
 /**
+\fn __STATIC_INLINE void EvrNetFTPs_InvalidCommandParam(uint8_t session)
+\details
+The event \b InvalidCommandParam is created when the FTP server detects an error in
+the command parameters. This may be due to incorrect command syntax or an invalid
+destination network address. The event may also indicate a potential FTP bounce
+attack attempt.
+
+\b Value in the Event Recorder shows:
+  - \b session: FTP server session.
+*/
+
+/**
+\fn __STATIC_INLINE void EvrNetFTPs_InvalidPort(uint8_t session, uint16_t port)
+\details
+The event \b InvalidPort is created when the FTP server detects that the requested
+port number falls within the well-known service port range. Connections to well-known
+service ports are not permitted.
+
+\b Value in the Event Recorder shows:
+  - \b session: FTP server session.
+  - \b port:    requested port number.
+*/
+
+/**
 \fn __STATIC_INLINE void EvrNetFTPs_ActiveModeStart(uint8_t session, uint16_t port)
 \details
 The event \b ActiveModeStart is created when the FTP server starts active FTP mode.
 
 \b Value in the Event Recorder shows:
   - \b session: FTP server session.
-  - \b port:    port on the client for data connection.
+  - \b port:    destination port for data connection.
 */
 
 /**

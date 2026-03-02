@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ftp_server.c
  * Purpose: File Transfer Server
@@ -33,7 +33,7 @@ static void ftp_parse_cmd (const char *name);
 static netStatus ftp_dopen_req (NET_FTP_INFO *ftp_s);
 static NET_FTP_INFO *ftp_map_session (int32_t socket);
 static void ftp_kill_session (NET_FTP_INFO *ftp_s);
-static uint16_t ftp_scan_dport (const char *buf, uint8_t type);
+static bool parse_port_param (NET_FTP_INFO *ftp_s, char *buf, uint8_t type);
 static char *make_path (NET_FTP_INFO *ftp_s, const char *name);
 static void free_name (NET_FTP_INFO *ftp_s);
 static void close_file (NET_FTP_INFO *ftp_s);
@@ -645,9 +645,22 @@ denied:       DEBUGF (FTP," Access denied\n");
           }
           if ((cmd.sel == FTP_CMD_PORT) ||
               (cmd.sel == FTP_CMD_EPRT)) {
-            /* Change FTP data port */
+            /* Parse and validate command parameters */
+            if (!parse_port_param (ftp_s, __CONST_CAST(char *)&buf[5], cmd.sel)) {
+              ERRORF (FTP,"Session %d, Invalid command parameter\n",ftp_s->Id);
+              EvrNetFTPs_InvalidCommandParam (ftp_s->Id);
+              ftp_s->Resp = FTP_RESP_BADPARAM;
+              break;
+            }
+            /* Check well-known ports */
+            if (ftp_s->DPort < 1024U) {
+              /* Disabled for well-known service ports [RFC2577, page 3] */
+              ERRORF (FTP,"Session %d, Invalid port\n",ftp_s->Id);
+              EvrNetFTPs_InvalidPort (ftp_s->Id, ftp_s->DPort);
+              ftp_s->Resp = FTP_RESP_NOTIMPL;
+              break;
+            }
             net_tcp_abort (ftp_s->DSocket);
-            ftp_s->DPort = ftp_scan_dport ((const char *)&buf[5], cmd.sel);
             DEBUGF (FTP," Data port is %d\n",ftp_s->DPort);
             EvrNetFTPs_ActiveModeStart (ftp_s->Id, ftp_s->DPort);
             ftp_s->Flags &= ~FTP_FLAG_PASSIVE;
@@ -1162,8 +1175,14 @@ static void ftp_server_run (void) {
         case FTP_RESP_ABORTED:
           len = LSTR(tp,"426 Transfer aborted\r\n");
           break;
+        case FTP_RESP_BADPARAM:
+          len = LSTR(tp,"501 Syntax error in parameters\r\n");
+          break;
         case FTP_RESP_USERFIRST:
           len = LSTR(tp,"503 Login with USER first\r\n");
+          break;
+        case FTP_RESP_NOTIMPL:
+          len = LSTR(tp,"504 Command not implemented for that parameter\r\n");
           break;
         case FTP_RESP_LOGINFAIL:
           len = LSTR(tp,"530 Login incorrect\r\n");
@@ -1598,39 +1617,108 @@ static NET_FTP_INFO *ftp_map_session (int32_t socket) {
 }
 
 /**
-  \brief       Scan PORT/EPRT command for FTP data port number.
-  \param[in]   buf   buffer containing command parameters.
-  \param[in]   type  command type (PORT or EPRT).
-  \return      data port or default port if not found.
+  \brief       Parse parameters of PORT/EPRT command.
+  \param[in]   ftp_s  session descriptor.
+  \param[in]   buf    buffer containing parameters (null-terminated).
+  \param[in]   type   command type (PORT or EPRT).
+  \return      status:
+               - true  = parameters valid
+               - false = invalid format or value
 */
-static uint16_t ftp_scan_dport (const char *buf, uint8_t type) {
-  int32_t max,m,n,port;
+static bool parse_port_param (NET_FTP_INFO *ftp_s, char *buf, uint8_t type) {
+  __ADDR addr;
+  int32_t i,n,d,port;
 
   if (type == FTP_CMD_PORT) {
     /* PORT example: 192,168,0,162,19,137 */
-    for (n = 0, max = 20; max; buf++, max--) {
-      if (*buf == ',') {
-        if (++n == 4) {
-          port  = net_atoi (++buf, &m) << 8;
-          port |= net_atoi (++buf+m, NULL);
-          return (port & 0xFFFF);
+    for (i = n = 0; buf[i]; i++) {
+      if (buf[i] == ',') {
+        if (++n == 4) { 
+          buf[i] = 0;
+          break;
         }
+        buf[i] = '.';
       }
+    }
+    /* buf: 192.168.0.162\0 */
+    if (!net_addr4_aton (buf, addr.addr)) {
+      return (false);
+    }
+    addr.addr_type = NET_ADDR_IP4;
+    buf += (i + 1);
+    /* buf: 19,137 */
+    d = net_atoi (buf, &n);
+    if (buf[n] != ',' || d > 255) {
+      return (false);
+    }
+    port = d << 8;
+    d = net_atoi (buf+n+1, &n);
+    if (d > 255) {
+      return (false);
+    }
+    port |= d;
+    if (port == 0) {
+      return (false);
     }
   }
   else {
     /* EPRT IP4 example: |1|192.168.0.162|5001|             */
     /*      IP6 example: |2|fe80::1c30:6cff:fea2:455e|5282| */
-    for (n = 0, max = 50; max; buf++, max--) {
-      if (*buf == '|') {
-        if (++n == 3) {
-          port = net_atoi (++buf, NULL);
-          return (port & 0xFFFF);
+    char delim = buf[0];
+    if (buf[2] != delim) {
+      return (false);
+    }
+    switch (buf[1]) {
+      case '1':
+        buf += 3;
+        for (i = 0; buf[i]; i++) {
+          if (buf[i] == delim) {
+            buf[i] = 0;
+            break;
+          }
         }
-      }
+        /* buf: 192.168.0.162\0 */
+        if (!net_addr4_aton (buf, addr.addr)) {
+          return (false);
+        }
+        addr.addr_type = NET_ADDR_IP4;
+        buf += (i + 1);
+        /* buf: 5001| */
+        break;
+
+#ifdef Network_IPv6
+      case '2':
+        buf += 3;
+        for (i = 0; buf[i]; i++) {
+          if (buf[i] == delim) {
+            buf[i] = 0;
+            break;
+          }
+        }
+        /* buf: fe80::1c30:6cff:fea2:455e\0 */
+        if (!net_addr6_aton (buf, addr.addr)) {
+          return (false);
+        }
+        addr.addr_type = NET_ADDR_IP6;
+        buf += (i + 1);
+        /* buf: 5282| */
+        break;
+#endif
+
+      default:
+        return (false);
+    }
+    port = net_atoi (buf, &n);
+    if (buf[n] != delim || port == 0 || port > 65535) {
+      return (false);
     }
   }
-  return (FTP_DEF_DPORT);
+  ftp_s->DPort = port & 0xFFFF;
+  if (!net_addr_comp (&ftp_s->Client, &addr)) {
+    /* Invalid network address, possible bounce attack */
+    return (false);
+  }
+  return (true);
 }
 
 /**

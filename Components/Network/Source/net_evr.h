@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_evr.h
  * Purpose: Network definitions for Event Recorder
@@ -13769,7 +13769,7 @@ typedef struct evr_addr {
 #define EvtNetFTPs_NoOperation              EventID (EventLevelOp,    EvtNetFTPs, 21)
 #define EvtNetFTPs_CurrentDirectory         EventID (EventLevelOp,    EvtNetFTPs, 22)
 #define EvtNetFTPs_ChangeDirectory          EventID (EventLevelOp,    EvtNetFTPs, 23)
-#define EvtNetFTPs_ChangeDirectoryFailed    EventID (EventLevelError, EvtNetFTPs, 67) // End
+#define EvtNetFTPs_ChangeDirectoryFailed    EventID (EventLevelError, EvtNetFTPs, 67)
 #define EvtNetFTPs_ChangeDirectoryLevelUp   EventID (EventLevelOp,    EvtNetFTPs, 24)
 #define EvtNetFTPs_MakeDirectory            EventID (EventLevelOp,    EvtNetFTPs, 25)
 #define EvtNetFTPs_OperationDenied          EventID (EventLevelOp,    EvtNetFTPs, 26)
@@ -13777,6 +13777,8 @@ typedef struct evr_addr {
 #define EvtNetFTPs_RemoveDirectoryFailed    EventID (EventLevelError, EvtNetFTPs, 28)
 #define EvtNetFTPs_DirectoryRemoved         EventID (EventLevelOp,    EvtNetFTPs, 29)
 #define EvtNetFTPs_ShowDataMode             EventID (EventLevelOp,    EvtNetFTPs, 30)
+#define EvtNetFTPs_InvalidCommandParam      EventID (EventLevelError, EvtNetFTPs, 68)
+#define EvtNetFTPs_InvalidPort              EventID (EventLevelError, EvtNetFTPs, 69) // End
 #define EvtNetFTPs_ActiveModeStart          EventID (EventLevelOp,    EvtNetFTPs, 31)
 #define EvtNetFTPs_PassiveModeStart         EventID (EventLevelOp,    EvtNetFTPs, 32)
 #define EvtNetFTPs_GetFileSize              EventID (EventLevelOp,    EvtNetFTPs, 33)
@@ -14214,6 +14216,31 @@ typedef struct evr_addr {
   }
 #else
   #define EvrNetFTPs_ShowDataMode(session, data_mode)
+#endif
+
+/**
+  \brief  Event on FTP server invalid command parameter error (Error)
+  \param  session       session number
+ */
+#ifdef Network_Debug_EVR
+  __STATIC_INLINE void EvrNetFTPs_InvalidCommandParam(uint8_t session) {
+    EventRecord2 (EvtNetFTPs_InvalidCommandParam, session, 0);
+  }
+#else
+  #define EvrNetFTPs_InvalidCommandParam(session)
+#endif
+
+/**
+  \brief  Event on FTP server requested port invalid (Error)
+  \param  session       session number
+  \param  port          port requested port number
+ */
+#ifdef Network_Debug_EVR
+  __STATIC_INLINE void EvrNetFTPs_InvalidPort(uint8_t session, uint16_t port) {
+    EventRecord2 (EvtNetFTPs_InvalidPort, session, port);
+  }
+#else
+  #define EvrNetFTPs_InvalidPort(session, port)
 #endif
 
 /**

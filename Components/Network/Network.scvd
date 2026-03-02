@@ -1198,7 +1198,7 @@
           <print property="Release Library"      value="%E[net_lib], ver: %d[net_ver.b3].%d[net_ver.b2].%d[net_ver.b0]" cond="!debug"/>
           <print property="Debug Library"        value="%E[net_lib], ver: %d[net_ver.b3].%d[net_ver.b2].%d[net_ver.b0]" cond="debug"/>
         </item>
-        <item property="Interfaces"              value="Available: %d[__size_of(&quot;net_if_list_all&quot;)-1]">
+        <item property="Interfaces"              value="Available: %d[__size_of(&quot;net_if_list_all&quot;)/4-1]">
 
           <!-- ETH0 Interface -->
           <item property="%E[eth0.Id]"           value="%E[eth0_ctrl.LinkState], Rx: %u[eth0_ctrl.RxCount], Tx: %u[eth0_ctrl.TxCount]" cond="eth0_en">
@@ -2507,6 +2507,8 @@
     <event id="28 + 0xD400" level="Error"  property="RemoveDirectoryFailed"     value="session=%d[val1]" info="Remove directory command failed on the server"/>
     <event id="29 + 0xD400" level="Op"     property="DirectoryRemoved"          value="session=%d[val1]" info="Directory removed on the server successfully"/>
     <event id="30 + 0xD400" level="Op"     property="ShowDataMode"              value="session=%d[val1], mode=%E[val2, FTP_DataMode:id]" info="Display transfer data mode"/>
+    <event id="68 + 0xD400" level="Error"  property="InvalidCommandParam"       value="session=%d[val1]" info="Invalid command parameter, unable to start active FTP server mode"/>
+    <event id="69 + 0xD400" level="Error"  property="InvalidPort"               value="session=%d[val1], port=%d[val2]" info="Requested port invalid for active FTP server mode"/>    
     <event id="31 + 0xD400" level="Op"     property="ActiveModeStart"           value="session=%d[val1], port=%d[val2]" info="Start active FTP server mode"/>
     <event id="32 + 0xD400" level="Op"     property="PassiveModeStart"          value="session=%d[val1], local_port=%d[val2]" info="Start passive FTP server mode"/>
     <event id="33 + 0xD400" level="Op"     property="GetFileSize"               value="name=&quot;%t[val1]&quot;" info="Get size of the requested file"/>
