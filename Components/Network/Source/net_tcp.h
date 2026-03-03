@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_tcp.h
  * Purpose: Transmission Control Protocol Definitions
@@ -44,14 +44,15 @@
 #define TCP_FLAG_URG        0x20        // Urgent Pointer Field significant
 
 /* TCP Internal Flags */
-#define TCP_IFLAG_CLOSING   0x01        // Socket Close pending
-#define TCP_IFLAG_KALIVE    0x02        // Keep alive recovery state
-#define TCP_IFLAG_RESEND    0x04        // Resend the buffered data
-#define TCP_IFLAG_FAST      0x08        // Fast Recovery active
-#define TCP_IFLAG_CBACK     0x10        // Callback context active
-#define TCP_IFLAG_DACK      0x20        // Callback ACK notification pending
-#define TCP_IFLAG_KSEG      0x40        // Send Keep Alive segment
-#define TCP_IFLAG_PUSH      0x80        // Push the data (set PSH flag)
+#define TCP_IFLAG_CLOSING   0x0001      // Socket Close pending
+#define TCP_IFLAG_KALIVE    0x0002      // Keep alive recovery state
+#define TCP_IFLAG_RESEND    0x0004      // Resend the buffered data
+#define TCP_IFLAG_FAST      0x0008      // Fast Recovery active
+#define TCP_IFLAG_CBACK     0x0010      // Callback context active
+#define TCP_IFLAG_DACK      0x0020      // Callback ACK notification pending
+#define TCP_IFLAG_KSEG      0x0040      // Send Keep Alive segment
+#define TCP_IFLAG_PUSH      0x0080      // Push the data (set PSH flag)
+#define TCP_IFLAG_TIMEOUT   0x0100      // Timeout Recovery active
 
 /* TCP Socket Types */
 #define TCP_TYPE_DELAY_ACK  0x01        // Delayed Acknowledge enabled

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_tcp.c
  * Purpose: Transmission Control Protocol
@@ -490,14 +490,18 @@ retf:
 
   net_mem_shrink (frame, TCP_DATA_OFFS + len);
   tcp_s->Flags |= TCP_IFLAG_DACK;
+  /* Check queue retransmit status */
   if (!(tcp_s->Flags & TCP_IFLAG_RESEND)) {
-    /* Not in retransmit, send a frame now */
+    /* Not active, send a frame now */
     tcp_s->Flags     |=  TCP_IFLAG_PUSH;
     tcp_s->Flags     &= ~TCP_IFLAG_KALIVE;
     tcp_send_data (tcp_s, frame, len);
-    /* Calculate RTO and set a retransmit timer */
-    tcp_s->RetryTimer = (uint16_t)((tcp_s->RttSa >> 3) + tcp_s->RttSv);
-    tcp_s->Retries    = tcp->MaxRetry;
+    /* Check timeout recovery status */
+    if (!(tcp_s->Flags & TCP_IFLAG_TIMEOUT)) {
+      /* Inactive, set retry timer and counter */
+      tcp_s->RetryTimer = (uint16_t)((tcp_s->RttSa >> 3) + tcp_s->RttSv);
+      tcp_s->Retries    = tcp->MaxRetry;
+    }
     tcp_s->AliveTimer = tcp_s->ConnTout;
   }
   else {
@@ -1207,8 +1211,9 @@ void net_tcp_socket_run (void) {
           }
           /* Make sure fast recovery mode is not active */
           tcp_s->DupAcks = 0;
-          /* Retransmit all frames from the queue */
           tcp_s->Flags  &= ~TCP_IFLAG_FAST;
+          /* Initialize the queue for timeout recovery */
+          tcp_s->Flags  |=  TCP_IFLAG_TIMEOUT;
           tcp_que_init (tcp_s);
           tcp_que_resend (tcp_s);
           return;
@@ -2453,7 +2458,7 @@ static void tcp_proc_acknr (NET_TCP_INFO *tcp_s, uint32_t acknr) {
     tcp_s->SendChk = acknr;
   }
 
-  /* Release the acked data from the queue */
+  /* Calculate RTT estimation */
   next = tcp_s->unack_list;
   if (TCP_QUE(next)->ticks) {
     /* Timestamp exists, do RTT estimation calculations. This */
@@ -2470,12 +2475,17 @@ static void tcp_proc_acknr (NET_TCP_INFO *tcp_s, uint32_t acknr) {
     DEBUG_INFO (tcp_s);
     EvrNetTCP_ShowRttVariables (tcp_s->Id, tcp_s->RttSa, tcp_s->RttSv);
   }
-  tcp_s->unack_list = NULL;
   if (frame != NULL) {
-    /* Markup the release edge (next = NULL) */
+    /* Mark the release edge (next = NULL) */
     tcp_s->unack_list = TCP_QUE(frame)->next;
-    TCP_QUE(frame)->next= NULL;
+    TCP_QUE(frame)->next = NULL;
   }
+  else {
+    /* All data in the queue is acked */
+    tcp_s->unack_list = NULL;
+    tcp_s->Flags &= ~TCP_IFLAG_TIMEOUT;
+  }
+  /* Release the acked data from the queue */
   for (frame = next; frame; frame = next) {
     next = TCP_QUE(frame)->next;
     net_mem_free (frame);

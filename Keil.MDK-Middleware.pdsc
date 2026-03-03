@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package schemaVersion="1.7.36" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.36/schema/PACK.xsd">
+<package schemaVersion="1.7.45" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.45/schema/PACK.xsd">
   <vendor>Keil</vendor>
   <name>MDK-Middleware</name>
   <description overview="Documentation/README.md">Middleware for Arm based processors</description>
@@ -14,6 +14,8 @@
   <releases>
     <release version="8.2.1-dev">
       Active development ...
+      Network Component Version 8.2.1
+      - fixed TCP retry counter handling during timeout recovery in netTCP_Send
     </release>
     <release version="7.17.0" date="2024-01-17">
       Network Component Version 7.19.0
@@ -681,7 +683,7 @@
   <components>
 
     <!-- Network (MDK) -->
-    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.2.0">
+    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.2.1">
       <description>IPv4/IPv6 Networking using Ethernet or Serial protocols</description>
       <doc>Documentation/html/Network/index.html</doc>
       <component Cgroup="CORE" condition="CMSIS Core with RTOS">

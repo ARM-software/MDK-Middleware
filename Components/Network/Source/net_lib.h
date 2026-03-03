@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_lib.h
  * Purpose: Network Library Definitions
@@ -225,7 +225,7 @@ typedef struct net_udp_info {
 typedef struct net_tcp_info {
   uint8_t  State;                       ///< Socket state
   uint8_t  Type;                        ///< Socket type
-  uint8_t  Flags;                       ///< State flags
+  uint16_t Flags;                       ///< State flags
   uint16_t LocPort;                     ///< Local TCP port
   uint8_t  Tos;                         ///< Type of Service for IPv4
   uint8_t  TClass;                      ///< Traffic class/packet priority for IPv6
