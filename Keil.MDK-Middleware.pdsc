@@ -12,9 +12,10 @@
     </licenseSet>
   </licenseSets>
   <releases>
-    <release version="8.2.1-dev">
+    <release version="8.3.0-dev">
       Active development ...
-      Network Component Version 8.2.1
+      Network Component Version 8.3.0
+      - updated mbedTLS interface and examples to support mbedTLS v4.0.0
       - corrected false-positive responses in FTP Server for commands starting active mode
       - fixed FTP server login with authentication disabled
       - fixed TCP retry counter handling during timeout recovery in netTCP_Send
@@ -527,7 +528,8 @@
       <description>Network TCP and CORE component with TLS</description>
       <require condition="Network Core"/>
       <require Cclass="Network" Cgroup="Socket" Csub="TCP"/>
-      <require Cclass="Security" Cgroup="mbed TLS" Cversion="3.1.0"/>
+      <accept  Cclass="Security" Cgroup="mbed TLS" Cversion="3.1.0"/>
+      <accept  Cclass="Security" Cgroup="mbed TLS" Cversion="4.0.0"/>
     </condition>
     <condition id="Network TCP and File System Drive">
       <description>Network TCP and CORE component with File System Drive</description>
@@ -551,7 +553,8 @@
       <description>Network Web Server Compact with TLS</description>
       <require condition="Network Core"/>
       <require Cclass="Network" Cgroup="Socket" Csub="TCP"/>
-      <require Cclass="Security" Cgroup="mbed TLS" Cversion="3.1.0"/>
+      <accept  Cclass="Security" Cgroup="mbed TLS" Cversion="3.1.0"/>
+      <accept  Cclass="Security" Cgroup="mbed TLS" Cversion="4.0.0"/>
       <deny Cclass="Network" Cgroup="Service" Csub="Web Server"/>
     </condition>
     <condition id="Network Web Server">
@@ -566,7 +569,8 @@
       <require condition="Network Core"/>
       <require Cclass="Network" Cgroup="Socket" Csub="TCP"/>
       <require condition="File System Drive"/>
-      <require Cclass="Security" Cgroup="mbed TLS" Cversion="3.1.0"/>
+      <accept  Cclass="Security" Cgroup="mbed TLS" Cversion="3.1.0"/>
+      <accept  Cclass="Security" Cgroup="mbed TLS" Cversion="4.0.0"/>
       <deny Cclass="Network" Cgroup="Service" Csub="Web Server Compact"/>
     </condition>
     <condition id="ETH Driver Single-file">
@@ -685,7 +689,7 @@
   <components>
 
     <!-- Network (MDK) -->
-    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.2.1">
+    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.3.0">
       <description>IPv4/IPv6 Networking using Ethernet or Serial protocols</description>
       <doc>Documentation/html/Network/index.html</doc>
       <component Cgroup="CORE" condition="CMSIS Core with RTOS">
