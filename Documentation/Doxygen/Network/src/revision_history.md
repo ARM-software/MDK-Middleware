@@ -6,8 +6,9 @@
       <th>Description</th>
     </tr>
     <tr>
-      <td>V8.2.1</td>
+      <td>V8.3.0</td>
       <td>
+        - updated mbedTLS interface and examples to support mbedTLS v4.0.0
         - corrected false-positive responses in FTP Server for commands starting active mode
         - fixed FTP server login with authentication disabled
         - fixed TCP retry counter handling during timeout recovery in \ref netTCP_Send
