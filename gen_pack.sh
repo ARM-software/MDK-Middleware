@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Version: 3.1
-# Date: 2024-04-17
+# Version: 3.0
+# Date: 2023-11-06
 # This bash script generates a CMSIS Software Pack:
 #
 
@@ -9,7 +9,7 @@ set -o pipefail
 # Set version of gen pack library
 # For available versions see https://github.com/Open-CMSIS-Pack/gen-pack/tags.
 # Use the tag name without the prefix "v", e.g., 0.7.0
-REQUIRED_GEN_PACK_LIB="0.13.0"
+REQUIRED_GEN_PACK_LIB="0.11.3"
 
 # Set default command line arguments
 DEFAULT_ARGS=(-c "v")
@@ -38,10 +38,8 @@ PACK_DIRS="
 # Specify file names to be added to pack base directory
 # Default: empty
 #
-# PACK_BASE_FILES="
-#   LICENSE
-#   <list files here>
-# "
+PACK_BASE_FILES="
+"
 
 # Specify file names to be deleted from pack build directory
 # Default: empty
@@ -53,9 +51,7 @@ PACK_DELETE_FILES="
 # Specify patches to be applied
 # Default: empty
 #
-# PACK_PATCH_FILES="
-#     <list patches here>
-# "
+# PACK_PATCH_FILES=""
 
 # Specify addition argument to packchk
 # Default: empty
@@ -82,18 +78,6 @@ PACKCHK_DEPS="
 # - tag       Tag annotations only
 #
 PACK_CHANGELOG_MODE="tag"
-
-# Specify file patterns to be excluded from the checksum file
-# Default: <empty>
-# Values:
-# - empty          All files packaged are included in the checksum file
-# - glob pattern   One glob pattern per line. Files matching a given pattern are excluded
-#                  from the checksum file
-# - "*"            The * (match all pattern) can be used to skip checksum file creating completely.
-# 
-# PACK_CHECKSUM_EXCLUDE="
-#   <list file patterns here>
-# "
 
 #
 # custom pre-processing steps
@@ -125,8 +109,8 @@ function postprocess() {
 
 # Set GEN_PACK_LIB_PATH to use a specific gen-pack library root
 # ... instead of bootstrap based on REQUIRED_GEN_PACK_LIB
-if [[ -n "${GEN_PACK_LIB_PATH}" ]] && [[ -f "${GEN_PACK_LIB_PATH}/gen-pack" ]]; then
-  . "${GEN_PACK_LIB_PATH}/gen-pack"
+if [[ -f "${GEN_PACK_LIB_PATH}/gen-pack" ]]; then
+  . "${GEN_PACK_LIB}/gen-pack"
 else
   . <(curl -sL "https://raw.githubusercontent.com/Open-CMSIS-Pack/gen-pack/main/bootstrap")
 fi
