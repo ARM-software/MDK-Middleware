@@ -131,11 +131,11 @@ var NAVTREEINDEX =
 "group__ftp__fs__interface.html#ga058e1483a1bf2d52e7fe296b52d88901",
 "group__net__evr__bsd__func.html#ga7b12356fe6e493742f7c33fd5bd7c522",
 "group__net__evr__eth__func.html#gaf37e1299ef26ea856f9114a5c86974ee",
-"group__net__evr__ip4__func.html#ga09f117a078d3c15f56f74d021573a6f4",
-"group__net__evr__ppp__func.html#gaefdfa6e896a5991c764cea04a55cc841",
-"group__net__evr__tcp__func.html#gac510c586418182e8d732018f46f404cc",
-"group__ppp__user__api.html#ga4bd34e4e1bb6351ed4ba20901e081ac9",
-"index.html"
+"group__net__evr__igmp__func.html#gaff2272055cb23a6bdad024ff30d49c34",
+"group__net__evr__ppp__func.html#gaea2182b9f98c9c572c21f2b6abd225c4",
+"group__net__evr__tcp__func.html#gabc6c1f97b79d796fb805a5bca2bd6681",
+"group__ppp__user__api.html",
+"group__ws__web__pages.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

@@ -1,5 +1,7 @@
 var NAVTREEINDEX6 =
 {
+"group__net__evr__tcp__func.html#gabc6c1f97b79d796fb805a5bca2bd6681":[10,8,19,45],
+"group__net__evr__tcp__func.html#gac4b46b4a2e8a72ef1e0b30b401b3fa3b":[10,8,19,46],
 "group__net__evr__tcp__func.html#gac510c586418182e8d732018f46f404cc":[10,8,19,57],
 "group__net__evr__tcp__func.html#gac6819f627f2ba4946734ffa4c611e73f":[10,8,19,96],
 "group__net__evr__tcp__func.html#gac7f8a6deada5aacfea6d5aa376a06ba5":[10,8,19,41],
@@ -247,7 +249,5 @@ var NAVTREEINDEX6 =
 "group__network__structs.html#af4dc31d32c4f19d27a280e4de946058d":[10,4,1,1,0],
 "group__network__structs.html#structNET__ADDR":[10,4,1,0],
 "group__network__structs.html#structNET__ADDR4":[10,4,1,1],
-"group__nw__sw__util__fcarm.html":[10,1,0,7],
-"group__ppp__user__api.html":[10,3,3,0],
-"group__ppp__user__api.html#ga19e5b83c645aec7b967d4a1e06e05e65":[10,3,3,0,0]
+"group__nw__sw__util__fcarm.html":[10,1,0,7]
 };

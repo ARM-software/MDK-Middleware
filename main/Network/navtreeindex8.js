@@ -1,5 +1,7 @@
 var NAVTREEINDEX8 =
 {
+"group__ws__web__pages.html":[10,1,0,1],
+"group__ws__web__technologies.html":[10,1,0,0],
 "index.html":[],
 "index.html":[0],
 "index.html#doc_structure":[0,0],

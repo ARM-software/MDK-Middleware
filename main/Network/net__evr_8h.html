@@ -2240,6 +2240,10 @@ Macros</h2></td></tr>
 <tr class="separator:ac80daa9f22b59c08a21218732daad754"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a8d8a1eae5b3b39379689217179ce85" id="r_a4a8d8a1eae5b3b39379689217179ce85"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a8d8a1eae5b3b39379689217179ce85">EvtNetFTPs_ShowDataMode</a>&#160;&#160;&#160;EventID (EventLevelOp,    <a class="el" href="#a654331ad3d2acc295c221c3b35d90c16">EvtNetFTPs</a>, 30)</td></tr>
 <tr class="separator:a4a8d8a1eae5b3b39379689217179ce85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa958c06ae6596d4f860b4bd386602eca" id="r_aa958c06ae6596d4f860b4bd386602eca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa958c06ae6596d4f860b4bd386602eca">EvtNetFTPs_InvalidCommandParam</a>&#160;&#160;&#160;EventID (EventLevelError, <a class="el" href="#a654331ad3d2acc295c221c3b35d90c16">EvtNetFTPs</a>, 68)</td></tr>
+<tr class="separator:aa958c06ae6596d4f860b4bd386602eca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1724dc281e288d1ab87a11ebf85ff93f" id="r_a1724dc281e288d1ab87a11ebf85ff93f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1724dc281e288d1ab87a11ebf85ff93f">EvtNetFTPs_InvalidPort</a>&#160;&#160;&#160;EventID (EventLevelError, <a class="el" href="#a654331ad3d2acc295c221c3b35d90c16">EvtNetFTPs</a>, 69)</td></tr>
+<tr class="separator:a1724dc281e288d1ab87a11ebf85ff93f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f91353eb80c60ac83df19a496016621" id="r_a5f91353eb80c60ac83df19a496016621"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f91353eb80c60ac83df19a496016621">EvtNetFTPs_ActiveModeStart</a>&#160;&#160;&#160;EventID (EventLevelOp,    <a class="el" href="#a654331ad3d2acc295c221c3b35d90c16">EvtNetFTPs</a>, 31)</td></tr>
 <tr class="separator:a5f91353eb80c60ac83df19a496016621"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8ac3f7a5277bd7a7365a68ee0b906a3" id="r_af8ac3f7a5277bd7a7365a68ee0b906a3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8ac3f7a5277bd7a7365a68ee0b906a3">EvtNetFTPs_PassiveModeStart</a>&#160;&#160;&#160;EventID (EventLevelOp,    <a class="el" href="#a654331ad3d2acc295c221c3b35d90c16">EvtNetFTPs</a>, 32)</td></tr>
@@ -5892,6 +5896,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga0d442b849a0e8d1964c79834bf8e7b27" id="r_ga0d442b849a0e8d1964c79834bf8e7b27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__ftps__func.html#ga0d442b849a0e8d1964c79834bf8e7b27">EvrNetFTPs_ShowDataMode</a> (uint8_t session, uint32_t data_mode)</td></tr>
 <tr class="memdesc:ga0d442b849a0e8d1964c79834bf8e7b27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on FTP server display transfer data mode (Op)  <br /></td></tr>
 <tr class="separator:ga0d442b849a0e8d1964c79834bf8e7b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae89a7644603d9e2f0c7863ec0adeb0d9" id="r_gae89a7644603d9e2f0c7863ec0adeb0d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__ftps__func.html#gae89a7644603d9e2f0c7863ec0adeb0d9">EvrNetFTPs_InvalidCommandParam</a> (uint8_t session)</td></tr>
+<tr class="memdesc:gae89a7644603d9e2f0c7863ec0adeb0d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on FTP server invalid command parameter error (Error)  <br /></td></tr>
+<tr class="separator:gae89a7644603d9e2f0c7863ec0adeb0d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd538349944e46dc7fac1d824c62541a" id="r_gafd538349944e46dc7fac1d824c62541a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__ftps__func.html#gafd538349944e46dc7fac1d824c62541a">EvrNetFTPs_InvalidPort</a> (uint8_t session, uint16_t port)</td></tr>
+<tr class="memdesc:gafd538349944e46dc7fac1d824c62541a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on FTP server requested port invalid (Error)  <br /></td></tr>
+<tr class="separator:gafd538349944e46dc7fac1d824c62541a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7be9d7b2a1920715d3d47f69dcce1f62" id="r_ga7be9d7b2a1920715d3d47f69dcce1f62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__net__evr__ftps__func.html#ga7be9d7b2a1920715d3d47f69dcce1f62">EvrNetFTPs_ActiveModeStart</a> (uint8_t session, uint16_t port)</td></tr>
 <tr class="memdesc:ga7be9d7b2a1920715d3d47f69dcce1f62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on FTP server start active mode (Op)  <br /></td></tr>
 <tr class="separator:ga7be9d7b2a1920715d3d47f69dcce1f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -13331,6 +13341,34 @@ type</td>
       <table class="memname">
         <tr>
           <td class="memname">#define EvtNetFTPs_InitServer&#160;&#160;&#160;EventID (EventLevelOp,    <a class="el" href="#a654331ad3d2acc295c221c3b35d90c16">EvtNetFTPs</a>,  0)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa958c06ae6596d4f860b4bd386602eca" name="aa958c06ae6596d4f860b4bd386602eca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa958c06ae6596d4f860b4bd386602eca">&#9670;&#160;</a></span>EvtNetFTPs_InvalidCommandParam</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define EvtNetFTPs_InvalidCommandParam&#160;&#160;&#160;EventID (EventLevelError, <a class="el" href="#a654331ad3d2acc295c221c3b35d90c16">EvtNetFTPs</a>, 68)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1724dc281e288d1ab87a11ebf85ff93f" name="a1724dc281e288d1ab87a11ebf85ff93f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1724dc281e288d1ab87a11ebf85ff93f">&#9670;&#160;</a></span>EvtNetFTPs_InvalidPort</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define EvtNetFTPs_InvalidPort&#160;&#160;&#160;EventID (EventLevelError, <a class="el" href="#a654331ad3d2acc295c221c3b35d90c16">EvtNetFTPs</a>, 69)</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -3,5 +3,5 @@ function writeHeader() {
 };
 
 function writeFooter()  {
-    document.write('Generated on Tue Mar  3 2026 11:13:56 for Network Component 8.2.1. Copyright &copy; 2026 Arm Limited (or its affiliates). All rights reserved.');
+    document.write('Generated on Tue Mar  3 2026 12:25:06 for Network Component 8.2.1. Copyright &copy; 2026 Arm Limited (or its affiliates). All rights reserved.');
 };

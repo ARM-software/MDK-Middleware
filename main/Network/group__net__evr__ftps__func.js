@@ -26,6 +26,8 @@ var group__net__evr__ftps__func =
     [ "EvrNetFTPs_GetSocketFailed", "group__net__evr__ftps__func.html#ga0e63ebcfbd8d8c234a6b2257bd99f272", null ],
     [ "EvrNetFTPs_InboundConnRejected", "group__net__evr__ftps__func.html#ga9f2d4046c02433cf28e876fe59ad4785", null ],
     [ "EvrNetFTPs_InitServer", "group__net__evr__ftps__func.html#ga4c5df9a4a7e7d630bc0b4fb09d172359", null ],
+    [ "EvrNetFTPs_InvalidCommandParam", "group__net__evr__ftps__func.html#gae89a7644603d9e2f0c7863ec0adeb0d9", null ],
+    [ "EvrNetFTPs_InvalidPort", "group__net__evr__ftps__func.html#gafd538349944e46dc7fac1d824c62541a", null ],
     [ "EvrNetFTPs_InvalidState", "group__net__evr__ftps__func.html#gab91ba78a9b2ac6f66c57c83b9a99f8ac", null ],
     [ "EvrNetFTPs_ListDirectoryBasic", "group__net__evr__ftps__func.html#ga7f396452eb4927307e0e9982bb6f73af", null ],
     [ "EvrNetFTPs_ListDirectoryExtended", "group__net__evr__ftps__func.html#gaff0a6a5094daabda267d3dcb6f99a3cd", null ],

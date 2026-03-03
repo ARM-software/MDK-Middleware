@@ -234,6 +234,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga0d442b849a0e8d1964c79834bf8e7b27" id="r_ga0d442b849a0e8d1964c79834bf8e7b27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga0d442b849a0e8d1964c79834bf8e7b27">EvrNetFTPs_ShowDataMode</a> (uint8_t session, uint32_t data_mode)</td></tr>
 <tr class="memdesc:ga0d442b849a0e8d1964c79834bf8e7b27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on FTP server display transfer data mode (Op)  <br /></td></tr>
 <tr class="separator:ga0d442b849a0e8d1964c79834bf8e7b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae89a7644603d9e2f0c7863ec0adeb0d9" id="r_gae89a7644603d9e2f0c7863ec0adeb0d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gae89a7644603d9e2f0c7863ec0adeb0d9">EvrNetFTPs_InvalidCommandParam</a> (uint8_t session)</td></tr>
+<tr class="memdesc:gae89a7644603d9e2f0c7863ec0adeb0d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on FTP server invalid command parameter error (Error)  <br /></td></tr>
+<tr class="separator:gae89a7644603d9e2f0c7863ec0adeb0d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafd538349944e46dc7fac1d824c62541a" id="r_gafd538349944e46dc7fac1d824c62541a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gafd538349944e46dc7fac1d824c62541a">EvrNetFTPs_InvalidPort</a> (uint8_t session, uint16_t port)</td></tr>
+<tr class="memdesc:gafd538349944e46dc7fac1d824c62541a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on FTP server requested port invalid (Error)  <br /></td></tr>
+<tr class="separator:gafd538349944e46dc7fac1d824c62541a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7be9d7b2a1920715d3d47f69dcce1f62" id="r_ga7be9d7b2a1920715d3d47f69dcce1f62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga7be9d7b2a1920715d3d47f69dcce1f62">EvrNetFTPs_ActiveModeStart</a> (uint8_t session, uint16_t port)</td></tr>
 <tr class="memdesc:ga7be9d7b2a1920715d3d47f69dcce1f62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on FTP server start active mode (Op)  <br /></td></tr>
 <tr class="separator:ga7be9d7b2a1920715d3d47f69dcce1f62"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -377,7 +383,7 @@ Functions</h2></td></tr>
 <p>The event <b>ActiveModeStart</b> is created when the FTP server starts active FTP mode.</p>
 <p><b>Value</b> in the Event Recorder shows:</p><ul>
 <li><b>session:</b> FTP server session.</li>
-<li><b>port:</b> port on the client for data connection. </li>
+<li><b>port:</b> destination port for data connection. </li>
 </ul>
 
 </div>
@@ -1160,6 +1166,70 @@ Functions</h2></td></tr>
 <li><b>sessions:</b> number of FTP sessions available.</li>
 <li><b>port:</b> port number to be used.</li>
 <li><b>tout:</b> duration of inactivity to close the session. </li>
+</ul>
+
+</div>
+</div>
+<a id="gae89a7644603d9e2f0c7863ec0adeb0d9" name="gae89a7644603d9e2f0c7863ec0adeb0d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae89a7644603d9e2f0c7863ec0adeb0d9">&#9670;&#160;</a></span>EvrNetFTPs_InvalidCommandParam()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void EvrNetFTPs_InvalidCommandParam </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>session</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event on FTP server invalid command parameter error (Error) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">session</td><td>session number</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The event <b>InvalidCommandParam</b> is created when the FTP server detects an error in the command parameters. This may be due to incorrect command syntax or an invalid destination network address. The event may also indicate a potential FTP bounce attack attempt.</p>
+<p><b>Value</b> in the Event Recorder shows:</p><ul>
+<li><b>session:</b> FTP server session. </li>
+</ul>
+
+</div>
+</div>
+<a id="gafd538349944e46dc7fac1d824c62541a" name="gafd538349944e46dc7fac1d824c62541a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafd538349944e46dc7fac1d824c62541a">&#9670;&#160;</a></span>EvrNetFTPs_InvalidPort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="net__evr_8h.html#aba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> void EvrNetFTPs_InvalidPort </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>session</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>port</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event on FTP server requested port invalid (Error) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">session</td><td>session number </td></tr>
+    <tr><td class="paramname">port</td><td>port requested port number</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The event <b>InvalidPort</b> is created when the FTP server detects that the requested port number falls within the well-known service port range. Connections to well-known service ports are not permitted.</p>
+<p><b>Value</b> in the Event Recorder shows:</p><ul>
+<li><b>session:</b> FTP server session.</li>
+<li><b>port:</b> requested port number. </li>
 </ul>
 
 </div>
