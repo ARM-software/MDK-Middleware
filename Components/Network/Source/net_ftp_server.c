@@ -401,8 +401,11 @@ static uint32_t ftp_listener (int32_t socket, netTCP_Event event, const NET_ADDR
       ftp_s->DPort  = FTP_DEF_DPORT;
       ftp_s->Flags |= FTP_FLAG_MODEASCII;
       ftp_s->Resp   = FTP_RESP_READY;
-      ftp_s->State  = FTP_STATE_USER;
       ftp_s->UserId = 0;
+      if (!ftp->en_auth) {
+        goto granted;
+      }
+      ftp_s->State = FTP_STATE_USER;
       break;
 
     case netTCP_EventClosed:
@@ -446,18 +449,16 @@ static uint32_t ftp_listener (int32_t socket, netTCP_Event event, const NET_ADDR
           if (cmd.sel == FTP_CMD_USER) {
             DEBUGF (FTP," Verifying Username\n");
             EvrNetFTPs_VerifyUsername (ftp_s->Id);
-            if (ftp->en_auth) {
-              /* Check username of a system admin account */
-              if (ftp->user && ftp->user_len &&
-                  strcmp ((const char *)&buf[5], ftp->user) == 0) {
-                ftp_s->Flags |= FTP_FLAG_USEROK;
-              }
-              /* Check username of optional external accounts */
-              else if ((i = netFTPs_CheckUsername ((const char *)&buf[5])) > 0) {
-                /* Username is valid, register user id */
-                ftp_s->UserId = i & 0xFF;
-                ftp_s->Flags |= FTP_FLAG_USEROK;
-              }
+            /* Check username of a system admin account */
+            if (ftp->user && ftp->user_len &&
+                strcmp ((const char *)&buf[5], ftp->user) == 0) {
+              ftp_s->Flags |= FTP_FLAG_USEROK;
+            }
+            /* Check username of optional external accounts */
+            else if ((i = netFTPs_CheckUsername ((const char *)&buf[5])) > 0) {
+              /* Username is valid, register user id */
+              ftp_s->UserId = i & 0xFF;
+              ftp_s->Flags |= FTP_FLAG_USEROK;
             }
             ftp_s->Resp  = FTP_RESP_PASSWREQ;
             ftp_s->State = FTP_STATE_PASSW;
@@ -470,51 +471,49 @@ static uint32_t ftp_listener (int32_t socket, netTCP_Event event, const NET_ADDR
           if (cmd.sel == FTP_CMD_QUIT) {
             goto quit;
           }
-          goto not_logd;
+          goto not_auth;
 
         case FTP_STATE_PASSW:
           /* Password required */
           if (cmd.sel == FTP_CMD_PASS) {
-            if (ftp->en_auth) {
-              DEBUGF (FTP," Verifying Password\n");
-              EvrNetFTPs_VerifyPassword (ftp_s->Id);
-              if ((ftp_s->Flags & FTP_FLAG_USEROK) == 0) {
-err_auth:       ERRORF (FTP,"Session %d, Login failed\n",ftp_s->Id);
-                EvrNetFTPs_AuthenticationFailed (ftp_s->Id);
-                ftp_s->Resp  = FTP_RESP_LOGINFAIL;
-                ftp_s->State = FTP_STATE_USER;
-                break;
+            DEBUGF (FTP," Verifying Password\n");
+            EvrNetFTPs_VerifyPassword (ftp_s->Id);
+            if ((ftp_s->Flags & FTP_FLAG_USEROK) == 0) {
+err_auth:     ERRORF (FTP,"Session %d, Login failed\n",ftp_s->Id);
+              EvrNetFTPs_AuthenticationFailed (ftp_s->Id);
+              ftp_s->Resp  = FTP_RESP_LOGINFAIL;
+              ftp_s->State = FTP_STATE_USER;
+              break;
+            }
+            if (ftp_s->UserId == 0) {
+              /* Verify password for system administrator */
+              if (ftp->passw && ftp->passw_len &&
+                  strcmp ((const char *)&buf[5],ftp->passw) != 0) {
+                goto err_auth;
               }
-              if (ftp_s->UserId == 0) {
-                /* Verify password for system administrator */
-                if (ftp->passw && ftp->passw_len &&
-                    strcmp ((const char *)&buf[5],ftp->passw) != 0) {
-                  goto err_auth;
-                }
-              }
-              else {
-                /* Verify password for external user */
-                if (!netFTPs_CheckPassword (ftp_s->UserId, (const char *)&buf[5])) {
-                  goto err_auth;
-                }
+            }
+            else {
+              /* Verify password for external user */
+              if (!netFTPs_CheckPassword (ftp_s->UserId, (const char *)&buf[5])) {
+                goto err_auth;
               }
             }
             DEBUGF (FTP," Login success\n");
             EvrNetFTPs_UserLoginSuccess (ftp_s->Id);
             netFTPs_Notify (netFTPs_EventLogin);
             ftp_s->Flags |= FTP_FLAG_LOGIN;
-            ftp_s->Path = (char *)net_mem_alloc (FTP_MAX_PATH+4);
+            ftp_s->Resp  = FTP_RESP_LOGINOK;
+granted:    ftp_s->Path  = (char *)net_mem_alloc (FTP_MAX_PATH+4);
             ftp_s->Path[0] = '/';
             ftp_s->Path[1] = 0;
             ftp_s->PathLen = 1;
-            ftp_s->Resp  = FTP_RESP_LOGINOK;
             ftp_s->State = FTP_STATE_COMMAND;
             break;
           }
           if (cmd.sel == FTP_CMD_QUIT) {
             goto quit;
           }
-not_logd: DEBUGF (FTP," Not logged in, command ignored\n");
+not_auth: DEBUGF (FTP," Not logged in, command ignored\n");
           EvrNetFTPs_NotAuthenticated (ftp_s->Id);
           ftp_s->Resp  = FTP_RESP_NOTLOGGED;
           ftp_s->State = FTP_STATE_USER;
