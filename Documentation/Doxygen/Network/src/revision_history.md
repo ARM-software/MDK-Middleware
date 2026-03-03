@@ -9,6 +9,7 @@
       <td>V8.2.1</td>
       <td>
         - corrected false-positive responses in FTP Server for commands starting active mode
+        - fixed FTP server login with authentication disabled
         - fixed TCP retry counter handling during timeout recovery in \ref netTCP_Send
       </td>
     </tr>
