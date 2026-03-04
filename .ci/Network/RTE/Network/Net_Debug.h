@@ -20,7 +20,9 @@
 //                     <1=>STDIO
 //                     <2=>STDIO + Timestamp
 //   <i>Select output channel for delivery of diagnostic messages
+#ifndef NET_DEBUG_CHANNEL
 #define NET_DEBUG_CHANNEL       0
+#endif
 
 //   <e>System
 //   <i>Enable generation of system diagnostic messages

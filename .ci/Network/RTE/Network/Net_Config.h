@@ -14,7 +14,9 @@
 //   <o>Variant <0=>IPv4 only
 //              <1=>IPv4/IPv6 dual stack
 //   <i>Configure variant of the network library
+#ifndef NET_CORE_VARIANT
 #define NET_CORE_VARIANT        1
+#endif
 
 //   <s.15>Local Host Name
 //   <i>This is the name under which embedded host can be

@@ -33,14 +33,61 @@ solution:
       define:
         - FS_DEBUG_EVR_ENABLE : 1
         - NET_DEBUG_ENABLE : 1
+        - NET_CORE_VARIANT : 1 
+        - NET_DEBUG_CHANNEL : 0
         - USBD_DEBUG_EVR : 1
         - USBH_DEBUG_EVR : 1
+    - type: Debug_stdio
+      debug: on
+      optimize: debug
+      define:
+        - NET_CORE_VARIANT : 1 
+        - NET_DEBUG_ENABLE : 1
+        - NET_DEBUG_CHANNEL : 2
+    - type: Debug_ip4
+      debug: on
+      optimize: debug
+      define:
+        - NET_CORE_VARIANT : 0 
+        - NET_DEBUG_ENABLE : 1
+        - NET_DEBUG_CHANNEL : 0
+    - type: Debug_ip4_stdio
+      debug: on
+      optimize: debug
+      define:
+        - NET_CORE_VARIANT : 0 
+        - NET_DEBUG_ENABLE : 1
+        - NET_DEBUG_CHANNEL : 2
+    - type: Release_ip4
+      debug: off
+      optimize: balanced
+      define:
+        - NET_CORE_VARIANT : 0 
+        - NET_DEBUG_ENABLE : 0
     - type: Release
       debug: off
       optimize: balanced
+      define:
+        - NET_CORE_VARIANT : 1 
+        - NET_DEBUG_ENABLE : 0
 
   projects:
     - project: FileSystem/FileSystem.cproject.yml
+      not-for-context:
+        - .Debug_stdio
+        - .Debug_ip4
+        - .Debug_ip4_stdio
+        - .Release_ip4
     - project: Network/Network.cproject.yml
     - project: USB/Device/USB_Device.cproject.yml
+      not-for-context:
+        - .Debug_stdio
+        - .Debug_ip4
+        - .Debug_ip4_stdio
+        - .Release_ip4
     - project: USB/Host/USB_Host.cproject.yml
+      not-for-context:
+        - .Debug_stdio
+        - .Debug_ip4
+        - .Debug_ip4_stdio
+        - .Release_ip4

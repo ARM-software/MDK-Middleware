@@ -10,7 +10,9 @@ project:
   components:
     - component: ARM::CMSIS:CORE
     - component: ARM::CMSIS-View:Event Recorder&DAP
-      for-context: .Debug
+      for-context:
+        - .Debug
+        - .Debug_ip4
     - component: ARM::CMSIS Driver:Ethernet:Custom
     - component: ARM::CMSIS Driver:WiFi:Custom
     - component: ARM::CMSIS Driver:USART:Custom
