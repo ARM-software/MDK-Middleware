@@ -140,7 +140,7 @@ $(function(){initNavTree('SMTPS_Client_Example.html',''); initResizable(true); }
 <img src="smtp_setup.png" alt=""/>
 <div class="caption">
 SMTPS client hardware setup</div></div>
-    <h1><a class="anchor" id="autotoc_md28"></a>
+    <h1><a class="anchor" id="autotoc_md30"></a>
 Project Organization</h1>
 <p>The SMTPS Client project is available as part of the <a class="el" href="examples.html">Network Reference examples</a>.</p>
 <h2>Application Source Files</h2>
@@ -177,14 +177,14 @@ Project Organization</h1>
 <li><code>Net_Debug.h</code>: <a class="el" href="create_app.html#netDebugConfig">Network Debug configuration</a></li>
 </ul>
 </li>
-<li>For mbedTLS component, in <code>./RTE/Security/</code> folder:<ul>
-<li><code>mbedTLS_config.h</code>, <code>mbedTLS_crypto_config.h</code>: <a href="https://github.com/ARM-software/CMSIS-mbedTLS">mbedTLS configuration files</a></li>
-</ul>
-</li>
 <li>For the CMSIS components, in the <code>./RTE/CMSIS/</code> folder:<ul>
 <li><code>RTX_Config.h</code> and <code>RTX_Config.c</code>: <a href="https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html">CMSIS-RTX Configuration files</a> for the RTOS Kernel</li>
 </ul>
 </li>
+</ul>
+<p>Configuration files for the <a href="https://github.com/ARM-software/CMSIS-mbedTLS">mbedTLS</a> are located in the <code>./</code> folder:</p><ul>
+<li><code>app_mbedtls_config.h</code>: main mbedTLS configuration file</li>
+<li><code>app_crypto_config.h</code>: crypto features configuration file</li>
 </ul>
 <p>When a board layer is added to the project, corresponding configuration files for the board and device components will become available in the local <code>./Board/</code> directory.</p>
 <h2>Board Layer</h2>
@@ -193,7 +193,7 @@ Project Organization</h1>
 <li><code>CMSIS_VIO</code>: CMSIS-Driver for Virtual I/O interface</li>
 <li><code>STDOUT</code>: Standard Output redirection</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md29"></a>
+<h1><a class="anchor" id="autotoc_md31"></a>
 Build the Project</h1>
 <p><a href="../General/working_with_examples.html">Working with MDK-Middleware Examples</a> explains the workflow for accessing, configuring and building an MDK-Middleware example project for your target hardware.</p>
 <ol type="1">
@@ -202,7 +202,7 @@ Build the Project</h1>
 <li>Select <b>SMTPS_Client</b> as an active project for the build process.</li>
 <li>Build the project and observe that no errors are reported.</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md30"></a>
+<h1><a class="anchor" id="autotoc_md32"></a>
 Run the Example</h1>
 <p><b>Setup</b></p>
 <p>Board-specific hardware setup such as jumpers, Ethernet ports, power supply, etc. is documented in the board layer description (<code>README.md</code>) of your selected target.</p>

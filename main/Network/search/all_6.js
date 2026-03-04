@@ -5,9 +5,9 @@ var searchData=
   ['best_20practices_2',['Best practices',['../troubleshoot.html#trbl_bestpractice',1,'']]],
   ['between_20ssl_20tls_3',['Difference between SSL/TLS',['../secure_communication.html#autotoc_md5',1,'']]],
   ['bind_4',['bind',['../group__using__network__sockets__bsd__func.html#ga371b442b92e67a6046b168521d4a1b4a',1,'rl_net.h']]],
-  ['bsd_20client_5',['BSD Client',['../BSD_Client_Example.html',1,'BSD Client'],['../group__using__network__sockets__bsd__func.html#autotoc_md78',1,'BSD Client']]],
-  ['bsd_20server_6',['BSD Server',['../BSD_Server_Example.html',1,'BSD Server'],['../group__using__network__sockets__bsd__func.html#autotoc_md76',1,'BSD Server']]],
-  ['bsd_20server_20dual_20stack_7',['BSD Server Dual-Stack',['../group__using__network__sockets__bsd__func.html#autotoc_md77',1,'']]],
+  ['bsd_20client_5',['BSD Client',['../BSD_Client_Example.html',1,'BSD Client'],['../group__using__network__sockets__bsd__func.html#autotoc_md80',1,'BSD Client']]],
+  ['bsd_20server_6',['BSD Server',['../BSD_Server_Example.html',1,'BSD Server'],['../group__using__network__sockets__bsd__func.html#autotoc_md78',1,'BSD Server']]],
+  ['bsd_20server_20dual_20stack_7',['BSD Server Dual-Stack',['../group__using__network__sockets__bsd__func.html#autotoc_md79',1,'']]],
   ['bsd_20socket_8',['BSD Socket',['../group__netBSD__Func.html',1,'BSD Socket'],['../group__net__evr__bsd__func.html',1,'NetBSD: BSD Socket']]],
   ['bsd_5feaddrinuse_9',['BSD_EADDRINUSE',['../group__bsd__errors.html#ga4a2966c6d53a1babc05811591b74d6af',1,'rl_net.h']]],
   ['bsd_5fealready_10',['BSD_EALREADY',['../group__bsd__errors.html#ga1fff246358a715fe78bcf3554566180f',1,'rl_net.h']]],
@@ -29,5 +29,5 @@ var searchData=
   ['bsd_5fetimedout_26',['BSD_ETIMEDOUT',['../group__bsd__errors.html#gafa2f1752f8dd3381a8c10cf7f4d27053',1,'rl_net.h']]],
   ['bsd_5fewouldblock_27',['BSD_EWOULDBLOCK',['../group__bsd__errors.html#gac194fc11e0dff1a1a5569a83c5830f0d',1,'rl_net.h']]],
   ['bssid_28',['bssid',['../group__Wifi__structs.html#a19c52baafe5797c359c5e0f5776499d7',1,'NET_WIFI_SCAN_INFO']]],
-  ['build_20the_20project_29',['Build the Project',['../HTTP_Server_Example.html#autotoc_md11',1,'Build the Project'],['../HTTPS_Server_Example.html#autotoc_md14',1,'Build the Project'],['../HTTP_Upload_Example.html#autotoc_md17',1,'Build the Project'],['../FTP_Server_Example.html#autotoc_md20',1,'Build the Project'],['../Telnet_Server_Example.html#autotoc_md23',1,'Build the Project'],['../SMTP_Client_Example.html#autotoc_md26',1,'Build the Project'],['../SMTPS_Client_Example.html#autotoc_md29',1,'Build the Project'],['../SNMP_Agent_Example.html#autotoc_md32',1,'Build the Project'],['../BSD_Client_Example.html#autotoc_md35',1,'Build the Project'],['../BSD_Server_Example.html#autotoc_md38',1,'Build the Project']]]
+  ['build_20the_20project_29',['Build the Project',['../HTTP_Server_Example.html#autotoc_md13',1,'Build the Project'],['../HTTPS_Server_Example.html#autotoc_md16',1,'Build the Project'],['../HTTP_Upload_Example.html#autotoc_md19',1,'Build the Project'],['../FTP_Server_Example.html#autotoc_md22',1,'Build the Project'],['../Telnet_Server_Example.html#autotoc_md25',1,'Build the Project'],['../SMTP_Client_Example.html#autotoc_md28',1,'Build the Project'],['../SMTPS_Client_Example.html#autotoc_md31',1,'Build the Project'],['../SNMP_Agent_Example.html#autotoc_md34',1,'Build the Project'],['../BSD_Client_Example.html#autotoc_md37',1,'Build the Project'],['../BSD_Server_Example.html#autotoc_md40',1,'Build the Project']]]
 ];

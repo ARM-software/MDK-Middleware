@@ -1,12 +1,12 @@
 var searchData=
 [
   ['nbns_20client_0',['NetNBNS: NBNS Client',['../group__net__evr__nbns__func.html',1,'']]],
-  ['ndp_20ipv6_20only_1',['Neighbor Discovery Protocol (NDP, IPv6 only)',['../group__ethernet__user__api.html#autotoc_md92',1,'']]],
+  ['ndp_20ipv6_20only_1',['Neighbor Discovery Protocol (NDP, IPv6 only)',['../group__ethernet__user__api.html#autotoc_md94',1,'']]],
   ['ndp_20neighbor_20discovery_2',['NetNDP: NDP Neighbor Discovery',['../group__net__evr__ndp__func.html',1,'']]],
   ['negotiation_3',['Option Negotiation',['../group__telnet__server__options.html',1,'']]],
   ['neighbor_20discovery_4',['NetNDP: NDP Neighbor Discovery',['../group__net__evr__ndp__func.html',1,'']]],
-  ['neighbor_20discovery_20protocol_20and_20dynamic_20address_20assignment_5',['Neighbor Discovery Protocol and Dynamic Address Assignment',['../group__using__ethernet__interfaces__ipv6__fundamentals.html#autotoc_md104',1,'']]],
-  ['neighbor_20discovery_20protocol_20ndp_20ipv6_20only_6',['Neighbor Discovery Protocol (NDP, IPv6 only)',['../group__ethernet__user__api.html#autotoc_md92',1,'']]],
+  ['neighbor_20discovery_20protocol_20and_20dynamic_20address_20assignment_5',['Neighbor Discovery Protocol and Dynamic Address Assignment',['../group__using__ethernet__interfaces__ipv6__fundamentals.html#autotoc_md106',1,'']]],
+  ['neighbor_20discovery_20protocol_20ndp_20ipv6_20only_6',['Neighbor Discovery Protocol (NDP, IPv6 only)',['../group__ethernet__user__api.html#autotoc_md94',1,'']]],
   ['net_5faccess_5fdirectory_5fcreate_7',['NET_ACCESS_DIRECTORY_CREATE',['../rl__net_8h.html#aad5e59330fe6b3a6910b361b7b9feda3',1,'rl_net.h']]],
   ['net_5faccess_5fdirectory_5flist_8',['NET_ACCESS_DIRECTORY_LIST',['../rl__net_8h.html#af9163a128bf84a9bdaead3d57ace30a4',1,'rl_net.h']]],
   ['net_5faccess_5fdirectory_5fremove_9',['NET_ACCESS_DIRECTORY_REMOVE',['../rl__net_8h.html#ac644287dd7eb5854094eedf956b9ac5a',1,'rl_net.h']]],
@@ -537,8 +537,8 @@ var searchData=
   ['network_20core_534',['Network Core',['../create_app.html#nw_Network_Core',1,'']]],
   ['network_20driver_20and_20controller_20configuration_535',['Network Driver and Controller Configuration',['../create_app.html#nw_Driver_Configuration',1,'']]],
   ['network_20interface_536',['Network Interface',['../create_app.html#nw_Network_Interface',1,'']]],
-  ['network_20ipv4_537',['Network (IPv4)',['../resource_requirements.html#autotoc_md43',1,'']]],
-  ['network_20ipv4_20ipv6_538',['Network (IPv4/IPv6)',['../resource_requirements.html#autotoc_md42',1,'']]],
+  ['network_20ipv4_537',['Network (IPv4)',['../resource_requirements.html#autotoc_md45',1,'']]],
+  ['network_20ipv4_20ipv6_538',['Network (IPv4/IPv6)',['../resource_requirements.html#autotoc_md44',1,'']]],
   ['network_20library_20hierarchy_539',['Network library hierarchy',['../troubleshoot.html#trbl_nw_hierachry',1,'']]],
   ['network_20service_540',['Network Service',['../create_app.html#nw_Network_Service',1,'']]],
   ['network_20socket_541',['Network Socket',['../create_app.html#nw_Network_Socket',1,'']]],
@@ -547,5 +547,5 @@ var searchData=
   ['notify_544',['Notify',['../group__netDS__Modem.html#a1f744bf97d3a60b95332c37106337edf',1,'DRIVER_MODEM']]],
   ['ntohl_545',['ntohl',['../rl__net_8h.html#a9c97c14f2d7fb01a84857a9c775b9b11',1,'rl_net.h']]],
   ['ntohs_546',['ntohs',['../rl__net_8h.html#aaf82f29d63af29bd83e76d8f7122cf47',1,'rl_net.h']]],
-  ['number_547',['Number',['../group__netInterfaces__Common.html#autotoc_md88',1,'Interface Identification Number'],['../group__netInterfaces__Common.html#autotoc_md89',1,'Interface Number']]]
+  ['number_547',['Number',['../group__netInterfaces__Common.html#autotoc_md90',1,'Interface Identification Number'],['../group__netInterfaces__Common.html#autotoc_md91',1,'Interface Number']]]
 ];

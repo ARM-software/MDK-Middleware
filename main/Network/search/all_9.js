@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['encoding_0',['Encoding',['../group__smtp__structs.html#a7d072dbf1f6abc03a6efe5b95d8c16fe',1,'NET_SMTP_MAIL::Encoding'],['../group__mib__interface.html#autotoc_md74',1,'Extended OID Encoding']]],
-  ['entry_1',['MIB Entry',['../group__mib__interface.html#autotoc_md71',1,'']]],
+  ['encoding_0',['Encoding',['../group__smtp__structs.html#a7d072dbf1f6abc03a6efe5b95d8c16fe',1,'NET_SMTP_MAIL::Encoding'],['../group__mib__interface.html#autotoc_md76',1,'Extended OID Encoding']]],
+  ['entry_1',['MIB Entry',['../group__mib__interface.html#autotoc_md73',1,'']]],
   ['enumerations_2',['Enumerations',['../group__netTCP__Enums.html',1,'Enumerations'],['../group__netUDP__Enums.html',1,'Enumerations'],['../group__netInterfaces__Enums.html',1,'Enumerations'],['../group__netETH__Enums.html',1,'Enumerations'],['../group__netWiFi__Enums.html',1,'Enumerations'],['../group__netSys__Enums.html',1,'Enumerations'],['../group__netPing__Enums.html',1,'Enumerations'],['../group__netDNS__Enums.html',1,'Enumerations'],['../group__netFTPs__Enums.html',1,'Enumerations'],['../group__netFTPc__Enums.html',1,'Enumerations'],['../group__netTFTPc__Enums.html',1,'Enumerations'],['../group__netTELNET__Enums.html',1,'Enumerations'],['../group__netSMTPc__Enums.html',1,'Enumerations'],['../group__netSNTPc__Enums.html',1,'Enumerations']]],
   ['error_20codes_3',['Error Codes',['../group__bsd__errors.html',1,'Error Codes'],['../group__netStatusErrorCodes.html',1,'Status and Error Codes']]],
-  ['error_20pages_4',['Error Pages',['../group__ws__web__pages.html#autotoc_md54',1,'']]],
-  ['establishment_5',['Connection Establishment',['../group__tcp__user__api.html#autotoc_md79',1,'']]],
+  ['error_20pages_4',['Error Pages',['../group__ws__web__pages.html#autotoc_md56',1,'']]],
+  ['establishment_5',['Connection Establishment',['../group__tcp__user__api.html#autotoc_md81',1,'']]],
   ['eth_20interface_6',['NetETH: ETH Interface',['../group__net__evr__eth__func.html',1,'']]],
   ['ethernet_20interface_7',['Ethernet Interface',['../group__netETH__Func.html',1,'']]],
   ['ethernet_20interface_8',['Check the Ethernet interface',['../troubleshoot.html#trbl_verify_eth',1,'']]],
@@ -2710,7 +2710,7 @@ var searchData=
   ['evtnetwifi_5fthreadcreatefailed_2707',['EvtNetWiFi_ThreadCreateFailed',['../net__evr_8h.html#a9d38d44a3b987e136de6ecf5dda9812d',1,'net_evr.h']]],
   ['evtnetwifi_5ftxqueueoverflow_2708',['EvtNetWiFi_TxQueueOverflow',['../net__evr_8h.html#aa72974328db133c42972a84459ce86fa',1,'net_evr.h']]],
   ['evtnetwifi_5funinitinterface_2709',['EvtNetWiFi_UninitInterface',['../net__evr_8h.html#aadc87e48c1c302afc98834163fd90bd2',1,'net_evr.h']]],
-  ['example_2710',['Example',['../group__ws__script__langugage.html#autotoc_md46',1,'Application Example'],['../group__ws__ajax.html#autotoc_md48',1,'Application Example'],['../HTTP_Server_Example.html#autotoc_md12',1,'Run the Example'],['../HTTPS_Server_Example.html#autotoc_md15',1,'Run the Example'],['../HTTP_Upload_Example.html#autotoc_md18',1,'Run the Example'],['../FTP_Server_Example.html#autotoc_md21',1,'Run the Example'],['../Telnet_Server_Example.html#autotoc_md24',1,'Run the Example'],['../SMTP_Client_Example.html#autotoc_md27',1,'Run the Example'],['../SMTPS_Client_Example.html#autotoc_md30',1,'Run the Example'],['../SNMP_Agent_Example.html#autotoc_md33',1,'Run the Example'],['../BSD_Client_Example.html#autotoc_md36',1,'Run the Example'],['../BSD_Server_Example.html#autotoc_md39',1,'Run the Example']]],
+  ['example_2710',['Example',['../group__ws__script__langugage.html#autotoc_md48',1,'Application Example'],['../group__ws__ajax.html#autotoc_md50',1,'Application Example'],['../HTTP_Server_Example.html#autotoc_md14',1,'Run the Example'],['../HTTPS_Server_Example.html#autotoc_md17',1,'Run the Example'],['../HTTP_Upload_Example.html#autotoc_md20',1,'Run the Example'],['../FTP_Server_Example.html#autotoc_md23',1,'Run the Example'],['../Telnet_Server_Example.html#autotoc_md26',1,'Run the Example'],['../SMTP_Client_Example.html#autotoc_md29',1,'Run the Example'],['../SMTPS_Client_Example.html#autotoc_md32',1,'Run the Example'],['../SNMP_Agent_Example.html#autotoc_md35',1,'Run the Example'],['../BSD_Client_Example.html#autotoc_md38',1,'Run the Example'],['../BSD_Server_Example.html#autotoc_md41',1,'Run the Example']]],
   ['example_5fbsd_5fclient_2emd_2711',['example_bsd_client.md',['../example__bsd__client_8md.html',1,'']]],
   ['example_5fbsd_5fserver_2emd_2712',['example_bsd_server.md',['../example__bsd__server_8md.html',1,'']]],
   ['example_5fftp_5fserver_2emd_2713',['example_ftp_server.md',['../example__ftp__server_8md.html',1,'']]],
@@ -2721,8 +2721,8 @@ var searchData=
   ['example_5fsmtps_5fclient_2emd_2718',['example_smtps_client.md',['../example__smtps__client_8md.html',1,'']]],
   ['example_5fsnmp_5fagent_2emd_2719',['example_snmp_agent.md',['../example__snmp__agent_8md.html',1,'']]],
   ['example_5ftelnet_5fserver_2emd_2720',['example_telnet_server.md',['../example__telnet__server_8md.html',1,'']]],
-  ['examples_2721',['Examples',['../examples.html',1,'Examples'],['../group__nw__sw__util__fcarm.html#autotoc_md68',1,'Examples']]],
+  ['examples_2721',['Examples',['../examples.html',1,'Examples'],['../group__nw__sw__util__fcarm.html#autotoc_md70',1,'Examples']]],
   ['examples_2emd_2722',['examples.md',['../examples_8md.html',1,'']]],
-  ['extended_20oid_20encoding_2723',['Extended OID Encoding',['../group__mib__interface.html#autotoc_md74',1,'']]],
-  ['externally_20stored_20web_20resources_2724',['Caching of externally stored web resources',['../group__ws__web__pages.html#autotoc_md57',1,'']]]
+  ['extended_20oid_20encoding_2723',['Extended OID Encoding',['../group__mib__interface.html#autotoc_md76',1,'']]],
+  ['externally_20stored_20web_20resources_2724',['Caching of externally stored web resources',['../group__ws__web__pages.html#autotoc_md59',1,'']]]
 ];

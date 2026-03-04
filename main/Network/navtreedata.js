@@ -69,7 +69,12 @@ var NAVTREE =
         [ "Why Mbed TLS?", "secure_communication.html#autotoc_md4", null ],
         [ "Difference between SSL/TLS", "secure_communication.html#autotoc_md5", null ],
         [ "Parts of an SSL/TLS Library", "secure_communication.html#autotoc_md6", null ],
-        [ "Add the mbed TLS library to a project", "secure_communication.html#add_mbedtls", null ]
+        [ "Add the mbed TLS library to a project", "secure_communication.html#add_mbedtls", [
+          [ "Configuration of mbed TLS", "secure_communication.html#mbedtls_v4", [
+            [ "Add preprocessor definitions", "secure_communication.html#autotoc_md7", null ],
+            [ "Add configuration files to the project:", "secure_communication.html#autotoc_md8", null ]
+          ] ]
+        ] ]
       ] ],
       [ "Using Secure Services", "secure_communication.html#use_secure_components", [
         [ "HTTPS Server", "secure_communication.html#https_server", [
@@ -82,9 +87,9 @@ var NAVTREE =
     ] ],
     [ "Examples", "examples.html", "examples" ],
     [ "Cyber Security", "cyber_security.html", [
-      [ "Achilles Test Platform", "cyber_security.html#autotoc_md7", [
-        [ "Setting up the Achilles Test Software", "cyber_security.html#autotoc_md8", null ],
-        [ "Storm Rate Limit determination", "cyber_security.html#autotoc_md9", null ]
+      [ "Achilles Test Platform", "cyber_security.html#autotoc_md9", [
+        [ "Setting up the Achilles Test Software", "cyber_security.html#autotoc_md10", null ],
+        [ "Storm Rate Limit determination", "cyber_security.html#autotoc_md11", null ]
       ] ]
     ] ],
     [ "Function Overview", "function_overview.html", [
@@ -110,8 +115,8 @@ var NAVTREE =
       [ "Heap Requirements", "resource_requirements.html#nw_heap_req", null ],
       [ "CMSIS-RTOS Requirements", "resource_requirements.html#nw_rtos_req", null ],
       [ "Memory Requirements", "resource_requirements.html#nw_spec_mem_req", [
-        [ "Network (IPv4/IPv6)", "resource_requirements.html#autotoc_md42", null ],
-        [ "Network (IPv4)", "resource_requirements.html#autotoc_md43", null ]
+        [ "Network (IPv4/IPv6)", "resource_requirements.html#autotoc_md44", null ],
+        [ "Network (IPv4)", "resource_requirements.html#autotoc_md45", null ]
       ] ]
     ] ],
     [ "Migration Guide", "migration_guide.html", [

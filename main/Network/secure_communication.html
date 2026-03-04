@@ -179,13 +179,35 @@ Add the mbed TLS library to a project</h2>
 <li>Download the <b>ARM:mbedTLS</b> library from  <script>link_ext('SW-Pack');</script> or use  <script>link_ext('uv4_ca_packinstaller');</script></li>
 <li>Open or create a project using the <b>Network Component</b>.</li>
 <li>Configure the Network Component as required by your application (Ethernet settings, TCP/IP communication, etc.).</li>
-<li>In the <b>Manage Run-Time Environment</b> window expand <b>Security</b> and enable <b>mbed TLS</b>: <img src="add_mbedTLS.png" alt="" class="inline" title="Add mbed TLS"/>    </li>
-</ol>
-<ol type="1">
-<li>Configure Mbed TLS using the <code>mbedTLS_config.h</code> file.</li>
+<li>In the <b>Manage Run-Time Environment</b> window expand <b>Security</b> and enable <b>mbed TLS</b>: <div class="image">
+<img src="add_mbedTLS.png" alt=""/>
+</div>
+</li>
+<li>Configure Mbed TLS using the <code>app_mbedtls_config.h</code> and <code>app_crypto_config.h</code> files.</li>
 <li>Use the <b>mbed TLS</b> API to secure your communication.</li>
 </ol>
 <dl class="section note"><dt>Note</dt><dd>You can use the Mbed TLS API in parallel to any of the <a class="el" href="#use_secure_components">secure services</a> that are part of the Network Component.</dd></dl>
+<h3><a class="anchor" id="mbedtls_v4"></a>
+Configuration of mbed TLS</h3>
+<p>Mbed TLS v4 requires the project to explicitly define configuration header macros so the library knows which configuration files to include.</p>
+<p>The following macros must be defined:</p><ul>
+<li>MBEDTLS_CONFIG_FILE</li>
+<li>TF_PSA_CRYPTO_CONFIG_FILE</li>
+</ul>
+<p>These macros instruct Mbed TLS to use your project-specific configuration headers instead of the default internal configuration.</p>
+<h4><a class="anchor" id="autotoc_md7"></a>
+Add preprocessor definitions</h4>
+<p>Add the following definitions to the project configuration (e.g., <code>cproject.yml</code>):</p>
+<div class="fragment"><div class="line">define:</div>
+<div class="line">  - MBEDTLS_CONFIG_FILE: \&quot;app_mbedtls_config.h\&quot;</div>
+<div class="line">  - TF_PSA_CRYPTO_CONFIG_FILE: \&quot;app_crypto_config.h\&quot;</div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md8"></a>
+Add configuration files to the project:</h4>
+<p>Ensure both configuration headers are included in the project:</p>
+<div class="fragment"><div class="line">files:</div>
+<div class="line">  - file: app_mbedtls_config.h</div>
+<div class="line">  - file: app_crypto_config.h</div>
+</div><!-- fragment --><p>Adding these files to the project also ensures their directories are added to the compiler's include path. If the headers are not accessible via the include path, the build will fail due to missing configuration definitions.</p>
 <h1><a class="anchor" id="use_secure_components"></a>
 Using Secure Services</h1>
 <p>The Network Component offers secure software components that are using <a class="el" href="#use_mbed_tls">Mbed TLS</a>. The user of the Network Component does not see the Mbed TLS API as it is hidden by the standard API of the secure component.</p>
