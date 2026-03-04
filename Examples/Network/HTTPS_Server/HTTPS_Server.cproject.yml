@@ -30,7 +30,7 @@ project:
         - file: HTTPS_Server_CGI.c
         - file: app_mbedtls_config.h
         - file: app_crypto_config.h
-        - file: Web.c
+        - file: $OutDir()$/Web.c
 
   components:
     - component: CMSIS:OS Tick:SysTick
@@ -51,10 +51,10 @@ project:
       run: ${CMAKE_COMMAND} -G Ninja -S $input(0)$ -B ${CMAKE_BINARY_DIR}/FCARM/$Project$.$BuildType$+$TargetType$ -DINPUT_DIRECTORY=$input(1)$ -DOUTPUT=$output$ && ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR}/FCARM/$Project$.$BuildType$+$TargetType$ -- --quiet
       always:
       input:
-        - FCARM   # CMake script directory
-        - Web     # Input directory with "web files" for FCARM
+        - FCARM             # CMake script directory
+        - Web               # Input directory with "web files" for FCARM
       output:
-        - Web.c   # Output file for FCARM
+        - $OutDir()$/Web.c  # Output file for FCARM
 
   output:
     type:
