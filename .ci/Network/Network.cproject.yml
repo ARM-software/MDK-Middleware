@@ -10,7 +10,7 @@ project:
   components:
     - component: ARM::CMSIS:CORE
     - component: ARM::CMSIS-View:Event Recorder&DAP
-      for-context: .Debug
+      for-context: \.*(?=Debug)(?!.*stdio).*
     - component: ARM::CMSIS Driver:Ethernet:Custom
     - component: ARM::CMSIS Driver:WiFi:Custom
     - component: ARM::CMSIS Driver:USART:Custom
