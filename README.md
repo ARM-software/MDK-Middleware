@@ -72,6 +72,5 @@ Directory                   | Description
 
 ## License
 
-The MDK-Middleware can be used free-of-charge with Arm-based devices and deployed as part of software applications. Refer to [redistributables.txt](https://github.com/ARM-software/MDK-Middleware/blob/main/license_terms/redistributables.txt) for more information.
-
-Users of the [MDK-Professional or MDK-Essential edition](https://www.keil.arm.com/keil-mdk/#mdk-v6-editions) are entitled to contact Arm for support and maintenance.
+Unless you have a current valid license for the Arm Tool 'Keil MDK Professional Edition' or 'Keil MDK Essential
+Edition' with active support & maintenance, your use of MDK-Middleware is restricted to non-commercial use only.
