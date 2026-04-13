@@ -9,30 +9,13 @@
 #include "cmsis_os2.h"
 #include "net_lib.h"
 
-/* Static object definitions */
+/* Network core resources */
 #ifdef RTE_CMSIS_RTOS2_RTX5
   #include "rtx_os.h"
-  #define __THREAD_T    osRtxThread_t
-  #define __MUTEX_T     osRtxMutex_t
-  #define __SEMAPHORE_T osRtxSemaphore_t
-  #define __TIMER_T     osRtxTimer_t
-  #define __STATIC_ALLOC
-#endif
-#ifdef RTE_CMSIS_RTOS2_FreeRTOS
-  #include "FreeRTOS.h"
-  #define __THREAD_T    StaticTask_t
-  #define __MUTEX_T     StaticSemaphore_t
-  #define __SEMAPHORE_T StaticSemaphore_t
-  #define __TIMER_T     struct {StaticTimer_t tm; void *cb[2];}
-  #define __STATIC_ALLOC
-#endif
-
-/* Network core resources */
-#ifdef __STATIC_ALLOC
-  static __MUTEX_T     net_lock_cb    __attribute__((section(".bss.os.mutex.cb")));
-  static __MUTEX_T     mem_lock_cb    __attribute__((section(".bss.os.mutex.cb")));
-  static __TIMER_T     net_timer_cb   __attribute__((section(".bss.os.timer.cb")));
-  static __THREAD_T    net_thread_cb  __attribute__((section(".bss.os.thread.cb")));
+  static osRtxMutex_t  net_lock_cb    __attribute__((section(".bss.os.mutex.cb")));
+  static osRtxMutex_t  mem_lock_cb    __attribute__((section(".bss.os.mutex.cb")));
+  static osRtxTimer_t  net_timer_cb   __attribute__((section(".bss.os.timer.cb")));
+  static osRtxThread_t net_thread_cb  __attribute__((section(".bss.os.thread.cb")));
   static uint64_t      net_stack[NET_THREAD_STACK_SIZE/8];
   #define __NET_LOCK   &net_lock_cb,   sizeof(net_lock_cb)
   #define __MEM_LOCK   &mem_lock_cb,   sizeof(mem_lock_cb)
@@ -49,19 +32,21 @@
 
 static const osMutexAttr_t net_lock_attr = {
   "netCore_Mutex",
-#ifndef RTE_CMSIS_RTOS2_FreeRTOS
-  osMutexRobust |
-#endif
+#ifdef RTE_CMSIS_RTOS2_RTX5
+  osMutexPrioInherit | osMutexRecursive | osMutexRobust,
+#else
   osMutexPrioInherit | osMutexRecursive,
+#endif
   __NET_LOCK
 };
 
 static const osMutexAttr_t mem_lock_attr = {
   "netMemory_Mutex",
-#ifndef RTE_CMSIS_RTOS2_FreeRTOS
-  osMutexRobust |
-#endif
+#ifdef RTE_CMSIS_RTOS2_RTX5
+  osMutexPrioInherit | osMutexRobust,
+#else
   osMutexPrioInherit,
+#endif
   __MEM_LOCK
 };
 
@@ -83,9 +68,9 @@ static const osThreadAttr_t net_thread_attr = {
 
 /* ETH0 interface resources */
 #if (ETH0_ENABLE)
-#ifdef __STATIC_ALLOC
-  static __SEMAPHORE_T    eth0_lock_cb   __attribute__((section(".bss.os.semaphore.cb")));
-  static __THREAD_T       eth0_thread_cb __attribute__((section(".bss.os.thread.cb")));
+#ifdef RTE_CMSIS_RTOS2_RTX5
+  static osRtxSemaphore_t eth0_lock_cb   __attribute__((section(".bss.os.semaphore.cb")));
+  static osRtxThread_t    eth0_thread_cb __attribute__((section(".bss.os.thread.cb")));
   static uint64_t         eth0_stack[ETH0_THREAD_STACK_SIZE/8];
   #define __ETH0_LOCK     &eth0_lock_cb,   sizeof(eth0_lock_cb)
   #define __ETH0_TCB      &eth0_thread_cb, sizeof(eth0_thread_cb)
@@ -115,9 +100,9 @@ static const osThreadAttr_t eth0_thread_attr = {
 
 /* ETH1 interface resources */
 #if (ETH1_ENABLE)
-#ifdef __STATIC_ALLOC
-  static __SEMAPHORE_T    eth1_lock_cb   __attribute__((section(".bss.os.semaphore.cb")));
-  static __THREAD_T       eth1_thread_cb __attribute__((section(".bss.os.thread.cb")));
+#ifdef RTE_CMSIS_RTOS2_RTX5
+  static osRtxSemaphore_t eth1_lock_cb   __attribute__((section(".bss.os.semaphore.cb")));
+  static osRtxThread_t    eth1_thread_cb __attribute__((section(".bss.os.thread.cb")));
   static uint64_t         eth1_stack[ETH1_THREAD_STACK_SIZE/8];
   #define __ETH1_LOCK     &eth1_lock_cb,   sizeof(eth1_lock_cb)
   #define __ETH1_TCB      &eth1_thread_cb, sizeof(eth1_thread_cb)
@@ -147,9 +132,9 @@ static const osThreadAttr_t eth1_thread_attr = {
 
 /* WIFI0 interface resources */
 #if (WIFI0_ENABLE)
-#ifdef __STATIC_ALLOC
-  static __SEMAPHORE_T    wifi0_lock_cb   __attribute__((section(".bss.os.semaphore.cb")));
-  static __THREAD_T       wifi0_thread_cb __attribute__((section(".bss.os.thread.cb")));
+#ifdef RTE_CMSIS_RTOS2_RTX5
+  static osRtxSemaphore_t wifi0_lock_cb   __attribute__((section(".bss.os.semaphore.cb")));
+  static osRtxThread_t    wifi0_thread_cb __attribute__((section(".bss.os.thread.cb")));
   static uint64_t         wifi0_stack[WIFI0_THREAD_STACK_SIZE/8];
   #define __WIFI0_LOCK    &wifi0_lock_cb,   sizeof(wifi0_lock_cb)
   #define __WIFI0_TCB     &wifi0_thread_cb, sizeof(wifi0_thread_cb)
@@ -179,9 +164,9 @@ static const osThreadAttr_t wifi0_thread_attr = {
 
 /* WIFI1 interface resources */
 #if (WIFI1_ENABLE)
-#ifdef __STATIC_ALLOC
-  static __SEMAPHORE_T    wifi1_lock_cb   __attribute__((section(".bss.os.semaphore.cb")));
-  static __THREAD_T       wifi1_thread_cb __attribute__((section(".bss.os.thread.cb")));
+#ifdef RTE_CMSIS_RTOS2_RTX5
+  static osRtxSemaphore_t wifi1_lock_cb   __attribute__((section(".bss.os.semaphore.cb")));
+  static osRtxThread_t    wifi1_thread_cb __attribute__((section(".bss.os.thread.cb")));
   static uint64_t         wifi1_stack[WIFI1_THREAD_STACK_SIZE/8];
   #define __WIFI1_LOCK    &wifi1_lock_cb,   sizeof(wifi1_lock_cb)
   #define __WIFI1_TCB     &wifi1_thread_cb, sizeof(wifi1_thread_cb)
@@ -211,9 +196,9 @@ static const osThreadAttr_t wifi1_thread_attr = {
 
 /* PPP interface resources */
 #if (PPP_ENABLE)
-#ifdef __STATIC_ALLOC
-  static __SEMAPHORE_T    ppp0_lock_cb    __attribute__((section(".bss.os.semaphore.cb")));
-  static __THREAD_T       ppp0_thread_cb  __attribute__((section(".bss.os.thread.cb")));
+#ifdef RTE_CMSIS_RTOS2_RTX5
+  static osRtxSemaphore_t ppp0_lock_cb    __attribute__((section(".bss.os.semaphore.cb")));
+  static osRtxThread_t    ppp0_thread_cb  __attribute__((section(".bss.os.thread.cb")));
   static uint64_t         ppp0_stack[PPP_THREAD_STACK_SIZE/8];
   #define __PPP0_LOCK     &ppp0_lock_cb,   sizeof(ppp0_lock_cb)
   #define __PPP0_TCB      &ppp0_thread_cb, sizeof(ppp0_thread_cb)
@@ -243,9 +228,9 @@ static const osThreadAttr_t ppp0_thread_attr = {
 
 /* SLIP interface resources */
 #if (SLIP_ENABLE)
-#ifdef __STATIC_ALLOC
-  static __SEMAPHORE_T    slip0_lock_cb   __attribute__((section(".bss.os.semaphore.cb")));
-  static __THREAD_T       slip0_thread_cb __attribute__((section(".bss.os.thread.cb")));
+#ifdef RTE_CMSIS_RTOS2_RTX5
+  static osRtxSemaphore_t slip0_lock_cb   __attribute__((section(".bss.os.semaphore.cb")));
+  static osRtxThread_t    slip0_thread_cb __attribute__((section(".bss.os.thread.cb")));
   static uint64_t         slip0_stack[SLIP_THREAD_STACK_SIZE/8];
   #define __SLIP0_LOCK    &slip0_lock_cb,   sizeof(slip0_lock_cb)
   #define __SLIP0_TCB     &slip0_thread_cb, sizeof(slip0_thread_cb)
