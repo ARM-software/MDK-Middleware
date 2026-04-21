@@ -14,6 +14,8 @@
   <releases>
     <release version="8.3.0-dev">
       Active development ...
+      FileSystem Component Version 8.0.3
+      - corrected output format in file seek debug events
       Network Component Version 8.3.0
       - updated mbedTLS interface and examples to support mbedTLS v4.0.0
       - corrected false-positive responses in FTP Server for commands starting active mode
@@ -1162,7 +1164,7 @@
     </bundle>
 
     <!-- File System (MDK) -->
-    <bundle Cbundle="MDK" Cclass="File System" Cversion="8.0.2">
+    <bundle Cbundle="MDK" Cclass="File System" Cversion="8.0.3">
       <description>File Access on various storage devices</description>
       <doc>Documentation/html/FileSystem/index.html</doc>
       <component Cgroup="CORE" condition="CMSIS Core with RTOS and File System I/O">
