@@ -1,9 +1,8 @@
 /**
- * Configuration template for SMTPS
- */
-/*
- *  Copyright The Mbed TLS Contributors
- *  SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
+ * Configuration for SMTPS client
+ *
+ * Copyright The Mbed TLS Contributors
+ * SPDX-License-Identifier: Apache-2.0 OR GPL-2.0-or-later
  */
 
 #define MBEDTLS_CONFIG_VERSION 0x04000000
@@ -11,18 +10,12 @@
 /* General configuration options */
 #define MBEDTLS_ERROR_C
 #define MBEDTLS_ERROR_STRERROR_DUMMY
-#define MBEDTLS_VERSION_C
-#define MBEDTLS_VERSION_FEATURES
 
 /* TLS feature selection */
 //#define MBEDTLS_DEBUG_C
 #define MBEDTLS_KEY_EXCHANGE_ECDHE_ECDSA_ENABLED
-#define MBEDTLS_KEY_EXCHANGE_ECDHE_PSK_ENABLED
 #define MBEDTLS_KEY_EXCHANGE_ECDHE_RSA_ENABLED
-#define MBEDTLS_KEY_EXCHANGE_PSK_ENABLED
 #define MBEDTLS_SSL_ALL_ALERT_MESSAGES
-#define MBEDTLS_SSL_ALPN
-#define MBEDTLS_SSL_CACHE_C
 #define MBEDTLS_SSL_CLI_C
 #define MBEDTLS_SSL_ENCRYPT_THEN_MAC
 #define MBEDTLS_SSL_EXTENDED_MASTER_SECRET
@@ -34,6 +27,5 @@
 #define MBEDTLS_SSL_OUT_CONTENT_LEN           4096
 
 /* X.509 feature selection */
-#define MBEDTLS_X509_CRL_PARSE_C
 #define MBEDTLS_X509_CRT_PARSE_C
 #define MBEDTLS_X509_USE_C
