@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    TLS_mbed.h
  * Purpose: TLS Interface definitions
@@ -46,11 +46,11 @@
   #error "mbedTLS_config: MBEDTLS_SSL_TLS_C not defined"
 #endif
 
-#if !defined(MBEDTLS_RSA_C)
+#if !defined(MBEDTLS_RSA_C) && (MBEDTLS_VERSION_MAJOR == 3)
   #error "mbedTLS_config: MBEDTLS_RSA_C not defined"
 #endif
 
-#if !defined(MBEDTLS_BIGNUM_C)
+#if !defined(MBEDTLS_BIGNUM_C) && (MBEDTLS_VERSION_MAJOR == 3)
   #error "mbedTLS_config: MBEDTLS_BIGNUM_C not defined"
 #endif
 
@@ -62,7 +62,7 @@
   #error "mbedTLS_config: MBEDTLS_X509_CRT_PARSE_C not defined"
 #endif
 
-#if !defined(MBEDTLS_ENTROPY_C)
+#if !defined(MBEDTLS_ENTROPY_C) && (MBEDTLS_VERSION_MAJOR == 3)
   #error "mbedTLS_config: MBEDTLS_ENTROPY_C not defined"
 #endif
 

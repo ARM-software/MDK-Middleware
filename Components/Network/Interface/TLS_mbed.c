@@ -33,6 +33,9 @@
 #if defined(MBEDTLS_SSL_CACHE_C)
   #include "mbedtls/ssl_cache.h"
 #endif
+#if defined(MBEDTLS_SSL_TICKET_C) && defined(MBEDTLS_SSL_SESSION_TICKETS)
+  #include "mbedtls/ssl_ticket.h"
+#endif
 #if defined(MBEDTLS_DEBUG_C)
   #include <stdio.h>
 #endif
@@ -66,6 +69,10 @@ static mbedtls_x509_crt   srvcert;
 static mbedtls_pk_context pkey_srv;
 #if defined(MBEDTLS_SSL_CACHE_C)
 static mbedtls_ssl_cache_context cache;
+#endif
+#if defined(MBEDTLS_SSL_TICKET_C) && defined(MBEDTLS_SSL_SESSION_TICKETS)
+static mbedtls_ssl_ticket_context ticket;
+static uint32_t last_ostick;
 #endif
 #endif
 #ifdef __TLS_CLIENT
@@ -372,6 +379,9 @@ static int32_t tls_init (void) {
 #if defined(MBEDTLS_SSL_CACHE_C)
   mbedtls_ssl_cache_init (&cache);
 #endif
+#if defined(MBEDTLS_SSL_TICKET_C) && defined(MBEDTLS_SSL_SESSION_TICKETS)
+  mbedtls_ssl_ticket_init (&ticket);
+#endif
 #endif
 #ifdef __TLS_CLIENT
   mbedtls_ssl_config_init (&conf_cli);
@@ -380,7 +390,7 @@ static int32_t tls_init (void) {
 #endif
 #endif
 
-#if (MBEDTLS_VERSION_MAJOR == 4) 
+#if (MBEDTLS_VERSION_MAJOR == 4)
   ret = psa_crypto_init();
   if (ret != PSA_SUCCESS) {
     /* PSA Crypto initialization failed */
@@ -431,28 +441,26 @@ static int32_t tls_init (void) {
 
   buf = netTLS_GetServerKey (&buf_len);
   if (buf == NULL) {
-#if (MBEDTLS_VERSION_MAJOR == 3)
+  #if (MBEDTLS_VERSION_MAJOR == 3)
     ret = mbedtls_pk_parse_key (&pkey_srv,  NetSecurity_ServerKey,
                                             NetSecurity_ServerKey_Len,
                                             NULL, 0,
                                             mbedtls_ctr_drbg_random, &ctr_drbg);
-#endif
-#if (MBEDTLS_VERSION_MAJOR == 4) 
+  #elif (MBEDTLS_VERSION_MAJOR == 4)
     ret = mbedtls_pk_parse_key (&pkey_srv,  NetSecurity_ServerKey,
                                             NetSecurity_ServerKey_Len,
                                             NULL, 0);
-#endif
+  #endif
   }
   else {
-#if (MBEDTLS_VERSION_MAJOR == 3) 
+  #if (MBEDTLS_VERSION_MAJOR == 3)
     ret = mbedtls_pk_parse_key (&pkey_srv,  buf, buf_len,
                                             NULL, 0,
                                             mbedtls_ctr_drbg_random, &ctr_drbg);
-#endif
-#if (MBEDTLS_VERSION_MAJOR == 4) 
+  #elif (MBEDTLS_VERSION_MAJOR == 4)
     ret = mbedtls_pk_parse_key (&pkey_srv,  buf, buf_len,
                                             NULL, 0);
-#endif
+  #endif
     netTLS_ReleaseMemory (buf);
   }
   if (ret != 0) {
@@ -516,9 +524,23 @@ static int32_t tls_init (void) {
   mbedtls_ssl_conf_rng (&conf_srv, mbedtls_ctr_drbg_random, &ctr_drbg);
 #endif
 #if defined(MBEDTLS_SSL_CACHE_C)
+  mbedtls_ssl_cache_set_max_entries (&cache, 5);
   mbedtls_ssl_conf_session_cache (&conf_srv, &cache,
                                   mbedtls_ssl_cache_get,
                                   mbedtls_ssl_cache_set);
+#endif
+#if defined(MBEDTLS_SSL_TICKET_C) && defined(MBEDTLS_SSL_SESSION_TICKETS)
+#if (MBEDTLS_VERSION_MAJOR == 3)
+  mbedtls_ssl_ticket_setup (&ticket, mbedtls_ctr_drbg_random, &ctr_drbg,
+                                     MBEDTLS_CIPHER_AES_256_GCM, 3600);
+#elif (MBEDTLS_VERSION_MAJOR == 4)
+  mbedtls_ssl_ticket_setup (&ticket, PSA_ALG_GCM, PSA_KEY_TYPE_AES, 256, 3600);
+#endif
+  mbedtls_ssl_conf_session_tickets_cb (&conf_srv,
+                                       mbedtls_ssl_ticket_write,
+                                       mbedtls_ssl_ticket_parse,
+                                       &ticket);
+  last_ostick = osKernelGetTickCount();
 #endif
   mbedtls_ssl_conf_ca_chain (&conf_srv, srvcert.next, NULL);
   ret = mbedtls_ssl_conf_own_cert (&conf_srv, &srvcert, &pkey_srv);
@@ -531,6 +553,9 @@ static int32_t tls_init (void) {
 #ifdef __TLS_CLIENT
 #if (MBEDTLS_VERSION_MAJOR == 3)
   mbedtls_ssl_conf_rng (&conf_cli, mbedtls_ctr_drbg_random, &ctr_drbg);
+#endif
+#if defined(MBEDTLS_SSL_MAX_FRAGMENT_LENGTH)
+  mbedtls_ssl_conf_max_frag_len(&conf_cli, MBEDTLS_SSL_MAX_FRAG_LEN_4096);
 #endif
 #ifdef __TLS_CLIENT_CA
   mbedtls_ssl_conf_ca_chain (&conf_cli, &cacert, NULL);
@@ -568,11 +593,14 @@ static void tls_uninit (void) {
 #if defined(MBEDTLS_SSL_CACHE_C)
   mbedtls_ssl_cache_free (&cache);
 #endif
+#if defined(MBEDTLS_SSL_TICKET_C) && defined(MBEDTLS_SSL_SESSION_TICKETS)
+  mbedtls_ssl_ticket_free (&ticket);
+#endif
 #endif
 
   /* Uninit central random generator */
-  mbedtls_ctr_drbg_free( &ctr_drbg );
-  mbedtls_entropy_free( &entropy );
+  mbedtls_ctr_drbg_free (&ctr_drbg);
+  mbedtls_entropy_free (&entropy);
 }
 
 /**
@@ -612,6 +640,21 @@ static void tls_run (void) {
         }
         mbedtls_ssl_set_bio (tls_s->ssl, tls_s, (mbedtls_ssl_send_t *)bio_send,
                                                 (mbedtls_ssl_recv_t *)bio_recv, NULL);
+      #if defined(MBEDTLS_SSL_TICKET_C) && defined(MBEDTLS_SSL_SESSION_TICKETS)
+        /* Rotate ticket keys after timeout of 1 hour */
+        uint32_t ostick = osKernelGetTickCount();
+        if ((ostick - last_ostick) > 3600000) {
+          last_ostick = ostick;
+          mbedtls_ssl_ticket_free (&ticket);
+          mbedtls_ssl_ticket_init (&ticket);
+        #if (MBEDTLS_VERSION_MAJOR == 3)
+          mbedtls_ssl_ticket_setup (&ticket, mbedtls_ctr_drbg_random, &ctr_drbg,
+                                             MBEDTLS_CIPHER_AES_256_GCM, 3600);
+        #elif (MBEDTLS_VERSION_MAJOR == 4)
+          mbedtls_ssl_ticket_setup (&ticket, PSA_ALG_GCM, PSA_KEY_TYPE_AES, 256, 3600);
+        #endif
+        }
+      #endif
         tls_s->State = TLS_STATE_HANDSHAKE;
         ctrl.busy    = true;
         break;
