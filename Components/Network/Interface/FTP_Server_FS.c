@@ -94,7 +94,7 @@ __WEAK int32_t netFTPs_ffind (const char *mask, char *fname,
   }
   if (ffind (mask, &info) == fsOK) {
     if (fname != NULL) {
-      strcpy (fname, info.name);
+      snprintf (fname, 256, "%s", info.name);
     }
     if (fsize != NULL) {
       *fsize = info.size;
