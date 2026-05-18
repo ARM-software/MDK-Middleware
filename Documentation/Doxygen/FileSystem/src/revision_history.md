@@ -6,6 +6,12 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V8.0.3</td>
+      <td>
+        - corrected output format in file seek debug events
+      </td>
+    </tr>
+    <tr>
       <td>V8.0.2</td>
       <td>
         - fixed bug that could cause strlen being called with NULL pointer in debug build

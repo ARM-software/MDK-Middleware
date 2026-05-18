@@ -13,7 +13,7 @@
     <td>V8.3.0</td>
     <td>
       - Network Component Version 8.3.0
-      - FileSystem Component Version 8.0.2 (unchanged)
+      - FileSystem Component Version 8.0.3
       - USB Component Version 8.0.1 (unchanged)
     </td>
   </tr>
