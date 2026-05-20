@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - name: Checkout MDK-Middleware
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: ./MDK-Middleware
 
@@ -41,7 +41,7 @@ jobs:
           sed -i "s|target-types:|&\n    - type: $TARGET_TYPE\n      device: $TARGET_DEVICE\n      variables:\n      - Board-Layer: $TARGET_LAYER|" ./Examples/USB/Host/USB_Host.csolution.yml
 
       - name: Cache packs
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           key: cmsis-packs-${{ hashFiles('**/*.csolution.yml', '**/*.cproject.yml', '**/*.clayer.yml') }}
           restore-keys: |
@@ -49,7 +49,7 @@ jobs:
           path: /home/runner/.cache/arm/packs
 
       - name: Prepare vcpkg env
-        uses: ARM-software/cmsis-actions/vcpkg@main
+        uses: ARM-software/cmsis-actions/vcpkg@v1
         with:
           config: ./MDK-Middleware/.ci/vcpkg-configuration.json
 
