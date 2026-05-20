@@ -1,7 +1,7 @@
 function writeHeader() {
-    document.write('Version 8.0.1');
+    document.write('Version 8.0.2');
 };
 
 function writeFooter()  {
-    document.write('Generated on Mon May 18 2026 07:35:23 for USB Component 8.0.1. Copyright &copy; 2026 Arm Limited (or its affiliates). All rights reserved.');
+    document.write('Generated on Wed May 20 2026 05:13:23 for USB Component 8.0.2. Copyright &copy; 2026 Arm Limited (or its affiliates). All rights reserved.');
 };
