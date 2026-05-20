@@ -1,0 +1,26 @@
+var group__net__evr__nbns__func =
+[
+    [ "EvrNetNBNS_ClearCache", "group__net__evr__nbns__func.html#ga1ed5a01770b1f1aa086fff0d03955afd", null ],
+    [ "EvrNetNBNS_ClearCacheClientBusy", "group__net__evr__nbns__func.html#gaf8143676faa70c532fa1fd35e080c573", null ],
+    [ "EvrNetNBNS_ClearCacheInvalidParam", "group__net__evr__nbns__func.html#ga1327c8afd1aa134229fc07b2d2d92c4b", null ],
+    [ "EvrNetNBNS_ClrCacheNetBiosDisabled", "group__net__evr__nbns__func.html#gaec3dfaa400b915d8982efbe31774b949", null ],
+    [ "EvrNetNBNS_FrameTooShort", "group__net__evr__nbns__func.html#gab4c7f7076b416bdaba2187badaab5805", null ],
+    [ "EvrNetNBNS_GetSocketFailed", "group__net__evr__nbns__func.html#ga1e381b11638fe5a03d231dd485abaa90", null ],
+    [ "EvrNetNBNS_InitService", "group__net__evr__nbns__func.html#ga8e0ce29fb48dc8287cd0706ace8bfb87", null ],
+    [ "EvrNetNBNS_NameQueryRequest", "group__net__evr__nbns__func.html#gae291d1b147c400a03b9cc8cea6802baa", null ],
+    [ "EvrNetNBNS_NameQueryResponse", "group__net__evr__nbns__func.html#gad56483410b5ba96b84922446ecd3eb77", null ],
+    [ "EvrNetNBNS_NetBiosDisabled", "group__net__evr__nbns__func.html#gaabb5dda0f4c86d72efcb2d332175c85e", null ],
+    [ "EvrNetNBNS_QueryFromAddress", "group__net__evr__nbns__func.html#gace4b8d00f3d59cc3d5a6008b57b0e576", null ],
+    [ "EvrNetNBNS_ReceiveFrame", "group__net__evr__nbns__func.html#gada6a3310a0e6fc61c8bc627928ae8d78", null ],
+    [ "EvrNetNBNS_Resolve", "group__net__evr__nbns__func.html#gaf9d239dfd7c886dccea93416182d95b3", null ],
+    [ "EvrNetNBNS_ResolveClientBusy", "group__net__evr__nbns__func.html#ga43a67768fe153a80e21772f79a310dc6", null ],
+    [ "EvrNetNBNS_ResolvedAddress", "group__net__evr__nbns__func.html#gac938817805e8e7611275348198ca473d", null ],
+    [ "EvrNetNBNS_ResolvedFromCache", "group__net__evr__nbns__func.html#ga2e89ebdee73779699f69e1a3bbc501cf", null ],
+    [ "EvrNetNBNS_ResolveInvalidParameter", "group__net__evr__nbns__func.html#ga3f42c4c756f17829d61173e462ada85e", null ],
+    [ "EvrNetNBNS_ResolveNetBiosDisabled", "group__net__evr__nbns__func.html#gada2b54ccdd000c024f90947155e11c46", null ],
+    [ "EvrNetNBNS_ResolveRetransmit", "group__net__evr__nbns__func.html#ga9c1b234d346c05da1d7fe19844726b6b", null ],
+    [ "EvrNetNBNS_ResolveTimeoutExpired", "group__net__evr__nbns__func.html#gae2f480fc2b372fb195234c2cacfc8760", null ],
+    [ "EvrNetNBNS_UninitService", "group__net__evr__nbns__func.html#ga679e95e1b4e46ea8f56a15945b28d4e7", null ],
+    [ "EvrNetNBNS_WrongRemotePort", "group__net__evr__nbns__func.html#ga54ba83a2cfc7736329a57edd4022b684", null ],
+    [ "EvrNetNBNS_WrongTransactionId", "group__net__evr__nbns__func.html#gaacfb730cee9975a8a70e250b93fb2292", null ]
+];
