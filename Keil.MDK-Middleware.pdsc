@@ -21,6 +21,8 @@
       - corrected false-positive responses in FTP Server for commands starting active mode
       - fixed FTP server login with authentication disabled
       - fixed TCP retry counter handling during timeout recovery in netTCP_Send
+      USB Component Version 8.0.2
+      - USB Host: improve code robustness
     </release>
     <release version="7.17.0" date="2024-01-17">
       Network Component Version 7.19.0
@@ -1263,7 +1265,7 @@
     </bundle>
 
     <!-- USB (MDK) -->
-    <bundle Cbundle="MDK" Cclass="USB" Cversion="8.0.1">
+    <bundle Cbundle="MDK" Cclass="USB" Cversion="8.0.2">
       <description>USB Communication with various device classes</description>
       <doc>Documentation/html/USB/index.html</doc>
       <component Cgroup="CORE" condition="CMSIS Core with RTOS">

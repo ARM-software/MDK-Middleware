@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_cmsis_rtos2.c
  * Purpose: USB Host (USBH) - RTOS abstraction implemented on CMSIS-RTOS2
@@ -104,11 +104,12 @@ static osRtxMutex_t   usbh_def_pipe_mutex_cb_mem[USBH_HC_NUM] __attribute__((sec
 #endif
 static osMutexAttr_t  usbh_def_pipe_mutex_attr = {
   NULL,
-  osMutexRecursive,
 #ifdef RTE_CMSIS_RTOS2_RTX5
+  osMutexPrioInherit | osMutexRecursive | osMutexRobust,
   &usbh_def_pipe_mutex_cb_mem,
   sizeof(osRtxMutex_t)
 #else
+  osMutexPrioInherit | osMutexRecursive,
   NULL,
   0U
 #endif
