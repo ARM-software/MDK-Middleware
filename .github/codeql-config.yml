@@ -9,3 +9,8 @@ paths-ignore:
   - Validation
   - Test
   - license_terms
+
+query-filters:
+  - exclude:
+      problem.severity:
+        - recommendation
