@@ -5,6 +5,7 @@ on:
     paths:
       - '.ci/USB/**'
       - .github/workflows/build_usb.yml
+      - .github/codeql-config.yml
       - 'Examples/USB/**'
       - 'Components/USB/**'
   push:
@@ -78,7 +79,8 @@ jobs:
           languages: cpp
           queries: security-and-quality
           build-mode: none
-          config-file: ./.github/codeql-config.yml
+          source-root: ./MDK-Middleware
+          config-file: ./MDK-Middleware/.github/codeql-config.yml
           
       - name: Build USB Device sources
         working-directory: ./MDK-Middleware

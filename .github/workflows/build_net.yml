@@ -5,6 +5,7 @@ on:
     paths:
       - '.ci/Network/**'
       - .github/workflows/build_net.yml
+      - .github/codeql-config.yml
       - 'Examples/Network/**'
       - 'Components/Network/**'
   push:
@@ -77,7 +78,8 @@ jobs:
           languages: cpp
           queries: security-and-quality
           build-mode: none
-          config-file: ./.github/codeql-config.yml
+          source-root: ./MDK-Middleware
+          config-file: ./MDK-Middleware/.github/codeql-config.yml
 
       - name: Build Network sources
         working-directory: ./MDK-Middleware

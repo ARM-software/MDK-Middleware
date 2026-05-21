@@ -5,6 +5,7 @@ on:
     paths:
       - '.ci/FileSystem/**'
       - .github/workflows/build_fs.yml
+      - .github/codeql-config.yml
       - 'Examples/FileSystem/**'
       - 'Components/FileSystem/**'
   push:
@@ -77,7 +78,8 @@ jobs:
           languages: cpp
           queries: security-and-quality
           build-mode: none
-          config-file: ./.github/codeql-config.yml
+          source-root: ./MDK-Middleware
+          config-file: ./MDK-Middleware/.github/codeql-config.yml
 
       - name: Build FileSystem sources
         working-directory: ./MDK-Middleware
