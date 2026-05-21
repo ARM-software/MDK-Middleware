@@ -43,8 +43,9 @@ jobs:
       - name: Cache packs
         uses: actions/cache@v5
         with:
-          key: cmsis-packs-${{ hashFiles('**/*.csolution.yml', '**/*.cproject.yml', '**/*.clayer.yml') }}
+          key: cmsis-packs-${{ github.workflow }}-${{ hashFiles('**/*.csolution.yml', '**/*.cproject.yml', '**/*.clayer.yml') }}
           restore-keys: |
+            cmsis-packs-${{ github.workflow }}-
             cmsis-packs-
           path: /home/runner/.cache/arm/packs
 
@@ -76,6 +77,8 @@ jobs:
         with:
           languages: cpp
           queries: security-and-quality
+          build-mode: none
+          config-file: ./.github/codeql-config.yml
           
       - name: Build USB Device sources
         working-directory: ./MDK-Middleware
@@ -103,6 +106,8 @@ jobs:
       - name: Perform CodeQL Analysis
         if: ${{ !cancelled() && matrix.compiler == 'GCC' }}
         uses: github/codeql-action/analyze@v4
+        with:
+          category: /component/usb
 
       - name: Deactivate Arm tool license
         if: always()

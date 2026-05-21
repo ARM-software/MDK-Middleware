@@ -1,0 +1,11 @@
+name: MDK-Middleware CodeQL Config
+
+paths:
+  - Components
+  - Examples
+
+paths-ignore:
+  - Documentation
+  - Validation
+  - Test
+  - license_terms
