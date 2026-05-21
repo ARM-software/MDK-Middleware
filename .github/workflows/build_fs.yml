@@ -59,7 +59,6 @@ jobs:
       - name: Use local MDK-Middleware pack
         run: |
           cpackget rm Keil.MDK-Middleware || true
-          cpackget rm Keil.MDK-Middleware.pdsc || true
           cpackget add Keil.MDK-Middleware.pdsc
 
       - name: Activate Arm tool license
