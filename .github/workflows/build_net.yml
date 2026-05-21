@@ -5,6 +5,7 @@ on:
     paths:
       - '.ci/Network/**'
       - .github/workflows/build_net.yml
+      - .github/codeql-config.yml
       - 'Examples/Network/**'
       - 'Components/Network/**'
   push:
@@ -31,26 +32,24 @@ jobs:
     steps:
       - name: Checkout MDK-Middleware
         uses: actions/checkout@v6
-        with:
-          path: ./MDK-Middleware
 
       - name: Setup board layer
-        working-directory: ./MDK-Middleware
         run: |
           sed -i "s|target-types:|&\n    - type: $TARGET_TYPE\n      device: $TARGET_DEVICE\n      variables:\n      - Board-Layer: $TARGET_LAYER|" ./Examples/Network/Network.csolution.yml
 
       - name: Cache packs
         uses: actions/cache@v5
         with:
-          key: cmsis-packs-${{ hashFiles('**/*.csolution.yml', '**/*.cproject.yml', '**/*.clayer.yml') }}
+          key: cmsis-packs-${{ github.workflow }}-${{ hashFiles('**/*.csolution.yml', '**/*.cproject.yml', '**/*.clayer.yml') }}
           restore-keys: |
+            cmsis-packs-${{ github.workflow }}-
             cmsis-packs-
           path: /home/runner/.cache/arm/packs
 
       - name: Prepare vcpkg env
         uses: ARM-software/cmsis-actions/vcpkg@v1
         with:
-          config: ./MDK-Middleware/.ci/vcpkg-configuration.json
+          config: .ci/vcpkg-configuration.json
 
       - name: Initialize CMSIS pack root folder
         run: |
@@ -58,10 +57,9 @@ jobs:
           cpackget update-index
 
       - name: Use local MDK-Middleware pack
-        working-directory: ./MDK-Middleware/
         run: |
           cpackget rm Keil.MDK-Middleware || true
-          cpackget add ./Keil.MDK-Middleware.pdsc
+          cpackget add Keil.MDK-Middleware.pdsc
 
       - name: Activate Arm tool license
         run: |
@@ -75,15 +73,16 @@ jobs:
         with:
           languages: cpp
           queries: security-and-quality
+          build-mode: manual
+          trap-caching: false
+          config-file: .github/codeql-config.yml
 
       - name: Build Network sources
-        working-directory: ./MDK-Middleware
         if: always()
         run: |
           cbuild ./.ci/Library.csolution.yml --packs --update-rte --context Network --toolchain ${{ matrix.compiler }}
 
       - name: Build Network examples
-        working-directory: ./MDK-Middleware/
         if: always()
         run: |
           cbuild ./Examples/Network/Network.csolution.yml --packs --update-rte --toolchain ${{ matrix.compiler }}
@@ -91,6 +90,8 @@ jobs:
       - name: Perform CodeQL Analysis
         if: ${{ !cancelled() && matrix.compiler == 'GCC' }}
         uses: github/codeql-action/analyze@v4
+        with:
+          category: /component/network
 
       - name: Deactivate Arm tool license
         if: always()
