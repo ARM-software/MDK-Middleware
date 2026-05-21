@@ -74,6 +74,7 @@ jobs:
           languages: cpp
           queries: security-and-quality
           build-mode: none
+          trap-caching: false
           config-file: .github/codeql-config.yml
 
       - name: Build FileSystem sources
