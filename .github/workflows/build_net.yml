@@ -32,8 +32,6 @@ jobs:
     steps:
       - name: Checkout MDK-Middleware
         uses: actions/checkout@v6
-        with:
-          path: ./MDK-Middleware
 
       - name: Setup board layer
         working-directory: ./MDK-Middleware
@@ -52,7 +50,7 @@ jobs:
       - name: Prepare vcpkg env
         uses: ARM-software/cmsis-actions/vcpkg@v1
         with:
-          config: ./MDK-Middleware/.ci/vcpkg-configuration.json
+          config: .ci/vcpkg-configuration.json
 
       - name: Initialize CMSIS pack root folder
         run: |
@@ -60,7 +58,6 @@ jobs:
           cpackget update-index
 
       - name: Use local MDK-Middleware pack
-        working-directory: ./MDK-Middleware/
         run: |
           cpackget rm Keil.MDK-Middleware || true
           cpackget add ./Keil.MDK-Middleware.pdsc
@@ -78,17 +75,14 @@ jobs:
           languages: cpp
           queries: security-and-quality
           build-mode: none
-          source-root: ./MDK-Middleware
-          config-file: ./MDK-Middleware/.github/codeql-config.yml
+          config-file: .github/codeql-config.yml
 
       - name: Build Network sources
-        working-directory: ./MDK-Middleware
         if: always()
         run: |
           cbuild ./.ci/Library.csolution.yml --packs --update-rte --context Network --toolchain ${{ matrix.compiler }}
 
       - name: Build Network examples
-        working-directory: ./MDK-Middleware/
         if: always()
         run: |
           cbuild ./Examples/Network/Network.csolution.yml --packs --update-rte --toolchain ${{ matrix.compiler }}
