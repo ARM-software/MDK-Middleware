@@ -34,7 +34,6 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Setup board layer
-        working-directory: ./MDK-Middleware
         run: |
           sed -i "s|target-types:|&\n    - type: $TARGET_TYPE\n      device: $TARGET_DEVICE\n      variables:\n      - Board-Layer: $TARGET_LAYER|" ./Examples/Network/Network.csolution.yml
 
@@ -60,7 +59,8 @@ jobs:
       - name: Use local MDK-Middleware pack
         run: |
           cpackget rm Keil.MDK-Middleware || true
-          cpackget add ./Keil.MDK-Middleware.pdsc
+          cpackget rm Keil.MDK-Middleware.pdsc || true
+          cpackget add Keil.MDK-Middleware.pdsc
 
       - name: Activate Arm tool license
         run: |
