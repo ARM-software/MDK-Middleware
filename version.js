@@ -1,7 +1,7 @@
 //--- list of versions‚ ---
 const versions = {
     "General": {
-        "main": "8.3.1-dev3",
+        "main": "8.3.1-dev4",
         "latest": "8.3.0",
         "v8.2.0": "8.2.0",
         "v8.1.0": "8.1.0",
@@ -9,7 +9,7 @@ const versions = {
     },
     "FileSystem": {
         "latest": "8.0.3",
-        "v8.2.0": "8.0.2",
+        "v8.1.0": "8.0.2",
         "v8.0.0": "8.0.0"
     },
     "Network": {
@@ -21,7 +21,7 @@ const versions = {
     "USB": {
         "latest": "8.0.2",
         "v8.2.0": "8.0.1",
-        "v8.0.0": "8.0.0"
+        "v8.1.0": "8.0.0"
     },
 }
 //--- list of versions ---
