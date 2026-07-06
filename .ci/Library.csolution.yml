@@ -31,29 +31,29 @@ solution:
       debug: on
       optimize: debug
       define:
-        - FS_DEBUG_EVR_ENABLE : 1
-        - NET_DEBUG_ENABLE : 1
-        - USBD_DEBUG_EVR : 1
-        - USBH_DEBUG_EVR : 1
+        - FS_DEBUG_EVR_ENABLE: 1
+        - NET_DEBUG_ENABLE: 1
+        - USBD_DEBUG_EVR: 1
+        - USBH_DEBUG_EVR: 1
     - type: Debug_net_stdio
       debug: on
       optimize: debug
       define:
-        - NET_DEBUG_ENABLE : 1
-        - NET_DEBUG_CHANNEL : 2
+        - NET_DEBUG_ENABLE: 1
+        - NET_DEBUG_CHANNEL: 2
     - type: Debug_net_ip4
       debug: on
       optimize: debug
       define:
-        - NET_CORE_VARIANT : 0 
-        - NET_DEBUG_ENABLE : 1
+        - NET_CORE_VARIANT: 0
+        - NET_DEBUG_ENABLE: 1
     - type: Debug_net_ip4_stdio
       debug: on
       optimize: debug
       define:
-        - NET_CORE_VARIANT : 0 
-        - NET_DEBUG_ENABLE : 1
-        - NET_DEBUG_CHANNEL : 2
+        - NET_CORE_VARIANT: 0
+        - NET_DEBUG_ENABLE: 1
+        - NET_DEBUG_CHANNEL: 2
     - type: Release
       debug: off
       optimize: balanced
@@ -61,7 +61,7 @@ solution:
       debug: off
       optimize: balanced
       define:
-        - NET_CORE_VARIANT : 0 
+        - NET_CORE_VARIANT: 0
 
   projects:
     - project: FileSystem/FileSystem.cproject.yml
