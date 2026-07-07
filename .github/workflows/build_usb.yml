@@ -39,7 +39,7 @@ jobs:
           sed -i "s|target-types:|&\n    - type: $TARGET_TYPE\n      device: $TARGET_DEVICE\n      variables:\n      - Board-Layer: $TARGET_LAYER|" ./Examples/USB/Host/USB_Host.csolution.yml
 
       - name: Cache packs
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           key: cmsis-packs-${{ github.workflow }}-${{ hashFiles('**/*.csolution.yml', '**/*.cproject.yml', '**/*.clayer.yml') }}
           restore-keys: |
