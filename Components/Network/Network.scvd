@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <component_viewer schemaVersion="0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
-  <component name="Network" shortname="NET" version="8.4.0"/>    <!-- name and version of the component  -->
+  <component name="Network" shortname="NET" version="8.5.0"/>    <!-- name and version of the component  -->
 
   <typedefs>
     <!-- Network Library variant -->
@@ -2426,6 +2426,7 @@
     <event id=" 1 + 0xD300" level="Op"     property="ViewRootFolder"            value="root=&quot;%t[val1]&quot;" info="Display root directory of HTTP server"/>
     <event id=" 2 + 0xD300" level="Error"  property="GetSocketFailed"           value="session=%d[val1]" info="Failed to allocate TCP socket"/>
     <event id=" 3 + 0xD300" level="API"    property="SetRootPath"               value="path=&quot;%t[val1]&quot;" info="Set/change path to the root directory"/>
+    <event id="46 + 0xD300" level="API"    property="SetInterface"              value="netif=%E[val2, NetIf:id]" info="Set Network Interface used by HTTP server"/>
     <event id=" 4 + 0xD300" level="API"    property="SetUsername"               value="username=&quot;%t[val1]&quot;" info="Set/change username for the administrator account"/>
     <event id=" 5 + 0xD300" level="API"    property="SetPassword"               value="password=&quot;%t[val1]&quot;" info="Set/change password for the administrator account"/>
     <event id=" 6 + 0xD300" level="Op"     property="StartService"              value="port=%d[val1]" info="Start HTTP server service"/>

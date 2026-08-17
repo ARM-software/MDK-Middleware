@@ -13104,6 +13104,7 @@ typedef struct evr_addr {
 #define EvtNetHTTPs_ViewRootFolder          EventID (EventLevelOp,    EvtNetHTTPs,  1)
 #define EvtNetHTTPs_GetSocketFailed         EventID (EventLevelError, EvtNetHTTPs,  2)
 #define EvtNetHTTPs_SetRootPath             EventID (EventLevelAPI,   EvtNetHTTPs,  3)
+#define EvtNetHTTPs_SetInterface            EventID (EventLevelAPI,   EvtNetHTTPs, 46) // End
 #define EvtNetHTTPs_SetUsername             EventID (EventLevelAPI,   EvtNetHTTPs,  4)
 #define EvtNetHTTPs_SetPassword             EventID (EventLevelAPI,   EvtNetHTTPs,  5)
 #define EvtNetHTTPs_StartService            EventID (EventLevelOp,    EvtNetHTTPs,  6)
@@ -13134,7 +13135,7 @@ typedef struct evr_addr {
 #define EvtNetHTTPs_ViewRedirectionUrl      EventID (EventLevelOp,    EvtNetHTTPs, 31)
 #define EvtNetHTTPs_ViewUserCredentials     EventID (EventLevelOp,    EvtNetHTTPs, 32)
 #define EvtNetHTTPs_ViewAcceptLanguage      EventID (EventLevelOp,    EvtNetHTTPs, 33)
-#define EvtNetHTTPs_ViewCookie              EventID (EventLevelOp,    EvtNetHTTPs, 45) // End
+#define EvtNetHTTPs_ViewCookie              EventID (EventLevelOp,    EvtNetHTTPs, 45)
 #define EvtNetHTTPs_ViewXmlType             EventID (EventLevelOp,    EvtNetHTTPs, 34)
 #define EvtNetHTTPs_PostXmlEncoded          EventID (EventLevelOp,    EvtNetHTTPs, 35)
 #define EvtNetHTTPs_PostCompleteMultipacket EventID (EventLevelOp,    EvtNetHTTPs, 36)
@@ -13199,6 +13200,18 @@ typedef struct evr_addr {
   }
 #else
   #define EvrNetHTTPs_SetRootPath(path, length)
+#endif
+
+/**
+  \brief  Event on HTTP server \ref netHTTPs_SetInterface (API)
+  \param  if_id         network interface identifier
+ */
+#ifdef Network_Debug_EVR
+  __STATIC_INLINE void EvrNetHTTPs_SetInterface(uint16_t if_id) {
+    EventRecord2 (EvtNetHTTPs_SetInterface, if_id, 0);
+  }
+#else
+  #define EvrNetHTTPs_SetInterface(if_id)
 #endif
 
 /**

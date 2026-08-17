@@ -10538,6 +10538,17 @@ TCP sockets in the TCP socket configuration.
 */
 
 /**
+\fn __STATIC_INLINE void EvrNetHTTPs_SetInterface(uint16_t if_id)
+\details
+The event \b SetInterface is created when the HTTP server binds to a specific network
+interface. This restricts the server's communication to the selected interface only.
+The event is recorded when the \ref netHTTPs_SetInterface function is executed.
+
+\b Value in the Event Recorder shows:
+  - \b netif: interface identification (ETH0, ETH1, WiFi0, WiFi1, PPP, SLIP).
+*/
+
+/**
 \fn __STATIC_INLINE void EvrNetHTTPs_SetRootPath(const char *path, uint32_t length)
 \details
 The event \b SetRootPath is created when the HTTP server changes the path to web

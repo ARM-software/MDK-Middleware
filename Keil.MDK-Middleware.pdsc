@@ -12,30 +12,10 @@
     </licenseSet>
   </licenseSets>
   <releases>
-    <release version="8.3.1-dev">
+    <release version="8.4.1-dev">
       Active development ...
-      Network Component Version 8.4.0
-      - fixed potential pre-authentication out-of-bounds read in SNMP processing (CVE-2026-115678)
-      - fixed potential FTP server out-of-bounds reads and writes to the RX buffer (CVE-2026-115679)
-      - fixed potential DHCPv6 option-walk over-reads and unintended data retransmission (CVE-2026-115680)
-      - fixed SMTP client unsigned underflow and Base64 over-read/write
-      - fixed potential out-of-bounds reads in FTP client
-      - fixed TFTP server filename being treated as an unbounded C string
-      - fixed parsing of malformed DHCP options
-      - fixed possible TCP socket reset after timeout recovery
-      - various minor fixes and security improvements
-      FileSystem Component Version 8.1.0
-      - added support for SD Ultra High Speed (UHS-I) bus interface
-      - corrected a bug in ffind for EFS which could return invalid file for explicit search
-      - corrected fchdrive to correctly handle NULL argument
-      - corrected funmount for FAT drives when called multiple times
-      - corrected file open to return fsTooManyOpenFiles when there is no file handle available
-      - corrected FAT name cache out of bound access for deep paths
-      - corrected FAT name cache entry size from 48 to 40 bytes
-      - corrected various minor code quality issues
-      USB Component Version 8.0.3
-      - USB Device/Host: improved code robustness
-      - USB Device: improved HID idle handling
+      Network Component Version 8.5.0
+      - added netHTTPs_SetInterface function to bind the HTTP server to a specified network interface
     </release>
     <release version="7.17.0" date="2024-01-17">
       Network Component Version 7.19.0
@@ -706,7 +686,7 @@
   <components>
 
     <!-- Network (MDK) -->
-    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.4.0">
+    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.5.0">
       <description>IPv4/IPv6 Networking using Ethernet or Serial protocols</description>
       <doc>Documentation/html/Network/index.html</doc>
       <component Cgroup="CORE" condition="CMSIS Core with RTOS">
