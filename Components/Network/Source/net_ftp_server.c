@@ -955,7 +955,7 @@ static uint32_t ftp_data_cb (int32_t socket, netTCP_Event event, const NET_ADDR 
       /* File content received, accepts also early data */
       if (netFTPs_fwrite (ftp_s->File, buf, len) != len) {
         /* Write failure, close the connection */
-        ERRORF (FTP,"Session %d, Local disk full\n");
+        ERRORF (FTP,"Session %d, Local disk full\n",ftp_s->Id);
         EvrNetFTPs_LocalDiskWriteError (ftp_s->Id);
         ftp_s->Flags |= FTP_FLAG_ERROR;
         break;
