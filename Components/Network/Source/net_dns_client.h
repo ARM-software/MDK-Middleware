@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_dns_client.h
  * Purpose: Domain Name Resolver Client Definitions
@@ -41,7 +41,7 @@
 /* DNS Control info */
 typedef struct net_dns_ctrl {
   uint8_t  State;                       // DNS Session current state
-  uint8_t  Socket;                      // Binded UDP Socket
+  uint8_t  Socket;                      // Bound UDP Socket
   uint8_t  Flags;                       // State machine Flags
   uint8_t  Retries;                     // Number of retransmit retries
   uint8_t  HostLen;                     // Length of the Host Name

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_sntp_client.h
  * Purpose: Simple Network Time Protocol Client Definitions
@@ -34,7 +34,7 @@ typedef struct net_ntp_ts {
 /* SNTP Control info */
 typedef struct net_sntp_ctrl {
   uint8_t  State;                       // SNTP Session current state
-  uint8_t  Socket;                      // Binded UDP Socket
+  uint8_t  Socket;                      // Bound UDP Socket
   uint8_t  Flags;                       // State machine Flags
   uint8_t  Retries;                     // Number of retransmit retries
   uint16_t Timer;                       // SNTP Retransmit timeout counter
