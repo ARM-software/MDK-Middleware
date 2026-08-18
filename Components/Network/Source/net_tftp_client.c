@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_tftp_client.c
  * Purpose: Trivial File Transfer Protocol Client
@@ -86,7 +86,7 @@ netStatus netTFTPc_Put (const NET_ADDR *addr,
     RETURN (netInvalidParameter);
   }
   DEBUGF (TFTPC,"Put file '%s'\n",local_fname);
-  EvrNetTFTPc_PutFile (local_fname, sizeof(local_fname));
+  EvrNetTFTPc_PutFile (local_fname, strlen(local_fname));
   if (net_addr_is_unspec ((const __ADDR *)addr)) {
     /* Server IP address not specified */
     ERRORF (TFTPC,"Put, Server IP unspecified\n");
@@ -104,7 +104,7 @@ netStatus netTFTPc_Put (const NET_ADDR *addr,
   }
   else {
     DEBUGF (TFTPC," Remote file '%s'\n",fname);
-    EvrNetTFTPc_PutRemoteName (fname, sizeof(fname));
+    EvrNetTFTPc_PutRemoteName (fname, strlen(fname));
   }
   net_addr_copy (&tftpc_s->Server, (const __ADDR *)addr);
   if (tftpc_s->Server.port == 0) {
@@ -154,7 +154,7 @@ netStatus netTFTPc_Get (const NET_ADDR *addr,
     RETURN (netInvalidParameter);
   }
   DEBUGF (TFTPC,"Get file '%s'\n",fname);
-  EvrNetTFTPc_GetFile (fname, sizeof(fname));
+  EvrNetTFTPc_GetFile (fname, strlen(fname));
   if (net_addr_is_unspec ((const __ADDR *)addr)) {
     /* Server IP address not specified */
     ERRORF (TFTPC,"Get, Server IP unspecified\n");
@@ -172,7 +172,7 @@ netStatus netTFTPc_Get (const NET_ADDR *addr,
   }
   else {
     DEBUGF (TFTPC," Local file '%s'\n",local_fname);
-    EvrNetTFTPc_GetLocalName (local_fname, sizeof(local_fname));
+    EvrNetTFTPc_GetLocalName (local_fname, strlen(local_fname));
   }
   net_addr_copy (&tftpc_s->Server, (const __ADDR *)addr);
   if (tftpc_s->Server.port == 0) {
