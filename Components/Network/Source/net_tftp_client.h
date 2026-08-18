@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_tftp_client.h
  * Purpose: Trivial File Transfer Client Definitions
@@ -46,7 +46,7 @@
 /* TFTP Client Session info */
 typedef struct net_tftpc_info {
   uint8_t  State;                       // Session current state
-  uint8_t  Socket;                      // Binded UDP Socket
+  uint8_t  Socket;                      // Bound UDP Socket
   uint8_t  Flags;                       // State machine Flags
   uint8_t  Retries;                     // Retry Counter
   uint16_t RetryTimer;                  // Retry Timeout Timer

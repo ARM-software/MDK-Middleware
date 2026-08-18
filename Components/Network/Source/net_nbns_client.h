@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_nbns_client.h
  * Purpose: NetBIOS Name Service Client Definitions
@@ -42,7 +42,7 @@
 
 /* NBNS Control info */
 typedef struct net_nbns_ctrl {
-  uint8_t  Socket;                      // Binded UDP socket
+  uint8_t  Socket;                      // Bound UDP socket
   uint8_t  Flags;                       // State machine Flags
   uint8_t  Retries;                     // Number of retransmit retries
   uint16_t Timer;                       // Retransmit timeout counter
