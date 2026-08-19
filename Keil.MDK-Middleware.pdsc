@@ -12,17 +12,10 @@
     </licenseSet>
   </licenseSets>
   <releases>
-    <release version="8.3.0-dev">
+    <release version="8.3.1-dev">
       Active development ...
-      FileSystem Component Version 8.0.3
-      - corrected output format in file seek debug events
-      Network Component Version 8.3.0
-      - updated mbedTLS interface and examples to support mbedTLS v4.0.0
-      - corrected false-positive responses in FTP Server for commands starting active mode
-      - fixed FTP server login with authentication disabled
-      - fixed TCP retry counter handling during timeout recovery in netTCP_Send
-      USB Component Version 8.0.2
-      - USB Host: improve code robustness
+      Network Component Version 8.3.1
+      - fixed possible TCP socket reset after timeout recovery
     </release>
     <release version="7.17.0" date="2024-01-17">
       Network Component Version 7.19.0
@@ -693,7 +686,7 @@
   <components>
 
     <!-- Network (MDK) -->
-    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.3.0">
+    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.3.1">
       <description>IPv4/IPv6 Networking using Ethernet or Serial protocols</description>
       <doc>Documentation/html/Network/index.html</doc>
       <component Cgroup="CORE" condition="CMSIS Core with RTOS">
