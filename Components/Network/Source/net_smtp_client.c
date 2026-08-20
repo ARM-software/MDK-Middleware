@@ -758,8 +758,8 @@ static uint32_t mime_encode_word (char *buf, const char *sp, uint32_t len) {
       if (((uint8_t)sp[j] > 127) || (sp[j] == '_') || (sp[j] == '=')) {
         /* Quoted-printable encoding "=XX" */
         buf[n]   = '=';
-        buf[n+1] = hex_digit[sp[j] >> 4];
-        buf[n+2] = hex_digit[sp[j] & 0x0F];
+        buf[n+1] = hex_digit[(uint8_t)sp[j] >> 4];
+        buf[n+2] = hex_digit[(uint8_t)sp[j] & 0x0F];
         n += 3;
         continue;
       }
@@ -825,8 +825,8 @@ static uint32_t mime_encode_line_qp (char *buf) {
     /* 8-bit ascii or '=' character, store encoded */
     if (((uint8_t)sp[i] > 127) || (sp[i] == '=')) {
       buf[n]   = '=';
-      buf[n+1] = hex_digit[sp[i] >> 4];
-      buf[n+2] = hex_digit[sp[i] & 0x0F];
+      buf[n+1] = hex_digit[(uint8_t)sp[i] >> 4];
+      buf[n+2] = hex_digit[(uint8_t)sp[i] & 0x0F];
       n += 3;
       continue;
     }
