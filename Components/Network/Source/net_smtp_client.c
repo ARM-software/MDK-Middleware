@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_smtp_client.c
  * Purpose: Mail Transfer Client advanced blocking mode
@@ -716,7 +716,7 @@ static uint32_t mime_encode_word (char *buf, const char *sp, uint32_t len) {
       /* Count escaped 7-bit characters */
       n++;
     }
-    else if (ch > 127) {
+    else if ((uint8_t)ch > 127) {
       /* Count 8-bit characters */
       j++;
     }
@@ -755,11 +755,11 @@ static uint32_t mime_encode_word (char *buf, const char *sp, uint32_t len) {
         buf[n++] = '_';
         continue;
       }
-      if ((sp[j] > 127) || (sp[j] == '_') || (sp[j] == '=')) {
+      if (((uint8_t)sp[j] > 127) || (sp[j] == '_') || (sp[j] == '=')) {
         /* Quoted-printable encoding "=XX" */
         buf[n]   = '=';
-        buf[n+1] = hex_digit[sp[j] >> 4];
-        buf[n+2] = hex_digit[sp[j] & 0x0F];
+        buf[n+1] = hex_digit[(uint8_t)sp[j] >> 4];
+        buf[n+2] = hex_digit[(uint8_t)sp[j] & 0x0F];
         n += 3;
         continue;
       }
@@ -823,10 +823,10 @@ static uint32_t mime_encode_line_qp (char *buf) {
 
   for (n = i = 0; n < 76; i++) {
     /* 8-bit ascii or '=' character, store encoded */
-    if ((sp[i] > 127) || (sp[i] == '=')) {
+    if (((uint8_t)sp[i] > 127) || (sp[i] == '=')) {
       buf[n]   = '=';
-      buf[n+1] = hex_digit[sp[i] >> 4];
-      buf[n+2] = hex_digit[sp[i] & 0x0F];
+      buf[n+1] = hex_digit[(uint8_t)sp[i] >> 4];
+      buf[n+2] = hex_digit[(uint8_t)sp[i] & 0x0F];
       n += 3;
       continue;
     }
@@ -864,7 +864,7 @@ static bool check_8bit (const NET_SMTP_MAIL *mail) {
   if (mail->Message && mail->Encoding && mail->Encoding[0]) {
     /* Scan the message */
     for (i = 0; mail->Message[i]; i++) {
-      if (mail->Message[i] > 127) {
+      if ((uint8_t)mail->Message[i] > 127) {
         return (true);
       }
     }
