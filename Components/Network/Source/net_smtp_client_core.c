@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_smtp_client_core.c
  * Purpose: Mail Transfer Client core
@@ -836,7 +836,7 @@ static void hmac_md5 (const char *buf, uint32_t len, const char *passw, uint8_t 
   key = (uint8_t *)net_mem_alloc (64 + sizeof (NET_MD5_CTX));
 
   /* XOR key with ipad value (0x36) */
-  for (i = 0; passw[i] && i < 64; i++) {
+  for (i = 0; i < 64 && passw[i]; i++) {
     key[i] = passw[i] ^ 0x36;
   }
   for ( ; i < 64; i++) {
