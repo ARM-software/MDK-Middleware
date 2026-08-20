@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_common.c
  * Purpose: Common Network Functions
@@ -136,7 +136,7 @@ int32_t net_strchr (const char *sp, char ch) {
 int32_t net_strnchr (const char *sp, char ch, uint32_t n) {
   int32_t i,nb = (int32_t)n;
 
-  for (i = 0; sp[i] && i < nb; i++) {
+  for (i = 0; i < nb && sp[i]; i++) {
     if (sp[i] == ch) {
       return (i);
     }

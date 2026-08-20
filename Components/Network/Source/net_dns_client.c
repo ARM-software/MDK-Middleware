@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_dns_client.c
  * Purpose: Domain Name Resolver Client
@@ -394,7 +394,7 @@ static uint32_t dns_listener (int32_t socket, const NET_ADDR *addr,
     }
     else {
       /* Flat/uncompressed, null-terminated */
-      while ((buf[idx] != 0) && (idx < len)) {
+      while ((idx < len) && (buf[idx] != 0)) {
         idx++;
       }
       idx++;
