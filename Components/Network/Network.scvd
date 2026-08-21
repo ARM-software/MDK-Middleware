@@ -1198,7 +1198,7 @@
           <print property="Release Library"      value="%E[net_lib], ver: %d[net_ver.b3].%d[net_ver.b2].%d[net_ver.b0]" cond="!debug"/>
           <print property="Debug Library"        value="%E[net_lib], ver: %d[net_ver.b3].%d[net_ver.b2].%d[net_ver.b0]" cond="debug"/>
         </item>
-        <item property="Interfaces"              value="Available: %d[__size_of(&quot;net_if_list_all&quot;)/4-1]">
+        <item property="Interfaces"              value="Available: %d[__size_of(&quot;net_if_list_all&quot;)-1]">
 
           <!-- ETH0 Interface -->
           <item property="%E[eth0.Id]"           value="%E[eth0_ctrl.LinkState], Rx: %u[eth0_ctrl.RxCount], Tx: %u[eth0_ctrl.TxCount]" cond="eth0_en">
