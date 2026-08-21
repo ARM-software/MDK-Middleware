@@ -7,6 +7,11 @@ to the specified API and functionality.
 
 Validation projects are available for the following Components:
 
+- **File System**
+  - **Drive F** - NOR flash (skeleton project; no tests implemented yet)
+  - **Drive M** - Memory card (skeleton project; no tests implemented yet)
+  - **Drive N** - NAND flash (skeleton project; no tests implemented yet)
+  - **Drive R** - RAM (skeleton project; no tests implemented yet)
 - **Network**
   - **BSD Sockets**
 - **USB Device**
@@ -42,11 +47,13 @@ The selection and configuration of Components for testing is done via [MW_CV_Con
 
 ### Board layer
 
-In order to build the validation project it shall be extended with a compatible board layer that provides the following interfaces as
+In order to build the validation project it shall be extended with a compatible board layer that provides the interfaces required by the selected project as
 [connections](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/#connections):
 
 - `CMSIS_ETH`:        CMSIS-Driver for Ethernet interface.
+- `CMSIS_FLASH`:      CMSIS-Driver for NOR Flash interface.
 - `CMSIS_MCI`:        CMSIS-Driver for MCI interface.
+- `CMSIS_NAND`:       CMSIS-Driver for NAND Flash interface.
 - `CMSIS_USB_Device`: CMSIS-Driver for USB Device interface.
 - `CMSIS_USB_Host`:   CMSIS-Driver for USB Host interface.
 - `STDOUT`:           Standard Output channel
@@ -58,12 +65,12 @@ In order to build the validation project it shall be extended with a compatible 
 
 ### Build the Validation Project
 
-- Open the **<Network|USB_Device|USB_Host>.csolution.yml**.
+- Open the **<FileSystem|Network|USB_Device|USB_Host>.csolution.yml**.
 - Copy the compatible board layer with accompanying files from the suitable **BSP** to the  
-  `<Network|USB_Device|USB_Host.csolution.yml root>/Board/<board name>/` folder.  
-  The location `<Network|USB_Device|USB_Host.csolution.yml root>/Board/<board name>/`
+  `<FileSystem|Network|USB_Device|USB_Host.csolution.yml root>/Board/<board name>/` folder.
+  The location `<FileSystem|Network|USB_Device|USB_Host.csolution.yml root>/Board/<board name>/`
   should contain **Board.clayer.yml** with other accompanying board layer files.
-- Edit the **<Network|USB_Device|USB_Host>.csolution.yml** file and add board description under **target-types**,
+- Edit the **<FileSystem|Network|USB_Device|USB_Host>.csolution.yml** file and add board description under **target-types**,
   for example for board **STM32H743I-EVAL** target type would look like below:
 
   ```yml
@@ -83,9 +90,15 @@ In order to build the validation project it shall be extended with a compatible 
 
 Board-specific hardware setup such as jumpers, USB ports, power supply, etc. is documented in the board layer description (`README.md`) of your selected target.
 
-- **Connect the Ethernet cable from your local network to the board**.
-- **Connect the USB cable between two USB ports on the board**.
-- **Insert the SD Card into an SD Card slot on the board**.
+- For Network validation, **connect the Ethernet cable from your local network to the board**.
+- For USB validation, **connect the USB cable between two USB ports on the board**.
+- For File System drive `M:` **insert the SD Card into an SD Card slot on the board**.
+- For File System drives `F:` and `N:`, ensure the corresponding flash device is available on the board.
+
+#### File System Validation execution
+
+- Load the executable image to the target development board.
+- Results of the validation should appear in the **STDIO** channel (usually Virtual COM port).
 
 #### Network Validation execution
 
