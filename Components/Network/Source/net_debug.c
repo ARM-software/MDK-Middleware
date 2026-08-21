@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_debug.c
  * Purpose: Network Debug Configuration
@@ -17,6 +17,7 @@
 
 #define EVR_ENABLE_FILTER(dbg,s,e) if (dbg) EventRecorderEnable(__FILTER(dbg),s,e)
 
+/* Configure message filtering for Event Recorder */
 void net_evr_init (void) {
   EventRecorderDisable(EventRecordAll, EvtNetStart, EvtNetEnd);
 #if (NET_DEBUG_SYSTEM)
@@ -82,12 +83,21 @@ void net_evr_init (void) {
   #define __DEBUG_TIME  ""
 #endif
 
-/* Print debug diagnostic message */
+/**
+  \brief       Print a debug information message.
+  \param[in]   proc  debug module identifier used for filtering.
+  \param[in]   fmt   printf-style format string.
+  \param[in]   ...   arguments corresponding to the format string.
+  \note        The message is formatted according to 'fmt' and printed
+               only if enabled by the filtering configuration for the
+               corresponding debug category defined in 'Net_Debug.h'.
+*/
 void net_debug_info (int32_t proc, const char *fmt, ...) {
   __va_list args;
 
   switch (proc) {
 
+  /* Check system debug category */
 #if (NET_DEBUG_SYSTEM)
     case NET_SYSTEM_CORE:   break;
   #if (NET_DEBUG_MEM > 1)
@@ -110,6 +120,7 @@ void net_debug_info (int32_t proc, const char *fmt, ...) {
   #endif
 #endif
 
+  /* Check IPv4 debug category */
 #if (NET_DEBUG_IP4)
   #if (NET_DEBUG_CORE_IP4 > 1)
     case NET_IP4_CORE:      break;
@@ -131,6 +142,7 @@ void net_debug_info (int32_t proc, const char *fmt, ...) {
   #endif
 #endif
 
+  /* Check IPv6 debug category */
 #if (NET_DEBUG_IP6)
   #if (NET_DEBUG_CORE_IP6 > 1)
     case NET_IP6_CORE:      break;
@@ -149,6 +161,7 @@ void net_debug_info (int32_t proc, const char *fmt, ...) {
   #endif
 #endif
 
+  /* Check socket debug category */
 #if (NET_DEBUG_SOCKET)
   #if (NET_DEBUG_UDP > 1)
     case NET_UDP_SOCKET:    break;
@@ -161,6 +174,7 @@ void net_debug_info (int32_t proc, const char *fmt, ...) {
   #endif
 #endif
 
+  /* Check service debug category */
 #if (NET_DEBUG_SERVICE)
   #if (NET_DEBUG_HTTP_SERVER > 1)
     case NET_HTTP_SERVER:   break;
@@ -203,12 +217,21 @@ void net_debug_info (int32_t proc, const char *fmt, ...) {
   va_end (args);
 }
 
-/* Print debug error message */
+/**
+  \brief       Print a debug error message.
+  \param[in]   proc  debug module identifier used for filtering.
+  \param[in]   fmt   printf-style format string.
+  \param[in]   ...   arguments corresponding to the format string.
+  \note        The message is formatted according to 'fmt' and printed
+               only if enabled by the filtering configuration for the
+               corresponding debug category defined in 'Net_Debug.h'.
+*/
 void net_debug_error (int32_t proc, const char *fmt, ...) {
   __va_list args;
 
   switch (proc) {
 
+  /* Check system debug category */
 #if (NET_DEBUG_SYSTEM)
     case NET_SYSTEM_CORE:   break;
   #if (NET_DEBUG_MEM > 0)
@@ -231,6 +254,7 @@ void net_debug_error (int32_t proc, const char *fmt, ...) {
   #endif
 #endif
 
+  /* Check IPv4 debug category */
 #if (NET_DEBUG_IP4)
   #if (NET_DEBUG_CORE_IP4 > 0)
     case NET_IP4_CORE:      break;
@@ -252,6 +276,7 @@ void net_debug_error (int32_t proc, const char *fmt, ...) {
   #endif
 #endif
 
+  /* Check IPv6 debug category */
 #if (NET_DEBUG_IP6)
   #if (NET_DEBUG_CORE_IP6 > 0)
     case NET_IP6_CORE:      break;
@@ -270,6 +295,7 @@ void net_debug_error (int32_t proc, const char *fmt, ...) {
   #endif
 #endif
 
+  /* Check socket debug category */
 #if (NET_DEBUG_SOCKET)
   #if (NET_DEBUG_UDP > 0)
     case NET_UDP_SOCKET:    break;
@@ -282,6 +308,7 @@ void net_debug_error (int32_t proc, const char *fmt, ...) {
   #endif
 #endif
 
+  /* Check service debug category */
 #if (NET_DEBUG_SERVICE)
   #if (NET_DEBUG_HTTP_SERVER > 0)
     case NET_HTTP_SERVER:   break;
