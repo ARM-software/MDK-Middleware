@@ -6,6 +6,12 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V8.3.1</td>
+      <td>
+        - fixed possible TCP socket reset after timeout recovery
+      </td>
+    </tr>
+    <tr>
       <td>V8.3.0</td>
       <td>
         - updated mbedTLS interface and examples to support mbedTLS v4.0.0

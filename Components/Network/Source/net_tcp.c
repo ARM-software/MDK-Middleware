@@ -2479,6 +2479,10 @@ static void tcp_proc_acknr (NET_TCP_INFO *tcp_s, uint32_t acknr) {
     /* Mark the release edge (next = NULL) */
     tcp_s->unack_list = TCP_QUE(frame)->next;
     TCP_QUE(frame)->next = NULL;
+    if (tcp_s->unack_list == NULL) {
+      /* Unacked queue is empty */
+      tcp_s->Flags &= ~TCP_IFLAG_TIMEOUT;
+    }
   }
   else {
     /* All data in the queue is acked */
