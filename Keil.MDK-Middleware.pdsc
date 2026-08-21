@@ -16,6 +16,7 @@
       Active development ...
       Network Component Version 8.3.1
       - fixed possible TCP socket reset after timeout recovery
+      - various minor fixes and security improvements
     </release>
     <release version="7.17.0" date="2024-01-17">
       Network Component Version 7.19.0

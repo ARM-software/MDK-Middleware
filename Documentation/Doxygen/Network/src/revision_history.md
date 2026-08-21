@@ -9,6 +9,7 @@
       <td>V8.3.1</td>
       <td>
         - fixed possible TCP socket reset after timeout recovery
+        - various minor fixes and security improvements
       </td>
     </tr>
     <tr>
