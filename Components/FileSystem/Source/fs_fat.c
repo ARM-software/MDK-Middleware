@@ -4349,7 +4349,9 @@ __WEAK fsStatus fat_unmount (fsFAT_Volume *vol) {
     }
   }
   /* Uninitialize media */
-  vol->Drv->UnInit (DM_MEDIA);
+  if (vol->Drv != NULL) {
+    vol->Drv->UnInit (DM_MEDIA);
+  }
   /* Update volume status */
   vol->Status &= ~(FAT_STATUS_MOUNT | FAT_STATUS_INIT_MEDIA);
 
