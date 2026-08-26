@@ -336,6 +336,11 @@ static ELINK *elink_rewind (uint32_t dir, ELINK_CACHE_CB *nc) {
       }
     }
   }
+
+  if ((el != NULL) && (el->Info.DirClus != dir)) {
+    /* Requested directory has no entries in the cache */
+    el = NULL;
+  }
   return (el);
 }
 
@@ -578,16 +583,22 @@ __WEAK ELINK *elink_cmd (uint32_t cmd, NCACHE *p) {
       if (el != NULL) {
         delete_list_update (el, nc->Depth, nc);
       }
-      break;
+      return (el);
 
     case ELINK_CMD_POS_INC:
       /* Set next link as the latest used */
-      el = nc->Used[nc->Depth].Latest->Next;
+      el = nc->Used[nc->Depth].Latest;
 
       if (el != NULL) {
-        delete_list_update (el, nc->Depth, nc);
+        el = el->Next;
+
+        if ((el != NULL) && (el->Info.DirClus == nc->Dir)) {
+          /* Next cached entry belongs to the current directory */
+          delete_list_update (el, nc->Depth, nc);
+          return (el);
+        }
       }
-      break;
+      return (NULL);
 
     case ELINK_CMD_GET_LAST:
       /* Return last used entry link */
