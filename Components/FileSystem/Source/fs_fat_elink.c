@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2020 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_fat_elink.c
  * Purpose: FAT File System Entry Link Cache implementation
@@ -362,6 +362,11 @@ __WEAK uint32_t elink_scan (uint32_t nameH, ELINK **el, NCACHE *p) {
   }
   nc = (ELINK_CACHE_CB *)p->buf;
 
+  if (nc->Depth >= p->max_path_depth) {
+    /* Path depth exceeds configured max path depth */
+    return (1);
+  }
+
   tl = elink_rewind (nc->Dir, nc);
 
   while (tl != NULL) {
@@ -402,6 +407,11 @@ __WEAK uint32_t elink_delete (ELINK *el, NCACHE *p) {
   }
   nc = (ELINK_CACHE_CB *)p->buf;
 
+  if (nc->Depth >= p->max_path_depth) {
+    /* Path depth exceeds configured max path depth */
+    return (1);
+  }
+
   if (el) {
     /* Disconnect link from the entry link chain */
     elink_discon (el);
@@ -434,6 +444,11 @@ __WEAK uint32_t elink_insert (ELINK *nl, NCACHE *p) {
     return (1);
   }
   nc = (ELINK_CACHE_CB *)p->buf;
+
+  if (nc->Depth >= p->max_path_depth) {
+    /* Path depth exceeds configured max path depth */
+    return (1);
+  }
 
   /* Take oldest link from the used list */
   el = nc->Used[nc->Depth].Oldest;
@@ -536,6 +551,25 @@ __WEAK ELINK *elink_cmd (uint32_t cmd, NCACHE *p) {
   }
   nc = (ELINK_CACHE_CB *)p->buf;
 
+  /* Process commands that shall always be executed */
+  switch (cmd) {
+    case ELINK_CMD_CHDIR:
+      /* Set current directory depth */
+      nc->Depth_CD = nc->Depth;
+      break;
+
+    case ELINK_CMD_FLUSH:
+      /* Flush name cache */
+      elink_flush (p->max_path_depth, nc);
+      break;
+  }
+
+  if (nc->Depth >= p->max_path_depth) {
+    /* Path depth exceeds configured max path depth */
+    return (NULL);
+  }
+
+  /* Process commands that depend on current path depth */
   switch (cmd) {
     case ELINK_CMD_DIR_REWIND:
       /* Rewind to the beginning of users directory */
@@ -562,16 +596,6 @@ __WEAK ELINK *elink_cmd (uint32_t cmd, NCACHE *p) {
     case ELINK_CMD_ALLOC:
       /* Allocate name entry link */
       return (elink_alloc (p->max_path_depth, nc));
-
-    case ELINK_CMD_CHDIR:
-      /* Set current directory depth */
-      nc->Depth_CD = nc->Depth;
-      break;
-
-    case ELINK_CMD_FLUSH:
-      /* Flush name cache */
-      elink_flush (p->max_path_depth, nc);
-      break;
   }
 
   return (nc->Used[nc->Depth].Latest);
