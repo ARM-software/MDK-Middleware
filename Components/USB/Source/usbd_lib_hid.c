@@ -508,7 +508,7 @@ void USBD_HID_Timer (void const *argument) {
       }
     }
     polling_reload = false;
-    if (ptr_hid_data->polling_count == polling_interval) {
+    if (ptr_hid_data->polling_count >= polling_interval) {
       ptr_hid_data->polling_count = 0U;
       polling_reload = true;            // If polling interval expired
     }
