@@ -2468,7 +2468,7 @@ static fsStatus frec_find_elink (PATH_INFO *pinfo, fsFAT_Volume *vol) {
 
       pinfo->frec.cnt      = (uint8_t)el->Info.EntryCount;
       pinfo->frec.pos.Clus = el->Info.EntryClus;
-      pinfo->frec.pos.Offs = (uint8_t)el->Info.EntryOffs;
+      pinfo->frec.pos.Offs = (uint16_t)el->Info.EntryOffs;
 
       pos.Clus = pinfo->frec.pos.Clus;
       pos.Offs = pinfo->frec.pos.Offs;
