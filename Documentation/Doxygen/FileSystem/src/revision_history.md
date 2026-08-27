@@ -6,10 +6,11 @@
       <th>Description</th>
     </tr>
     <tr>
-      <td>V8.0.5</td>
+      <td>V8.0.6</td>
       <td>
         - corrected funmount for FAT drives when called multiple times
         - corrected FAT name cache entry size from 48 to 40 bytes
+        - corrected various minor code quality issues
       </td>
     </tr>
     <tr>
