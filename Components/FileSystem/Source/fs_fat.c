@@ -812,7 +812,7 @@ static uint32_t char_validate (char ch) {
       (ch >= '^' && ch <= '{') ||
       (ch == '}')              ||
       (ch == '~')               ) {
-
+    /* Valid SFN character */
     val = 1;
   }
 #ifndef FS_FAT_NO_LFN
@@ -821,9 +821,12 @@ static uint32_t char_validate (char ch) {
       (ch == ';')              ||
       (ch == '=')              ||
       (ch == '[')              ||
-      (ch == ']')              ||
-      (ch >  127)               ) {
-
+      (ch == ']')               ) {
+    /* Valid LFN character */
+    val = 2;
+  }
+  if ((uint8_t)ch > 127) {
+    /* Valid LFN character */
     val = 2;
   }
 #endif
@@ -1054,9 +1057,9 @@ static bool name_basis_gen (const char *fn, uint32_t fn_len, char *bn) {
 
   i = 0;
   /* Strip leading spaces */
-  while (fn[i] == ' ' && i < fn_len) { i++; }
+  while ((i < fn_len) && (fn[i] == ' ')) { i++; }
   /* Strip leading periods */
-  while (fn[i] == '.' && i < fn_len) { i++; }
+  while ((i < fn_len) && (fn[i] == '.')) { i++; }
 
   len   = 0;
   lossy = false;
@@ -1073,17 +1076,15 @@ static bool name_basis_gen (const char *fn, uint32_t fn_len, char *bn) {
     else {
       /* Skip all embedded spaces */
       if (ch != ' ') {
-        if (len < 8) {
-          if (char_validate (ch) != 1) {
-            *bn = '_';
-            lossy = true;
-          }
-          else {
-            *bn = ch;
-          }
-          bn++;
-          len++;
+        if (char_validate (ch) != 1) {
+          *bn = '_';
+          lossy = true;
         }
+        else {
+          *bn = ch;
+        }
+        bn++;
+        len++;
       }
     }
     i++;
@@ -4349,7 +4350,9 @@ __WEAK fsStatus fat_unmount (fsFAT_Volume *vol) {
     }
   }
   /* Uninitialize media */
-  vol->Drv->UnInit (DM_MEDIA);
+  if (vol->Drv != NULL) {
+    vol->Drv->UnInit (DM_MEDIA);
+  }
   /* Update volume status */
   vol->Status &= ~(FAT_STATUS_MOUNT | FAT_STATUS_INIT_MEDIA);
 

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System:Drive
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    FS_Config_USB_0.h
  * Purpose: File System Configuration for USB Drive
@@ -22,7 +22,7 @@
 
 //   <o>Filename Cache Size <0-1000000>
 //   <i>Define number of cached file or directory names.
-//   <i>48 bytes of RAM is required for each cached name.
+//   <i>40 bytes of RAM is required for each cached name.
 #define USB0_NAME_CACHE_SIZE    0
 
 //   <q>Use FAT Journal

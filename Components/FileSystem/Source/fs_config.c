@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_config.h
  * Purpose: File System Library Configuration
@@ -265,7 +265,7 @@ uint8_t const fs_efs_fh_cnt = EFS_MAX_OPEN_FILES;
 uint8_t const fs_ndrv = FS_NDRV;
 
  /* FAT Name Cache definitions */
-#define FAT_NCACHE_LINK_SZ  (48)
+#define FAT_NCACHE_LINK_SZ  (40)
 #define FAT_NCACHE_STAT_SZ  (20)
 #define FAT_NCACHE_USED_SZ  (8)
 
