@@ -1076,17 +1076,15 @@ static bool name_basis_gen (const char *fn, uint32_t fn_len, char *bn) {
     else {
       /* Skip all embedded spaces */
       if (ch != ' ') {
-        if (len < 8) {
-          if (char_validate (ch) != 1) {
-            *bn = '_';
-            lossy = true;
-          }
-          else {
-            *bn = ch;
-          }
-          bn++;
-          len++;
+        if (char_validate (ch) != 1) {
+          *bn = '_';
+          lossy = true;
         }
+        else {
+          *bn = ch;
+        }
+        bn++;
+        len++;
       }
     }
     i++;
