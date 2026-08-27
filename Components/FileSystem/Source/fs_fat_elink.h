@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_fat_elink.h
  * Purpose: FAT File System Entry Link Cache definitions
@@ -50,10 +50,8 @@ typedef struct __elink_info {
 } ELINK_INFO;
 
 
-/* Cached file entry link (48 bytes) */
+/* Cached file entry link (40 bytes) */
 typedef struct __elink {
-  struct __elink *Back;                 /* Back link                          */
-  struct __elink *Forw;                 /* Forward link                       */
   struct __elink *Prev;                 /* Previous link                      */
   struct __elink *Next;                 /* Next link                          */
   ELINK_DEL  Del;                       /* Entry link delete list             */

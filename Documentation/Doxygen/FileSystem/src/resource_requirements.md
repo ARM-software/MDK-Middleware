@@ -111,7 +111,7 @@ on compiler optimizations and target processor and may be therefore slightly dif
 | **File System:Core** EFS (Embedded File System)      |    < 6.0 k        | < 0.4 k
 | **File System:Core** FAT with SFN (Short File Name)  |   < 13.0 k        | 1.2 k
 | **File System:Core** FAT with LFN (Long File Name)   |   < 14.4 k        | 1.2 k
-| **File System:Core** FAT Name caching                |      1.6 k        | 48 x *FAT Name Cache Size* (configured in `FS_Config_Drive_n.h`)
+| **File System:Core** FAT Name caching                |      1.6 k        | 40 x *FAT Name Cache Size* (configured in `FS_Config_Drive_n.h`)
 | **File System:Core** FAT Journaling                  |      0.7 k        | 0.5 k (configured in `FS_Config_Drive_n.h`)
 | **File System:Drive:Memory Card** (FAT)              |      2.7 k        | < 0.2 k + *Drive Cache Size* (configured in `FS_Config_MC_n.h`)
 | **File System:Drive:NAND** (FAT)                     |   < 10.6 k        | < 0.7 k + *Drive Cache Size* + *Page Caching* + *Block Indexing* (configured in `FS_Config_NAND_n.h`)
