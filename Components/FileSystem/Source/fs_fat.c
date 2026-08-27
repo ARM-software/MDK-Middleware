@@ -812,7 +812,7 @@ static uint32_t char_validate (char ch) {
       (ch >= '^' && ch <= '{') ||
       (ch == '}')              ||
       (ch == '~')               ) {
-
+    /* Valid SFN character */
     val = 1;
   }
 #ifndef FS_FAT_NO_LFN
@@ -821,9 +821,12 @@ static uint32_t char_validate (char ch) {
       (ch == ';')              ||
       (ch == '=')              ||
       (ch == '[')              ||
-      (ch == ']')              ||
-      (ch >  127)               ) {
-
+      (ch == ']')               ) {
+    /* Valid LFN character */
+    val = 2;
+  }
+  if ((uint8_t)ch > 127) {
+    /* Valid LFN character */
     val = 2;
   }
 #endif
