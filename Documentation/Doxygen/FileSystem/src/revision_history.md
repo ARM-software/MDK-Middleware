@@ -8,6 +8,7 @@
     <tr>
       <td>V8.0.6</td>
       <td>
+        - corrected fchdrive to correctly handle NULL argument
         - corrected funmount for FAT drives when called multiple times
         - corrected FAT name cache entry size from 48 to 40 bytes
         - corrected various minor code quality issues
