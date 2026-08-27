@@ -6,7 +6,7 @@
       <th>Description</th>
     </tr>
     <tr>
-      <td>V8.0.6</td>
+      <td>V8.0.7</td>
       <td>
         - corrected fchdrive to correctly handle NULL argument
         - corrected funmount for FAT drives when called multiple times
