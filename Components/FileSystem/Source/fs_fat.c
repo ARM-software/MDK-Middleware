@@ -1054,9 +1054,9 @@ static bool name_basis_gen (const char *fn, uint32_t fn_len, char *bn) {
 
   i = 0;
   /* Strip leading spaces */
-  while (fn[i] == ' ' && i < fn_len) { i++; }
+  while ((i < fn_len) && (fn[i] == ' ')) { i++; }
   /* Strip leading periods */
-  while (fn[i] == '.' && i < fn_len) { i++; }
+  while ((i < fn_len) && (fn[i] == '.')) { i++; }
 
   len   = 0;
   lossy = false;
