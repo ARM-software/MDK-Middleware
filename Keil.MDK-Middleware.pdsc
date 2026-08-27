@@ -14,9 +14,10 @@
   <releases>
     <release version="8.3.1-dev">
       Active development ...
-      FileSystem Component Version 8.0.5
+      FileSystem Component Version 8.0.6
       - corrected funmount for FAT drives when called multiple times
       - corrected FAT name cache entry size from 48 to 40 bytes
+      - corrected various minor code quality issues
       Network Component Version 8.3.1
       - fixed possible TCP socket reset after timeout recovery
       - various minor fixes and security improvements
@@ -1163,7 +1164,7 @@
     </bundle>
 
     <!-- File System (MDK) -->
-    <bundle Cbundle="MDK" Cclass="File System" Cversion="8.0.5">
+    <bundle Cbundle="MDK" Cclass="File System" Cversion="8.0.6">
       <description>File Access on various storage devices</description>
       <doc>Documentation/html/FileSystem/index.html</doc>
       <component Cgroup="CORE" condition="CMSIS Core with RTOS and File System I/O">
