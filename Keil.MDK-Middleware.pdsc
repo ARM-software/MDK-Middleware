@@ -14,7 +14,8 @@
   <releases>
     <release version="8.3.1-dev">
       Active development ...
-      FileSystem Component Version 8.0.8
+      FileSystem Component Version 8.0.9
+      - corrected a bug in ffind for EFS which could return invalid file for explicit search
       - corrected fchdrive to correctly handle NULL argument
       - corrected funmount for FAT drives when called multiple times
       - corrected file open to return fsTooManyOpenFiles when there is no file handle available
@@ -1166,7 +1167,7 @@
     </bundle>
 
     <!-- File System (MDK) -->
-    <bundle Cbundle="MDK" Cclass="File System" Cversion="8.0.8">
+    <bundle Cbundle="MDK" Cclass="File System" Cversion="8.0.9">
       <description>File Access on various storage devices</description>
       <doc>Documentation/html/FileSystem/index.html</doc>
       <component Cgroup="CORE" condition="CMSIS Core with RTOS and File System I/O">

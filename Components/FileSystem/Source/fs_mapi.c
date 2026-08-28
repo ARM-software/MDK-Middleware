@@ -293,6 +293,7 @@ fsStatus ffind (const char *pattern, fsFileInfo *info) {
   const char *p;
   int32_t  len1;
   uint32_t len2;
+  uint32_t pattern_len;
 
   START_LOCK (fsStatus);
 
@@ -321,7 +322,8 @@ fsStatus ffind (const char *pattern, fsFileInfo *info) {
     RETURN (fsInvalidParameter);
   }
 
-  len1 = fs_strpos (p, '*');
+  pattern_len = fs_strlen (p);
+  len1        = fs_strpos (p, '*');
 
   if (len1 >= 0) {
     /* Wildcard found */
@@ -330,7 +332,7 @@ fsStatus ffind (const char *pattern, fsFileInfo *info) {
       len2 = 0U;
     }
     else {
-      len2  = fs_strlen (p);
+      len2  = pattern_len;
       len2 -= (uint32_t)(len1 + 1);
     }
   }
@@ -367,7 +369,8 @@ fsStatus ffind (const char *pattern, fsFileInfo *info) {
     }
     else {
       /* No wildcard, must exactly match (case insensitive) */
-      if (fs_strncasecmp (&info->name[0], &p[0], fs_strlen(info->name)) == 0) {
+      if ((fs_strlen (info->name) == pattern_len) &&
+          (fs_strncasecmp (&info->name[0], &p[0], pattern_len) == 0)) {
         /* Exact match */
         RETURN (fsOK);
       }
