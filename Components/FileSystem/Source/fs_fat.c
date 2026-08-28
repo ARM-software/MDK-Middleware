@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_fat.c
  * Purpose: FAT File System Implementation
@@ -141,11 +141,10 @@ static fsStatus fat_vol_chk (uint32_t status, fsFAT_Volume *vol) {
 
 
 /**
-  Find and return pointer to unused FAT file handle
+  Find and return the id of an unused FAT file handle.
 
   \param[in]  vol                       volume description structure
-
-  \return     Pointer to file handle or NULL if all file handles used
+  \return     File handle id or -1 if file handle not available.
 */
 __WEAK int32_t fat_handle_get (fsFAT_Volume *vol) {
   fsFAT_Handle *fh;

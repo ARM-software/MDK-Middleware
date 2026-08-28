@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_efs.c
  * Purpose: Embedded File System Implementation
@@ -59,7 +59,7 @@ static fsStatus efs_vol_chk (uint32_t status, fsEFS_Volume *vol) {
 
 
 /**
-  Find and return unused EFS file handle.
+  Find and return the id of an unused EFS file handle.
 
   \param[in]  vol                       volume description structure
   \return     File handle id or -1 if file handle not available.

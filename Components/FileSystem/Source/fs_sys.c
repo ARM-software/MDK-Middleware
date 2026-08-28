@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_sys.c
  * Purpose: System Retarget interface
@@ -431,12 +431,18 @@ static int32_t fs_open (const char *path, int32_t mode) {
       /* Get FAT file handle */
       fh = fat_handle_get ((fsFAT_Volume *)dev->dcb);
 
-      /* Open a file on FAT drive */
-      stat = fat_open (fh, path, mode);
+      if (fh < 0) {
+        /* All file handles are in use */
+        stat = fsTooManyOpenFiles;
+      }
+      else {
+        /* Open a file on FAT drive */
+        stat = fat_open (fh, path, mode);
 
-      if (stat == fsOK) {
-        /* Set "FAT handle" flag */
-        fh |= SYS_HANDLE_FAT;
+        if (stat == fsOK) {
+          /* Set "FAT handle" flag */
+          fh |= SYS_HANDLE_FAT;
+        }
       }
     }
     else {
@@ -446,16 +452,22 @@ static int32_t fs_open (const char *path, int32_t mode) {
       /* Get EFS file handle */
       fh = efs_handle_get ((fsEFS_Volume *)dev->dcb);
 
-      /* Open a file on EFS drive */
-      stat = efs_open (fh, path, mode);
-
-      if (stat == fsOK) {
-        /* Set "EFS handle" flag */
-        fh |= SYS_HANDLE_EFS;
+      if (fh < 0) {
+        /* All file handles are in use */
+        stat = fsTooManyOpenFiles;
       }
       else {
-        /* File open failed, invalidate file handle */
-        fs_efs_fh[fh].flags = 0;
+        /* Open a file on EFS drive */
+        stat = efs_open (fh, path, mode);
+
+        if (stat == fsOK) {
+          /* Set "EFS handle" flag */
+          fh |= SYS_HANDLE_EFS;
+        }
+        else {
+          /* File open failed, invalidate file handle */
+          fs_efs_fh[fh].flags = 0;
+        }
       }
     }
   }
