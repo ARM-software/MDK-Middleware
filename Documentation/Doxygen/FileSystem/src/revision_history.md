@@ -10,6 +10,7 @@
       <td>
         - corrected fchdrive to correctly handle NULL argument
         - corrected funmount for FAT drives when called multiple times
+        - corrected file open to return fsTooManyOpenFiles when there is no file handle available
         - corrected FAT name cache entry size from 48 to 40 bytes
         - corrected various minor code quality issues
       </td>
