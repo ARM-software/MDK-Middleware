@@ -1,7 +1,7 @@
 function writeHeader() {
-    document.write('Version 8.0.6');
+    document.write('Version 8.0.7');
 };
 
 function writeFooter()  {
-    document.write('Generated on Thu Aug 27 2026 10:54:07 for File System Component 8.0.6. Copyright &copy; 2026 Arm Limited (or its affiliates). All rights reserved.');
+    document.write('Generated on Mon Aug 31 2026 08:36:00 for File System Component 8.0.7. Copyright &copy; 2026 Arm Limited (or its affiliates). All rights reserved.');
 };
