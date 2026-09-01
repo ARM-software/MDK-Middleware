@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_snmp_agent.c
  * Purpose: Simple Network Management Agent
@@ -630,27 +630,38 @@ ex: sendbuf = net_udp_get_buf (tlv.End);
                - false = error found.
 */
 static bool parse_tlv (const uint8_t *buf, NET_SNMP_TLV *tlv) {
-  int32_t i,len,tlen;
+  int32_t i,tlen;
+  uint32_t len;
 
   tlv->Start = tlv->Next;
-  buf += tlv->Start;
+  if (tlv->Start + 2U > tlv->End) {
+    return (false);
+  }
+  buf       += tlv->Start;
+  tlv->vStart= tlv->Start + 2U;
   tlv->Type  = buf[0];
-  tlv->vStart= tlv->Start + 2;
-  len = buf[1];
+  len        = buf[1];
   if (len & 0x80) {
     /* Extended length encoding (Hi bit set) */
     tlen = len & 0x7f;
-    if (tlen > 4) {
-      /* Length range error */
+    if (tlen > 4 || tlen == 0) {
+      /* Invalid BER length encoding: */
+      /* - oversized length           */
+      /* - indefinite-length encoding */
+      return (false);
+    }
+    if (tlv->vStart + tlen > tlv->End) {
       return (false);
     }
     tlv->vStart += tlen;
     for (i = len = 0; i < tlen; i++) {
-      len <<= 8;
-      len |= buf[i+2];
+      len = (len << 8) | buf[i+2];
+    }
+    if (len > 0xFFFF) {
+      return (false);
     }
   }
-  /* Size checking */
+  /* Validate value size */
   if (tlv->vStart + len > tlv->End) {
     return (false);
   }
@@ -668,6 +679,19 @@ static bool parse_tlv (const uint8_t *buf, NET_SNMP_TLV *tlv) {
   }
   if (tlv->Check && (tlv->Check != tlv->Type)) {
     return (false);
+  }
+  /* Check zero-length values */
+  switch (tlv->Type) {
+    case SNMP_TYPE_INTEGER:
+    case SNMP_TYPE_OID:
+    case SNMP_TYPE_IP:
+    case SNMP_TYPE_COUNTER:
+    case SNMP_TYPE_GAUGE:
+    case SNMP_TYPE_TICKS:
+      if (tlv->Len == 0U) {
+        return (false);
+      }
+      break;
   }
   return (true);
 }
