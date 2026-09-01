@@ -33,7 +33,7 @@ static void ftp_parse_cmd (const char *name);
 static netStatus ftp_dopen_req (NET_FTP_INFO *ftp_s);
 static NET_FTP_INFO *ftp_map_session (int32_t socket);
 static void ftp_kill_session (NET_FTP_INFO *ftp_s);
-static bool parse_port_param (NET_FTP_INFO *ftp_s, char *buf, uint8_t type);
+static bool parse_port_param (NET_FTP_INFO *ftp_s, const char *buf, uint8_t type);
 static char *make_path (NET_FTP_INFO *ftp_s, const char *name);
 static void free_name (NET_FTP_INFO *ftp_s);
 static void close_file (NET_FTP_INFO *ftp_s);
@@ -429,7 +429,7 @@ static uint32_t ftp_listener (int32_t socket, netTCP_Event event, const NET_ADDR
       }
       DEBUGF (FTP," Received %d bytes, Session %d\n",len,ftp_s->Id);
       EvrNetFTPs_ReceiveFrame (ftp_s->Id, len);
-      if(len < 3) {
+      if(len < 5) {
         /* Data frame too short */
         ERRORF (FTP,"Session %d receive, Frame too short\n",ftp_s->Id);
         EvrNetFTPs_FrameTooShort (ftp_s->Id, len, 3);
@@ -645,7 +645,7 @@ denied:       DEBUGF (FTP," Access denied\n");
           if ((cmd.sel == FTP_CMD_PORT) ||
               (cmd.sel == FTP_CMD_EPRT)) {
             /* Parse and validate command parameters */
-            if (!parse_port_param (ftp_s, __CONST_CAST(char *)&buf[5], cmd.sel)) {
+            if (!parse_port_param (ftp_s, (const char *)&buf[4], cmd.sel)) {
               ERRORF (FTP,"Session %d, Invalid command parameter\n",ftp_s->Id);
               EvrNetFTPs_InvalidCommandParam (ftp_s->Id);
               ftp_s->Resp = FTP_RESP_BADPARAM;
@@ -1627,82 +1627,79 @@ static NET_FTP_INFO *ftp_map_session (int32_t socket) {
                - true  = parameters valid
                - false = invalid format or value
 */
-static bool parse_port_param (NET_FTP_INFO *ftp_s, char *buf, uint8_t type) {
+static bool parse_port_param (NET_FTP_INFO *ftp_s, const char *buf, uint8_t type) {
   __ADDR addr;
   int32_t i,n,d,port;
 
   if (type == FTP_CMD_PORT) {
     /* PORT example: 192,168,0,162,19,137 */
-    for (i = n = 0; buf[i]; i++) {
-      if (buf[i] == ',') {
-        if (++n == 4) { 
-          buf[i] = 0;
-          break;
-        }
-        buf[i] = '.';
-      }
-    }
-    /* buf: 192.168.0.162\0 */
-    if (!net_addr4_aton (buf, addr.addr)) {
-      return (false);
-    }
     addr.addr_type = NET_ADDR_IP4;
-    buf += (i + 1);
+    for (i = 0; i < 4; i++) {
+      d = net_atoi (buf, &n);
+      if ((buf[n] != ',') || (d < 0) || (d > 255)) {
+        return (false);
+      }
+      addr.addr[i] = d & 0xFF;
+      buf += (n + 1);
+    }
     /* buf: 19,137 */
     d = net_atoi (buf, &n);
-    if (buf[n] != ',' || d > 255) {
+    if ((buf[n] != ',') || (d < 0) || (d > 255)) {
       return (false);
     }
     port = d << 8;
     d = net_atoi (buf+n+1, &n);
-    if (d > 255) {
+    if ((d < 0) || (d > 255)) {
       return (false);
     }
     port |= d;
-    if (port == 0) {
-      return (false);
-    }
   }
   else {
     /* EPRT IP4 example: |1|192.168.0.162|5001|             */
     /*      IP6 example: |2|fe80::1c30:6cff:fea2:455e|5282| */
+    if (*buf == ' ') buf++;
     char delim = buf[0];
-    if (buf[2] != delim) {
+    if ((delim == 0) || (buf[1] == 0) || (buf[2] != delim)) {
       return (false);
     }
     switch (buf[1]) {
       case '1':
         buf += 3;
-        for (i = 0; buf[i]; i++) {
-          if (buf[i] == delim) {
-            buf[i] = 0;
-            break;
+        /* buf: 192.168.0.162|5001| */
+        addr.addr_type = NET_ADDR_IP4;
+        for (i = 0; i < 3; i++) {
+          d = net_atoi (buf, &n);
+          if ((buf[n] != '.') || (d < 0) || (d > 255)) {
+            return (false);
           }
+          addr.addr[i] = d & 0xFF;
+          buf += (n + 1);
         }
-        /* buf: 192.168.0.162\0 */
-        if (!net_addr4_aton (buf, addr.addr)) {
+        d = net_atoi (buf, &n);
+        if ((buf[n] != delim) || (d < 0) || (d > 255)) {
           return (false);
         }
-        addr.addr_type = NET_ADDR_IP4;
-        buf += (i + 1);
+        addr.addr[i] = d & 0xFF;
+        buf += (n + 1);
         /* buf: 5001| */
         break;
 
 #ifdef Network_IPv6
       case '2':
         buf += 3;
-        for (i = 0; buf[i]; i++) {
-          if (buf[i] == delim) {
-            buf[i] = 0;
-            break;
-          }
-        }
-        /* buf: fe80::1c30:6cff:fea2:455e\0 */
-        if (!net_addr6_aton (buf, addr.addr)) {
+        /* buf: fe80::1c30:6cff:fea2:455e|5282| */
+        n = net_strnchr (buf, delim, 40);
+        if (n < 0) {
           return (false);
         }
+        static char tmp[40];
+        net_strncpy (tmp, buf, n);
+        /* tmp: fe80::1c30:6cff:fea2:455e\0 */
         addr.addr_type = NET_ADDR_IP6;
-        buf += (i + 1);
+        if (!net_addr6_aton (tmp, addr.addr)) {
+          return (false);
+        }
+        buf += (n + 1);
         /* buf: 5282| */
         break;
 #endif
@@ -1711,15 +1708,19 @@ static bool parse_port_param (NET_FTP_INFO *ftp_s, char *buf, uint8_t type) {
         return (false);
     }
     port = net_atoi (buf, &n);
-    if (buf[n] != delim || port == 0 || port > 65535) {
+    if ((buf[n] != delim) || (port < 0) || (port > 65535)) {
       return (false);
     }
   }
-  ftp_s->DPort = port & 0xFFFF;
   if (!net_addr_comp (&ftp_s->Client, &addr)) {
     /* Invalid network address, possible bounce attack */
     return (false);
   }
+  if (port == 0) {
+    /* Invalid port */
+    return (false);
+  }
+  ftp_s->DPort = port & 0xFFFF;
   return (true);
 }
 
