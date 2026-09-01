@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_dhcp6_client.c
  * Purpose: Dynamic Host Configuration Client for IPv6
@@ -54,6 +54,8 @@ static bool select_server (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len);
 static bool check_server_id (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len);
 static bool check_client_id (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len);
 static void proc_opt_ia_na (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len);
+static uint32_t validate_index (uint32_t index, const uint8_t *buf, uint32_t len);
+static uint32_t get_next_index (uint32_t index, const uint8_t *buf, uint32_t len);
 static uint16_t get_tout (uint32_t prev_tout, uint32_t max_tout, bool first);
 #ifdef Network_Debug_STDIO
  static const char *msg_ascii (uint8_t msg_type);
@@ -689,17 +691,21 @@ static uint32_t dhcp6_listener (int32_t socket, const NET_ADDR *addr,
 
       /* Process DHCPv6 options */
       ctrl->Flags &= ~(DHCP6_FLAG_OPT_VALID | DHCP6_FLAG_STATUS_FAIL);
-      for (index = 4; index < len;  ) {
+      for (index = validate_index (4, buf, len);
+           index < len;
+           index = get_next_index (index, buf, len)) {
         switch (get_u16 (&buf[index])) {
           case DHCP6_OPT_IA_NA:
             /* IA for Non-temporary address */
             tlen = get_u16 (&buf[index+2]);
-            if ((index + 4 + tlen) <= len) {
-              proc_opt_ia_na (h, &buf[index+4], tlen);
-            }
+            proc_opt_ia_na (h, &buf[index+4], tlen);
             break;
           case DHCP6_OPT_STATUS_CODE:
             /* Status code option */
+            if (get_u16 (&buf[index+2]) < 2U) {
+              /* Option invalid, too short */
+              break;
+            }
             stat = get_u16(&buf[index+4]);
             if (stat == DHCP6_STATUS_NoAddrAvail) {
               ctrl->Flags |= DHCP6_FLAG_NO_ADDR;
@@ -711,7 +717,6 @@ static uint32_t dhcp6_listener (int32_t socket, const NET_ADDR *addr,
             EvrNetDHCP6_StatusCode (h->If->Id, stat);
             break;
         }
-        index += (get_u16 (&buf[index+2]) + 4);
       }
       /* Got what we were looking for? */
       if (((ctrl->Flags & DHCP6_FLAG_OPT_VALID)   == 0) ||
@@ -751,15 +756,15 @@ req:  if (buf[0] != DHCP6_MSG_REPLY) {
       }
       /* Process DHCPv6 options */
 opt:  ctrl->Flags &= ~(DHCP6_FLAG_OPT_VALID | DHCP6_FLAG_STATUS_FAIL);
-      for (index = 4; index < len; ) {
+      for (index = validate_index (4, buf, len);
+           index < len;
+           index = get_next_index (index, buf, len)) {
         switch (get_u16 (&buf[index])) {
           case DHCP6_OPT_IA_NA:
             /* IA for Non-temporary address */
             tlen = get_u16 (&buf[index+2]);
-            if ((index + 4 + tlen) <= len) {
-              /* Update recorded information about IA */
-              proc_opt_ia_na (h, &buf[index+4], tlen);
-            }
+            /* Update recorded information about IA */
+            proc_opt_ia_na (h, &buf[index+4], tlen);
             break;
           case DHCP6_OPT_DNS_SERVERS:
             /* DNS name servers */
@@ -777,6 +782,10 @@ opt:  ctrl->Flags &= ~(DHCP6_FLAG_OPT_VALID | DHCP6_FLAG_STATUS_FAIL);
             break;
           case DHCP6_OPT_STATUS_CODE:
             /* Status code option */
+            if (get_u16 (&buf[index+2]) < 2U) {
+              /* Option invalid, too short */
+              break;
+            }
             stat = get_u16(&buf[index+4]);
             if (stat != DHCP6_STATUS_Success) {
               ctrl->Flags |= DHCP6_FLAG_STATUS_FAIL;
@@ -785,7 +794,6 @@ opt:  ctrl->Flags &= ~(DHCP6_FLAG_OPT_VALID | DHCP6_FLAG_STATUS_FAIL);
             EvrNetDHCP6_StatusCode (h->If->Id, stat);
             break;
         }
-        index += (get_u16 (&buf[index+2]) + 4);
       }
       /* Got what we were looking for? */
       if (((ctrl->Flags & DHCP6_FLAG_OPT_VALID)   == 0) ||
@@ -858,7 +866,9 @@ opt:  ctrl->Flags &= ~(DHCP6_FLAG_OPT_VALID | DHCP6_FLAG_STATUS_FAIL);
       }
       /* Process DHCPv6 options */
       ctrl->Flags &= ~(DHCP6_FLAG_OPT_VALID | DHCP6_FLAG_STATUS_FAIL);
-      for (index = 4; index < len; ) {
+      for (index = validate_index (4, buf, len);
+           index < len;
+           index = get_next_index (index, buf, len)) {
         switch (get_u16 (&buf[index])) {
           case DHCP6_OPT_DNS_SERVERS:
             /* DNS name servers */
@@ -878,6 +888,10 @@ opt:  ctrl->Flags &= ~(DHCP6_FLAG_OPT_VALID | DHCP6_FLAG_STATUS_FAIL);
             break;
           case DHCP6_OPT_STATUS_CODE:
             /* Status code option */
+            if (get_u16 (&buf[index+2]) < 2U) {
+              /* Option invalid, too short */
+              break;
+            }
             stat = get_u16(&buf[index+4]);
             if (stat != DHCP6_STATUS_Success) {
               ctrl->Flags |= DHCP6_FLAG_STATUS_FAIL;
@@ -886,7 +900,6 @@ opt:  ctrl->Flags &= ~(DHCP6_FLAG_OPT_VALID | DHCP6_FLAG_STATUS_FAIL);
             EvrNetDHCP6_StatusCode (h->If->Id, stat);
             break;
         }
-        index += (get_u16 (&buf[index+2]) + 4);
       }
       if (((ctrl->Flags & DHCP6_FLAG_OPT_VALID)   == 0) ||
           ((ctrl->Flags & DHCP6_FLAG_STATUS_FAIL) != 0)) {
@@ -919,7 +932,9 @@ static bool select_server (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len) {
 
   id_pos = 0;
   pref   = 0;
-  for (index = 0; index < len;  ) {
+  for (index = validate_index (0, buf, len);
+       index < len;
+       index = get_next_index (index, buf, len)) {
     switch (get_u16 (&buf[index])) {
       case DHCP6_OPT_SERVER_ID:
         /* Save position of Server ID option */
@@ -927,10 +942,11 @@ static bool select_server (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len) {
         break;
       case DHCP6_OPT_PREFERENCE:
         /* Server preference (pref=0 when option missing) */
-        pref = buf[index+4];
+        if (get_u16(&buf[index+2]) == 1U) {
+          pref = buf[index+4];
+        }
         break;
     }
-    index += (get_u16 (&buf[index+2]) + 4);
   }
   if (id_pos == 0) {
     /* Server ID option not found */
@@ -966,7 +982,9 @@ static bool select_server (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len) {
 static bool check_server_id (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len) {
   uint32_t index,len2;
 
-  for (index = 0; index < len;  ) {
+  for (index = validate_index (0, buf, len);
+       index < len;
+       index = get_next_index (index, buf, len)) {
     if (get_u16 (&buf[index]) == DHCP6_OPT_SERVER_ID) {
       /* Option found, check if Server ID the same */
       len2 = get_u16 (&buf[index+2]);
@@ -977,7 +995,6 @@ static bool check_server_id (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len)
       }
       return (false);
     }
-    index += (get_u16 (&buf[index+2]) + 4);
   }
   /* Server ID option is missing */
   return (false);
@@ -995,7 +1012,9 @@ static bool check_server_id (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len)
 static bool check_client_id (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len) {
   uint32_t index;
 
-  for (index = 0; index < len;  ) {
+  for (index = validate_index (0, buf, len);
+       index < len;
+       index = get_next_index (index, buf, len)) {
     if (get_u16 (&buf[index]) == DHCP6_OPT_CLIENT_ID) {
       /* Option found, check Client ID content */
       if ((get_u16 (&buf[index+2]) == 14)               &&
@@ -1009,7 +1028,6 @@ static bool check_client_id (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len)
       /* Wrong Client ID, not ours */
       return (false);
     }
-    index += (get_u16 (&buf[index+2]) + 4);
   }
   /* Client ID option is missing */
   return (false);
@@ -1034,7 +1052,9 @@ static void proc_opt_ia_na (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len) 
     EvrNetDHCP6_WrongIaid (h->If->Id, get_u32(&buf[0]), DHCP6_IAID);
     return;
   }
-  for (index = 12; index < len;  ) {
+  for (index = validate_index (12, buf, len);
+       index < len;
+       index = get_next_index (index, buf, len)) {
     /* Find IA Address option */
     if (get_u16 (&buf[index]) == DHCP6_OPT_IA_ADDR) {
       if (get_u16 (&buf[index+2]) < 24) {
@@ -1091,8 +1111,39 @@ static void proc_opt_ia_na (NET_DHCP6_CFG *h, const uint8_t *buf, uint32_t len) 
       }
       break;
     }
-    index += (get_u16 (&buf[index+2]) + 4);
   }
+}
+
+/**
+  \brief       Validate an index used when parsing DHCPv6 options.
+  \param[in]   index  index into the buffer to validate.
+  \param[in]   buf    buffer containing DHCPv6 option data.
+  \param[in]   len    length of the buffer in bytes.
+  \return      'index' if the option is valid, otherwise 'len'.
+*/
+static uint32_t validate_index (uint32_t index, const uint8_t *buf, uint32_t len) {
+  uint32_t d;
+
+  if (index + 4U > len) {
+    return (len);
+  }
+  d = get_u16 (&buf[index+2]);
+  if (index + d + 4U > len) {
+    return (len);
+  }
+  return (index);
+}
+
+/**
+  \brief       Calculate the next index for parsing DHCPv6 options.
+  \param[in]   index  current validated index into the buffer.
+  \param[in]   buf    buffer containing DHCPv6 option data.
+  \param[in]   len    length of the buffer in bytes.
+  \return      next valid index, or 'len' if no valid option follows.
+*/
+static uint32_t get_next_index (uint32_t index, const uint8_t *buf, uint32_t len) {
+  index += get_u16 (&buf[index+2]) + 4U;
+  return (validate_index (index, buf, len));
 }
 
 /**
