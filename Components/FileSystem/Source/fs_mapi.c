@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_mapi.c
  * Purpose: File Maintenance API Functions
@@ -987,21 +987,19 @@ fsStatus fchdir (const char *path) {
 */
 fsStatus fchdrive (const char *drive) {
   int32_t id;
+  fsStatus status;
 
   EvrFsCore_fchdrive (drive);
 
-  if (drive[0] == '\0') {
-    /* Empty string is not allowed */
-    return (fsInvalidParameter);
+  id = fs_drive_id (drive, NULL);
+  if (id < 0) {
+    /* Nonexistent drive or invalid input */
+    status = (fsStatus)(-id);
+  } else {
+    status = fs_set_cdrive (id);
   }
-  else {
-    id = fs_drive_id (drive, NULL);
-    if (id < 0) {
-      /* Nonexistent drive or invalid input */
-      return ((fsStatus)(-id));
-    }
-  }
-  return (fs_set_cdrive (id));
+
+  return status;
 }
 
 
