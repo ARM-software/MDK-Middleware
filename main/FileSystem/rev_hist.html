@@ -138,10 +138,12 @@ $(function(){initNavTree('rev_hist.html',''); initResizable(true); });
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
-<td>V8.0.7 </td><td><ul>
+<td>V8.0.10 </td><td><ul>
+<li>corrected a bug in ffind for EFS which could return invalid file for explicit search</li>
 <li>corrected fchdrive to correctly handle NULL argument</li>
 <li>corrected funmount for FAT drives when called multiple times</li>
 <li>corrected file open to return fsTooManyOpenFiles when there is no file handle available</li>
+<li>corrected FAT name cache out of bound access for deep paths</li>
 <li>corrected FAT name cache entry size from 48 to 40 bytes</li>
 <li>corrected various minor code quality issues </li>
 </ul>
