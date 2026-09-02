@@ -193,7 +193,7 @@ uint32_t fs_strncasecmp (const char s1[], const char s2[], uint32_t n) {
 
   \param[in] s1  string pointer
   \param[in] s2  string pointer
-  \param[in] len1  number of characters to compare from the beggining of the strings
+  \param[in] len1  number of characters to compare from the beginning of the strings
   \param[in] len2  number of characters to compare before end of strings
   \return    0 if strings are the same, 1 otherwise
 */
@@ -203,26 +203,22 @@ uint32_t fs_strmatch (const char s1[], const char s2[], uint32_t len1, uint32_t 
 
   match = 0U;
 
-  if ((len1 != 0U) || (len2 != 0U)) {
-    if (len1 != 0U) {
-      /* Compare from the start */
-      match = fs_strncasecmp (&s1[0], &s2[0], len1);
+  if (len1 != 0U) {
+    /* Compare from the start */
+    match = fs_strncasecmp (s1, s2, len1);
+  }
+
+  if ((match == 0U) && (len2 != 0U)) {
+    n1 = fs_strlen (s1);
+    n2 = fs_strlen (s2);
+
+    if ((n1 >= len2) && (n2 >= len2)) {
+      /* Compare part at the end */
+      match = fs_strncasecmp (&s1[n1 - len2], &s2[n2 - len2], len2);
     }
-
-    if (len2 != 0U) {
-      n1 = fs_strlen (s1);
-      n2 = fs_strlen (s2);
-
-      if ((n1 >= len2) && (n2 >= len2)) {
-        n1 -= len2;
-        n2 -= len2;
-        /* Compare part at the end */
-        match |= fs_strncasecmp (&s1[n1], &s2[n2], len2);
-      }
-      else {
-        /* Not long enough, no match */
-        match = 1U;
-      }
+    else {
+      /* Not long enough, no match */
+      match = 1U;
     }
   }
 
