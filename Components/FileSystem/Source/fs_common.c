@@ -1,13 +1,12 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_common.c 
  * Purpose: Common file system functions
  *----------------------------------------------------------------------------*/
 
 #include <string.h>
-#include <ctype.h>
 #include "fs_common.h"
 #include "fs_sys.h"
 #include "fs_evr.h"
@@ -145,7 +144,7 @@ int32_t fs_strpos (const char sp[], const char ch) {
 
 
 /**
-  Case insensitive compare of two char strings.
+  Case insensitive compare of two (ASCII) char strings.
 
   The function strncasecmp is not part of the standard C library - it is a POSIX
   function and may not be available on all platforms, hence we provide our own
@@ -163,12 +162,18 @@ uint32_t fs_strncasecmp (const char s1[], const char s2[], uint32_t n) {
   i = 0U;
 
   while (i < n) {
-    c1 = (uint8_t)tolower(s1[i]);
-    c2 = (uint8_t)tolower(s2[i]);
+    c1 = (uint8_t)s1[i];
+    c2 = (uint8_t)s2[i];
 
     if (c1 != c2) {
-      /* No match */
-      return (1U);
+      /* Convert differing characters to lowercase. */
+      c1 |= 0x20U;
+      c2 |= 0x20U;
+
+      if ((c1 != c2) || (c1 < (uint8_t)'a') || (c1 > (uint8_t)'z')) {
+        /* No match */
+        return (1U);
+      }
     }
     if (c1 == '\0') {
       /* End of strings */
