@@ -2412,6 +2412,12 @@ __WEAK fsStatus efs_rename (const char *fn, const char *newname, fsEFS_Volume *v
   EvrFsEFS_FileName  (fn, fs_strlen(fn));
   EvrFsEFS_FileName  (newname, fs_strlen(newname));
 
+  if ((fn == NULL) || (newname == NULL)) {
+    /* Invalid parameters */
+    EvrFsEFS_InvalidParameter (vol->DrvLet);
+    return (fsInvalidParameter);
+  }
+
   stat = efs_vol_chk (EFS_STATUS_MOUNT, vol);
   if (stat != fsOK) {
     return (stat);
