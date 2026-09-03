@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_nftl.c
  * Purpose: NAND FTL Implementation
@@ -22,7 +22,7 @@ extern NAND_MEDIA_DRIVER NAND_MediaDriver;
  *----------------------------------------------------------------------------*/
 static uint32_t ScanBlock     (NAND_FTL_DEV *ftl, uint16_t bn, uint32_t lsn, uint32_t *pageNum);
 static uint32_t AllocBlock    (NAND_FTL_DEV *ftl, uint16_t *bn, uint32_t restriction, uint32_t area);
-static uint32_t UpdateBTT     (NAND_FTL_DEV *ftl, uint16_t lbn, uint16_t *primBN, uint16_t *replBN);
+static uint32_t UpdateBTT     (NAND_FTL_DEV *ftl, uint16_t lbn, uint16_t primBN, uint16_t replBN);
 static uint32_t GcRun         (NAND_FTL_DEV *ftl, uint16_t lbn, BTT_ITEM *btt, uint32_t gcArea, uint16_t allocBn);
 static uint32_t MoveBlock     (NAND_FTL_DEV *ftl, uint16_t srcBN, uint16_t destBN, uint32_t endPg, uint32_t area);
 static uint32_t RelocBlock    (NAND_FTL_DEV *ftl, uint16_t *pbn, uint32_t endPg, uint32_t area, uint32_t eraseBlock);
@@ -1221,7 +1221,7 @@ static uint32_t RefreshDataBlock(NAND_FTL_DEV *ftl, uint16_t lbn, uint32_t blTyp
 
   (blTyp == TYP_PRIM) ? (btti->primBN = bn) : (btti->replBN = bn);
 
-  rtv = UpdateBTT (ftl, lbn, &btti->primBN, &btti->replBN);
+  rtv = UpdateBTT (ftl, lbn, btti->primBN, btti->replBN);
   if (rtv != FTL_OK) { return rtv; }
 
   rtv = EraseBlock(ftl, &tmp);
@@ -1547,7 +1547,7 @@ static uint32_t ForceDataGc(NAND_FTL_DEV *ftl) {
 
             /* GC ok, now update translation table */
             pbn = INVALID_BLOCK;
-            rtv = UpdateBTT(ftl, lbn, &emptyBN, &pbn);
+            rtv = UpdateBTT(ftl, lbn, emptyBN, pbn);
 
             if (rtv != FTL_OK) {
               return rtv;
@@ -1773,20 +1773,16 @@ static uint32_t SearchBTT(NAND_FTL_DEV *ftl, uint32_t lbn, BTT_ITEM *btt) {
   Primary block must then be found (if exist) or allocated, else
   replacement block is used.
 
-  In case when data block is relocated one of the *primBN and
-  *replBN parameters can be NULL. This way table can be updated even if
-  location of only one block is known.
-
   Table update is retried for __MAX_RETRY times if some NAND flash
   read/write error appear.
 
   \param[in,out]  ftl       FTL instance object
   \param[in]      lbn       logical block number
-  \param[in]     *primBN    pointer to primary physical block number for lbn
-  \param[in]     *replBN    pointer to replacement physical block number for lbn
+  \param[in]      primBN    primary physical block number for lbn
+  \param[in]      replBN    replacement physical block number for lbn
   \return execution status FTL_STATUS
 */
-static uint32_t UpdateBTT(NAND_FTL_DEV *ftl, uint16_t lbn, uint16_t *primBN, uint16_t *replBN) {
+static uint32_t UpdateBTT(NAND_FTL_DEV *ftl, uint16_t lbn, uint16_t primBN, uint16_t replBN) {
   BTT_ITEM entBl;
   uint16_t cBN, allocBN, badBN;
   uint32_t i, rtv, freePg;
@@ -1794,7 +1790,7 @@ static uint32_t UpdateBTT(NAND_FTL_DEV *ftl, uint16_t lbn, uint16_t *primBN, uin
   uint32_t tbnS, tsnS, tsnB, tsnE, tsnIdx;
   uint32_t sOffs, row, col, primRow, replRow;
 
-  EvrFsNFTL_TableUpdate (ftl->Media->instance, lbn, *primBN, *replBN);
+  EvrFsNFTL_TableUpdate (ftl->Media->instance, lbn, primBN, replBN);
 
   tsnS  = lbn >> BTT_EPS;                    /* TSN we are searching for */
   tbnS  = LBN(tsnS);                         /* is in block with TBN     */
@@ -1936,14 +1932,10 @@ static uint32_t UpdateBTT(NAND_FTL_DEV *ftl, uint16_t lbn, uint16_t *primBN, uin
     col  = ftl->PgLay.sector_inc * sOffs +  (lbn & ((1 << BTT_EPS) - 1)) * BTT_ENTRY_SZ;
 
     /* Update entry in tsn page */
-    if (primBN != NULL) {
-      ftl->PgBuf[col]     = (uint8_t)(*primBN);
-      ftl->PgBuf[col + 1] = (uint8_t)(*primBN >> 8);
-    }
-    if (replBN != NULL) {
-      ftl->PgBuf[col + 2] = (uint8_t)(*replBN);
-      ftl->PgBuf[col + 3] = (uint8_t)(*replBN >> 8);
-    }
+    ftl->PgBuf[col]     = (uint8_t)(primBN);
+    ftl->PgBuf[col + 1] = (uint8_t)(primBN >> 8);
+    ftl->PgBuf[col + 2] = (uint8_t)(replBN);
+    ftl->PgBuf[col + 3] = (uint8_t)(replBN >> 8);
 
     /* Set spare */
     for (i = 0,   col = ftl->PgLay.spare_ofs;
@@ -2783,7 +2775,7 @@ uint32_t ftl_WriteSect(uint32_t lsn, const uint8_t *buf, uint32_t cnt, NAND_FTL_
 
     /* Update table if we allocated new block */
     if (alloc) {
-      rtv = UpdateBTT (ftl, LBN(lsn), &btti.primBN, &btti.replBN);
+      rtv = UpdateBTT (ftl, LBN(lsn), btti.primBN, btti.replBN);
       if (rtv != FTL_OK) {
         return rtv;
       }
@@ -2818,7 +2810,7 @@ gc:
       btti.replBN = INVALID_BLOCK;
 
       /* Update table */
-      rtv = UpdateBTT (ftl, LBN(lsn), &btti.primBN, &btti.replBN);
+      rtv = UpdateBTT (ftl, LBN(lsn), btti.primBN, btti.replBN);
       if (rtv != FTL_OK) {
         return rtv;
       }
