@@ -22,7 +22,10 @@
       - corrected FAT name cache out of bound access for deep paths
       - corrected FAT name cache entry size from 48 to 40 bytes
       - corrected various minor code quality issues
-      Network Component Version 8.3.1
+      Network Component Version 8.4.0
+      - fixed potential pre-authentication out-of-bounds read in SNMP processing (CVE-2026-115678)
+      - fixed potential FTP server out-of-bounds reads and writes to the RX buffer (CVE-2026-115679)
+      - fixed potential DHCPv6 option-walk over-reads and unintended data retransmission (CVE-2026-115680)
       - fixed SMTP client unsigned underflow and Base64 over-read/write
       - fixed potential out-of-bounds reads in FTP client
       - fixed TFTP server filename being treated as an unbounded C string
@@ -702,7 +705,7 @@
   <components>
 
     <!-- Network (MDK) -->
-    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.3.1">
+    <bundle Cbundle="MDK" Cclass="Network" Cversion="8.4.0">
       <description>IPv4/IPv6 Networking using Ethernet or Serial protocols</description>
       <doc>Documentation/html/Network/index.html</doc>
       <component Cgroup="CORE" condition="CMSIS Core with RTOS">

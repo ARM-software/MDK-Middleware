@@ -6,8 +6,12 @@
       <th>Description</th>
     </tr>
     <tr>
-      <td>V8.3.1</td>
+      <td>V8.4.0</td>
       <td>
+        - fixed security vulnerabilities: [CVE-2026-115678, CVE-2026-115679, and CVE-2026-115680](https://support.arm.com/documentation/112560/1-0)
+          - potential pre-authentication out-of-bounds read in SNMP processing (CVE-2026-115678)
+          - potential FTP server out-of-bounds reads and writes to the RX buffer (CVE-2026-115679)
+          - potential DHCPv6 option-walk over-reads and unintended data retransmission (CVE-2026-115680)
         - fixed SMTP client unsigned underflow and Base64 over-read/write
         - fixed potential out-of-bounds reads in FTP client
         - fixed TFTP server filename being treated as an unbounded C string
