@@ -5745,16 +5745,21 @@ __WEAK fsStatus fat_delete (const char *path, const char *options, fsFAT_Volume 
 
 
 /**
-  Find a file or directory in requested directory.
+  Find a file or directory matching the requested pattern.
 
-  \param[in]  fn                        path name
+  \param[in]  fn                        path and search pattern
   \param[out] info                      file information structure
   \param[in]  vol                       volume description structure
   \return     execution status \ref fsStatus
 */
 __WEAK fsStatus fat_ffind (const char *fn, fsFileInfo *info, fsFAT_Volume *vol) {
   PATH_INFO pinfo;
+  const char *pattern;
   fsStatus  status;
+  int32_t  prefix_len;
+  uint32_t suffix_len;
+  uint32_t pattern_len;
+  uint32_t i;
 
   if ((fn == NULL) || (info == NULL)) {
     /* Invalid parameters */
@@ -5770,11 +5775,37 @@ __WEAK fsStatus fat_ffind (const char *fn, fsFileInfo *info, fsFAT_Volume *vol) 
     return (status);
   }
 
-  path_init (fn, &pinfo, vol);
+  pattern = fn;
+  i       = 0U;
 
-  status = path_open (&pinfo, vol);
+  while (fn[i] != '\0') {
+    if ((fn[i] == '\\') || (fn[i] == '/')) {
+      pattern = &fn[i + 1U];
+    }
+    i++;
+  }
 
-  if (status == fsOK) {
+  if (*pattern == '\0') {
+    return (fsInvalidParameter);
+  }
+
+  pattern_len = fs_strlen (pattern);
+  prefix_len  = fs_strpos (pattern, '*');
+  suffix_len  = 0U;
+
+  if ((prefix_len >= 0) && (strcmp (&pattern[prefix_len + 1], ".*") != 0)) {
+    suffix_len = pattern_len - (uint32_t)(prefix_len + 1);
+  }
+
+  for (;;) {
+    path_init (fn, &pinfo, vol);
+
+    status = path_open (&pinfo, vol);
+
+    if (status != fsOK) {
+      return (status);
+    }
+
     if (pinfo.fn_flags & FAT_NAME_WILDCARD) {
       /* Reposition entry offset */
       pinfo.frec.pos.Clus = pinfo.dir_clus;
@@ -5809,8 +5840,17 @@ __WEAK fsStatus fat_ffind (const char *fn, fsFileInfo *info, fsFAT_Volume *vol) 
 
     extract_date (pinfo.sfne->WriteDate, &info->time);
     extract_time (pinfo.sfne->WriteTime, &info->time);
+
+    if (prefix_len >= 0) {
+      if (fs_strmatch (pattern, info->name, (uint32_t)prefix_len, suffix_len) == 0U) {
+        return (fsOK);
+      }
+    }
+    else if ((fs_strlen (info->name) == pattern_len) &&
+             (fs_strncasecmp (info->name, pattern, pattern_len) == 0U)) {
+      return (fsOK);
+    }
   }
-  return (status);
 }
 
 

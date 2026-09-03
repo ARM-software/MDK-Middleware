@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_core_lib.h
  * Purpose: File System Library Definitions
@@ -261,7 +261,7 @@ extern int32_t  efs_seek      (int32_t handle, int32_t offset, int32_t whence);
 
 /* EFS Maintenance Routines */
 extern fsStatus efs_delete    (const char *filename, fsEFS_Volume *vol);
-extern fsStatus efs_ffind     (fsFileInfo *info, fsEFS_Volume *vol);
+extern fsStatus efs_ffind     (const char *filename, fsFileInfo *info, fsEFS_Volume *vol);
 extern fsStatus efs_rename    (const char *filename, const char *newname, fsEFS_Volume *vol);
 
 /* EFS Utility Routines */

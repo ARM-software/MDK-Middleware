@@ -2269,18 +2269,22 @@ __WEAK fsStatus efs_delete (const char *path, fsEFS_Volume *vol) {
 
 
 /**
-  Searches for the file with next file ID.
+  Find a file matching the requested pattern.
 
-  \param[in]  handle                    file handle
-  \param[in]  info                      file information structure
+  \param[in]  fn                        file search pattern
+  \param[out] info                      file information structure
+  \param[in]  vol                       volume description structure
   \return     execution status \ref fsStatus
 */
-__WEAK fsStatus efs_ffind (fsFileInfo *info, fsEFS_Volume *vol) {
+__WEAK fsStatus efs_ffind (const char *fn, fsFileInfo *info, fsEFS_Volume *vol) {
   FALLOC fa;
   uint32_t block, addr;
-  uint32_t nid, id, id_block = 0U;
-  uint32_t prev, fn_addr = 0U;
+  uint32_t nid, id, id_block;
+  uint32_t prev, fn_addr;
   fsStatus stat;
+  int32_t  prefix_len;
+  uint32_t suffix_len;
+  uint32_t pattern_len;
 
   if (info == NULL) {
     /* Invalid parameter */
@@ -2293,74 +2297,101 @@ __WEAK fsStatus efs_ffind (fsFileInfo *info, fsEFS_Volume *vol) {
     return (stat);
   }
 
-  /* Initialize next and current id */
-  nid = 0x8000 | (info->fileID + 1);
-  id  = 0xFFFF;
+  /* EFS supports file names only, without directory components. */
+  fn = file_name_validate (fn);
+  if (fn == NULL) {
+    return (fsInvalidPath);
+  }
 
-  /* Scan through all blocks */
-  for (block = 0; block < vol->SectorCount; block++) {
-    /* Read block signature */
-    addr = 0U;
+  pattern_len = fs_strlen (fn);
+  prefix_len  = fs_strpos (fn, '*');
+  suffix_len  = 0U;
 
-    stat = sign_read (vol, block, &fa.end, &addr);
-    if (stat != fsOK) {
-      return (stat);
-    }
+  if ((prefix_len >= 0) && (strcmp (&fn[prefix_len + 1], ".*") != 0)) {
+    /* Calculate the length of the suffix after the '*' character. */
+    suffix_len = pattern_len - (uint32_t)(prefix_len + 1);
+  }
 
-    /* Read all file allocation info */
-    prev = 0;
-    while (fa.end != vol->ErasedValue) {
-      stat = falloc_read (vol, addr, &fa, &addr);
+  for (;;) {
+    /* Initialize next and current id */
+    nid      = 0x8000 | (info->fileID + 1);
+    id       = 0xFFFF;
+    id_block = 0U;
+    fn_addr  = 0U;
 
+    /* Scan through all blocks */
+    for (block = 0; block < vol->SectorCount; block++) {
+      /* Read block signature */
+      addr = 0U;
+
+      stat = sign_read (vol, block, &fa.end, &addr);
       if (stat != fsOK) {
         return (stat);
       }
 
-      if (fa.end != vol->ErasedValue) {
-        if ((fa.fileID >= nid) && (fa.fileID < id)) {
-          /* Store the ID of the current valid file */
-          id = fa.fileID;
-          /* Store the block where we found the file */
-          id_block = block;
-          /* Store the file name address */
-          fn_addr = addr_of_block(vol, block) + prev;
+      /* Read all file allocation info */
+      prev = 0;
+      while (fa.end != vol->ErasedValue) {
+        stat = falloc_read (vol, addr, &fa, &addr);
 
-          if (id == nid) {
-            break;
-          }
+        if (stat != fsOK) {
+          return (stat);
         }
-        prev = fa.end;
+
+        if (fa.end != vol->ErasedValue) {
+          if ((fa.fileID >= nid) && (fa.fileID < id)) {
+            /* Store the ID of the current valid file */
+            id = fa.fileID;
+            /* Store the block where we found the file */
+            id_block = block;
+            /* Store the file name address */
+            fn_addr = addr_of_block(vol, block) + prev;
+
+            if (id == nid) {
+              break;
+            }
+          }
+          prev = fa.end;
+        }
       }
+
+      if (id == nid) { break; }
     }
 
-    if (id == nid) { break; }
+    if (id == 0xFFFF) {
+      /* File not found */
+      EvrFsEFS_FileNotFound (vol->DrvLet);
+      return (fsFileNotFound);
+    }
+
+    /* Filename is stored 4-byte aligned. */
+    fn_addr = (fn_addr + 3U) & ~3U;
+    /* Copy name to buffer. */
+    block_read (vol, fn_addr, &info->name, 32);
+
+    info->fileID = id & 0x7FFF;
+
+    /* Timestamps are not supported in EFS */
+    info->time.hr  = 12;
+    info->time.min = 0;
+    info->time.sec = 0;
+    info->time.day = 1;
+    info->time.mon = 1;
+    info->time.year= 1980;
+
+    info->size   = file_size_get (vol, id_block, info->fileID);
+    info->attrib = 0;
+
+    if (prefix_len >= 0) {
+      if (fs_strmatch (fn, info->name, (uint32_t)prefix_len, suffix_len) == 0U) {
+        return (fsOK);
+      }
+    }
+    else if ((fs_strlen (info->name) == pattern_len) &&
+             (fs_strncasecmp (info->name, fn, pattern_len) == 0U)) {
+      return (fsOK);
+    }
   }
-  
-  if (id == 0xFFFF) {
-    /* File not found */
-    EvrFsEFS_FileNotFound (vol->DrvLet);
-    return (fsFileNotFound);
-  }
-
-  /* Filename is stored 4-byte aligned. */
-  fn_addr = (fn_addr + 3U) & ~3U;
-  /* Copy name to buffer. */
-  block_read (vol, fn_addr, &info->name, 32);
-
-  info->fileID = id & 0x7FFF;
-
-  /* Timestamps are not supported in EFS */
-  info->time.hr  = 12;
-  info->time.min = 0;
-  info->time.sec = 0;
-  info->time.day = 1;
-  info->time.mon = 1;
-  info->time.year= 1980;
-  
-  info->size   = file_size_get (vol, id_block, info->fileID);
-  info->attrib = 0;
-
-  return (fsOK);
 }
 
 
