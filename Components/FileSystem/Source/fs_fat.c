@@ -5766,9 +5766,6 @@ __WEAK fsStatus fat_ffind (const char *fn, fsFileInfo *info, fsFAT_Volume *vol) 
     EvrFsFAT_InvalidParameter (vol->DrvLet);
     return (fsInvalidParameter);
   }
-  if (*fn == '\0') {
-    return (fsInvalidPath);
-  }
 
   status = fat_vol_chk (FAT_STATUS_READY | FAT_STATUS_MOUNT, vol);
   if (status != fsOK) {
@@ -5786,7 +5783,7 @@ __WEAK fsStatus fat_ffind (const char *fn, fsFileInfo *info, fsFAT_Volume *vol) 
   }
 
   if (*pattern == '\0') {
-    return (fsInvalidParameter);
+    return (fsInvalidPath);
   }
 
   pattern_len = fs_strlen (pattern);

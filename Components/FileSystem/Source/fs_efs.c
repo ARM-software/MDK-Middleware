@@ -2286,8 +2286,8 @@ __WEAK fsStatus efs_ffind (const char *fn, fsFileInfo *info, fsEFS_Volume *vol) 
   uint32_t suffix_len;
   uint32_t pattern_len;
 
-  if (info == NULL) {
-    /* Invalid parameter */
+  if ((fn == NULL) || (info == NULL)) {
+    /* Invalid parameters */
     EvrFsEFS_InvalidParameter (vol->DrvLet);
     return (fsInvalidParameter);
   }
