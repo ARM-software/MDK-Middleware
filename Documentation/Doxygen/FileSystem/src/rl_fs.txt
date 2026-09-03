@@ -282,8 +282,9 @@ If file or directory matching to the specified pattern is found, \ref fsOK statu
 and time stamps are returned to the info structure. Status code \ref fsFileNotFound is returned when function fails to find any
 file or directory that matches to the specified pattern.
 
-If arguments \a pattern or \a info are NULL or if \a pattern specifies only directory path (i.e. ends with slash or backslash) 
-the \ref fsInvalidParameter status code is returned.  
+If arguments \a pattern or \a info are NULL, the \ref fsInvalidParameter status code is returned.
+If \a pattern is an empty string or specifies only a directory path (i.e. ends with a slash or backslash),
+the \ref fsInvalidPath status code is returned.
 
 Member \b fileID of the fsFileInfo structure is used to control the file search and must be <b>set to 0 (zero) before starting a new search</b>.
 

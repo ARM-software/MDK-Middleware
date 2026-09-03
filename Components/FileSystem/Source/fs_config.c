@@ -1744,7 +1744,7 @@ int __wrap_fflush (FILE *stream) {
  fsStatus efs_flush (int32_t h)                                    { (void)h;                   return (fsError); }
  int32_t  efs_flen  (int32_t h)                                    { (void)h;                   return (-1);      }
  int32_t  efs_seek  (int32_t h, int32_t o, int32_t w)              { (void)h; (void)o; (void)w; return (fsError); }
- fsStatus efs_ffind (fsFileInfo *i, fsEFS_Volume *v)               { (void)i; (void)v;          return (fsError); }
+ fsStatus efs_ffind (const char *p, fsFileInfo *i, fsEFS_Volume *v){ (void)p; (void)i; (void)v; return (fsError); }
  fsStatus efs_rename(const char *p, const char *n, fsEFS_Volume *v){ (void)p; (void)n; (void)v; return (fsError); }
  fsStatus efs_delete(const char *p, fsEFS_Volume *v)               { (void)p; (void)v;          return (fsError); }
  int32_t  efs_analyse(fsEFS_Volume *v)                             { (void)v;                   return (0);       }

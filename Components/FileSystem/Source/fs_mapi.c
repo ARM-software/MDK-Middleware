@@ -288,12 +288,7 @@ fsStatus funmount (const char *drive) {
 */
 fsStatus ffind (const char *pattern, fsFileInfo *info) {
   FS_DEV *dev;
-  fsStatus retv;
   int32_t id;
-  const char *p;
-  int32_t  len1;
-  uint32_t len2;
-  uint32_t pattern_len;
 
   START_LOCK (fsStatus);
 
@@ -306,75 +301,17 @@ fsStatus ffind (const char *pattern, fsFileInfo *info) {
   }
   dev = &fs_DevPool[id];
 
-  len2 = 0U;
-  p    = pattern;
-
-  /* Strip out path from search pattern */
-  while (pattern[len2] != '\0') {
-    if ((pattern[len2] == '\\') || (pattern[len2] == '/')) {
-      p = &pattern[len2+1];
-    }
-    len2++;
-  }
-
-  if (*p == '\0') {
-    /* Invalid input (only directory path specified) */
-    RETURN (fsInvalidParameter);
-  }
-
-  pattern_len = fs_strlen (p);
-  len1        = fs_strpos (p, '*');
-
-  if (len1 >= 0) {
-    /* Wildcard found */
-    if (strcmp (&p[len1+1],".*") == 0) {
-      /* Search using *.* */
-      len2 = 0U;
-    }
-    else {
-      len2  = pattern_len;
-      len2 -= (uint32_t)(len1 + 1);
-    }
-  }
-
   if (dev->attr & FS_FAT) {
     /* Lock FAT volume */
     VOLUME_LOCK ((fsFAT_Volume *)dev->dcb);
+
+    RETURN (fat_ffind (pattern, info, (fsFAT_Volume *)dev->dcb));
   }
   else {
     /* Lock EFS volume */
     VOLUME_LOCK ((fsEFS_Volume *)dev->dcb);
-  }
 
-  for (;;) {
-    if (dev->attr & FS_FAT) {
-      /* Find FAT file */
-      retv = fat_ffind (pattern, info, (fsFAT_Volume *)dev->dcb);
-    }
-    else {
-      /* Find EFS file */
-      retv = efs_ffind (info, (fsEFS_Volume *)dev->dcb);
-    }
-
-    if (retv != fsOK) {
-      RETURN (retv);
-    }
-
-    if (len1 >= 0) {
-      /* Wildcard search, do partial compare */
-      if (fs_strmatch (&p[0], &info->name[0], (uint32_t)len1, len2) == 0) {
-        /* Partial match */
-        RETURN (fsOK);
-      }
-    }
-    else {
-      /* No wildcard, must exactly match (case insensitive) */
-      if ((fs_strlen (info->name) == pattern_len) &&
-          (fs_strncasecmp (&info->name[0], &p[0], pattern_len) == 0)) {
-        /* Exact match */
-        RETURN (fsOK);
-      }
-    }
+    RETURN (efs_ffind (pattern, info, (fsEFS_Volume *)dev->dcb));
   }
 
   END_LOCK;
