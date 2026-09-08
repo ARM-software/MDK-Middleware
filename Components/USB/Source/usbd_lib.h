@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib.h
  * Purpose: USB Device header file
@@ -272,7 +272,7 @@ typedef struct {
   uint16_t              data_in_rece_len;                   ///< length of received data
   uint16_t              data_feat_rece_len;                 ///< length of received feature data
   bool                  data_out_end_with_zlp_packet;       ///< data send ended with Zero Length Packet (ZLP) flag
-  uint8_t               last_in_report;                     ///< last input report index if multiple input reports are specified"
+  uint8_t               last_in_report;                     ///< last input report index if multiple input reports are specified
   uint8_t               pad0[2];                            ///< explicit padding
 } usbd_hid_data_t;
 
