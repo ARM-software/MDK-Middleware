@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_cmsis_rtos2.c
  * Purpose: USB Device (USBD) - RTOS abstraction implemented on CMSIS-RTOS2
@@ -824,7 +824,9 @@ static osRtxSemaphore_t usbd_hid_semaphore_cb_mem      [USBD_HID_NUM]           
 
 // Functions definition
 
-/// \brief Create a thread
+/// \brief Create a USB-specific thread
+/// \details       This function creates a USB thread as requested by the system.
+///                The thread can be either a USB Core thread or a class-specific thread for handling class-specific endpoint events.
 /// \param[in]     thread               thread
 /// \param[in]     index                parameter dependent on thread (device index or class instance or endpoint index)
 /// \return
