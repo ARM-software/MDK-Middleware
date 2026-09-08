@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates).
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates).
  * All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_core.c
@@ -1774,7 +1774,9 @@ usbStatus USBH_DeviceRequest_GetConfiguration (uint8_t device, uint8_t *ptr_conf
   usbStatus         status;
   usbStatus         mstatus;
 
-  EvrUSBH_Core_RequestGetConfiguration(device, *ptr_configuration);
+  if (ptr_configuration != NULL) {
+    EvrUSBH_Core_RequestGetConfiguration(device, *ptr_configuration);
+  }
 
   ctrl   = usbh_dev[device].ctrl;
   status = CheckController (ctrl);
@@ -1850,7 +1852,9 @@ usbStatus USBH_DeviceRequest_GetInterface (uint8_t device, uint8_t index, uint8_
   usbStatus         status;
   usbStatus         mstatus;
 
-  EvrUSBH_Core_RequestGetInterface(device, index, *ptr_alternate);
+  if (ptr_alternate != NULL) {
+    EvrUSBH_Core_RequestGetInterface(device, index, *ptr_alternate);
+  }
 
   ctrl   = usbh_dev[device].ctrl;
   status = CheckController (ctrl);
