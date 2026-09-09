@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_ioc.c 
  * Purpose: Media IO Control API Functions
@@ -34,15 +34,10 @@
 */
 int32_t fs_ioc_get_id (const char *drive) {
   int32_t id, val;
-  const char def[3] = "";
-  const char *p;
 
   EvrFsIOC_GetId (get_u32((const uint8_t *)drive));
 
-  p = drive;
-  if (p == NULL) { p = def; }
-
-  id = fs_drive_id (p, NULL);
+  id = fs_drive_id (drive, NULL);
   if (id < 0) {
     /* Nonexistent drive or input invalid */
     EvrFsIOC_GetIdError (get_u32((const uint8_t *)drive));
