@@ -6,6 +6,14 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V8.0.3</td>
+      <td>
+        - USB Device: updated HID configuration for high-speed interrupt endpoints
+        - USB Device: fixed HID idle handling for endpoint intervals not aligned to 4 ms
+        - USB Device: fixed HID idle handling for multiple input reports
+      </td>
+    </tr>
+    <tr>
       <td>V8.0.2</td>
       <td>
         - USB Host: improve code robustness

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_hid.c
  * Purpose: USB Device - Human Interface Device (HID) module
@@ -472,6 +472,8 @@ void USBD_HID_EndpointStart (uint8_t instance, uint8_t ep_addr) {
 }
 
 /// \brief HID Timer event handling (handling report timings: polling and idle times)(called every 4 ms).
+/// \details       The timer interval is 4 ms, as this is the resolution of the idle duration defined by the HID specification
+///                (HID1_11.pdf, 7.2.4 Set_Idle Request)
 /// \param[in]     instance      instance of HID class.
 void USBD_HID_Timer (void const *argument) {
   const usbd_data_t     *ptr_dev_data;
@@ -498,17 +500,17 @@ void USBD_HID_Timer (void const *argument) {
       if (ptr_hid_cfg->ep_int_in_interval[1] == 0U) {
         polling_interval = 1U;
       } else {
-        polling_interval = INTERVAL_HS[ptr_hid_cfg->ep_int_in_interval[1]-1U];
+        polling_interval = INTERVAL_HS[(ptr_hid_cfg->ep_int_in_interval[1]-1U) & 0x0FU];
       }
     } else {
       if (ptr_hid_cfg->ep_int_in_interval[0] == 0U) {
         polling_interval = 1U;
       } else {
-        polling_interval = ptr_hid_cfg->ep_int_in_interval[0];
+        polling_interval = ptr_hid_cfg->ep_int_in_interval[0] & 0xFFU;
       }
     }
     polling_reload = false;
-    if (ptr_hid_data->polling_count == polling_interval) {
+    if (ptr_hid_data->polling_count >= polling_interval) {
       ptr_hid_data->polling_count = 0U;
       polling_reload = true;            // If polling interval expired
     }
@@ -546,8 +548,6 @@ void USBD_HID_Timer (void const *argument) {
       if (USBD_SemaphoreAcquire (usbd_hid_semaphore_id[instance], 0U) == 0) {
         USBD_HID_EpIntIn (instance);
       }
-    } else {
-      ptr_hid_data->data_out_update_req_mask &= ~(1UL << i);
     }
   }
 }
@@ -627,11 +627,7 @@ static void USBD_HID_EpIntIn (uint8_t instance) {
             ptr_hid_data->data_out_update_req_mask  = 0U;
           }
         } else {                        // If multiple reports in system
-          i = ptr_hid_data->last_in_report + 1U;
-          do {
-            if (i > ptr_hid_cfg->in_report_num) {
-              i = 0U;
-            }
+          for (i = 0U; i < ptr_hid_cfg->in_report_num; i++) {
             if ((ptr_hid_data->data_out_update_req_mask & (1UL << i)) != 0U) {
               ptr_hid_cfg->in_report[0]= i + 1U;        // ReportID
               ptr_hid_data->data_out_sent_len    = 0U;
@@ -646,7 +642,7 @@ static void USBD_HID_EpIntIn (uint8_t instance) {
               ptr_hid_data->data_out_update_req_mask &= ~(1UL << i);
               break;
             }
-          } while (i != ptr_hid_data->last_in_report);
+          }
         }
       }
     }

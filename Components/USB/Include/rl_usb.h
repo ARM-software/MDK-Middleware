@@ -16,7 +16,7 @@
 
 #define MW_USB_VERSION_MAJOR           (8U)
 #define MW_USB_VERSION_MINOR           (0U)
-#define MW_USB_VERSION_PATCH           (2U)
+#define MW_USB_VERSION_PATCH           (3U)
 #define MW_USB_VERSION                ((MW_USB_VERSION_MAJOR * 10000000U) + \
                                        (MW_USB_VERSION_MINOR * 10000U)    + \
                                        (MW_USB_VERSION_PATCH))
