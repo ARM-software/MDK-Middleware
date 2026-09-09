@@ -9,7 +9,7 @@
       <td>V8.0.10</td>
       <td>
         - corrected a bug in ffind for EFS which could return invalid file for explicit search
-        - corrected fchdrive to correctly handle NULL argument
+        - corrected fchdrive and fs_ioc_get_id to correctly handle NULL argument
         - corrected funmount for FAT drives when called multiple times
         - corrected file open to return fsTooManyOpenFiles when there is no file handle available
         - corrected FAT name cache out of bound access for deep paths
