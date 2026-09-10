@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component Validation
- * Copyright (c) 2018-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2018-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    MW_CV_TestReport.c
  * Purpose: MDK Middleware - Component Validation - Test Report module
@@ -80,8 +80,6 @@ void TestReportUnitTestEnd (uint32_t time_in_sec) {
          (unsigned int)passed,
          (unsigned int)failed);
   printf("Unit Test Result:  %s\n\n\n", result_str);
-
-  fflush(stdout);
 }
 
 /*-----------------------------------------------------------------------------
@@ -93,6 +91,7 @@ void TestReportTestCaseBegin (uint32_t idx, const char *name) {
   asserts_failed = 0U;
 
   printf("Test Case %02u: %-41s ", (unsigned int)idx, name);
+  fflush(stdout);
 }
 
 /*-----------------------------------------------------------------------------
@@ -116,8 +115,6 @@ void TestReportTestCaseEnd (void) {
     printf("\n                                                        ");
   }
   printf("(%s)\n", result_str);
-
-  fflush(stdout);
 }
 
 /*-----------------------------------------------------------------------------
@@ -144,6 +141,7 @@ void TestReportAssertTrue (const char *module_name, uint32_t module_line, bool c
       va_start(args, format);
       printf(": ");
       vprintf(format, args);
+      fflush(stdout);
       va_end(args);
     }
   }
@@ -161,6 +159,7 @@ void TestReportDetailInfo (const char *format, ...) {
     vprintf(format, args);
     printf("\n");
     printf("                                                        ");
+    fflush(stdout);
     va_end(args);
   }
 }
