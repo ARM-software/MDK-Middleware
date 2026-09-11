@@ -1,0 +1,33 @@
+solution:
+  description: File System Validation
+  created-for: CMSIS-Toolbox@2.12.0
+  cdefault:
+
+  # List of tested compilers that can be selected
+  select-compiler:
+    - compiler: AC6
+    - compiler: GCC
+
+  # List of miscellaneous tool-specific controls
+  misc:
+    - for-compiler: AC6 # GDB requires DWARF 5, remove when using uVision Debugger
+      C-CPP:
+        - -gdwarf-5
+      ASM:
+        - -gdwarf-5
+
+  target-types:
+
+  build-types:
+    - type: Debug
+      debug: on
+      optimize: none
+    - type: Release
+      debug: off
+      optimize: balanced
+
+  projects:
+    - project: Drive_F/Drive_F.cproject.yml
+    - project: Drive_M/Drive_M.cproject.yml
+    - project: Drive_N/Drive_N.cproject.yml
+    - project: Drive_R/Drive_R.cproject.yml
