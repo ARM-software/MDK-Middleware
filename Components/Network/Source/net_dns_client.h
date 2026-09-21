@@ -61,7 +61,7 @@ typedef struct net_dns_ctrl {
 } NET_DNS_CTRL;
 
 /* DNS Header format */
-typedef struct net_dns_header {
+typedef __PACKED_STRUCT net_dns_header {
   uint16_t ID;                          // DNS Transaction Id
   uint16_t Flags;                       // DNS Frame Flags
   uint16_t QDcnt;                       // Question Count
@@ -71,7 +71,7 @@ typedef struct net_dns_header {
   uint8_t  Data[];                      // Message Data Field starts here
 } NET_DNS_HEADER;
 
-#define DNS_FRAME(buf)      ((NET_DNS_HEADER *)((uint32_t)buf))
+#define DNS_FRAME(buf)      ((NET_DNS_HEADER *)(buf))
 
 /* Variables */
 extern NET_DNS_CFG  net_dns_config;

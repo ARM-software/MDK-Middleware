@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ppp_lcp.h
  * Purpose: PPP Link Control Definitions
@@ -61,13 +61,13 @@ typedef struct net_lcp_ctrl {
 } NET_LCP_CTRL;
 
 /* LCP Header format */
-typedef struct net_lcp_header {
+typedef __PACKED_STRUCT net_lcp_header {
   uint8_t  Code;                        // LCP Code field
   uint8_t  Id;                          // Code identification
   uint16_t Len;                         // Code length
 } NET_LCP_HEADER;
 
-#define LCP_FRAME(frame)  ((NET_LCP_HEADER *)(uint32_t)&(frame)->data[PPP_FRM_OFFS+PPP_HEADER_LEN])
+#define LCP_FRAME(frame)  ((NET_LCP_HEADER *)&(frame)->data[PPP_FRM_OFFS+PPP_HEADER_LEN])
 
 /* Variables */
 extern NET_LCP_CTRL net_ppp0_lcp_control;

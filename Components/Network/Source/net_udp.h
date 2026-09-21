@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_udp.h
  * Purpose: User Datagram Protocol Definitions
@@ -33,7 +33,7 @@
 #define UDP_STATE_OPENED    2           // Socket opened for communication
 
 /* UDP Header format */
-typedef struct net_udp_header {
+typedef __PACKED_STRUCT net_udp_header {
   uint16_t SrcPort;                     // Source port
   uint16_t DstPort;                     // Destination port
   uint16_t Len;                         // Length of UDP frame

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ip4.h
  * Purpose: Internet Protocol Version 4 Definitions
@@ -37,7 +37,7 @@ typedef struct net_ip4_ctrl {
 } NET_IP4_CTRL;
 
 /* IPv4 Header format */
-typedef struct net_ip4_header {
+typedef __PACKED_STRUCT net_ip4_header {
   uint8_t  VerHLen;                     // Version & Header Length field
   uint8_t  Tos;                         // Type Of Service field
   uint16_t Len;                         // Total Length of IP packet
@@ -50,7 +50,7 @@ typedef struct net_ip4_header {
   uint8_t  DstAddr[NET_ADDR_IP4_LEN];   // Destination IP address
 } NET_IP4_HEADER;
 
-#define IP4_FRAME(frame)    ((NET_IP4_HEADER *)(uint32_t)&(frame)->data[PHY_HEADER_LEN])
+#define IP4_FRAME(frame)    ((NET_IP4_HEADER *)&(frame)->data[PHY_HEADER_LEN])
 #define NET_WI4(frm)        ((NET_FRAME *)(uint32_t)&(frame)->data[20-NET_HEADER_LEN])
 
 /* Variables and constants */
