@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_icmp.h
  * Purpose: Internet Control Message Protocol Definitions
@@ -21,7 +21,7 @@
 #define ICMP_TRACERT        30          // Traceroute
 
 /* ICMP Header format */
-typedef struct net_icmp_header {
+typedef __PACKED_STRUCT net_icmp_header {
   uint8_t  Type;                        // Type of the message
   uint8_t  Code;                        // Message Code byte
   uint16_t Chksum;                      // Checksum of ICMP header
@@ -29,14 +29,14 @@ typedef struct net_icmp_header {
 } NET_ICMP_HEADER;
 
 /* ICMP Echo Header format */
-typedef struct net_echo_header {
+typedef __PACKED_STRUCT net_echo_header {
   uint16_t Id;                          // Echo Identifier
   uint16_t Seq;                         // Echo Sequence
   uint8_t  Data[];                      // Optional Data
 } NET_ECHO_HEADER;
 
-#define ICMP_FRAME(frm)     ((NET_ICMP_HEADER *)(uint32_t)&(frm)->data[IP4_DATA_OFFS])
-#define ECHO_FRAME(frm)     ((NET_ECHO_HEADER *)(uint32_t)&(frm)->data[IP4_DATA_OFFS+4])
+#define ICMP_FRAME(frm)     ((NET_ICMP_HEADER *)&(frm)->data[IP4_DATA_OFFS])
+#define ECHO_FRAME(frm)     ((NET_ECHO_HEADER *)&(frm)->data[IP4_DATA_OFFS+4])
 
 /* ICMP control info */
 typedef struct net_icmp_ctrl {

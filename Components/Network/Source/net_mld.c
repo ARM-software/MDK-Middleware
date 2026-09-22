@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_mld.c
  * Purpose: Multicast Listener Discovery for IPv6
@@ -259,7 +259,7 @@ void net_mld_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
   }
 
   /* Checksum validated in ICMP6 */
-  mld_hdr = __ALIGN_CAST(NET_MLD_HEADER *)&frame->data[frame->index];
+  mld_hdr = (NET_MLD_HEADER *)&frame->data[frame->index];
 
   switch (mld_hdr->Type) {
     case ICMP6_MCAST_QUERY:
@@ -416,7 +416,7 @@ static void mld_send_message (NET_MLD_CFG *h,
   /* Reserve space for IPv6 Router Alert option */
   frame = net_mem_alloc (IP6_DATA_OFFS + 8 + MLD_HEADER_LEN);
   frame->index = IP6_DATA_OFFS + 8;
-  mld_frm = __ALIGN_CAST(NET_MLD_HEADER *)&frame->data[frame->index];
+  mld_frm = (NET_MLD_HEADER *)&frame->data[frame->index];
 
   mld_frm->MaxDelay = 0;
   mld_frm->Reserved = 0;

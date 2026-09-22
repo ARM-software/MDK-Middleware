@@ -62,7 +62,7 @@
 #define TCP_TYPE_SERVER     0x08        // Server mode active flag
 
 /* TCP Header format */
-typedef struct net_tcp_header {
+typedef __PACKED_STRUCT net_tcp_header {
   uint16_t SrcPort;                     // Source port
   uint16_t DstPort;                     // Destination port
   uint32_t SeqNr;                       // Frame Sequence Number

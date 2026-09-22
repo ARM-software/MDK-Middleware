@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ip6.h
  * Purpose: Internet Protocol Version 6 Definitions
@@ -42,7 +42,7 @@ typedef struct net_ip6_ctrl {
 } NET_IP6_CTRL;
 
 /* IPv6 Header format */
-typedef struct net_ip6_header {
+typedef __PACKED_STRUCT net_ip6_header {
   uint8_t  VerClass;                    // Version & Traffic Class hi 4 bits
   uint8_t  ClassFlow;                   // Traffic Class lo 4 bits & Flow Label hi 4 bits
   uint16_t Flow;                        // Flow Label lo-bits
@@ -54,13 +54,13 @@ typedef struct net_ip6_header {
 } NET_IP6_HEADER;
 
 /* IPv6 Hop-by-hop option header format */
-typedef struct net_ip6_opt {
+typedef __PACKED_STRUCT net_ip6_opt {
   uint8_t  NextHdr;
   uint8_t  Len;
   uint8_t  Data[];
 } NET_IP6_OPT;
 
-#define IP6_FRAME(frame)    ((NET_IP6_HEADER *)(uint32_t)&(frame)->data[PHY_HEADER_LEN])
+#define IP6_FRAME(frame)    ((NET_IP6_HEADER *)&(frame)->data[PHY_HEADER_LEN])
 #define IP6_PROT(frame)     ((IP6_FRAME(frame)->NextHdr != IP6_PROT_HOP_BY_HOP)  ? \
                              IP6_FRAME(frame)->NextHdr : frame->data[IP6_DATA_OFFS])
 

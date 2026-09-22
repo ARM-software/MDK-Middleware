@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ppp_ipcp.h
  * Purpose: PPP Internet Protocol Control Definitions
@@ -48,7 +48,7 @@ typedef struct net_ipcp_ctrl {
 } NET_IPCP_CTRL;
 
 /* IPCP Option info */
-typedef struct net_ipcp_opt {
+typedef __PACKED_STRUCT net_ipcp_opt {
   uint8_t  Code;                        // Option Code
   uint8_t  Len;                         // Option Length
   uint8_t  Data[];                      // Option Data ('Len' size)

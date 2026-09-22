@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_icmp6.c
  * Purpose: Internet Control Message Protocol Version 6
@@ -81,7 +81,7 @@ bool net_icmp6_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
   NET_FRAME *txfrm;
 
   DEBUGF (ICMP6,"*** Process_frame %s ***\n",net_if->Name);
-  icmp_hdr = __ALIGN_CAST(NET_ICMP_HEADER *)&frame->data[frame->index];
+  icmp_hdr = (NET_ICMP_HEADER *)&frame->data[frame->index];
 
   /* Check the frame length */
   if (frame->length < ICMP_HEADER_LEN) {
@@ -269,11 +269,11 @@ bool net_icmp6_send (NET_IF_CFG *net_if, NET_FRAME *frame,
 
   /* Construct ICMP6 header */
   if ((type == ICMP6_MCAST_REPORT) || (type == ICMP6_MCAST_DONE)) {
-    icmp_hdr  = __ALIGN_CAST(NET_ICMP_HEADER *)&frame->data[frame->index];
+    icmp_hdr  = (NET_ICMP_HEADER *)&frame->data[frame->index];
     hop_limit = 1;
   }
   else {
-    icmp_hdr  = __ALIGN_CAST(NET_ICMP_HEADER *)&frame->data[IP6_DATA_OFFS];
+    icmp_hdr  = (NET_ICMP_HEADER *)&frame->data[IP6_DATA_OFFS];
     hop_limit = 255;
   }
   if (type == ICMP6_NEIGHB_SOL) {

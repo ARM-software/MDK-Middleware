@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_mld.h
  * Purpose: Multicast Listener Discovery for IPv6 Definitions
@@ -29,7 +29,7 @@ typedef struct net_mld_ctrl {
 } NET_MLD_CTRL;
 
 /* MLD Header format */
-typedef struct net_mld_header {
+typedef __PACKED_STRUCT net_mld_header {
   uint8_t  Type;                        // Type of the message
   uint8_t  Code;                        // Message code byte
   uint16_t Chksum;                      // Checksum of MLD header

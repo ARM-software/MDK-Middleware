@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_igmp.h
  * Purpose: Internet Group Management Definitions
@@ -43,7 +43,7 @@ typedef struct net_igmp_ctrl {
 } NET_IGMP_CTRL;
 
 /* IGMP Header format */
-typedef struct net_igmp_header {
+typedef __PACKED_STRUCT net_igmp_header {
   uint8_t  VerType;                     // Version & Type of the message
   uint8_t  MaxTime;                     // Max. Response Time (Unused in IGMPv1)
   uint16_t Chksum;                      // Checksum of IGMP message

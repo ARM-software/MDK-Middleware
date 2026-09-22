@@ -56,7 +56,7 @@ typedef struct net_nbns_ctrl {
 } NET_NBNS_CTRL;
 
 /* NBNS Header Format */
-typedef struct net_nbns_header {
+typedef __PACKED_STRUCT net_nbns_header {
   uint16_t Id;                          // Transaction id
   uint16_t Flags;                       // Message flags
   uint16_t QDcnt;                       // Question section count
@@ -66,7 +66,7 @@ typedef struct net_nbns_header {
   uint8_t  Data[];                      // Message data starts here
 } NET_NBNS_HEADER;
 
-#define NBNS_FRAME(buf)     ((NET_NBNS_HEADER *)(uint32_t)(buf))
+#define NBNS_FRAME(buf)     ((NET_NBNS_HEADER *)(buf))
 
 /* Variables */
 extern NET_NBNS_CFG  net_nbns_config;

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ip6_frag.h
  * Purpose: IPv6 Fragmentation Definitions
@@ -17,7 +17,7 @@
 #define IP6_FRAG_MASK       0xFFF8      // Fragment offset mask
 
 /* IPv6 Fragment extension header */
-typedef struct net_ip6_frag {
+typedef __PACKED_STRUCT net_ip6_frag {
   uint8_t  NextHdr;                     // Next header
   uint8_t  Reserved;                    // Reserved field
   uint16_t FragOffs;                    // IPv6 Flag & Fragment offset
@@ -26,7 +26,7 @@ typedef struct net_ip6_frag {
 
 
 #define IP6_QUE(frm)        ((NET_IP_FRAG_LIST *)(uint32_t)&(frm)->data[0])
-#define IP6_FRAG(frm)       ((NET_IP6_FRAG *)(uint32_t)&(frm)->data[IP6_DATA_OFFS])
+#define IP6_FRAG(frm)       ((NET_IP6_FRAG *)&(frm)->data[IP6_DATA_OFFS])
 
 /* Variables */
 extern NET_IP_FRAG_CFG  net_ip6_frag_config; 

@@ -45,7 +45,7 @@ typedef struct net_sntp_ctrl {
 } NET_SNTP_CTRL;
 
 /* NTP Header format */
-typedef struct net_ntp_header {
+typedef __PACKED_STRUCT net_ntp_header {
   uint8_t  VerMode;                     // Version & Mode of the message
   uint8_t  ClkStrat;                    // Stratum level of the local clock
   uint8_t  PollItv;                     // Poll interval (in power of 2 seconds)
@@ -59,7 +59,7 @@ typedef struct net_ntp_header {
   NET_NTP_TS Tx;                        // Transmit Timestamp
 } NET_NTP_HEADER;
 
-#define NTP_FRAME(buf)      ((NET_NTP_HEADER *)(uint32_t)(buf))
+#define NTP_FRAME(buf)      ((NET_NTP_HEADER *)(buf))
 
 /* Variables and Constants */
 extern NET_SNTP_CFG  net_sntp_config;

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_eth.h
  * Purpose: Ethernet Interface Definitions
@@ -50,7 +50,7 @@ typedef struct net_eth_ctrl {
 } NET_ETH_CTRL;
 
 /* ETH Header format */
-typedef struct net_eth_header {
+typedef __PACKED_STRUCT net_eth_header {
   uint8_t  DstAddr[NET_ADDR_ETH_LEN];   // Ethernet destination MAC address
   uint8_t  SrcAddr[NET_ADDR_ETH_LEN];   // Ethernet source MAC address
   uint16_t volatile Prot;               // Protocol field of ethernet header
@@ -58,13 +58,13 @@ typedef struct net_eth_header {
 } NET_ETH_HEADER;
 
 /* VLAN Tag format */
-typedef struct net_vlan_header {
+typedef __PACKED_STRUCT net_vlan_header {
   uint16_t Prot;                        // TPID - Tag protocol identifier
   uint16_t Ctrl;                        // TCI - Tag control information
 } NET_VLAN_HEADER;
 
-#define ETH_FRAME(frame)    ((NET_ETH_HEADER *)(uint32_t)&(frame)->data[0])
-#define VLAN_TAG(frame)     ((NET_VLAN_HEADER *)(uint32_t)&(frame)->data[12])
+#define ETH_FRAME(frame)    ((NET_ETH_HEADER *)&(frame)->data[0])
+#define VLAN_TAG(frame)     ((NET_VLAN_HEADER *)&(frame)->data[12])
 
 /* Variables and Constants */
 extern NET_ETH_CTRL net_eth0_if_control;

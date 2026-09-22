@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_arp.h
  * Purpose: Address Resolution for Ethernet Definitions
@@ -40,7 +40,7 @@
 #define ARP_FLAG_PROBE_BUSY 0x01        // Probe busy waiting for response
 
 /* ARP Header format */
-typedef struct net_arp_header {
+typedef __PACKED_STRUCT net_arp_header {
   uint16_t HwType;                      // Hardware address type
   uint16_t ProtType;                    // Protocol address type
   uint8_t  HwLen;                       // Hardware address length
@@ -52,7 +52,7 @@ typedef struct net_arp_header {
   uint8_t  TargIpAddr[NET_ADDR_IP4_LEN];// Target IP address
 } NET_ARP_HEADER;
 
-#define ARP_FRAME(frame)    ((NET_ARP_HEADER *)(uint32_t)&ETH_FRAME(frame)->Data[0])
+#define ARP_FRAME(frame)    ((NET_ARP_HEADER *)&ETH_FRAME(frame)->Data[0])
 
 /* ARP Buffer list structure */
 typedef struct net_arp_buf_list {
