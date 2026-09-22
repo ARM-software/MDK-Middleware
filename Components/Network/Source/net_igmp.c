@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_igmp.c
  * Purpose: Internet Group Management
@@ -269,7 +269,7 @@ void net_igmp_process (NET_IF_CFG *net_if, NET_FRAME *frame) {
     EvrNetIGMP_FrameTooShort (h->If->Id, frame->length, IGMP_HEADER_LEN);
     return;
   }
-  igmp_frm = __ALIGN_CAST(NET_IGMP_HEADER *)&frame->data[frame->index];
+  igmp_frm = (NET_IGMP_HEADER *)&frame->data[frame->index];
   EvrNetIGMP_ReceiveFrame (h->If->Id, igmp_frm->VerType, frame->length);
 
   /* Check if IGMP frame is valid */
@@ -455,14 +455,14 @@ static void igmp_send_report (NET_IGMP_CFG *h, const uint8_t *ip_addr) {
     /* No IP Router Alert option */
     frame = net_mem_alloc (IP4_DATA_OFFS + IGMP_HEADER_LEN);
     frame->index = IP4_DATA_OFFS;
-    igmp_frm = __ALIGN_CAST(NET_IGMP_HEADER *)&frame->data[IP4_DATA_OFFS];
+    igmp_frm = (NET_IGMP_HEADER *)&frame->data[IP4_DATA_OFFS];
     igmp_frm->VerType = IGMP_REPORT_V1;
   }
   else {
     /* Reserve space for IP Router Alert option */
     frame = net_mem_alloc (IP4_DATA_OFFS + 4 + IGMP_HEADER_LEN);
     frame->index = IP4_DATA_OFFS + 4;
-    igmp_frm = __ALIGN_CAST(NET_IGMP_HEADER *)&frame->data[IP4_DATA_OFFS + 4];
+    igmp_frm = (NET_IGMP_HEADER *)&frame->data[IP4_DATA_OFFS + 4];
     igmp_frm->VerType = IGMP_REPORT_V2;
   }
   igmp_frm->MaxTime = 0;
@@ -487,7 +487,7 @@ static void igmp_send_leave (NET_IGMP_CFG *h, const uint8_t *ip_addr) {
   NET_IGMP_HEADER *igmp_frm;
 
   frame = net_mem_alloc (IP4_DATA_OFFS + 4 + IGMP_HEADER_LEN);
-  igmp_frm = __ALIGN_CAST(NET_IGMP_HEADER *)&frame->data[IP4_DATA_OFFS + 4];
+  igmp_frm = (NET_IGMP_HEADER *)&frame->data[IP4_DATA_OFFS + 4];
   igmp_frm->VerType = IGMP_LEAVE_V2;
   igmp_frm->MaxTime = 0;
   igmp_frm->Chksum  = 0;

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_common.h
  * Purpose: Common Network Function Definitions
@@ -80,11 +80,11 @@ extern int32_t  net_atoi (const char *sp, int32_t *len);
 extern uint32_t net_xtoul (const char *sp, int32_t *len);
 extern uint8_t  net_xtouc (const char *sp);
 
-/* Turn off AC6 compiler warnings */
+/* String helpers returning length as uint32_t */
 #define net_strcpy2(dp,sp)      (uint32_t)net_strcpy(dp,sp)
 #define net_strncpy2(dp,sp,n)   (uint32_t)net_strncpy(dp,sp,n)
 
-/* Avoid using generic public function names */
+/* Network byte-order accessors */
 #define get_u16(p)          net_rd_u16((const uint8_t *)(p))
 #define get_u32(p)          net_rd_u32((const uint8_t *)(p))
 #define set_u16(p,v)        net_wr_u16((uint8_t *)(p),(uint16_t)(v))

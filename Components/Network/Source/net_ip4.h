@@ -51,7 +51,7 @@ typedef __PACKED_STRUCT net_ip4_header {
 } NET_IP4_HEADER;
 
 #define IP4_FRAME(frame)    ((NET_IP4_HEADER *)&(frame)->data[PHY_HEADER_LEN])
-#define NET_WI4(frm)        ((NET_FRAME *)(uint32_t)&(frame)->data[20-NET_HEADER_LEN])
+#define NET_WI4(frm)        ((NET_FRAME *)(uint32_t)&(frm)->data[20-NET_HEADER_LEN])
 
 /* Variables and constants */
 extern uint8_t const net_addr4_loopback[];
