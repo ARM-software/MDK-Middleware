@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ppp.h
  * Purpose: Point to Point Interface Definitions
@@ -99,7 +99,7 @@ typedef struct net_ppp_header {
   uint8_t  Data[];                      // Frame data 46-1500 bytes
 } NET_PPP_HEADER;
 
-#define PPP_FRAME(frame)    ((NET_PPP_HEADER *)(uint32_t)&(frame)->data[0])
+#define PPP_FRAME(frm)      ((NET_PPP_HEADER *)(void *)&(frm)->data[0])
 
 /* Variables */
 extern NET_PPP_CTRL net_ppp0_if_control;

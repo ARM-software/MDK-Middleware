@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ndp.h
  * Purpose: Neighbor Discovery for IPv6 Definitions
@@ -63,7 +63,7 @@ typedef struct net_ndp_buf_list {
   uint16_t   reserved;                  // Reserved (not used)
 } NET_NDP_BUF_LIST;
 
-#define NDP_QUE(frm)        ((NET_NDP_BUF_LIST *)(uint32_t)&(frm)->data[0])
+#define NDP_QUE(frm)        ((NET_NDP_BUF_LIST *)(void *)&(frm)->data[0])
 
 /* SLAAC control info */
 typedef struct net_slaac_ctrl {

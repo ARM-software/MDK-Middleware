@@ -60,7 +60,7 @@ typedef struct net_arp_buf_list {
   uint16_t   reserved;                  // Reserved (not used)
 } NET_ARP_BUF_LIST;
 
-#define ARP_QUE(frm)        ((NET_ARP_BUF_LIST *)(uint32_t)&(frm)->data[0])
+#define ARP_QUE(frm)        ((NET_ARP_BUF_LIST *)(void *)&(frm)->data[0])
 
 /* ARP control info */
 typedef struct net_arp_ctrl {

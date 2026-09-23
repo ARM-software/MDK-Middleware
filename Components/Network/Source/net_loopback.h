@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_loopback.h
  * Purpose: Loopback Interface Definitions
@@ -31,7 +31,7 @@ typedef struct net_loopb {
   uint8_t  Data[];                      // Frame data 46-1500 bytes
 } NET_LOOPB;
 
-#define LOOPB(frame)        ((NET_LOOPB *)(uint32_t)&(frame)->data[0])
+#define LOOPB(frm)          ((NET_LOOPB *)(void *)&(frm)->data[0])
 
 /* Variables and constants */
 extern NET_IF_CFG net_loop_if_config;

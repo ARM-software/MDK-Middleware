@@ -86,7 +86,7 @@ typedef struct net_tcp_wr_info {
   uint8_t  ver;                         // IP version: IPv4 or IPv6
 } NET_TCP_WR_INFO;
 
-#define TCP_WI(frm)         ((NET_TCP_WR_INFO *)(uint32_t)&(frm)->data[0])
+#define TCP_WI(frm)         ((NET_TCP_WR_INFO *)(void *)&(frm)->data[0])
 
 /* TCP Buffer list structure */
 typedef struct net_tcp_buf_list {
@@ -96,7 +96,7 @@ typedef struct net_tcp_buf_list {
   uint16_t delta;                       // Retransmit delta
 } NET_TCP_BUF_LIST;
 
-#define TCP_QUE(frm)        ((NET_TCP_BUF_LIST *)(uint32_t)&(frm)->data[0])
+#define TCP_QUE(frm)        ((NET_TCP_BUF_LIST *)(void *)&(frm)->data[0])
 
 /* Variables */
 extern NET_TCP_CFG  net_tcp_config;

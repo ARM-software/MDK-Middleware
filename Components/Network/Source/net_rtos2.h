@@ -365,37 +365,37 @@ NETOS_ID netif_create (uint32_t if_id, NETOS_ID *semaphore) {
     case NET_IF_CLASS_ETH:
       *semaphore = osSemaphoreNew (1, 1, &eth0_lock_attr);
       return (osThreadNew (&netETH_Thread,
-                           (void *)(uint32_t)&eth0_ll_config, &eth0_thread_attr));
+                           (void *)(uintptr_t)&eth0_ll_config, &eth0_thread_attr));
 #endif
 #if (ETH1_ENABLE)
     case NET_IF_CLASS_ETH+1:
       *semaphore = osSemaphoreNew (1, 1, &eth1_lock_attr);
       return (osThreadNew (&netETH_Thread,
-                           (void *)(uint32_t)&eth1_ll_config, &eth1_thread_attr));
+                           (void *)(uintptr_t)&eth1_ll_config, &eth1_thread_attr));
 #endif
 #if (WIFI0_ENABLE)
     case NET_IF_CLASS_WIFI:
       *semaphore = osSemaphoreNew (1, 1, &wifi0_lock_attr);
       return (osThreadNew (&netWiFi_Thread,
-                           (void *)(uint32_t)&wifi0_ll_config, &wifi0_thread_attr));
+                           (void *)(uintptr_t)&wifi0_ll_config, &wifi0_thread_attr));
 #endif
 #if (WIFI1_ENABLE)
     case NET_IF_CLASS_WIFI+1:
       *semaphore = osSemaphoreNew (1, 1, &wifi1_lock_attr);
       return (osThreadNew (&netWiFi_Thread,
-                           (void *)(uint32_t)&wifi1_ll_config, &wifi1_thread_attr));
+                           (void *)(uintptr_t)&wifi1_ll_config, &wifi1_thread_attr));
 #endif
 #if (PPP_ENABLE)
     case NET_IF_CLASS_PPP:
       *semaphore = osSemaphoreNew (1, 1, &ppp0_lock_attr);
       return (osThreadNew (&netPPP_Thread,
-                           (void *)(uint32_t)&ppp0_ll_config, &ppp0_thread_attr));
+                           (void *)(uintptr_t)&ppp0_ll_config, &ppp0_thread_attr));
 #endif
 #if (SLIP_ENABLE)
     case NET_IF_CLASS_SLIP:
       *semaphore = osSemaphoreNew (1, 1, &slip0_lock_attr);
       return (osThreadNew (&netSLIP_Thread,
-                           (void *)(uint32_t)&slip0_ll_config, &slip0_thread_attr));
+                           (void *)(uintptr_t)&slip0_ll_config, &slip0_thread_attr));
 #endif
   }
   return (NULL);
