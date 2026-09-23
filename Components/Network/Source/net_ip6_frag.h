@@ -25,7 +25,7 @@ typedef __PACKED_STRUCT net_ip6_frag {
 } NET_IP6_FRAG;
 
 
-#define IP6_QUE(frm)        ((NET_IP_FRAG_LIST *)(uint32_t)&(frm)->data[0])
+#define IP6_QUE(frm)        ((NET_IP_FRAG_LIST *)(void *)&(frm)->data[0])
 #define IP6_FRAG(frm)       ((NET_IP6_FRAG *)&(frm)->data[IP6_DATA_OFFS])
 
 /* Variables */

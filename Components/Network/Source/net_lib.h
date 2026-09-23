@@ -123,8 +123,8 @@ typedef struct net_ip_frag_list {
   #define __ADDR            NET_ADDR4
   #define __ADDR_IP_LEN     NET_ADDR_IP4_LEN
 #endif
-#define __FRAME(buf)        ((NET_FRAME *)(uint32_t)(buf))
-#define __BUFFER(buf)       ((NET_BUFFER *)(uint32_t)(buf))
+#define __FRAME(buf)        ((NET_FRAME *)(void *)(buf))
+#define __BUFFER(buf)       ((NET_BUFFER *)(void *)(buf))
 
 /// Local Machine info version 4
 typedef struct net_localm {

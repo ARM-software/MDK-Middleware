@@ -23,7 +23,7 @@
 #define __ALIGNED_UINT64(x) (*(uint64_t *)(void *)(x))
 
 #define __ALIGN_CAST(t)     (t)(void *)
-#define __CONST_CAST(t)     (t)(uint32_t)
+#define __CONST_CAST(t)     (t)(uintptr_t)
 
 /* Definitions */
 #if defined (__ARM_BIG_ENDIAN)

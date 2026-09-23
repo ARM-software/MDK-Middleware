@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_bsd.h
  * Purpose: Berkeley Socket API Definitions
@@ -80,8 +80,8 @@ typedef struct net_bsd_host {
 } NET_BSD_HOST;
 
 /* Socket address access macros */
-#define  SOCKADDR4(addr)    ((SOCKADDR_IN *)((uint32_t)addr))
-#define  SOCKADDR6(addr)    ((SOCKADDR_IN6 *)((uint32_t)addr))
+#define  SOCKADDR4(addr)    ((SOCKADDR_IN *)(void *)(addr))
+#define  SOCKADDR6(addr)    ((SOCKADDR_IN6 *)(void *)(addr))
 
 /* Select set access macros */
 #define __FD_SET(fd,set)       (set)->fd_bits[(fd-1)>>5] |=  (1U << ((fd-1)&0x1F))

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_icmp6.h
  * Purpose: Internet Control Message Protocol Version 6 Definitions
@@ -26,9 +26,9 @@
 #define ICMP6_NBR_SOL_DAD   255         // Parameter for ndp_send_request()
                                         // (RFC4443: specified as reserved)
 
-#define ICMP6_FRAME(frm)    ((NET_ICMP_HEADER *)(uint32_t)&(frm)->data[IP6_DATA_OFFS])
-#define ECHO6_FRAME(frm)    ((NET_ECHO_HEADER *)(uint32_t)(ICMP6_FRAME(frm))->Data)
-#define ECHO6_HDR(icmp_hdr) ((NET_ECHO_HEADER *)(uint32_t)(icmp_hdr)->Data)
+#define ICMP6_FRAME(frm)    ((NET_ICMP_HEADER *)&(frm)->data[IP6_DATA_OFFS])
+#define ECHO6_FRAME(frm)    ((NET_ECHO_HEADER *)(ICMP6_FRAME(frm))->Data)
+#define ECHO6_HDR(icmp_hdr) ((NET_ECHO_HEADER *)(icmp_hdr)->Data)
 
 /* ICMP6 control info */
 typedef struct net_icmp6_ctrl {

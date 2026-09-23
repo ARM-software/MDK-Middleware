@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_md5.h
  * Purpose: MD5 Message-Digest Algorithm Definitions
@@ -21,7 +21,7 @@ typedef struct net_md5_ctx {
   } u;
 } NET_MD5_CTX;
 
-#define __MD5_CTX(buf)          (NET_MD5_CTX *)((uint32_t)(buf))
+#define __MD5_CTX(buf)          (NET_MD5_CTX *)((void *)(buf))
 
 /* Functions */
 void net_md5_init   (NET_MD5_CTX *md5);

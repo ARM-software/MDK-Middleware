@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_mem.h
  * Purpose: Memory Management Definitions
@@ -28,7 +28,7 @@ typedef struct net_mem_ctrl {
   uint32_t count;                       // Number of allocated blocks
 } NET_MEM_CTRL;
 
-#define __MEMP(frame)       ((NET_MEMP *)((uint32_t)(frame) - MEM_HEADER_LEN))
+#define __MEMP(frm)         ((NET_MEMP *)((uintptr_t)(frm) - MEM_HEADER_LEN))
 
 /* Functions */
 extern void       net_mem_init (void);
