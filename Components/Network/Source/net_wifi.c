@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_wifi.c
  * Purpose: WiFi Interface
@@ -613,8 +613,8 @@ netStatus netWiFi_Scan (uint32_t if_num,
   START_LOCK (netStatus);
 
   if (h == NULL || max_num == 0 || scan_info == NULL) {
-    ERRORF (WIFI,"Scan %d, Invalid parameter\n",h->IfNum);
-    EvrNetWiFi_ScanInvalidParameter (h->IfNum);
+    ERRORF (WIFI,"Scan %d, Invalid parameter\n",if_num);
+    EvrNetWiFi_ScanInvalidParameter (if_num);
     RETURN (netInvalidParameter);
   }
 
@@ -664,8 +664,8 @@ netStatus netWiFi_GetOption (uint32_t if_num, netWiFi_Option option,
   START_LOCK (netStatus);
 
   if (h == NULL || opt == 0 || buf == NULL) {
-    ERRORF (WIFI,"GetOption %d, Invalid parameter\n",h->IfNum);
-    EvrNetWiFi_GetOptionInvalidParameter (h->IfNum);
+    ERRORF (WIFI,"GetOption %d, Invalid parameter\n",if_num);
+    EvrNetWiFi_GetOptionInvalidParameter (if_num);
     RETURN (netInvalidParameter);
   }
 
@@ -699,8 +699,8 @@ netStatus netWiFi_SetOption (uint32_t if_num, netWiFi_Option option,
   START_LOCK (netStatus);
 
   if (h == NULL || opt == 0 || buf == NULL) {
-    ERRORF (WIFI,"SetOption %d, Invalid parameter\n",h->IfNum);
-    EvrNetWiFi_SetOptionInvalidParameter (h->IfNum);
+    ERRORF (WIFI,"SetOption %d, Invalid parameter\n",if_num);
+    EvrNetWiFi_SetOptionInvalidParameter (if_num);
     RETURN (netInvalidParameter);
   }
 
@@ -730,8 +730,8 @@ netStatus netWiFi_Activate (uint32_t if_num, const NET_WIFI_CONFIG *config) {
   START_LOCK (netStatus);
 
   if (h == NULL || config == NULL) {
-    ERRORF (WIFI,"Activate %d, Invalid parameter\n",h->IfNum);
-    EvrNetWiFi_ActivateInvalidParameter (h->IfNum);
+    ERRORF (WIFI,"Activate %d, Invalid parameter\n",if_num);
+    EvrNetWiFi_ActivateInvalidParameter (if_num);
     RETURN (netInvalidParameter);
   }
 
@@ -763,8 +763,8 @@ netStatus netWiFi_Deactivate (uint32_t if_num) {
   START_LOCK (netStatus);
 
   if (h == NULL) {
-    ERRORF (WIFI,"Deactivate %d, Invalid parameter\n",h->IfNum);
-    EvrNetWiFi_DeactivateInvalidParam (h->IfNum);
+    ERRORF (WIFI,"Deactivate %d, Invalid parameter\n",if_num);
+    EvrNetWiFi_DeactivateInvalidParam (if_num);
     RETURN (netInvalidParameter);
   }
 
@@ -809,8 +809,8 @@ netStatus netWiFi_GetNetInfo (uint32_t if_num, NET_WIFI_NET_INFO *net_info) {
   START_LOCK (netStatus);
 
   if (h == NULL || net_info == NULL) {
-    ERRORF (WIFI,"GetNetInfo %d, Invalid parameter\n",h->IfNum);
-    EvrNetWiFi_GetNetInfoInvalidParam (h->IfNum);
+    ERRORF (WIFI,"GetNetInfo %d, Invalid parameter\n",if_num);
+    EvrNetWiFi_GetNetInfoInvalidParam (if_num);
     RETURN (netInvalidParameter);
   }
 

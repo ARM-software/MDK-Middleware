@@ -514,8 +514,8 @@ netStatus net_eth_get_option (uint32_t if_num, netIF_Option option,
       break;
   }
 invalid_param:
-  ERRORF (ETH,"GetOption %d, Invalid parameter\n",h->IfNum);
-  EvrNetETH_GetOptionInvalidParameter (h->IfNum);
+  ERRORF (ETH,"GetOption %d, Invalid parameter\n",if_num);
+  EvrNetETH_GetOptionInvalidParameter (if_num);
   return (netInvalidParameter);
 }
 
@@ -668,8 +668,8 @@ netStatus net_eth_set_option (uint32_t if_num, netIF_Option option,
       break;
   }
 invalid_param:
-  ERRORF (ETH,"SetOption %d, Invalid parameter\n",h->IfNum);
-  EvrNetETH_SetOptionInvalidParameter (h->IfNum);
+  ERRORF (ETH,"SetOption %d, Invalid parameter\n",if_num);
+  EvrNetETH_SetOptionInvalidParameter (if_num);
   return (netInvalidParameter);
 }
 
