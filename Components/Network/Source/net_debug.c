@@ -93,7 +93,7 @@ void net_evr_init (void) {
                corresponding debug category defined in 'Net_Debug.h'.
 */
 void net_debug_info (int32_t proc, const char *fmt, ...) {
-  __va_list args;
+  va_list args;
 
   switch (proc) {
 
@@ -227,7 +227,7 @@ void net_debug_info (int32_t proc, const char *fmt, ...) {
                corresponding debug category defined in 'Net_Debug.h'.
 */
 void net_debug_error (int32_t proc, const char *fmt, ...) {
-  __va_list args;
+  va_list args;
 
   switch (proc) {
 
