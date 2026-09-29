@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network:Service
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    HTTP_Server_CGI.c
  * Purpose: HTTP Server CGI Module
- * Rev.:    V7.0.0
+ * Rev.:    V7.1.0
  *----------------------------------------------------------------------------*/
 //! [code_HTTP_Server_CGI]
 #include <stdio.h>
@@ -144,7 +144,8 @@ uint32_t netCGI_Script (const char *env, char *buf, uint32_t buf_len, uint32_t *
         case 'i':
           // Write the local IP address
           netIP_ntoa (NET_ADDR_IP4, IpAddr, ip_ascii, sizeof(ip_ascii));
-          len = sprintf (buf, &env[4], ip_ascii);
+          len = snprintf (buf, buf_len, &env[4], ip_ascii);
+          if (len > buf_len) len = buf_len;
           break;
           ...
       }

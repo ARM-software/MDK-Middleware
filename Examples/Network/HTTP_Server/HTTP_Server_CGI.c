@@ -1,13 +1,14 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network:Service
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    HTTP_Server_CGI.c
  * Purpose: HTTP Server CGI Module
- * Rev.:    V7.0.0
+ * Rev.:    V7.1.0
  *----------------------------------------------------------------------------*/
 
 #include <stdio.h>
+#include <stdarg.h>
 #include <string.h>
 
 #include "cmsis_os2.h"                  // ::CMSIS:RTOS2
@@ -15,29 +16,34 @@
 
 #include "rl_net.h"                     // Keil::Network&MDK:CORE
 
-#if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6210000)
-  #pragma  clang diagnostic ignored "-Wformat-nonliteral"
-  #pragma  clang diagnostic ignored "-Wunsafe-buffer-usage"
-#endif
+// Output buffer descriptor
+struct buffer {
+  char   *data;
+  int32_t size;
+  int32_t len;
+};
 
 extern bool LEDrun;
 extern int32_t analog_in (uint32_t ch);
 extern const char *net_tcp_ntoa (netTCP_State state);
 
-// Local variables.
+// Local variables
 static uint8_t led_port;
 static char lcd_text[2][20+1] = { "LCD line 1", "LCD line 2" };
 
 // Script interpreter functions
-static int32_t cgi_network (const char *env, char *buf, uint32_t buf_len, uint32_t *state);
-static int32_t cgi_leds    (const char *env, char *buf, uint32_t buf_len, uint32_t *state);
-static int32_t cgi_tcp     (const char *env, char *buf, uint32_t buf_len, uint32_t *state);
-static int32_t cgi_system  (const char *env, char *buf, uint32_t buf_len, uint32_t *state);
-static int32_t cgi_language(const char *env, char *buf, uint32_t buf_len, uint32_t *state);
-static int32_t cgi_lcd     (const char *env, char *buf, uint32_t buf_len, uint32_t *state);
-static int32_t cgi_ad      (const char *env, char *buf, uint32_t buf_len, uint32_t *state);
-static int32_t cgx_ad      (const char *env, char *buf, uint32_t buf_len, uint32_t *state);
-static int32_t cgx_button  (const char *env, char *buf, uint32_t buf_len, uint32_t *state);
+static void cgi_network (const char *env, struct buffer *b, uint32_t *state);
+static void cgi_leds    (const char *env, struct buffer *b, uint32_t *state);
+static void cgi_tcp     (const char *env, struct buffer *b, uint32_t *state);
+static void cgi_system  (const char *env, struct buffer *b, uint32_t *state);
+static void cgi_language(const char *env, struct buffer *b, uint32_t *state);
+static void cgi_lcd     (const char *env, struct buffer *b, uint32_t *state);
+static void cgi_ad      (const char *env, struct buffer *b, uint32_t *state);
+static void cgx_ad      (const char *env, struct buffer *b, uint32_t *state);
+static void cgx_button  (const char *env, struct buffer *b, uint32_t *state);
+
+// Local functions
+static int32_t bprintf (struct buffer *b, const char *fmt, ...);
 
 // Process query string received by GET request.
 void netCGI_ProcessQuery (const char *qstr) {
@@ -124,7 +130,7 @@ void netCGI_ProcessQuery (const char *qstr) {
 //            - 4 = any XML encoded POST data (single or last stream).
 //            - 5 = the same as 4, but with more XML data to follow.
 void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
-  char var[40],passw[12];
+  char var[40],passw[16];
 
   if (code != 0) {
     // Ignore all other codes
@@ -177,7 +183,7 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
       // Change password, retyped password
       if (netHTTPs_LoginActive()) {
         if (passw[0] == 1) {
-          strcpy (passw, var+4);
+          snprintf (passw, sizeof(passw), "%s", var+4);
         }
         else if (strcmp (passw, var+4) == 0) {
           // Both strings are equal, change the password
@@ -187,12 +193,12 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
     }
     else if (strncmp (var, "lcd1=", 5) == 0) {
       // LCD Module line 1 text
-      strcpy (lcd_text[0], var+5);
+      snprintf (lcd_text[0], sizeof(lcd_text[0]), "%s", var+5);
       printf("LCD1: %s\n", lcd_text[0]);
     }
     else if (strncmp (var, "lcd2=", 5) == 0) {
       // LCD Module line 2 text
-      strcpy (lcd_text[1], var+5);
+      snprintf (lcd_text[1], sizeof(lcd_text[1]), "%s", var+5);
       printf("LCD2: %s\n", lcd_text[1]);
     }
   } while (data);
@@ -201,7 +207,12 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
 
 // Generate dynamic web data from a script line.
 uint32_t netCGI_Script (const char *env, char *buf, uint32_t buf_len, uint32_t *pcgi) {
-  int32_t (*fn)(const char *env, char *buf, uint32_t buf_len, uint32_t *state);
+  void (*fn)(const char *env, struct buffer *b, uint32_t *state);
+  struct buffer b = {
+    .data = buf,
+    .size = buf_len,
+    .len  = 0
+  };
 
   switch (env[0]) {
     case 'a': fn = cgi_network;  break;
@@ -215,18 +226,17 @@ uint32_t netCGI_Script (const char *env, char *buf, uint32_t buf_len, uint32_t *
     case 'y': fn = cgx_button;   break;
     default:  return (0);
   }
-  return ((uint32_t)fn (&env[1], buf, buf_len, pcgi));
+  fn (&env[1], &b, pcgi);
+  return ((uint32_t)b.len);
 }
 
 // CGI-script implementation: "network.cgi"
-static int32_t cgi_network (const char *env, char *buf, uint32_t buf_len, uint32_t *state) {
+static void cgi_network (const char *env, struct buffer *b, uint32_t *state) {
   uint8_t ip_addr[NET_ADDR_IP6_LEN];
   netIF_Option option;
   int16_t addr_type;
   char ip_ascii[40];
-  int32_t len = 0;
 
-  (void)buf_len;
   (void)state;
 
   switch (env[0]) {
@@ -291,29 +301,27 @@ static int32_t cgi_network (const char *env, char *buf, uint32_t buf_len, uint32
       break;
 
     default:
-      return (len);
+      return;
   }
 
   ip_ascii[0] = 0;
   if (netIF_GetOption (NET_IF_CLASS_ETH, option, ip_addr, sizeof(ip_addr)) == netOK) {
     netIP_ntoa (addr_type, ip_addr, ip_ascii, sizeof(ip_ascii));
   }
-  len = sprintf (buf, &env[2], ip_ascii);
-  return (len);
+  bprintf (b, &env[2], ip_ascii);
 }
 
 // CGI-script implementation: "leds.cgi"
-static int32_t cgi_leds (const char *env, char *buf, uint32_t buf_len, uint32_t *state) {
-  int32_t mask, len = 0;
+static void cgi_leds (const char *env, struct buffer *b, uint32_t *state) {
+  int32_t mask;
 
-  (void)buf_len;
   (void)state;
 
   switch (env[0]) {
     case 'c':
       // Select Control
-      len = sprintf (buf, &env[2], LEDrun ?     ""     : "selected",
-                                   LEDrun ? "selected" :    ""     );
+      bprintf (b, &env[2], LEDrun ?     ""     : "selected",
+                           LEDrun ? "selected" :    ""     );
       break;
     case '0':
     case '1':
@@ -325,42 +333,38 @@ static int32_t cgi_leds (const char *env, char *buf, uint32_t buf_len, uint32_t 
     case '7':
       // LED CheckBoxes
       mask = 1 << (env[0] - '0');
-      len  = sprintf (buf, &env[2], (led_port & mask) ? "checked" : "");
+      bprintf (b, &env[2], (led_port & mask) ? "checked" : "");
       break;
   }
-  return (len);
 }
 
 // CGI-script implementation: "tcp.cgi"
-static int32_t cgi_tcp (const char *env, char *buf, uint32_t buf_len, uint32_t *state) {
+static void cgi_tcp (const char *env, struct buffer *b, uint32_t *state) {
   netTCP_State tcp_state;
   int32_t socket = (int32_t)(*state + 1);
-  int32_t len = 0;
 
   (void)env;
-  (void)buf_len;
 
   tcp_state = netTCP_GetState (socket);
   if (tcp_state != netTCP_StateINVALID) {
-    len  = sprintf (buf, "<tr align=\"center\">");
-
+    bprintf (b, "<tr align=\"center\">");
     // Column: Socket, State
-    len += sprintf (buf+len, "<td>%d</td><td>%s</td>",socket,net_tcp_ntoa(tcp_state));
+    bprintf (b, "<td>%d</td><td>%s</td>", socket, net_tcp_ntoa(tcp_state));
 
     // Column: Port
     if (tcp_state >= netTCP_StateLISTEN) {
-      len += sprintf (buf+len, "<td>%d</td>", netTCP_GetLocalPort(socket));
+      bprintf (b, "<td>%d</td>", netTCP_GetLocalPort(socket));
     }
     else {
-      len += sprintf (buf+len, "<td>-</td>");
+      bprintf (b, "<td>-</td>");
     }
 
     // Column: Timer
     if (tcp_state > netTCP_StateLISTEN) {
-      len += sprintf (buf+len, "<td>%d</td>", netTCP_GetTimer(socket));
+      bprintf (b, "<td>%d</td>", netTCP_GetTimer(socket));
     }
     else {
-      len += sprintf (buf+len, "<td>-</td>");
+      bprintf (b, "<td>-</td>");
     }
 
     // Column: Address, Port
@@ -369,43 +373,36 @@ static int32_t cgi_tcp (const char *env, char *buf, uint32_t buf_len, uint32_t *
       char ip_ascii[40];
       netTCP_GetPeer (socket, &peer, sizeof(peer));
       netIP_ntoa (peer.addr_type, peer.addr, ip_ascii, sizeof (ip_ascii));
-      len += sprintf (buf+len, "<td>%s</td><td>%d</td>", ip_ascii, peer.port);
+      bprintf (b, "<td>%s</td><td>%d</td>", ip_ascii, peer.port);
     }
     else {
-      len += sprintf (buf+len, "<td>-</td><td>-</td>");
+      bprintf (b, "<td>-</td><td>-</td>");
     }
-    len += sprintf (buf+len, "</tr>");
-
+    bprintf (b, "</tr>");
     *state = *state + 1;
-    len |= (1u << 31);
+    b->len |= (1u << 31);
   }
-  return (len);
 }
 
 // CGI-script implementation: "system.cgi"
-static int32_t cgi_system (const char *env, char *buf, uint32_t buf_len, uint32_t *state) {
-  int32_t len = 0;
+static void cgi_system (const char *env, struct buffer *b, uint32_t *state) {
 
-  (void)buf_len;
   (void)state;
 
   switch (env[0]) {
     case '1':
-      len = sprintf (buf, &env[2], netHTTPs_LoginActive() ? "Enabled" : "Disabled");
+      bprintf (b, &env[2], netHTTPs_LoginActive() ? "Enabled" : "Disabled");
       break;
     case '2':
-      len = sprintf (buf, &env[2], netHTTPs_GetPassword());
+      bprintf (b, &env[2], netHTTPs_GetPassword());
       break;
   }
-  return (len);
 }
 
 // CGI-script implementation: "language.cgi"
-static int32_t cgi_language (const char *env, char *buf, uint32_t buf_len, uint32_t *state) {
+static void cgi_language (const char *env, struct buffer *b, uint32_t *state) {
   const char *lang;
-  int32_t len = 0;
 
-  (void)buf_len;
   (void)state;
 
   lang = netHTTPs_GetLanguage();
@@ -424,71 +421,60 @@ static int32_t cgi_language (const char *env, char *buf, uint32_t buf_len, uint3
   else {
     lang = "Unknown";
   }
-  len = sprintf (buf, &env[0], lang, netHTTPs_GetLanguage());
-  return (len);
+  bprintf (b, &env[0], lang, netHTTPs_GetLanguage());
 }
 
 // CGI-script implementation: "lcd.cgi"
-static int32_t cgi_lcd (const char *env, char *buf, uint32_t buf_len, uint32_t *state) {
-  int32_t len = 0;
+static void cgi_lcd (const char *env, struct buffer *b, uint32_t *state) {
 
-  (void)buf_len;
   (void)state;
 
   switch (env[0]) {
     case '1':
-      len = sprintf (buf, &env[2], lcd_text[0]);
+      bprintf (b, &env[2], lcd_text[0]);
       break;
     case '2':
-      len = sprintf (buf, &env[2], lcd_text[1]);
+      bprintf (b, &env[2], lcd_text[1]);
       break;
   }
-  return (len);
 }
 
 // CGI-script implementation: "ad.cgi"
-static int32_t cgi_ad (const char *env, char *buf, uint32_t buf_len, uint32_t *state) {
+static void cgi_ad (const char *env, struct buffer *b, uint32_t *state) {
   static int32_t val;
-  int32_t len = 0;
 
-  (void)buf_len;
   (void)state;
 
   switch (env[0]) {
     case '1':
       val = analog_in (0);
-      len = sprintf (buf, &env[2], val);
+      bprintf (b, &env[2], val);
       break;
     case '2': {
       float v = (float)val * 3.3f / 1024;
-      len = sprintf (buf, &env[2], (double)v);
+      bprintf (b, &env[2], (double)v);
     } break;
     case '3':
       val = (val * 100) / 1024;
-      len = sprintf (buf, &env[2], val);
+      bprintf (b, &env[2], val);
       break;
   }
-  return (len);
 }
 
 // AJAX-script implementation: "ad.cgx"
-static int32_t cgx_ad (const char *env, char *buf, uint32_t buf_len, uint32_t *state) {
-  int32_t val, len = 0;
+static void cgx_ad (const char *env, struct buffer *b, uint32_t *state) {
+  int32_t val;
 
-  (void)buf_len;
   (void)state;
 
   val = analog_in (0);
-  len = sprintf (buf, &env[1], val);
-  return (len);
+  bprintf (b, &env[1], val);
 }
 
 // AJAX-script implementation: "button.cgx"
-static int32_t cgx_button (const char *env, char *buf, uint32_t buf_len, uint32_t *state) {
+static void cgx_button (const char *env, struct buffer *b, uint32_t *state) {
   uint32_t mask;
-  int32_t  len = 0;
 
-  (void)buf_len;
   (void)state;
 
   switch (env[0]) {
@@ -502,8 +488,30 @@ static int32_t cgx_button (const char *env, char *buf, uint32_t buf_len, uint32_
     case '7':
       // Button states: ON=true, OFF=false
       mask = 1 << (env[0] - '0');
-      len  = sprintf (buf, &env[2], (vioGetSignal(0xFFU) & mask) ? "true" : "false");
+      bprintf (b, &env[2], (vioGetSignal(0xFFU) & mask) ? "true" : "false");
       break;
   }
-  return (len);
+}
+
+// Print formatted data to a buffer
+static int32_t bprintf (struct buffer *b, const char *fmt, ...) {
+  va_list args;
+  int32_t n;
+  
+  if (b->len >= b->size) {
+    return (-1);
+  }
+  va_start(args, fmt);
+  n = vsnprintf (b->data + b->len, b->size - b->len, fmt, args);
+  va_end(args);
+
+  if (n < 0) {
+    return (-1);
+  }
+  if (n >= b->size - b->len) {
+    b->len = b->size - 1;  // truncated
+    return (0);
+  }
+  b->len += n;
+  return (0);
 }

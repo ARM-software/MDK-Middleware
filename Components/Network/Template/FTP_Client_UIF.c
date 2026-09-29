@@ -23,21 +23,24 @@ uint32_t netFTPc_Process (netFTPc_Request request, char *buf, uint32_t buf_len) 
     case netFTPc_RequestUsername:
       // Username to login to FTP server
       /* Example
-      len = sprintf (buf, "anonymous");
+      len = snprintf (buf, buf_len, "anonymous");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netFTPc_RequestPassword:
       // Password to login to FTP server
       /* Example
-      len = sprintf (buf, "test@keil.com");
+      len = snprintf (buf, buf_len, "test@keil.com");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netFTPc_RequestDirectory:
       // Working directory path on server
       /* Example
-      len = sprintf (buf, "/Logs");
+      len = snprintf (buf, buf_len, "/Logs");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
@@ -45,21 +48,24 @@ uint32_t netFTPc_Process (netFTPc_Request request, char *buf, uint32_t buf_len) 
       // Filename for PUT, GET, APPEND, DELETE and RENAME commands
       // Directory name for MKDIR and RMDIR commands
       /* Example
-      len = sprintf (buf, "test.log");
+      len = snprintf (buf, buf_len, "test.log");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netFTPc_RequestNewName:
       // New name for a RENAME command
       /* Example
-      len = sprintf (buf, "renamed.log");
+      len = snprintf (buf, buf_len, "renamed.log");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netFTPc_RequestListMask:
       // File filter/mask for LIST command (wildcards allowed)
       /* Example
-      len = sprintf (buf, "");
+      len = snprintf (buf, buf_len, "");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
@@ -75,7 +81,8 @@ uint32_t netFTPc_Process (netFTPc_Request request, char *buf, uint32_t buf_len) 
     case netFTPc_RequestLocalFilename:
       // Local filename
       /* Example
-      len = sprintf (buf, "test_log.txt");
+      len = snprintf (buf, buf_len, "test_log.txt");
+      if (len > buf_len) len = buf_len;
       */
       break;
   }

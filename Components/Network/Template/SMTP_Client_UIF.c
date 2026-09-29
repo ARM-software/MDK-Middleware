@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network:Service
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    SMTP_Client_UIF.c
  * Purpose: SMTP Client User Interface
@@ -28,42 +28,48 @@ uint32_t netSMTPc_Process (netSMTPc_Request request, char *buf, uint32_t buf_len
     case netSMTPc_RequestUsername:
       // Username to login to SMTP server
       /* Example
-      len = sprintf (buf, "guest");
+      len = snprintf (buf, buf_len, "guest");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netSMTPc_RequestPassword:
       // Password to login to SMTP server
       /* Example
-      len = sprintf (buf, "guest");
+      len = snprintf (buf, buf_len, "guest");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netSMTPc_RequestSender:
       // Email address of the sender
       /* Example
-      len = sprintf (buf, "me@domain.com");
+      len = snprintf (buf, buf_len, "me@domain.com");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netSMTPc_RequestRecipient:
       // Email address of the recipient
       /* Example
-      len = sprintf (buf, "you@domain.com");
+      len = snprintf (buf, buf_len, "you@domain.com");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netSMTPc_RequestSubject:
       // Subject of email
       /* Example
-      len = sprintf (buf, "Hello");
+      len = snprintf (buf, buf_len, "Hello");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netSMTPc_RequestBody:
       // Email body in plain ascii format
       /* Example
-      len = sprintf (buf, "Hello, how are you?\r\n");
+      len = snprintf (buf, buf_len, "Hello, how are you?\r\n");
+      if (len > buf_len) len = buf_len;
       */
       break;
   }

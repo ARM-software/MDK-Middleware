@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network:Service
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    Telnet_Server_UIF.c
  * Purpose: Telnet Server User Interface
- * Rev.:    V7.0.0
+ * Rev.:    V7.1.0
  *----------------------------------------------------------------------------*/
 //! [code_Telnet_Server_UIF]
 #include <stdio.h>
@@ -22,64 +22,72 @@ uint32_t netTELNETs_ProcessMessage (netTELNETs_Message msg, char *buf, uint32_t 
     case netTELNETs_MessageWelcome:
       // Initial welcome message
       /* Example
-      len = sprintf (buf, "\r\n"
-                          "Embedded Telnet Server\r\n");
+      len = snprintf (buf, buf_len, "\r\n"
+                                    "Embedded Telnet Server\r\n");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netTELNETs_MessagePrompt:
       // Prompt message
       /* Example
-      len = sprintf (buf, "\r\n"
-                          "Cmd> ");
+      len = snprintf (buf, buf_len, "\r\n"
+                                    "Cmd> ");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netTELNETs_MessageLogin:
       // Login message, if authentication is enabled
       /* Example
-      len = sprintf (buf, "\r\n"
-                          "Please login...");
+      len = snprintf (buf, buf_len, "\r\n"
+                                    "Please login...");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netTELNETs_MessageUsername:
       // Username request login message
       /* Example
-      len = sprintf (buf, "\r\n"
-                          "Username: ");
+      len = snprintf (buf, buf_len, "\r\n"
+                                    "Username: ");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netTELNETs_MessagePassword:
       // Password request login message
       /* Example
-      len = sprintf (buf, "\r\n"
-                          "Password: ");
+      len = snprintf (buf, buf_len, "\r\n"
+                                    "Password: ");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netTELNETs_MessageLoginFailed:
       // Incorrect login error message
       /* Example
-      len = sprintf (buf, "\r\n"
-                          "Login incorrect");
+      len = snprintf (buf, buf_len, "\r\n"
+                                    "Login incorrect");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netTELNETs_MessageLoginTimeout:
       // Login timeout error message
       /* Example
-      len = sprintf (buf, "\r\n"
-                          "Login timeout\r\n");
+      len = snprintf (buf, buf_len, "\r\n"
+                                    "Login timeout\r\n");
+      if (len > buf_len) len = buf_len;
       */
       break;
  
     case netTELNETs_MessageUnsolicited:
       // Unsolicited message (ie. from basic interpreter)
       /* Example
-      len = sprintf (buf, "\r\n"
-                          "Unsolicited message\r\n");
+      len = snprintf (buf, buf_len, "\r\n"
+                                    "Unsolicited message\r\n");
+      if (len > buf_len) len = buf_len;
       */
       break;
   }
@@ -107,15 +115,17 @@ uint32_t netTELNETs_ProcessCommand (const char *cmd, char *buf, uint32_t buf_len
  
   if (netTELNETs_CheckCommand (cmd, "COUNT") == true) {
     // Print counter value
-    len = sprintf (buf, "\r\n"
-                        " Counter = %d", counter);
+    len = snprintf (buf, buf_len, "\r\n"
+                                  " Counter = %d", counter);
+    if (len > buf_len) len = buf_len;
     return (len);
   }
   // ...
   if (netTELNETs_CheckCommand (cmd, "BYE") == true) {
     // Generate reply and disconnect
-    len = sprintf (buf, "\r\n"
-                        "Disconnecting\r\n");
+    len = snprintf (buf, buf_len, "\r\n"
+                                  "Disconnecting\r\n");
+    if (len > buf_len) len = buf_len;
     return (len | (1u<<30));
   }
   */

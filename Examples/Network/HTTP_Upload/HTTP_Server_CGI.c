@@ -1,32 +1,36 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network:Service
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    HTTP_Server_CGI.c
  * Purpose: HTTP Server CGI Module
- * Rev.:    V7.0.0
+ * Rev.:    V7.1.0
  *----------------------------------------------------------------------------*/
 
 #include <stdio.h>
+#include <stdarg.h>
 #include <string.h>
 
 #include "rl_net.h"                     // Keil::Network&MDK:CORE
 #include "rl_fs.h"                      // Keil::File System&MDK:CORE
 
-#if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6210000)
-  #pragma  clang diagnostic ignored "-Wformat-nonliteral"
-  #pragma  clang diagnostic ignored "-Wunsafe-buffer-usage"
-#endif
+// Output buffer descriptor
+struct buffer {
+  char   *data;
+  int32_t size;
+  int32_t len;
+};
 
 // Local variables
 static char label[12] = "SD_CARD";
 
 // Script interpreter functions
-static int32_t cgi_dir    (const char *env, char *buf, uint32_t buf_len, uint32_t *state);
-static int32_t cgi_format (const char *env, char *buf, uint32_t buf_len, uint32_t *state);
+static void cgi_dir    (const char *env, struct buffer *b, uint32_t *state);
+static void cgi_format (const char *env, struct buffer *b, uint32_t *state);
 
 // Local functions
-static void dot_format (uint64_t val, char *sp);
+static void fmt_size (struct buffer *b, uint64_t size);
+static int32_t bprintf (struct buffer *b, const char *fmt, ...);
 
 
 // Process query string received by GET request.
@@ -55,7 +59,7 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
           // Loop through all the parameters
           data = netCGI_GetEnvVar(data, var, sizeof (var));
           if (strncmp(var, "label=", 6) == 0) {
-            strcpy(&label[0], &var[6]);
+            snprintf (&label[0], sizeof(label), "%s", &var[6]);
           }
           else if (strcmp(var, "format=yes") == 0) {
             do_format = true;
@@ -63,7 +67,7 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
         } while (data);
         // Format SD card on request
         if (do_format) {
-          sprintf(&var[0], "/L %s", label);
+          snprintf (&var[0], sizeof(var), "/L %s", label);
           if (finit("M0:") == fsOK) {
             fmount("M0:");
             fformat("M0:", var);
@@ -112,24 +116,27 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
 
 // Generate dynamic web data from a script line.
 uint32_t netCGI_Script (const char *env, char *buf, uint32_t buf_len, uint32_t *pcgi) {
-  int32_t (*fn)(const char *env, char *buf, uint32_t buf_len, uint32_t *state);
+  void (*fn)(const char *env, struct buffer *b, uint32_t *state);
+  struct buffer b = {
+    .data = buf,
+    .size = buf_len,
+    .len  = 0
+  };
 
   switch (env[0]) {
     case 'd': fn = cgi_dir;      break;
     case 'f': fn = cgi_format;   break;
     default:  return (0);
   }
-  return ((uint32_t)fn (&env[1], buf, buf_len, pcgi));
+  fn (&env[1], &b, pcgi);
+  return ((uint32_t)b.len);
 }
 
 // CGI-script implementation: "dir.cgi"
-static int32_t cgi_dir (const char *env, char *buf, uint32_t buf_len, uint32_t *state) {
+static void cgi_dir (const char *env, struct buffer *b, uint32_t *state) {
   static fsFileInfo info;
-  char temp[16];
-  int32_t len = 0;
 
   (void)env;
-  (void)buf_len;
 
   if (*state == 0) {
     // Initialize environment on first call
@@ -137,63 +144,76 @@ static int32_t cgi_dir (const char *env, char *buf, uint32_t buf_len, uint32_t *
     if (!(finit("M0:") == fsOK) ||
         !(fmount("M0:") == fsOK)) {
       // No card or failed to initialize
-      return (len);
+      return;
     }
   }
   // Repeat for all files, ignore folders
   *state = *state + 1;
   if (ffind("*.*", &info) == fsOK) {
-    len += sprintf(buf+len, "<tr align=center><td>%d.</td>"
-                            "<td align=left><a href=\"/%s\">%s</a></td>",
-                            *state, info.name, info.name);
-    dot_format (info.size, temp);
-    len += sprintf(buf+len, "<td align=right>%s</td>"
-                            "<td>%02d.%02d.%04d - %02d:%02d</td>"
-                            "</tr>\r\n",
-                            temp,
-                            info.time.day, info.time.mon, info.time.year,
-                            info.time.hr, info.time.min);
+    bprintf (b, "<tr align=center><td>%d.</td>"
+                "<td align=left><a href=\"/%s\">%s</a></td>",
+                *state, info.name, info.name);
+    bprintf (b, "<td align=right>");
+    fmt_size(b, info.size);
+    bprintf (b, "</td>"
+                "<td>%02d.%02d.%04d - %02d:%02d</td>"
+                "</tr>\r\n",
+                info.time.day, info.time.mon, info.time.year,
+                info.time.hr, info.time.min);
     // Bit-31 is a repeat flag
-    len |= (1u << 31);
+    b->len |= (1u << 31);
   }
-  return (len);
 }
 
 // CGI-script implementation: "format.cgi"
-static int32_t cgi_format (const char *env, char *buf, uint32_t buf_len, uint32_t *state) {
-  int32_t len = 0;
+static void cgi_format (const char *env, struct buffer *b, uint32_t *state) {
 
-  (void)buf_len;
   (void)state;
 
   switch (env[0]) {
     case '1':
       // Format label
-      len += (uint32_t)sprintf(buf, &env[2], label);
+      bprintf (b, &env[2], label);
       break;
   }
-  return (len);
 }
 
-// Print size in dotted decimal format.
-static void dot_format (uint64_t val, char *sp) {
+// Format file size with dots as thousands separators.
+static void fmt_size (struct buffer *b, uint64_t size) {
   uint16_t group[4];
   uint32_t i;
 
-  for (i = 0; i < 4; val /= 1000, i++) {
-    group[i] = (uint16_t)(val % 1000);
+  for (i = 0; i < 4; i++) {
+    group[i] = (uint16_t)(size % 1000);
+    size /= 1000;
   }
+  
+  while (i > 1 && group[i-1] == 0) i--;
+  bprintf (b, "%u", group[i-1]);
+  while (i-- > 1) {
+    bprintf (b, ".%03u", group[i-1]);
+  }
+}
 
-  if (group[3] > 0) {
-    sprintf(sp,"%d.%03d.%03d.%03d",group[3],group[2],group[1],group[0]);
+// Print formatted data to a buffer
+static int32_t bprintf (struct buffer *b, const char *fmt, ...) {
+  va_list args;
+  int32_t n;
+  
+  if (b->len >= b->size) {
+    return (-1);
   }
-  else if (group[2] > 0) {
-    sprintf(sp,"%d.%03d.%03d",group[2],group[1],group[0]);
+  va_start(args, fmt);
+  n = vsnprintf (b->data + b->len, b->size - b->len, fmt, args);
+  va_end(args);
+
+  if (n < 0) {
+    return (-1);
   }
-  else if (group[1]) {
-    sprintf(sp,"%d.%03d",group[1],group[0]);
+  if (n >= b->size - b->len) {
+    b->len = b->size - 1;  // truncated
+    return (0);
   }
-  else {
-    sprintf(sp,"%d",group[0]);
-  }
+  b->len += n;
+  return (0);
 }
