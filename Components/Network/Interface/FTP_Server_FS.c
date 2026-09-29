@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network:Service
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    FTP_Server_FS.c
  * Purpose: FTP Server File System Interface
@@ -94,7 +94,7 @@ __WEAK int32_t netFTPs_ffind (const char *mask, char *fname,
   }
   if (ffind (mask, &info) == fsOK) {
     if (fname != NULL) {
-      strcpy (fname, info.name);
+      snprintf (fname, 210, "%s", info.name);
     }
     if (fsize != NULL) {
       *fsize = info.size;
