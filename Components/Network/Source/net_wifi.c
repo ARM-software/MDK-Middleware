@@ -383,8 +383,8 @@ netStatus net_wifi_get_option (uint32_t if_num, netIF_Option option,
       break;
   }
 invalid_param:
-  ERRORF (WIFI,"GetOption %d, Invalid parameter\n",h->IfNum);
-  EvrNetWiFi_GetOptionInvalidParameter (h->IfNum);
+  ERRORF (WIFI,"GetOption %d, Invalid parameter\n",if_num);
+  EvrNetWiFi_GetOptionInvalidParameter (if_num);
   return (netInvalidParameter);
 }
 
@@ -522,8 +522,8 @@ netStatus net_wifi_set_option (uint32_t if_num, netIF_Option option,
       break;
   }
 invalid_param:
-  ERRORF (WIFI,"SetOption %d, Invalid parameter\n",h->IfNum);
-  EvrNetWiFi_SetOptionInvalidParameter (h->IfNum);
+  ERRORF (WIFI,"SetOption %d, Invalid parameter\n",if_num);
+  EvrNetWiFi_SetOptionInvalidParameter (if_num);
   return (netInvalidParameter);
 }
 

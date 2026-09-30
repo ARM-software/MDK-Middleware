@@ -1049,11 +1049,11 @@ netStatus netETH_SendRaw (uint32_t if_num, const uint8_t *buf, uint32_t len) {
 
   START_LOCK (netStatus);
 
-  DEBUGF (ETH,"SendRaw %d\n",h->IfNum);
-  EvrNetETH_SendRawFrame (h->IfNum, len);
+  DEBUGF (ETH,"SendRaw %d\n",if_num);
+  EvrNetETH_SendRawFrame (if_num, len);
   if (h == NULL || buf == NULL || len < PHY_HEADER_LEN || len > ctrl->Mtu) {
-    ERRORF (ETH,"SendRaw %d, Invalid parameter\n",h->IfNum);
-    EvrNetETH_SendRawInvalidParameter (h->IfNum);
+    ERRORF (ETH,"SendRaw %d, Invalid parameter\n",if_num);
+    EvrNetETH_SendRawInvalidParameter (if_num);
     RETURN (netInvalidParameter);
   }
   if (ctrl->th.LinkState == ARM_ETH_LINK_DOWN) {
