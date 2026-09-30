@@ -5695,23 +5695,26 @@ file system will be used, refer to the reference implementation in the \b %FTP_S
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn int32_t netFTPs_ffind (const char *mask, char *fname, uint32_t *fsize, NET_FS_TIME *ftime, bool first)
+\fn int32_t netFTPs_ffind (const char *mask, char *fname, uint32_t fname_size, uint32_t *fsize, NET_FS_TIME *ftime, bool new_search)
 \details
 The function \b netFTPs_ffind searches the File System directory for files matching the specified mask filter \a mask.
 Matching file information is stored to the output buffer \a fname, \a fsize and \a ftime. The output data is then processed
 in FTP server and formatted in the FTP folder listing format.
 
-The argument \a fname is a pointer to a buffer, where the file name is going to be stored. If this argument is \token{NULL},
-the file name is not requested and is not saved.
+The argument \a fname is a pointer to a buffer where the file name will be stored. If this argument is \token{NULL},
+the file name is not requested and is not stored.
 
-The argument \a fsize is a pointer to where the file size is going to be stored. If this argument is \token{NULL}, the file
-size is not requested and is not saved.
+The argument \a fname_size specifies the size of the \a fname buffer in bytes.
 
-The argument \a ftime is a pointer to a structure, that will receive the last modification time of a file. If this argument
-is \token{NULL}, the last modification time is not requested and is not saved.
+The argument \a fsize is a pointer to where the file size will be stored. If this argument is \token{NULL}, the file
+size is not requested and is not stored.
 
-The argument \a first has a value of \token{true} when the first file is requested. On all subsequent calls, the argument
-\a first has a value of \token{false}. It is used to initialize the file search engine in the File System Component.
+The argument \a ftime is a pointer to a structure that will receive the last modification time of a file. If this argument
+is \token{NULL}, the last modification time is not requested and is not stored.
+
+The argument \a new_search has a value of \token{true} to initialize a new file search. On all subsequent calls, the argument
+\a new_search has a value of \token{false} to continue the current search. A value of \token{true} initializes the file search
+engine in the File System Component.
 
 This function returns the following values:
 |Return Value                  |Description                     |

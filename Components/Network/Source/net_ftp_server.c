@@ -1300,9 +1300,12 @@ static void ftp_server_run (void) {
           break;
         }
         path = net_path (ftp->root, ftp_s->Path);
-        for (len = 0; len < (int32_t)(max_dsize - 255); ) {
-          int32_t retv, nidx = (ftp_s->Flags & FTP_FLAG_NAMELST) ? len : len + 39;
-          retv = netFTPs_ffind (path, (char *)&sendbuf[nidx], &fsize, &ftime,
+        for (len = 0; (len + 256) < (int32_t)max_dsize; ) {
+          int32_t retv, fname_size = (int32_t)max_dsize - len;
+          char *fname_buf = (char *)&sendbuf[len];
+          if (!(ftp_s->Flags & FTP_FLAG_NAMELST)) fname_buf += 39;
+          if (fname_size > 256)                   fname_size = 256;
+          retv = netFTPs_ffind (path, fname_buf, fname_size, &fsize, &ftime,
                                 (ftp_s->Flags & FTP_FLAG_FIRST) ? true : false);
           if (retv == 0) {
             /* No more entries, LIST completed */
@@ -1423,7 +1426,7 @@ static void ftp_server_run (void) {
           /* Other ftp session has locked ffind() */
           break;
         }
-        if (netFTPs_ffind (net_path (ftp->root, ftp_s->Name), NULL, &fsize, &ftime, true)) {
+        if (netFTPs_ffind (net_path (ftp->root, ftp_s->Name), NULL, 0, &fsize, &ftime, true)) {
           /* File was found, send info */
           sendbuf = net_tcp_get_buf (24);
           len = net_strcpy ((char *)sendbuf, "213 ");

@@ -84,17 +84,17 @@ __WEAK bool netFTPs_chdir (const char *path) {
 }
 
 // Search the file system directory for matching files.
-__WEAK int32_t netFTPs_ffind (const char *mask, char *fname,
-                              uint32_t *fsize, NET_FS_TIME *ftime, bool first) {
+__WEAK int32_t netFTPs_ffind (const char *mask, char *fname, uint32_t fname_size,
+                              uint32_t *fsize, NET_FS_TIME *ftime, bool new_search) {
   static fsFileInfo info;
 
-  if (first) {
-    /* First call, initialize the info. */
+  if (new_search) {
+    /* New search, initialize the info. */
     info.fileID = 0;
   }
   if (ffind (mask, &info) == fsOK) {
     if (fname != NULL) {
-      snprintf (fname, 210, "%s", info.name);
+      snprintf (fname, fname_size, "%s", info.name);
     }
     if (fsize != NULL) {
       *fsize = info.size;
