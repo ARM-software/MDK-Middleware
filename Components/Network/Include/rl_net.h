@@ -1871,16 +1871,17 @@ extern bool      netFTPs_chdir (const char *path);
 /// \param[in]     mask          file mask filter.
 /// \param[out]    fname         buffer to write filename to.
 ///                              - NULL for none.
+/// \param[in]     fname_size    size of the filename buffer in bytes.
 /// \param[out]    fsize         pointer to where to return the file size.
 ///                              - NULL for none.
 /// \param[out]    ftime         pointer to where to return the created or last modified time.
 ///                              - NULL for none.
-/// \param[in]     first         find first file.
+/// \param[in]     new_search    true to start a new search, false to continue the current search.
 /// \return      status information:
 ///              - NET_FS_ATTR_FILE      = File found.
 ///              - NET_FS_ATTR_DIRECTORY = Directory found.
-///              - 0                     = No entry found.
-extern int32_t   netFTPs_ffind (const char *mask, char *fname, uint32_t *fsize, NET_FS_TIME *ftime, bool first);
+///              - 0                     = No matching entry found.
+extern int32_t   netFTPs_ffind (const char *mask, char *fname, uint32_t fname_size, uint32_t *fsize, NET_FS_TIME *ftime, bool new_search);
 
 //  ==== FTP Client User API ====
 
