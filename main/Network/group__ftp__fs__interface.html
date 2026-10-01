@@ -168,9 +168,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5f35536140a7b1e84ad9a18dfcdebf4f" id="r_ga5f35536140a7b1e84ad9a18dfcdebf4f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga5f35536140a7b1e84ad9a18dfcdebf4f">netFTPs_chdir</a> (const char *path)</td></tr>
 <tr class="memdesc:ga5f35536140a7b1e84ad9a18dfcdebf4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check that the directory exists on FTP server. [<a class="el" href="group__function__categories.html#interface">interface</a>].  <br /></td></tr>
 <tr class="separator:ga5f35536140a7b1e84ad9a18dfcdebf4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga058e1483a1bf2d52e7fe296b52d88901" id="r_ga058e1483a1bf2d52e7fe296b52d88901"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga058e1483a1bf2d52e7fe296b52d88901">netFTPs_ffind</a> (const char *mask, char *fname, uint32_t *fsize, <a class="el" href="rl__net_8h.html#structNET__FS__TIME">NET_FS_TIME</a> *ftime, bool first)</td></tr>
-<tr class="memdesc:ga058e1483a1bf2d52e7fe296b52d88901"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search the file system directory for matching files. [<a class="el" href="group__function__categories.html#interface">interface</a>].  <br /></td></tr>
-<tr class="separator:ga058e1483a1bf2d52e7fe296b52d88901"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc3fb7adb8d0f3cf83293c5d6a0e8f2d" id="r_gadc3fb7adb8d0f3cf83293c5d6a0e8f2d"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gadc3fb7adb8d0f3cf83293c5d6a0e8f2d">netFTPs_ffind</a> (const char *mask, char *fname, uint32_t fname_size, uint32_t *fsize, <a class="el" href="rl__net_8h.html#structNET__FS__TIME">NET_FS_TIME</a> *ftime, bool new_search)</td></tr>
+<tr class="memdesc:gadc3fb7adb8d0f3cf83293c5d6a0e8f2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Search the file system directory for matching files. [<a class="el" href="group__function__categories.html#interface">interface</a>].  <br /></td></tr>
+<tr class="separator:gadc3fb7adb8d0f3cf83293c5d6a0e8f2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>FTP server functions that work with a File System. </p>
@@ -182,7 +182,7 @@ Functions</h2></td></tr>
 <li><a class="el" href="#gaf339c6195518cdade993468fdf6ce083">netFTPs_fwrite</a> - write a block of data from the FTP data buffer to a file.</li>
 <li><a class="el" href="#ga034f0593c51540b396a87e0d7cdfbada">netFTPs_fdelete</a> - delete a specified file.</li>
 <li><a class="el" href="#ga368a7ef4831a738853bab7bd21ed0c8d">netFTPs_frename</a> - rename a file from old to a new name.</li>
-<li><a class="el" href="#ga058e1483a1bf2d52e7fe296b52d88901">netFTPs_ffind</a> - find a file in a folder for printing a directory listing.</li>
+<li><a class="el" href="#gadc3fb7adb8d0f3cf83293c5d6a0e8f2d">netFTPs_ffind</a> - find a file in a folder for printing a directory listing.</li>
 <li><a class="el" href="#gafad69f5082b908e7784e36ec0e68ccec">netFTPs_mkdir</a> - make a new directory.</li>
 <li><a class="el" href="#ga820f164bd04191381778ae691ba441ca">netFTPs_rmdir</a> - delete an empty directory.</li>
 <li><a class="el" href="#ga5f35536140a7b1e84ad9a18dfcdebf4f">netFTPs_chdir</a> - verify that specified directory exists.</li>
@@ -304,8 +304,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga058e1483a1bf2d52e7fe296b52d88901" name="ga058e1483a1bf2d52e7fe296b52d88901"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga058e1483a1bf2d52e7fe296b52d88901">&#9670;&#160;</a></span>netFTPs_ffind()</h2>
+<a id="gadc3fb7adb8d0f3cf83293c5d6a0e8f2d" name="gadc3fb7adb8d0f3cf83293c5d6a0e8f2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadc3fb7adb8d0f3cf83293c5d6a0e8f2d">&#9670;&#160;</a></span>netFTPs_ffind()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -326,6 +326,11 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>fname_size</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">uint32_t *</td>          <td class="paramname"><span class="paramname"><em>fsize</em></span>, </td>
         </tr>
         <tr>
@@ -336,7 +341,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>first</em></span>&#160;)</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>new_search</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -354,6 +359,7 @@ Functions</h2></td></tr>
 <li>NULL for none. </li>
 </ul>
 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fname_size</td><td>size of the filename buffer in bytes. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">fsize</td><td>pointer to where to return the file size.<ul>
 <li>NULL for none. </li>
 </ul>
@@ -362,21 +368,22 @@ Functions</h2></td></tr>
 <li>NULL for none. </li>
 </ul>
 </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">first</td><td>find first file. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_search</td><td>true to start a new search, false to continue the current search. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status information:<ul>
 <li>NET_FS_ATTR_FILE = File found.</li>
 <li>NET_FS_ATTR_DIRECTORY = Directory found.</li>
-<li>0 = No entry found.</li>
+<li>0 = No matching entry found.</li>
 </ul>
 </dd></dl>
 <p>The function <b>netFTPs_ffind</b> searches the File System directory for files matching the specified mask filter <em class="arg">mask</em>. Matching file information is stored to the output buffer <em class="arg">fname</em>, <em class="arg">fsize</em> and <em class="arg">ftime</em>. The output data is then processed in FTP server and formatted in the FTP folder listing format.</p>
-<p>The argument <em class="arg">fname</em> is a pointer to a buffer, where the file name is going to be stored. If this argument is <span class="XML-Token">NULL</span>, the file name is not requested and is not saved.</p>
-<p>The argument <em class="arg">fsize</em> is a pointer to where the file size is going to be stored. If this argument is <span class="XML-Token">NULL</span>, the file size is not requested and is not saved.</p>
-<p>The argument <em class="arg">ftime</em> is a pointer to a structure, that will receive the last modification time of a file. If this argument is <span class="XML-Token">NULL</span>, the last modification time is not requested and is not saved.</p>
-<p>The argument <em class="arg">first</em> has a value of <span class="XML-Token">true</span> when the first file is requested. On all subsequent calls, the argument <em class="arg">first</em> has a value of <span class="XML-Token">false</span>. It is used to initialize the file search engine in the File System Component.</p>
+<p>The argument <em class="arg">fname</em> is a pointer to a buffer where the file name will be stored. If this argument is <span class="XML-Token">NULL</span>, the file name is not requested and is not stored.</p>
+<p>The argument <em class="arg">fname_size</em> specifies the size of the <em class="arg">fname</em> buffer in bytes.</p>
+<p>The argument <em class="arg">fsize</em> is a pointer to where the file size will be stored. If this argument is <span class="XML-Token">NULL</span>, the file size is not requested and is not stored.</p>
+<p>The argument <em class="arg">ftime</em> is a pointer to a structure that will receive the last modification time of a file. If this argument is <span class="XML-Token">NULL</span>, the last modification time is not requested and is not stored.</p>
+<p>The argument <em class="arg">new_search</em> has a value of <span class="XML-Token">true</span> to initialize a new file search. On all subsequent calls, the argument <em class="arg">new_search</em> has a value of <span class="XML-Token">false</span> to continue the current search. A value of <span class="XML-Token">true</span> initializes the file search engine in the File System Component.</p>
 <p>This function returns the following values: </p><table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Return Value   </th><th class="markdownTableHeadNone">Description    </th></tr>
