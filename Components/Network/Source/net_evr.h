@@ -5658,7 +5658,7 @@ typedef struct evr_addr {
   \param  length        length of the bootfile name string
  */
 #ifdef Network_Debug_EVR
-  __STATIC_INLINE void EvrNetDHCP_ViewBootfileName(const uint8_t *bootfile, uint32_t length) {
+  __STATIC_INLINE void EvrNetDHCP_ViewBootfileName(const char *bootfile, uint32_t length) {
     if (length > 32) length = 32;
     EventRecordData (EvtNetDHCP_ViewBootfileName, bootfile, length);
   }

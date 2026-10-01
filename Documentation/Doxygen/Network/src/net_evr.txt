@@ -4491,7 +4491,7 @@ the lease rebinding time for the assigned IP address.
 */
 
 /**
-\fn __STATIC_INLINE void EvrNetDHCP_ViewBootfileName(const uint8_t *bootfile, uint32_t length)
+\fn __STATIC_INLINE void EvrNetDHCP_ViewBootfileName(const char *bootfile, uint32_t length)
 \details
 The event \b ViewBootfileName is created when the network library wants to display
 the name of the boot file that was requested in DHCP options.

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_dhcp_client.h
  * Purpose: Dynamic Host Configuration Client Definitions
@@ -21,6 +21,12 @@
 #define BOOTP_FLAG_UCAST    0x0000      // Flags - unicast message
 #define BOOTP_FLAG_BCAST    0x8000      // Flags - broadcast message
 #define BOOTP_MAGIC_COOKIE  0x63825363  // Magic Cookie
+
+/* BOOTP fields used for DHCP option overload */
+#define BOOTP_FILE_OFFS         108U
+#define BOOTP_FILE_END          (BOOTP_FILE_OFFS + 128U)
+#define BOOTP_SNAME_OFFS        44U
+#define BOOTP_SNAME_END         (BOOTP_SNAME_OFFS + 64U)
 
 /* DHCP states */
 #define DHCP_STATE_DISABLED     0       // DHCP Client is disabled
