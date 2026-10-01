@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_tftp_server.c
  * Purpose: Trivial File Transfer Protocol Server
@@ -453,6 +453,13 @@ static uint32_t tftp_listener (int32_t socket, const NET_ADDR *addr,
 
   buf += 2;
   len -= 2;
+
+  /* Check if filename is null-terminated and followed by the mode field */
+  if (!get_next_opt (buf, buf + len)) {
+    tftp_abort_session (tftp_s, TFTP_ERR_ILLOPCOD, "Illegal operation");
+    return (false);
+  }
+
   DEBUGF (TFTP," File  : %s\n",buf);
   EvrNetTFTPs_FileRequested ((const char *)buf, strlen((const char *)buf));
 
