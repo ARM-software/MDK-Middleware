@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_ftp_client.c
  * Purpose: File Transfer Client
@@ -26,7 +26,7 @@ static uint32_t ftpc_listener (int32_t socket, netTCP_Event event, const NET_ADD
 static uint32_t ftpc_data_cb  (int32_t socket, netTCP_Event event, const NET_ADDR *addr,
                                                const uint8_t *buf, uint32_t len);
 static netStatus ftpc_dopen_req (void);
-static uint16_t ftpc_scan_dport (const char *buf);
+static uint16_t ftpc_scan_dport (const char *buf, uint32_t len);
 static void ftpc_close_file (void);
 static void ftpc_transit (uint8_t state);
 static void ftpc_stop (netFTPc_Event event);
@@ -290,7 +290,7 @@ dopen:    ftpc_transit ((ftpc_s->Flags & FTPC_FLAG_PASSIVE) ?
               (ftpc_s->Resp != FTPC_RESP_EPSVOK)) {
             break;
           }
-          ftpc_s->DPort = ftpc_scan_dport ((const char *)buf);
+          ftpc_s->DPort = ftpc_scan_dport ((const char *)buf, len);
           if (ftpc_s->DPort == 0) {
             ERRORF (FTPC,"PASV command failed\n");
             EvrNetFTPc_PasvCommandFailed ();
@@ -960,35 +960,59 @@ static netStatus ftpc_dopen_req (void) {
 /**
   \brief       Scan PASV/EPSV response for FTP data port number.
   \param[in]   buf  buffer containing response parameters.
+  \param[in]   len  length of the response.
   \return      data port number or 0=not found.
 */
-static uint16_t ftpc_scan_dport (const char *buf) {
-  int32_t max,m,n,port;
+static uint16_t ftpc_scan_dport (const char *buf, uint32_t len) {
+  int32_t i,start,d,n,port;
 
+  start = net_strnchr (buf, '(', len);
+  if (start < 0) {
+    return (0);
+  }
+  if (net_strnchr (buf+start, ')', len-start) < 6) {
+    return (0);
+  }
+
+  buf += (start + 1);
   if (ftpc_s->Resp == FTPC_RESP_PASVOK) {
     /* PASV example: (192,168,0,162,19,137) */
-    for (n = 0, max = 60; max; buf++, max--) {
-      if (*buf == ',') {
-        if (++n == 4) {
-          port  = net_atoi (++buf, &m) << 8;
-          port |= net_atoi (++buf+m, NULL);
-          return (port & 0xFFFF);
-        }
+    /* buf: 192,168,0,162,19,137) */
+    for (i = 0; i < 4; i++) {
+      d = net_atoi (buf, &n);
+      if (buf[n] != ',' || d < 0 || d > 255) {
+        return (0);
       }
+      buf += (n + 1);
     }
+    /* buf: 19,137) */
+    d = net_atoi (buf, &n);
+    if (buf[n] != ',' || d < 0 || d > 255) {
+      return (0);
+    }
+    buf += (n + 1);
+    port = d << 8;
+    d = net_atoi (buf, &n);
+    if (buf[n] != ')' || d < 0 || d > 255) {
+      return (0);
+    }
+    port |= d;
   }
   else {
     /* EPSV example: (|||5282|) */
-    for (n = 0, max = 60; max; buf++, max--) {
-      if (*buf == '|') {
-        if (++n == 3) {
-          port = net_atoi (++buf, NULL);
-          return (port & 0xFFFF);
-        }
-      }
+    /* buf: |||5282|) */
+    char delim = buf[0];
+    if ((buf[1] != delim) || (buf[2] != delim)) {
+      return (0);
+    }
+    buf += 3;
+    /* buf: 5282|) */
+    port = net_atoi (buf, &n);
+    if (buf[n] != delim || port < 0 || port > 65535) {
+      return (0);
     }
   }
-  return (0);
+  return (port & 0xFFFF);
 }
 
 /**
@@ -1046,28 +1070,29 @@ static bool ftpc_proc_resp (const char *buf, const char *end) {
     ftpc_s->Flags |= FTPC_FLAG_FIRST;
     ftpc_s->Resp   = get_resp (buf);
     buf += 3;
-    if ((buf[0] != '-') || (buf >= end)) {
+    if ((buf >= end) || (buf[0] != '-')) {
       /* This is a single line response, we are done */
       return (true);
     }
     /* Get next line */
-    for ( ; (buf[0] != '\n') && (buf < end); buf++);
+    for ( ; (buf < end) && (buf[0] != '\n'); buf++);
     if (++buf >= end) {
       return (false);
     }
   }
   /* Process multi-line response */
-  for (;;) {
+  for ( ; buf+4 <= end; ) {
     if ((get_resp (buf) == ftpc_s->Resp) && (buf[3] != '-')) {
       /* Terminating reply code */
-      break;
+      return (true);
     }
-    for ( ; (buf[0] != '\n') && (buf < end); buf++);
+    /* Get next line */
+    for ( ; (buf < end) && (buf[0] != '\n'); buf++);
     if (++buf >= end) {
       return (false);
     }
   }
-  return (true);
+  return (false);
 }
 
 /**
