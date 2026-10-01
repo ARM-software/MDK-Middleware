@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_dhcp_client.c
  * Purpose: Dynamic Host Configuration Client
@@ -43,6 +43,13 @@ static bool is_selected (NET_DHCP_CFG *h, const uint8_t *ip_addr);
 static uint32_t proc_opt_sel (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t index);
 static uint32_t proc_opt_req (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t index);
 static uint32_t proc_opt_renew (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t index);
+static void parse_sel_opts (NET_DHCP_CFG *h,
+                            const uint8_t *buf, uint32_t start, uint32_t end);
+static void parse_req_opts (NET_DHCP_CFG *h,
+                            const uint8_t *buf, uint32_t start, uint32_t end);
+static void parse_renew_opts (NET_DHCP_CFG *h,
+                              const uint8_t *buf, uint32_t start, uint32_t end);
+static uint32_t validate_index (uint32_t index, const uint8_t *buf, uint32_t len);
 static void assign_auto_ip (NET_DHCP_CFG *h);
 #ifdef Network_Debug_STDIO
  static void debug_info (const uint8_t *opt);
@@ -694,7 +701,7 @@ static void dhcp_send_message (NET_DHCP_CFG *h, uint8_t msg_type) {
 
   sz = index + 1;
   if (sz < 300) sz = 300;
- 
+
   /* Send unicast message when server's IP is available */
   addr.addr_type = NET_ADDR_IP4;
   addr.port      = DHCP_SERVER_PORT;
@@ -754,7 +761,7 @@ static uint32_t dhcp_listener (int32_t socket, const NET_ADDR *addr,
     return (false);
   }
   /* Initial correctness checking */
-  if (len < 236) {
+  if (len < 240) {
     ERRORF (DHCP,"Process %s, Frame too short\n",h->If->Name);
     EvrNetDHCP_FrameTooShort (h->If->Id, len, 236);
     return (false);
@@ -800,10 +807,14 @@ static uint32_t dhcp_listener (int32_t socket, const NET_ADDR *addr,
       EvrNetDHCP_ClientState (h->If->Id, DHCP_STATE_SELECTING);
       /* Go through all parameters and try to find if this is DHCP_OFFER */
       /* Search for the SERVER_IDENTIFIER option (a server's IP address) */
-      for (index = 240; index < len; ) {
+      index = validate_index (240, buf, len);
+      while (index < len) {
         switch (buf[index]) {
           case DHCP_OPT_MSG_TYPE:
             /* Check message type */
+            if (buf[index+1] != 1U) {
+              break;
+            }
             if (buf[index+2] != DHCP_OFFER) {
               DEBUGF (DHCP," Discarded, Not DHCP_OFFER message\n");
               EvrNetDHCP_InvalidMessageType (h->If->Id, buf[index+2], DHCP_OFFER);
@@ -815,27 +826,26 @@ static uint32_t dhcp_listener (int32_t socket, const NET_ADDR *addr,
 
           case DHCP_OPT_OVERLOAD:
             /* Overloaded message, read overload value */
-            overload = buf[index+2];
+            if (buf[index+1] == 1U) {
+              overload = buf[index+2];
+            }
             break;
         }
         index = proc_opt_sel (h, buf, index);
+        index = validate_index (index, buf, len);
       }
       /* For overload message, 'sname' and 'file' fields hold options */
       if (overload & 0x01) {
         /* Process options overloaded to 'file' field */
         DEBUGF (DHCP," Processing Overload 'file' options\n");
         EvrNetDHCP_FileOverloadOptions (h->If->Id, DHCP_OFFER);
-        for (index = 108; index < (108+128); ) {
-          index = proc_opt_sel (h, buf, index);
-        }
+        parse_sel_opts (h, buf, BOOTP_FILE_OFFS, BOOTP_FILE_END);
       }
       if (overload & 0x02) {
         /* Process options overloaded to 'sname' field */
         DEBUGF (DHCP," Processing Overload 'sname' options\n");
         EvrNetDHCP_SnameOverloadOptions (h->If->Id, DHCP_OFFER);
-        for (index = 44; index < (44+64); ) {
-          index = proc_opt_sel (h, buf, index);
-        }
+        parse_sel_opts (h, buf, BOOTP_SNAME_OFFS, BOOTP_SNAME_END);
       }
       /* Processed all, got what we were looking for ? */
       if (__ALIGNED_UINT32(ctrl->SrvAddr) == 0) {
@@ -906,11 +916,15 @@ static uint32_t dhcp_listener (int32_t socket, const NET_ADDR *addr,
       }
       /* Go through param list and process them. We expect to get */
       /* all the params here and that this is DHCP_ACK message.   */
-      for (index = 240; index < len; ) {
+      index = validate_index (240, buf, len);
+      while (index < len) {
         switch (buf[index]) {
           case DHCP_OPT_MSG_TYPE:
             /* If this is DHCP_ACK we can switch state and assume */
             /* that the parameters are OK.                        */
+            if (buf[index+1] != 1U) {
+              break;
+            }
             if (buf[index+2] != DHCP_ACK) {
               DEBUGF (DHCP," Discarded, Not DHCP_ACK message\n");
               EvrNetDHCP_InvalidMessageType (h->If->Id, buf[index+2], DHCP_ACK);
@@ -929,27 +943,26 @@ static uint32_t dhcp_listener (int32_t socket, const NET_ADDR *addr,
 
           case DHCP_OPT_OVERLOAD:
             /* Overloaded message, read overload value */
-            overload = buf[index+2];
+            if (buf[index+1] == 1U) {
+              overload = buf[index+2];
+            }
             break;
         }
         index = proc_opt_req (h, buf, index);
+        index = validate_index (index, buf, len);
       }
       /* For overload message, 'sname' and 'file' fields hold options */
       if (overload & 0x01) {
         /* Process options overloaded to 'file' field. */
         DEBUGF (DHCP," Processing Overload 'file' options\n");
         EvrNetDHCP_FileOverloadOptions (h->If->Id, DHCP_ACK);
-        for (index = 108; index < (108+128); ) {
-          index = proc_opt_req (h, buf, index);
-        }
+        parse_req_opts (h, buf, BOOTP_FILE_OFFS, BOOTP_FILE_END);
       }
       if (overload & 0x02) {
         /* Process options overloaded to 'sname' field */
         DEBUGF (DHCP," Processing Overload 'sname' options\n");
         EvrNetDHCP_SnameOverloadOptions (h->If->Id, DHCP_ACK);
-        for (index = 44; index < (44+64); ) {
-          index = proc_opt_req (h, buf, index);
-        }
+        parse_req_opts (h, buf, BOOTP_SNAME_OFFS, BOOTP_SNAME_END);
       }
       DEBUGF (DHCP," Next State-BOUND\n");
       EvrNetDHCP_NextState (h->If->Id, DHCP_STATE_BOUND);
@@ -977,9 +990,13 @@ ack:  if (!is_selected (h, addr->addr)) {
         EvrNetDHCP_ServerAddressNotSelected (h->If->Id, addr->addr);
         return (false);
       }
-      for (index = 240; index < len; ) {
+      index = validate_index (240, buf, len);
+      while (index < len) {
         switch (buf[index]) {
           case DHCP_OPT_MSG_TYPE:
+            if (buf[index+1] != 1U) {
+              break;
+            }
             if (buf[index+2] == DHCP_NAK) {
               DEBUGF (DHCP," Received DHCP_NAK message\n");
               DEBUGF (DHCP," Next State-INIT\n");
@@ -1001,27 +1018,26 @@ ack:  if (!is_selected (h, addr->addr)) {
 
           case DHCP_OPT_OVERLOAD:
             /* Overloaded message, read overload value */
-            overload = buf[index+2];
+            if (buf[index+1] == 1U) {
+              overload = buf[index+2];
+            }
             break;
         }
         index = proc_opt_renew (h, buf, index);
+        index = validate_index (index, buf, len);
       }
       /* For overload message, 'sname' and 'file' fields hold options */
       if (overload & 0x01) {
         /* Process options overloaded to 'file' field */
         DEBUGF (DHCP," Processing Overload 'file' options\n");
         EvrNetDHCP_FileOverloadOptions (h->If->Id, DHCP_ACK);
-        for (index = 108; index < (108+128); ) {
-          index = proc_opt_renew (h, buf, index);
-        }
+        parse_renew_opts (h, buf, BOOTP_FILE_OFFS, BOOTP_FILE_END);
       }
       if (overload & 0x02) {
         /* Process options overloaded to 'sname' field */
         DEBUGF (DHCP," Processing Overload 'sname' options\n");
         EvrNetDHCP_SnameOverloadOptions (h->If->Id, DHCP_ACK);
-        for (index = 44; index < (44+64); ) {
-          index = proc_opt_renew (h, buf, index);
-        }
+        parse_renew_opts (h, buf, BOOTP_SNAME_OFFS, BOOTP_SNAME_END);
       }
       DEBUGF (DHCP," Next State-BOUND\n");
       EvrNetDHCP_NextState (h->If->Id, DHCP_STATE_BOUND);
@@ -1057,7 +1073,23 @@ static bool is_selected (NET_DHCP_CFG *h, const uint8_t *ip_addr) {
 }
 
 /**
-  \brief       Process DHCP option in state SELECTING.
+  \brief       Parse overloaded options in SELECTING state.
+  \param[in]   h      DHCP instance handle.
+  \param[in]   buf    buffer containing DHCP options.
+  \param[in]   start  index of the first option to parse.
+  \param[in]   end    end position of the options.
+*/
+static void parse_sel_opts (NET_DHCP_CFG *h,
+                            const uint8_t *buf, uint32_t start, uint32_t end) {
+  uint32_t index = validate_index (start, buf, end);
+  while (index < end) {
+    index = proc_opt_sel (h, buf, index);
+    index = validate_index (index, buf, end);
+  }
+}
+
+/**
+  \brief       Process DHCP option in SELECTING state.
   \param[in]   h      DHCP instance handle.
   \param[in]   buf    buffer containing DHCP options.
   \param[in]   index  position of an option to process.
@@ -1067,6 +1099,10 @@ static uint32_t proc_opt_sel (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t inde
   switch (buf[index]) {
     case DHCP_OPT_SERVER_ID:
       /* Read Server Identifier */
+      if (buf[index+1] != 4U) {
+        /* Invalid option length, ignore */
+        break;
+      }
       net_addr4_copy (ctrl->SrvAddr, &buf[index+2]);
       DEBUG_INF2 ("Server ID",ctrl->SrvAddr);
       EvrNetDHCP_ViewServerId (h->If->Id, ctrl->SrvAddr);
@@ -1074,10 +1110,6 @@ static uint32_t proc_opt_sel (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t inde
 
     case DHCP_OPT_PAD:
       return (index + 1);
-
-    case DHCP_OPT_END:
-      /* End of options */
-      return (0xFFFFFFFF);
   }
   /* Calculate index of next option */
   index += buf[index+1] + 2;
@@ -1085,7 +1117,23 @@ static uint32_t proc_opt_sel (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t inde
 }
 
 /**
-  \brief       Process DHCP option in state REQUESTING.
+  \brief       Parse overloaded options in REQUESTING state.
+  \param[in]   h      DHCP instance handle.
+  \param[in]   buf    buffer containing DHCP options.
+  \param[in]   start  index of the first option to parse.
+  \param[in]   end    end position of the options.
+*/
+static void parse_req_opts (NET_DHCP_CFG *h,
+                            const uint8_t *buf, uint32_t start, uint32_t end) {
+  uint32_t index = validate_index (start, buf, end);
+  while (index < end) {
+    index = proc_opt_req (h, buf, index);
+    index = validate_index (index, buf, end);
+  }
+}
+
+/**
+  \brief       Process DHCP option in REQUESTING state.
   \param[in]   h      DHCP instance handle.
   \param[in]   buf    buffer containing DHCP options.
   \param[in]   index  position of an option to process.
@@ -1093,9 +1141,14 @@ static uint32_t proc_opt_sel (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t inde
 */
 static uint32_t proc_opt_req (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t index) {
   uint32_t tmp;
+  char *dbuf;
 
   switch (buf[index]) {
     case DHCP_OPT_SUBNET_MASK:
+      if (buf[index+1] != 4U) {
+        /* Invalid option length, ignore */
+        break;
+      }
       net_addr4_copy (LocM.NetMask, &buf[index+2]);
       DEBUG_INF2 ("Net mask",LocM.NetMask);
       EvrNetDHCP_ViewNetMask (h->If->Id, LocM.NetMask);
@@ -1103,6 +1156,10 @@ static uint32_t proc_opt_req (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t inde
 
     case DHCP_OPT_ROUTER:
       /* Read Default Gateway IP address */
+      if (buf[index+1] < 4U || (buf[index+1] & 3U) != 0U) {
+        /* Option length must be a non-zero multiple of 4 */
+        break;
+      }
       net_addr4_copy (LocM.DefGW, &buf[index+2]);
       DEBUG_INF2 ("Gateway",LocM.DefGW);
       EvrNetDHCP_ViewGatewayAddress (h->If->Id, LocM.DefGW);
@@ -1110,6 +1167,10 @@ static uint32_t proc_opt_req (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t inde
 
     case DHCP_OPT_DNS_SERVER:
       /* Read primary and secondary DNS Server */
+      if (buf[index+1] < 4U || (buf[index+1] & 3U) != 0U) {
+        /* Option length must be a non-zero multiple of 4 */
+        break;
+      }
       net_addr4_copy (LocM.PriDNS, &buf[index+2]);
       net_addr4_copy (LocM.SecDNS, (buf[index+1] < 8) ? net_addr_unspec : &buf[index+6]);
       DEBUG_INF2 ("Prim. DNS",LocM.PriDNS);
@@ -1122,17 +1183,23 @@ static uint32_t proc_opt_req (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t inde
       break;
 
     case DHCP_OPT_LEASE_TIME:
+      if (buf[index+1] != 4U) {
+        break;
+      }
       tmp = get_u32 (&buf[index+2]);
       /* Time calculation from RFC! These values can */
       /* also be received directly in options.       */
-      ctrl->t1 = 5 * tmp / 10;  /* 0.5*tmp   */
-      ctrl->t2 = 7 * tmp / 8;   /* 0.875*tmp */
+      ctrl->t1 = tmp / 2U;         /* T1 = 0.5*tmp   */
+      ctrl->t2 = tmp - tmp / 8U;   /* T2 = 0.875*tmp */
       DEBUGF (DHCP," Lease time: %d sec\n",tmp);
       EvrNetDHCP_ViewLeaseTime (h->If->Id, tmp);
       break;
 
     case DHCP_OPT_T1_VALUE:
       /* Read T1 - DHCP Renewal time */
+      if (buf[index+1] != 4U) {
+        break;
+      }
       ctrl->t1 = get_u32 (&buf[index+2]);
       DEBUGF (DHCP," T1 timeout: %d sec\n",ctrl->t1);
       EvrNetDHCP_ViewTimeT1 (h->If->Id, ctrl->t1);
@@ -1140,6 +1207,9 @@ static uint32_t proc_opt_req (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t inde
 
     case DHCP_OPT_T2_VALUE:
       /* Read T2 - DHCP Rebinding time */
+      if (buf[index+1] != 4U) {
+        break;
+      }
       ctrl->t2 = get_u32 (&buf[index+2]);
       DEBUGF (DHCP," T2 timeout: %d sec\n",ctrl->t2);
       EvrNetDHCP_ViewTimeT2 (h->If->Id, ctrl->t2);
@@ -1148,17 +1218,22 @@ static uint32_t proc_opt_req (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t inde
     case DHCP_OPT_BOOTFILE:
       /* Read Bootfile Name and provide it to  */
       /* the user as a null-terminated string. */
-      tmp = buf[index + buf[index+1] + 2];
-      (__CONST_CAST(uint8_t *)buf)[index + buf[index+1] + 2] = 0;
-      DEBUGF (DHCP," Boot fname: %s\n",&buf[index+2]);
-      EvrNetDHCP_ViewBootfileName (&buf[index+2], buf[index+1]+1);
+      dbuf = (char *)net_mem_alloc (buf[index+1] + 1);
+      net_strncpy (dbuf, (const char *)&buf[index+2], buf[index+1]);
+      /* The bootfile name is null-terminated by net_strncpy() */
+      DEBUGF (DHCP," Boot fname: %s\n",dbuf);
+      EvrNetDHCP_ViewBootfileName (dbuf, buf[index+1] + 1);
       netDHCP_Notify (h->If->Id,
-                      NET_DHCP_OPTION_BOOTFILE_NAME, &buf[index+2], buf[index+1]);
-      (__CONST_CAST(uint8_t *)buf)[index + buf[index+1] + 2] = tmp & 0xFF;
+                      NET_DHCP_OPTION_BOOTFILE_NAME, (uint8_t *)dbuf, buf[index+1]);
+      net_mem_free (__FRAME(dbuf));
       break;
 
     case DHCP_OPT_NTP_SERVER:
       /* Read a list of NTP Servers and provide it to the user */
+      if (buf[index+1] < 4U || (buf[index+1] & 3U) != 0U) {
+        /* Option length must be a non-zero multiple of 4 */
+        break;
+      }
       DEBUG_INFO (&buf[index]);
       EvrNetDHCP_ViewNtpServerList (h->If->Id, &buf[index+2], buf[index+1]);
       netDHCP_Notify (h->If->Id,
@@ -1167,10 +1242,6 @@ static uint32_t proc_opt_req (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t inde
 
     case DHCP_OPT_PAD:
       return (index + 1);
-
-    case DHCP_OPT_END:
-      /* End of options */
-      return (0xFFFFFFFF);
   }
   /* Calculate index of next option */
   index += buf[index+1] + 2;
@@ -1178,7 +1249,23 @@ static uint32_t proc_opt_req (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t inde
 }
 
 /**
-  \brief       Process DHCP option in state RENEWING.
+  \brief       Parse overloaded options in RENEWING state.
+  \param[in]   h      DHCP instance handle.
+  \param[in]   buf    buffer containing DHCP options.
+  \param[in]   start  index of the first option to parse.
+  \param[in]   end    end position of the options.
+*/
+static void parse_renew_opts (NET_DHCP_CFG *h,
+                              const uint8_t *buf, uint32_t start, uint32_t end) {
+  uint32_t index = validate_index (start, buf, end);
+  while (index < end) {
+    index = proc_opt_renew (h, buf, index);
+    index = validate_index (index, buf, end);
+  }
+}
+
+/**
+  \brief       Process DHCP option in RENEWING state.
   \param[in]   h      DHCP instance handle.
   \param[in]   buf    buffer containing DHCP options.
   \param[in]   index  position of an option to process.
@@ -1189,17 +1276,23 @@ static uint32_t proc_opt_renew (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t in
 
   switch (buf[index]) {
     case DHCP_OPT_LEASE_TIME:
+      if (buf[index+1] != 4U) {
+        break;
+      }
       tmp = get_u32 (&buf[index+2]);
       /* Time calculation from RFC! These values   */
       /* can also be received directly in options. */
-      ctrl->t1 = 5 * tmp / 10;  /* 0.5*tmp   */
-      ctrl->t2 = 7 * tmp / 8;   /* 0.875*tmp */
+      ctrl->t1 = tmp / 2U;         /* T1 = 0.5*tmp   */
+      ctrl->t2 = tmp - tmp / 8U;   /* T2 = 0.875*tmp */
       DEBUGF (DHCP," Lease time: %d sec\n",tmp);
       EvrNetDHCP_ViewLeaseTime (h->If->Id, tmp);
       break;
 
     case DHCP_OPT_T1_VALUE:
       /* Read T1 - DHCP Renewal time */
+      if (buf[index+1] != 4U) {
+        break;
+      }
       ctrl->t1 = get_u32 (&buf[index+2]);
       DEBUGF (DHCP," T1 timeout: %d sec\n",ctrl->t1);
       EvrNetDHCP_ViewTimeT1 (h->If->Id, ctrl->t1);
@@ -1207,6 +1300,9 @@ static uint32_t proc_opt_renew (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t in
 
     case DHCP_OPT_T2_VALUE:
       /* Read T2 - DHCP Rebinding time */
+      if (buf[index+1] != 4U) {
+        break;
+      }
       ctrl->t2 = get_u32 (&buf[index+2]);
       DEBUGF (DHCP," T2 timeout: %d sec\n",ctrl->t2);
       EvrNetDHCP_ViewTimeT2 (h->If->Id, ctrl->t2);
@@ -1214,6 +1310,10 @@ static uint32_t proc_opt_renew (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t in
 
     case DHCP_OPT_ROUTER:
       /* Update Default Gateway IP address */
+      if (buf[index+1] < 4U || (buf[index+1] & 3U) != 0U) {
+        /* Option length must be a non-zero multiple of 4 */
+        break;
+      }
       net_addr4_copy (LocM.DefGW, &buf[index+2]);
       DEBUG_INF2 ("Gateway",LocM.DefGW);
       EvrNetDHCP_ViewGatewayAddress (h->If->Id, LocM.DefGW);
@@ -1221,6 +1321,10 @@ static uint32_t proc_opt_renew (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t in
 
     case DHCP_OPT_DNS_SERVER:
       /* Update Primary and Secondary DNS Server */
+      if (buf[index+1] < 4U || (buf[index+1] & 3U) != 0U) {
+        /* Option length must be a non-zero multiple of 4 */
+        break;
+      }
       net_addr4_copy (LocM.PriDNS, &buf[index+2]);
       net_addr4_copy (LocM.SecDNS, (buf[index+1] < 8) ? net_addr_unspec : &buf[index+6]);
       DEBUG_INF2 ("Prim. DNS",LocM.PriDNS);
@@ -1230,14 +1334,41 @@ static uint32_t proc_opt_renew (NET_DHCP_CFG *h, const uint8_t *buf, uint32_t in
 
     case DHCP_OPT_PAD:
       return (index + 1);
-
-    case DHCP_OPT_END:
-      /* End of options */
-      return (0xFFFFFFFF);
   }
 
   /* Calculate index of next option */
   index += buf[index+1] + 2;
+  return (index);
+}
+
+/**
+  \brief       Validate an index used when parsing DHCP options.
+  \param[in]   index  index into the buffer to validate.
+  \param[in]   buf    buffer containing DHCP option data.
+  \param[in]   len    length of the buffer in bytes.
+  \return      'index' if the option is valid, otherwise 'len'.
+*/
+static uint32_t validate_index (uint32_t index, const uint8_t *buf, uint32_t len) {
+  uint32_t rem;
+
+  if (index >= len) {
+    return (len);
+  }
+  /* PAD and END are single-byte options */
+  if (buf[index] == DHCP_OPT_PAD) {
+    return (index);
+  }
+  if (buf[index] == DHCP_OPT_END) {
+    return (len);
+  }
+  /* TLV option requires a type and length byte */
+  rem = len - index;
+  if (rem < 2U) {
+    return (len);
+  }
+  if (2U + (uint32_t)buf[index + 1U] > rem) {
+    return (len);
+  }
   return (index);
 }
 
