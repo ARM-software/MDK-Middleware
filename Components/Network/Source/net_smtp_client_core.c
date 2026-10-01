@@ -192,10 +192,10 @@ static uint32_t smtp_listener (int32_t socket, netTCP_Event event, const NET_ADD
         return (false);
       }
       /* Get reply from server */
-      if(len < 3) {
-        /* Data frame too short */
+      if (len < 5) {
+        /* Minimum SMTP response is 3-digit reply code + CRLF */
         ERRORF (SMTP,"Process, Frame too short\n");
-        EvrNetSMTP_FrameTooShort (len, 3);
+        EvrNetSMTP_FrameTooShort (len, 5);
         return (false);
       }
 
@@ -303,9 +303,8 @@ static uint32_t smtp_listener (int32_t socket, netTCP_Event event, const NET_ADD
             (__CONST_CAST(char *)buf)[len-1] = 0;
             DEBUGF (SMTP," Prompt: %s\n",buf+4);
 #endif
-            /* Decode base64 string to the same buffer */
-            net_base64_decode (__CONST_CAST(char *)buf+4, (const char *)buf+4, len-4);
-            if (net_strcmp ((const char *)buf+4, "Username:")) {
+            /* Base64-encoded "Username:" prompt for AUTH LOGIN */
+            if ((len > 16) && net_strcmp ((const char *)buf+4, "VXNlcm5hbWU6")) { 
               smtp_transit (SMTP_STATE_USER);
               return (true);
             }
@@ -347,9 +346,8 @@ static uint32_t smtp_listener (int32_t socket, netTCP_Event event, const NET_ADD
           (__CONST_CAST(char *)buf)[len-1] = 0;
           DEBUGF (SMTP," Prompt: %s\n",buf+4);
 #endif
-          /* Decode base64 string to the same buffer */
-          net_base64_decode (__CONST_CAST(char *)buf+4, (const char *)buf+4, len-4);
-          if (net_strcmp ((const char *)buf+4, "Password:")) {
+          /* Base64-encoded "Password:" prompt for AUTH LOGIN */
+          if ((len > 16) && net_strcmp ((const char *)buf+4, "UGFzc3dvcmQ6")) {
             smtp->Flags |= SMTP_FLAG_PASSW;
             smtp_transit (SMTP_STATE_USER);
             return (true);

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_base64.c
  * Purpose: Base64 Encode and Decode
@@ -61,14 +61,15 @@ uint32_t net_base64_encode (char *base64, const void *buf, uint32_t len) {
 }
 
 /**
-  \brief       Decode base64 encoded string to binary data.
+  \brief       Decode base64 encoded string into binary data.
   \param[out]  buf     output buffer to store the data.
-  \param[in]   base64  pointer to encoded input string.
+  \param[in]   base64  pointer to base64 encoded input string.
   \param[in]   len     maximum length of the input string.
   \return      length of converted binary data.
 */
 uint32_t net_base64_decode (void *buf, const char *base64, uint32_t len) {
-  /* Base64 decoding table: characters 43 to 122 ('+' to 'z') */
+  /* Base64 decoding table: characters from '+' (43) through 'z' (122)   */
+  /* Values 0..63 are valid base64 values; 0xFF marks invalid characters */
   static const uint8_t dec_map[80] = {
     "\x3E\xFF\xFF\xFF\x3F\x34\x35\x36\x37\x38\x39\x3A\x3B\x3C\x3D\xFF"
     "\xFF\xFF\xFF\xFF\xFF\xFF\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09"
@@ -79,28 +80,28 @@ uint32_t net_base64_decode (void *buf, const char *base64, uint32_t len) {
   uint8_t *dp = buf;
   uint32_t i,j,v,idx;
 
-  for (i = 0; len > 0; base64 += 4, i += 3) {
-    /* Convert 4 base64 characters to 3 binary bytes */
+  for (i = 0; len > 3; base64 += 4, len -= 4, i += 3) {
+    /* Convert four 6-bit base64 values into 24-bit output value */
     for (v = j = 0; j < 4; j++) {
       if (j == 2 && base64[j] == '=' && base64[j+1] == '=') {
-        /* Padding, decode last byte */
+        /* '==' padding, only one output byte remains */
         dp[i] = (v >> 4) & 0xFF;
         return (i + 1);
       }
       if (j == 3 && base64[j] == '=') {
-        /* Padding, decode last 2 bytes */
+        /* '=' padding, two output bytes remain */
         dp[i]   = (v >> 10) & 0xFF;
         dp[i+1] = (v >> 2) & 0xFF;
         return (i + 2);
       }
       idx = base64[j] - 43;
       if (idx > 79 || dec_map[idx] > 63) {
-        /* End, invalid character found*/
+        /* Stop decoding, invalid base64 character found */
         return (i);
       }
       v = v << 6 | dec_map[idx];
-      len--;
     }
+    /* Split 24-bit value into three decoded bytes */
     dp[i]   = (v >> 16) & 0xFF;
     dp[i+1] = (v >> 8) & 0xFF;
     dp[i+2] = v & 0xFF;
