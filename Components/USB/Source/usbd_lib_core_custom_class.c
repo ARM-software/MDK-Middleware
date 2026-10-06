@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_core_custom_class.c
  * Purpose: USB Device - Custom Class core module
@@ -23,16 +23,23 @@ __WEAK bool USBD_Endpoint0_ReqGetExtProp_CC (uint8_t device, const uint8_t **pD)
   const usbd_custom_class_t *ptr_cc_cfg;
         uint8_t              index, i;
 
-  if (device >= usbd_dev_num) { return false; }         // Check if device exists
+  if (device >= usbd_dev_num)       { return false; }   // Check if device exists
+  if (usbd_dev_ptr[device] == NULL) { return false; }
 
   ptr_dev_data = usbd_dev_ptr[device]->data_ptr; if (ptr_dev_data == NULL) { return false; }
 
   for (index = 0U; index < usbd_custom_class_num; index++) {
     ptr_cc_cfg = usbd_custom_class_ptr[index];
+    if ((ptr_cc_cfg == NULL) || (usbd_cc_desc_ptr[index] == NULL)) {
+      continue;
+    }
     if (device == ptr_cc_cfg->dev_num) {                                        // If request is on device containing custom class
       for (i = 0U; i < 4U; i++) {
         if ((ptr_cc_cfg->cc[i].if_en != 0U) && ((ptr_dev_data->setup_packet.wValue & 0x00FFU) == (uint16_t)(ptr_cc_cfg->cc[i].if_num))) {
-          *pD = (uint8_t *)((uint32_t)usbd_cc_desc_ptr[index]->ms_ext_prop_descriptor[i]);
+          if (usbd_cc_desc_ptr[index]->ms_ext_prop_descriptor[i] == NULL) {
+            return false;
+          }
+          *pD = (uint8_t *)usbd_cc_desc_ptr[index]->ms_ext_prop_descriptor[i];
           return true;
         }
       }
@@ -57,8 +64,8 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_SetupPacketReceived (uint8_t devic
 
   status = usbdRequestNotProcessed;
 
-  if (device >= usbd_dev_num)                                              { return status; }
-  if (fpUSBD_CustomClass_Endpoint0_SetupPacketReceived[device] == NULL)    { return status; }
+  if (device >= usbd_dev_num)       { return status; }
+  if (usbd_dev_ptr[device] == NULL) { return status; }
 
   ptr_dev_data = usbd_dev_ptr[device]->data_ptr; if (ptr_dev_data == NULL) { return status; }
 
@@ -68,10 +75,16 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_SetupPacketReceived (uint8_t devic
       case USB_REQUEST_TO_DEVICE:
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
-            EvrUSBD_CC_OnEndpoint0SetupPacketReceivedDetail(device, (const void *)&ptr_dev_data->setup_packet, ptr_dev_data->len);
+            EvrUSBD_CC_OnEndpoint0SetupPacketReceivedDetail(index, (const void *)&ptr_dev_data->setup_packet, ptr_dev_data->len);
+            if (fpUSBD_CustomClass_Endpoint0_SetupPacketReceived[index] == NULL) {
+              continue;
+            }
             status = fpUSBD_CustomClass_Endpoint0_SetupPacketReceived[index] ((const USB_SETUP_PACKET *) &ptr_dev_data->setup_packet, &ptr_dev_data->buf, &ptr_dev_data->len);
-            EvrUSBD_CC_OnEndpoint0SetupPacketReceived(device, status);
+            EvrUSBD_CC_OnEndpoint0SetupPacketReceived(index, status);
             if (status != usbdRequestNotProcessed) {
               break;
             }
@@ -82,17 +95,26 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_SetupPacketReceived (uint8_t devic
       case USB_REQUEST_TO_INTERFACE:
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
             for (i = 0U; i < 4U; i++) {
               if ((ptr_cc_cfg->cc[i].if_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_num))) {
-                EvrUSBD_CC_OnEndpoint0SetupPacketReceivedDetail(device, (const void *)&ptr_dev_data->setup_packet, ptr_dev_data->len);
+                EvrUSBD_CC_OnEndpoint0SetupPacketReceivedDetail(index, (const void *)&ptr_dev_data->setup_packet, ptr_dev_data->len);
+                if (fpUSBD_CustomClass_Endpoint0_SetupPacketReceived[index] == NULL) {
+                  continue;
+                }
                 status = fpUSBD_CustomClass_Endpoint0_SetupPacketReceived[index] ((const USB_SETUP_PACKET *) &ptr_dev_data->setup_packet, &ptr_dev_data->buf, &ptr_dev_data->len);
-                EvrUSBD_CC_OnEndpoint0SetupPacketReceived(device, status);
+                EvrUSBD_CC_OnEndpoint0SetupPacketReceived(index, status);
                 if (status != usbdRequestNotProcessed) {
                   break;
                 }
               }
             }
+          }
+          if (status != usbdRequestNotProcessed) {
+            break;
           }
         }
         break;
@@ -100,6 +122,9 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_SetupPacketReceived (uint8_t devic
       case USB_REQUEST_TO_ENDPOINT:
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
             for (i = 0U; i < 4U; i++) {
               if (ptr_cc_cfg->cc[i].if_en != 0U) {
@@ -111,9 +136,12 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_SetupPacketReceived (uint8_t devic
                     ((ptr_cc_cfg->cc[i].if_ep5_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_ep5_addr))) ||
                     ((ptr_cc_cfg->cc[i].if_ep6_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_ep6_addr))) ||
                     ((ptr_cc_cfg->cc[i].if_ep7_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_ep7_addr)))) {
-                  EvrUSBD_CC_OnEndpoint0SetupPacketReceivedDetail(device, (const void *)&ptr_dev_data->setup_packet, ptr_dev_data->len);
+                  EvrUSBD_CC_OnEndpoint0SetupPacketReceivedDetail(index, (const void *)&ptr_dev_data->setup_packet, ptr_dev_data->len);
+                  if (fpUSBD_CustomClass_Endpoint0_SetupPacketReceived[index] == NULL) {
+                    continue;
+                  }
                   status = fpUSBD_CustomClass_Endpoint0_SetupPacketReceived[index] ((const USB_SETUP_PACKET *) &ptr_dev_data->setup_packet, &ptr_dev_data->buf, &ptr_dev_data->len);
-                  EvrUSBD_CC_OnEndpoint0SetupPacketReceived(device, status);
+                  EvrUSBD_CC_OnEndpoint0SetupPacketReceived(index, status);
                   if (status != usbdRequestNotProcessed) {
                     break;
                   }
@@ -127,10 +155,16 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_SetupPacketReceived (uint8_t devic
       case USB_REQUEST_TO_OTHER:
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
-            EvrUSBD_CC_OnEndpoint0SetupPacketReceivedDetail(device, (const void *)&ptr_dev_data->setup_packet, ptr_dev_data->len);
-            status = fpUSBD_CustomClass_Endpoint0_SetupPacketReceived[device] ((const USB_SETUP_PACKET *) &ptr_dev_data->setup_packet, &ptr_dev_data->buf, &ptr_dev_data->len);
-            EvrUSBD_CC_OnEndpoint0SetupPacketReceived(device, status);
+            EvrUSBD_CC_OnEndpoint0SetupPacketReceivedDetail(index, (const void *)&ptr_dev_data->setup_packet, ptr_dev_data->len);
+            if (fpUSBD_CustomClass_Endpoint0_SetupPacketReceived[index] == NULL) {
+              continue;
+            }
+            status = fpUSBD_CustomClass_Endpoint0_SetupPacketReceived[index] ((const USB_SETUP_PACKET *) &ptr_dev_data->setup_packet, &ptr_dev_data->buf, &ptr_dev_data->len);
+            EvrUSBD_CC_OnEndpoint0SetupPacketReceived(index, status);
             if (status != usbdRequestNotProcessed) {
               break;
             }
@@ -153,8 +187,8 @@ __WEAK void USBD_Class_Endpoint0_SetupPacketProcessed (uint8_t device) {
   const usbd_custom_class_t *ptr_cc_cfg;
         uint8_t              index, i;
 
-  if (device >= usbd_dev_num)                                              { return; }
-  if (fpUSBD_CustomClass_Endpoint0_SetupPacketProcessed[device] == NULL)   { return; }
+  if (device >= usbd_dev_num)       { return; }
+  if (usbd_dev_ptr[device] == NULL) { return; }
 
   ptr_dev_data = usbd_dev_ptr[device]->data_ptr; if (ptr_dev_data == NULL) { return; }
 
@@ -164,10 +198,16 @@ __WEAK void USBD_Class_Endpoint0_SetupPacketProcessed (uint8_t device) {
       case USB_REQUEST_TO_DEVICE:
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
-            EvrUSBD_CC_OnEndpoint0SetupPacketProcessedDetail(device, (const void *)&ptr_dev_data->setup_packet);
+            EvrUSBD_CC_OnEndpoint0SetupPacketProcessedDetail(index, (const void *)&ptr_dev_data->setup_packet);
+            if (fpUSBD_CustomClass_Endpoint0_SetupPacketProcessed[index] == NULL) {
+              continue;
+            }
             fpUSBD_CustomClass_Endpoint0_SetupPacketProcessed[index] ((const USB_SETUP_PACKET *) &ptr_dev_data->setup_packet);
-            EvrUSBD_CC_OnEndpoint0SetupPacketProcessed(device);
+            EvrUSBD_CC_OnEndpoint0SetupPacketProcessed(index);
           }
         }
         break;
@@ -176,12 +216,18 @@ __WEAK void USBD_Class_Endpoint0_SetupPacketProcessed (uint8_t device) {
         ptr_dev_data = (usbd_dev_ptr[device])->data_ptr;
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
             for (i = 0U; i < 4U; i++) {
               if ((ptr_cc_cfg->cc[i].if_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_num))) {
-                EvrUSBD_CC_OnEndpoint0SetupPacketProcessedDetail(device, (const void *)&ptr_dev_data->setup_packet);
+                EvrUSBD_CC_OnEndpoint0SetupPacketProcessedDetail(index, (const void *)&ptr_dev_data->setup_packet);
+                if (fpUSBD_CustomClass_Endpoint0_SetupPacketProcessed[index] == NULL) {
+                  continue;
+                }
                 fpUSBD_CustomClass_Endpoint0_SetupPacketProcessed[index] ((const USB_SETUP_PACKET *) &ptr_dev_data->setup_packet);
-                EvrUSBD_CC_OnEndpoint0SetupPacketProcessed(device);
+                EvrUSBD_CC_OnEndpoint0SetupPacketProcessed(index);
               }
             }
           }
@@ -191,6 +237,9 @@ __WEAK void USBD_Class_Endpoint0_SetupPacketProcessed (uint8_t device) {
       case USB_REQUEST_TO_ENDPOINT:
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
             for (i = 0U; i < 4U; i++) {
               if (ptr_cc_cfg->cc[i].if_en != 0U) {
@@ -202,9 +251,12 @@ __WEAK void USBD_Class_Endpoint0_SetupPacketProcessed (uint8_t device) {
                     ((ptr_cc_cfg->cc[i].if_ep5_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_ep5_addr))) ||
                     ((ptr_cc_cfg->cc[i].if_ep6_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_ep6_addr))) ||
                     ((ptr_cc_cfg->cc[i].if_ep7_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_ep7_addr)))) {
-                  EvrUSBD_CC_OnEndpoint0SetupPacketProcessedDetail(device, (const void *)&ptr_dev_data->setup_packet);
+                  EvrUSBD_CC_OnEndpoint0SetupPacketProcessedDetail(index, (const void *)&ptr_dev_data->setup_packet);
+                  if (fpUSBD_CustomClass_Endpoint0_SetupPacketProcessed[index] == NULL) {
+                    continue;
+                  }
                   fpUSBD_CustomClass_Endpoint0_SetupPacketProcessed[index] ((const USB_SETUP_PACKET *) &ptr_dev_data->setup_packet);
-                  EvrUSBD_CC_OnEndpoint0SetupPacketProcessed(device);
+                  EvrUSBD_CC_OnEndpoint0SetupPacketProcessed(index);
                 }
               }
             }
@@ -215,10 +267,16 @@ __WEAK void USBD_Class_Endpoint0_SetupPacketProcessed (uint8_t device) {
       case USB_REQUEST_TO_OTHER:
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
-            EvrUSBD_CC_OnEndpoint0SetupPacketProcessedDetail(device, (const void *)&ptr_dev_data->setup_packet);
+            EvrUSBD_CC_OnEndpoint0SetupPacketProcessedDetail(index, (const void *)&ptr_dev_data->setup_packet);
+            if (fpUSBD_CustomClass_Endpoint0_SetupPacketProcessed[index] == NULL) {
+              continue;
+            }
             fpUSBD_CustomClass_Endpoint0_SetupPacketProcessed[index] ((const USB_SETUP_PACKET *) &ptr_dev_data->setup_packet);
-            EvrUSBD_CC_OnEndpoint0SetupPacketProcessed(device);
+            EvrUSBD_CC_OnEndpoint0SetupPacketProcessed(index);
           }
         }
         break;
@@ -244,8 +302,8 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_OutDataReceived (uint8_t device) {
 
   status = usbdRequestNotProcessed;
 
-  if (device >= usbd_dev_num)                                              { return status; }
-  if (fpUSBD_CustomClass_Endpoint0_OutDataReceived[device] == NULL)        { return status; }
+  if (device >= usbd_dev_num)       { return status; }
+  if (usbd_dev_ptr[device] == NULL) { return status; }
 
   ptr_dev_data = usbd_dev_ptr[device]->data_ptr; if (ptr_dev_data == NULL) { return status; }
 
@@ -255,9 +313,15 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_OutDataReceived (uint8_t device) {
       case USB_REQUEST_TO_DEVICE:
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
+            if (fpUSBD_CustomClass_Endpoint0_OutDataReceived [index] == NULL) {
+              continue;
+            }
             status = fpUSBD_CustomClass_Endpoint0_OutDataReceived [index] (ptr_dev_data->len);
-            EvrUSBD_CC_OnEndpoint0OutDataReceived(device, ptr_dev_data->len, status);
+            EvrUSBD_CC_OnEndpoint0OutDataReceived(index, ptr_dev_data->len, status);
             if (status != usbdRequestNotProcessed) {
               break;
             }
@@ -268,11 +332,17 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_OutDataReceived (uint8_t device) {
       case USB_REQUEST_TO_INTERFACE:
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
             for (i = 0U; i < 4U; i++) {
               if ((ptr_cc_cfg->cc[i].if_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_num))) {
+                if (fpUSBD_CustomClass_Endpoint0_OutDataReceived [index] == NULL) {
+                  continue;
+                }
                 status = fpUSBD_CustomClass_Endpoint0_OutDataReceived [index] (ptr_dev_data->len);
-                EvrUSBD_CC_OnEndpoint0OutDataReceived(device, ptr_dev_data->len, status);
+                EvrUSBD_CC_OnEndpoint0OutDataReceived(index, ptr_dev_data->len, status);
                 if (status != usbdRequestNotProcessed) {
                   break;
                 }
@@ -285,6 +355,9 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_OutDataReceived (uint8_t device) {
       case USB_REQUEST_TO_ENDPOINT:
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
             for (i = 0U; i < 4U; i++) {
               if (ptr_cc_cfg->cc[i].if_en != 0U) {
@@ -296,8 +369,11 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_OutDataReceived (uint8_t device) {
                     ((ptr_cc_cfg->cc[i].if_ep5_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_ep5_addr))) ||
                     ((ptr_cc_cfg->cc[i].if_ep6_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_ep6_addr))) ||
                     ((ptr_cc_cfg->cc[i].if_ep7_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_ep7_addr)))) {
+                  if (fpUSBD_CustomClass_Endpoint0_OutDataReceived[index] == NULL) {
+                    continue;
+                  }
                   status = fpUSBD_CustomClass_Endpoint0_OutDataReceived [index] (ptr_dev_data->len);
-                  EvrUSBD_CC_OnEndpoint0OutDataReceived(device, ptr_dev_data->len, status);
+                  EvrUSBD_CC_OnEndpoint0OutDataReceived(index, ptr_dev_data->len, status);
                   if (status != usbdRequestNotProcessed) {
                     break;
                   }
@@ -311,9 +387,15 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_OutDataReceived (uint8_t device) {
       case USB_REQUEST_TO_OTHER:
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
+            if (fpUSBD_CustomClass_Endpoint0_OutDataReceived[index] == NULL) {
+              continue;
+            }
             status = fpUSBD_CustomClass_Endpoint0_OutDataReceived [index] (ptr_dev_data->len);
-            EvrUSBD_CC_OnEndpoint0OutDataReceived(device, ptr_dev_data->len, status);
+            EvrUSBD_CC_OnEndpoint0OutDataReceived(index, ptr_dev_data->len, status);
             if (status != usbdRequestNotProcessed) {
               break;
             }
@@ -344,8 +426,8 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_InDataSent (uint8_t device) {
 
   status = usbdRequestNotProcessed;
 
-  if (device >= usbd_dev_num)                                              { return status; }
-  if (fpUSBD_CustomClass_Endpoint0_InDataSent[device] == NULL)             { return status; }
+  if (device >= usbd_dev_num)       { return status; }
+  if (usbd_dev_ptr[device] == NULL) { return status; }
 
   ptr_dev_data = usbd_dev_ptr[device]->data_ptr; if (ptr_dev_data == NULL) { return status; }
 
@@ -355,9 +437,15 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_InDataSent (uint8_t device) {
       case USB_REQUEST_TO_DEVICE:
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
+            if (fpUSBD_CustomClass_Endpoint0_InDataSent [index] == NULL) {
+              continue;
+            }
             status = fpUSBD_CustomClass_Endpoint0_InDataSent [index] (ptr_dev_data->len);
-            EvrUSBD_CC_OnEndpoint0InDataSent(device, ptr_dev_data->len, status);
+            EvrUSBD_CC_OnEndpoint0InDataSent(index, ptr_dev_data->len, status);
             if (status != usbdRequestNotProcessed) {
               break;
             }
@@ -368,11 +456,17 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_InDataSent (uint8_t device) {
       case USB_REQUEST_TO_INTERFACE:
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
             for (i = 0U; i < 4U; i++) {
               if ((ptr_cc_cfg->cc[i].if_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_num))) {
+                if (fpUSBD_CustomClass_Endpoint0_InDataSent [index] == NULL) {
+                  continue;
+                }
                 status = fpUSBD_CustomClass_Endpoint0_InDataSent [index] (ptr_dev_data->len);
-                EvrUSBD_CC_OnEndpoint0InDataSent(device, ptr_dev_data->len, status);
+                EvrUSBD_CC_OnEndpoint0InDataSent(index, ptr_dev_data->len, status);
                 if (status != usbdRequestNotProcessed) {
                   break;
                 }
@@ -385,6 +479,9 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_InDataSent (uint8_t device) {
       case USB_REQUEST_TO_ENDPOINT:
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
             for (i = 0U; i < 4U; i++) {
               if (ptr_cc_cfg->cc[i].if_en != 0U) {
@@ -396,8 +493,11 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_InDataSent (uint8_t device) {
                     ((ptr_cc_cfg->cc[i].if_ep5_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_ep5_addr))) ||
                     ((ptr_cc_cfg->cc[i].if_ep6_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_ep6_addr))) ||
                     ((ptr_cc_cfg->cc[i].if_ep7_en != 0U) && (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_cc_cfg->cc[i].if_ep7_addr)))) {
+                  if (fpUSBD_CustomClass_Endpoint0_InDataSent[index] == NULL) {
+                    continue;
+                  }
                   status = fpUSBD_CustomClass_Endpoint0_InDataSent [index] (ptr_dev_data->len);
-                  EvrUSBD_CC_OnEndpoint0InDataSent(device, ptr_dev_data->len, status);
+                  EvrUSBD_CC_OnEndpoint0InDataSent(index, ptr_dev_data->len, status);
                   if (status != usbdRequestNotProcessed) {
                     break;
                   }
@@ -411,9 +511,15 @@ __WEAK usbdRequestStatus USBD_Class_Endpoint0_InDataSent (uint8_t device) {
       case USB_REQUEST_TO_OTHER:
         for (index = 0U; index < usbd_custom_class_num; index++) {
           ptr_cc_cfg = usbd_custom_class_ptr[index];
+          if (ptr_cc_cfg == NULL) {
+            continue;
+          }
           if (device == ptr_cc_cfg->dev_num) {                                  // If request is on device containing custom class
+            if (fpUSBD_CustomClass_Endpoint0_InDataSent [index] == NULL) {
+              continue;
+            }
             status = fpUSBD_CustomClass_Endpoint0_InDataSent [index] (ptr_dev_data->len);
-            EvrUSBD_CC_OnEndpoint0InDataSent(device, ptr_dev_data->len, status);
+            EvrUSBD_CC_OnEndpoint0InDataSent(index, ptr_dev_data->len, status);
             if (status != usbdRequestNotProcessed) {
               break;
             }

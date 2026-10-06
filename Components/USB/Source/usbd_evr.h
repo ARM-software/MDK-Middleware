@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_evr.h
  * Purpose: USB Device (USBD) - Event Recorder definitions
@@ -973,7 +973,9 @@
  */
 #ifdef                 EvtUSBD_Core_ReadSetupPacket
   __STATIC_INLINE void EvrUSBD_Core_ReadSetupPacket(  uint8_t device,     const void     * setup_packet) {
-    EventRecord4(      EvtUSBD_Core_ReadSetupPacket, TO_BYTE0(device), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U), 0U);
+    if (setup_packet != NULL) {
+      EventRecord4(    EvtUSBD_Core_ReadSetupPacket, TO_BYTE0(device), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U), 0U);
+    }
   }
 #else
   #define              EvrUSBD_Core_ReadSetupPacket(...)
@@ -1273,7 +1275,9 @@
  */
 #ifdef                 EvtUSBD_Core_OnSetupPacketReceivedDetail
   __STATIC_INLINE void EvrUSBD_Core_OnSetupPacketReceivedDetail(  uint8_t n,     const void     * setup_packet,                                        uint32_t len) {
-    EventRecord4(      EvtUSBD_Core_OnSetupPacketReceivedDetail, TO_BYTE0(n), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U),          len);
+    if (setup_packet != NULL) {
+      EventRecord4(    EvtUSBD_Core_OnSetupPacketReceivedDetail, TO_BYTE0(n), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U),          len);
+    }
   }
 #else
   #define              EvrUSBD_Core_OnSetupPacketReceivedDetail(...)
@@ -1300,7 +1304,9 @@
  */
 #ifdef                 EvtUSBD_Core_OnSetupPacketProcessedDetail
   __STATIC_INLINE void EvrUSBD_Core_OnSetupPacketProcessedDetail(  uint8_t n,     const void     * setup_packet) {
-    EventRecord4(      EvtUSBD_Core_OnSetupPacketProcessedDetail, TO_BYTE0(n), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U), 0U);
+    if (setup_packet != NULL) {
+      EventRecord4(    EvtUSBD_Core_OnSetupPacketProcessedDetail, TO_BYTE0(n), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U), 0U);
+    }
   }
 #else
   #define              EvrUSBD_Core_OnSetupPacketProcessedDetail(...)
@@ -1561,7 +1567,9 @@
  */
 #ifdef                 EvtUSBD_Driver_ReadSetupPacket
   __STATIC_INLINE void EvrUSBD_Driver_ReadSetupPacket(  uint8_t device,     const void     * setup_packet) {
-    EventRecord4(      EvtUSBD_Driver_ReadSetupPacket, TO_BYTE0(device), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U), 0U);
+    if (setup_packet != NULL) {
+      EventRecord4(    EvtUSBD_Driver_ReadSetupPacket, TO_BYTE0(device), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U), 0U);
+    }
   }
 #else
   #define              EvrUSBD_Driver_ReadSetupPacket(...)
@@ -1920,7 +1928,9 @@
  */
 #ifdef                 EvtUSBD_CC_OnEndpoint0SetupPacketReceivedDetail
   __STATIC_INLINE void EvrUSBD_CC_OnEndpoint0SetupPacketReceivedDetail(  uint8_t n,     const void     * setup_packet,                                        uint32_t len) {
-    EventRecord4(      EvtUSBD_CC_OnEndpoint0SetupPacketReceivedDetail, TO_BYTE0(n), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U),          len);
+    if (setup_packet != NULL) {
+      EventRecord4(    EvtUSBD_CC_OnEndpoint0SetupPacketReceivedDetail, TO_BYTE0(n), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U),          len);
+    }
   }
 #else
   #define              EvrUSBD_CC_OnEndpoint0SetupPacketReceivedDetail(...)
@@ -1947,7 +1957,9 @@
  */
 #ifdef                 EvtUSBD_CC_OnEndpoint0SetupPacketProcessedDetail
   __STATIC_INLINE void EvrUSBD_CC_OnEndpoint0SetupPacketProcessedDetail(  uint8_t n,     const void     * setup_packet) {
-    EventRecord4(      EvtUSBD_CC_OnEndpoint0SetupPacketProcessedDetail, TO_BYTE0(n), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U), 0U);
+    if (setup_packet != NULL) {
+      EventRecord4(    EvtUSBD_CC_OnEndpoint0SetupPacketProcessedDetail, TO_BYTE0(n), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U), 0U);
+    }
   }
 #else
   #define              EvrUSBD_CC_OnEndpoint0SetupPacketProcessedDetail(...)

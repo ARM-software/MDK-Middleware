@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates).
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates).
  * All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_hid.c
@@ -55,7 +55,7 @@ uint8_t USBH_HID_GetDevice (uint8_t instance) {
     if (usbh_hid[instance].ptr_dev == usbh_dev) {
       return 0U;
     } else {
-      device = (uint8_t)(((uint32_t)usbh_hid[instance].ptr_dev - (uint32_t)usbh_dev) / sizeof (USBH_DEV));
+      device = (uint8_t)(((uintptr_t)usbh_hid[instance].ptr_dev - (uintptr_t)usbh_dev) / sizeof (USBH_DEV));
     }
   } else {
     device = 0xFFU;
@@ -94,32 +94,42 @@ usbStatus USBH_HID_GetDeviceStatus (uint8_t instance) {
 ///                                       - value < 0 :  error occurred, -value is execution status as defined with \ref usbStatus
 int32_t USBH_HID_Read (uint8_t instance, uint8_t *buf, int32_t len) {
   USBH_HID *ptr_hid;
-  int32_t   num;
+  int32_t   num = 0;
   usbStatus status;
 
   EvrUSBH_HID_Read(instance, len);
 
-  num = 0;
-
-  status = CheckInstance (instance);
-  if (status == usbOK) {
-    if (buf != NULL) {
-      ptr_hid = &usbh_hid[instance];
-
-      num = (int32_t)ptr_hid->hid_in_data_len;
-      if (num > len) {
-        num = len;
-      }
-
-      if (num != 0) {
-        memcpy ((void *)buf, (void *)ptr_hid->ptr_int_in_buf, (uint32_t)num);
-        ptr_hid->hid_in_data_len = 0U;
-      }
-    } else {
-      status = usbInvalidParameter;
-    }
+  if (buf == NULL) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+  if (len <= 0) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+  if (len > UINT16_MAX) {
+    status = usbInvalidParameter;
+    goto exit;
   }
 
+  status = CheckInstance (instance);
+  if (status != usbOK) {
+    goto exit;
+  }
+
+  ptr_hid = &usbh_hid[instance];
+
+  num = (int32_t)ptr_hid->hid_in_data_len;
+  if (num > len) {
+    num = len;
+  }
+
+  if (num != 0) {
+    memcpy ((void *)buf, (void *)ptr_hid->ptr_int_in_buf, (uint32_t)num);
+    ptr_hid->hid_in_data_len = 0U;
+  }
+
+exit:
   if (status != usbOK) {
     EvrUSBH_HID_ReadFailed(instance, len, status);
     return -(int32_t)status;
@@ -138,23 +148,33 @@ int32_t USBH_HID_Read (uint8_t instance, uint8_t *buf, int32_t len) {
 ///                                       - value < 0 :  error occurred, -value is execution status as defined with \ref usbStatus
 int32_t USBH_HID_Write (uint8_t instance, const uint8_t *buf, int32_t len) {
   usbStatus status;
-  int32_t   num;
+  int32_t   num = 0;
 
   EvrUSBH_HID_Write(instance, len);
 
-  num = 0;
-
-  status = CheckInstance (instance);
-  if (status == usbOK) {
-    if (buf != NULL) {
-      if (USBH_HID_ReportOut (instance, buf, (uint16_t)len) == usbOK) {
-        num = len;
-      }
-    } else {
-      status = usbInvalidParameter;
-    }
+  if (buf == NULL) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+  if (len <= 0) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+  if (len > UINT16_MAX) {
+    status = usbInvalidParameter;
+    goto exit;
   }
 
+  status = CheckInstance (instance);
+  if (status != usbOK) {
+    goto exit;
+  }
+
+  if (USBH_HID_ReportOut (instance, buf, (uint16_t)len) == usbOK) {
+    num = len;
+  }
+
+exit:
   if (status != usbOK) {
     EvrUSBH_HID_WriteFailed(instance, len, status);
     return -(int32_t)status;
@@ -215,7 +235,7 @@ __WEAK int USBH_HID_GetKeyboardKey (uint8_t instance) {
           ptr_hid->hid_in_data_len     = 0U;
         }
       } else {
-        if ((key >= HID_USAGE_KEYBOARD_F1) || (HID_KEYBOARD_ID_TO_ASCII[key] == 0xFFU)) {
+        if ((key >= sizeof(HID_KEYBOARD_ID_TO_ASCII)) || (key >= HID_USAGE_KEYBOARD_F1) || (HID_KEYBOARD_ID_TO_ASCII[key] == 0xFFU)) {
           key = key | 0x10000UL;        // bit 16. specifies if it is a non-ASCII translated HID ID
         } else {
           // Translate to ASCII
@@ -247,23 +267,37 @@ __WEAK usbStatus USBH_HID_GetMouseState (uint8_t instance, usbHID_MouseState *st
 
   EvrUSBH_HID_GetMouseState(instance);
 
-  status = CheckInstance (instance);
-  if (status == usbOK) {
-    ptr_hid = &usbh_hid[instance];
-
-    if (ptr_hid->hid_in_data_len != 0U) {
-      ptr_hid->hid_in_data_len = 0U;
-      if (ptr_hid->protocol == HID_PROTOCOL_MOUSE) {
-        ptr_hid->mouse_state.button =  ptr_hid->hid_in_data_buf[0];
-        x                           = (int8_t)ptr_hid->hid_in_data_buf[1];
-        ptr_hid->mouse_state.x     += (int16_t)x;
-        y                           = (int8_t)ptr_hid->hid_in_data_buf[2];
-        ptr_hid->mouse_state.y     += (int16_t)y;
-      }
-    }
-    *state = ptr_hid->mouse_state;
+  if (state == NULL) {
+    status = usbInvalidParameter;
+    goto exit;
   }
 
+  status = CheckInstance (instance);
+  if (status != usbOK) {
+    goto exit;
+  }
+
+  ptr_hid = &usbh_hid[instance];
+  if (ptr_hid == NULL) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+  if (ptr_hid->protocol != HID_PROTOCOL_MOUSE) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
+  if (ptr_hid->hid_in_data_len != 0U) {
+    ptr_hid->hid_in_data_len = 0U;
+    ptr_hid->mouse_state.button =  ptr_hid->hid_in_data_buf[0];
+    x                           = (int8_t)ptr_hid->hid_in_data_buf[1];
+    ptr_hid->mouse_state.x     += (int16_t)x;
+    y                           = (int8_t)ptr_hid->hid_in_data_buf[2];
+    ptr_hid->mouse_state.y     += (int16_t)y;
+  }
+  *state = ptr_hid->mouse_state;
+
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_HID_GetMouseStateFailed(instance, status);
@@ -308,20 +342,20 @@ __WEAK void USBH_HID_DataReceived (uint8_t instance, uint32_t len) {
 ///                                       - value 255 :    configuration failed
 __WEAK uint8_t USBH_HID_Configure (uint8_t device, const USB_DEVICE_DESCRIPTOR *ptr_dev_desc, const USB_CONFIGURATION_DESCRIPTOR *ptr_cfg_desc) {
         USBH_DEV                 *ptr_dev;
-        USBH_HID                 *ptr_hid;
+        USBH_HID                 *ptr_hid = NULL;
+  const USB_COMMON_DESCRIPTOR    *ptr_cmn_desc;
   const USB_INTERFACE_DESCRIPTOR *ptr_if_desc;
   const HID_DESCRIPTOR           *ptr_hid_desc;
   const USB_ENDPOINT_DESCRIPTOR  *ptr_ep_desc;
   const uint8_t                  *ptr_desc;
         USBH_PIPE_HANDLE          pipe_hndl;
+        uint32_t                  cgf_desc_len;
         uint8_t                   num;
         uint8_t                   ret, idx;
-        usbStatus                 status;
 
-  status = usbOK;
-  ret    = 255U;
+  ret = 255U;
 
-  if (device == 255U) {
+  if (device >= usbh_dev_num) {
     goto exit;
   }
   if (ptr_dev_desc == NULL) {
@@ -350,8 +384,17 @@ __WEAK uint8_t USBH_HID_Configure (uint8_t device, const USB_DEVICE_DESCRIPTOR *
 
   ptr_hid->ptr_dev = (USBH_DEV *)ptr_dev;
 
-  ptr_desc    = (const uint8_t *)ptr_cfg_desc;
-  ptr_desc   += ptr_cfg_desc->bLength;
+  ptr_desc = (const uint8_t *)ptr_cfg_desc;
+  if (ptr_cfg_desc->bLength != sizeof(USB_CONFIGURATION_DESCRIPTOR)) {
+    goto exit;
+  }
+
+  cgf_desc_len  = (uint32_t)ptr_cfg_desc->wTotalLength;
+  ptr_desc     += ptr_cfg_desc->bLength;
+  ptr_cmn_desc  = (const USB_COMMON_DESCRIPTOR *)ptr_desc;
+  if ((ptr_cmn_desc->bLength == 0U) || (ptr_cmn_desc->bLength >= cgf_desc_len)) {
+    goto exit;
+  }
   ptr_if_desc = (const USB_INTERFACE_DESCRIPTOR *)ptr_desc;
   num = ptr_if_desc->bNumEndpoints;     // Number of endpoints
 
@@ -361,33 +404,30 @@ __WEAK uint8_t USBH_HID_Configure (uint8_t device, const USB_DEVICE_DESCRIPTOR *
 
       // HID Descriptor
       ptr_desc     = (const uint8_t *)ptr_if_desc;
-      ptr_desc    += ptr_if_desc->bLength;
+      ptr_cmn_desc = (const USB_COMMON_DESCRIPTOR *)ptr_desc;
+      if ((ptr_cmn_desc->bLength == 0U) || 
+          (((uintptr_t)ptr_desc + ptr_cmn_desc->bLength) > ((uintptr_t)ptr_cfg_desc + cgf_desc_len))) {
+        goto exit;
+      }
+      ptr_desc    += ptr_cmn_desc->bLength;
       ptr_hid_desc = (const HID_DESCRIPTOR *)ptr_desc;
       ptr_hid->report_desc_type = ptr_hid_desc->DescriptorList[0].bDescriptorType;
       ptr_hid->report_desc_len  = ptr_hid_desc->DescriptorList[0].wDescriptorLength;
 
+      ptr_cmn_desc = (const USB_COMMON_DESCRIPTOR *)ptr_desc;
+      if ((ptr_cmn_desc->bLength == 0U) || 
+          (((uintptr_t)ptr_desc + ptr_cmn_desc->bLength) > ((uintptr_t)ptr_cfg_desc + cgf_desc_len))) {
+        goto exit;
+      }
+      ptr_desc    += ptr_cmn_desc->bLength;
+
       // Create Pipes
-      ptr_desc     = (const uint8_t *)ptr_hid_desc;
-      ptr_desc    += ptr_hid_desc->bLength;
-      ptr_ep_desc  = (const USB_ENDPOINT_DESCRIPTOR *)ptr_desc;
+      ptr_ep_desc = (const USB_ENDPOINT_DESCRIPTOR *)ptr_desc;
       while (num-- != 0U) {
         if ((ptr_ep_desc->bmAttributes & 3U) == USB_ENDPOINT_TYPE_INTERRUPT) {  // Interrupt Endpoint
-          pipe_hndl = USBH_PipeCreate (device, ptr_ep_desc->bEndpointAddress, (uint8_t)((uint32_t)ptr_ep_desc->bmAttributes & USB_ENDPOINT_TYPE_MASK), ptr_ep_desc->wMaxPacketSize & 0x7FFU, ptr_ep_desc->bInterval);
+          pipe_hndl = USBH_PipeCreate (device, ptr_ep_desc->bEndpointAddress, (uint8_t)(ptr_ep_desc->bmAttributes & USB_ENDPOINT_TYPE_MASK), ptr_ep_desc->wMaxPacketSize & 0x7FFU, ptr_ep_desc->bInterval);
           if (pipe_hndl == 0U) {
             // If creation of pipe has failed delete previously created pipes
-            if (ptr_hid->int_in_pipe_hndl  != 0U) {
-              status = USBH_PipeDelete (ptr_hid->int_in_pipe_hndl);
-              if (status != usbOK) {
-                goto exit;
-              }
-            }
-            if (ptr_hid->int_out_pipe_hndl != 0U) {
-              status = USBH_PipeDelete (ptr_hid->int_out_pipe_hndl);
-              if (status != usbOK) {
-                goto exit;
-              }
-            }
-            memset ((void *)ptr_hid, 0, sizeof (USBH_HID));
             goto exit;
           }
           if ((ptr_ep_desc->bEndpointAddress & USB_ENDPOINT_DIRECTION_MASK) != 0U) {
@@ -408,11 +448,26 @@ __WEAK uint8_t USBH_HID_Configure (uint8_t device, const USB_DEVICE_DESCRIPTOR *
   }
 
 exit:
-#if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
-  if (status != usbOK) {
-    EvrUSBH_HID_ConfigureFailed(status);
+  if (ret == 255U) {                     // If configuration failed
+    if (ptr_hid != NULL) {
+      if (ptr_hid->int_in_pipe_hndl != 0U) {
+        if (USBH_PipeDelete (ptr_hid->int_in_pipe_hndl) == usbOK) {
+          ptr_hid->int_in_pipe_hndl = 0U;
+        }
+      }
+      if (ptr_hid->int_out_pipe_hndl != 0U) {
+        if (USBH_PipeDelete (ptr_hid->int_out_pipe_hndl) == usbOK) {
+          ptr_hid->int_out_pipe_hndl = 0U;
+        }
+      }
+      if ((ptr_hid->int_in_pipe_hndl  == 0U) &&
+          (ptr_hid->int_out_pipe_hndl == 0U)) {
+        memset ((void *)ptr_hid, 0, sizeof (USBH_HID));
+      }
+    }
+    EvrUSBH_HID_ConfigureFailed(usbClassErrorHID);
   }
-#endif
+
   return ret;
 }
 
@@ -856,9 +911,9 @@ static usbStatus USBH_HID_ReportOut (uint8_t instance, const uint8_t *ptr_data, 
   ptr_hid = &usbh_hid[instance];
 
   if (ptr_hid->int_out_pipe_hndl != 0U) {
-    status = USBH_PipeSend (ptr_hid->int_out_pipe_hndl, (uint8_t *)((uint32_t)ptr_data), data_len);
+    status = USBH_PipeSend (ptr_hid->int_out_pipe_hndl, (uint8_t *)(uintptr_t)ptr_data, data_len);
   } else {
-    status = USBH_HID_SetReport (instance, 2, 0, 0, (uint8_t *)((uint32_t)ptr_data), data_len);
+    status = USBH_HID_SetReport (instance, 2, 0, 0, (uint8_t *)(uintptr_t)ptr_data, data_len);
   }
 
 exit:

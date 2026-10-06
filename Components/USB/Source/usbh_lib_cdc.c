@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates).
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates).
  * All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_cdc.c
@@ -47,7 +47,7 @@ uint8_t USBH_CDC_ACM_GetDevice (uint8_t instance) {
     if (usbh_cdc[instance].ptr_dev == usbh_dev) {
       return 0U;
     } else {
-      device = (uint8_t)(((uint32_t)usbh_cdc[instance].ptr_dev - (uint32_t)usbh_dev) / sizeof (USBH_DEV));
+      device = (uint8_t)(((uintptr_t)usbh_cdc[instance].ptr_dev - (uintptr_t)usbh_dev) / sizeof (USBH_DEV));
     }
   } else {
     device = 0xFFU;
@@ -214,7 +214,9 @@ usbStatus USBH_CDC_ACM_SetLineCoding (uint8_t instance, const CDC_LINE_CODING *l
   uint8_t          device;
   usbStatus        status;
 
-  EvrUSBH_CDC_ACM_SetLineCoding(instance, line_coding->dwDTERate);
+  if (line_coding != NULL) {
+    EvrUSBH_CDC_ACM_SetLineCoding(instance, line_coding->dwDTERate);
+  }
 
   status = CheckInstance (instance);
   if (status == usbOK) {
@@ -222,7 +224,7 @@ usbStatus USBH_CDC_ACM_SetLineCoding (uint8_t instance, const CDC_LINE_CODING *l
       device = USBH_CDC_ACM_GetDevice (instance);
       if (device != 0xFFU) {
         PREPARE_SETUP_PACKET_DATA(((USB_SETUP_PACKET *)&setup_packet), USB_REQUEST_HOST_TO_DEVICE, USB_REQUEST_CLASS, USB_REQUEST_TO_INTERFACE, CDC_SET_LINE_CODING, 0U, 0U, sizeof(CDC_LINE_CODING))
-        status = USBH_ControlTransfer (device, &setup_packet, (uint8_t *)((uint32_t)line_coding), sizeof(CDC_LINE_CODING));
+        status = USBH_ControlTransfer (device, &setup_packet, (uint8_t *)(uintptr_t)line_coding, sizeof(CDC_LINE_CODING));
       } else {
         status = usbDeviceError;
       }
@@ -233,7 +235,9 @@ usbStatus USBH_CDC_ACM_SetLineCoding (uint8_t instance, const CDC_LINE_CODING *l
 
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
-    EvrUSBH_CDC_ACM_SetLineCodingFailed(instance, line_coding->dwDTERate, status);
+    if (line_coding != NULL) {
+      EvrUSBH_CDC_ACM_SetLineCodingFailed(instance, line_coding->dwDTERate, status);
+    }
   }
 #endif
   return status;
@@ -264,10 +268,12 @@ usbStatus USBH_CDC_ACM_GetLineCoding (uint8_t instance, CDC_LINE_CODING *line_co
   }
 
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
-  if (status != usbOK) {
-    EvrUSBH_CDC_ACM_SetLineCodingFailed(instance, line_coding->dwDTERate, status);
-  } else {
-    EvrUSBH_CDC_ACM_SetLineCoding(instance, line_coding->dwDTERate);
+  if (line_coding != NULL) {
+    if (status != usbOK) {
+      EvrUSBH_CDC_ACM_SetLineCodingFailed(instance, line_coding->dwDTERate, status);
+    } else {
+      EvrUSBH_CDC_ACM_SetLineCoding(instance, line_coding->dwDTERate);
+    }
   }
 #endif
   return status;
@@ -368,22 +374,21 @@ usbStatus USBH_CDC_ACM_SendBreak (uint8_t instance, uint16_t duration) {
 ///                                       - value 255 :    configuration failed
 __WEAK uint8_t USBH_CDC_Configure (uint8_t device, const USB_DEVICE_DESCRIPTOR *ptr_dev_desc, const USB_CONFIGURATION_DESCRIPTOR *ptr_cfg_desc) {
         USBH_DEV                             *ptr_dev;
-        USBH_CDC                             *ptr_cdc;
+        USBH_CDC                             *ptr_cdc = NULL;
   const USB_COMMON_DESCRIPTOR                *ptr_cmn_desc;
   const USB_INTERFACE_DESCRIPTOR             *ptr_if_desc;
   const USB_INTERFACE_ASSOCIATION_DESCRIPTOR *ptr_if_assoc_desc;
   const USB_ENDPOINT_DESCRIPTOR              *ptr_ep_desc;
   const uint8_t                              *ptr_desc;
         USBH_PIPE_HANDLE                      pipe_hndl;
+        uint32_t                              cgf_desc_len;
         uint8_t                               num;
         uint8_t                               ret, idx, if_cnt;
-        usbStatus                             status;
 
-  status = usbOK;
   ret    = 255U;
   if_cnt = 0U;
 
-  if (device == 255U) {
+  if (device >= usbh_dev_num) {
     goto exit;
   }
   if (ptr_dev_desc == NULL) {
@@ -412,9 +417,19 @@ __WEAK uint8_t USBH_CDC_Configure (uint8_t device, const USB_DEVICE_DESCRIPTOR *
 
   ptr_cdc->ptr_dev = (USBH_DEV *)ptr_dev;
 
-  ptr_desc      = (const uint8_t *)ptr_cfg_desc;
+  ptr_desc = (const uint8_t *)ptr_cfg_desc;
+  if (ptr_cfg_desc->bLength != sizeof(USB_CONFIGURATION_DESCRIPTOR)) {
+    goto exit;
+  }
+
+  cgf_desc_len  = (uint32_t)ptr_cfg_desc->wTotalLength;
   ptr_desc     += ptr_cfg_desc->bLength;
   ptr_cmn_desc  = (const USB_COMMON_DESCRIPTOR *)ptr_desc;
+  if ((ptr_cmn_desc->bLength == 0U) || (ptr_cmn_desc->bLength >= cgf_desc_len)) {
+    goto exit;
+  }
+
+  // Skip Interface Association Descriptor if it exists
   if (ptr_cmn_desc->bDescriptorType == USB_INTERFACE_ASSOCIATION_DESCRIPTOR_TYPE) {
     // If this is Interface Association Descriptor
     ptr_if_assoc_desc = (const USB_INTERFACE_ASSOCIATION_DESCRIPTOR *)ptr_desc;
@@ -423,6 +438,9 @@ __WEAK uint8_t USBH_CDC_Configure (uint8_t device, const USB_DEVICE_DESCRIPTOR *
       goto exit;                        // Not CDC device
     }
     ptr_desc      = (const uint8_t *)ptr_if_assoc_desc;
+    if (ptr_if_assoc_desc->bLength != sizeof(USB_INTERFACE_ASSOCIATION_DESCRIPTOR)) {
+      goto exit;
+    }
     ptr_desc     += ptr_if_assoc_desc->bLength;
     ptr_cmn_desc  = (const USB_COMMON_DESCRIPTOR *)ptr_desc;
   }
@@ -430,44 +448,30 @@ __WEAK uint8_t USBH_CDC_Configure (uint8_t device, const USB_DEVICE_DESCRIPTOR *
     goto exit;                          // Not CDC device
   }
   ptr_if_desc = (const USB_INTERFACE_DESCRIPTOR *)ptr_desc;
-  while ((uint32_t)ptr_if_desc < ((uint32_t)ptr_cfg_desc + ptr_cfg_desc->wTotalLength) && (if_cnt < 2U)) {
+  while ((uintptr_t)ptr_if_desc < ((uintptr_t)ptr_cfg_desc + cgf_desc_len) && (if_cnt < 2U)) {
     num = ptr_if_desc->bNumEndpoints;   // Number of endpoints
     switch (ptr_if_desc->bInterfaceClass) {
       case CDC_COMMUNICATION_INTERFACE_CLASS:
       case CDC_DATA_INTERFACE_CLASS:
         if_cnt++;
         // Skip all descriptors until Endpoint Descriptor
-        ptr_desc      = (const uint8_t *)ptr_if_desc;
-        ptr_cmn_desc  = (const USB_COMMON_DESCRIPTOR *)ptr_desc;
+        ptr_desc     = (const uint8_t *)ptr_if_desc;
+        ptr_cmn_desc = (const USB_COMMON_DESCRIPTOR *)ptr_desc;
         while (ptr_cmn_desc->bDescriptorType != USB_ENDPOINT_DESCRIPTOR_TYPE) {
-          ptr_desc     += ptr_cmn_desc->bLength;
-          ptr_cmn_desc  = (const USB_COMMON_DESCRIPTOR *)ptr_desc;
+          if ((ptr_cmn_desc->bLength == 0U) || 
+              (((uintptr_t)ptr_desc + ptr_cmn_desc->bLength) > ((uintptr_t)ptr_cfg_desc + cgf_desc_len))) {
+            goto exit;
+          }
+          ptr_desc    += ptr_cmn_desc->bLength;
+          ptr_cmn_desc = (const USB_COMMON_DESCRIPTOR *)ptr_desc;
         }
+
         // Create Pipes
         ptr_ep_desc = (const USB_ENDPOINT_DESCRIPTOR *)ptr_desc;
         while (num-- != 0U) {
-          pipe_hndl = USBH_PipeCreate (device, ptr_ep_desc->bEndpointAddress, (uint8_t)((uint32_t)ptr_ep_desc->bmAttributes & USB_ENDPOINT_TYPE_MASK), ptr_ep_desc->wMaxPacketSize & 0x7FFU, ptr_ep_desc->bInterval);
+          pipe_hndl = USBH_PipeCreate (device, ptr_ep_desc->bEndpointAddress, (uint8_t)(ptr_ep_desc->bmAttributes & USB_ENDPOINT_TYPE_MASK), ptr_ep_desc->wMaxPacketSize & 0x7FFU, ptr_ep_desc->bInterval);
           if (pipe_hndl == 0U) {
             // If creation of pipe has failed delete previously created pipes
-            if (ptr_cdc->bulk_in_pipe_hndl != 0U) {
-              status = USBH_PipeDelete (ptr_cdc->bulk_in_pipe_hndl);
-              if (status != usbOK) {
-                goto exit;
-              }
-            }
-            if (ptr_cdc->bulk_out_pipe_hndl != 0U) {
-              status = USBH_PipeDelete (ptr_cdc->bulk_out_pipe_hndl);
-              if (status != usbOK) {
-                goto exit;
-              }
-            }
-            if (ptr_cdc->int_in_pipe_hndl != 0U) {
-              status = USBH_PipeDelete (ptr_cdc->int_in_pipe_hndl);
-              if (status != usbOK) {
-                goto exit;
-              }
-            }
-            memset ((void *)ptr_cdc, 0, sizeof (USBH_CDC));
             goto exit;
           }
           switch (ptr_ep_desc->bmAttributes & USB_ENDPOINT_TYPE_MASK) {
@@ -496,10 +500,16 @@ __WEAK uint8_t USBH_CDC_Configure (uint8_t device, const USB_DEVICE_DESCRIPTOR *
       // Skip all descriptors in current interface as it is not a CDC interface
       ptr_desc      = (const uint8_t *)ptr_if_desc;
       ptr_cmn_desc  = (const USB_COMMON_DESCRIPTOR *)ptr_desc;
+      if ((ptr_cmn_desc->bLength == 0U) || 
+          (((uintptr_t)ptr_desc + ptr_cmn_desc->bLength) > ((uintptr_t)ptr_cfg_desc + cgf_desc_len))) {
+        goto exit;
+      }
       ptr_desc     += ptr_cmn_desc->bLength;    // Step over current interface descriptor
       ptr_cmn_desc  = (const USB_COMMON_DESCRIPTOR *)ptr_desc;
-      while ((ptr_cmn_desc->bDescriptorType != USB_INTERFACE_DESCRIPTOR_TYPE) && 
-             ((uint32_t)ptr_cmn_desc < ((uint32_t)ptr_cfg_desc + ptr_cfg_desc->wTotalLength))) {
+      while (ptr_cmn_desc->bDescriptorType != USB_INTERFACE_DESCRIPTOR_TYPE) {
+        if ((ptr_cmn_desc->bLength == 0U) || (((uintptr_t)ptr_cmn_desc + ptr_cmn_desc->bLength) >= ((uintptr_t)ptr_cfg_desc + cgf_desc_len))) {
+          goto exit;
+        }
         ptr_desc     += ptr_cmn_desc->bLength;
         ptr_cmn_desc  = (const USB_COMMON_DESCRIPTOR *)ptr_desc;
       }
@@ -507,7 +517,7 @@ __WEAK uint8_t USBH_CDC_Configure (uint8_t device, const USB_DEVICE_DESCRIPTOR *
       break;
     }
   }
-  
+
   if ((ptr_cdc->bulk_in_pipe_hndl  != 0U) &&
       (ptr_cdc->bulk_out_pipe_hndl != 0U) &&
       (ptr_cdc->int_in_pipe_hndl   != 0U)) {
@@ -515,11 +525,34 @@ __WEAK uint8_t USBH_CDC_Configure (uint8_t device, const USB_DEVICE_DESCRIPTOR *
   }
 
 exit:
-#if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
-  if (status != usbOK) {
-    EvrUSBH_CDC_ACM_ConfigureFailed(status);
+  if (ret == 255U) {                     // If configuration failed
+    if (ptr_cdc != NULL) {
+      // Delete previously created pipes
+      if (ptr_cdc->bulk_in_pipe_hndl != 0U) {
+        if (USBH_PipeDelete (ptr_cdc->bulk_in_pipe_hndl) == usbOK) {
+          ptr_cdc->bulk_in_pipe_hndl = 0U;
+        }
+      }
+      if (ptr_cdc->bulk_out_pipe_hndl != 0U) {
+        if (USBH_PipeDelete (ptr_cdc->bulk_out_pipe_hndl) == usbOK) {
+          ptr_cdc->bulk_out_pipe_hndl = 0U;
+        }
+      }
+      if (ptr_cdc->int_in_pipe_hndl != 0U) {
+        if (USBH_PipeDelete (ptr_cdc->int_in_pipe_hndl) == usbOK) {
+          ptr_cdc->int_in_pipe_hndl = 0U;
+
+        }
+      }
+      if ((ptr_cdc->bulk_in_pipe_hndl  == 0U) &&
+          (ptr_cdc->bulk_out_pipe_hndl == 0U) &&
+          (ptr_cdc->int_in_pipe_hndl   == 0U)) {
+        memset ((void *)ptr_cdc, 0, sizeof (USBH_CDC));
+      }
+    }
+    EvrUSBH_CDC_ACM_ConfigureFailed(usbClassErrorCDC);
   }
-#endif
+
   return ret;
 }
 
@@ -589,6 +622,7 @@ __WEAK usbStatus USBH_CDC_Unconfigure (uint8_t instance) {
 __WEAK usbStatus USBH_CDC_Initialize_Lib (uint8_t instance) {
   USBH_CDC        *ptr_cdc;
   CDC_LINE_CODING  line_coding;
+  uint16_t         max_packet_size;
   usbStatus        status;
 
   EvrUSBH_CDC_ACM_Initialize(instance);
@@ -603,6 +637,12 @@ __WEAK usbStatus USBH_CDC_Initialize_Lib (uint8_t instance) {
     line_coding.bParityType = 0;
     line_coding.bDataBits   = 8;
     status = USBH_CDC_ACM_SetLineCoding (instance, (const CDC_LINE_CODING *)(&line_coding));
+    if (status == usbOK) {
+      max_packet_size = ((USBH_PIPE *)ptr_cdc->int_in_pipe_hndl)->wMaxPacketSize;
+      if (max_packet_size > sizeof(ptr_cdc->int_in_data_buf)) {
+        status = usbClassErrorCDC;
+      }
+    }
     if (status == usbOK) {
       // Start Interrupt In Pipe handling thread
       ptr_cdc->int_in_thread_id = USBH_ThreadCreate (usbhThreadCDC, ptr_cdc->ptr_dev->class_instance);
@@ -678,10 +718,9 @@ static usbStatus CheckInstance (uint8_t instance) {
 ///        device (from Interrupt In endpoint)
 /// \param[in]     arg              index of CDC instance.
 void USBH_CDC_IntIn_Thread (void *arg) {
-         USBH_CDC *ptr_cdc;
-         uint16_t  status;
-         uint8_t   instance;
-  static uint8_t   buf[16];
+  USBH_CDC *ptr_cdc;
+  uint16_t  status;
+  uint8_t   instance;
 
   instance = (uint8_t)((uint32_t)arg);
   if (instance >= usbh_cdc_num) {
@@ -694,18 +733,18 @@ void USBH_CDC_IntIn_Thread (void *arg) {
   ptr_cdc = &usbh_cdc[instance];
 
   for (;;) {
-    if (USBH_PipeReceive  (ptr_cdc->int_in_pipe_hndl, buf, ((USBH_PIPE *)ptr_cdc->int_in_pipe_hndl)->wMaxPacketSize) == usbOK) {
+    if (USBH_PipeReceive(ptr_cdc->int_in_pipe_hndl, ptr_cdc->int_in_data_buf, 10U) == usbOK) {
       // Data has been received on Interrupt In Pipe
-      if ((buf[0] == 0xA1U)                         &&
-          (buf[1] == CDC_NOTIFICATION_SERIAL_STATE) &&
-          (buf[2] == 0x00U)                         &&
-          (buf[3] == 0x00U)                         &&
-          (buf[4] == 0x00U)                         &&
-          (buf[5] == 0x00U)                         &&
-          (buf[6] == 0x02U)                         &&
-          (buf[7] == 0x00U)) {
+      if ((ptr_cdc->int_in_data_buf[0] == 0xA1U)                         &&
+          (ptr_cdc->int_in_data_buf[1] == CDC_NOTIFICATION_SERIAL_STATE) &&
+          (ptr_cdc->int_in_data_buf[2] == 0x00U)                         &&
+          (ptr_cdc->int_in_data_buf[3] == 0x00U)                         &&
+          (ptr_cdc->int_in_data_buf[4] == 0x00U)                         &&
+          (ptr_cdc->int_in_data_buf[5] == 0x00U)                         &&
+          (ptr_cdc->int_in_data_buf[6] == 0x02U)                         &&
+          (ptr_cdc->int_in_data_buf[7] == 0x00U)) {
         // If this is Notification then store new modem line and error status
-        status = (uint16_t)(((uint32_t)buf[9] << 8) | (uint32_t)buf[8]);
+        status = (uint16_t)(((uint32_t)ptr_cdc->int_in_data_buf[9] << 8) | (uint32_t)ptr_cdc->int_in_data_buf[8]);
         EvrUSBH_CDC_ACM_OnNotify (instance, status);
         USBH_CDC_ACM_Notify (instance, status);
       }

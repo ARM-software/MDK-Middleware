@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_core_custom_device.c
  * Purpose: USB Device - Device core module
@@ -24,14 +24,18 @@ __WEAK usbdRequestStatus USBD_Core_Endpoint0_SetupPacketReceived (uint8_t device
   usbd_data_t       *ptr_dev_data;
   usbdRequestStatus  status;
 
-  if (device >= usbd_dev_num) { return usbdRequestNotProcessed; }
+  if (device >= usbd_dev_num)       { return usbdRequestNotProcessed; }
+  if (usbd_dev_ptr[device] == NULL) { return usbdRequestNotProcessed; }
 
   ptr_dev_data = usbd_dev_ptr[device]->data_ptr; if (ptr_dev_data == NULL) { return usbdRequestNotProcessed; }
 
   // Allow SETUP PACKET processing at device level
   ptr_dev_data->buf = NULL;
   ptr_dev_data->len = 0U;
-  status = fpUSBD_Device_Endpoint0_SetupPacketReceived [device] ((const USB_SETUP_PACKET *)&ptr_dev_data->setup_packet, &ptr_dev_data->buf, &ptr_dev_data->len);
+  status = usbdRequestNotProcessed;
+  if (fpUSBD_Device_Endpoint0_SetupPacketReceived[device] != NULL) {
+    status = fpUSBD_Device_Endpoint0_SetupPacketReceived [device] ((const USB_SETUP_PACKET *)&ptr_dev_data->setup_packet, &ptr_dev_data->buf, &ptr_dev_data->len);
+  }
   EvrUSBD_Core_OnSetupPacketReceived(device, status);
   EvrUSBD_Core_OnSetupPacketReceivedDetail(device, (const void *)&ptr_dev_data->setup_packet, ptr_dev_data->len);
   if (status != usbdRequestNotProcessed) {
@@ -49,7 +53,12 @@ __WEAK usbdRequestStatus USBD_Core_Endpoint0_SetupPacketReceived (uint8_t device
 __WEAK void USBD_Core_Endpoint0_SetupPacketProcessed (uint8_t device) {
   const usbd_data_t *ptr_dev_data;
 
-  if (device >= usbd_dev_num) { return; }
+  if (device >= usbd_dev_num)       { return; }
+  if (usbd_dev_ptr[device] == NULL) { return; }
+
+  if (fpUSBD_Device_Endpoint0_SetupPacketProcessed[device] == NULL) {
+    return;
+  }
 
   ptr_dev_data = usbd_dev_ptr[device]->data_ptr; if (ptr_dev_data == NULL) { return; }
 
@@ -73,7 +82,12 @@ __WEAK usbdRequestStatus USBD_Core_Endpoint0_OutDataReceived (uint8_t device) {
   const usbd_data_t       *ptr_dev_data;
         usbdRequestStatus  status;
 
-  if (device >= usbd_dev_num) { return usbdRequestNotProcessed; }
+  if (device >= usbd_dev_num)       { return usbdRequestNotProcessed; }
+  if (usbd_dev_ptr[device] == NULL) { return usbdRequestNotProcessed; }
+
+  if (fpUSBD_Device_Endpoint0_OutDataReceived[device] == NULL) {
+    return usbdRequestNotProcessed;
+  }
 
   ptr_dev_data = usbd_dev_ptr[device]->data_ptr; if (ptr_dev_data == NULL) { return usbdRequestNotProcessed; }
 
@@ -99,7 +113,12 @@ __WEAK usbdRequestStatus USBD_Core_Endpoint0_InDataSent (uint8_t device) {
   const usbd_data_t       *ptr_dev_data;
         usbdRequestStatus  status;
 
-  if (device >= usbd_dev_num) { return usbdRequestNotProcessed; }
+  if (device >= usbd_dev_num)       { return usbdRequestNotProcessed; }
+  if (usbd_dev_ptr[device] == NULL) { return usbdRequestNotProcessed; }
+
+  if (fpUSBD_Device_Endpoint0_InDataSent[device] == NULL) {
+    return usbdRequestNotProcessed;
+  }
 
   ptr_dev_data = usbd_dev_ptr[device]->data_ptr; if (ptr_dev_data == NULL) { return usbdRequestNotProcessed; }
 

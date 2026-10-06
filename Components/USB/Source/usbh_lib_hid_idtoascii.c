@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2019 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_hid_idtoascii.c
  * Purpose: USB Host - Human Interface Device Class Key mapping table
@@ -11,7 +11,7 @@
 
 // Values of 0xFFU will be translated to HID ID + 0x10000
 
-const unsigned char HID_KEYBOARD_ID_TO_ASCII[] = {
+const unsigned char HID_KEYBOARD_ID_TO_ASCII[58] = {
   // Usage IDs:   0 ..   9
   0xFFU,                                // Reserved
   0xFFU,                                // ErrorRollOver

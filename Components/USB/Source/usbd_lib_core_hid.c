@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2021 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_core_hid.c
  * Purpose: USB Device - Human Interface Device (HID) core module
@@ -23,7 +23,7 @@ __WEAK bool USBD_Endpoint0_ReqGetDescriptor_HID (uint8_t device, const uint8_t *
   const usbd_dev_t  *ptr_dev_cfg;
   const usbd_data_t *ptr_dev_data;
   const usbd_hid_t  *ptr_hid_cfg;
-        uint8_t      index, cnt;
+        uint8_t      index;
 
   if (device >= usbd_dev_num) { return false; }         // Check if device exists
 
@@ -33,43 +33,48 @@ __WEAK bool USBD_Endpoint0_ReqGetDescriptor_HID (uint8_t device, const uint8_t *
 
   switch (ptr_dev_data->setup_packet.wValue >> 8) {
     case HID_HID_DESCRIPTOR_TYPE:
-      cnt = 0U;
       for (index = 0U; index < usbd_hid_num; index++) {
         ptr_hid_cfg = usbd_hid_ptr[index]; if (ptr_hid_cfg == NULL) { continue; }
         if (device == ptr_hid_cfg->dev_num) {
           if (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_hid_cfg->if_num)) {   // Interface number correct?
             break;
           }
-          cnt++;
         }
       }
-      if (cnt == usbd_hid_num) {
+      if (index == usbd_hid_num) {
         return false;                                                   // If HID Interface does not exist
       }
       if ((ptr_dev_cfg->hs == 0U) && (ptr_dev_data->high_speed != 0U)) {
         return false;                                                   // High speed request but high-speed not enabled
       }
+      if (usbd_desc_ptr[device] == NULL) {
+        return false;
+      }
       if (ptr_dev_data->high_speed == 0U) {
-        *pD = (uint8_t *)((uint32_t)usbd_desc_ptr[device]->config_descriptor_fs);
+        *pD = (uint8_t *)(uintptr_t)usbd_desc_ptr[device]->config_descriptor_fs;
       } else {
-        *pD = (uint8_t *)((uint32_t)usbd_desc_ptr[device]->config_descriptor_hs);
+        *pD = (uint8_t *)(uintptr_t)usbd_desc_ptr[device]->config_descriptor_hs;
+      }
+      if (usbd_hid_desc_ptr[index] == NULL) {
+        return false;
       }
       *pD += usbd_hid_desc_ptr[index]->hid_descriptor_offset;
       *len = sizeof(HID_DESCRIPTOR);
       break;
     case HID_REPORT_DESCRIPTOR_TYPE:
-      cnt = 0U;
       for (index = 0U; index < usbd_hid_num; index++) {
         ptr_hid_cfg = usbd_hid_ptr[index]; if (ptr_hid_cfg == NULL) { continue; }
         if (device == ptr_hid_cfg->dev_num) {
           if (ptr_dev_data->setup_packet.wIndex == (uint16_t)(ptr_hid_cfg->if_num)) {   // Interface number correct?
             break;
           }
-          cnt++;
         }
       }
-      if (cnt == usbd_hid_num) {
+      if (index == usbd_hid_num) {
         return false;                   // If HID Interface does not exist
+      }
+      if (usbd_hid_desc_ptr[index] == NULL) {
+        return false;
       }
       *pD  = usbd_hid_desc_ptr[index]->report_descriptor;
       *len = usbd_hid_desc_ptr[index]->report_descriptor_size;
@@ -208,6 +213,9 @@ __WEAK bool USBD_Endpoint0_Out_HID_ReqToIF (uint8_t device) {
   if (device >= usbd_dev_num) { return false; }         // Check if device exists
 
   // Check all necessary pointers
+  if (usbd_dev_ptr[device] == NULL) {
+    return false;
+  }
   ptr_dev_data = usbd_dev_ptr[device]->data_ptr; if (ptr_dev_data == NULL) { return false; }
 
   for (index = 0U; index < usbd_hid_num; index++) {

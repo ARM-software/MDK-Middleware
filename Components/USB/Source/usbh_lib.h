@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib.h
  * Purpose: USB Host header file
@@ -237,6 +237,7 @@ typedef struct {
   USBH_PIPE_HANDLE      bulk_out_pipe_hndl;                 ///< bulk out pipe handle
   USBH_PIPE_HANDLE      int_in_pipe_hndl;                   ///< interrupt in pipe handle
   void                 *int_in_thread_id;                   ///< interrupt in pipe thread ID
+  uint8_t               int_in_data_buf[64];                ///< interrupt in data buffer
 } USBH_CDC;
 
 //  ==== USB Host Functions for Memory Management ====

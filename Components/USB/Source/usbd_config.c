@@ -5962,55 +5962,72 @@ usbStatus USBD_ClassInitialize (uint8_t device) {
   status_ret = usbOK;
 #if (USBD_CUSTOM_CLASS_NUM > 0)
   for (instance = 0; instance < usbd_custom_class_num; instance++) {
-    if (usbd_custom_class_ptr[instance] != NULL) {
-      if (usbd_custom_class_ptr[instance]->dev_num == device) {
-        status = USBD_CustomClass_Initialize (instance);
-        if (status) status_ret = status;
-      }
+    if (usbd_custom_class_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_custom_class_ptr[instance]->dev_num == device) {
+      status = USBD_CustomClass_Initialize (instance);
+      if (status) status_ret = status;
     }
   }
 #endif
 
 #if (USBD_ADC_NUM > 0)
   for (instance = 0; instance < usbd_adc_num; instance++) {
-    if ((usbd_adc_ptr[instance]->spkr_data_ptr != NULL) || (usbd_adc_ptr[instance]->mic_data_ptr != NULL)) {
-      if (usbd_adc_ptr[instance]->dev_num == device) {
-        status = USBD_ADC_Initialize (instance);
-        if (status) status_ret = status;
-      }
+    if (usbd_adc_ptr[instance] == NULL) {
+      continue;
+    }
+    if ((usbd_adc_ptr[instance]->spkr_data_ptr == NULL) && (usbd_adc_ptr[instance]->mic_data_ptr == NULL)) {
+      continue;
+    }
+    if (usbd_adc_ptr[instance]->dev_num == device) {
+      status = USBD_ADC_Initialize (instance);
+      if (status) status_ret = status;
     }
   }
 #endif
 
 #if (USBD_CDC_NUM > 0)
   for (instance = 0; instance < usbd_cdc_num; instance++) {
-    if (usbd_cdc_ptr[instance]->data_ptr != NULL) {
-      if (usbd_cdc_ptr[instance]->dev_num == device) {
-        status = USBD_CDC_Initialize (instance);
-        if (status) status_ret = status;
-      }
+    if (usbd_cdc_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_cdc_ptr[instance]->data_ptr == NULL) {
+      continue;
+    }
+    if (usbd_cdc_ptr[instance]->dev_num == device) {
+      status = USBD_CDC_Initialize (instance);
+      if (status) status_ret = status;
     }
   }
 #endif
 
 #if (USBD_HID_NUM > 0)
   for (instance = 0; instance < usbd_hid_num; instance++) {
-    if (usbd_hid_ptr[instance]->data_ptr != NULL) {
-      if (usbd_hid_ptr[instance]->dev_num == device) {
-        status = USBD_HID_Initialize (instance);
-        if (status) status_ret = status;
-      }
+    if (usbd_hid_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_hid_ptr[instance]->data_ptr == NULL) {
+      continue;
+    }
+    if (usbd_hid_ptr[instance]->dev_num == device) {
+      status = USBD_HID_Initialize (instance);
+      if (status) status_ret = status;
     }
   }
 #endif
 
 #if (USBD_MSC_NUM > 0)
   for (instance = 0; instance < usbd_msc_num; instance++) {
-    if (usbd_msc_ptr[instance]->data_ptr != NULL) {
-      if (usbd_msc_ptr[instance]->dev_num == device) {
-        status = USBD_MSC_Initialize (instance);
-        if (status) status_ret = status;
-      }
+    if (usbd_msc_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_msc_ptr[instance]->data_ptr == NULL) {
+      continue;
+    }
+    if (usbd_msc_ptr[instance]->dev_num == device) {
+      status = USBD_MSC_Initialize (instance);
+      if (status) status_ret = status;
     }
   }
 #endif
@@ -6025,55 +6042,72 @@ usbStatus USBD_ClassUninitialize (uint8_t device) {
   status_ret = usbOK;
 #if (USBD_CUSTOM_CLASS_NUM > 0)
   for (instance = 0; instance < usbd_custom_class_num; instance++) {
-    if (usbd_custom_class_ptr[instance] != NULL) {
-      if (usbd_custom_class_ptr[instance]->dev_num == device) {
-        status = USBD_CustomClass_Uninitialize (instance);
-        if (status) status_ret = status;
-      }
+    if (usbd_custom_class_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_custom_class_ptr[instance]->dev_num == device) {
+      status = USBD_CustomClass_Uninitialize (instance);
+      if (status) status_ret = status;
     }
   }
 #endif
 
 #if (USBD_ADC_NUM > 0)
   for (instance = 0; instance < usbd_adc_num; instance++) {
-    if ((usbd_adc_ptr[instance]->spkr_data_ptr != NULL) || (usbd_adc_ptr[instance]->mic_data_ptr != NULL)) {
-      if (usbd_adc_ptr[instance]->dev_num == device) {
-        status = USBD_ADC_Uninitialize (instance);
-        if (status) status_ret = status;
-      }
+    if (usbd_adc_ptr[instance] == NULL) {
+      continue;
+    }
+    if ((usbd_adc_ptr[instance]->spkr_data_ptr == NULL) && (usbd_adc_ptr[instance]->mic_data_ptr == NULL)) {
+      continue;
+    }
+    if (usbd_adc_ptr[instance]->dev_num == device) {
+      status = USBD_ADC_Uninitialize (instance);
+      if (status) status_ret = status;
     }
   }
 #endif
 
 #if (USBD_CDC_NUM > 0)
   for (instance = 0; instance < usbd_cdc_num; instance++) {
-    if (usbd_cdc_ptr[instance]->data_ptr != NULL) {
-      if (usbd_cdc_ptr[instance]->dev_num == device) {
-        status = USBD_CDC_Uninitialize (instance);
-        if (status) status_ret = status;
-      }
+    if (usbd_cdc_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_cdc_ptr[instance]->data_ptr == NULL) {
+      continue;
+    }
+    if (usbd_cdc_ptr[instance]->dev_num == device) {
+      status = USBD_CDC_Uninitialize (instance);
+      if (status) status_ret = status;
     }
   }
 #endif
 
 #if (USBD_HID_NUM > 0)
   for (instance = 0; instance < usbd_hid_num; instance++) {
-    if (usbd_hid_ptr[instance]->data_ptr != NULL) {
-      if (usbd_hid_ptr[instance]->dev_num == device) {
-        status = USBD_HID_Uninitialize (instance);
-        if (status) status_ret = status;
-      }
+    if (usbd_hid_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_hid_ptr[instance]->data_ptr == NULL) {
+      continue;
+    }
+    if (usbd_hid_ptr[instance]->dev_num == device) {
+      status = USBD_HID_Uninitialize (instance);
+      if (status) status_ret = status;
     }
   }
 #endif
 
 #if (USBD_MSC_NUM > 0)
   for (instance = 0; instance < usbd_msc_num; instance++) {
-    if (usbd_msc_ptr[instance]->data_ptr != NULL) {
-      if (usbd_msc_ptr[instance]->dev_num == device) {
-        status = USBD_MSC_Uninitialize (instance);
-        if (status) status_ret = status;
-      }
+    if (usbd_msc_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_msc_ptr[instance]->data_ptr == NULL) {
+      continue;
+    }
+    if (usbd_msc_ptr[instance]->dev_num == device) {
+      status = USBD_MSC_Uninitialize (instance);
+      if (status) status_ret = status;
     }
   }
 #endif
@@ -6086,50 +6120,67 @@ void USBD_Reset (uint8_t device) {
 
 #if (USBD_CUSTOM_CLASS_NUM > 0)
   for (instance = 0; instance < usbd_custom_class_num; instance++) {
-    if (usbd_custom_class_ptr[instance] != NULL) {
-      if (usbd_custom_class_ptr[instance]->dev_num == device) {
-        USBD_CustomClass_Reset (instance);
-      }
+    if (usbd_custom_class_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_custom_class_ptr[instance]->dev_num == device) {
+      USBD_CustomClass_Reset (instance);
     }
   }
 #endif
 
 #if (USBD_ADC_NUM > 0)
   for (instance = 0; instance < usbd_adc_num; instance++) {
-    if ((usbd_adc_ptr[instance]->spkr_data_ptr != NULL) || (usbd_adc_ptr[instance]->mic_data_ptr != NULL)){
-      if (usbd_adc_ptr[instance]->dev_num == device) {
-        USBD_ADC_Reset (instance);
-      }
+    if (usbd_adc_ptr[instance] == NULL) {
+      continue;
+    }
+    if ((usbd_adc_ptr[instance]->spkr_data_ptr == NULL) && (usbd_adc_ptr[instance]->mic_data_ptr == NULL)){
+      continue;
+    }
+    if (usbd_adc_ptr[instance]->dev_num == device) {
+      USBD_ADC_Reset (instance);
     }
   }
 #endif
 
 #if (USBD_CDC_NUM > 0)
   for (instance = 0; instance < usbd_cdc_num; instance++) {
-    if (usbd_cdc_ptr[instance]->data_ptr != NULL) {
-      if (usbd_cdc_ptr[instance]->dev_num == device) {
-        USBD_CDC_Reset (instance);
-      }
+    if (usbd_cdc_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_cdc_ptr[instance]->data_ptr == NULL) {
+      continue;
+    }
+    if (usbd_cdc_ptr[instance]->dev_num == device) {
+      USBD_CDC_Reset (instance);
     }
   }
 #endif
 
 #if (USBD_HID_NUM > 0)
   for (instance = 0; instance < usbd_hid_num; instance++) {
-    if (usbd_hid_ptr[instance]->data_ptr != NULL) {
-      if (usbd_hid_ptr[instance]->dev_num == device) {
-        USBD_HID_Reset (instance);
-      }
+    if (usbd_hid_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_hid_ptr[instance]->data_ptr == NULL) {
+      continue;
+    }
+    if (usbd_hid_ptr[instance]->dev_num == device) {
+      USBD_HID_Reset (instance);
     }
   }
 #endif
 
 #if (USBD_MSC_NUM > 0)
   for (instance = 0; instance < usbd_msc_num; instance++) {
-    if (usbd_msc_ptr[instance]->data_ptr != NULL) {
-      if (usbd_msc_ptr[instance]->dev_num == device) {
-        USBD_MSC_Reset (instance);
-      }
+    if (usbd_msc_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_msc_ptr[instance]->data_ptr == NULL) {
+      continue;
+    }
+    if (usbd_msc_ptr[instance]->dev_num == device) {
+      USBD_MSC_Reset (instance);
     }
   }
 #endif
@@ -6142,10 +6193,14 @@ void USBD_SetConfiguration (uint8_t device, uint8_t configuration) {
 
   if (configuration != 0U) {
     for (instance = 0; instance < usbd_hid_num; instance++) {
-      if (usbd_hid_ptr[instance]->data_ptr != NULL) {
-        if (usbd_hid_ptr[instance]->dev_num == device) {
-          USBD_HID_SetConfiguration (instance);
-        }
+      if (usbd_hid_ptr[instance] == NULL) {
+        continue;
+      }
+      if (usbd_hid_ptr[instance]->data_ptr == NULL) {
+        continue;
+      }
+      if (usbd_hid_ptr[instance]->dev_num == device) {
+        USBD_HID_SetConfiguration (instance);
       }
     }
   }
@@ -6162,28 +6217,29 @@ void USBD_EndpointStart (uint8_t device, uint8_t ep_addr) {
   uint8_t i;
 
   for (instance = 0; instance < usbd_custom_class_num; instance++) {
-    if (usbd_custom_class_ptr[instance] != NULL) {
-      if (usbd_custom_class_ptr[instance]->dev_num == device) {
-        for (i = 0U; i < 4U; i++) {
-          if (usbd_custom_class_ptr[instance]->cc[i].if_en) {
-            if (((usbd_custom_class_ptr[instance]->cc[i].if_ep0_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep0_addr == ep_addr)) ||
-                ((usbd_custom_class_ptr[instance]->cc[i].if_ep1_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep1_addr == ep_addr)) ||
-                ((usbd_custom_class_ptr[instance]->cc[i].if_ep2_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep2_addr == ep_addr)) ||
-                ((usbd_custom_class_ptr[instance]->cc[i].if_ep3_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep3_addr == ep_addr)) ||
-                ((usbd_custom_class_ptr[instance]->cc[i].if_ep4_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep4_addr == ep_addr)) ||
-                ((usbd_custom_class_ptr[instance]->cc[i].if_ep5_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep5_addr == ep_addr)) ||
-                ((usbd_custom_class_ptr[instance]->cc[i].if_ep6_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep6_addr == ep_addr)) ||
-                ((usbd_custom_class_ptr[instance]->cc[i].if_ep7_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep7_addr == ep_addr))) {
-              USBD_CustomClass_EndpointStart (instance, ep_addr);
-            }
+    if (usbd_custom_class_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_custom_class_ptr[instance]->dev_num == device) {
+      for (i = 0U; i < 4U; i++) {
+        if (usbd_custom_class_ptr[instance]->cc[i].if_en) {
+          if (((usbd_custom_class_ptr[instance]->cc[i].if_ep0_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep0_addr == ep_addr)) ||
+              ((usbd_custom_class_ptr[instance]->cc[i].if_ep1_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep1_addr == ep_addr)) ||
+              ((usbd_custom_class_ptr[instance]->cc[i].if_ep2_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep2_addr == ep_addr)) ||
+              ((usbd_custom_class_ptr[instance]->cc[i].if_ep3_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep3_addr == ep_addr)) ||
+              ((usbd_custom_class_ptr[instance]->cc[i].if_ep4_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep4_addr == ep_addr)) ||
+              ((usbd_custom_class_ptr[instance]->cc[i].if_ep5_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep5_addr == ep_addr)) ||
+              ((usbd_custom_class_ptr[instance]->cc[i].if_ep6_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep6_addr == ep_addr)) ||
+              ((usbd_custom_class_ptr[instance]->cc[i].if_ep7_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep7_addr == ep_addr))) {
+            USBD_CustomClass_EndpointStart (instance, ep_addr);
           }
         }
       }
@@ -6193,6 +6249,9 @@ void USBD_EndpointStart (uint8_t device, uint8_t ep_addr) {
 
 #if (USBD_ADC_NUM > 0)
   for (instance = 0; instance < usbd_adc_num; instance++) {
+    if (usbd_adc_ptr[instance] == NULL) {
+      continue;
+    }
     if (usbd_adc_ptr[instance]->dev_num == device) {
       if ((usbd_adc_ptr[instance]->spkr_data_ptr != NULL) && (usbd_adc_ptr[instance]->out_cfg != NULL)) {
         if ((usbd_adc_ptr[instance]->out_cfg->ep_iso) == ep_addr) {
@@ -6210,13 +6269,17 @@ void USBD_EndpointStart (uint8_t device, uint8_t ep_addr) {
 
 #if (USBD_CDC_NUM > 0)
   for (instance = 0; instance < usbd_cdc_num; instance++) {
-    if (usbd_cdc_ptr[instance]->data_ptr != NULL) {
-      if (usbd_cdc_ptr[instance]->dev_num == device) {
-        if (((usbd_cdc_ptr[instance]->ep_int_in  | 0x80) == ep_addr) ||
-            ((usbd_cdc_ptr[instance]->ep_bulk_in | 0x80) == ep_addr) ||
-            ((usbd_cdc_ptr[instance]->ep_bulk_out      ) == ep_addr)) {
-          USBD_CDC_EndpointStart (instance, ep_addr);
-        }
+    if (usbd_cdc_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_cdc_ptr[instance]->data_ptr == NULL) {
+      continue;
+    }
+    if (usbd_cdc_ptr[instance]->dev_num == device) {
+      if (((usbd_cdc_ptr[instance]->ep_int_in  | 0x80) == ep_addr) ||
+          ((usbd_cdc_ptr[instance]->ep_bulk_in | 0x80) == ep_addr) ||
+          ((usbd_cdc_ptr[instance]->ep_bulk_out      ) == ep_addr)) {
+        USBD_CDC_EndpointStart (instance, ep_addr);
       }
     }
   }
@@ -6224,12 +6287,16 @@ void USBD_EndpointStart (uint8_t device, uint8_t ep_addr) {
 
 #if (USBD_HID_NUM > 0)
   for (instance = 0; instance < usbd_hid_num; instance++) {
-    if (usbd_hid_ptr[instance]->data_ptr != NULL) {
-      if (usbd_hid_ptr[instance]->dev_num == device) {
-        if (((usbd_hid_ptr[instance]->ep_int_in | 0x80) == ep_addr) ||
-            ((usbd_hid_ptr[instance]->ep_int_out      ) == ep_addr)) {
-          USBD_HID_EndpointStart (instance, ep_addr);
-        }
+    if (usbd_hid_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_hid_ptr[instance]->data_ptr == NULL) {
+      continue;
+    }
+    if (usbd_hid_ptr[instance]->dev_num == device) {
+      if (((usbd_hid_ptr[instance]->ep_int_in | 0x80) == ep_addr) ||
+          ((usbd_hid_ptr[instance]->ep_int_out      ) == ep_addr)) {
+        USBD_HID_EndpointStart (instance, ep_addr);
       }
     }
   }
@@ -6237,12 +6304,16 @@ void USBD_EndpointStart (uint8_t device, uint8_t ep_addr) {
 
 #if (USBD_MSC_NUM > 0)
   for (instance = 0; instance < usbd_msc_num; instance++) {
-    if (usbd_msc_ptr[instance]->data_ptr != NULL) {
-      if (usbd_msc_ptr[instance]->dev_num == device) {
-        if (((usbd_msc_ptr[instance]->ep_bulk_in | 0x80) == ep_addr) ||
-            ((usbd_msc_ptr[instance]->ep_bulk_out      ) == ep_addr)) {
-          USBD_MSC_EndpointStart (instance, ep_addr);
-        }
+    if (usbd_msc_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_msc_ptr[instance]->data_ptr == NULL) {
+      continue;
+    }
+    if (usbd_msc_ptr[instance]->dev_num == device) {
+      if (((usbd_msc_ptr[instance]->ep_bulk_in | 0x80) == ep_addr) ||
+          ((usbd_msc_ptr[instance]->ep_bulk_out      ) == ep_addr)) {
+        USBD_MSC_EndpointStart (instance, ep_addr);
       }
     }
   }
@@ -6261,28 +6332,29 @@ void USBD_EndpointStop (uint8_t device, uint8_t ep_addr) {
   uint8_t i;
 
   for (instance = 0; instance < usbd_custom_class_num; instance++) {
-    if (usbd_custom_class_ptr[instance] != NULL) {
-      if (usbd_custom_class_ptr[instance]->dev_num == device) {
-        for (i = 0U; i < 4U; i++) {
-          if (usbd_custom_class_ptr[instance]->cc[i].if_en) {
-            if (((usbd_custom_class_ptr[instance]->cc[i].if_ep0_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep0_addr == ep_addr)) ||
-                ((usbd_custom_class_ptr[instance]->cc[i].if_ep1_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep1_addr == ep_addr)) ||
-                ((usbd_custom_class_ptr[instance]->cc[i].if_ep2_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep2_addr == ep_addr)) ||
-                ((usbd_custom_class_ptr[instance]->cc[i].if_ep3_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep3_addr == ep_addr)) ||
-                ((usbd_custom_class_ptr[instance]->cc[i].if_ep4_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep4_addr == ep_addr)) ||
-                ((usbd_custom_class_ptr[instance]->cc[i].if_ep5_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep5_addr == ep_addr)) ||
-                ((usbd_custom_class_ptr[instance]->cc[i].if_ep6_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep6_addr == ep_addr)) ||
-                ((usbd_custom_class_ptr[instance]->cc[i].if_ep7_en   != 0U)       &&
-                 (usbd_custom_class_ptr[instance]->cc[i].if_ep7_addr == ep_addr))) {
-              USBD_CustomClass_EndpointStop (instance, ep_addr);
-            }
+    if (usbd_custom_class_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_custom_class_ptr[instance]->dev_num == device) {
+      for (i = 0U; i < 4U; i++) {
+        if (usbd_custom_class_ptr[instance]->cc[i].if_en) {
+          if (((usbd_custom_class_ptr[instance]->cc[i].if_ep0_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep0_addr == ep_addr)) ||
+              ((usbd_custom_class_ptr[instance]->cc[i].if_ep1_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep1_addr == ep_addr)) ||
+              ((usbd_custom_class_ptr[instance]->cc[i].if_ep2_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep2_addr == ep_addr)) ||
+              ((usbd_custom_class_ptr[instance]->cc[i].if_ep3_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep3_addr == ep_addr)) ||
+              ((usbd_custom_class_ptr[instance]->cc[i].if_ep4_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep4_addr == ep_addr)) ||
+              ((usbd_custom_class_ptr[instance]->cc[i].if_ep5_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep5_addr == ep_addr)) ||
+              ((usbd_custom_class_ptr[instance]->cc[i].if_ep6_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep6_addr == ep_addr)) ||
+              ((usbd_custom_class_ptr[instance]->cc[i].if_ep7_en   != 0U)       &&
+               (usbd_custom_class_ptr[instance]->cc[i].if_ep7_addr == ep_addr))) {
+            USBD_CustomClass_EndpointStop (instance, ep_addr);
           }
         }
       }
@@ -6292,6 +6364,9 @@ void USBD_EndpointStop (uint8_t device, uint8_t ep_addr) {
 
 #if (USBD_ADC_NUM > 0)
   for (instance = 0; instance < usbd_adc_num; instance++) {
+    if (usbd_adc_ptr[instance] == NULL) {
+      continue;
+    }
     if (usbd_adc_ptr[instance]->dev_num == device) {
       if ((usbd_adc_ptr[instance]->spkr_data_ptr != NULL) && (usbd_adc_ptr[instance]->out_cfg != NULL)) {
         if ((usbd_adc_ptr[instance]->out_cfg->ep_iso) == ep_addr) {
@@ -6309,13 +6384,17 @@ void USBD_EndpointStop (uint8_t device, uint8_t ep_addr) {
 
 #if (USBD_CDC_NUM > 0)
   for (instance = 0; instance < usbd_cdc_num; instance++) {
-    if (usbd_cdc_ptr[instance]->data_ptr != NULL) {
-      if (usbd_cdc_ptr[instance]->dev_num == device) {
-        if (((usbd_cdc_ptr[instance]->ep_int_in  | 0x80) == ep_addr) ||
-            ((usbd_cdc_ptr[instance]->ep_bulk_in | 0x80) == ep_addr) ||
-            ((usbd_cdc_ptr[instance]->ep_bulk_out      ) == ep_addr)) {
-          USBD_CDC_EndpointStop (instance, ep_addr);
-        }
+    if (usbd_cdc_ptr[instance] == NULL) {
+      continue;
+    }
+    if (usbd_cdc_ptr[instance]->data_ptr == NULL) {
+      continue;
+    }
+    if (usbd_cdc_ptr[instance]->dev_num == device) {
+      if (((usbd_cdc_ptr[instance]->ep_int_in  | 0x80) == ep_addr) ||
+          ((usbd_cdc_ptr[instance]->ep_bulk_in | 0x80) == ep_addr) ||
+          ((usbd_cdc_ptr[instance]->ep_bulk_out      ) == ep_addr)) {
+        USBD_CDC_EndpointStop (instance, ep_addr);
       }
     }
   }

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_cdc.c
  * Purpose: USB Device - Communication Device Class (CDC) module
@@ -46,8 +46,13 @@ int32_t USBD_CDC_ACM_ReadData (uint8_t instance, uint8_t *buf, int32_t len) {
         uint32_t         max_packet_size, len_data, len_till_wrap, len_req = 0U, len_loc;
         usbStatus        status;
 
+  // Check parameters
   status = USBD_CDC_CheckInstance(instance);
   if (status != usbOK) {
+    goto exit;
+  }
+  if ((buf == NULL) || (len < 0)) {
+    status = usbInvalidParameter;
     goto exit;
   }
 
@@ -153,8 +158,13 @@ int32_t USBD_CDC_ACM_WriteData (uint8_t instance, const uint8_t *buf, int32_t le
         uint32_t         len_free, len_till_wrap, len_req = 0U, len_loc;
         usbStatus        status;
 
+  // Check parameters
   status = USBD_CDC_CheckInstance(instance);
   if (status != usbOK) {
+    goto exit;
+  }
+  if ((buf == NULL) || (len < 0)) {
+    status = usbInvalidParameter;
     goto exit;
   }
 
@@ -606,8 +616,13 @@ int32_t USBD_CDC_NCM_NTB_IN_WriteDatagram (uint8_t instance, const uint8_t *buf,
         uint32_t           tot_size;
         usbStatus          status;
 
+  // Check parameters
   status = USBD_CDC_CheckInstance(instance);
   if (status != usbOK) {
+    goto exit;
+  }
+  if ((buf == NULL) || (len == 0U)) {
+    status = usbInvalidParameter;
     goto exit;
   }
 
@@ -923,8 +938,14 @@ int32_t USBD_CDC_NCM_NTB_OUT_ReadDatagram (uint8_t instance, uint8_t *buf, uint3
         uint32_t           len;
         usbStatus          status;
 
+  // Check parameters
   status = USBD_CDC_CheckInstance(instance);
   if (status != usbOK) {
+    EvrUSBD_CDC_NCM_NTB_OUT_ReadDatagramFailed(instance, max_len, -(int32_t)status);
+    return -(int32_t)status;
+  }
+  if ((buf == NULL) || (max_len == 0U)) {
+    status = usbInvalidParameter;
     EvrUSBD_CDC_NCM_NTB_OUT_ReadDatagramFailed(instance, max_len, -(int32_t)status);
     return -(int32_t)status;
   }
@@ -979,8 +1000,13 @@ int32_t USBD_CDC_NCM_NTB_IN_RawSend (uint8_t instance, const uint8_t *buf, uint3
         uint32_t         max_packet_size;
         usbStatus        status;
 
+  // Check parameters
   status = USBD_CDC_CheckInstance(instance);
   if (status != usbOK) {
+    goto exit;
+  }
+  if ((buf == NULL) || (len == 0U)) {
+    status = usbInvalidParameter;
     goto exit;
   }
 
@@ -1055,8 +1081,13 @@ int32_t USBD_CDC_NCM_NTB_OUT_RawReceive (uint8_t instance, uint8_t *buf, uint32_
         usbd_cdc_data_t *ptr_cdc_data;
         usbStatus        status;
 
+  // Check parameters
   status = USBD_CDC_CheckInstance(instance);
   if (status != usbOK) {
+    goto exit;
+  }
+  if ((buf == NULL) || (max_len == 0U)) {
+    status = usbInvalidParameter;
     goto exit;
   }
 
@@ -1302,8 +1333,10 @@ bool USBD_CDC_ACM_CoreGetEncapsulatedResponse (uint8_t instance, uint16_t max_le
   result = false;
   if (USBD_CDC_CheckInstance(instance) == usbOK) {
     if (fpUSBD_CDC_ACM_GetEncapsulatedResponse[instance] != NULL) {
-      result = fpUSBD_CDC_ACM_GetEncapsulatedResponse[instance] (max_len, buf, len);
-      EvrUSBD_CDC_ACM_OnGetEncapsulatedResponse(instance, max_len, (uint32_t)(*buf), *len, result);
+      if ((buf != NULL) && (len != NULL)) {
+        result = fpUSBD_CDC_ACM_GetEncapsulatedResponse[instance] (max_len, buf, len);
+        EvrUSBD_CDC_ACM_OnGetEncapsulatedResponse(instance, max_len, (uint32_t)(*buf), *len, result);
+      }
     }
   }
 
@@ -2258,7 +2291,7 @@ void USBD_CDC_Int_Thread (void *arg) {
 
   for (;;) {
     event = USBD_ThreadFlagsWait (0xFFFFFFFFU);
-    if ((event & 0x8000000U) == 0U) {
+    if ((event & 0x80000000U) == 0U) {
       if (((event >> 8) & ARM_USBD_EVENT_IN) != 0U) {
         USBD_CDC_EpIntIn (instance);
       }
@@ -2279,7 +2312,7 @@ void USBD_CDC_Bulk_Thread (void *arg) {
 
   for (;;) {
     event = USBD_ThreadFlagsWait (0xFFFFFFFFU);
-    if ((event & 0x8000000U) == 0U) {
+    if ((event & 0x80000000U) == 0U) {
       if (((event >> 8) & ARM_USBD_EVENT_OUT) != 0U) {
         USBD_CDC_EpBulkOut (instance);
       }

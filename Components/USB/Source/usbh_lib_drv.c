@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates).
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates).
  * All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_drv.c
@@ -8,6 +8,8 @@
  *----------------------------------------------------------------------------*/
 
 #include "usbh_lib_drv.h"
+
+#include <string.h>
 
 #include "usb_lib_debug.h"
 #include "usbh_config.h"
@@ -19,6 +21,14 @@
 /// \param[in]   ctrl  Controller Index
 /// \return      \ref ARM_DRIVER_VERSION
 ARM_DRIVER_VERSION USBH_DriverGetVersion (uint8_t ctrl) {
+  ARM_DRIVER_VERSION ver;
+
+  // Check parameters
+  if (ctrl >= usbh_hc_num) {
+    memset(&ver, 0, sizeof(ARM_DRIVER_VERSION));
+    return ver;
+  }
+
   return ((*usbh_hcd_ptr[ctrl])->GetVersion());
 }
 
@@ -26,6 +36,14 @@ ARM_DRIVER_VERSION USBH_DriverGetVersion (uint8_t ctrl) {
 /// \param[in]   ctrl  Controller Index
 /// \return      \ref ARM_USBH_CAPABILITIES
 ARM_USBH_CAPABILITIES USBH_DriverGetCapabilities (uint8_t ctrl) {
+  ARM_USBH_CAPABILITIES caps;
+
+  // Check parameters
+  if (ctrl >= usbh_hc_num) {
+    memset(&caps, 0, sizeof(ARM_USBH_CAPABILITIES));
+    return caps;
+  }
+
   return ((*usbh_hcd_ptr[ctrl])->GetCapabilities());
 }
 
@@ -38,13 +56,12 @@ usbStatus USBH_DriverInitialize (uint8_t ctrl, ARM_USBH_SignalPortEvent_t cb_por
   int32_t driver_status;
   uint8_t retry;
 
-  retry = 3U;
-  do {
-    if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 100U) == 0) { break; }
-    (void)USBH_Delay (10U);
-    retry--;
-  } while (retry != 0U);
-  if (retry == 0U) {
+  // Check parameters
+  if (ctrl >= usbh_hc_num) {
+    return usbInvalidParameter;
+  }
+
+  if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
     return usbDriverBusy;
   }
 
@@ -74,13 +91,12 @@ usbStatus USBH_DriverUninitialize (uint8_t ctrl) {
   int32_t driver_status;
   uint8_t retry;
 
-  retry = 3U;
-  do {
-    if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 100U) == 0) { break; }
-    (void)USBH_Delay (10U);
-    retry--;
-  } while (retry != 0U);
-  if (retry == 0U) {
+  // Check parameters
+  if (ctrl >= usbh_hc_num) {
+    return usbInvalidParameter;
+  }
+
+  if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
     return usbDriverBusy;
   }
 
@@ -111,13 +127,12 @@ usbStatus USBH_DriverPowerControl (uint8_t ctrl, ARM_POWER_STATE state) {
   int32_t driver_status;
   uint8_t retry;
 
-  retry = 3U;
-  do {
-    if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 100U) == 0) { break; }
-    (void)USBH_Delay (10U);
-    retry--;
-  } while (retry != 0U);
-  if (retry == 0U) {
+  // Check parameters
+  if (ctrl >= usbh_hc_num) {
+    return usbInvalidParameter;
+  }
+
+  if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
     return usbDriverBusy;
   }
 
@@ -151,13 +166,13 @@ usbStatus USBH_DriverPortVbusOnOff (uint8_t ctrl, uint8_t port, bool vbus) {
   int32_t driver_status;
   uint8_t retry;
 
-  retry = 3U;
-  do {
-    if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 100U) == 0) { break; }
-    (void)USBH_Delay (10U);
-    retry--;
-  } while (retry != 0U);
-  if (retry == 0U) {
+  // Check parameters
+  if ((ctrl >= usbh_hc_num) ||
+      (port >= 16U)) {
+    return usbInvalidParameter;
+  }
+
+  if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
     return usbDriverBusy;
   }
 
@@ -188,13 +203,13 @@ usbStatus USBH_DriverPortReset (uint8_t ctrl, uint8_t port) {
   int32_t driver_status;
   uint8_t retry;
 
-  retry = 3U;
-  do {
-    if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 100U) == 0) { break; }
-    (void)USBH_Delay (10U);
-    retry--;
-  } while (retry != 0U);
-  if (retry == 0U) {
+  // Check parameters
+  if ((ctrl >= usbh_hc_num) ||
+      (port >= 16U)) {
+    return usbInvalidParameter;
+  }
+
+  if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
     return usbDriverBusy;
   }
 
@@ -226,13 +241,13 @@ usbStatus USBH_DriverPortSuspend (uint8_t ctrl, uint8_t port) {
   int32_t driver_status;
   uint8_t retry;
 
-  retry = 3U;
-  do {
-    if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 100U) == 0) { break; }
-    (void)USBH_Delay (10U);
-    retry--;
-  } while (retry != 0U);
-  if (retry == 0U) {
+  // Check parameters
+  if ((ctrl >= usbh_hc_num) ||
+      (port >= 16U)) {
+    return usbInvalidParameter;
+  }
+
+  if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
     return usbDriverBusy;
   }
 
@@ -263,13 +278,13 @@ usbStatus USBH_DriverPortResume (uint8_t ctrl, uint8_t port) {
   int32_t driver_status;
   uint8_t retry;
 
-  retry = 3U;
-  do {
-    if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 100U) == 0) { break; }
-    (void)USBH_Delay (10U);
-    retry--;
-  } while (retry != 0U);
-  if (retry == 0U) {
+  // Check parameters
+  if ((ctrl >= usbh_hc_num) ||
+      (port >= 16U)) {
+    return usbInvalidParameter;
+  }
+
+  if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
     return usbDriverBusy;
   }
 
@@ -299,6 +314,14 @@ usbStatus USBH_DriverPortResume (uint8_t ctrl, uint8_t port) {
 ARM_USBH_PORT_STATE USBH_DriverPortGetState (uint8_t ctrl, uint8_t port) {
   ARM_USBH_PORT_STATE port_state;
 
+  memset(&port_state, 0, sizeof(port_state));
+
+  // Check parameters
+  if ((ctrl >= usbh_hc_num) ||
+      (port >= 16U)) {
+    return port_state;
+  }
+
   port_state = (*usbh_hcd_ptr[ctrl])->PortGetState (port);
   if ((usbh_hc[ctrl].port_discon & (1UL << port)) != 0U) {
     port_state.connected = 0U;
@@ -323,16 +346,14 @@ ARM_USBH_PORT_STATE USBH_DriverPortGetState (uint8_t ctrl, uint8_t port) {
 /// \return      Pipe Handle \ref ARM_USBH_PIPE_HANDLE
 ARM_USBH_PIPE_HANDLE USBH_DriverPipeCreate (uint8_t ctrl, uint8_t dev_addr, uint8_t dev_speed, uint8_t hub_addr, uint8_t hub_port, uint8_t ep_addr, uint8_t ep_type, uint16_t ep_max_packet_size, uint8_t ep_interval) {
   ARM_USBH_PIPE_HANDLE pipe_hndl;
-  uint8_t              retry;
 
-  retry = 3U;
-  do {
-    if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 100U) == 0) { break; }
-    (void)USBH_Delay (10U);
-    retry--;
-  } while (retry != 0U);
-  if (retry == 0U) {
-    return 0U;
+  // Check parameters
+  if (ctrl >= usbh_hc_num) {
+    return NULL;
+  }
+
+  if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
+    return NULL;
   }
 
   pipe_hndl = (*usbh_hcd_ptr[ctrl])->PipeCreate (dev_addr, dev_speed, hub_addr, hub_port, ep_addr, ep_type, ep_max_packet_size, ep_interval);
@@ -362,13 +383,12 @@ usbStatus USBH_DriverPipeModify (uint8_t ctrl, ARM_USBH_PIPE_HANDLE pipe_hndl, u
   int32_t driver_status;
   uint8_t retry;
 
-  retry = 3U;
-  do {
-    if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 100U) == 0) { break; }
-    (void)USBH_Delay (10U);
-    retry--;
-  } while (retry != 0U);
-  if (retry == 0U) {
+  // Check parameters
+  if (ctrl >= usbh_hc_num) {
+    return usbInvalidParameter;
+  }
+
+  if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
     return usbDriverBusy;
   }
 
@@ -399,12 +419,12 @@ usbStatus USBH_DriverPipeDelete (uint8_t ctrl, ARM_USBH_PIPE_HANDLE pipe_hndl) {
   int32_t driver_status;
   uint8_t retry;
 
-  retry = 3U;
-  while (retry-- != 0U) {
-    if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 100U) == 0) { break; }
-    (void)USBH_Delay (10U);
+  // Check parameters
+  if (ctrl >= usbh_hc_num) {
+    return usbInvalidParameter;
   }
-  if (retry == 0U) {
+
+  if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
     return usbDriverBusy;
   }
 
@@ -435,13 +455,12 @@ usbStatus USBH_DriverPipeReset (uint8_t ctrl, ARM_USBH_PIPE_HANDLE pipe_hndl) {
   int32_t driver_status;
   uint8_t retry;
 
-  retry = 3U;
-  do {
-    if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 100U) == 0) { break; }
-    (void)USBH_Delay (10U);
-    retry--;
-  } while (retry != 0U);
-  if (retry == 0U) {
+  // Check parameters
+  if (ctrl >= usbh_hc_num) {
+    return usbInvalidParameter;
+  }
+
+  if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
     return usbDriverBusy;
   }
 
@@ -475,13 +494,12 @@ usbStatus USBH_DriverPipeTransfer (uint8_t ctrl, ARM_USBH_PIPE_HANDLE pipe_hndl,
   int32_t driver_status;
   uint8_t retry;
 
-  retry = 3U;
-  do {
-    if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 100U) == 0) { break; }
-    (void)USBH_Delay (10U);
-    retry--;
-  } while (retry != 0U);
-  if (retry == 0U) {
+  // Check parameters
+  if (ctrl >= usbh_hc_num) {
+    return usbInvalidParameter;
+  }
+
+  if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
     return usbDriverBusy;
   }
 
@@ -514,15 +532,13 @@ usbStatus USBH_DriverPipeTransfer (uint8_t ctrl, ARM_USBH_PIPE_HANDLE pipe_hndl,
 /// \return      number of successfully transferred data bytes
 uint32_t USBH_DriverPipeTransferGetResult (uint8_t ctrl, ARM_USBH_PIPE_HANDLE pipe_hndl) {
   uint32_t val;
-  uint8_t  retry;
 
-  retry = 3U;
-  do {
-    if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 100U) == 0) { break; }
-    (void)USBH_Delay (10U);
-    retry--;
-  } while (retry != 0U);
-  if (retry == 0U) {
+  // Check parameters
+  if (ctrl >= usbh_hc_num) {
+    return 0U;
+  }
+
+  if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
     return 0U;
   }
 
@@ -543,13 +559,12 @@ usbStatus USBH_DriverPipeTransferAbort (uint8_t ctrl, ARM_USBH_PIPE_HANDLE pipe_
   int32_t driver_status;
   uint8_t retry;
 
-  retry = 3U;
-  do {
-    if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 100U) == 0) { break; }
-    (void)USBH_Delay (10U);
-    retry--;
-  } while (retry != 0U);
-  if (retry == 0U) {
+  // Check parameters
+  if (ctrl >= usbh_hc_num) {
+    return usbInvalidParameter;
+  }
+
+  if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
     return usbDriverBusy;
   }
 
@@ -577,15 +592,13 @@ usbStatus USBH_DriverPipeTransferAbort (uint8_t ctrl, ARM_USBH_PIPE_HANDLE pipe_
 /// \return      Frame Number
 uint16_t USBH_DriverGetFrameNumber (uint8_t ctrl) {
   uint16_t val;
-  uint8_t  retry;
 
-  retry = 3U;
-  do {
-    if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 100U) == 0) { break; }
-    (void)USBH_Delay (10U);
-    retry--;
-  } while (retry != 0U);
-  if (retry == 0U) {
+  // Check parameters
+  if (ctrl >= usbh_hc_num) {
+    return 0U;
+  }
+
+  if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
     return 0U;
   }
 
@@ -605,6 +618,12 @@ uint16_t USBH_DriverGetFrameNumber (uint8_t ctrl) {
 /// \return      none
 void USBH_SignalPortEvent (uint8_t ctrl, uint8_t port, uint32_t event) {
   USBH_HC *ptr_hc;
+
+  // Check parameters
+  if ((ctrl >= usbh_hc_num) ||
+      (port >= 16U)) {
+    return;
+  }
 
   ptr_hc = &usbh_hc[ctrl];
 

@@ -26,6 +26,7 @@
       - fixed possible TCP socket reset after timeout recovery
       - various minor fixes and security improvements
       USB Component Version 8.0.3
+      - USB Device/Host: improved code robustness
       - USB Device: improved HID idle handling
     </release>
     <release version="7.17.0" date="2024-01-17">

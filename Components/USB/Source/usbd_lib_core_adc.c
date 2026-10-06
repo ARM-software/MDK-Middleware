@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2021 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_core_adc.c
  * Purpose: USB Device - Audio Device Class (ADC) core module
@@ -322,7 +322,7 @@ __WEAK bool USBD_Endpoint0_Out_ADC_ReqToIF (uint8_t device) {
           case AUDIO_VOLUME_CONTROL:                                    // Volume Control
             switch (ptr_dev_data->setup_packet.bRequest) {
               case AUDIO_REQUEST_SET_CUR:
-                if (USBD_ADC_SpeakerVolumeSetCur(index, (uint8_t)(ptr_dev_data->setup_packet.wValue), *(uint16_t *)((uint32_t)ptr_dev_cfg->ep0_buf))) {
+                if (USBD_ADC_SpeakerVolumeSetCur(index, (uint8_t)(ptr_dev_data->setup_packet.wValue), *((uint16_t *)ptr_dev_cfg->ep0_buf))) {
                   if (USBD_StatusInStage(device) == usbOK) {            // send ZLP IN
                     return true;
                   }
@@ -355,7 +355,7 @@ __WEAK bool USBD_Endpoint0_Out_ADC_ReqToIF (uint8_t device) {
           case AUDIO_VOLUME_CONTROL:                                    // Volume Control
             switch (ptr_dev_data->setup_packet.bRequest) {
               case AUDIO_REQUEST_SET_CUR:
-                if (USBD_ADC_MicrophoneVolumeSetCur(index, (uint8_t)(ptr_dev_data->setup_packet.wValue), *(uint16_t *)((uint32_t)ptr_dev_cfg->ep0_buf))) {
+                if (USBD_ADC_MicrophoneVolumeSetCur(index, (uint8_t)(ptr_dev_data->setup_packet.wValue), *(uint16_t *)ptr_dev_cfg->ep0_buf)) {
                   if (USBD_StatusInStage(device) == usbOK) {            // send ZLP IN
                     return true;
                   }
