@@ -694,7 +694,7 @@ usbStatus USBH_PipeRegisterCallback (USBH_PIPE_HANDLE pipe_hndl, USBH_PipeEvent_
   EvrUSBH_Core_PipeRegisterCallback(pipe_hndl);
 
   // Check parameters
-  if (pipe_hndl == NULL) {
+  if (pipe_hndl == 0U) {
     status = usbInvalidParameter;
     goto exit;
   }
@@ -732,7 +732,7 @@ usbStatus USBH_PipeUpdate (USBH_PIPE_HANDLE pipe_hndl) {
   EvrUSBH_Core_PipeUpdate(pipe_hndl);
 
   // Check parameters
-  if (pipe_hndl == NULL) {
+  if (pipe_hndl == 0U) {
     status = usbInvalidParameter;
     goto exit;
   }
@@ -776,7 +776,7 @@ usbStatus USBH_PipeDelete (USBH_PIPE_HANDLE pipe_hndl) {
   EvrUSBH_Core_PipeDelete(pipe_hndl);
 
   // Check parameters
-  if (pipe_hndl == NULL) {
+  if (pipe_hndl == 0U) {
     status = usbInvalidParameter;
     goto exit;
   }
@@ -830,7 +830,7 @@ usbStatus USBH_PipeReset (USBH_PIPE_HANDLE pipe_hndl) {
   EvrUSBH_Core_PipeReset(pipe_hndl);
 
   // Check parameters
-  if (pipe_hndl == NULL) {
+  if (pipe_hndl == 0U) {
     status = usbInvalidParameter;
     goto exit;
   }
@@ -930,7 +930,7 @@ usbStatus USBH_PipeReceive (USBH_PIPE_HANDLE pipe_hndl, uint8_t *buf, uint32_t l
     goto exit;
   }
   hw_handle = ptr_pipe->hw_handle;
-  if (hw_handle == NULL) {
+  if (hw_handle == 0U) {
     status = usbDriverError;
     goto exit;
   }
@@ -1243,7 +1243,7 @@ usbStatus USBH_PipeSend (USBH_PIPE_HANDLE pipe_hndl, const uint8_t *buf, uint32_
     goto exit;
   }
   hw_handle = ptr_pipe->hw_handle;
-  if (hw_handle == NULL) {
+  if (hw_handle == 0U) {
     status = usbDriverError;
     goto exit;
   }
@@ -2808,7 +2808,7 @@ static usbStatus USBH_PipeDoPing (USBH_PIPE_HANDLE pipe_hndl) {
     goto exit;
   }
   hw_handle = ptr_pipe->hw_handle;
-  if (hw_handle == NULL) {
+  if (hw_handle == 0U) {
     status = usbDriverError;
     goto exit;
   }
@@ -2936,7 +2936,7 @@ static usbStatus USBH_PipeSendSetup (USBH_PIPE_HANDLE pipe_hndl, const USB_SETUP
     goto exit;
   }
   hw_handle = ptr_pipe->hw_handle;
-  if (hw_handle == NULL) {
+  if (hw_handle == 0U) {
     status = usbDriverError;
     goto exit;
   }

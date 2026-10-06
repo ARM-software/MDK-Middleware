@@ -349,11 +349,11 @@ ARM_USBH_PIPE_HANDLE USBH_DriverPipeCreate (uint8_t ctrl, uint8_t dev_addr, uint
 
   // Check parameters
   if (ctrl >= usbh_hc_num) {
-    return NULL;
+    return 0U;
   }
 
   if (USBH_SemaphoreAcquire (usbh_driver_semaphore_id[ctrl], 300U) != 0) {
-    return NULL;
+    return 0U;
   }
 
   pipe_hndl = (*usbh_hcd_ptr[ctrl])->PipeCreate (dev_addr, dev_speed, hub_addr, hub_port, ep_addr, ep_type, ep_max_packet_size, ep_interval);
