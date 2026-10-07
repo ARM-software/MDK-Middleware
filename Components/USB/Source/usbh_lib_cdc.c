@@ -720,6 +720,7 @@ static usbStatus CheckInstance (uint8_t instance) {
 void USBH_CDC_IntIn_Thread (void *arg) {
   USBH_CDC *ptr_cdc;
   uint16_t  status;
+  uint16_t  notify_len;
   uint8_t   instance;
 
   instance = (uint8_t)((uint32_t)arg);
@@ -731,9 +732,15 @@ void USBH_CDC_IntIn_Thread (void *arg) {
   }
 
   ptr_cdc = &usbh_cdc[instance];
+  notify_len = ((USBH_PIPE *)ptr_cdc->int_in_pipe_hndl)->wMaxPacketSize;
+  if (notify_len > sizeof(ptr_cdc->int_in_data_buf)) {
+    notify_len = sizeof(ptr_cdc->int_in_data_buf);
+  } else if (notify_len < 10U) {
+    notify_len = 10U;
+  }
 
   for (;;) {
-    if (USBH_PipeReceive(ptr_cdc->int_in_pipe_hndl, ptr_cdc->int_in_data_buf, 10U) == usbOK) {
+    if (USBH_PipeReceive(ptr_cdc->int_in_pipe_hndl, ptr_cdc->int_in_data_buf, notify_len) == usbOK) {
       // Data has been received on Interrupt In Pipe
       if ((ptr_cdc->int_in_data_buf[0] == 0xA1U)                         &&
           (ptr_cdc->int_in_data_buf[1] == CDC_NOTIFICATION_SERIAL_STATE) &&

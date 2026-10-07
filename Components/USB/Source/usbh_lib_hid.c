@@ -235,7 +235,7 @@ __WEAK int USBH_HID_GetKeyboardKey (uint8_t instance) {
           ptr_hid->hid_in_data_len     = 0U;
         }
       } else {
-        if ((key >= sizeof(HID_KEYBOARD_ID_TO_ASCII)) || (key >= HID_USAGE_KEYBOARD_F1) || (HID_KEYBOARD_ID_TO_ASCII[key] == 0xFFU)) {
+        if ((key >= sizeof(HID_KEYBOARD_ID_TO_ASCII)) || (HID_KEYBOARD_ID_TO_ASCII[key] == 0xFFU)) {
           key = key | 0x10000UL;        // bit 16. specifies if it is a non-ASCII translated HID ID
         } else {
           // Translate to ASCII

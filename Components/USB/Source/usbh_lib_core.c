@@ -1559,9 +1559,9 @@ usbStatus USBH_PipeAbort (USBH_PIPE_HANDLE pipe_hndl) {
         (void)USBH_Delay (10U);
       }
       if (ptr_pipe->transfer_active == 1U) {
-        status = USBH_DriverPipeTransferAbort(ptr_dev->ctrl, ptr_pipe->hw_handle);
+        status = USBH_DriverPipeTransferAbort(ctrl, ptr_pipe->hw_handle);
         if (status == usbOK) {
-          USBH_SignalPipeEvent (ptr_dev->ctrl, ptr_pipe->hw_handle, ARM_USBH_EVENT_ABORT);
+          USBH_SignalPipeEvent (ctrl, ptr_pipe->hw_handle, ARM_USBH_EVENT_ABORT);
         }
       }
     }
@@ -2716,7 +2716,7 @@ static usbStatus USBH_DefaultPipeDelete (uint8_t ctrl) {
 
   if (ptr_pipe->device != 255U) {
     status = USBH_PipeAbort((USBH_PIPE_HANDLE)ptr_pipe);
-    if (status != usbOK) {
+    if (status == usbDriverError) {
       goto exit;
     }
   }
