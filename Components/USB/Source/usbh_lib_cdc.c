@@ -720,6 +720,7 @@ static usbStatus CheckInstance (uint8_t instance) {
 void USBH_CDC_IntIn_Thread (void *arg) {
   USBH_CDC *ptr_cdc;
   uint16_t  status;
+  uint16_t  max_packet_size;
   uint16_t  notify_len;
   uint8_t   instance;
 
@@ -732,11 +733,21 @@ void USBH_CDC_IntIn_Thread (void *arg) {
   }
 
   ptr_cdc = &usbh_cdc[instance];
-  notify_len = ((USBH_PIPE *)ptr_cdc->int_in_pipe_hndl)->wMaxPacketSize;
-  if (notify_len > sizeof(ptr_cdc->int_in_data_buf)) {
+  max_packet_size = ((USBH_PIPE *)ptr_cdc->int_in_pipe_hndl)->wMaxPacketSize;
+  if (max_packet_size == 0U) {
+    goto exit;
+  }
+
+  if (max_packet_size < 10U) {
+    if ((10U % max_packet_size) == 0U) {
+      notify_len = 10U;
+    } else {
+      notify_len = ((10U + (max_packet_size - 1U)) / max_packet_size) * max_packet_size;
+    }
+  } else if (max_packet_size <= sizeof(ptr_cdc->int_in_data_buf)) {
+    notify_len = max_packet_size;
+  } else {
     notify_len = sizeof(ptr_cdc->int_in_data_buf);
-  } else if (notify_len < 10U) {
-    notify_len = 10U;
   }
 
   for (;;) {
@@ -756,9 +767,12 @@ void USBH_CDC_IntIn_Thread (void *arg) {
         USBH_CDC_ACM_Notify (instance, status);
       }
     } else {
-      ptr_cdc->int_in_thread_id = NULL;
-      (void)USBH_ThreadTerminate (USBH_ThreadGetHandle());
-      return;
+      break;
     }
   }
+
+exit:
+  ptr_cdc->int_in_thread_id = NULL;
+  (void)USBH_ThreadTerminate (USBH_ThreadGetHandle());
+  return;
 }

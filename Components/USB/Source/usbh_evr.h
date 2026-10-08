@@ -9,6 +9,8 @@
 #ifndef USBH_EVR_H_
 #define USBH_EVR_H_
 
+#include <string.h>
+
 #include "RTE_Components.h"
 
 #include "rl_usb.h"
@@ -1054,8 +1056,12 @@
  */
 #ifdef                 EvtUSBH_Core_ControlTransfer
   __STATIC_INLINE void EvrUSBH_Core_ControlTransfer(  uint8_t device,     const USB_SETUP_PACKET *setup_packet,                                        uint32_t len) {
+    uint32_t word0;
+    uint32_t word1;
     if (setup_packet != NULL) {
-      EventRecord4(    EvtUSBH_Core_ControlTransfer, TO_BYTE0(device), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U),          len);
+      memcpy(&word0, setup_packet, 4U);
+      memcpy(&word1, ((const uint8_t *)setup_packet) + 4U, 4U);
+      EventRecord4(    EvtUSBH_Core_ControlTransfer, TO_BYTE0(device), word0, word1, len);
     }
   }
 #else
@@ -1071,8 +1077,12 @@
  */
 #ifdef                 EvtUSBH_Core_ControlTransferFailed
   __STATIC_INLINE void EvrUSBH_Core_ControlTransferFailed(  uint8_t device,     const USB_SETUP_PACKET *setup_packet,                                        usbStatus error) {
+    uint32_t word0;
+    uint32_t word1;
     if (setup_packet != NULL) {
-      EventRecord4(    EvtUSBH_Core_ControlTransferFailed, TO_BYTE0(device), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U), (uint32_t)error);
+      memcpy(&word0, setup_packet, 4U);
+      memcpy(&word1, ((const uint8_t *)setup_packet) + 4U, 4U);
+      EventRecord4(    EvtUSBH_Core_ControlTransferFailed, TO_BYTE0(device), word0, word1, (uint32_t)error);
     }
   }
 #else

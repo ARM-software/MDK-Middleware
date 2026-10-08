@@ -103,7 +103,7 @@ int32_t USBH_HID_Read (uint8_t instance, uint8_t *buf, int32_t len) {
     status = usbInvalidParameter;
     goto exit;
   }
-  if (len <= 0) {
+  if (len < 0) {
     status = usbInvalidParameter;
     goto exit;
   }
@@ -156,7 +156,7 @@ int32_t USBH_HID_Write (uint8_t instance, const uint8_t *buf, int32_t len) {
     status = usbInvalidParameter;
     goto exit;
   }
-  if (len <= 0) {
+  if (len < 0) {
     status = usbInvalidParameter;
     goto exit;
   }

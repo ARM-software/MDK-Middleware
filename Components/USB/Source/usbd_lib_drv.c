@@ -444,9 +444,6 @@ usbStatus USBD_DriverEndpointConfigure (uint8_t device, uint8_t ep_addr, uint8_t
   if ((ep_addr & 0x7FU) >= usbd_ep_max_num) {
     return usbInvalidParameter;
   }
-  if ((((uint32_t)device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU) + usbd_ep_max_num) >= UINT8_MAX) {
-    return usbInvalidParameter;
-  }
 
   ep_idx  = (ep_addr & 0x0FU) + ((ep_addr & 0x80U) >> 3);
 
@@ -526,9 +523,6 @@ usbStatus USBD_DriverEndpointUnconfigure (uint8_t device, uint8_t ep_addr) {
   if ((ep_addr & 0x7FU) >= usbd_ep_max_num) {
     return usbInvalidParameter;
   }
-  if ((((uint32_t)device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU) + usbd_ep_max_num) >= UINT8_MAX) {
-    return usbInvalidParameter;
-  }
 
   ep_idx = (ep_addr & 0x0FU) + ((ep_addr & 0x80U) >> 3);
 
@@ -597,9 +591,6 @@ usbStatus USBD_DriverEndpointStall (uint8_t device, uint8_t ep_addr, bool stall)
   if ((ep_addr & 0x7FU) >= usbd_ep_max_num) {
     return usbInvalidParameter;
   }
-  if ((((uint32_t)device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU) + usbd_ep_max_num) >= UINT8_MAX) {
-    return usbInvalidParameter;
-  }
 
   ep_idx = (ep_addr & 0x0FU) + ((ep_addr & 0x80U) >> 3);
 
@@ -666,9 +657,6 @@ usbStatus USBD_DriverEndpointTransfer (uint8_t device, uint8_t ep_addr, uint8_t 
     return usbInvalidParameter;
   }
   if ((ep_addr & 0x7FU) >= usbd_ep_max_num) {
-    return usbInvalidParameter;
-  }
-  if ((((uint32_t)device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU) + usbd_ep_max_num) >= UINT8_MAX) {
     return usbInvalidParameter;
   }
 
@@ -751,9 +739,6 @@ uint32_t USBD_DriverEndpointTransferGetResult (uint8_t device, uint8_t ep_addr) 
   if ((ep_addr & 0x7FU) >= usbd_ep_max_num) {
     return 0U;
   }
-  if ((((uint32_t)device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU) + usbd_ep_max_num) >= UINT8_MAX) {
-    return 0U;
-  }
 
   ep_idx = (ep_addr & 0x0FU) + ((ep_addr & 0x80U) >> 3);
 
@@ -797,9 +782,6 @@ usbStatus USBD_DriverEndpointTransferAbort (uint8_t device, uint8_t ep_addr) {
     return usbInvalidParameter;
   }
   if ((ep_addr & 0x7FU) >= usbd_ep_max_num) {
-    return usbInvalidParameter;
-  }
-  if ((((uint32_t)device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU) + usbd_ep_max_num) >= UINT8_MAX) {
     return usbInvalidParameter;
   }
 

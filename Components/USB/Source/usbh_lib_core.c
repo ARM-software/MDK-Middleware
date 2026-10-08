@@ -647,6 +647,10 @@ USBH_PIPE_HANDLE USBH_PipeCreate (uint8_t device, uint8_t ep_addr, uint8_t ep_ty
   if (ptr_pipe == NULL) {
     goto exit;
   }
+  if ((ptr_dev->dev_speed == USB_SPEED_HIGH) && (ep_interval > 16U)) {
+    // Limit maximum bInterval to 16 for high-speed devices as per USB specification
+    ep_interval = 16U;
+  }
 
   hw_handle = USBH_DriverPipeCreate(ptr_dev->ctrl, ptr_dev->dev_addr, ptr_dev->dev_speed, ptr_dev->hub_addr, ptr_dev->hub_port, ep_addr, ep_type, ep_max_packet_size, ep_interval);
   if (hw_handle == 0U) {
@@ -658,10 +662,6 @@ USBH_PIPE_HANDLE USBH_PipeCreate (uint8_t device, uint8_t ep_addr, uint8_t ep_ty
   ptr_pipe->bEndpointAddress = ep_addr;
   ptr_pipe->bmAttributes     = ep_type;
   ptr_pipe->wMaxPacketSize   = ep_max_packet_size;
-  if ((ptr_dev->dev_speed == USB_SPEED_HIGH) && (ep_interval > 16U)) {
-    // Limit maximum bInterval to 16 for high-speed devices as per USB specification
-    ep_interval = 16U;
-  }
   ptr_pipe->bInterval        = ep_interval;
   ptr_pipe->device           = device;
   ptr_pipe->locked           = 0U;
@@ -792,9 +792,11 @@ usbStatus USBH_PipeDelete (USBH_PIPE_HANDLE pipe_hndl) {
     goto exit;
   }
 
-  status = USBH_PipeAbort(pipe_hndl);
-  if (status != usbOK) {
-    goto exit;
+  if ((ptr_pipe->locked != 0U) || (ptr_pipe->transfer_active != 0U)) {
+    status = USBH_PipeAbort(pipe_hndl);
+    if (status != usbOK) {
+      goto exit;
+    }
   }
 
   ptr_dev = &usbh_dev[ptr_pipe->device];
@@ -1035,8 +1037,8 @@ transfer_data:
       }
       ptr_pipe->transfer_active = 0U;
       transferred = USBH_DriverPipeTransferGetResult(ctrl, hw_handle);
-      if (transferred > receive_len) {
-        transferred = receive_len;
+      if (transferred > (receive_len - received_len)) {
+        transferred = receive_len - received_len;
       }
       if (transferred > remain_len) {
        transferred = remain_len;
@@ -1553,17 +1555,24 @@ usbStatus USBH_PipeAbort (USBH_PIPE_HANDLE pipe_hndl) {
   }
 
   if (status == usbOK) {
-    if (ptr_pipe->locked == 1U) {
+    if (ptr_pipe->locked != 0U) {
       for (retry = 3U; retry != 0U; retry--) {
-        if (ptr_pipe->transfer_active == 1U) { break; }
+        if (ptr_pipe->transfer_active != 0U) {
+          status = USBH_DriverPipeTransferAbort(ctrl, ptr_pipe->hw_handle);
+          if (status == usbOK) {
+            USBH_SignalPipeEvent (ctrl, ptr_pipe->hw_handle, ARM_USBH_EVENT_ABORT);
+            break;
+          }
+        }
         (void)USBH_Delay (10U);
       }
-      if (ptr_pipe->transfer_active == 1U) {
-        status = USBH_DriverPipeTransferAbort(ctrl, ptr_pipe->hw_handle);
-        if (status == usbOK) {
-          USBH_SignalPipeEvent (ctrl, ptr_pipe->hw_handle, ARM_USBH_EVENT_ABORT);
-        }
-      }
+    }
+    for (retry = 3U; retry != 0U; retry--) {
+      if ((ptr_pipe->transfer_active == 0U) && (ptr_pipe->locked == 0U)) { break; }
+      (void)USBH_Delay (10U);
+    }
+    if ((ptr_pipe->transfer_active != 0U) || (ptr_pipe->locked != 0U)) {
+      status = usbTimeout;
     }
   }
 
@@ -2714,9 +2723,9 @@ static usbStatus USBH_DefaultPipeDelete (uint8_t ctrl) {
     goto exit;
   }
 
-  if (ptr_pipe->device != 255U) {
+  if ((ptr_pipe->locked != 0U) || (ptr_pipe->transfer_active != 0U)) {
     status = USBH_PipeAbort((USBH_PIPE_HANDLE)ptr_pipe);
-    if (status == usbDriverError) {
+    if (status != usbOK) {
       goto exit;
     }
   }
@@ -3180,7 +3189,7 @@ static usbStatus USBH_EnumerateDevice (uint8_t ctrl, uint8_t port, uint8_t speed
   }
   status = USBH_DeviceRequest_GetDescriptor     (device, USB_REQUEST_TO_DEVICE, USB_CONFIGURATION_DESCRIPTOR_TYPE, 0U, 0U, (uint8_t *)ptr_cfg_desc, 9U);
   if (status == usbOK) {
-    if ((ptr_cfg_desc->wTotalLength > (sizeof(USB_CONFIGURATION_DESCRIPTOR) + sizeof(USB_INTERFACE_DESCRIPTOR))) && (ptr_cfg_desc->wTotalLength < (UINT16_MAX - 63U))) {
+    if ((ptr_cfg_desc->wTotalLength >= (sizeof(USB_CONFIGURATION_DESCRIPTOR) + sizeof(USB_INTERFACE_DESCRIPTOR))) && (ptr_cfg_desc->wTotalLength < (UINT16_MAX - 63U))) {
       len = ptr_cfg_desc->wTotalLength;
     } else {
       status = usbDeviceError;
