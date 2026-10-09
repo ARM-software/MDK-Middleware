@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_msc.c
  * Purpose: USB Device - Mass Storage device Class (MSC) module
@@ -1693,7 +1693,7 @@ void USBD_MSC_Thread (void *arg) {
 
   for (;;) {
     event = USBD_ThreadFlagsWait (0xFFFFFFFFU);
-    if ((event & 0x8000000U) == 0U) {
+    if ((event & 0x80000000U) == 0U) {
       if (((event >> 8) & ARM_USBD_EVENT_OUT) != 0U) {
         ptr_msc_data->bulk_len = USBD_DriverEndpointTransferGetResult (device, ep_bulk_out);
         USBD_MSC_EpBulkOut(instance);

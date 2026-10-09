@@ -9,7 +9,6 @@
 
 #include "usbh_lib_core.h"
 
-#include <stdio.h>
 #include <string.h>
 
 #include "usb_lib_debug.h"
@@ -143,7 +142,7 @@ usbStatus USBH_Initialize (uint8_t ctrl) {
   }
 
   port_num = 0U;
-  for (port = 0U; port < 15U; port++) {
+  for (port = 0U; port < 16U; port++) {
     if ((usbh_capabilities[ctrl].port_mask & (1UL << port)) != 0U) {
       port_num ++;
       // Set VBUS high
@@ -214,7 +213,7 @@ usbStatus USBH_Uninitialize (uint8_t ctrl) {
   // Delete Default Pipe
   first_err_status = USBH_DefaultPipeDelete (ctrl);
 
-  for (port = 0U; port < 15U; port++) {
+  for (port = 0U; port < 16U; port++) {
     if ((usbh_capabilities[ctrl].port_mask & (1UL << port)) != 0U) {
       if ((ptr_hc->port_con & (1UL << port)) != 0U) {
         // Uninitialize devices on active ports
@@ -471,6 +470,8 @@ uint16_t USBH_Device_GetPID (uint8_t device) {
 usbStatus USBH_Device_GetStringDescriptor (uint8_t device, uint8_t index, uint16_t language_id, uint8_t *descriptor_data, uint16_t descriptor_length) {
   usbStatus status;
 
+  EvrUSBH_Core_DeviceGetStringDescriptor(device, index, language_id, descriptor_length);
+
   status = CheckDeviceInstance (device);
   if (status == usbOK) {
     status = USBH_DeviceRequest_GetDescriptor (device, USB_REQUEST_TO_DEVICE, USB_STRING_DESCRIPTOR_TYPE, index, language_id, descriptor_data, descriptor_length);
@@ -479,8 +480,6 @@ usbStatus USBH_Device_GetStringDescriptor (uint8_t device, uint8_t index, uint16
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_Core_DeviceGetStringDescriptorFailed(device, index, language_id, descriptor_length, status);
-  } else {
-    EvrUSBH_Core_DeviceGetStringDescriptor(device, index, language_id, descriptor_length);
   }
 #endif
   return status;
@@ -522,7 +521,7 @@ uint8_t USBH_CustomClass_GetDevice (uint8_t instance) {
 
   if (instance < usbh_cls_num) {
     // Find custom class device for requested custom class instance
-    for (i = 0U; i <= usbh_dev_num; i++) {
+    for (i = 0U; i < usbh_dev_num; i++) {
       if ((usbh_dev[i].state.in_use == 1U) && (usbh_dev[i].class_custom != 0U) && (usbh_dev[i].class_instance == instance)) {
         device = i;                     // Found requested custom class instance
         break;
@@ -547,7 +546,7 @@ usbStatus USBH_CustomClass_GetStatus (uint8_t instance) {
     status  = usbDeviceError;
 
     // Find custom class device for requested custom class instance
-    for (i = 0U; i <= usbh_dev_num; i++) {
+    for (i = 0U; i < usbh_dev_num; i++) {
       if ((usbh_dev[i].class_custom != 0U) && (usbh_dev[i].class_instance == instance)) {
         ptr_dev = &usbh_dev[i];
         if ((ptr_dev->state.configured == 1U) && (ptr_dev->state.initialized == 1U)) {
@@ -628,30 +627,55 @@ __WEAK usbStatus USBH_CustomClass_Uninitialize (uint8_t instance) {
 ///                                       - value 0 :   pipe creation failed
 USBH_PIPE_HANDLE USBH_PipeCreate (uint8_t device, uint8_t ep_addr, uint8_t ep_type, uint16_t ep_max_packet_size, uint8_t ep_interval) {
   const USBH_DEV  *ptr_dev;
-        USBH_PIPE *ptr_pipe;
+        USBH_PIPE *ptr_pipe = NULL;
         uint32_t   hw_handle;
 
-  ptr_dev  = &usbh_dev[device];
-  ptr_pipe = USBH_GetFree_PIPE (ptr_dev->ctrl);
-  if (ptr_pipe != NULL) {
-    EvrUSBH_Core_PipeCreate(device, ep_addr, ep_type, ep_max_packet_size, ep_interval, (USBH_PIPE_HANDLE)ptr_pipe);
-    hw_handle = USBH_DriverPipeCreate (ptr_dev->ctrl, ptr_dev->dev_addr, ptr_dev->dev_speed, ptr_dev->hub_addr, ptr_dev->hub_port, ep_addr, ep_type, ep_max_packet_size, ep_interval);
-    if (hw_handle != 0U) {
-      ptr_pipe->hw_handle        = hw_handle;
-      ptr_pipe->thread_id        = NULL;
-      ptr_pipe->bEndpointAddress = ep_addr;
-      ptr_pipe->bmAttributes     = ep_type;
-      ptr_pipe->wMaxPacketSize   = ep_max_packet_size;
-      ptr_pipe->bInterval        = ep_interval;
-      ptr_pipe->device           = device;
-      ptr_pipe->locked           = 0U;
-      ptr_pipe->transfer_active  = 0U;
-      ptr_pipe->transferred      = 0U;
-    }
+  // Check parameters
+  if (device >= usbh_dev_num) {
+    goto exit;
   }
 
-#if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
+  ptr_dev = &usbh_dev[device];
+  if (ptr_dev == NULL) {
+    goto exit;
+  }
+  if (ptr_dev->ctrl >= usbh_hc_num) {
+    goto exit;
+  }
+
+  ptr_pipe = USBH_GetFree_PIPE(ptr_dev->ctrl);
   if (ptr_pipe == NULL) {
+    goto exit;
+  }
+  if ((ptr_dev->dev_speed == USB_SPEED_HIGH) && 
+      ((ep_type == USB_ENDPOINT_TYPE_ISOCHRONOUS) || (ep_type == USB_ENDPOINT_TYPE_INTERRUPT)) && 
+      (ep_interval > 16U)) {
+    // Limit maximum bInterval for high-speed isochronous and interrupt endpoints to 16, as per USB specification
+    ep_interval = 16U;
+  }
+
+  hw_handle = USBH_DriverPipeCreate(ptr_dev->ctrl, ptr_dev->dev_addr, ptr_dev->dev_speed, ptr_dev->hub_addr, ptr_dev->hub_port, ep_addr, ep_type, ep_max_packet_size, ep_interval);
+  if (hw_handle == 0U) {
+    ptr_pipe = NULL;
+    goto exit;
+  }
+
+  ptr_pipe->thread_id        = NULL;
+  ptr_pipe->bEndpointAddress = ep_addr;
+  ptr_pipe->bmAttributes     = ep_type;
+  ptr_pipe->wMaxPacketSize   = ep_max_packet_size;
+  ptr_pipe->bInterval        = ep_interval;
+  ptr_pipe->device           = device;
+  ptr_pipe->locked           = 0U;
+  ptr_pipe->transfer_active  = 0U;
+  ptr_pipe->transferred      = 0U;
+  ptr_pipe->hw_handle        = hw_handle;
+
+exit:
+#if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
+  if (ptr_pipe != NULL) {
+    EvrUSBH_Core_PipeCreate(device, ep_addr, ep_type, ep_max_packet_size, ep_interval, (USBH_PIPE_HANDLE)ptr_pipe);
+  } else {
     EvrUSBH_Core_PipeCreateFailed(device, ep_addr, ep_type, ep_max_packet_size, ep_interval);
   }
 #endif
@@ -659,7 +683,7 @@ USBH_PIPE_HANDLE USBH_PipeCreate (uint8_t device, uint8_t ep_addr, uint8_t ep_ty
 }
 
 /// \brief  Register a callback for Pipe events
-/// \detail Supported only for Isochronous pipes.
+/// \details Supported only for Isochronous pipes.
 /// \param[in]     pipe_hndl            pipe handle.
 /// \param[in]     cb_pipe_event        pointer to pipe event callback function :
 ///                                       - value > 0 : pointer to pipe event callback function
@@ -671,20 +695,26 @@ usbStatus USBH_PipeRegisterCallback (USBH_PIPE_HANDLE pipe_hndl, USBH_PipeEvent_
 
   EvrUSBH_Core_PipeRegisterCallback(pipe_hndl);
 
+  // Check parameters
+  if (pipe_hndl == 0U) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+  
   ptr_pipe = (USBH_PIPE *)pipe_hndl;
-  status   = CheckPipe (ptr_pipe);
-
-  if (status == usbOK) {
-    if ((((USBH_PIPE *)ptr_pipe)->bmAttributes & USB_ENDPOINT_TYPE_MASK) != USB_ENDPOINT_TYPE_ISOCHRONOUS) {
-      // If not a pipe to isochronous endpoint
-      status = usbInvalidParameter;
-    }
+  status = CheckPipe(ptr_pipe);
+  if (status != usbOK) {
+    goto exit;
+  }
+  if ((((USBH_PIPE *)ptr_pipe)->bmAttributes & USB_ENDPOINT_TYPE_MASK) != USB_ENDPOINT_TYPE_ISOCHRONOUS) {
+    // If not a pipe to isochronous endpoint
+    status = usbInvalidParameter;
+    goto exit;
   }
 
-  if (status == usbOK) {
-    ptr_pipe->cb_pipe_event = cb_pipe_event;
-  }
+  ptr_pipe->cb_pipe_event = cb_pipe_event;
 
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_Core_PipeRegisterCallbackFailed(pipe_hndl, status);
@@ -703,13 +733,32 @@ usbStatus USBH_PipeUpdate (USBH_PIPE_HANDLE pipe_hndl) {
 
   EvrUSBH_Core_PipeUpdate(pipe_hndl);
 
+  // Check parameters
+  if (pipe_hndl == 0U) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+  
   ptr_pipe = (USBH_PIPE *)pipe_hndl;
-  status   = CheckPipe (ptr_pipe);
-  if (status == usbOK) {
-    ptr_dev = &usbh_dev[ptr_pipe->device];
-    status  = USBH_DriverPipeModify (ptr_dev->ctrl, ptr_pipe->hw_handle, ptr_dev->dev_addr, ptr_dev->dev_speed, ptr_dev->hub_addr, ptr_dev->hub_port, ptr_pipe->wMaxPacketSize);
+  status = CheckPipe(ptr_pipe);
+  if (status != usbOK) {
+    goto exit;
   }
 
+  if (ptr_pipe->device >= usbh_dev_num) {
+    status = usbDeviceError;
+    goto exit;
+  }
+
+  ptr_dev = &usbh_dev[ptr_pipe->device];
+  if (ptr_dev == NULL) {
+    status = usbDeviceError;
+    goto exit;
+  }
+
+  status = USBH_DriverPipeModify(ptr_dev->ctrl, ptr_pipe->hw_handle, ptr_dev->dev_addr, ptr_dev->dev_speed, ptr_dev->hub_addr, ptr_dev->hub_port, ptr_pipe->wMaxPacketSize);
+
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_Core_PipeUpdateFailed(pipe_hndl, status);
@@ -728,19 +777,44 @@ usbStatus USBH_PipeDelete (USBH_PIPE_HANDLE pipe_hndl) {
 
   EvrUSBH_Core_PipeDelete(pipe_hndl);
 
+  // Check parameters
+  if (pipe_hndl == 0U) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
   ptr_pipe = (USBH_PIPE *)pipe_hndl;
-  status   = CheckPipe (ptr_pipe);
-  if (status == usbOK) {
-    ptr_dev = &usbh_dev[ptr_pipe->device];
-    status  = USBH_DriverPipeTransferAbort (ptr_dev->ctrl, ptr_pipe->hw_handle);
-    if (status == usbOK) {
-      status = USBH_DriverPipeDelete (ptr_dev->ctrl, ptr_pipe->hw_handle);
-      if (status == usbOK) {
-        memset ((void *)ptr_pipe, 0, sizeof(USBH_PIPE));
-      }
+  status = CheckPipe(ptr_pipe);
+  if (status != usbOK) {
+    goto exit;
+  }
+
+  if (ptr_pipe->device >= usbh_dev_num) {
+    status = usbDeviceError;
+    goto exit;
+  }
+
+  if ((ptr_pipe->locked != 0U) || (ptr_pipe->transfer_active != 0U)) {
+    status = USBH_PipeAbort(pipe_hndl);
+    if (status != usbOK) {
+      goto exit;
     }
   }
 
+  ptr_dev = &usbh_dev[ptr_pipe->device];
+  if (ptr_dev == NULL) {
+    status = usbDeviceError;
+    goto exit;
+  }
+
+  status = USBH_DriverPipeDelete(ptr_dev->ctrl, ptr_pipe->hw_handle);
+  if (status != usbOK) {
+    goto exit;
+  }
+
+  memset((void *)ptr_pipe, 0, sizeof(USBH_PIPE));
+
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_Core_PipeDeleteFailed(pipe_hndl, status);
@@ -759,13 +833,32 @@ usbStatus USBH_PipeReset (USBH_PIPE_HANDLE pipe_hndl) {
 
   EvrUSBH_Core_PipeReset(pipe_hndl);
 
+  // Check parameters
+  if (pipe_hndl == 0U) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+  
   ptr_pipe = (USBH_PIPE *)pipe_hndl;
-  status   = CheckPipe (ptr_pipe);
-  if (status == usbOK) {
-    ptr_dev  = &usbh_dev[ptr_pipe->device];
-    status = USBH_DriverPipeReset (ptr_dev->ctrl, ptr_pipe->hw_handle);
+  status = CheckPipe(ptr_pipe);
+  if (status != usbOK) {
+    goto exit;
   }
 
+  if (ptr_pipe->device >= usbh_dev_num) {
+    status = usbDeviceError;
+    goto exit;
+  }
+
+  ptr_dev = &usbh_dev[ptr_pipe->device];
+  if (ptr_dev == NULL) {
+    status = usbDeviceError;
+    goto exit;
+  }
+
+  status = USBH_DriverPipeReset (ptr_dev->ctrl, ptr_pipe->hw_handle);
+
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_Core_PipeResetFailed(pipe_hndl, status);
@@ -785,7 +878,7 @@ usbStatus USBH_PipeReceive (USBH_PIPE_HANDLE pipe_hndl, uint8_t *buf, uint32_t l
         USBH_PIPE          *ptr_pipe;
         uint32_t            event;
         ARM_USBH_EP_HANDLE  hw_handle;
-        uint8_t            *ptr_data;
+        uint8_t            *ptr_data = NULL;
         uint32_t            max_data_len;
         uint32_t            remain_len;
         uint32_t            receive_len;
@@ -800,13 +893,14 @@ usbStatus USBH_PipeReceive (USBH_PIPE_HANDLE pipe_hndl, uint8_t *buf, uint32_t l
 
   EvrUSBH_Core_PipeReceive(pipe_hndl, len);
 
+  // Check parameters
   if ((buf == NULL) && (len != 0U)) {
     status = usbInvalidParameter;
     goto exit;
   }
 
   ptr_pipe = (USBH_PIPE *)pipe_hndl;
-  status   = CheckPipe (ptr_pipe);
+  status = CheckPipe(ptr_pipe);
   if (status != usbOK) {
     goto exit;
   }
@@ -814,21 +908,50 @@ usbStatus USBH_PipeReceive (USBH_PIPE_HANDLE pipe_hndl, uint8_t *buf, uint32_t l
     status = usbDriverBusy;
     goto exit;
   }
+  if (ptr_pipe->thread_id != NULL) {
+    status = usbDriverBusy;
+    goto exit;
+  }
 
-  ptr_dev         = &usbh_dev[ptr_pipe->device];
-  ctrl            =  ptr_dev->ctrl;
-  ptr_hc          = &usbh_hc[ctrl];
-  hw_handle       =  ptr_pipe->hw_handle;
-  max_packet_size =  ptr_pipe->wMaxPacketSize;
+  if (ptr_pipe->device >= usbh_dev_num) {
+    status = usbDeviceError;
+    goto exit;
+  }
+
+  ptr_dev = &usbh_dev[ptr_pipe->device];
+  if (ptr_dev == NULL) {
+    status = usbDeviceError;
+    goto exit;
+  }
+  ctrl = ptr_dev->ctrl;
+  status = CheckController(ctrl);
+  if (status != usbOK) {
+    goto exit;
+  }
+  ptr_hc = &usbh_hc[ctrl];
+  if (ptr_hc == NULL) {
+    status = usbControllerError;
+    goto exit;
+  }
+  hw_handle = ptr_pipe->hw_handle;
+  if (hw_handle == 0U) {
+    status = usbDriverError;
+    goto exit;
+  }
+  max_packet_size = ptr_pipe->wMaxPacketSize;
+  if (max_packet_size == 0U) {
+    status = usbUnknownError;
+    goto exit;
+  }
 
   ptr_pipe->locked = 1U;
 
   if (((ptr_pipe->bmAttributes & 3U)==ARM_USB_ENDPOINT_ISOCHRONOUS) &&  // If Isochronous pipe
        (ptr_pipe->cb_pipe_event != NULL)) {                             // and registered callback
     // Isochronous pipe handling
-    status = USBH_DriverPipeTransfer (ctrl, hw_handle, ARM_USBH_PACKET_IN, buf, len);
+    status = USBH_DriverPipeTransfer(ctrl, hw_handle, ARM_USBH_PACKET_IN, buf, len);
     ptr_pipe->locked = 0U;
-    return status;
+    goto exit;
   }
 
   remain_len   = len;
@@ -837,7 +960,7 @@ usbStatus USBH_PipeReceive (USBH_PIPE_HANDLE pipe_hndl, uint8_t *buf, uint32_t l
     if (remain_len == 0U) {                                             // If ZLP is requested
       alloc_mem = false;
     } else {
-      alloc_mem = !USBH_MemoryIsInPool (ctrl, buf);
+      alloc_mem = !USBH_MemoryIsInPool(ctrl, buf);
     }
     if (alloc_mem) {
       // If memory for USB must be relocated, allocate maximum memory chunk for reception
@@ -845,16 +968,21 @@ usbStatus USBH_PipeReceive (USBH_PIPE_HANDLE pipe_hndl, uint8_t *buf, uint32_t l
         max_data_len = ptr_hc->port_mem_max & (~((uint32_t)max_packet_size-1U));
       }
       do {
-        mstatus = USBH_MemoryAllocate (ctrl, (uint8_t **)((uint32_t)&ptr_data), max_data_len);
+        mstatus = USBH_MemoryAllocate(ctrl, &ptr_data, max_data_len);
         if (mstatus == usbOK) {
           break;
         }
-        max_data_len -= max_packet_size;
         if (max_data_len <= max_packet_size) {
           status = usbMemoryError;
-          goto exit;
+          goto done;
+        } else {
+          max_data_len -= max_packet_size;
         }
-      } while (max_data_len > max_packet_size);
+      } while (max_data_len >= max_packet_size);
+      if (mstatus != usbOK) {
+        status = usbMemoryError;
+        goto done;
+      }
     } else {                                                            // If memory is in pool it is ok
       ptr_data = buf;
     }
@@ -863,7 +991,7 @@ usbStatus USBH_PipeReceive (USBH_PIPE_HANDLE pipe_hndl, uint8_t *buf, uint32_t l
     ptr_data  = (uint8_t *)buf;
   }
 
-  packet    = ARM_USBH_PACKET_IN;
+  packet = ARM_USBH_PACKET_IN;
   if ((ptr_pipe->bEndpointAddress & 0x0FU) == 0U) {                     // If EP0 IN on control endpoint => force DATA1
     packet &= ~ARM_USBH_PACKET_DATA_Msk;
     packet |=  ARM_USBH_PACKET_DATA1;
@@ -872,10 +1000,6 @@ usbStatus USBH_PipeReceive (USBH_PIPE_HANDLE pipe_hndl, uint8_t *buf, uint32_t l
   transferred           = 0U;
   received_len          = 0U;
 
-  if (ptr_pipe->thread_id != NULL) {
-    status = usbDriverBusy;
-    goto mem_free_and_exit;
-  }
   ptr_pipe->thread_id = USBH_ThreadGetHandle();
 
   for (;;) {
@@ -891,7 +1015,7 @@ transfer_data:
       if (((packet & ARM_USBH_PACKET_DATA1) != 0U) && (transferred != 0U)) {
         packet &= ~ARM_USBH_PACKET_DATA1;
       }
-      status = USBH_DriverPipeTransfer (ctrl, hw_handle, packet, ptr_data + received_len, receive_len - received_len);
+      status = USBH_DriverPipeTransfer(ctrl, hw_handle, packet, ptr_data + received_len, receive_len - received_len);
       if (status != usbOK) {                                            // If transfer failed clear EP to TID and exit
         goto done;
       }
@@ -914,9 +1038,15 @@ transfer_data:
           break;
       }
       ptr_pipe->transfer_active = 0U;
-      transferred = USBH_DriverPipeTransferGetResult (ctrl, hw_handle);
+      transferred = USBH_DriverPipeTransferGetResult(ctrl, hw_handle);
+      if (transferred > (receive_len - received_len)) {
+        transferred = receive_len - received_len;
+      }
+      if (transferred > remain_len) {
+       transferred = remain_len;
+      }
       if ((alloc_mem) && (buf != NULL) && (ptr_data != NULL) && (transferred != 0U)) {
-        memcpy ((void *)buf, (void *)(ptr_data + received_len), transferred);
+        memcpy((void *)buf, (void *)(ptr_data + received_len), transferred);
       }
       ptr_pipe->transferred += transferred;
       received_len          += transferred;
@@ -935,6 +1065,10 @@ transfer_data:
                   goto done;
                 }
               } else {
+                if ((ptr_dev->hub_port == 0U) || (ptr_dev->hub_port >= 16U)) {
+                  status = usbTransferError;
+                  goto done;
+                }
                 if ((ptr_hc->port_event[ptr_dev->hub_port - 1U]) != 0U) {
                   status = usbTransferError;
                   goto done;
@@ -1002,14 +1136,14 @@ transfer_data:
   }
 
 abort_and_done:
-  (void)USBH_DriverPipeTransferAbort (ctrl, hw_handle);
+  (void)USBH_DriverPipeTransferAbort(ctrl, hw_handle);
 
 done:
-  ptr_pipe->thread_id = NULL;
-  ptr_pipe->locked    = 0U;
+  ptr_pipe->thread_id       = NULL;
+  ptr_pipe->transfer_active = 0U;
+  ptr_pipe->locked          = 0U;
 
-mem_free_and_exit:
-  if (alloc_mem) {
+  if ((alloc_mem) && (ptr_data != NULL)) {
     mstatus = USBH_MemoryFree (ctrl, (uint8_t  *) ptr_data);
     if (mstatus != usbOK) {
       status = mstatus;
@@ -1035,7 +1169,7 @@ uint32_t USBH_PipeReceiveGetResult (USBH_PIPE_HANDLE pipe_hndl) {
   num = 0U;
 
   ptr_pipe = (USBH_PIPE *)pipe_hndl;
-  if (CheckPipe (ptr_pipe) == usbOK) {
+  if (CheckPipe(ptr_pipe) == usbOK) {
     if ((ptr_pipe->bEndpointAddress & 0x80U) != 0U) {   // If pipe endpoint IN
       num = ptr_pipe->transferred;
     }
@@ -1057,7 +1191,7 @@ usbStatus USBH_PipeSend (USBH_PIPE_HANDLE pipe_hndl, const uint8_t *buf, uint32_
         USBH_PIPE          *ptr_pipe;
         uint32_t            event;
         ARM_USBH_EP_HANDLE  hw_handle;
-        uint8_t            *ptr_data;
+        uint8_t            *ptr_data = NULL;
         uint32_t            max_data_len;
         uint32_t            remain_len;
         uint32_t            send_len;
@@ -1079,7 +1213,7 @@ usbStatus USBH_PipeSend (USBH_PIPE_HANDLE pipe_hndl, const uint8_t *buf, uint32_
   }
 
   ptr_pipe = (USBH_PIPE *)pipe_hndl;
-  status   = CheckPipe (ptr_pipe);
+  status = CheckPipe(ptr_pipe);
   if (status != usbOK) {
     goto exit;
   }
@@ -1087,21 +1221,50 @@ usbStatus USBH_PipeSend (USBH_PIPE_HANDLE pipe_hndl, const uint8_t *buf, uint32_
     status = usbDriverBusy;
     goto exit;
   }
+  if (ptr_pipe->thread_id != NULL) {
+    status = usbDriverBusy;
+    goto exit;
+  }
 
-  ptr_dev         = &usbh_dev[ptr_pipe->device];
-  ctrl            =  ptr_dev->ctrl;
-  ptr_hc          = &usbh_hc[ctrl];
-  hw_handle       =  ptr_pipe->hw_handle;
-  max_packet_size =  ptr_pipe->wMaxPacketSize;
+  if (ptr_pipe->device >= usbh_dev_num) {
+    status = usbDeviceError;
+    goto exit;
+  }
+
+  ptr_dev = &usbh_dev[ptr_pipe->device];
+  if (ptr_dev == NULL) {
+    status = usbDeviceError;
+    goto exit;
+  }
+  ctrl = ptr_dev->ctrl;
+  status = CheckController(ctrl);
+  if (status != usbOK) {
+    goto exit;
+  }
+  ptr_hc = &usbh_hc[ctrl];
+  if (ptr_hc == NULL) {
+    status = usbControllerError;
+    goto exit;
+  }
+  hw_handle = ptr_pipe->hw_handle;
+  if (hw_handle == 0U) {
+    status = usbDriverError;
+    goto exit;
+  }
+  max_packet_size = ptr_pipe->wMaxPacketSize;
+  if (max_packet_size == 0U) {
+    status = usbUnknownError;
+    goto exit;
+  }
 
   ptr_pipe->locked = 1U;
 
   if (((ptr_pipe->bmAttributes & 3U)==ARM_USB_ENDPOINT_ISOCHRONOUS) &&  // If Isochronous pipe
        (ptr_pipe->cb_pipe_event != NULL)) {                             // and registered callback
     // Isochronous pipe handling
-    status = USBH_DriverPipeTransfer (ctrl, hw_handle, ARM_USBH_PACKET_OUT, (uint8_t *)((uint32_t)buf), len);
+    status = USBH_DriverPipeTransfer(ctrl, hw_handle, ARM_USBH_PACKET_OUT, (uint8_t *)(uintptr_t)buf, len);
     ptr_pipe->locked = 0U;
-    return status;
+    goto exit;
   }
 
   remain_len   = len;
@@ -1118,22 +1281,24 @@ usbStatus USBH_PipeSend (USBH_PIPE_HANDLE pipe_hndl, const uint8_t *buf, uint32_
         max_data_len = ptr_hc->port_mem_max & (~((uint32_t)max_packet_size-1U));
       }
       do {
-        mstatus = USBH_MemoryAllocate (ctrl, (uint8_t **)((uint32_t)&ptr_data), max_data_len);
+        mstatus = USBH_MemoryAllocate (ctrl, &ptr_data, max_data_len);
         if (mstatus == usbOK) {
           break;
         }
-        max_data_len -= max_packet_size;
-        if (max_data_len <= max_packet_size) {
-          status = usbMemoryError;
-          goto exit;
+        if (max_data_len >= max_packet_size) {
+          max_data_len -= max_packet_size;
         }
-      } while (max_data_len > max_packet_size);
+      } while (max_data_len >= max_packet_size);
+      if (mstatus != usbOK) {
+        status = usbMemoryError;
+        goto done;
+      }
     } else {                                                            // If memory is in pool it is ok
-      ptr_data = (uint8_t *)((uint32_t)buf);
+      ptr_data = (uint8_t *)(uintptr_t)buf;
     }
   } else {                                                              // If memory relocation is not enabled
     alloc_mem = false;
-    ptr_data  = (uint8_t *)((uint32_t)buf);
+    ptr_data  = (uint8_t *)(uintptr_t)buf;
   }
 
   packet    = ARM_USBH_PACKET_OUT;
@@ -1150,10 +1315,6 @@ usbStatus USBH_PipeSend (USBH_PIPE_HANDLE pipe_hndl, const uint8_t *buf, uint32_
     hs = 0U;
   }
 
-  if (ptr_pipe->thread_id != NULL) {
-    status = usbDriverBusy;
-    goto mem_free_and_exit;
-  }
   ptr_pipe->thread_id = USBH_ThreadGetHandle();
 
   for (;;) {
@@ -1172,7 +1333,7 @@ transfer_data:
       if (((packet & ARM_USBH_PACKET_DATA1) != 0U) && (transferred != 0U)) {
         packet &= ~ARM_USBH_PACKET_DATA1;
       }
-      status = USBH_DriverPipeTransfer (ctrl, hw_handle, packet, ptr_data + sent_len, send_len - sent_len);
+      status = USBH_DriverPipeTransfer(ctrl, hw_handle, packet, ptr_data + sent_len, send_len - sent_len);
       if (status != usbOK) {                                            // If transfer failed clear EP to TID and exit
         goto done;
       }
@@ -1195,7 +1356,13 @@ transfer_data:
           break;
       }
       ptr_pipe->transfer_active = 0U;
-      transferred = USBH_DriverPipeTransferGetResult (ctrl, hw_handle);
+      transferred = USBH_DriverPipeTransferGetResult(ctrl, hw_handle);
+      if (transferred > send_len) {
+        transferred = send_len;
+      }
+      if (transferred > remain_len) {
+        transferred = remain_len;
+      }
       ptr_pipe->transferred += transferred;
       sent_len              += transferred;
       remain_len            -= transferred;
@@ -1213,6 +1380,10 @@ transfer_data:
                   goto done;
                 }
               } else {
+                if ((ptr_dev->hub_port == 0U) || (ptr_dev->hub_port >= 16U)) {
+                  status = usbTransferError;
+                  goto done;
+                }
                 if ((ptr_hc->port_event[ptr_dev->hub_port - 1U]) != 0U) {
                   status = usbTransferError;
                   goto done;
@@ -1239,7 +1410,7 @@ transfer_data:
                   case ARM_USB_ENDPOINT_CONTROL:
                   case ARM_USB_ENDPOINT_BULK:
                     if (hs == 1U) {                                     // For high-speed pipe endpoint and was not an error
-                      status = USBH_PipeDoPing (pipe_hndl);
+                      status = USBH_PipeDoPing(pipe_hndl);
                       if (status != usbOK) {
                         goto done;
                       }
@@ -1271,7 +1442,7 @@ transfer_data:
                   status = usbOK;
                   goto done;
                 }
-                status = USBH_PipeDoPing (pipe_hndl);
+                status = USBH_PipeDoPing(pipe_hndl);
                 if (status == usbOK) {
                   goto done;
                 }
@@ -1302,11 +1473,11 @@ abort_and_done:
   (void)USBH_DriverPipeTransferAbort (ctrl, hw_handle);
 
 done:
-  ptr_pipe->thread_id = NULL;
-  ptr_pipe->locked    = 0U;
+  ptr_pipe->thread_id       = NULL;
+  ptr_pipe->transfer_active = 0U;
+  ptr_pipe->locked          = 0U;
 
-mem_free_and_exit:
-  if (alloc_mem) {
+  if ((alloc_mem) && (ptr_data != NULL)) {
     mstatus = USBH_MemoryFree (ctrl, (uint8_t  *) ptr_data);
     if (mstatus != usbOK) {
       status = mstatus;
@@ -1350,38 +1521,64 @@ usbStatus USBH_PipeAbort (USBH_PIPE_HANDLE pipe_hndl) {
   const USBH_DEV  *ptr_dev;
         USBH_PIPE *ptr_pipe;
         usbStatus  status;
+        uint8_t    ctrl;
         uint8_t    retry;
 
   EvrUSBH_Core_PipeAbort(pipe_hndl);
 
   ptr_pipe = (USBH_PIPE *)pipe_hndl;
   status   = CheckPipe (ptr_pipe);
-  ptr_dev  = &usbh_dev[ptr_pipe->device];
+  if (status != usbOK) {
+    goto exit;
+  }
+
+  if (ptr_pipe->device >= usbh_dev_num) {
+    status = usbDeviceError;
+    goto exit;
+  }
+
+  ptr_dev = &usbh_dev[ptr_pipe->device];
+  if (ptr_dev == NULL) {
+    status = usbDeviceError;
+    goto exit;
+  }
+  ctrl = ptr_dev->ctrl;
+  status = CheckController(ctrl);
+  if (status != usbOK) {
+    goto exit;
+  }
 
   if (((ptr_pipe->bmAttributes & 3U)==ARM_USB_ENDPOINT_ISOCHRONOUS) &&  // If Isochronous pipe
        (ptr_pipe->cb_pipe_event != NULL)) {                             // and registered callback
     // Isochronous pipe handling
-    status = USBH_DriverPipeTransferAbort (ptr_dev->ctrl, ptr_pipe->hw_handle);
+    status = USBH_DriverPipeTransferAbort(ctrl, ptr_pipe->hw_handle);
     ptr_pipe->locked = 0U;
-    return status;
+    goto exit;
   }
 
   if (status == usbOK) {
-    if (ptr_pipe->locked == 1U) {
-      retry = 3U;
-      while (retry-- != 0U) {
-        if (ptr_pipe->transfer_active == 1U) { break; }
+    if (ptr_pipe->locked != 0U) {
+      for (retry = 3U; retry != 0U; retry--) {
+        if (ptr_pipe->transfer_active != 0U) {
+          status = USBH_DriverPipeTransferAbort(ctrl, ptr_pipe->hw_handle);
+          if (status == usbOK) {
+            USBH_SignalPipeEvent (ctrl, ptr_pipe->hw_handle, ARM_USBH_EVENT_ABORT);
+            break;
+          }
+        }
         (void)USBH_Delay (10U);
       }
-      if (ptr_pipe->transfer_active == 1U) {
-        status = USBH_DriverPipeTransferAbort (ptr_dev->ctrl, ptr_pipe->hw_handle);
-        if (status == usbOK) {
-          USBH_SignalPipeEvent (ptr_dev->ctrl, ptr_pipe->hw_handle, ARM_USBH_EVENT_ABORT);
-        }
-      }
+    }
+    for (retry = 3U; retry != 0U; retry--) {
+      if ((ptr_pipe->transfer_active == 0U) && (ptr_pipe->locked == 0U)) { break; }
+      (void)USBH_Delay (10U);
+    }
+    if ((ptr_pipe->transfer_active != 0U) || (ptr_pipe->locked != 0U)) {
+      status = usbTimeout;
     }
   }
 
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_Core_PipeAbortFailed(pipe_hndl, status);
@@ -1402,14 +1599,21 @@ usbStatus USBH_ControlTransfer (uint8_t device, const USB_SETUP_PACKET *setup_pa
         uint8_t           ctrl, retry;
         usbStatus         status;
 
-  EvrUSBH_Core_ControlTransfer(device, (const void *)setup_packet, len);
+  // Check parameters
+  if ((device >= usbh_dev_num) || 
+      (setup_packet == NULL)) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
+  EvrUSBH_Core_ControlTransfer(device, setup_packet, len);
 
   if ((data != NULL) || (len == 0U)) {
     ptr_dev = &usbh_dev[device];
     ctrl    = ptr_dev->ctrl;
     if (ctrl < usbh_hc_num) {
       retry = 3U;
-      while (retry-- != 0U) {
+      for (retry = 3U; retry != 0U; retry--) {
         if (USBH_MutexAcquire (usbh_def_pipe_mutex_id[ctrl], 500U) == 0) { break; }
         (void)USBH_Delay (100U);
       }
@@ -1505,8 +1709,7 @@ usbStatus USBH_ControlTransfer (uint8_t device, const USB_SETUP_PACKET *setup_pa
           }
         }
 
-        retry = 3U;
-        while (retry-- != 0U) {
+        for (retry = 3U; retry != 0U; retry--) {
           if (USBH_MutexRelease (usbh_def_pipe_mutex_id[ctrl]) == 0) { break; }
           (void)USBH_Delay (100U);
         }
@@ -1521,9 +1724,10 @@ usbStatus USBH_ControlTransfer (uint8_t device, const USB_SETUP_PACKET *setup_pa
     status = usbInvalidParameter;
   }
 
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
-    EvrUSBH_Core_ControlTransferFailed(device, (const void *)setup_packet, status);
+    EvrUSBH_Core_ControlTransferFailed(device, setup_packet, status);
   }
 #endif
   return status;
@@ -1541,11 +1745,18 @@ usbStatus USBH_DeviceRequest_GetStatus (uint8_t device, uint8_t recipient, uint8
   usbStatus         status;
   usbStatus         mstatus;
 
+  // Check parameters
+  if ((device >= usbh_dev_num) || 
+      (ptr_stat_dat == NULL)) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
   ctrl   = usbh_dev[device].ctrl;
   status = CheckController (ctrl);
   if (status == usbOK) {
     if (ptr_stat_dat != NULL) {
-      status = USBH_MemoryAllocate      (ctrl, (uint8_t **)((uint32_t)&ptr_sp), 8U);
+      status = USBH_MemoryAllocate      (ctrl, (uint8_t **)&ptr_sp, 8U);
       if (status == usbOK) {
         PREPARE_SETUP_PACKET_DATA       (                   ptr_sp, USB_REQUEST_DEVICE_TO_HOST, USB_REQUEST_STANDARD, recipient, USB_REQUEST_GET_STATUS, 0U, index, 2U)
         status  = USBH_ControlTransfer  (device,            ptr_sp, ptr_stat_dat, 2U);
@@ -1559,9 +1770,10 @@ usbStatus USBH_DeviceRequest_GetStatus (uint8_t device, uint8_t recipient, uint8
     }
   }
 
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status == usbOK) {
-    EvrUSBH_Core_RequestGetStatus      (device, recipient, index, ((uint16_t)(*(ptr_stat_dat+1U))) | ((uint16_t)*ptr_stat_dat));
+    EvrUSBH_Core_RequestGetStatus(device, recipient, index, ((uint16_t)(*(ptr_stat_dat+1U))) | ((uint16_t)*ptr_stat_dat));
   } else {
     EvrUSBH_Core_RequestGetStatusFailed(device, recipient, index, status);
   }
@@ -1583,10 +1795,16 @@ usbStatus USBH_DeviceRequest_ClearFeature (uint8_t device, uint8_t recipient, ui
 
   EvrUSBH_Core_RequestClearFeature(device, recipient, index, feature_selector);
 
+  // Check parameters
+  if (device >= usbh_dev_num) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
   ctrl   = usbh_dev[device].ctrl;
   status = CheckController (ctrl);
   if (status == usbOK) {
-    status = USBH_MemoryAllocate        (ctrl, (uint8_t **)((uint32_t)&ptr_sp), 8U);
+    status = USBH_MemoryAllocate        (ctrl, (uint8_t **)&ptr_sp, 8U);
     if (status == usbOK) {
       PREPARE_SETUP_PACKET_DATA         (                   ptr_sp, USB_REQUEST_HOST_TO_DEVICE, USB_REQUEST_STANDARD, recipient, USB_REQUEST_CLEAR_FEATURE, feature_selector, index, 0U)
       status = USBH_ControlTransfer     (device,            ptr_sp, NULL, 0U);
@@ -1597,6 +1815,7 @@ usbStatus USBH_DeviceRequest_ClearFeature (uint8_t device, uint8_t recipient, ui
     }
   }
 
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_Core_RequestClearFeatureFailed(device, recipient, index, feature_selector, status);
@@ -1619,10 +1838,16 @@ usbStatus USBH_DeviceRequest_SetFeature (uint8_t device, uint8_t recipient, uint
 
   EvrUSBH_Core_RequestSetFeature(device, recipient, index, feature_selector);
 
+  // Check parameters
+  if (device >= usbh_dev_num) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
   ctrl   = usbh_dev[device].ctrl;
   status = CheckController (ctrl);
   if (status == usbOK) {
-    status = USBH_MemoryAllocate        (ctrl, (uint8_t **)((uint32_t)&ptr_sp), 8U);
+    status = USBH_MemoryAllocate        (ctrl, (uint8_t **)&ptr_sp, 8U);
     if (status == usbOK) {
       PREPARE_SETUP_PACKET_DATA         (                   ptr_sp, USB_REQUEST_HOST_TO_DEVICE, USB_REQUEST_STANDARD, recipient, USB_REQUEST_SET_FEATURE, feature_selector, index, 0U)
       status = USBH_ControlTransfer     (device,            ptr_sp, NULL, 0U);
@@ -1633,6 +1858,7 @@ usbStatus USBH_DeviceRequest_SetFeature (uint8_t device, uint8_t recipient, uint
     }
   }
 
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_Core_RequestSetFeatureFailed(device, recipient, index, feature_selector, status);
@@ -1653,10 +1879,17 @@ usbStatus USBH_DeviceRequest_SetAddress (uint8_t device, uint8_t device_address)
 
   EvrUSBH_Core_RequestSetAddress(device, device_address);
 
+  // Check parameters
+  if ((device >= usbh_dev_num) ||
+      (device_address > 127U)) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
   ctrl   = usbh_dev[device].ctrl;
   status = CheckController (ctrl);
   if (status == usbOK) {
-    status = USBH_MemoryAllocate        (ctrl, (uint8_t **)((uint32_t)&ptr_sp), 8U);
+    status = USBH_MemoryAllocate        (ctrl, (uint8_t **)&ptr_sp, 8U);
     if (status == usbOK) {
       PREPARE_SETUP_PACKET_DATA         (                   ptr_sp, USB_REQUEST_HOST_TO_DEVICE, USB_REQUEST_STANDARD, USB_REQUEST_TO_DEVICE, USB_REQUEST_SET_ADDRESS, device_address, 0U, 0U)
       status = USBH_ControlTransfer     (device,            ptr_sp, NULL, 0U);
@@ -1670,6 +1903,7 @@ usbStatus USBH_DeviceRequest_SetAddress (uint8_t device, uint8_t device_address)
     }
   }
 
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_Core_RequestSetAddressFailed(device, device_address, status);
@@ -1695,12 +1929,20 @@ usbStatus USBH_DeviceRequest_GetDescriptor (uint8_t device, uint8_t recipient, u
 
   EvrUSBH_Core_RequestGetDescriptor(device, recipient, descriptor_type, descriptor_index, language_id, descriptor_length);
 
+  // Check parameters
+  if ((device >= usbh_dev_num) || 
+      (descriptor_data == NULL)) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
   ctrl   = usbh_dev[device].ctrl;
   status = CheckController (ctrl);
   if (status == usbOK) {
     if (descriptor_data != NULL) {
-      status = USBH_MemoryAllocate      (ctrl, (uint8_t **)((uint32_t)&ptr_sp), 8U);
+      status = USBH_MemoryAllocate      (ctrl, (uint8_t **)&ptr_sp, 8U);
       if (status == usbOK) {
+        memset(descriptor_data, 0, descriptor_length);
         PREPARE_SETUP_PACKET_DATA       (                   ptr_sp, USB_REQUEST_DEVICE_TO_HOST, USB_REQUEST_STANDARD, recipient, USB_REQUEST_GET_DESCRIPTOR, (((uint32_t)descriptor_type << 8) | (uint32_t)descriptor_index), language_id, descriptor_length)
         status = USBH_ControlTransfer   (device,            ptr_sp, descriptor_data, descriptor_length);
         mstatus = USBH_MemoryFree       (ctrl, (uint8_t  *) ptr_sp);
@@ -1713,6 +1955,7 @@ usbStatus USBH_DeviceRequest_GetDescriptor (uint8_t device, uint8_t recipient, u
     }
   }
 
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_Core_RequestGetDescriptorFailed(device, recipient, descriptor_type, descriptor_index, language_id, descriptor_length, status);
@@ -1738,14 +1981,21 @@ usbStatus USBH_DeviceRequest_SetDescriptor (uint8_t device, uint8_t recipient, u
 
   EvrUSBH_Core_RequestSetDescriptor(device, recipient, descriptor_type, descriptor_index, language_id, descriptor_length);
 
+  // Check parameters
+  if ((device >= usbh_dev_num) || 
+      (descriptor_data == NULL)) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
   ctrl   = usbh_dev[device].ctrl;
   status = CheckController (ctrl);
   if (status == usbOK) {
     if (descriptor_data != NULL) {
-      status = USBH_MemoryAllocate      (ctrl, (uint8_t **)((uint32_t)&ptr_sp), 8U);
+      status = USBH_MemoryAllocate      (ctrl, (uint8_t **)&ptr_sp, 8U);
       if (status == usbOK) {
         PREPARE_SETUP_PACKET_DATA       (                   ptr_sp, USB_REQUEST_HOST_TO_DEVICE, USB_REQUEST_STANDARD, recipient, USB_REQUEST_SET_DESCRIPTOR, (((uint32_t)descriptor_type << 8) | (uint32_t)descriptor_index), language_id, descriptor_length)
-        status = USBH_ControlTransfer   (device,            ptr_sp, (uint8_t *)((uint32_t)descriptor_data), descriptor_length);
+        status = USBH_ControlTransfer   (device,            ptr_sp, (uint8_t *)(uintptr_t)descriptor_data, descriptor_length);
         mstatus = USBH_MemoryFree       (ctrl, (uint8_t  *) ptr_sp);
         if ((mstatus != usbOK) && (status == usbOK)) {
           status = mstatus;
@@ -1756,6 +2006,7 @@ usbStatus USBH_DeviceRequest_SetDescriptor (uint8_t device, uint8_t recipient, u
     }
   }
 
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_Core_RequestSetDescriptorFailed(device, recipient, descriptor_type, descriptor_index, language_id, descriptor_length, status);
@@ -1774,15 +2025,18 @@ usbStatus USBH_DeviceRequest_GetConfiguration (uint8_t device, uint8_t *ptr_conf
   usbStatus         status;
   usbStatus         mstatus;
 
-  if (ptr_configuration != NULL) {
-    EvrUSBH_Core_RequestGetConfiguration(device, *ptr_configuration);
+  // Check parameters
+  if ((device >= usbh_dev_num) || 
+      (ptr_configuration == NULL)) {
+    status = usbInvalidParameter;
+    goto exit;
   }
 
   ctrl   = usbh_dev[device].ctrl;
   status = CheckController (ctrl);
   if (status == usbOK) {
     if (ptr_configuration != NULL) {
-      status = USBH_MemoryAllocate      (ctrl, (uint8_t **)((uint32_t)&ptr_sp), 8U);
+      status = USBH_MemoryAllocate      (ctrl, (uint8_t **)&ptr_sp, 8U);
       if (status == usbOK) {
         PREPARE_SETUP_PACKET_DATA       (                   ptr_sp, USB_REQUEST_DEVICE_TO_HOST, USB_REQUEST_STANDARD, USB_REQUEST_TO_DEVICE, USB_REQUEST_GET_CONFIGURATION, 0U, 0U, 1U)
         status = USBH_ControlTransfer   (device,            ptr_sp, ptr_configuration, 1U);
@@ -1796,8 +2050,11 @@ usbStatus USBH_DeviceRequest_GetConfiguration (uint8_t device, uint8_t *ptr_conf
     }
   }
 
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
-  if (status != usbOK) {
+  if (status == usbOK) {
+    EvrUSBH_Core_RequestGetConfiguration(device, *ptr_configuration);
+  } else {
     EvrUSBH_Core_RequestGetConfigurationFailed(device, status);
   }
 #endif
@@ -1816,10 +2073,16 @@ usbStatus USBH_DeviceRequest_SetConfiguration (uint8_t device, uint8_t configura
 
   EvrUSBH_Core_RequestSetConfiguration(device, configuration);
 
+  // Check parameters
+  if (device >= usbh_dev_num) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
   ctrl   = usbh_dev[device].ctrl;
   status = CheckController (ctrl);
   if (status == usbOK) {
-    status = USBH_MemoryAllocate        (ctrl, (uint8_t **)((uint32_t)&ptr_sp), 8U);
+    status = USBH_MemoryAllocate        (ctrl, (uint8_t **)&ptr_sp, 8U);
     if (status == usbOK) {
       PREPARE_SETUP_PACKET_DATA         (                   ptr_sp, USB_REQUEST_HOST_TO_DEVICE, USB_REQUEST_STANDARD, USB_REQUEST_TO_DEVICE, USB_REQUEST_SET_CONFIGURATION, configuration, 0U, 0U)
       status = USBH_ControlTransfer     (device,            ptr_sp, NULL, 0U);
@@ -1833,6 +2096,7 @@ usbStatus USBH_DeviceRequest_SetConfiguration (uint8_t device, uint8_t configura
     }
   }
 
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_Core_RequestSetConfigurationFailed(device, configuration, status);
@@ -1852,15 +2116,18 @@ usbStatus USBH_DeviceRequest_GetInterface (uint8_t device, uint8_t index, uint8_
   usbStatus         status;
   usbStatus         mstatus;
 
-  if (ptr_alternate != NULL) {
-    EvrUSBH_Core_RequestGetInterface(device, index, *ptr_alternate);
+  // Check parameters
+  if ((device >= usbh_dev_num) || 
+      (ptr_alternate == NULL)) {
+    status = usbInvalidParameter;
+    goto exit;
   }
 
   ctrl   = usbh_dev[device].ctrl;
   status = CheckController (ctrl);
   if (status == usbOK) {
     if (ptr_alternate != NULL) {
-      status = USBH_MemoryAllocate      (ctrl, (uint8_t **)((uint32_t)&ptr_sp), 8U);
+      status = USBH_MemoryAllocate      (ctrl, (uint8_t **)&ptr_sp, 8U);
       if (status == usbOK) {
         PREPARE_SETUP_PACKET_DATA       (                   ptr_sp, USB_REQUEST_DEVICE_TO_HOST, USB_REQUEST_STANDARD, USB_REQUEST_TO_DEVICE, USB_REQUEST_GET_INTERFACE, 0U, index, 1U)
         status = USBH_ControlTransfer   (device,            ptr_sp, ptr_alternate, 1U);
@@ -1874,8 +2141,11 @@ usbStatus USBH_DeviceRequest_GetInterface (uint8_t device, uint8_t index, uint8_
     }
   }
 
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
-  if (status != usbOK) {
+  if (status == usbOK) {
+    EvrUSBH_Core_RequestGetInterface(device, index, *ptr_alternate);
+  } else {
     EvrUSBH_Core_RequestGetInterfaceFailed(device, index, status);
   }
 #endif
@@ -1895,10 +2165,16 @@ usbStatus USBH_DeviceRequest_SetInterface (uint8_t device, uint8_t index, uint8_
 
   EvrUSBH_Core_RequestSetInterface(device, index, alternate);
 
+  // Check parameters
+  if (device >= usbh_dev_num) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
   ctrl   = usbh_dev[device].ctrl;
   status = CheckController (ctrl);
   if (status == usbOK) {
-    status = USBH_MemoryAllocate        (ctrl, (uint8_t **)((uint32_t)&ptr_sp), 8U);
+    status = USBH_MemoryAllocate        (ctrl, (uint8_t **)&ptr_sp, 8U);
     if (status == usbOK) {
       PREPARE_SETUP_PACKET_DATA         (                   ptr_sp, USB_REQUEST_HOST_TO_DEVICE, USB_REQUEST_STANDARD, USB_REQUEST_TO_INTERFACE, USB_REQUEST_SET_INTERFACE, alternate, index, 0U)
       status = USBH_ControlTransfer     (device,            ptr_sp, NULL, 0U);
@@ -1909,6 +2185,7 @@ usbStatus USBH_DeviceRequest_SetInterface (uint8_t device, uint8_t index, uint8_
     }
   }
 
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_Core_RequestSetInterfaceFailed(device, index, alternate, status);
@@ -1928,11 +2205,18 @@ usbStatus USBH_DeviceRequest_SynchFrame (uint8_t device, uint8_t index, uint8_t 
   usbStatus         status;
   usbStatus         mstatus;
 
+  // Check parameters
+  if ((device >= usbh_dev_num) || 
+      (ptr_frame_number == NULL)) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
   ctrl   = usbh_dev[device].ctrl;
   status = CheckController (ctrl);
   if (status == usbOK) {
     if (ptr_frame_number != NULL) {
-      status = USBH_MemoryAllocate      (ctrl, (uint8_t **)((uint32_t)&ptr_sp), 8U);
+      status = USBH_MemoryAllocate      (ctrl, (uint8_t **)&ptr_sp, 8U);
       if (status == usbOK) {
         PREPARE_SETUP_PACKET_DATA       (                   ptr_sp, USB_REQUEST_DEVICE_TO_HOST, USB_REQUEST_STANDARD, USB_REQUEST_TO_DEVICE, USB_REQUEST_SYNC_FRAME, 0U, index, 2U)
         status = USBH_ControlTransfer   (device,            ptr_sp, ptr_frame_number, 2U);
@@ -1946,9 +2230,10 @@ usbStatus USBH_DeviceRequest_SynchFrame (uint8_t device, uint8_t index, uint8_t 
     }
   }
 
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status == usbOK) {
-    EvrUSBH_Core_RequestSynchFrame      (device, index, ((uint16_t)(*(ptr_frame_number+1U))) | ((uint16_t)*ptr_frame_number));
+    EvrUSBH_Core_RequestSynchFrame(device, index, ((uint16_t)(*(ptr_frame_number+1U))) | ((uint16_t)*ptr_frame_number));
   } else {
     EvrUSBH_Core_RequestSynchFrameFailed(device, index, status);
   }
@@ -1967,6 +2252,15 @@ USBH_PIPE *USBH_GetFree_PIPE (uint8_t ctrl) {
   USBH_PIPE       *ptr_pipe;
   uint32_t         max_pipe;
   uint32_t         i;
+
+  if (CheckController (ctrl) != usbOK) {
+    return NULL;
+  }
+
+  if ((usbh_pipe_ptr[ctrl]     == NULL) ||
+      (usbh_pipe_num_ptr[ctrl] == NULL)) {
+    return NULL;
+  }
 
   ptr_pipe =  usbh_pipe_ptr[ctrl];
   max_pipe = *usbh_pipe_num_ptr[ctrl];
@@ -1999,7 +2293,12 @@ void *USBH_Get_Thread_ID_of_Pipe (uint8_t ctrl, ARM_USBH_PIPE_HANDLE hw_handle) 
     return NULL;
   }
 
-  ptr_pipe =  usbh_pipe_ptr[ctrl];
+  ptr_pipe = usbh_pipe_ptr[ctrl];
+  if ((usbh_pipe_ptr[ctrl]     == NULL) ||
+      (usbh_pipe_num_ptr[ctrl] == NULL)) {
+    return NULL;
+  }
+
   max_pipe = *usbh_pipe_num_ptr[ctrl];
 
   for (i = 0U; i < max_pipe; i++) {
@@ -2031,6 +2330,11 @@ USBH_PipeEvent_t USBH_Get_PipeCallback_of_Pipe (uint8_t ctrl, ARM_USBH_PIPE_HAND
   }
 
   ptr_pipe =  usbh_pipe_ptr[ctrl];
+  if ((usbh_pipe_ptr[ctrl]     == NULL) ||
+      (usbh_pipe_num_ptr[ctrl] == NULL)) {
+    return NULL;
+  }
+
   max_pipe = *usbh_pipe_num_ptr[ctrl];
 
   for (i = 0U; i < max_pipe; i++) {
@@ -2049,13 +2353,17 @@ USBH_PipeEvent_t USBH_Get_PipeCallback_of_Pipe (uint8_t ctrl, ARM_USBH_PIPE_HAND
 usbStatus USBH_MemoryInitialize (uint8_t ctrl) {
   usbStatus status;
 
-  status = CheckController (ctrl);
-  if (status == usbOK) {
-    if (USBH_MemoryInitializeLib (ctrl) == false) {
-      status = usbMemoryError;
-    }
+  // Check parameters
+  status = CheckController(ctrl);
+  if (status != usbOK) {
+    goto exit;
   }
 
+  if (USBH_MemoryInitializeLib(ctrl) != true) {
+    status = usbMemoryError;
+  }
+
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status == usbOK) {
     EvrUSBH_Core_MemInit(ctrl);
@@ -2072,13 +2380,17 @@ usbStatus USBH_MemoryInitialize (uint8_t ctrl) {
 usbStatus USBH_MemoryUninitialize (uint8_t ctrl) {
   usbStatus status;
 
-  status = CheckController (ctrl);
-  if (status == usbOK) {
-    if (USBH_MemoryUninitializeLib (ctrl) == false) {
-      status = usbMemoryError;
-    }
+  // Check parameters
+  status = CheckController(ctrl);
+  if (status != usbOK) {
+    goto exit;
   }
 
+  if (USBH_MemoryUninitializeLib(ctrl) != true) {
+    status = usbMemoryError;
+  }
+
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status == usbOK) {
     EvrUSBH_Core_MemUninit(ctrl);
@@ -2098,22 +2410,25 @@ usbStatus USBH_MemoryAllocate (uint8_t ctrl, uint8_t **ptr, uint32_t size) {
   uint8_t   *mem;
   usbStatus  status;
 
-  mem = NULL;
-
-  status = CheckController (ctrl);
-  if (status == usbOK) {
-    if (ptr != NULL) {
-      mem = USBH_MemoryAllocateLib (ctrl, size);
-      if (mem != NULL) {
-        *ptr = mem;
-      } else {
-        status = usbMemoryError;
-      }
-    } else {
-      status = usbInvalidParameter;
-    }
+  // Check parameters
+  status = CheckController(ctrl);
+  if (status != usbOK) {
+    goto exit;
+  }
+  if ((ptr == NULL) || (size == 0U)) {
+    status = usbInvalidParameter;
+    goto exit;
   }
 
+  mem = USBH_MemoryAllocateLib(ctrl, size);
+  if (mem == NULL) {
+    status = usbMemoryError;
+    goto exit;
+  }
+
+  *ptr = mem;
+
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status == usbOK) {
     EvrUSBH_Core_MemAlloc(ctrl, (const uint8_t *)mem, size);
@@ -2131,17 +2446,21 @@ usbStatus USBH_MemoryAllocate (uint8_t ctrl, uint8_t **ptr, uint32_t size) {
 usbStatus USBH_MemoryFree (uint8_t ctrl, uint8_t *ptr) {
   usbStatus status;
 
+  // Check parameters
   status = CheckController (ctrl);
-  if (status == usbOK) {
-    if (ptr != NULL) {
-      if (USBH_MemoryFreeLib (ctrl, ptr) == false) {
-        status = usbMemoryError;
-      }
-    } else {
-      status = usbInvalidParameter;
-    }
+  if (status != usbOK) {
+    goto exit;
+  }
+  if (ptr == NULL) {
+    status = usbInvalidParameter;
+    goto exit;
   }
 
+  if (USBH_MemoryFreeLib(ctrl, ptr) != true) {
+    status = usbMemoryError;
+  }
+
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status == usbOK) {
     EvrUSBH_Core_MemFree(ctrl, (const uint8_t *)ptr);
@@ -2154,15 +2473,26 @@ usbStatus USBH_MemoryFree (uint8_t ctrl, uint8_t *ptr) {
 
 /// \brief Try to recover USB Device (reset and re-enumerate)
 /// \param[in]     ptr_dev              pointer to USB Device instance.
-/// \param[in]     port                 port index (0 .. 127).
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 usbStatus USBH_RecoverDevice (USBH_DEV *ptr_dev) {
   USBH_HC  *ptr_hc;
   uint32_t  event;
   uint8_t   ctrl, port;
+  usbStatus status;
 
-  ctrl    =  ptr_dev->ctrl;
-  port    =  ptr_dev->hub_port;
+  if (ptr_dev == NULL) {
+    return usbInvalidParameter;
+  }
+
+  ctrl = ptr_dev->ctrl;
+  status = CheckController(ctrl);
+  if (status != usbOK) {
+    return status;
+  }
+  port = ptr_dev->hub_port;
+  if (port >= 16U) {
+    return usbControllerError;
+  }
   ptr_hc  = &usbh_hc[ctrl];
 
   ptr_dev->recovery_thread_id = USBH_ThreadGetHandle ();
@@ -2217,7 +2547,7 @@ void USBH_ConnectDebounce (void *arg){
     ptr_hc->debounce_max_countdown--;
   }
 
-  for (port = 0U; port < 15U; port++) {
+  for (port = 0U; port < 16U; port++) {
     if (((port_mask >> port) == 0U) || ((ptr_hc->port_debounce >> port) == 0U)) {
       break;
     }
@@ -2235,7 +2565,7 @@ void USBH_ConnectDebounce (void *arg){
     return;
   }
   if (ptr_hc->debounce_countdown == 0U) {
-    for (port = 0U; port < 15U; port++) {
+    for (port = 0U; port < 16U; port++) {
       if (((port_mask >> port) == 0U) || ((ptr_hc->port_debounce >> port) == 0U)) {
         break;
       }
@@ -2273,6 +2603,7 @@ static usbStatus CheckController (uint8_t ctrl) {
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 static usbStatus CheckDeviceInstanceConfigured (uint8_t instance) {
 
+  if (instance                   >= usbh_dev_num) { return usbDeviceError; }
   if (usbh_dev[instance].dev_addr          == 0U) { return usbDeviceError; }
   if (usbh_dev[instance].state.configured  == 0U) { return usbDeviceError; }
   if (usbh_dev[instance].vid               == 0U) { return usbDeviceError; }
@@ -2286,6 +2617,7 @@ static usbStatus CheckDeviceInstanceConfigured (uint8_t instance) {
 /// \return                             status code that indicates the execution status of the function as defined with \ref usbStatus.
 static usbStatus CheckDeviceInstance (uint8_t instance) {
 
+  if (instance                   >= usbh_dev_num) { return usbDeviceError; }
   if (usbh_dev[instance].dev_addr          == 0U) { return usbDeviceError; }
   if (usbh_dev[instance].state.configured  == 0U) { return usbDeviceError; }
   if (usbh_dev[instance].state.initialized == 0U) { return usbDeviceError; }
@@ -2339,30 +2671,36 @@ static usbStatus USBH_DefaultPipeCreate (uint8_t ctrl) {
   uint32_t   hw_handle;
   usbStatus  status;
 
-  status = CheckController (ctrl);
-  if (status == usbOK) {
-    ptr_pipe = USBH_GetFree_PIPE (ctrl);
-    if (ptr_pipe != NULL) {
-      hw_handle = USBH_DriverPipeCreate (ctrl, 0U, ARM_USB_SPEED_LOW, 0U, 0U, 0U, USB_ENDPOINT_TYPE_CONTROL, 8U, 0U);
-      if (hw_handle != 0U) {
-        ptr_pipe->hw_handle          = hw_handle;
-        ptr_pipe->bEndpointAddress   = 0U;
-        ptr_pipe->bmAttributes       = USB_ENDPOINT_TYPE_CONTROL;
-        ptr_pipe->wMaxPacketSize     = 8U;
-        ptr_pipe->bInterval          = 0U;
-        ptr_pipe->device             = 255U;
-        ptr_pipe->locked             = 0U;
-        ptr_pipe->transfer_active    = 0U;
-        ptr_pipe->transferred        = 0U;
-        usbh_hc[ctrl].def_pipe_hndl = (USBH_PIPE_HANDLE)ptr_pipe;
-      } else {
-        status = usbDriverError;
-      }
-    } else {
-      status = usbDriverError;
-    }
+  // Check parameters
+  status = CheckController(ctrl);
+  if (status != usbOK) {
+    return status;
   }
 
+  ptr_pipe = USBH_GetFree_PIPE(ctrl);
+  if (ptr_pipe == NULL) {
+    status = usbDriverError;
+    goto exit;
+  }
+
+  hw_handle = USBH_DriverPipeCreate(ctrl, 0U, ARM_USB_SPEED_LOW, 0U, 0U, 0U, USB_ENDPOINT_TYPE_CONTROL, 8U, 0U);
+  if (hw_handle == 0U) {
+    status = usbDriverError;
+    goto exit;
+  }
+
+  ptr_pipe->bEndpointAddress   = 0U;
+  ptr_pipe->bmAttributes       = USB_ENDPOINT_TYPE_CONTROL;
+  ptr_pipe->wMaxPacketSize     = 8U;
+  ptr_pipe->bInterval          = 0U;
+  ptr_pipe->device             = 255U;
+  ptr_pipe->locked             = 0U;
+  ptr_pipe->transfer_active    = 0U;
+  ptr_pipe->transferred        = 0U;
+  usbh_hc[ctrl].def_pipe_hndl = (USBH_PIPE_HANDLE)ptr_pipe;
+  ptr_pipe->hw_handle          = hw_handle;
+
+exit:
   return status;
 }
 
@@ -2376,22 +2714,32 @@ static usbStatus USBH_DefaultPipeDelete (uint8_t ctrl) {
   ptr_pipe = NULL;
 
   status = CheckController (ctrl);
-  if (status == usbOK) {
-    ptr_pipe = (USBH_PIPE *)usbh_hc[ctrl].def_pipe_hndl;
-    EvrUSBH_Core_PipeDelete((USBH_PIPE_HANDLE)ptr_pipe);
-    if (ptr_pipe != NULL) {
-      status  = USBH_DriverPipeTransferAbort (ctrl, ptr_pipe->hw_handle);
-      if (status == usbOK) {
-        status = USBH_DriverPipeDelete (ctrl, ptr_pipe->hw_handle);
-        if (status == usbOK) {
-          memset ((void *)ptr_pipe, 0, sizeof(USBH_PIPE));
-        }
-      }
-    } else {
-      status = usbControllerError;
+  if (status != usbOK) {
+    goto exit;
+  }
+
+  ptr_pipe = (USBH_PIPE *)usbh_hc[ctrl].def_pipe_hndl;
+  EvrUSBH_Core_PipeDelete((USBH_PIPE_HANDLE)ptr_pipe);
+  if (ptr_pipe == NULL) {
+    status = usbControllerError;
+    goto exit;
+  }
+
+  if ((ptr_pipe->locked != 0U) || (ptr_pipe->transfer_active != 0U)) {
+    status = USBH_PipeAbort((USBH_PIPE_HANDLE)ptr_pipe);
+    if (status != usbOK) {
+      goto exit;
     }
   }
 
+  status = USBH_DriverPipeDelete(ctrl, ptr_pipe->hw_handle);
+  if (status != usbOK) {
+    goto exit;
+  }
+
+  memset((void *)ptr_pipe, 0, sizeof(USBH_PIPE));
+
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_Core_PipeDeleteFailed((USBH_PIPE_HANDLE)ptr_pipe, status);
@@ -2437,29 +2785,49 @@ static usbStatus USBH_PipeDoPing (USBH_PIPE_HANDLE pipe_hndl) {
         uint32_t            event;
         ARM_USBH_EP_HANDLE  hw_handle;
         uint8_t             ctrl;
-        uint8_t             device;
         usbStatus           status;
 
+  // Check parameters
   ptr_pipe = (USBH_PIPE *)pipe_hndl;
-  status   = CheckPipe (ptr_pipe);
+  status = CheckPipe(ptr_pipe);
   if (status != usbOK) {
-    return status;
+    goto exit;
   }
 
-  device    =  ptr_pipe->device;
-  ptr_dev   = &usbh_dev[device];
-  ctrl      =  ptr_dev->ctrl;
-  ptr_hc    = &usbh_hc[ctrl];
-  hw_handle =  ptr_pipe->hw_handle;
-
+  if (ptr_pipe->device >= usbh_dev_num) {
+    status = usbDeviceError;
+    goto exit;
+  }
   if (ptr_pipe->thread_id != NULL) {
     status = usbDriverBusy;
     return status;
   }
+
+  ptr_dev = &usbh_dev[ptr_pipe->device];
+  if (ptr_dev == NULL) {
+    status = usbDeviceError;
+    goto exit;
+  }
+  ctrl = ptr_dev->ctrl;
+  status = CheckController(ctrl);
+  if (status != usbOK) {
+    goto exit;
+  }
+  ptr_hc = &usbh_hc[ctrl];
+  if (ptr_hc == NULL) {
+    status = usbControllerError;
+    goto exit;
+  }
+  hw_handle = ptr_pipe->hw_handle;
+  if (hw_handle == 0U) {
+    status = usbDriverError;
+    goto exit;
+  }
+
   ptr_pipe->thread_id = USBH_ThreadGetHandle();
 
   for (;;) {
-    status = USBH_DriverPipeTransfer (ctrl, hw_handle, ARM_USBH_PACKET_PING, NULL, 0U);
+    status = USBH_DriverPipeTransfer(ctrl, hw_handle, ARM_USBH_PACKET_PING, NULL, 0U);
     if (status != usbOK) {                                              // If transfer failed clear EP to TID and exit
       goto done;
     }
@@ -2475,6 +2843,10 @@ static usbStatus USBH_PipeDoPing (USBH_PIPE_HANDLE pipe_hndl) {
                 goto done;
               }
             } else {
+              if ((ptr_dev->hub_port == 0U) || (ptr_dev->hub_port >= 16U)) {
+                status = usbTransferError;
+                goto done;
+              }
               if ((ptr_hc->port_event[ptr_dev->hub_port - 1U]) != 0U) {
                 status = usbTransferError;
                 goto done;
@@ -2510,11 +2882,12 @@ static usbStatus USBH_PipeDoPing (USBH_PIPE_HANDLE pipe_hndl) {
   }
 
 abort_and_done:
-  (void)USBH_DriverPipeTransferAbort (ctrl, hw_handle);
+  (void)USBH_DriverPipeTransferAbort(ctrl, hw_handle);
 
 done:
   ptr_pipe->thread_id = NULL;
 
+exit:
   return status;
 }
 
@@ -2528,7 +2901,7 @@ static usbStatus USBH_PipeSendSetup (USBH_PIPE_HANDLE pipe_hndl, const USB_SETUP
         USBH_PIPE          *ptr_pipe;
         uint32_t            event;
         ARM_USBH_EP_HANDLE  hw_handle;
-        uint8_t            *ptr_data;
+        uint8_t            *ptr_data = NULL;
         uint8_t             ctrl;
         bool                alloc_mem;
         usbStatus           status;
@@ -2540,19 +2913,44 @@ static usbStatus USBH_PipeSendSetup (USBH_PIPE_HANDLE pipe_hndl, const USB_SETUP
   }
 
   ptr_pipe = (USBH_PIPE *)pipe_hndl;
-  status   = CheckPipe (ptr_pipe);
+  status = CheckPipe(ptr_pipe);
   if (status != usbOK) {
-    return status;
+    goto exit;
   }
   if (ptr_pipe->locked != 0U) {
     status = usbDriverBusy;
-    return status;
+    goto exit;
+  }
+  if (ptr_pipe->thread_id != NULL) {
+    status = usbDriverBusy;
+    goto exit;
   }
 
-  ptr_dev   = &usbh_dev[ptr_pipe->device];
-  ctrl      =  ptr_dev->ctrl;
-  ptr_hc    = &usbh_hc[ctrl];
-  hw_handle =  ptr_pipe->hw_handle;
+  if (ptr_pipe->device >= usbh_dev_num) {
+    status = usbDeviceError;
+    goto exit;
+  }
+
+  ptr_dev = &usbh_dev[ptr_pipe->device];
+  if (ptr_dev == NULL) {
+    status = usbDeviceError;
+    goto exit;
+  }
+  ctrl = ptr_dev->ctrl;
+  status = CheckController(ctrl);
+  if (status != usbOK) {
+    goto exit;
+  }
+  ptr_hc = &usbh_hc[ctrl];
+  if (ptr_hc == NULL) {
+    status = usbControllerError;
+    goto exit;
+  }
+  hw_handle = ptr_pipe->hw_handle;
+  if (hw_handle == 0U) {
+    status = usbDriverError;
+    goto exit;
+  }
 
   ptr_pipe->locked = 1U;
 
@@ -2560,27 +2958,23 @@ static usbStatus USBH_PipeSendSetup (USBH_PIPE_HANDLE pipe_hndl, const USB_SETUP
     alloc_mem = !USBH_MemoryIsInPool (ctrl, (const uint8_t *)setup_packet);
     if (alloc_mem) {
       // If memory for USB must be relocated, allocate 8 bytes for SETUP packet
-      mstatus = USBH_MemoryAllocate (ctrl, (uint8_t **)((uint32_t)&ptr_data), 8U);
+      mstatus = USBH_MemoryAllocate (ctrl, &ptr_data, 8U);
       if (mstatus != usbOK) {
         status = usbMemoryError;
-        goto exit;
+        goto done;
       }
       memcpy((void *)ptr_data, (const void *)setup_packet, 8U);         // Copy SETUP data to allocated buffer
     } else {                                                            // If memory is in pool it is ok
-      ptr_data = (uint8_t *)((uint32_t)setup_packet);
+      ptr_data = (uint8_t *)(uintptr_t)setup_packet;
     }
   } else {                                                              // If memory relocation is not enabled
     alloc_mem = false;
-    ptr_data  = (uint8_t *)((uint32_t)setup_packet);
+    ptr_data  = (uint8_t *)(uintptr_t)setup_packet;
   }
 
   // Send Setup Packet
-  if (ptr_pipe->thread_id != NULL) {
-    status = usbDriverBusy;
-    goto mem_free_and_exit;
-  }
   ptr_pipe->thread_id = USBH_ThreadGetHandle();
-  status = USBH_DriverPipeTransfer (ctrl, hw_handle, ARM_USBH_PACKET_SETUP, (uint8_t *)ptr_data, 8U);
+  status = USBH_DriverPipeTransfer(ctrl, hw_handle, ARM_USBH_PACKET_SETUP, (uint8_t *)ptr_data, 8U);
   if (status != usbOK) {                                                // If transfer failed clear EP to TID and exit
     goto done;
   }
@@ -2598,6 +2992,10 @@ static usbStatus USBH_PipeSendSetup (USBH_PIPE_HANDLE pipe_hndl, const USB_SETUP
               goto done;
             }
           } else {
+            if ((ptr_dev->hub_port == 0U) || (ptr_dev->hub_port >= 16U)) {
+              status = usbTransferError;
+              goto done;
+            }
             if ((ptr_hc->port_event[ptr_dev->hub_port - 1U]) != 0U) {
               status = usbTransferError;
               goto done;
@@ -2634,14 +3032,13 @@ static usbStatus USBH_PipeSendSetup (USBH_PIPE_HANDLE pipe_hndl, const USB_SETUP
   }
 
 abort_and_done:
-  (void)USBH_DriverPipeTransferAbort (ctrl, hw_handle);
+  (void)USBH_DriverPipeTransferAbort(ctrl, hw_handle);
 
 done:
   ptr_pipe->thread_id = NULL;
   ptr_pipe->locked    = 0U;
 
-mem_free_and_exit:
-  if (alloc_mem) {
+  if ((alloc_mem) && (ptr_data != NULL)) {
     mstatus = USBH_MemoryFree (ctrl, (uint8_t  *)ptr_data);
     if (mstatus != usbOK) {
       status = mstatus;
@@ -2696,9 +3093,10 @@ static usbStatus USBH_PrepareEnumerateDevice (uint8_t ctrl, uint8_t port, uint8_
 
   // Get Device Descriptor (8 or 64 bytes) to determine maximum packet size
   // and set device max packet size
-  mstatus = USBH_MemoryAllocate                 (ctrl, (uint8_t **)((uint32_t)&ptr_dev_desc), 64U);
+  mstatus = USBH_MemoryAllocate                 (ctrl, (uint8_t **)&ptr_dev_desc, 64U);
   if (mstatus != usbOK) {
-    return mstatus;
+    status = mstatus;
+    goto exit;
   }
   status = USBH_DeviceRequest_GetDescriptor     (device, USB_REQUEST_TO_DEVICE, USB_DEVICE_DESCRIPTOR_TYPE, 0U, 0U, (uint8_t *)ptr_dev_desc, 64U);
   if (status == usbOK) {
@@ -2707,6 +3105,11 @@ static usbStatus USBH_PrepareEnumerateDevice (uint8_t ctrl, uint8_t port, uint8_
   mstatus = USBH_MemoryFree                     (ctrl, (uint8_t *)ptr_dev_desc);
   if ((status == usbOK) && (mstatus != usbOK)) {
     status = mstatus;
+  }
+
+exit:
+  if (status != usbOK) {
+    usbh_dev[device].state.in_use = 0U;
   }
 
   return status;
@@ -2769,7 +3172,7 @@ static usbStatus USBH_EnumerateDevice (uint8_t ctrl, uint8_t port, uint8_t speed
   (void)USBH_Delay (50U);                       // Delay 50 ms (max allowed)
 
   // 2. USB bus: Get Device Descriptor
-  mstatus = USBH_MemoryAllocate                 (ctrl, (uint8_t **)((uint32_t)&ptr_dev_desc), 18U);
+  mstatus = USBH_MemoryAllocate                 (ctrl, (uint8_t **)&ptr_dev_desc, 64U);
   if (mstatus != usbOK) {
     return mstatus;
   }
@@ -2781,13 +3184,19 @@ static usbStatus USBH_EnumerateDevice (uint8_t ctrl, uint8_t port, uint8_t speed
   }
 
   // 3. USB bus: Get 9 bytes of Configuration Descriptor to determine size of whole Configuration Descriptor
-  mstatus = USBH_MemoryAllocate                 (ctrl, (uint8_t **)((uint32_t)&ptr_cfg_desc), 9U);
+  mstatus = USBH_MemoryAllocate                 (ctrl, (uint8_t **)&ptr_cfg_desc, 64U);
   if (mstatus != usbOK) {
-    return mstatus;
+    status = mstatus;
+    goto mem_free_and_exit;
   }
-  status  = USBH_DeviceRequest_GetDescriptor    (device, USB_REQUEST_TO_DEVICE, USB_CONFIGURATION_DESCRIPTOR_TYPE, 0U, 0U, (uint8_t *)ptr_cfg_desc, 9U);
+  status = USBH_DeviceRequest_GetDescriptor     (device, USB_REQUEST_TO_DEVICE, USB_CONFIGURATION_DESCRIPTOR_TYPE, 0U, 0U, (uint8_t *)ptr_cfg_desc, 9U);
   if (status == usbOK) {
-    len = ptr_cfg_desc->wTotalLength;
+    if ((ptr_cfg_desc->wTotalLength >= (sizeof(USB_CONFIGURATION_DESCRIPTOR) + sizeof(USB_INTERFACE_DESCRIPTOR))) && (ptr_cfg_desc->wTotalLength < (UINT16_MAX - 63U))) {
+      len = ptr_cfg_desc->wTotalLength;
+    } else {
+      status = usbDeviceError;
+      goto mem_free_and_exit;
+    }
   } else {
     goto mem_free_and_exit;
   }
@@ -2800,17 +3209,34 @@ static usbStatus USBH_EnumerateDevice (uint8_t ctrl, uint8_t port, uint8_t speed
   (void)USBH_Delay (10U);
 
   // 4. USB bus: Get Configuration Descriptor
-  mstatus = USBH_MemoryAllocate                 (ctrl,(uint8_t **)((uint32_t)&ptr_cfg_desc), len);
+  mstatus = USBH_MemoryAllocate                 (ctrl,(uint8_t **)&ptr_cfg_desc, ((len + 63U) / 64U) * 64U);
   if (mstatus != usbOK) {
     status = mstatus;
     goto mem_free_and_exit;
   }
+  memset(ptr_cfg_desc, 0, ((len + 63U) / 64U) * 64U);
   status  = USBH_DeviceRequest_GetDescriptor    (device, USB_REQUEST_TO_DEVICE, USB_CONFIGURATION_DESCRIPTOR_TYPE, 0U, 0U, (uint8_t *)ptr_cfg_desc, len);
   if (status == usbOK) {
     ptr_hc->dev_addr_mask[dev_addr >> 5] |= (1UL << (dev_addr & 0x1FU));
     ptr_desc                 = (uint8_t *)ptr_cfg_desc;
+    if ((uint32_t)ptr_cfg_desc->bLength != sizeof(USB_CONFIGURATION_DESCRIPTOR)) {
+      status = usbNotConfigured;
+      goto mem_free_and_exit;
+    }
     ptr_desc                += (uint32_t)ptr_cfg_desc->bLength;
     ptr_if_desc              = (const USB_INTERFACE_DESCRIPTOR *)ptr_desc;
+
+    // If the current descriptor is not an interface descriptor or an interface association descriptor, the device is not supported
+    if ((ptr_if_desc->bDescriptorType != USB_INTERFACE_DESCRIPTOR_TYPE) && (ptr_if_desc->bDescriptorType != USB_INTERFACE_ASSOCIATION_DESCRIPTOR_TYPE)) {
+      status = usbNotConfigured;
+      goto mem_free_and_exit;
+    }
+    // If the current descriptor length does not match the expected size for its type, the device is not supported
+    if (((ptr_if_desc->bDescriptorType == USB_INTERFACE_DESCRIPTOR_TYPE)             && ((uint32_t)ptr_if_desc->bLength != sizeof(USB_INTERFACE_DESCRIPTOR))) || 
+        ((ptr_if_desc->bDescriptorType == USB_INTERFACE_ASSOCIATION_DESCRIPTOR_TYPE) && ((uint32_t)ptr_if_desc->bLength != sizeof(USB_INTERFACE_ASSOCIATION_DESCRIPTOR)))) {
+      status = usbNotConfigured;
+      goto mem_free_and_exit;
+    }
 
     ptr_dev                  = &usbh_dev[device];
 
@@ -2919,7 +3345,7 @@ static usbStatus USBH_EnumerateDevice (uint8_t ctrl, uint8_t port, uint8_t speed
 
     if (status != usbOK) {
       // If device is unknown or configuration of device has failed
-      goto exit;
+      goto mem_free_and_exit;
     }
 
     (void)USBH_Delay (10U);
@@ -2927,7 +3353,7 @@ static usbStatus USBH_EnumerateDevice (uint8_t ctrl, uint8_t port, uint8_t speed
     // 5. USB bus: Set Configuration (1)
     status = USBH_DeviceRequest_SetConfiguration (device, 1U);
     if (status != usbOK) {
-      goto exit;
+      goto mem_free_and_exit;
     }
 
     (void)USBH_Delay (50U);
@@ -2977,6 +3403,9 @@ static usbStatus USBH_EnumerateDevice (uint8_t ctrl, uint8_t port, uint8_t speed
   }
 
 mem_free_and_exit:
+  if (status != usbOK) {
+    ptr_hc->dev_addr_mask[dev_addr >> 5] &= ~(1UL << (dev_addr & 0x1FU));
+  }
   if (ptr_cfg_desc != NULL) {
     mstatus = USBH_MemoryFree (ctrl, (uint8_t *)ptr_cfg_desc);
     if ((status == usbOK) && (mstatus != usbOK)) {
@@ -2990,7 +3419,6 @@ mem_free_and_exit:
     }
   }
 
-exit:
   return status;
 }
 
@@ -3010,7 +3438,7 @@ static uint8_t USBH_FindRecoveryDevice (uint8_t ctrl, uint8_t port) {
       return 0xFFU;                     // Recovery device was not found
     }
     if ((ptr_dev->ctrl == ctrl) && (ptr_dev->hub_port == port)) {
-      break;                            // Recovery device found              */
+      break;                            // Recovery device found
     }
     ptr_dev++;
   }
@@ -3025,7 +3453,7 @@ static uint8_t USBH_FindRecoveryDevice (uint8_t ctrl, uint8_t port) {
 static usbStatus USBH_RecoveryEnumerateDevice (uint8_t ctrl, uint8_t port) {
   USBH_HC                      *ptr_hc;
   USBH_DEV                     *ptr_dev;
-  USB_DEVICE_DESCRIPTOR        *ptr_dev_desc;
+  USB_DEVICE_DESCRIPTOR        *ptr_dev_desc = NULL;
   USB_CONFIGURATION_DESCRIPTOR *ptr_cfg_desc;
   uint8_t                       device;
   uint8_t                       dev_addr;
@@ -3043,7 +3471,7 @@ static usbStatus USBH_RecoveryEnumerateDevice (uint8_t ctrl, uint8_t port) {
 
   // Clear previously used address
   if (device != 0xFFU) {
-    ptr_hc->dev_addr_mask[usbh_dev[device].dev_addr >> 5] |= (1UL << (usbh_dev[device].dev_addr & 0x1FU));
+    ptr_hc->dev_addr_mask[usbh_dev[device].dev_addr >> 5] &= ~(1UL << (usbh_dev[device].dev_addr & 0x1FU));
     ptr_dev = &usbh_dev[device];
   } else {
     return usbDeviceError;
@@ -3069,7 +3497,7 @@ static usbStatus USBH_RecoveryEnumerateDevice (uint8_t ctrl, uint8_t port) {
   ptr_dev->dev_addr = 0U;
 
   // 1. USB bus: Get Device Descriptor
-  mstatus = USBH_MemoryAllocate                 (ctrl, (uint8_t **)((uint32_t)&ptr_dev_desc), usbh_dev[device].dev_desc_len);
+  mstatus = USBH_MemoryAllocate                 (ctrl, (uint8_t **)&ptr_dev_desc, usbh_dev[device].dev_desc_len);
   if (mstatus != usbOK) {
     return mstatus;
   }
@@ -3090,11 +3518,11 @@ static usbStatus USBH_RecoveryEnumerateDevice (uint8_t ctrl, uint8_t port) {
   (void)USBH_Delay (50U);                       // Delay 50 ms (max time)
 
   // 3. USB bus: Get Device Descriptor
-  mstatus = USBH_MemoryAllocate                 (ctrl, (uint8_t **)((uint32_t)&ptr_dev_desc), 64U);
+  mstatus = USBH_MemoryAllocate                 (ctrl, (uint8_t **)&ptr_dev_desc, 64U);
   if (mstatus != usbOK) {
     return mstatus;
   }
-  status  = USBH_DeviceRequest_GetDescriptor    (device, USB_REQUEST_TO_DEVICE, USB_DEVICE_DESCRIPTOR_TYPE, 0U, 0U, (uint8_t *)ptr_dev_desc, usbh_dev[device].dev_desc_len);
+  status  = USBH_DeviceRequest_GetDescriptor    (device, USB_REQUEST_TO_DEVICE, USB_DEVICE_DESCRIPTOR_TYPE, 0U, 0U, (uint8_t *)ptr_dev_desc, sizeof(USB_DEVICE_DESCRIPTOR));
   mstatus = USBH_MemoryFree                     (ctrl, (uint8_t *)ptr_dev_desc);
   if (mstatus != usbOK) {
     return mstatus;
@@ -3105,7 +3533,7 @@ static usbStatus USBH_RecoveryEnumerateDevice (uint8_t ctrl, uint8_t port) {
 
   // 4. USB bus: Get Configuration Descriptor
   (void)USBH_Delay (50U);                       // Wait 50 ms for robustness
-  mstatus = USBH_MemoryAllocate                 (ctrl,(uint8_t **)((uint32_t)&ptr_cfg_desc), usbh_dev[device].cfg_desc_len);
+  mstatus = USBH_MemoryAllocate                 (ctrl,(uint8_t **)&ptr_cfg_desc, usbh_dev[device].cfg_desc_len);
   if (mstatus != usbOK) {
     return mstatus;
   }
@@ -3231,6 +3659,11 @@ static void USBH_Engine (uint8_t ctrl, uint8_t port, uint32_t event) {
     return;
   }
 
+  // Port must be in range 0 .. 15
+  if (port >= 16U) {
+    return;
+  }
+
   ptr_hc         = &usbh_hc[ctrl];
   ptr_port_state = &ptr_hc->port_state[port];
 
@@ -3248,6 +3681,9 @@ static void USBH_Engine (uint8_t ctrl, uint8_t port, uint32_t event) {
         (USBH_DriverPortGetState (ctrl, port).connected == 0U))) {      // if state is not connected)
       if ((*ptr_port_state >= 7U) && (*ptr_port_state <= 10U)){ // If state was during reset recovery
         device = usbh_hc[ctrl].device;
+        if (device >= usbh_dev_num) {
+          break;
+        }
         (void)USBH_ThreadFlagsSet (usbh_dev[device].recovery_thread_id, ARM_USBH_EVENT_CORE_RECOVERY_FAIL);
       }
       ptr_hc->port_con    &= (uint16_t)(~(1UL << port));
@@ -3388,17 +3824,17 @@ static void USBH_Engine (uint8_t ctrl, uint8_t port, uint32_t event) {
           (void)USBH_Delay (100U);
           status = USBH_RecoveryEnumerateDevice (ctrl, port);
           device = usbh_hc[ctrl].device;
-          if (status == usbOK) {                                // If recovery succeeded
-            (void)USBH_ThreadFlagsSet (usbh_dev[device].recovery_thread_id, ARM_USBH_EVENT_CORE_RECOVERY_OK);
-            *ptr_port_state = 15U;                              // => Port active
-          } else if (ptr_hc->port_retry != 0U) {
-            ptr_hc->port_retry--;
-            *ptr_port_state = 7U;                               // Repeat 1st recovery reset
-          } else {                                              // If recovery enumeration failed
-            if (device != 0xFFU) { 
+          if (device < usbh_dev_num) {
+            if (status == usbOK) {                              // If recovery succeeded
+              (void)USBH_ThreadFlagsSet (usbh_dev[device].recovery_thread_id, ARM_USBH_EVENT_CORE_RECOVERY_OK);
+              *ptr_port_state = 15U;                            // => Port active
+            } else if (ptr_hc->port_retry != 0U) {
+              ptr_hc->port_retry--;
+              *ptr_port_state = 7U;                             // Repeat 1st recovery reset
+            } else {                                            // If recovery enumeration failed
               (void)USBH_ThreadFlagsSet (usbh_dev[device].recovery_thread_id, ARM_USBH_EVENT_CORE_RECOVERY_FAIL);
+              *ptr_port_state = 15U;                            // => Port active
             }
-            *ptr_port_state = 15U;                              // => Port active
           }
         } else {
           *ptr_port_state = 15U;                                // No reset event => Port active
@@ -3461,8 +3897,8 @@ void USBH_Core_Thread (void *arg) {
   for (;;) {
     port_debounce = 0U;
     event = USBH_ThreadFlagsWait (millisec);
-    if ((event & 0x8000000U) == 0U) {
-      for (port = 0U; port < 15U; port++) {
+    if ((event & 0x80000000U) == 0U) {
+      for (port = 0U; port < 16U; port++) {
         if ((port_mask >> port) == 0U) {
           break;
         }
@@ -3514,7 +3950,7 @@ void USBH_Core_Thread (void *arg) {
         }
       }
     } else {
-      for (port = 0U; port < 15U; port++) {
+      for (port = 0U; port < 16U; port++) {
         if ((port_mask >> port) == 0U) {
           break;
         }

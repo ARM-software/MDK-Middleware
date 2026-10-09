@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates).
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates).
  * All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_mem.c
@@ -23,6 +23,8 @@
 
 /************************** Variable and Memory Definitions *******************/
 
+#define USBH_MIN_MEM_POOL_SIZE          64U
+
 #ifdef __DEBUG
 static uint32_t mem_load   [4];         /* Memory Pool Load for debugging     */
 static uint8_t  mem_counter[4];         /* Number of Allocated Memory Blocks  */
@@ -37,14 +39,23 @@ static uint8_t  mem_counter[4];         /* Number of Allocated Memory Blocks  */
 /// \return      false  initialization failed
 bool USBH_MemoryInitializeLib (uint8_t idx) {
   MEMP_t   *ptr_init;
-  uint32_t  addr;
+  uintptr_t addr;
 
-  if ((usbh_mem_pool_ptr[idx] == NULL) || (*usbh_mem_pool_size_ptr[idx] == 0U)) { return false; }
+  // Check parameters
+  if (idx >= usbh_hc_num) {
+    return false;
+  }
+  if ((usbh_mem_pool_ptr[idx] == NULL) || (usbh_mem_pool_size_ptr[idx] == NULL)) {
+    return false;
+  }
+  if (*usbh_mem_pool_size_ptr[idx] < USBH_MIN_MEM_POOL_SIZE) {
+    return false;
+  }
 
   memset ((void *)usbh_mem_pool_ptr[idx], 0, *usbh_mem_pool_size_ptr[idx]);
 
-  ptr_init                = (MEMP_t *)((uint32_t)usbh_mem_pool_ptr[idx]);
-  addr                    = (uint32_t)usbh_mem_pool_ptr[idx] + (uint32_t)(*usbh_mem_pool_size_ptr[idx]) - sizeof (struct mem *);
+  ptr_init                = (MEMP_t *)usbh_mem_pool_ptr[idx];
+  addr                    = (uintptr_t)usbh_mem_pool_ptr[idx] + (uintptr_t)(*usbh_mem_pool_size_ptr[idx]) - sizeof (struct mem *);
   ptr_init->next          = (MEMP_t *)addr;
   ptr_init->next->next    = NULL;
   ptr_init->len           = 0U;
@@ -63,6 +74,14 @@ bool USBH_MemoryInitializeLib (uint8_t idx) {
 /// \return      false  uninitialization failed
 bool USBH_MemoryUninitializeLib (uint8_t idx) {
 
+  // Check parameters
+  if (idx >= usbh_hc_num) {
+    return false;
+  }
+  if ((usbh_mem_pool_ptr[idx] == NULL) || (usbh_mem_pool_size_ptr[idx] == NULL)) {
+    return false;
+  }
+
   memset ((void *)usbh_mem_pool_ptr[idx], 0, *usbh_mem_pool_size_ptr[idx]);
 
 #ifdef __DEBUG
@@ -79,6 +98,14 @@ bool USBH_MemoryUninitializeLib (uint8_t idx) {
 /// \return      size of memory pool in bytes
 uint32_t USBH_MemoryGetPoolSize (uint8_t idx) {
 
+  // Check parameters
+  if (idx >= usbh_hc_num) {
+    return 0U;
+  }
+  if (usbh_mem_pool_size_ptr[idx] == NULL) {  
+    return 0U;
+  }
+
   return (*usbh_mem_pool_size_ptr[idx]);
 }
 
@@ -90,7 +117,22 @@ uint32_t USBH_MemoryGetPoolSize (uint8_t idx) {
 /// \return      false    is not in pool
 bool USBH_MemoryIsInPool (uint8_t idx, const uint8_t *ptr_mem) {
 
-  if ((ptr_mem != NULL) && (ptr_mem >= (uint8_t *)usbh_mem_pool_ptr[idx]) && (ptr_mem < ((uint8_t *)usbh_mem_pool_ptr[idx] + *usbh_mem_pool_size_ptr[idx]))) {
+  // Check parameters
+  if (idx >= usbh_hc_num) {
+    return false;
+  }
+  if (ptr_mem == NULL) {
+    return false;
+  }
+  if ((usbh_mem_pool_ptr[idx] == NULL) || (usbh_mem_pool_size_ptr[idx] == NULL)) {
+    return false;
+  }
+  if (*usbh_mem_pool_size_ptr[idx] < USBH_MIN_MEM_POOL_SIZE) {
+    return false;
+  }
+
+  if (((uintptr_t)ptr_mem >= ((uintptr_t)usbh_mem_pool_ptr[idx] + sizeof(struct mem *) + sizeof(uintptr_t))) &&
+      ((uintptr_t)ptr_mem <  ((uintptr_t)usbh_mem_pool_ptr[idx] + *usbh_mem_pool_size_ptr[idx] - sizeof(uintptr_t)))) {
     return true;
   }
 
@@ -109,16 +151,45 @@ uint8_t *USBH_MemoryAllocateLib (uint8_t idx, uint32_t sz) {
   uint8_t  *ptr_data;
   uint32_t  total_sz;
   uint32_t  hole_sz;
-  uint32_t  addr;
+  uintptr_t addr;
+
+  // Check parameters
+  if (idx >= usbh_hc_num) {
+    return NULL;
+  }
+  if (sz == 0U) {
+    return NULL;
+  }
+  if (sz >= (UINT32_MAX - (sizeof(struct mem *) + sizeof(uintptr_t) + 3U))) {
+    return NULL;
+  }
+  if ((usbh_mem_pool_ptr[idx] == NULL) || (usbh_mem_pool_size_ptr[idx] == NULL)) {
+    return NULL;
+  }
+  if (*usbh_mem_pool_size_ptr[idx] < USBH_MIN_MEM_POOL_SIZE) {
+    return NULL;
+  }
 
   // Add the header offset to 'sz'
-  total_sz = sz + sizeof(struct mem *) + sizeof (uint32_t);
+  total_sz = sz + sizeof(struct mem *) + sizeof(uintptr_t);
   // Make sure that block is 4-byte aligned
   total_sz = (total_sz + 3U) & ~0x00000003U;
 
-  ptr_search = (MEMP_t *)((uint32_t)usbh_mem_pool_ptr[idx]);
+  ptr_search = (MEMP_t *)usbh_mem_pool_ptr[idx];
+  if (ptr_search->next == NULL) {
+    // If memory pool was not initialized
+    return NULL;
+  }
+
   for (;;) {
-    hole_sz  = (uint32_t)(ptr_search->next) - (uint32_t)ptr_search;
+    if (((uintptr_t)(ptr_search->next) - (uintptr_t)ptr_search) >= UINT32_MAX) {
+      return NULL;
+    }
+    hole_sz  = (uint32_t)((uintptr_t)(ptr_search->next) - (uintptr_t)ptr_search);
+    if (ptr_search->len > hole_sz) {
+      // Corrupted memory list
+      return NULL;
+    }
     hole_sz -= ptr_search->len;
     // Check if the hole size is big enough
     if (hole_sz >= total_sz) {
@@ -138,7 +209,7 @@ uint8_t *USBH_MemoryAllocateLib (uint8_t idx, uint32_t sz) {
     ptr_data         = (uint8_t *)ptr_search->content;
   } else {
     // Insert a new list element into the memory list
-    addr             = (uint32_t)ptr_search + ptr_search->len;
+    addr             = (uintptr_t)ptr_search + ptr_search->len;
     ptr_new          = (MEMP_t *)addr;
     ptr_new->next    = ptr_search->next;
     ptr_search->next = ptr_new;
@@ -161,17 +232,27 @@ uint8_t *USBH_MemoryAllocateLib (uint8_t idx, uint32_t sz) {
 bool USBH_MemoryFreeLib (uint8_t idx, uint8_t *ptr_mem) {
   const MEMP_t   *ptr_return;
         MEMP_t   *ptr_prev, *ptr_search;
-        uint32_t  addr;
+        uintptr_t addr;
 
+  // Check parameters
+  if (idx >= usbh_hc_num) {
+    return false;
+  }
   if (ptr_mem == NULL) {
-    return true;
+    return false;
+  }
+  if (USBH_MemoryIsInPool(idx, ptr_mem) == false) {
+    return false;
   }
 
-  addr       = (uint32_t)ptr_mem - (sizeof(struct mem *) + sizeof(uint32_t));
+  addr       = (uintptr_t)ptr_mem - (sizeof(struct mem *) + sizeof(uintptr_t));
   ptr_return = (MEMP_t *)addr;
 
   // Set list header
-  ptr_search = (MEMP_t *)((uint32_t)usbh_mem_pool_ptr[idx]);
+  ptr_search = (MEMP_t *)usbh_mem_pool_ptr[idx];
+  if (ptr_search == NULL) {
+    return false;
+  }
   ptr_prev   = ptr_search;
   while (ptr_search != ptr_return) {
     ptr_prev   = ptr_search;
@@ -180,7 +261,12 @@ bool USBH_MemoryFreeLib (uint8_t idx, uint8_t *ptr_mem) {
       // This is not a valid Memory Block pointer
       return false;
     }
-    if ((((uint32_t)(ptr_search->next)) & 3U) != 0U) {
+    if (((uintptr_t)ptr_search <  ((uintptr_t)usbh_mem_pool_ptr[idx] + sizeof(struct mem *) + sizeof(uintptr_t))) ||
+        ((uintptr_t)ptr_search >= ((uintptr_t)usbh_mem_pool_ptr[idx] + *usbh_mem_pool_size_ptr[idx] - sizeof(uintptr_t)))) {
+      // If ptr_search is not within the valid memory pool range
+      return false;
+    }
+    if ((((uintptr_t)(ptr_search->next)) & 3U) != 0U) {
       // Error Link pointer overwritten, memory corrupt
       return false;
     }
@@ -189,12 +275,13 @@ bool USBH_MemoryFreeLib (uint8_t idx, uint8_t *ptr_mem) {
   mem_load[idx]     -= ptr_search->len;
   mem_counter[idx]--;
 #endif
-  if (ptr_search == (MEMP_t *)((uint32_t)usbh_mem_pool_ptr[idx])) {
+  if (ptr_search == (MEMP_t *)usbh_mem_pool_ptr[idx]) {
     // First element to be set free, only set Length to 0
     ptr_search->len  = 0U;
   } else {
     // Discard list element
     ptr_prev->next   = ptr_search->next;
+    memset(ptr_search, 0, (sizeof(struct mem *) + sizeof(uintptr_t)));
   }
 
   return true;

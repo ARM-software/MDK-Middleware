@@ -89,12 +89,12 @@ extern "C"  {
 /// Status code values returned by USB library functions.
 typedef enum {
   usbOK                       =    0U,  ///< Function completed with no error
-  usbTimeout,                           ///< Function completed; time-out occurred
+  usbTimeout,                           ///< Function timed out
   usbInvalidParameter,                  ///< Invalid Parameter error: a mandatory parameter was missing or specified an incorrect object
   usbThreadError              = 0x10U,  ///< CMSIS-RTOS Thread creation/termination failed
   usbTimerError,                        ///< CMSIS-RTOS Timer creation/deletion failed
-  usbSemaphoreError,                    ///< CMSIS-RTOS Semaphore creation failed
-  usbMutexError,                        ///< CMSIS-RTOS Mutex creation failed
+  usbSemaphoreError,                    ///< CMSIS-RTOS Semaphore creation/acquisition/release/deletion failed
+  usbMutexError,                        ///< CMSIS-RTOS Mutex creation/acquisition/release/deletion failed
   usbControllerError          = 0x20U,  ///< Controller does not exist
   usbDeviceError,                       ///< Device does not exist
   usbDriverError,                       ///< Driver function produced error
@@ -2314,7 +2314,7 @@ extern usbStatus         USBD_HID_Uninitialize              (uint8_t instance);
 extern void              USBD_HID_Reset                     (uint8_t instance);
 extern void              USBD_HID_SetConfiguration          (uint8_t instance);
 extern void              USBD_HID_EndpointStart             (uint8_t instance, uint8_t ep_addr);
-extern void              USBD_HID_Timer                     (void const *argument);
+extern void              USBD_HID_Timer                     (void *argument);
 
 extern usbStatus         USBD_MSC_Initialize                (uint8_t instance);
 extern usbStatus         USBD_MSC_Uninitialize              (uint8_t instance);

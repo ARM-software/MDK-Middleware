@@ -980,12 +980,13 @@
     </typedef>
 
     <!-- USB Host Communication Device Instance Runtime Structure -->
-    <typedef  name="USBH_CDC"                     info="USB Host Communication Device Instance Runtime Structure" size="20">
+    <typedef  name="USBH_CDC"                     info="USB Host Communication Device Instance Runtime Structure" size="84">
       <member name="ptr_dev"                      type="*USBH_DEV"              offset="0"   info="Pointer to device structure"/>
       <member name="bulk_in_pipe_hndl"            type="uint32_t"               offset="4"   info="Bulk in pipe handle"/>
       <member name="bulk_out_pipe_hndl"           type="uint32_t"               offset="8"   info="Bulk out pipe handle"/>
       <member name="int_in_pipe_hndl"             type="uint32_t"               offset="12"  info="Interrupt in pipe handle"/>
       <member name="int_in_thread_id"             type="uint32_t"               offset="16"  info="Interrupt in pipe thread ID"/>
+      <member name="int_in_data_buf"              type="uint8_t"                offset="20"  info="Interrupt in data buffer"/>
     </typedef>
   </typedefs>
 

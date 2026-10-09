@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_core.h
  * Purpose: USB Host - Core module header file
@@ -82,5 +82,7 @@ extern usbStatus USBH_RecoverDevice (USBH_DEV *ptr_dev);
 /// \param[in]     arg                  index (instance) of USB Host controller.
 /// \return                             none.
 extern void USBH_ConnectDebounce (void * arg);
+
+extern void USBH_Core_Thread (void *arg);
 
 #endif  // USBH_LIB_CORE_H_

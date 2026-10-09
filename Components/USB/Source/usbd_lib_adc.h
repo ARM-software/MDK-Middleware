@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_adc.h
  * Purpose: USB Device - Audio Device Class (ADC) module header file
@@ -117,5 +117,7 @@ extern bool USBD_ADC_MicrophoneVolumeGetMax (uint8_t instance, uint8_t ch);
 /// \return        true          success
 /// \return        false         fail
 extern bool USBD_ADC_MicrophoneVolumeGetRes (uint8_t instance, uint8_t ch);
+
+extern void USBD_ADC_Thread (void *arg);
 
 #endif  // USBD_LIB_ADC_H_

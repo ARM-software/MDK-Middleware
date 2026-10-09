@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2021 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_core_cdc.c
  * Purpose: USB Device - Communication Device Class (CDC) core module
@@ -133,12 +133,12 @@ __WEAK bool USBD_Endpoint0_Setup_CDC_ReqToIF (uint8_t device) {
           }
           break;
         case CDC_SET_ETHERNET_MULTICAST_FILTERS:
-          if (ptr_dev_data->ep0_data.cnt < (ptr_dev_data->setup_packet.wValue * 6UL)) {
+          if (ptr_dev_data->ep0_data.cnt < ((uint32_t)ptr_dev_data->setup_packet.wValue * 6UL)) {
             return false;
           }
           ptr_dev_data->ep0_data.data = ptr_dev_cfg->ep0_buf;           // data to be received, see USBD_EVT_OUT
-          if (ptr_dev_data->ep0_data.cnt > (ptr_dev_data->setup_packet.wValue * 6UL)) {
-            ptr_dev_data->ep0_data.cnt = (ptr_dev_data->setup_packet.wValue * 6UL);
+          if (ptr_dev_data->ep0_data.cnt > ((uint32_t)ptr_dev_data->setup_packet.wValue * 6UL)) {
+            ptr_dev_data->ep0_data.cnt = ((uint32_t)ptr_dev_data->setup_packet.wValue * 6UL);
           }
           return true;
         case CDC_SET_ETHERNET_PMP_FILTER:
@@ -172,7 +172,7 @@ __WEAK bool USBD_Endpoint0_Setup_CDC_ReqToIF (uint8_t device) {
           }
           return true;
         case CDC_GET_ETHERNET_PMP_FILTER:
-          if (USBD_CDC_NCM_CoreGetEthernetPowerManagementPatternFilter (index, ptr_dev_data->setup_packet.wValue, (uint16_t *)((uint32_t)ptr_dev_cfg->ep0_buf))) {
+          if (USBD_CDC_NCM_CoreGetEthernetPowerManagementPatternFilter (index, ptr_dev_data->setup_packet.wValue, (uint16_t *)ptr_dev_cfg->ep0_buf)) {
             ptr_dev_data->ep0_data.data = ptr_dev_cfg->ep0_buf;         // point to data to be sent
             if (ptr_dev_data->ep0_data.cnt > 2U) {
               ptr_dev_data->ep0_data.cnt = 2U;
@@ -195,7 +195,7 @@ __WEAK bool USBD_Endpoint0_Setup_CDC_ReqToIF (uint8_t device) {
           }
           break;
         case CDC_GET_ETHERNET_STATISTIC:
-          if (USBD_CDC_NCM_CoreGetEthernetStatistic (index, ptr_dev_data->setup_packet.wValue, (uint32_t *)((uint32_t)ptr_dev_cfg->ep0_buf))) {
+          if (USBD_CDC_NCM_CoreGetEthernetStatistic (index, ptr_dev_data->setup_packet.wValue, (uint32_t *)((uintptr_t)ptr_dev_cfg->ep0_buf))) {
             ptr_dev_data->ep0_data.data = ptr_dev_cfg->ep0_buf;         // point to data to be sent
             if (ptr_dev_data->ep0_data.cnt > 4U) {
               ptr_dev_data->ep0_data.cnt = 4U;
@@ -234,7 +234,7 @@ __WEAK bool USBD_Endpoint0_Setup_CDC_ReqToIF (uint8_t device) {
           }
           break;
         case CDC_GET_NTB_FORMAT:
-          if (USBD_CDC_NCM_CoreGetNtbFormat (index, (uint16_t *)((uint32_t)ptr_dev_cfg->ep0_buf))) {
+          if (USBD_CDC_NCM_CoreGetNtbFormat (index, (uint16_t *)(ptr_dev_cfg->ep0_buf))) {
             ptr_dev_data->ep0_data.data = ptr_dev_cfg->ep0_buf;         // point to data to be sent
             if (ptr_dev_data->ep0_data.cnt > 2U) {
               ptr_dev_data->ep0_data.cnt = 2U;
@@ -257,7 +257,7 @@ __WEAK bool USBD_Endpoint0_Setup_CDC_ReqToIF (uint8_t device) {
           }
           break;
         case CDC_GET_NTB_INPUT_SIZE:
-          if (USBD_CDC_NCM_CoreGetNtbInputSize (index, (uint32_t *)((uint32_t)ptr_dev_cfg->ep0_buf))) {
+          if (USBD_CDC_NCM_CoreGetNtbInputSize (index, (uint32_t *)(ptr_dev_cfg->ep0_buf))) {
             ptr_dev_data->ep0_data.data = ptr_dev_cfg->ep0_buf;         // point to data to be sent
             if (ptr_dev_data->ep0_data.cnt > 4U) {
               ptr_dev_data->ep0_data.cnt = 4U;
@@ -270,7 +270,7 @@ __WEAK bool USBD_Endpoint0_Setup_CDC_ReqToIF (uint8_t device) {
           }
           break;
         case CDC_GET_MAX_DATAGRAM_SIZE:
-          if (USBD_CDC_NCM_CoreGetMaxDatagramSize (index, (uint16_t *)((uint32_t)ptr_dev_cfg->ep0_buf))) {
+          if (USBD_CDC_NCM_CoreGetMaxDatagramSize (index, (uint16_t *)(ptr_dev_cfg->ep0_buf))) {
             ptr_dev_data->ep0_data.data = ptr_dev_cfg->ep0_buf;         // point to data to be sent
             if (ptr_dev_data->ep0_data.cnt > 2U) {
               ptr_dev_data->ep0_data.cnt = 2U;
@@ -283,7 +283,7 @@ __WEAK bool USBD_Endpoint0_Setup_CDC_ReqToIF (uint8_t device) {
           }
           break;
         case CDC_GET_CRC_MODE:
-          if (USBD_CDC_NCM_CoreGetCrcMode (index, (uint16_t *)((uint32_t)ptr_dev_cfg->ep0_buf))) {
+          if (USBD_CDC_NCM_CoreGetCrcMode (index, (uint16_t *)(ptr_dev_cfg->ep0_buf))) {
             ptr_dev_data->ep0_data.data = ptr_dev_cfg->ep0_buf;         // point to data to be sent
             if (ptr_dev_data->ep0_data.cnt > 2U) {
               ptr_dev_data->ep0_data.cnt = 2U;
@@ -379,14 +379,14 @@ __WEAK bool USBD_Endpoint0_Out_CDC_ReqToIF (uint8_t device) {
           }
           break;
         case CDC_SET_NTB_INPUT_SIZE:
-          if (USBD_CDC_NCM_CoreSetNtbInputSize (index, *((uint32_t *)((uint32_t)ptr_dev_cfg->ep0_buf)))) {
+          if (USBD_CDC_NCM_CoreSetNtbInputSize (index, *((uint32_t *)ptr_dev_cfg->ep0_buf))) {
             if (USBD_StatusInStage(device) == usbOK) {                  // send ZLP IN
               return true;
             }
           }
           break;
         case CDC_SET_MAX_DATAGRAM_SIZE:
-          if (USBD_CDC_NCM_CoreSetMaxDatagramSize (index, *((uint16_t *)((uint32_t)ptr_dev_cfg->ep0_buf)))) {
+          if (USBD_CDC_NCM_CoreSetMaxDatagramSize (index, *((uint16_t *)ptr_dev_cfg->ep0_buf))) {
             if (USBD_StatusInStage(device) == usbOK) {                  // send ZLP IN
               return true;
             }

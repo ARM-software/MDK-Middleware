@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_core.c
  * Purpose: USB Device - Core module
@@ -93,6 +93,11 @@ usbStatus USBD_Initialize (uint8_t device) {
     return usbOK;
   }
 
+  if ((((uint32_t)device + 1U) * usbd_ep_max_num * 2U) >= UINT8_MAX) {
+    status = usbUnknownError;
+    goto exit;
+  }
+
   usbd_drv_version[device]  = USBD_DriverGetVersion      (device);
   usbd_capabilities[device] = USBD_DriverGetCapabilities (device);
 
@@ -107,7 +112,7 @@ usbStatus USBD_Initialize (uint8_t device) {
   }
 
   for (i = 0U; i < (usbd_ep_max_num * 2U); i++) {
-    sem_idx = (uint8_t)(device * usbd_ep_max_num * 2U) + i;
+    sem_idx = (device * usbd_ep_max_num * 2U) + i;
     if (usbd_driver_ep_semaphore_id[sem_idx] == NULL) {
       usbd_driver_ep_semaphore_id[sem_idx] = USBD_SemaphoreCreate (usbdSemaphoreEndpoint, device, i);
       if (usbd_driver_ep_semaphore_id[sem_idx] == NULL) {
@@ -161,7 +166,7 @@ cleanup_and_exit:
       fpUSBD_Device_Uninitialize [device] ();
     }
     for (i = 0U; i < (usbd_ep_max_num * 2U); i++) {
-      sem_idx = (uint8_t)(device * usbd_ep_max_num * 2U) + i;
+      sem_idx = (device * usbd_ep_max_num * 2U) + i;
       if (usbd_driver_ep_semaphore_id[sem_idx] != NULL) {
         USBD_SemaphoreDelete (usbd_driver_ep_semaphore_id[sem_idx]);
         usbd_driver_ep_semaphore_id[sem_idx] = NULL;
@@ -402,6 +407,12 @@ usbStatus USBD_SetSerialNumber (uint8_t device, const char *string) {
 
   EvrUSBD_Core_SetSerialNumber(device);
 
+  // Check parameters
+  if (string == NULL) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
   status = USBD_CheckDevice (device);
   if (status != usbOK) {
     goto exit;
@@ -412,10 +423,23 @@ usbStatus USBD_SetSerialNumber (uint8_t device, const char *string) {
   ptr_str_desc =  (USB_STRING_DESCRIPTOR *)usbd_desc_ptr[device]->ser_num_string_descriptor;
                                           if (ptr_str_desc == NULL) { status = usbUnknownError; goto exit; }
 
-  str_len = strlen(string);
-  if (str_len > ptr_dev_cfg->ser_num_str_len) {
-    str_len = ptr_dev_cfg->ser_num_str_len;
+  // ptr_dev_cfg->ser_num_str_len is the maximum length of the serial number string in characters as configured in the USBD_Config_n.h file
+
+  if ((ptr_dev_cfg->ser_num_str_len == 0U) || (ptr_dev_cfg->ser_num_str_len > 126U)) {
+    status = usbInvalidParameter;
+    goto exit;
   }
+
+  // Determine the actual length of the provided serial number string (string parameter).
+
+  // The string length must not exceed the maximum length configured in the USBD_Config_n.h file.
+  // If it does, the string will be truncated to the configured maximum length.
+  for (i = 0U; i < ptr_dev_cfg->ser_num_str_len; i++) {
+    if (string[i] == '\0') {
+      break;
+    }
+  }
+  str_len = i;
 
   ptr_str_desc_str = (uint8_t *)ptr_str_desc + offsetof(USB_STRING_DESCRIPTOR, bString);
 
@@ -449,11 +473,18 @@ usbStatus USBD_EndpointRead (uint8_t device, uint8_t ep_addr, uint8_t *buf, uint
 
   EvrUSBD_Core_EndpointRead(device, ep_addr, len);
 
+  // Check parameters
+  if (buf == NULL) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
   status = USBD_CheckDevice (device);
   if (status == usbOK) {
     status = USBD_DriverEndpointTransfer (device, USB_ENDPOINT_OUT(ep_addr), buf, len);
   }
 
+exit:
 #if (defined(USBD_DEBUG) && (USBD_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBD_Core_EndpointReadFailed(device, ep_addr, status);
@@ -494,13 +525,20 @@ uint32_t USBD_EndpointReadGetResult (uint8_t device, uint8_t ep_addr) {
 usbStatus USBD_EndpointWrite (uint8_t device, uint8_t ep_addr, const uint8_t *buf, uint32_t len) {
   usbStatus status;
 
+  // Check parameters
+  if ((buf == NULL) && (len != 0U)) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
   EvrUSBD_Core_EndpointWrite(device, ep_addr, len);
 
   status = USBD_CheckDevice (device);
   if (status == usbOK) {
-    status = USBD_DriverEndpointTransfer (device, USB_ENDPOINT_IN(ep_addr), (uint8_t *)((uint32_t)buf), len);
+    status = USBD_DriverEndpointTransfer (device, USB_ENDPOINT_IN(ep_addr), (uint8_t *)(uintptr_t)buf, len);
   }
 
+exit:
 #if (defined(USBD_DEBUG) && (USBD_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBD_Core_EndpointWriteFailed(device, ep_addr, status);
@@ -989,11 +1027,11 @@ static bool USBD_ReqSetAddress (uint8_t device) {
 /// \return        true                 success
 /// \return        false                fail
 static bool USBD_ReqGetDescriptor (uint8_t device) {
-         const usbd_dev_t  *ptr_dev_cfg;
-               usbd_data_t *ptr_dev_data;
-  static const uint8_t     *ptr_desc;
-  static       uint32_t     len;
-               uint32_t     i;
+  const usbd_dev_t  *ptr_dev_cfg;
+        usbd_data_t *ptr_dev_data;
+  const uint8_t     *ptr_desc;
+        uint32_t     len;
+        uint32_t     i;
 
   if (device >= usbd_dev_num) { return false; }         // Check if device exists
 
@@ -1117,10 +1155,10 @@ static bool USBD_ReqGetDescriptor (uint8_t device) {
 /// \return        true                 success
 /// \return        false                fail
 static bool USBD_ReqGetMSDescriptor (uint8_t device) {
-         const usbd_dev_t  *ptr_dev_cfg;
-               usbd_data_t *ptr_dev_data;
-  static const uint8_t     *ptr_desc;
-  static       uint32_t     len;
+  const usbd_dev_t  *ptr_dev_cfg;
+        usbd_data_t *ptr_dev_data;
+  const uint8_t     *ptr_desc;
+        uint32_t     len = 0U;
 
   if (device >= usbd_dev_num) { return false; }         // Check if device exists
 
@@ -1146,11 +1184,12 @@ static bool USBD_ReqGetMSDescriptor (uint8_t device) {
     case USB_REQUEST_TO_DEVICE:
       switch (ptr_dev_data->setup_packet.wIndex) {
         case USB_MS_OS_FEAT_EXT_COMPAT_ID_DESCRIPTOR_IDX:                                        // Is Extended Compat ID Descriptor request
-          if (usbd_desc_ptr[device]->ms_os_ext_compat_id_descriptor != NULL) {                   // Extended Compat ID Descriptor pointer is valid
-            ptr_desc  = usbd_desc_ptr[device]->ms_os_ext_compat_id_descriptor;
-            ptr_dev_data->ep0_data.data = (uint8_t *)((uint32_t)ptr_desc);
-            len = ((const USB_MS_OS_FEAT_EXT_COMPAT_ID_HEADER *)((uint32_t)ptr_desc))->dwLength;
+          if (usbd_desc_ptr[device]->ms_os_ext_compat_id_descriptor == NULL) {                   // Extended Compat ID Descriptor pointer is valid
+            return false;
           }
+          ptr_desc  = usbd_desc_ptr[device]->ms_os_ext_compat_id_descriptor;
+          ptr_dev_data->ep0_data.data = (uint8_t *)((uint32_t)ptr_desc);
+          len = ((const USB_MS_OS_FEAT_EXT_COMPAT_ID_HEADER *)((uint32_t)ptr_desc))->dwLength;
           break;
         case USB_MS_OS_FEAT_EXT_PROP_DESCRIPTOR_IDX:                                             // Is Extended Properties OS Descriptor request
           if (USBD_Endpoint0_ReqGetExtProp_CC (device, &ptr_desc) == false) {
@@ -1170,6 +1209,8 @@ static bool USBD_ReqGetMSDescriptor (uint8_t device) {
         }
         ptr_dev_data->ep0_data.data = (uint8_t *)((uint32_t)ptr_desc);
         len = ((const USB_MS_OS_FEAT_EXT_PROP_HEADER *)((uint32_t)ptr_desc))->dwLength;
+      } else {
+        return false;
       }
       break;
     default:
@@ -1924,7 +1965,10 @@ void USBD_Core_Thread (void *arg) {
 
   for (;;) {
     event = USBD_ThreadFlagsWait (millisec);
-    if ((event & 0x8000000U) == 0U) {
+    if ((event & 0x80000000U) != 0U) {
+      continue;                                        // Ignore wait errors
+    }
+    if (event != 0U) {
       USBD_Core (device, event);
     } else {                                           // If timeout
       vbus = ptr_dev_driver->DeviceGetState().vbus;

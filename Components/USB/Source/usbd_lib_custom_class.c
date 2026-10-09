@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_custom_class.c
  * Purpose: USB Device - Custom Class module
@@ -31,7 +31,7 @@ static usbStatus USBD_CustomClass_CheckInstance (uint8_t instance);
 __WEAK usbStatus USBD_CustomClass_Initialize (uint8_t instance) {
   uint32_t  ep_msk;
   usbStatus status;
-  uint8_t   index;
+  uint8_t   device, index;
 
   status = USBD_CustomClass_CheckInstance(instance);
   if (status != usbOK) {
@@ -43,20 +43,34 @@ __WEAK usbStatus USBD_CustomClass_Initialize (uint8_t instance) {
     fpUSBD_CustomClass_Initialize[instance] ();
   }
 
+  device = usbd_custom_class_ptr[instance]->dev_num;
   ep_msk = usbd_custom_class_ptr[instance]->ep_msk;
 
   for (index = 1U; index < usbd_ep_max_num; index ++) {
-    if ((usbd_ep_thread_id_ptr[(instance * usbd_ep_max_num) + index] != NULL) && ((ep_msk & (1UL << index)) != 0U)) {
+    if ((usbd_ep_thread_id_ptr[(device * usbd_ep_max_num) + index] != NULL) && ((ep_msk & (1UL << index)) != 0U)) {
       if (usbd_custom_class_ep_thread_id[instance][index] == NULL) {
         usbd_custom_class_ep_thread_id[instance][index] = USBD_ThreadCreate (usbdThreadCC, (uint8_t)(instance * usbd_ep_max_num) + index);
         if (usbd_custom_class_ep_thread_id[instance][index] == NULL) {
-          return usbThreadError;
+          status = usbThreadError;
         }
       }
     }
   }
 
-  return usbOK;
+  // If thread creation failed, terminate any already created thread
+  if (status != usbOK) {
+    for (index = 1U; index < usbd_ep_max_num; index ++) {
+      if ((usbd_ep_thread_id_ptr[(device * usbd_ep_max_num) + index] != NULL) && ((ep_msk & (1UL << index)) != 0U)) {
+        if (usbd_custom_class_ep_thread_id[instance][index] != NULL) {
+          if (USBD_ThreadTerminate (usbd_custom_class_ep_thread_id[instance][index]) == osOK) {
+            usbd_custom_class_ep_thread_id[instance][index] = NULL;
+          }
+        }
+      }
+    }
+  }
+
+  return status;
 }
 
 /// \brief Uninitialize Custom Class device instance and terminate Endpoint handling thread(s)
@@ -65,17 +79,18 @@ __WEAK usbStatus USBD_CustomClass_Initialize (uint8_t instance) {
 __WEAK usbStatus USBD_CustomClass_Uninitialize (uint8_t instance) {
   uint32_t  ep_msk;
   usbStatus status;
-  uint8_t   index;
+  uint8_t   device, index;
 
   status = USBD_CustomClass_CheckInstance(instance);
   if (status != usbOK) {
     return status;
   }
 
+  device = usbd_custom_class_ptr[instance]->dev_num;
   ep_msk = usbd_custom_class_ptr[instance]->ep_msk;
 
   for (index = 1U; index < usbd_ep_max_num; index ++) {
-    if ((usbd_ep_thread_id_ptr[(instance * usbd_ep_max_num) + index] != NULL) && ((ep_msk & (1UL << index)) != 0U)) {
+    if ((usbd_ep_thread_id_ptr[(device * usbd_ep_max_num) + index] != NULL) && ((ep_msk & (1UL << index)) != 0U)) {
       if (usbd_custom_class_ep_thread_id[instance][index] != NULL) {
         if (USBD_ThreadTerminate (usbd_custom_class_ep_thread_id[instance][index]) != 0) {
           return usbThreadError;
@@ -150,6 +165,7 @@ __WEAK void USBD_CustomClass_EndpointStop (uint8_t instance, uint8_t ep_addr) {
 static usbStatus USBD_CustomClass_CheckInstance (uint8_t instance) {
 
   if (instance >= usbd_custom_class_num)                                        { return usbClassErrorCustom; }
+  if (usbd_custom_class_ptr[instance]                                  == NULL) { return usbClassErrorCustom; }
   if (usbd_custom_class_ptr[instance]->dev_num >= usbd_dev_num)                 { return usbDeviceError;      }
   if (usbd_dev_ptr[usbd_custom_class_ptr[instance]->dev_num]           == NULL) { return usbDeviceError;      }
   if (usbd_dev_ptr[usbd_custom_class_ptr[instance]->dev_num]->data_ptr == NULL) { return usbDeviceError;      }
@@ -164,7 +180,8 @@ static usbStatus USBD_CustomClass_CheckInstance (uint8_t instance) {
 /// \param[in]     instance      instance of Custom Class class.
 void USBD_CustomClass_EP_Thread (void *arg) {
   uint32_t event;
-  uint8_t  ep_num, ep_evt, idx;
+  uint16_t idx;
+  uint8_t  ep_num, ep_evt;
   uint8_t  instance;
 
   instance = (uint8_t)((uint32_t)arg);
@@ -174,12 +191,15 @@ void USBD_CustomClass_EP_Thread (void *arg) {
 
   for (;;) {
     event = USBD_ThreadFlagsWait (0xFFFFFFFFU);
-    if ((event & 0x8000000U) == 0U) {
+    if ((event & 0x80000000U) == 0U) {
       // (event >> 12) & 0x0F = endpoint number
       // (event >>  8) & 0x0F = endpoint event
       ep_num = (uint8_t)((event >> 12) & 0x0FU);
+      if (ep_num >= usbd_ep_max_num) {
+        continue;
+      }
       ep_evt = (uint8_t)((event >>  8) & 0x0FU);
-      idx = (uint8_t)(instance * usbd_ep_max_num) + ep_num;
+      idx = ((uint16_t)instance * usbd_ep_max_num) + ep_num;
       if (fpUSBD_Endpoint_Event[idx] != NULL) {
         EvrUSBD_CC_OnEndpointmEvent(instance, ep_num, ep_evt);
         fpUSBD_Endpoint_Event[idx](ep_evt);

@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_evr.h
  * Purpose: USB Host (USBH) - Event Recorder definitions
@@ -8,6 +8,8 @@
 
 #ifndef USBH_EVR_H_
 #define USBH_EVR_H_
+
+#include <string.h>
 
 #include "RTE_Components.h"
 
@@ -785,7 +787,7 @@
 
 
 /**
-  \brief  Event on \ref USBH_PipeCreate start (API)
+  \brief  Event on \ref USBH_PipeCreate (API)
   \param  device               index of USB Device.
   \param  ep_addr              endpoint address
            - ep_addr.0..3:       address
@@ -1053,8 +1055,14 @@
   \param  len          number of data bytes in data stage
  */
 #ifdef                 EvtUSBH_Core_ControlTransfer
-  __STATIC_INLINE void EvrUSBH_Core_ControlTransfer(  uint8_t device,     const void     * setup_packet,                                        uint32_t len) {
-    EventRecord4(      EvtUSBH_Core_ControlTransfer, TO_BYTE0(device), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U),          len);
+  __STATIC_INLINE void EvrUSBH_Core_ControlTransfer(  uint8_t device,     const USB_SETUP_PACKET *setup_packet,                                        uint32_t len) {
+    uint32_t word0;
+    uint32_t word1;
+    if (setup_packet != NULL) {
+      memcpy(&word0, setup_packet, 4U);
+      memcpy(&word1, ((const uint8_t *)setup_packet) + 4U, 4U);
+      EventRecord4(    EvtUSBH_Core_ControlTransfer, TO_BYTE0(device), word0, word1, len);
+    }
   }
 #else
   #define              EvrUSBH_Core_ControlTransfer(...)
@@ -1068,8 +1076,14 @@
   \param  error        error code \ref usbStatus
  */
 #ifdef                 EvtUSBH_Core_ControlTransferFailed
-  __STATIC_INLINE void EvrUSBH_Core_ControlTransferFailed(  uint8_t device,     const void     * setup_packet,                                        usbStatus error) {
-    EventRecord4(      EvtUSBH_Core_ControlTransferFailed, TO_BYTE0(device), *((const uint32_t *)setup_packet), *((const uint32_t *)setup_packet+1U), (uint32_t)error);
+  __STATIC_INLINE void EvrUSBH_Core_ControlTransferFailed(  uint8_t device,     const USB_SETUP_PACKET *setup_packet,                                        usbStatus error) {
+    uint32_t word0;
+    uint32_t word1;
+    if (setup_packet != NULL) {
+      memcpy(&word0, setup_packet, 4U);
+      memcpy(&word1, ((const uint8_t *)setup_packet) + 4U, 4U);
+      EventRecord4(    EvtUSBH_Core_ControlTransferFailed, TO_BYTE0(device), word0, word1, (uint32_t)error);
+    }
   }
 #else
   #define              EvrUSBH_Core_ControlTransferFailed(...)
@@ -1278,7 +1292,7 @@
 
 
 /**
-  \brief  Event on \ref USBH_DeviceRequest_GetConfiguration start (API)
+  \brief  Event on \ref USBH_DeviceRequest_GetConfiguration (API)
   \param  device       device index
   \param  config       configuration
  */
@@ -1335,7 +1349,7 @@
 
 
 /**
-  \brief  Event on \ref USBH_DeviceRequest_GetInterface start (API)
+  \brief  Event on \ref USBH_DeviceRequest_GetInterface (API)
   \param  device       device index
   \param  index        interface index
   \param  alt          alternate setting
@@ -2096,7 +2110,7 @@
   \param  status       device status \ref usbStatus
  */
 #ifdef                 EvtUSBH_CC_GetStatus
-  __STATIC_INLINE void EvrUSBH_CC_GetStatus(  uint8_t instance,    uint8_t status) {
+  __STATIC_INLINE void EvrUSBH_CC_GetStatus(  uint8_t instance,  usbStatus status) {
     EventRecord2(      EvtUSBH_CC_GetStatus, TO_BYTE0(instance), (uint32_t)status);
   }
 #else
@@ -2322,7 +2336,7 @@
   \param  status       device status \ref usbStatus
  */
 #ifdef                 EvtUSBH_CDC_ACM_GetStatus
-  __STATIC_INLINE void EvrUSBH_CDC_ACM_GetStatus(  uint8_t instance,    uint8_t status) {
+  __STATIC_INLINE void EvrUSBH_CDC_ACM_GetStatus(  uint8_t instance,  usbStatus status) {
     EventRecord2(      EvtUSBH_CDC_ACM_GetStatus, TO_BYTE0(instance), (uint32_t)status);
   }
 #else
@@ -2823,7 +2837,7 @@
   \param  status       device status \ref usbStatus
  */
 #ifdef                 EvtUSBH_HID_GetStatus
-  __STATIC_INLINE void EvrUSBH_HID_GetStatus(  uint8_t instance,    uint8_t status) {
+  __STATIC_INLINE void EvrUSBH_HID_GetStatus(  uint8_t instance,  usbStatus status) {
     EventRecord2(      EvtUSBH_HID_GetStatus, TO_BYTE0(instance), (uint32_t)status);
   }
 #else
@@ -3360,7 +3374,7 @@
   \param  status       device status \ref usbStatus
  */
 #ifdef                 EvtUSBH_MSC_GetStatus
-  __STATIC_INLINE void EvrUSBH_MSC_GetStatus(  uint8_t instance,    uint8_t status) {
+  __STATIC_INLINE void EvrUSBH_MSC_GetStatus(  uint8_t instance,  usbStatus status) {
     EventRecord2(      EvtUSBH_MSC_GetStatus, TO_BYTE0(instance), (uint32_t)status);
   }
 #else

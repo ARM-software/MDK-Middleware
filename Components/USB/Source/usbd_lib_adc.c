@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_adc.c
  * Purpose: USB Device - Audio Device Class (ADC) module
@@ -238,6 +238,10 @@ int32_t USBD_ADC_ReadSamples (uint8_t instance, void *buf, int32_t num) {
     EvrUSBD_ADC_ReadSamplesFailed(instance, status);
     return -(int32_t)status;
   }
+  if ((buf == NULL) || (num < 0)) {
+    EvrUSBD_ADC_ReadSamplesFailed(instance, usbInvalidParameter);
+    return -(int32_t)usbInvalidParameter;
+  }
 
   result            = 0U;
   ptr_adc_cfg       = usbd_adc_ptr[instance];
@@ -435,6 +439,10 @@ int32_t USBD_ADC_WriteSamples (uint8_t instance, const void *buf, int32_t num) {
     EvrUSBD_ADC_WriteSamplesFailed(instance, status);
     return -(int32_t)status;
   }
+  if ((buf == NULL) || (num < 0)) {
+    EvrUSBD_ADC_WriteSamplesFailed(instance, usbInvalidParameter);
+    return -(int32_t)usbInvalidParameter;
+  }
 
   result           = 0U;
   ptr_adc_cfg      = usbd_adc_ptr[instance];
@@ -621,6 +629,9 @@ bool USBD_ADC_SpeakerMuteGetCur (uint8_t instance, uint8_t ch) {
   }
 
   ptr_adc_cfg = usbd_adc_ptr[instance];
+  if (ptr_adc_cfg->spkr_data_ptr == NULL) {
+    return false;
+  }
 
   usbd_dev_ptr[ptr_adc_cfg->dev_num]->ep0_buf[0] = ptr_adc_cfg->spkr_data_ptr->mute;
 
@@ -637,6 +648,9 @@ bool USBD_ADC_SpeakerMuteGetCur (uint8_t instance, uint8_t ch) {
 bool USBD_ADC_SpeakerMuteSetCur (uint8_t instance, uint8_t ch, bool on) {
 
   if (USBD_ADC_CheckInstance(instance) != usbOK) {
+    return false;
+  }
+  if (usbd_adc_ptr[instance]->spkr_data_ptr == NULL) {
     return false;
   }
 
@@ -671,6 +685,9 @@ bool USBD_ADC_SpeakerVolumeGetCur (uint8_t instance, uint8_t ch) {
   }
 
   ptr_adc_cfg = usbd_adc_ptr[instance];
+  if (ptr_adc_cfg->spkr_data_ptr == NULL) {
+    return false;
+  }
 
   *((uint16_t *)((uint32_t)usbd_dev_ptr[ptr_adc_cfg->dev_num]->ep0_buf)) = ptr_adc_cfg->spkr_data_ptr->vol_cur[ch-1U];
 
@@ -687,6 +704,9 @@ bool USBD_ADC_SpeakerVolumeGetCur (uint8_t instance, uint8_t ch) {
 bool USBD_ADC_SpeakerVolumeSetCur (uint8_t instance, uint8_t ch, uint16_t vol) {
 
   if (USBD_ADC_CheckInstance(instance) != usbOK) {
+    return false;
+  }
+  if (usbd_adc_ptr[instance]->spkr_data_ptr == NULL) {
     return false;
   }
 
@@ -721,6 +741,9 @@ bool USBD_ADC_SpeakerVolumeGetMin (uint8_t instance, uint8_t ch) {
   }
 
   ptr_adc_cfg = usbd_adc_ptr[instance];
+  if (ptr_adc_cfg->spkr_data_ptr == NULL) {
+    return false;
+  }
 
   *((uint16_t *)((uint32_t)usbd_dev_ptr[ptr_adc_cfg->dev_num]->ep0_buf)) = ptr_adc_cfg->spkr_data_ptr->vol_min[ch-1U];
 
@@ -744,6 +767,9 @@ bool USBD_ADC_SpeakerVolumeGetMax (uint8_t instance, uint8_t ch) {
   }
 
   ptr_adc_cfg = usbd_adc_ptr[instance];
+  if (ptr_adc_cfg->spkr_data_ptr == NULL) {
+    return false;
+  }
 
   *((uint16_t *)((uint32_t)usbd_dev_ptr[ptr_adc_cfg->dev_num]->ep0_buf)) = ptr_adc_cfg->spkr_data_ptr->vol_max[ch-1U];
 
@@ -767,6 +793,9 @@ bool USBD_ADC_SpeakerVolumeGetRes (uint8_t instance, uint8_t ch) {
   }
 
   ptr_adc_cfg = usbd_adc_ptr[instance];
+  if (ptr_adc_cfg->spkr_data_ptr == NULL) {
+    return false;
+  }
 
   *((uint16_t *)((uint32_t)usbd_dev_ptr[ptr_adc_cfg->dev_num]->ep0_buf)) = ptr_adc_cfg->spkr_data_ptr->vol_res[ch-1U];
 
@@ -788,6 +817,9 @@ bool USBD_ADC_MicrophoneMuteGetCur (uint8_t instance, uint8_t ch) {
   }
 
   ptr_adc_cfg = usbd_adc_ptr[instance];
+  if (ptr_adc_cfg->mic_data_ptr == NULL) {
+    return false;
+  }
 
   usbd_dev_ptr[ptr_adc_cfg->dev_num]->ep0_buf[0] = ptr_adc_cfg->mic_data_ptr->mute;
 
@@ -804,6 +836,9 @@ bool USBD_ADC_MicrophoneMuteGetCur (uint8_t instance, uint8_t ch) {
 bool USBD_ADC_MicrophoneMuteSetCur (uint8_t instance, uint8_t ch, bool on) {
 
   if (USBD_ADC_CheckInstance(instance) != usbOK) {
+    return false;
+  }
+  if (usbd_adc_ptr[instance]->mic_data_ptr == NULL) {
     return false;
   }
 
@@ -838,6 +873,9 @@ bool USBD_ADC_MicrophoneVolumeGetCur (uint8_t instance, uint8_t ch) {
   }
 
   ptr_adc_cfg = usbd_adc_ptr[instance];
+  if (ptr_adc_cfg->mic_data_ptr == NULL) {
+    return false;
+  }
 
   *((uint16_t *)((uint32_t)usbd_dev_ptr[ptr_adc_cfg->dev_num]->ep0_buf)) = ptr_adc_cfg->mic_data_ptr->vol_cur[ch-1U];
 
@@ -854,6 +892,9 @@ bool USBD_ADC_MicrophoneVolumeGetCur (uint8_t instance, uint8_t ch) {
 bool USBD_ADC_MicrophoneVolumeSetCur (uint8_t instance, uint8_t ch, uint16_t vol) {
 
   if (USBD_ADC_CheckInstance(instance) != usbOK) {
+    return false;
+  }
+  if (usbd_adc_ptr[instance]->mic_data_ptr == NULL) {
     return false;
   }
 
@@ -888,6 +929,9 @@ bool USBD_ADC_MicrophoneVolumeGetMin (uint8_t instance, uint8_t ch) {
   }
 
   ptr_adc_cfg = usbd_adc_ptr[instance];
+  if (ptr_adc_cfg->mic_data_ptr == NULL) {
+    return false;
+  }
 
   *((uint16_t *)((uint32_t)usbd_dev_ptr[ptr_adc_cfg->dev_num]->ep0_buf)) = ptr_adc_cfg->mic_data_ptr->vol_min[ch-1U];
 
@@ -911,6 +955,9 @@ bool USBD_ADC_MicrophoneVolumeGetMax (uint8_t instance, uint8_t ch) {
   }
 
   ptr_adc_cfg = usbd_adc_ptr[instance];
+  if (ptr_adc_cfg->mic_data_ptr == NULL) {
+    return false;
+  }
 
   *((uint16_t *)((uint32_t)usbd_dev_ptr[ptr_adc_cfg->dev_num]->ep0_buf)) = ptr_adc_cfg->mic_data_ptr->vol_max[ch-1U];
 
@@ -934,6 +981,9 @@ bool USBD_ADC_MicrophoneVolumeGetRes (uint8_t instance, uint8_t ch) {
   }
 
   ptr_adc_cfg = usbd_adc_ptr[instance];
+  if (ptr_adc_cfg->mic_data_ptr == NULL) {
+    return false;
+  }
 
   *((uint16_t *)((uint32_t)usbd_dev_ptr[ptr_adc_cfg->dev_num]->ep0_buf)) = ptr_adc_cfg->mic_data_ptr->vol_res[ch-1U];
 
@@ -1055,7 +1105,10 @@ void USBD_ADC_EndpointStart (uint8_t instance, uint8_t ep_addr) {
     return;
   }
 
-  ptr_adc_cfg       = usbd_adc_ptr[instance];
+  ptr_adc_cfg = usbd_adc_ptr[instance];
+  if (ptr_adc_cfg == NULL) {
+    return;
+  }
   ptr_adc_spkr_data = ptr_adc_cfg->spkr_data_ptr;
   ptr_adc_mic_data  = ptr_adc_cfg->mic_data_ptr;
   ptr_out_cfg       = ptr_adc_cfg->out_cfg;
@@ -1074,7 +1127,7 @@ void USBD_ADC_EndpointStart (uint8_t instance, uint8_t ep_addr) {
       fpUSBD_ADC_PlayStart   [instance] ();
     }
   }
-  if ((ptr_in_cfg != NULL) && (USB_ENDPOINT_IN(ptr_in_cfg->ep_iso) == ep_addr)) {
+  if ((ptr_adc_mic_data != NULL) && (ptr_in_cfg != NULL) && (USB_ENDPOINT_IN(ptr_in_cfg->ep_iso) == ep_addr)) {
     ptr_adc_mic_data->active = 1U;
     if (fpUSBD_ADC_RecordStart [instance] != NULL) {
       EvrUSBD_ADC_OnRecordStart(instance);
@@ -1099,7 +1152,10 @@ void USBD_ADC_EndpointStop (uint8_t instance, uint8_t ep_addr) {
     return;
   }
 
-  ptr_adc_cfg       = usbd_adc_ptr[instance];
+  ptr_adc_cfg = usbd_adc_ptr[instance];
+  if (ptr_adc_cfg == NULL) {
+    return;
+  }
   ptr_adc_spkr_data = ptr_adc_cfg->spkr_data_ptr;
   ptr_adc_mic_data  = ptr_adc_cfg->mic_data_ptr;
   ptr_out_cfg       = ptr_adc_cfg->out_cfg;
@@ -1162,8 +1218,17 @@ static void USBD_ADC_EpIsoOut (uint8_t instance) {
   }
 
   ptr_adc_cfg       = usbd_adc_ptr[instance];
+  if (ptr_adc_cfg == NULL) {
+    return;
+  }
   ptr_adc_spkr_data = ptr_adc_cfg->spkr_data_ptr;
+  if (ptr_adc_spkr_data == NULL) {
+    return;
+  }
   ptr_out_cfg       = ptr_adc_cfg->out_cfg;
+  if (ptr_out_cfg == NULL) {
+    return;
+  }
   device            = ptr_adc_cfg->dev_num;
   ep_iso            = ptr_out_cfg->ep_iso;
 
@@ -1218,8 +1283,17 @@ static void USBD_ADC_EpIsoIn (uint8_t instance) {
   }
 
   ptr_adc_cfg      = usbd_adc_ptr[instance];
+  if (ptr_adc_cfg == NULL) {
+    return;
+  }
   ptr_adc_mic_data = ptr_adc_cfg->mic_data_ptr;
+  if (ptr_adc_mic_data == NULL) {
+    return;
+  }
   ptr_in_cfg       = ptr_adc_cfg->in_cfg;
+  if (ptr_in_cfg == NULL) {
+    return;
+  }
   device           = ptr_adc_cfg->dev_num;
   ep_iso           = ptr_in_cfg->ep_iso;
 
@@ -1273,7 +1347,7 @@ void USBD_ADC_Thread (void *arg) {
 
   for (;;) {
     event = USBD_ThreadFlagsWait (0xFFFFFFFFU);
-    if ((event & 0x8000000U) == 0U) {
+    if ((event & 0x80000000U) == 0U) {
       if (((event >> 8) & ARM_USBD_EVENT_OUT) != 0U) {
         USBD_ADC_EpIsoOut (instance);
       }

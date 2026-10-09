@@ -1,12 +1,14 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_drv.c
  * Purpose: USB Device - Driver access module
  *----------------------------------------------------------------------------*/
 
 #include "usbd_lib_drv.h"
+
+#include <string.h>
 
 #include "usb_lib_debug.h"
 #include "usbd_lib_config_def.h"
@@ -22,6 +24,14 @@
 /// \param[in]   device Device Index
 /// \return      \ref ARM_DRIVER_VERSION
 ARM_DRIVER_VERSION USBD_DriverGetVersion (uint8_t device) {
+  ARM_DRIVER_VERSION ver;
+
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    memset(&ver, 0, sizeof(ARM_DRIVER_VERSION));
+    return ver;
+  }
+
   return (usbd_dev_ptr[device]->driver->GetVersion());
 }
 
@@ -29,6 +39,14 @@ ARM_DRIVER_VERSION USBD_DriverGetVersion (uint8_t device) {
 /// \param[in]   device Device Index
 /// \return      \ref ARM_USBD_CAPABILITIES
 ARM_USBD_CAPABILITIES USBD_DriverGetCapabilities (uint8_t device) {
+  ARM_USBD_CAPABILITIES caps;
+
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    memset(&caps, 0, sizeof(ARM_USBD_CAPABILITIES));
+    return caps;
+  }
+
   return (usbd_dev_ptr[device]->driver->GetCapabilities());
 }
 
@@ -40,6 +58,11 @@ ARM_USBD_CAPABILITIES USBD_DriverGetCapabilities (uint8_t device) {
 usbStatus USBD_DriverInitialize (uint8_t device, ARM_USBD_SignalDeviceEvent_t cb_device_event, ARM_USBD_SignalEndpointEvent_t cb_endpoint_event) {
   int32_t driver_status;
   uint8_t retry;
+
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return usbInvalidParameter;
+  }
 
   retry = USBD_DRIVER_RETRY_COUNT;
   do {
@@ -76,6 +99,11 @@ usbStatus USBD_DriverInitialize (uint8_t device, ARM_USBD_SignalDeviceEvent_t cb
 usbStatus USBD_DriverUninitialize (uint8_t device) {
   int32_t driver_status;
   uint8_t retry;
+
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return usbInvalidParameter;
+  }
 
   retry = USBD_DRIVER_RETRY_COUNT;
   do {
@@ -114,6 +142,11 @@ usbStatus USBD_DriverPowerControl (uint8_t device, ARM_POWER_STATE state) {
   int32_t driver_status;
   uint8_t retry;
 
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return usbInvalidParameter;
+  }
+
   retry = USBD_DRIVER_RETRY_COUNT;
   do {
     if (USBD_SemaphoreAcquire (usbd_driver_semaphore_id[device], 0U) == 0) { break; }
@@ -149,6 +182,11 @@ usbStatus USBD_DriverPowerControl (uint8_t device, ARM_POWER_STATE state) {
 usbStatus USBD_DriverDeviceConnect (uint8_t device) {
   int32_t driver_status;
   uint8_t retry;
+
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return usbInvalidParameter;
+  }
 
   retry = USBD_DRIVER_RETRY_COUNT;
   do {
@@ -186,6 +224,11 @@ usbStatus USBD_DriverDeviceDisconnect (uint8_t device) {
   int32_t driver_status;
   uint8_t retry;
 
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return usbInvalidParameter;
+  }
+
   retry = USBD_DRIVER_RETRY_COUNT;
   do {
     if (USBD_SemaphoreAcquire (usbd_driver_semaphore_id[device], 0U) == 0) { break; }
@@ -222,6 +265,13 @@ USBD_STATE USBD_DriverDeviceGetState (uint8_t device) {
   ARM_USBD_STATE hw_val;
   USBD_STATE     val;
 
+  memset(&val, 0, sizeof(USBD_STATE));
+
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    goto exit;
+  }
+
   hw_val     = usbd_dev_ptr[device]->driver->DeviceGetState ();
   val.vbus   = hw_val.vbus;
   switch (hw_val.speed) {
@@ -242,6 +292,7 @@ USBD_STATE USBD_DriverDeviceGetState (uint8_t device) {
 
   EvrUSBD_Driver_DeviceGetState(device, hw_val);
 
+exit:
   return val;
 }
 
@@ -251,6 +302,11 @@ USBD_STATE USBD_DriverDeviceGetState (uint8_t device) {
 usbStatus USBD_DriverDeviceRemoteWakeup (uint8_t device) {
   int32_t driver_status;
   uint8_t retry;
+
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return usbInvalidParameter;
+  }
 
   retry = USBD_DRIVER_RETRY_COUNT;
   do {
@@ -289,6 +345,11 @@ usbStatus USBD_DriverDeviceSetAddress (uint8_t device, uint8_t dev_addr) {
   int32_t driver_status;
   uint8_t retry;
 
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return usbInvalidParameter;
+  }
+
   retry = USBD_DRIVER_RETRY_COUNT;
   do {
     if (USBD_SemaphoreAcquire (usbd_driver_semaphore_id[device], 0U) == 0) { break; }
@@ -325,6 +386,14 @@ usbStatus USBD_DriverDeviceSetAddress (uint8_t device, uint8_t dev_addr) {
 usbStatus USBD_DriverReadSetupPacket (uint8_t device, uint8_t *data) {
   int32_t driver_status;
   uint8_t retry;
+
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return usbInvalidParameter;
+  }
+  if (data == NULL) {
+    return usbInvalidParameter;
+  }
 
   retry = USBD_DRIVER_RETRY_COUNT;
   do {
@@ -368,9 +437,17 @@ usbStatus USBD_DriverEndpointConfigure (uint8_t device, uint8_t ep_addr, uint8_t
   uint8_t ep_idx, sem_idx;
   uint8_t retry;
 
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return usbInvalidParameter;
+  }
+  if ((ep_addr & 0x7FU) >= usbd_ep_max_num) {
+    return usbInvalidParameter;
+  }
+
   ep_idx  = (ep_addr & 0x0FU) + ((ep_addr & 0x80U) >> 3);
 
-  sem_idx = (uint8_t)(device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU);
+  sem_idx = (device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU);
   if (ep_idx >= 16U) {
     sem_idx += usbd_ep_max_num;
   }
@@ -439,9 +516,17 @@ usbStatus USBD_DriverEndpointUnconfigure (uint8_t device, uint8_t ep_addr) {
   uint8_t ep_idx, sem_idx;
   uint8_t retry;
 
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return usbInvalidParameter;
+  }
+  if ((ep_addr & 0x7FU) >= usbd_ep_max_num) {
+    return usbInvalidParameter;
+  }
+
   ep_idx = (ep_addr & 0x0FU) + ((ep_addr & 0x80U) >> 3);
 
-  sem_idx = (uint8_t)(device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU);
+  sem_idx = (device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU);
   if (ep_idx >= 16U) {
     sem_idx += usbd_ep_max_num;
   }
@@ -499,9 +584,17 @@ usbStatus USBD_DriverEndpointStall (uint8_t device, uint8_t ep_addr, bool stall)
   uint8_t ep_idx, sem_idx;
   uint8_t retry;
 
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return usbInvalidParameter;
+  }
+  if ((ep_addr & 0x7FU) >= usbd_ep_max_num) {
+    return usbInvalidParameter;
+  }
+
   ep_idx = (ep_addr & 0x0FU) + ((ep_addr & 0x80U) >> 3);
 
-  sem_idx = (uint8_t)(device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU);
+  sem_idx = (device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU);
   if (ep_idx >= 16U) {
     sem_idx += usbd_ep_max_num;
   }
@@ -559,10 +652,18 @@ usbStatus USBD_DriverEndpointTransfer (uint8_t device, uint8_t ep_addr, uint8_t 
   uint8_t  ep_idx, sem_idx;
   uint8_t  retry;
 
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return usbInvalidParameter;
+  }
+  if ((ep_addr & 0x7FU) >= usbd_ep_max_num) {
+    return usbInvalidParameter;
+  }
+
   ep_idx = (ep_addr & 0x0FU) + ((ep_addr & 0x80U) >> 3);
   ep_msk =  1UL << ep_idx;
 
-  sem_idx = (uint8_t)(device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU);
+  sem_idx = (device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU);
   if (ep_idx >= 16U) {
     sem_idx += usbd_ep_max_num;
   }
@@ -631,9 +732,17 @@ uint32_t USBD_DriverEndpointTransferGetResult (uint8_t device, uint8_t ep_addr) 
   uint8_t  ep_idx, sem_idx;
   uint8_t  retry;
 
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return 0U;
+  }
+  if ((ep_addr & 0x7FU) >= usbd_ep_max_num) {
+    return 0U;
+  }
+
   ep_idx = (ep_addr & 0x0FU) + ((ep_addr & 0x80U) >> 3);
 
-  sem_idx = (uint8_t)(device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU);
+  sem_idx = (device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU);
   if (ep_idx >= 16U) {
     sem_idx += usbd_ep_max_num;
   }
@@ -668,9 +777,17 @@ usbStatus USBD_DriverEndpointTransferAbort (uint8_t device, uint8_t ep_addr) {
   uint8_t ep_idx, sem_idx;
   uint8_t retry;
 
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return usbInvalidParameter;
+  }
+  if ((ep_addr & 0x7FU) >= usbd_ep_max_num) {
+    return usbInvalidParameter;
+  }
+
   ep_idx = (ep_addr & 0x0FU) + ((ep_addr & 0x80U) >> 3);
 
-  sem_idx = (uint8_t)(device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU);
+  sem_idx = (device * usbd_ep_max_num * 2U) + (ep_addr & 0x0FU);
   if (ep_idx >= 16U) {
     sem_idx += usbd_ep_max_num;
   }
@@ -720,6 +837,11 @@ uint16_t USBD_DriverGetFrameNumber (uint8_t device) {
   uint16_t val;
   uint8_t  retry;
 
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return 0U;
+  }
+
   retry = USBD_DRIVER_RETRY_COUNT;
   do {
     if (USBD_SemaphoreAcquire (usbd_driver_semaphore_id[device], 0U) == 0) { break; }
@@ -744,6 +866,12 @@ uint16_t USBD_DriverGetFrameNumber (uint8_t device) {
 /// \param[in]   event \ref USBD_dev_events
 void USBD_SignalDeviceEvent(uint8_t device, uint32_t event) {
   EvrUSBD_Driver_OnSignalDeviceEvent(device, event);
+
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return;
+  }
+
   (void)USBD_ThreadFlagsSet (usbd_core_thread_id[device], event);
 }
 
@@ -757,11 +885,21 @@ void USBD_SignalEndpointEvent(uint8_t device, uint8_t ep_addr, uint32_t event) {
   uint8_t ep_num;
   uint8_t ep_idx;
 
+  EvrUSBD_Driver_OnSignalEndpointEvent(device, ep_addr, event);
+
+  // Check parameters
+  if (device >= usbd_dev_num) {
+    return;
+  }
+  if ((ep_addr & 0x7FU) >= usbd_ep_max_num) {
+    return;
+  }
+
   ep_num = (ep_addr & 0x0FU);
   ep_idx =  ep_num + ((ep_addr & 0x80U) >> 3);
 
-  EvrUSBD_Driver_OnSignalEndpointEvent(device, ep_addr, event);
-
   usbd_dev_ptr[device]->data_ptr->endpoint_active[ep_idx] = 0U;
-  (void)USBD_ThreadFlagsSet (*usbd_ep_thread_id_ptr[(device*usbd_ep_max_num)+ep_num], ((((uint32_t)(ep_num)) << 12) | (event << 8)));
+  if (usbd_ep_thread_id_ptr[(device*usbd_ep_max_num)+ep_num] != NULL) {
+    (void)USBD_ThreadFlagsSet (*usbd_ep_thread_id_ptr[(device*usbd_ep_max_num)+ep_num], ((((uint32_t)(ep_num)) << 12) | (event << 8)));
+  }
 }

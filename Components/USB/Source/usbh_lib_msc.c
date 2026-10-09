@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates).
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates).
  * All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_msc.c
@@ -58,7 +58,7 @@ uint8_t USBH_MSC_GetDevice (uint8_t instance) {
     if (usbh_msc[instance].ptr_dev == usbh_dev) {
       return 0U;
     } else {
-      device = (uint8_t)(((uint32_t)usbh_msc[instance].ptr_dev - (uint32_t)usbh_dev) / sizeof (USBH_DEV));
+      device = (uint8_t)(((uintptr_t)usbh_msc[instance].ptr_dev - (uintptr_t)usbh_dev) / sizeof (USBH_DEV));
     }
   } else {
     device = 0xFFU;
@@ -205,6 +205,11 @@ usbStatus USBH_MSC_ReadCapacity (uint8_t instance, uint32_t *block_count, uint32
 
   EvrUSBH_MSC_ReadCapacity(instance);
 
+  if ((block_count == NULL) || (block_size == NULL)) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
   status = CheckInstance (instance);
   if (status == usbOK) {
     if ((block_count != NULL) && (block_size != NULL)) {
@@ -215,10 +220,11 @@ usbStatus USBH_MSC_ReadCapacity (uint8_t instance, uint32_t *block_count, uint32
     }
   }
 
+exit:
 #if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
   if (status != usbOK) {
     EvrUSBH_MSC_ReadCapacityFailed(instance, status);
-  } else {
+  } else if ((block_count != NULL) && (block_size != NULL)) {
     EvrUSBH_MSC_ReadCapacityDone(instance, *block_count, *block_size);
   }
 #endif
@@ -232,24 +238,24 @@ usbStatus USBH_MSC_ReadCapacity (uint8_t instance, uint32_t *block_count, uint32
 /// \param[in]     device               index of USB Device.
 /// \param[in]     ptr_dev_desc         pointer to device descriptor.
 /// \param[in]     ptr_cfg_desc         pointer to configuration descriptor.
-/// \return                             index of configured MSC instance or configuration failed
+/// \return                             index of configured MSC instance or configuration failed :
 ///                                       - value <= 127 : index of configured MSC instance
 ///                                       - value 255 :    configuration failed
 __WEAK uint8_t USBH_MSC_Configure (uint8_t device, const USB_DEVICE_DESCRIPTOR *ptr_dev_desc, const USB_CONFIGURATION_DESCRIPTOR *ptr_cfg_desc) {
         USBH_DEV                 *ptr_dev;
-        USBH_MSC                 *ptr_msc;
+        USBH_MSC                 *ptr_msc = NULL;
+  const USB_COMMON_DESCRIPTOR    *ptr_cmn_desc;
   const USB_INTERFACE_DESCRIPTOR *ptr_if_desc;
   const USB_ENDPOINT_DESCRIPTOR  *ptr_ep_desc;
   const uint8_t                  *ptr_desc;
         USBH_PIPE_HANDLE          pipe_hndl;
+        uint32_t                  cgf_desc_len;
         uint8_t                   num;
         uint8_t                   ret, idx;
-        usbStatus                 status;
 
-  status = usbOK;
-  ret    = 255U;
+  ret = 255U;
 
-  if (device == 255U) {
+  if (device >= usbh_dev_num) {
     goto exit;
   }
   if (ptr_dev_desc == NULL) {
@@ -278,8 +284,17 @@ __WEAK uint8_t USBH_MSC_Configure (uint8_t device, const USB_DEVICE_DESCRIPTOR *
 
   ptr_msc->ptr_dev = (USBH_DEV *)ptr_dev;
 
-  ptr_desc    = (const uint8_t *)ptr_cfg_desc;
-  ptr_desc   += ptr_cfg_desc->bLength;
+  ptr_desc = (const uint8_t *)ptr_cfg_desc;
+  if (ptr_cfg_desc->bLength != sizeof(USB_CONFIGURATION_DESCRIPTOR)) {
+    goto exit;
+  }
+
+  cgf_desc_len  = (uint32_t)ptr_cfg_desc->wTotalLength;
+  ptr_desc     += ptr_cfg_desc->bLength;
+  ptr_cmn_desc  = (const USB_COMMON_DESCRIPTOR *)ptr_desc;
+  if ((ptr_cmn_desc->bLength == 0U) || (ptr_cmn_desc->bLength >= cgf_desc_len)) {
+    goto exit;
+  }
   ptr_if_desc = (const USB_INTERFACE_DESCRIPTOR *)ptr_desc;
   num = ptr_if_desc->bNumEndpoints;     // Number of endpoints
 
@@ -288,30 +303,24 @@ __WEAK uint8_t USBH_MSC_Configure (uint8_t device, const USB_DEVICE_DESCRIPTOR *
       switch (ptr_if_desc->bInterfaceSubClass) {
         case MSC_SUBCLASS_SCSI:         // SCSI transparent command set
           if (ptr_if_desc->bInterfaceProtocol == MSC_PROTOCOL_BULK_ONLY) {
+            ptr_desc     = (const uint8_t *)ptr_if_desc;
+            ptr_cmn_desc = (const USB_COMMON_DESCRIPTOR *)ptr_desc;
+            if ((ptr_cmn_desc->bLength == 0U) || 
+                (((uintptr_t)ptr_desc + ptr_cmn_desc->bLength) > ((uintptr_t)ptr_cfg_desc + cgf_desc_len))) {
+              goto exit;
+            }
+            ptr_desc    += ptr_cmn_desc->bLength;
+
             // Create Pipes
-            ptr_desc    = (const uint8_t *)ptr_if_desc;
-            ptr_desc   += ptr_if_desc->bLength;
             ptr_ep_desc = (const USB_ENDPOINT_DESCRIPTOR *)ptr_desc;
             while (num-- != 0U) {
               if ((ptr_ep_desc->bmAttributes & 3U) == USB_ENDPOINT_TYPE_BULK) { // Bulk Endpoint
-                pipe_hndl = USBH_PipeCreate (device, ptr_ep_desc->bEndpointAddress, ptr_ep_desc->bmAttributes & USB_ENDPOINT_TYPE_MASK, ptr_ep_desc->wMaxPacketSize & 0x7FFU, ptr_ep_desc->bInterval);
+                pipe_hndl = USBH_PipeCreate (device, ptr_ep_desc->bEndpointAddress, (uint8_t)(ptr_ep_desc->bmAttributes & USB_ENDPOINT_TYPE_MASK), ptr_ep_desc->wMaxPacketSize & 0x7FFU, ptr_ep_desc->bInterval);
                 if (pipe_hndl == 0U) {
                   // If creation of pipe has failed delete previously created pipes
-                  if (ptr_msc->bulk_in_pipe_hndl  != 0U) {
-                    status = USBH_PipeDelete (ptr_msc->bulk_in_pipe_hndl);
-                    if (status != usbOK) {
-                      goto exit;
-                    }
-                  }
-                  if (ptr_msc->bulk_out_pipe_hndl != 0U) {
-                    status = USBH_PipeDelete (ptr_msc->bulk_out_pipe_hndl);
-                    if (status != usbOK) {
-                      goto exit;
-                    }
-                  }
-                  memset ((void *)ptr_msc, 0, sizeof (USBH_MSC));
                   goto exit;
                 }
+                  
                 if ((ptr_ep_desc->bEndpointAddress & USB_ENDPOINT_DIRECTION_MASK) != 0U) {
                   ptr_msc->bulk_in_pipe_hndl  = pipe_hndl;
                 } else {
@@ -336,11 +345,27 @@ __WEAK uint8_t USBH_MSC_Configure (uint8_t device, const USB_DEVICE_DESCRIPTOR *
   }
 
 exit:
-#if (defined(USBH_DEBUG) && (USBH_DEBUG == 1))
-  if (status != usbOK) {
-    EvrUSBH_MSC_ConfigureFailed(status);
+  if (ret == 255U) {                     // If configuration failed
+    if (ptr_msc != NULL) {
+      // Delete previously created pipes
+      if (ptr_msc->bulk_in_pipe_hndl != 0U) {
+        if (USBH_PipeDelete (ptr_msc->bulk_in_pipe_hndl) == usbOK) {
+          ptr_msc->bulk_in_pipe_hndl = 0U;
+        }
+      }
+      if (ptr_msc->bulk_out_pipe_hndl != 0U) {
+        if (USBH_PipeDelete (ptr_msc->bulk_out_pipe_hndl) == usbOK) {
+          ptr_msc->bulk_out_pipe_hndl = 0U;
+        }
+      }
+      if ((ptr_msc->bulk_in_pipe_hndl  == 0U) &&
+          (ptr_msc->bulk_out_pipe_hndl == 0U)) {
+        memset ((void *)ptr_msc, 0, sizeof (USBH_MSC));
+      }
+    }
+    EvrUSBH_MSC_ConfigureFailed(usbClassErrorMSC);
   }
-#endif
+
   return ret;
 }
 
@@ -1204,6 +1229,10 @@ static usbStatus USBH_MSC_SCSI_Read10 (uint8_t instance, uint32_t block_addr, ui
 
   EvrUSBH_MSC_ScsiRead10(instance, block_addr, block_num);
 
+  if (block_num > UINT16_MAX) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
   if (ptr_data == NULL) {
     status = usbInvalidParameter;
     goto exit;
@@ -1221,6 +1250,11 @@ static usbStatus USBH_MSC_SCSI_Read10 (uint8_t instance, uint32_t block_addr, ui
   ctrl               =  ptr_msc->ptr_dev->ctrl;
   bulk_out_pipe_hndl =  ptr_msc->bulk_out_pipe_hndl;
   bulk_in_pipe_hndl  =  ptr_msc->bulk_in_pipe_hndl;
+
+  if (ptr_msc->block_size != 512U) {
+    status = usbClassErrorMSC;
+    goto exit;
+  }
 
   // Send CBW
   mstatus = USBH_MemoryAllocate         (ctrl,                      (uint8_t **)&ptr_mem, 31U); ptr_cbw = (MSC_CBW *)ptr_mem;
@@ -1303,6 +1337,10 @@ static usbStatus USBH_MSC_SCSI_Write10 (uint8_t instance, uint32_t block_addr, u
 
   EvrUSBH_MSC_ScsiWrite10(instance, block_addr, block_num);
 
+  if (block_num > UINT16_MAX) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
   if (ptr_data == NULL) {
     status = usbInvalidParameter;
     goto exit;
@@ -1320,6 +1358,11 @@ static usbStatus USBH_MSC_SCSI_Write10 (uint8_t instance, uint32_t block_addr, u
   ctrl               =  ptr_msc->ptr_dev->ctrl;
   bulk_out_pipe_hndl =  ptr_msc->bulk_out_pipe_hndl;
   bulk_in_pipe_hndl  =  ptr_msc->bulk_in_pipe_hndl;
+
+  if (ptr_msc->block_size != 512U) {
+    status = usbClassErrorMSC;
+    goto exit;
+  }
 
   // Send CBW
   mstatus = USBH_MemoryAllocate         (ctrl,                      (uint8_t **)&ptr_mem, 31U); ptr_cbw = (MSC_CBW *)ptr_mem;

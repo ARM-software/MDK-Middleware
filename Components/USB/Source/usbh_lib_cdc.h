@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Host
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbh_lib_cdc.h
  * Purpose: USB Host - Communication Device Class (CDC) module header file
@@ -39,5 +39,7 @@ extern usbStatus USBH_CDC_Initialize_Lib (uint8_t instance);
 /// \param[in]     instance             index of CDC instance.
 /// \return                             status code that indicates the execution status of the function as defined with usbStatus.
 extern usbStatus USBH_CDC_Uninitialize_Lib (uint8_t instance);
+
+extern void USBH_CDC_IntIn_Thread (void *arg);
 
 #endif  // USBH_LIB_CDC_H_

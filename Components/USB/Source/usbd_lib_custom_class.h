@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_custom_class.h
  * Purpose: USB Device - Custom Class module header file
@@ -41,5 +41,7 @@ extern void USBD_CustomClass_EndpointStart (uint8_t instance, uint8_t ep_addr);
 ///                 - ep_addr.0..3: address
 ///                 - ep_addr.7:    direction
 extern void USBD_CustomClass_EndpointStop (uint8_t instance, uint8_t ep_addr);
+
+extern void USBD_CustomClass_EP_Thread (void *arg);
 
 #endif  // USBD_LIB_CUSTOM_CLASS_H_

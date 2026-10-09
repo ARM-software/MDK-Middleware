@@ -46,6 +46,12 @@ usbStatus USBD_HID_GetReportTrigger (uint8_t instance, uint8_t rid, const uint8_
 
   EvrUSBD_HID_GetReportTrigger(instance, rid, buf, len);
 
+  // Check parameters
+  if (buf == NULL) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
+
   status = USBD_HID_CheckInstance (instance);
   if (status != usbOK) {
     goto exit;
@@ -55,6 +61,11 @@ usbStatus USBD_HID_GetReportTrigger (uint8_t instance, uint8_t rid, const uint8_
   ptr_hid_data = ptr_hid_cfg->data_ptr;
   ptr_dev_data = usbd_dev_ptr[ptr_hid_cfg->dev_num]->data_ptr;
 
+  if (((ptr_hid_cfg->in_report_num > 1U) && (rid == 0U)) ||
+       (rid > ptr_hid_cfg->in_report_num)) {
+    status = usbInvalidParameter;
+    goto exit;
+  }
   if (len > ptr_hid_cfg->in_report_max_sz) {
     status = usbInvalidParameter;
     goto exit;
@@ -81,7 +92,10 @@ usbStatus USBD_HID_GetReportTrigger (uint8_t instance, uint8_t rid, const uint8_
   } else {                                                      // If more IN reports, send ReportID
     ptr_hid_data->data_out_to_send_len++;
   }
-  ptr_hid_cfg->idle_count[rid]         = 0U;
+  if (rid != 0U) {
+    rid = rid - 1U;
+  }
+  ptr_hid_cfg->idle_count[rid] = 0U;
   USBD_HID_EpIntIn (instance);
 
 exit:
@@ -102,15 +116,21 @@ exit:
 /// \return        true          success
 /// \return        false         fail, not supported request
 bool USBD_HID_CoreGetReport (uint8_t instance) {
-  const usbd_data_t *ptr_dev_data;
+  const usbd_data_t *ptr_dev_data = NULL;
         uint8_t     *ptr_buf;
         int32_t      len;
 
   EvrUSBD_HID_GetReport(instance);
 
-  ptr_dev_data = usbd_dev_ptr[usbd_hid_ptr[instance]->dev_num]->data_ptr;
-
   if (USBD_HID_CheckInstance(instance) != usbOK) {
+    goto failed;
+  }
+  if (usbd_hid_ptr[instance]->dev_num >= usbd_dev_num) {
+    goto failed;
+  }
+
+  ptr_dev_data = usbd_dev_ptr[usbd_hid_ptr[instance]->dev_num]->data_ptr;
+  if (ptr_dev_data == NULL) {
     goto failed;
   }
 
@@ -139,7 +159,9 @@ bool USBD_HID_CoreGetReport (uint8_t instance) {
   }
 
 failed:
-  EvrUSBD_HID_OnGetReportFailed(instance, (uint8_t)(ptr_dev_data->setup_packet.wValue >> 8), (uint8_t)USBD_HID_REQ_EP_CTRL, (uint8_t)(ptr_dev_data->setup_packet.wValue));
+  if (ptr_dev_data != NULL) {
+    EvrUSBD_HID_OnGetReportFailed(instance, (uint8_t)(ptr_dev_data->setup_packet.wValue >> 8), (uint8_t)USBD_HID_REQ_EP_CTRL, (uint8_t)(ptr_dev_data->setup_packet.wValue));
+  }
   EvrUSBD_HID_GetReportFailed(instance);
   return false;
 }
@@ -149,16 +171,21 @@ failed:
 /// \return        true          success
 /// \return        false         fail, not supported request
 bool USBD_HID_CoreSetReport (uint8_t instance) {
-  const usbd_data_t *ptr_dev_data;
+  const usbd_data_t *ptr_dev_data = NULL;
   const uint8_t     *ptr_buf;
-        bool         result;
+        bool         result = false;
 
   EvrUSBD_HID_SetReport(instance);
 
-  ptr_dev_data = usbd_dev_ptr[usbd_hid_ptr[instance]->dev_num]->data_ptr;
-
-  result = false;
   if (USBD_HID_CheckInstance(instance) != usbOK) {
+    goto failed;
+  }
+  if (usbd_hid_ptr[instance]->dev_num >= usbd_dev_num) {
+    goto failed;
+  }
+
+  ptr_dev_data = usbd_dev_ptr[usbd_hid_ptr[instance]->dev_num]->data_ptr;
+  if (ptr_dev_data == NULL) {
     goto failed;
   }
 
@@ -187,7 +214,9 @@ bool USBD_HID_CoreSetReport (uint8_t instance) {
   }
 
 failed:
-  EvrUSBD_HID_OnSetReportFailed(instance, (uint8_t)(ptr_dev_data->setup_packet.wValue >> 8), (uint8_t)USBD_HID_REQ_EP_CTRL, (uint8_t)(ptr_dev_data->setup_packet.wValue), (int32_t)(ptr_dev_data->setup_packet.wLength));
+  if (ptr_dev_data != NULL) {
+    EvrUSBD_HID_OnSetReportFailed(instance, (uint8_t)(ptr_dev_data->setup_packet.wValue >> 8), (uint8_t)USBD_HID_REQ_EP_CTRL, (uint8_t)(ptr_dev_data->setup_packet.wValue), (int32_t)(ptr_dev_data->setup_packet.wLength));
+  }
   EvrUSBD_HID_SetReportFailed(instance);
   return result;
 }
@@ -210,8 +239,18 @@ bool USBD_HID_CoreGetIdle (uint8_t instance) {
   ptr_dev_cfg  = usbd_dev_ptr[ptr_hid_cfg->dev_num];
   ptr_dev_data = ptr_dev_cfg->data_ptr;
 
-  EvrUSBD_HID_GetIdle(instance, (uint8_t)ptr_dev_data->setup_packet.wValue & 0xFFU, ptr_hid_cfg->idle_set[ptr_dev_data->setup_packet.wValue & 0xFFU]);
-  ptr_dev_cfg->ep0_buf[0] = ptr_hid_cfg->idle_set[ptr_dev_data->setup_packet.wValue & 0xFFU];
+  if ((ptr_dev_data->setup_packet.wValue & 0xFFU) != 0U) {      // If  > 0 Report ID specified
+    if (((ptr_dev_data->setup_packet.wValue & 0xFFU)-1U) < usbd_hid_ptr[instance]->in_report_num) {
+      EvrUSBD_HID_GetIdle(instance, (uint8_t)ptr_dev_data->setup_packet.wValue & 0xFFU, ptr_hid_cfg->idle_set[(ptr_dev_data->setup_packet.wValue & 0xFFU)-1U]);
+      ptr_dev_cfg->ep0_buf[0] = ptr_hid_cfg->idle_set[(ptr_dev_data->setup_packet.wValue & 0xFFU)-1U];
+    } else {
+      EvrUSBD_HID_GetIdleFailed(instance);
+      return false;
+    }
+  } else {                                                      // If == 0 all reports
+    EvrUSBD_HID_GetIdle(instance, 0U, ptr_hid_cfg->idle_set[0]);
+    ptr_dev_cfg->ep0_buf[0] = ptr_hid_cfg->idle_set[0];
+  }
 
   return true;
 }
@@ -233,7 +272,12 @@ bool USBD_HID_CoreSetIdle (uint8_t instance) {
 
   EvrUSBD_HID_SetIdle(instance, (uint8_t)ptr_dev_data->setup_packet.wValue & 0xFFU, (uint8_t)(ptr_dev_data->setup_packet.wValue >> 8));
   if ((ptr_dev_data->setup_packet.wValue & 0xFFU) != 0U) {      // If  > 0 Report ID specified
-    usbd_hid_ptr[instance]->idle_set[(ptr_dev_data->setup_packet.wValue & 0xFFU)-1U] = (uint8_t)(ptr_dev_data->setup_packet.wValue >> 8);
+    if (((ptr_dev_data->setup_packet.wValue & 0xFFU)-1U) < usbd_hid_ptr[instance]->in_report_num) {
+      usbd_hid_ptr[instance]->idle_set[(ptr_dev_data->setup_packet.wValue & 0xFFU)-1U] = (uint8_t)(ptr_dev_data->setup_packet.wValue >> 8);
+    } else {
+      EvrUSBD_HID_SetIdleFailed(instance);
+      return false;
+    }
   } else {                                                      // If == 0 all reports
     for (i = 0U; i < usbd_hid_ptr[instance]->in_report_num; i++) {
       usbd_hid_ptr[instance]->idle_set[i] = (uint8_t)(ptr_dev_data->setup_packet.wValue >> 8);
@@ -366,12 +410,16 @@ usbStatus USBD_HID_Uninitialize (uint8_t instance) {
     goto exit;
   }
 
-  if (usbd_hid_semaphore_id[instance] != NULL) {
-    if (USBD_SemaphoreDelete (usbd_hid_semaphore_id[instance]) != 0) {
-      status = usbSemaphoreError;
+  if (usbd_hid_timer_id[instance] != NULL) {
+    if (USBD_TimerStop (usbd_hid_timer_id[instance]) != 0) {
+      status = usbTimerError;
       goto exit;
     }
-    usbd_hid_semaphore_id[instance] = NULL;
+    if (USBD_TimerDelete (usbd_hid_timer_id[instance]) != 0) {
+      status = usbTimerError;
+      goto exit;
+    }
+    usbd_hid_timer_id[instance] = NULL;
   }
   if (usbd_hid_thread_id[instance] != NULL) {
     if (USBD_ThreadTerminate (usbd_hid_thread_id[instance]) != 0) {
@@ -379,6 +427,13 @@ usbStatus USBD_HID_Uninitialize (uint8_t instance) {
       goto exit;
     }
     usbd_hid_thread_id[instance] = NULL;
+  }
+  if (usbd_hid_semaphore_id[instance] != NULL) {
+    if (USBD_SemaphoreDelete (usbd_hid_semaphore_id[instance]) != 0) {
+      status = usbSemaphoreError;
+      goto exit;
+    }
+    usbd_hid_semaphore_id[instance] = NULL;
   }
 
   if (fpUSBD_HID_Uninitialize [instance] != NULL) {
@@ -475,7 +530,7 @@ void USBD_HID_EndpointStart (uint8_t instance, uint8_t ep_addr) {
 /// \details       The timer interval is 4 ms, as this is the resolution of the idle duration defined by the HID specification
 ///                (HID1_11.pdf, 7.2.4 Set_Idle Request)
 /// \param[in]     instance      instance of HID class.
-void USBD_HID_Timer (void const *argument) {
+void USBD_HID_Timer (void *argument) {
   const usbd_data_t     *ptr_dev_data;
   const usbd_hid_t      *ptr_hid_cfg;
         usbd_hid_data_t *ptr_hid_data;
@@ -735,7 +790,7 @@ void USBD_HID_Thread (void *arg) {
 
   for (;;) {
     event = USBD_ThreadFlagsWait (0xFFFFFFFFU);
-    if ((event & 0x8000000U) == 0U) {
+    if ((event & 0x80000000U) == 0U) {
       if (((event >> 8) & ARM_USBD_EVENT_OUT) != 0U) {
         USBD_HID_EpIntOut (instance);
       }

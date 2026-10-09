@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_config_def_0.h
  * Purpose: USB Device (USBD) - Device 0 Definitions
@@ -5641,8 +5641,8 @@
 #define USBD_CDC4_RNDIS                    (USBD0_CDC4_RNDIS)
 #define USBD_CDC4_IF0_NUM                  (USBD0_CUSTOM_CLASS_IF_CNT+USBD0_ADC_IF_CNT+USBD0_CDC0_IF_CNT+USBD0_CDC1_IF_CNT+USBD0_CDC2_IF_CNT+USBD0_CDC3_IF_CNT)
 #define USBD_CDC4_IF1_NUM                  (USBD_CDC4_IF0_NUM+1)
-#define USBD_CDC4_IF_CNT                   (USBD0_CDC3_IF_CNT)
-#define USBD_CDC4_EP_CNT                   (USBD0_CDC3_EP_CNT)
+#define USBD_CDC4_IF_CNT                   (USBD0_CDC4_IF_CNT)
+#define USBD_CDC4_EP_CNT                   (USBD0_CDC4_EP_CNT)
 #define USBD_CDC4_IF0_STR_IDX              (USBD0_DEV_STR_CNT+USBD0_CUSTOM_CLASS_STR_CNT+USBD0_ADC_STR_CNT+USBD0_CDC0_STR_CNT+USBD0_CDC1_STR_CNT+USBD0_CDC2_STR_CNT+USBD0_CDC3_STR_CNT)
 #define USBD_CDC4_IF1_STR_IDX              (USBD_CDC4_IF0_STR_IDX+1)
 #define USBD_CDC4_IMAC_STR_IDX             (USBD_CDC4_IF0_STR_IDX+2)
@@ -5871,8 +5871,8 @@
 #define USBD_CDC5_RNDIS                    (USBD0_CDC5_RNDIS)
 #define USBD_CDC5_IF0_NUM                  (USBD0_CUSTOM_CLASS_IF_CNT+USBD0_ADC_IF_CNT+USBD0_CDC0_IF_CNT+USBD0_CDC1_IF_CNT+USBD0_CDC2_IF_CNT+USBD0_CDC3_IF_CNT+USBD0_CDC4_IF_CNT)
 #define USBD_CDC5_IF1_NUM                  (USBD_CDC5_IF0_NUM+1)
-#define USBD_CDC5_IF_CNT                   (USBD0_CDC3_IF_CNT)
-#define USBD_CDC5_EP_CNT                   (USBD0_CDC3_EP_CNT)
+#define USBD_CDC5_IF_CNT                   (USBD0_CDC5_IF_CNT)
+#define USBD_CDC5_EP_CNT                   (USBD0_CDC5_EP_CNT)
 #define USBD_CDC5_IF0_STR_IDX              (USBD0_DEV_STR_CNT+USBD0_CUSTOM_CLASS_STR_CNT+USBD0_ADC_STR_CNT+USBD0_CDC0_STR_CNT+USBD0_CDC1_STR_CNT+USBD0_CDC2_STR_CNT+USBD0_CDC3_STR_CNT+USBD0_CDC4_STR_CNT)
 #define USBD_CDC5_IF1_STR_IDX              (USBD_CDC5_IF0_STR_IDX+1)
 #define USBD_CDC5_IMAC_STR_IDX             (USBD_CDC5_IF0_STR_IDX+2)
@@ -6101,8 +6101,8 @@
 #define USBD_CDC6_RNDIS                    (USBD0_CDC6_RNDIS)
 #define USBD_CDC6_IF0_NUM                  (USBD0_CUSTOM_CLASS_IF_CNT+USBD0_ADC_IF_CNT+USBD0_CDC0_IF_CNT+USBD0_CDC1_IF_CNT+USBD0_CDC2_IF_CNT+USBD0_CDC3_IF_CNT+USBD0_CDC4_IF_CNT+USBD0_CDC5_IF_CNT)
 #define USBD_CDC6_IF1_NUM                  (USBD_CDC6_IF0_NUM+1)
-#define USBD_CDC6_IF_CNT                   (USBD0_CDC3_IF_CNT)
-#define USBD_CDC6_EP_CNT                   (USBD0_CDC3_EP_CNT)
+#define USBD_CDC6_IF_CNT                   (USBD0_CDC6_IF_CNT)
+#define USBD_CDC6_EP_CNT                   (USBD0_CDC6_EP_CNT)
 #define USBD_CDC6_IF0_STR_IDX              (USBD0_DEV_STR_CNT+USBD0_CUSTOM_CLASS_STR_CNT+USBD0_ADC_STR_CNT+USBD0_CDC0_STR_CNT+USBD0_CDC1_STR_CNT+USBD0_CDC2_STR_CNT+USBD0_CDC3_STR_CNT+USBD0_CDC4_STR_CNT+USBD0_CDC5_STR_CNT)
 #define USBD_CDC6_IF1_STR_IDX              (USBD_CDC6_IF0_STR_IDX+1)
 #define USBD_CDC6_IMAC_STR_IDX             (USBD_CDC6_IF0_STR_IDX+2)
@@ -6331,8 +6331,8 @@
 #define USBD_CDC7_RNDIS                    (USBD0_CDC7_RNDIS)
 #define USBD_CDC7_IF0_NUM                  (USBD0_CUSTOM_CLASS_IF_CNT+USBD0_ADC_IF_CNT+USBD0_CDC0_IF_CNT+USBD0_CDC1_IF_CNT+USBD0_CDC2_IF_CNT+USBD0_CDC3_IF_CNT+USBD0_CDC4_IF_CNT+USBD0_CDC5_IF_CNT+USBD0_CDC6_IF_CNT)
 #define USBD_CDC7_IF1_NUM                  (USBD_CDC7_IF0_NUM+1)
-#define USBD_CDC7_IF_CNT                   (USBD0_CDC3_IF_CNT)
-#define USBD_CDC7_EP_CNT                   (USBD0_CDC3_EP_CNT)
+#define USBD_CDC7_IF_CNT                   (USBD0_CDC7_IF_CNT)
+#define USBD_CDC7_EP_CNT                   (USBD0_CDC7_EP_CNT)
 #define USBD_CDC7_IF0_STR_IDX              (USBD0_DEV_STR_CNT+USBD0_CUSTOM_CLASS_STR_CNT+USBD0_ADC_STR_CNT+USBD0_CDC0_STR_CNT+USBD0_CDC1_STR_CNT+USBD0_CDC2_STR_CNT+USBD0_CDC3_STR_CNT+USBD0_CDC4_STR_CNT+USBD0_CDC5_STR_CNT+USBD0_CDC6_STR_CNT)
 #define USBD_CDC7_IF1_STR_IDX              (USBD_CDC7_IF0_STR_IDX+1)
 #define USBD_CDC7_IMAC_STR_IDX             (USBD_CDC7_IF0_STR_IDX+2)

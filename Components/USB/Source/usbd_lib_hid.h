@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::USB:Device
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    usbd_lib_hid.h
  * Purpose: USB Device - Human Interface Device (HID) module header file
@@ -47,5 +47,8 @@ extern bool USBD_HID_CoreGetProtocol (uint8_t instance);
 /// \return        true          success
 /// \return        false         fail, not supported request
 extern bool USBD_HID_CoreSetProtocol (uint8_t instance);
+
+extern void USBD_HID_Timer  (void *argument);
+extern void USBD_HID_Thread (void *arg);
 
 #endif  // USBD_LIB_HID_H_
