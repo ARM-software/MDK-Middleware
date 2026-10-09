@@ -647,8 +647,10 @@ USBH_PIPE_HANDLE USBH_PipeCreate (uint8_t device, uint8_t ep_addr, uint8_t ep_ty
   if (ptr_pipe == NULL) {
     goto exit;
   }
-  if ((ptr_dev->dev_speed == USB_SPEED_HIGH) && (ep_interval > 16U)) {
-    // Limit maximum bInterval to 16 for high-speed devices as per USB specification
+  if ((ptr_dev->dev_speed == USB_SPEED_HIGH) && 
+      ((ep_type == USB_ENDPOINT_TYPE_ISOCHRONOUS) || (ep_type == USB_ENDPOINT_TYPE_INTERRUPT)) && 
+      (ep_interval > 16U)) {
+    // Limit maximum bInterval for high-speed isochronous and interrupt endpoints to 16, as per USB specification
     ep_interval = 16U;
   }
 
