@@ -113,7 +113,7 @@ var NAVTREEINDEX =
 "USB_Classes.html",
 "group__usbd__evr__adc__func.html#ga1ccb91620b8d3b067cbb462feaf7a485",
 "group__usbd__evr__msc__func.html#ga733e733d85493019fb3ae08a414ebe3e",
-"group__usbh__evr__core__func.html#gaebd18d0608cc543c9684f9beceb47cfc"
+"group__usbh__evr__driver__func.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronization';

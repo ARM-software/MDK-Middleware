@@ -638,7 +638,7 @@ var searchData=
   ['usbd_5fhid_5finitialize_635',['USBD_HID_Initialize',['../rl__usb_8h.html#a614a68594e2bb32f1aee9a4fcb1debf5',1,'rl_usb.h']]],
   ['usbd_5fhid_5freset_636',['USBD_HID_Reset',['../rl__usb_8h.html#a349983786ca087f8197f0c7f30540980',1,'rl_usb.h']]],
   ['usbd_5fhid_5fsetconfiguration_637',['USBD_HID_SetConfiguration',['../rl__usb_8h.html#ad87718ad4dbafec268f2a2593e2d897e',1,'rl_usb.h']]],
-  ['usbd_5fhid_5ftimer_638',['USBD_HID_Timer',['../rl__usb_8h.html#a3a7d7d6b034433add1cc290c209b14c0',1,'rl_usb.h']]],
+  ['usbd_5fhid_5ftimer_638',['USBD_HID_Timer',['../rl__usb_8h.html#a9683258b4f32f3f1060997f74f555b86',1,'rl_usb.h']]],
   ['usbd_5fhid_5funinitialize_639',['USBD_HID_Uninitialize',['../rl__usb_8h.html#a9e8800d163ddb6df325a6b65c20ad727',1,'rl_usb.h']]],
   ['usbd_5fhidn_5fgetreport_640',['USBD_HIDn_GetReport',['../group__usbd__hidFunctions__api.html#gaed8b507a9ce1bf958fbcae55ee0b91bf',1,'rl_usb.h']]],
   ['usbd_5fhidn_5finitialize_641',['USBD_HIDn_Initialize',['../group__usbd__hidFunctions__api.html#ga2c21f6f5bbe3b1fb832bbd7a1615f477',1,'rl_usb.h']]],

@@ -7,7 +7,6 @@ var group__usbh__evr__msc__func =
     [ "EvrUSBH_MSC_GetDevice", "group__usbh__evr__msc__func.html#ga703f8bca51982daed267717ded05cb05", null ],
     [ "EvrUSBH_MSC_GetMaxLun", "group__usbh__evr__msc__func.html#ga8abfcd4e792e238a4e41d5600e264760", null ],
     [ "EvrUSBH_MSC_GetMaxLunFailed", "group__usbh__evr__msc__func.html#ga716c57daa835fad9ccdd8f5f98a6153c", null ],
-    [ "EvrUSBH_MSC_GetStatus", "group__usbh__evr__msc__func.html#gadb9eb534f8b5a5ce69f584a15607bc61", null ],
     [ "EvrUSBH_MSC_Initialize", "group__usbh__evr__msc__func.html#ga706227a4e5b875d2b4b6581cb4db3390", null ],
     [ "EvrUSBH_MSC_InitializeFailed", "group__usbh__evr__msc__func.html#ga173c9fcc3e0f7c6adbfc26a2d7d73ea6", null ],
     [ "EvrUSBH_MSC_OnInitialize", "group__usbh__evr__msc__func.html#gad07d3b71061df6989aa789c47b1e3726", null ],

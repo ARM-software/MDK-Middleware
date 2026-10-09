@@ -1,7 +1,5 @@
 var group__usbh__evr__core__func =
 [
-    [ "EvrUSBH_Core_ControlTransfer", "group__usbh__evr__core__func.html#ga7d0a168fd3ef588c7e8c25256c403035", null ],
-    [ "EvrUSBH_Core_ControlTransferFailed", "group__usbh__evr__core__func.html#gab5b2947e564944ed47c7a0b537bb7ab3", null ],
     [ "EvrUSBH_Core_DeviceGetAddress", "group__usbh__evr__core__func.html#ga8b3eb4b11486ab859fbde32d41b9ee97", null ],
     [ "EvrUSBH_Core_DeviceGetController", "group__usbh__evr__core__func.html#gaeb7512c3b5935271d4f831f71c5aec99", null ],
     [ "EvrUSBH_Core_DeviceGetPID", "group__usbh__evr__core__func.html#ga61172c1ee2e7ebf1f164c487a9769fd1", null ],

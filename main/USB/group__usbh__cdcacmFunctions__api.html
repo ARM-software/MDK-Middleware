@@ -630,7 +630,7 @@ Functions</h2></td></tr>
 <div class="line">  <span class="comment">// Receive Data on Bulk In Pipe in thread</span></div>
 <div class="line">  <span class="keywordflow">do</span> {</div>
 <div class="line">    status = <a class="code hl_function" href="#ga09e555648df23066b92f1200c0d11886" title="Receive data from Communication Device Class device.">USBH_CDC_ACM_Receive</a> (instance, ptr_usart_cdc-&gt;receive_data, ptr_usart_cdc-&gt;receive_num);</div>
-<div class="line">  } <span class="keywordflow">while</span> (status == <a class="code hl_enumvalue" href="rl__usb_8h.html#gaa48e102b9b2600828158b5319c3386afa9bc79fe1432b596c95184a2f477b55d6" title="Function completed; time-out occurred.">usbTimeout</a>);</div>
+<div class="line">  } <span class="keywordflow">while</span> (status == <a class="code hl_enumvalue" href="rl__usb_8h.html#gaa48e102b9b2600828158b5319c3386afa9bc79fe1432b596c95184a2f477b55d6" title="Function timed out.">usbTimeout</a>);</div>
 <div class="line">  ptr_usart_cdc-&gt;receive_busy = <span class="keyword">false</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">if</span> (status == <a class="code hl_enumvalue" href="rl__usb_8h.html#gaa48e102b9b2600828158b5319c3386afacfe6cb72ed8e7b8e95a38cbf95418dbf" title="Function completed with no error.">usbOK</a>) ARM_USARTx_Received(instance);</div>

@@ -14,7 +14,6 @@ var group__usbh__evr__hid__func =
     [ "EvrUSBH_HID_GetProtocolFailed", "group__usbh__evr__hid__func.html#ga0a4fbacf97b2f04531cddcb8ec3384b9", null ],
     [ "EvrUSBH_HID_GetReport", "group__usbh__evr__hid__func.html#ga868c98b9ad3383212395fea1445946d0", null ],
     [ "EvrUSBH_HID_GetReportFailed", "group__usbh__evr__hid__func.html#ga4d80419c46a3cf11a2018e1e9f638494", null ],
-    [ "EvrUSBH_HID_GetStatus", "group__usbh__evr__hid__func.html#ga37c04b92cc8a4aafaf6a2a41298899c5", null ],
     [ "EvrUSBH_HID_Initialize", "group__usbh__evr__hid__func.html#ga9089d11052a7db33209314291fe70099", null ],
     [ "EvrUSBH_HID_InitializeFailed", "group__usbh__evr__hid__func.html#gad1635b15a6ca92302b4b387e78647c73", null ],
     [ "EvrUSBH_HID_OnDataReceived", "group__usbh__evr__hid__func.html#gaa36f9fbd873978199336258acb3c526c", null ],

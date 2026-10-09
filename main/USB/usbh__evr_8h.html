@@ -136,7 +136,8 @@ $(function(){initNavTree('usbh__evr_8h.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">usbh_evr.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;RTE_Components.h&quot;</code><br />
+<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
+<code>#include &quot;RTE_Components.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="rl__usb_8h.html">rl_usb.h</a>&quot;</code><br />
 <code>#include &quot;Driver_USBH.h&quot;</code><br />
 <code>#include &quot;EventRecorder.h&quot;</code><br />
@@ -1111,7 +1112,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:gaf334d951402ed6d5fa3c059beed77ee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__coreFunctions__api.html#gadf15f81f73e124c12c689dac8c93db42">USBH_Notify</a> user callback function start (API)  <br /></td></tr>
 <tr class="separator:gaf334d951402ed6d5fa3c059beed77ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac1a585daebe8eff780f7b4e25db2a8b7" id="r_gac1a585daebe8eff780f7b4e25db2a8b7"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__core__func.html#gac1a585daebe8eff780f7b4e25db2a8b7">EvrUSBH_Core_PipeCreate</a> (uint8_t device, uint8_t ep_addr, uint8_t ep_type, uint16_t ep_max_packet_size, uint8_t ep_interval, <a class="el" href="group__usbh__data__types.html#ga98c1a0cd2cf7e047d714fd23dfba5e53">USBH_PIPE_HANDLE</a> pipe_hndl)</td></tr>
-<tr class="memdesc:gac1a585daebe8eff780f7b4e25db2a8b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gae9f6b49b88dca85534d8addcc7fbf049">USBH_PipeCreate</a> start (API)  <br /></td></tr>
+<tr class="memdesc:gac1a585daebe8eff780f7b4e25db2a8b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gae9f6b49b88dca85534d8addcc7fbf049">USBH_PipeCreate</a> (API)  <br /></td></tr>
 <tr class="separator:gac1a585daebe8eff780f7b4e25db2a8b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2911f28b2de3bad0db4a57ed169af7e3" id="r_a2911f28b2de3bad0db4a57ed169af7e3"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2911f28b2de3bad0db4a57ed169af7e3">EvrUSBH_Core_PipeCreateFailed</a> (uint8_t device, uint8_t ep_addr, uint8_t ep_type, uint16_t ep_max_packet_size, uint8_t ep_interval)</td></tr>
 <tr class="memdesc:a2911f28b2de3bad0db4a57ed169af7e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gae9f6b49b88dca85534d8addcc7fbf049">USBH_PipeCreate</a> failed (Error)  <br /></td></tr>
@@ -1164,12 +1165,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga6ed556c6ba5c377201fe80c3c9aab0ed" id="r_ga6ed556c6ba5c377201fe80c3c9aab0ed"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__core__func.html#ga6ed556c6ba5c377201fe80c3c9aab0ed">EvrUSBH_Core_PipeAbortFailed</a> (<a class="el" href="group__usbh__data__types.html#ga98c1a0cd2cf7e047d714fd23dfba5e53">USBH_PIPE_HANDLE</a> pipe_hndl, <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> error)</td></tr>
 <tr class="memdesc:ga6ed556c6ba5c377201fe80c3c9aab0ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gac0da54ada429142ce65daadd49efefb8">USBH_PipeAbort</a> failed (Error)  <br /></td></tr>
 <tr class="separator:ga6ed556c6ba5c377201fe80c3c9aab0ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7d0a168fd3ef588c7e8c25256c403035" id="r_ga7d0a168fd3ef588c7e8c25256c403035"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__core__func.html#ga7d0a168fd3ef588c7e8c25256c403035">EvrUSBH_Core_ControlTransfer</a> (uint8_t device, const void *setup_packet, uint32_t len)</td></tr>
-<tr class="memdesc:ga7d0a168fd3ef588c7e8c25256c403035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga2b0c9f2e4d76ce263a95962edd13cc7c">USBH_ControlTransfer</a> start (API)  <br /></td></tr>
-<tr class="separator:ga7d0a168fd3ef588c7e8c25256c403035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5b2947e564944ed47c7a0b537bb7ab3" id="r_gab5b2947e564944ed47c7a0b537bb7ab3"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__core__func.html#gab5b2947e564944ed47c7a0b537bb7ab3">EvrUSBH_Core_ControlTransferFailed</a> (uint8_t device, const void *setup_packet, <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> error)</td></tr>
-<tr class="memdesc:gab5b2947e564944ed47c7a0b537bb7ab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga2b0c9f2e4d76ce263a95962edd13cc7c">USBH_ControlTransfer</a> failed (Error)  <br /></td></tr>
-<tr class="separator:gab5b2947e564944ed47c7a0b537bb7ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f760723ac187ba8698d16e2e788f34f" id="r_a5f760723ac187ba8698d16e2e788f34f"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f760723ac187ba8698d16e2e788f34f">EvrUSBH_Core_ControlTransfer</a> (uint8_t device, const <a class="el" href="group__usbd__data__types.html#structUSB__SETUP__PACKET">USB_SETUP_PACKET</a> *setup_packet, uint32_t len)</td></tr>
+<tr class="memdesc:a5f760723ac187ba8698d16e2e788f34f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga2b0c9f2e4d76ce263a95962edd13cc7c">USBH_ControlTransfer</a> start (API)  <br /></td></tr>
+<tr class="separator:a5f760723ac187ba8698d16e2e788f34f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1c92f23741f1bb09a36bb87d0fc8c85" id="r_aa1c92f23741f1bb09a36bb87d0fc8c85"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1c92f23741f1bb09a36bb87d0fc8c85">EvrUSBH_Core_ControlTransferFailed</a> (uint8_t device, const <a class="el" href="group__usbd__data__types.html#structUSB__SETUP__PACKET">USB_SETUP_PACKET</a> *setup_packet, <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> error)</td></tr>
+<tr class="memdesc:aa1c92f23741f1bb09a36bb87d0fc8c85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga2b0c9f2e4d76ce263a95962edd13cc7c">USBH_ControlTransfer</a> failed (Error)  <br /></td></tr>
+<tr class="separator:aa1c92f23741f1bb09a36bb87d0fc8c85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5f7d0cbc725fa1ddc9c7d838cc55ff1b" id="r_ga5f7d0cbc725fa1ddc9c7d838cc55ff1b"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__core__func.html#ga5f7d0cbc725fa1ddc9c7d838cc55ff1b">EvrUSBH_Core_RequestGetStatus</a> (uint8_t device, uint8_t recipient, uint8_t index, uint16_t status)</td></tr>
 <tr class="memdesc:ga5f7d0cbc725fa1ddc9c7d838cc55ff1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga805a67cc134452844c0ca5551dbc5dcb">USBH_DeviceRequest_GetStatus</a> start (API)  <br /></td></tr>
 <tr class="separator:ga5f7d0cbc725fa1ddc9c7d838cc55ff1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1207,7 +1208,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a6519868a71f1b265fd8c2328dc538ab6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga048f1116de57a104db2408f002d4f26e">USBH_DeviceRequest_SetDescriptor</a> failed (Error)  <br /></td></tr>
 <tr class="separator:a6519868a71f1b265fd8c2328dc538ab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga96e35b7e435723113c7468064d76d25f" id="r_ga96e35b7e435723113c7468064d76d25f"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__core__func.html#ga96e35b7e435723113c7468064d76d25f">EvrUSBH_Core_RequestGetConfiguration</a> (uint8_t device, uint8_t config)</td></tr>
-<tr class="memdesc:ga96e35b7e435723113c7468064d76d25f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga39987c151198c186b174a1b6a1992ac0">USBH_DeviceRequest_GetConfiguration</a> start (API)  <br /></td></tr>
+<tr class="memdesc:ga96e35b7e435723113c7468064d76d25f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga39987c151198c186b174a1b6a1992ac0">USBH_DeviceRequest_GetConfiguration</a> (API)  <br /></td></tr>
 <tr class="separator:ga96e35b7e435723113c7468064d76d25f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab5c20a381bf06b8a4ebc548bb069d477" id="r_gab5c20a381bf06b8a4ebc548bb069d477"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__core__func.html#gab5c20a381bf06b8a4ebc548bb069d477">EvrUSBH_Core_RequestGetConfigurationFailed</a> (uint8_t device, <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> error)</td></tr>
 <tr class="memdesc:gab5c20a381bf06b8a4ebc548bb069d477"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga39987c151198c186b174a1b6a1992ac0">USBH_DeviceRequest_GetConfiguration</a> failed (Error)  <br /></td></tr>
@@ -1219,7 +1220,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga15d347e31a548e257315552951d34ff9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gac7df4be2fc8ccceea18b369754f86f84">USBH_DeviceRequest_SetConfiguration</a> failed (Error)  <br /></td></tr>
 <tr class="separator:ga15d347e31a548e257315552951d34ff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8f70a339fbce0b13e1c5709ade338059" id="r_ga8f70a339fbce0b13e1c5709ade338059"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__core__func.html#ga8f70a339fbce0b13e1c5709ade338059">EvrUSBH_Core_RequestGetInterface</a> (uint8_t device, uint8_t index, uint8_t alt)</td></tr>
-<tr class="memdesc:ga8f70a339fbce0b13e1c5709ade338059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gad8f31ca57dfb6d918d58228ce69f2210">USBH_DeviceRequest_GetInterface</a> start (API)  <br /></td></tr>
+<tr class="memdesc:ga8f70a339fbce0b13e1c5709ade338059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gad8f31ca57dfb6d918d58228ce69f2210">USBH_DeviceRequest_GetInterface</a> (API)  <br /></td></tr>
 <tr class="separator:ga8f70a339fbce0b13e1c5709ade338059"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga831eba9f739c2afc98bd592d6a474b3c" id="r_ga831eba9f739c2afc98bd592d6a474b3c"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__core__func.html#ga831eba9f739c2afc98bd592d6a474b3c">EvrUSBH_Core_RequestGetInterfaceFailed</a> (uint8_t device, uint8_t index, <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> error)</td></tr>
 <tr class="memdesc:ga831eba9f739c2afc98bd592d6a474b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gad8f31ca57dfb6d918d58228ce69f2210">USBH_DeviceRequest_GetInterface</a> failed (Error)  <br /></td></tr>
@@ -1365,9 +1366,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga1481a2a61a773c8556dc5359eefc1594" id="r_ga1481a2a61a773c8556dc5359eefc1594"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__cc__func.html#ga1481a2a61a773c8556dc5359eefc1594">EvrUSBH_CC_GetDevice</a> (uint8_t instance, uint8_t device)</td></tr>
 <tr class="memdesc:ga1481a2a61a773c8556dc5359eefc1594"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gae0f3f86f8a049c663b84fda06d5668cd">USBH_CustomClass_GetDevice</a> finished (API)  <br /></td></tr>
 <tr class="separator:ga1481a2a61a773c8556dc5359eefc1594"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2daddd7ed9381cb395fa398794962b73" id="r_ga2daddd7ed9381cb395fa398794962b73"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__cc__func.html#ga2daddd7ed9381cb395fa398794962b73">EvrUSBH_CC_GetStatus</a> (uint8_t instance, uint8_t status)</td></tr>
-<tr class="memdesc:ga2daddd7ed9381cb395fa398794962b73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga6cc444113f6641e70d5276ffdea0b842">USBH_CustomClass_GetStatus</a> finished (API)  <br /></td></tr>
-<tr class="separator:ga2daddd7ed9381cb395fa398794962b73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5677bd88a34558bfdcbde01bdee39e4e" id="r_a5677bd88a34558bfdcbde01bdee39e4e"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5677bd88a34558bfdcbde01bdee39e4e">EvrUSBH_CC_GetStatus</a> (uint8_t instance, <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> status)</td></tr>
+<tr class="memdesc:a5677bd88a34558bfdcbde01bdee39e4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga6cc444113f6641e70d5276ffdea0b842">USBH_CustomClass_GetStatus</a> finished (API)  <br /></td></tr>
+<tr class="separator:a5677bd88a34558bfdcbde01bdee39e4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga109161dd6ff8d471e98feee47fc37515" id="r_ga109161dd6ff8d471e98feee47fc37515"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__cc__func.html#ga109161dd6ff8d471e98feee47fc37515">EvrUSBH_CC_OnConfigure</a> (uint8_t device, uint8_t class, uint8_t sub_class, uint16_t vid, uint16_t pid, uint8_t instance)</td></tr>
 <tr class="memdesc:ga109161dd6ff8d471e98feee47fc37515"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga385a67ca676ca94efcf078b637fdf49c">USBH_CustomClass_Configure</a> user callback function finished (API)  <br /></td></tr>
 <tr class="separator:ga109161dd6ff8d471e98feee47fc37515"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1413,9 +1414,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga957a1a0dc3d641713d272ce2cbcb39ee" id="r_ga957a1a0dc3d641713d272ce2cbcb39ee"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__cdc__acm__func.html#ga957a1a0dc3d641713d272ce2cbcb39ee">EvrUSBH_CDC_ACM_GetDevice</a> (uint8_t instance, uint8_t device)</td></tr>
 <tr class="memdesc:ga957a1a0dc3d641713d272ce2cbcb39ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__cdcacmFunctions__api.html#ga46afdf86b21f4e7501b136c8fd85bdb8">USBH_CDC_ACM_GetDevice</a> finished (API)  <br /></td></tr>
 <tr class="separator:ga957a1a0dc3d641713d272ce2cbcb39ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga709b43ad1726186ce9f664de0092ceb4" id="r_ga709b43ad1726186ce9f664de0092ceb4"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__cdc__acm__func.html#ga709b43ad1726186ce9f664de0092ceb4">EvrUSBH_CDC_ACM_GetStatus</a> (uint8_t instance, uint8_t status)</td></tr>
-<tr class="memdesc:ga709b43ad1726186ce9f664de0092ceb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__cdcacmFunctions__api.html#gaca5c244c4966b91db667778da473aded">USBH_CDC_ACM_GetStatus</a> finished (API)  <br /></td></tr>
-<tr class="separator:ga709b43ad1726186ce9f664de0092ceb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab989c09774d7d33c2684e9f0d6a0bdaf" id="r_ab989c09774d7d33c2684e9f0d6a0bdaf"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab989c09774d7d33c2684e9f0d6a0bdaf">EvrUSBH_CDC_ACM_GetStatus</a> (uint8_t instance, <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> status)</td></tr>
+<tr class="memdesc:ab989c09774d7d33c2684e9f0d6a0bdaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__cdcacmFunctions__api.html#gaca5c244c4966b91db667778da473aded">USBH_CDC_ACM_GetStatus</a> finished (API)  <br /></td></tr>
+<tr class="separator:ab989c09774d7d33c2684e9f0d6a0bdaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5a851e62be55ca10b232a22a7a9a9958" id="r_ga5a851e62be55ca10b232a22a7a9a9958"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__cdc__acm__func.html#ga5a851e62be55ca10b232a22a7a9a9958">EvrUSBH_CDC_ACM_Send</a> (uint8_t instance, uint32_t num)</td></tr>
 <tr class="memdesc:ga5a851e62be55ca10b232a22a7a9a9958"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__cdcacmFunctions__api.html#ga343ba6c23196059e3b2cdaa425e75d9b">USBH_CDC_ACM_Send</a> start (API)  <br /></td></tr>
 <tr class="separator:ga5a851e62be55ca10b232a22a7a9a9958"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1518,9 +1519,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga4c0ffd1c389ad35da6cc344a6064ecc8" id="r_ga4c0ffd1c389ad35da6cc344a6064ecc8"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__hid__func.html#ga4c0ffd1c389ad35da6cc344a6064ecc8">EvrUSBH_HID_GetDevice</a> (uint8_t instance, uint8_t device)</td></tr>
 <tr class="memdesc:ga4c0ffd1c389ad35da6cc344a6064ecc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__hidFunctions__api.html#gad565d4443916b27d72dd1967106c712e">USBH_HID_GetDevice</a> finished (API)  <br /></td></tr>
 <tr class="separator:ga4c0ffd1c389ad35da6cc344a6064ecc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga37c04b92cc8a4aafaf6a2a41298899c5" id="r_ga37c04b92cc8a4aafaf6a2a41298899c5"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__hid__func.html#ga37c04b92cc8a4aafaf6a2a41298899c5">EvrUSBH_HID_GetStatus</a> (uint8_t instance, uint8_t status)</td></tr>
-<tr class="memdesc:ga37c04b92cc8a4aafaf6a2a41298899c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__hidFunctions__api.html#ga87af2b86ae68781e915cc887d9c6ac67">USBH_HID_GetStatus</a> finished (API)  <br /></td></tr>
-<tr class="separator:ga37c04b92cc8a4aafaf6a2a41298899c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a514a5a010a0b59f8e53147632139a176" id="r_a514a5a010a0b59f8e53147632139a176"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a514a5a010a0b59f8e53147632139a176">EvrUSBH_HID_GetStatus</a> (uint8_t instance, <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> status)</td></tr>
+<tr class="memdesc:a514a5a010a0b59f8e53147632139a176"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__hidFunctions__api.html#ga87af2b86ae68781e915cc887d9c6ac67">USBH_HID_GetStatus</a> finished (API)  <br /></td></tr>
+<tr class="separator:a514a5a010a0b59f8e53147632139a176"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6ad835e5cc27270be4de8db0bad8d89b" id="r_ga6ad835e5cc27270be4de8db0bad8d89b"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__hid__func.html#ga6ad835e5cc27270be4de8db0bad8d89b">EvrUSBH_HID_Read</a> (uint8_t instance, int32_t len)</td></tr>
 <tr class="memdesc:ga6ad835e5cc27270be4de8db0bad8d89b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__hidFunctions__api.html#ga35bdd4f4d943a627050ab052474eeadd">USBH_HID_Read</a> start (API)  <br /></td></tr>
 <tr class="separator:ga6ad835e5cc27270be4de8db0bad8d89b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1635,9 +1636,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga703f8bca51982daed267717ded05cb05" id="r_ga703f8bca51982daed267717ded05cb05"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__msc__func.html#ga703f8bca51982daed267717ded05cb05">EvrUSBH_MSC_GetDevice</a> (uint8_t instance, uint8_t device)</td></tr>
 <tr class="memdesc:ga703f8bca51982daed267717ded05cb05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__mscFunctions__api.html#gadbff27f85d5e89ac2baba6d1e6e8a039">USBH_MSC_GetDevice</a> finished (API)  <br /></td></tr>
 <tr class="separator:ga703f8bca51982daed267717ded05cb05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb9eb534f8b5a5ce69f584a15607bc61" id="r_gadb9eb534f8b5a5ce69f584a15607bc61"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__msc__func.html#gadb9eb534f8b5a5ce69f584a15607bc61">EvrUSBH_MSC_GetStatus</a> (uint8_t instance, uint8_t status)</td></tr>
-<tr class="memdesc:gadb9eb534f8b5a5ce69f584a15607bc61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__mscFunctions__api.html#ga2480185d26ff2652737fce77586ddcd8">USBH_MSC_GetStatus</a> finished (API)  <br /></td></tr>
-<tr class="separator:gadb9eb534f8b5a5ce69f584a15607bc61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25b5a545bcf743d3d12efe2d9c97b920" id="r_a25b5a545bcf743d3d12efe2d9c97b920"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a25b5a545bcf743d3d12efe2d9c97b920">EvrUSBH_MSC_GetStatus</a> (uint8_t instance, <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> status)</td></tr>
+<tr class="memdesc:a25b5a545bcf743d3d12efe2d9c97b920"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__mscFunctions__api.html#ga2480185d26ff2652737fce77586ddcd8">USBH_MSC_GetStatus</a> finished (API)  <br /></td></tr>
+<tr class="separator:a25b5a545bcf743d3d12efe2d9c97b920"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae4c5a0d66a6c4f803f140c3132a5e66e" id="r_gae4c5a0d66a6c4f803f140c3132a5e66e"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__usbh__evr__msc__func.html#gae4c5a0d66a6c4f803f140c3132a5e66e">EvrUSBH_MSC_Read</a> (uint8_t instance, uint32_t lba, uint32_t cnt)</td></tr>
 <tr class="memdesc:gae4c5a0d66a6c4f803f140c3132a5e66e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__mscFunctions__api.html#ga8fbe5bb0db9f02eb026fc37daf1fc6b3">USBH_MSC_Read</a> start (API)  <br /></td></tr>
 <tr class="separator:gae4c5a0d66a6c4f803f140c3132a5e66e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -8114,6 +8115,138 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a5677bd88a34558bfdcbde01bdee39e4e" name="a5677bd88a34558bfdcbde01bdee39e4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5677bd88a34558bfdcbde01bdee39e4e">&#9670;&#160;</a></span>EvrUSBH_CC_GetStatus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void EvrUSBH_CC_GetStatus </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>instance</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a></td>          <td class="paramname"><span class="paramname"><em>status</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event on <a class="el" href="group__usbh__customFunctions__api.html#ga6cc444113f6641e70d5276ffdea0b842">USBH_CustomClass_GetStatus</a> finished (API) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance</td><td>instance of custom class device </td></tr>
+    <tr><td class="paramname">status</td><td>device status <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab989c09774d7d33c2684e9f0d6a0bdaf" name="ab989c09774d7d33c2684e9f0d6a0bdaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab989c09774d7d33c2684e9f0d6a0bdaf">&#9670;&#160;</a></span>EvrUSBH_CDC_ACM_GetStatus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void EvrUSBH_CDC_ACM_GetStatus </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>instance</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a></td>          <td class="paramname"><span class="paramname"><em>status</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event on <a class="el" href="group__usbh__cdcacmFunctions__api.html#gaca5c244c4966b91db667778da473aded">USBH_CDC_ACM_GetStatus</a> finished (API) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance</td><td>instance of CDC ACM device </td></tr>
+    <tr><td class="paramname">status</td><td>device status <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5f760723ac187ba8698d16e2e788f34f" name="a5f760723ac187ba8698d16e2e788f34f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f760723ac187ba8698d16e2e788f34f">&#9670;&#160;</a></span>EvrUSBH_Core_ControlTransfer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void EvrUSBH_Core_ControlTransfer </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__usbd__data__types.html#structUSB__SETUP__PACKET">USB_SETUP_PACKET</a> *</td>          <td class="paramname"><span class="paramname"><em>setup_packet</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>len</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event on <a class="el" href="group__usbh__customFunctions__api.html#ga2b0c9f2e4d76ce263a95962edd13cc7c">USBH_ControlTransfer</a> start (API) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">device</td><td>device index </td></tr>
+    <tr><td class="paramname">setup_packet</td><td>setup packet content </td></tr>
+    <tr><td class="paramname">len</td><td>number of data bytes in data stage </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa1c92f23741f1bb09a36bb87d0fc8c85" name="aa1c92f23741f1bb09a36bb87d0fc8c85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1c92f23741f1bb09a36bb87d0fc8c85">&#9670;&#160;</a></span>EvrUSBH_Core_ControlTransferFailed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void EvrUSBH_Core_ControlTransferFailed </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__usbd__data__types.html#structUSB__SETUP__PACKET">USB_SETUP_PACKET</a> *</td>          <td class="paramname"><span class="paramname"><em>setup_packet</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a></td>          <td class="paramname"><span class="paramname"><em>error</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event on <a class="el" href="group__usbh__customFunctions__api.html#ga2b0c9f2e4d76ce263a95962edd13cc7c">USBH_ControlTransfer</a> failed (Error) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">device</td><td>device index </td></tr>
+    <tr><td class="paramname">setup_packet</td><td>setup packet content </td></tr>
+    <tr><td class="paramname">error</td><td>error code <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a2911f28b2de3bad0db4a57ed169af7e3" name="a2911f28b2de3bad0db4a57ed169af7e3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2911f28b2de3bad0db4a57ed169af7e3">&#9670;&#160;</a></span>EvrUSBH_Core_PipeCreateFailed()</h2>
 
@@ -8335,6 +8468,66 @@ Functions</h2></td></tr>
     <tr><td class="paramname">lang_id</td><td>language ID </td></tr>
     <tr><td class="paramname">desc_length</td><td>descriptor length </td></tr>
     <tr><td class="paramname">error</td><td>error code <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a514a5a010a0b59f8e53147632139a176" name="a514a5a010a0b59f8e53147632139a176"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a514a5a010a0b59f8e53147632139a176">&#9670;&#160;</a></span>EvrUSBH_HID_GetStatus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void EvrUSBH_HID_GetStatus </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>instance</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a></td>          <td class="paramname"><span class="paramname"><em>status</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event on <a class="el" href="group__usbh__hidFunctions__api.html#ga87af2b86ae68781e915cc887d9c6ac67">USBH_HID_GetStatus</a> finished (API) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance</td><td>instance of HID device </td></tr>
+    <tr><td class="paramname">status</td><td>device status <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a25b5a545bcf743d3d12efe2d9c97b920" name="a25b5a545bcf743d3d12efe2d9c97b920"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25b5a545bcf743d3d12efe2d9c97b920">&#9670;&#160;</a></span>EvrUSBH_MSC_GetStatus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void EvrUSBH_MSC_GetStatus </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>instance</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a></td>          <td class="paramname"><span class="paramname"><em>status</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event on <a class="el" href="group__usbh__mscFunctions__api.html#ga2480185d26ff2652737fce77586ddcd8">USBH_MSC_GetStatus</a> finished (API) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instance</td><td>instance of MSC device </td></tr>
+    <tr><td class="paramname">status</td><td>device status <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> </td></tr>
   </table>
   </dd>
 </dl>

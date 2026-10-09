@@ -196,7 +196,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:gaf334d951402ed6d5fa3c059beed77ee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__coreFunctions__api.html#gadf15f81f73e124c12c689dac8c93db42">USBH_Notify</a> user callback function start (API)  <br /></td></tr>
 <tr class="separator:gaf334d951402ed6d5fa3c059beed77ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac1a585daebe8eff780f7b4e25db2a8b7" id="r_gac1a585daebe8eff780f7b4e25db2a8b7"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gac1a585daebe8eff780f7b4e25db2a8b7">EvrUSBH_Core_PipeCreate</a> (uint8_t device, uint8_t ep_addr, uint8_t ep_type, uint16_t ep_max_packet_size, uint8_t ep_interval, <a class="el" href="group__usbh__data__types.html#ga98c1a0cd2cf7e047d714fd23dfba5e53">USBH_PIPE_HANDLE</a> pipe_hndl)</td></tr>
-<tr class="memdesc:gac1a585daebe8eff780f7b4e25db2a8b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gae9f6b49b88dca85534d8addcc7fbf049">USBH_PipeCreate</a> start (API)  <br /></td></tr>
+<tr class="memdesc:gac1a585daebe8eff780f7b4e25db2a8b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gae9f6b49b88dca85534d8addcc7fbf049">USBH_PipeCreate</a> (API)  <br /></td></tr>
 <tr class="separator:gac1a585daebe8eff780f7b4e25db2a8b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga319df3c2f8881dda8143b50d8578c7ef" id="r_ga319df3c2f8881dda8143b50d8578c7ef"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga319df3c2f8881dda8143b50d8578c7ef">EvrUSBH_Core_PipeUpdate</a> (<a class="el" href="group__usbh__data__types.html#ga98c1a0cd2cf7e047d714fd23dfba5e53">USBH_PIPE_HANDLE</a> pipe_hndl)</td></tr>
 <tr class="memdesc:ga319df3c2f8881dda8143b50d8578c7ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga3bb7973ffaf495c82c11921954e0eb6b">USBH_PipeUpdate</a> start (API)  <br /></td></tr>
@@ -240,12 +240,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ga6ed556c6ba5c377201fe80c3c9aab0ed" id="r_ga6ed556c6ba5c377201fe80c3c9aab0ed"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga6ed556c6ba5c377201fe80c3c9aab0ed">EvrUSBH_Core_PipeAbortFailed</a> (<a class="el" href="group__usbh__data__types.html#ga98c1a0cd2cf7e047d714fd23dfba5e53">USBH_PIPE_HANDLE</a> pipe_hndl, <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> error)</td></tr>
 <tr class="memdesc:ga6ed556c6ba5c377201fe80c3c9aab0ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gac0da54ada429142ce65daadd49efefb8">USBH_PipeAbort</a> failed (Error)  <br /></td></tr>
 <tr class="separator:ga6ed556c6ba5c377201fe80c3c9aab0ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7d0a168fd3ef588c7e8c25256c403035" id="r_ga7d0a168fd3ef588c7e8c25256c403035"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga7d0a168fd3ef588c7e8c25256c403035">EvrUSBH_Core_ControlTransfer</a> (uint8_t device, const void *setup_packet, uint32_t len)</td></tr>
-<tr class="memdesc:ga7d0a168fd3ef588c7e8c25256c403035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga2b0c9f2e4d76ce263a95962edd13cc7c">USBH_ControlTransfer</a> start (API)  <br /></td></tr>
-<tr class="separator:ga7d0a168fd3ef588c7e8c25256c403035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5b2947e564944ed47c7a0b537bb7ab3" id="r_gab5b2947e564944ed47c7a0b537bb7ab3"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gab5b2947e564944ed47c7a0b537bb7ab3">EvrUSBH_Core_ControlTransferFailed</a> (uint8_t device, const void *setup_packet, <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> error)</td></tr>
-<tr class="memdesc:gab5b2947e564944ed47c7a0b537bb7ab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga2b0c9f2e4d76ce263a95962edd13cc7c">USBH_ControlTransfer</a> failed (Error)  <br /></td></tr>
-<tr class="separator:gab5b2947e564944ed47c7a0b537bb7ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5f7d0cbc725fa1ddc9c7d838cc55ff1b" id="r_ga5f7d0cbc725fa1ddc9c7d838cc55ff1b"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga5f7d0cbc725fa1ddc9c7d838cc55ff1b">EvrUSBH_Core_RequestGetStatus</a> (uint8_t device, uint8_t recipient, uint8_t index, uint16_t status)</td></tr>
 <tr class="memdesc:ga5f7d0cbc725fa1ddc9c7d838cc55ff1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga805a67cc134452844c0ca5551dbc5dcb">USBH_DeviceRequest_GetStatus</a> start (API)  <br /></td></tr>
 <tr class="separator:ga5f7d0cbc725fa1ddc9c7d838cc55ff1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -277,7 +271,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga1e9a92c438f78cfb28816d37109223db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga048f1116de57a104db2408f002d4f26e">USBH_DeviceRequest_SetDescriptor</a> start (API)  <br /></td></tr>
 <tr class="separator:ga1e9a92c438f78cfb28816d37109223db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga96e35b7e435723113c7468064d76d25f" id="r_ga96e35b7e435723113c7468064d76d25f"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga96e35b7e435723113c7468064d76d25f">EvrUSBH_Core_RequestGetConfiguration</a> (uint8_t device, uint8_t config)</td></tr>
-<tr class="memdesc:ga96e35b7e435723113c7468064d76d25f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga39987c151198c186b174a1b6a1992ac0">USBH_DeviceRequest_GetConfiguration</a> start (API)  <br /></td></tr>
+<tr class="memdesc:ga96e35b7e435723113c7468064d76d25f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga39987c151198c186b174a1b6a1992ac0">USBH_DeviceRequest_GetConfiguration</a> (API)  <br /></td></tr>
 <tr class="separator:ga96e35b7e435723113c7468064d76d25f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab5c20a381bf06b8a4ebc548bb069d477" id="r_gab5c20a381bf06b8a4ebc548bb069d477"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gab5c20a381bf06b8a4ebc548bb069d477">EvrUSBH_Core_RequestGetConfigurationFailed</a> (uint8_t device, <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> error)</td></tr>
 <tr class="memdesc:gab5c20a381bf06b8a4ebc548bb069d477"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#ga39987c151198c186b174a1b6a1992ac0">USBH_DeviceRequest_GetConfiguration</a> failed (Error)  <br /></td></tr>
@@ -289,7 +283,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga15d347e31a548e257315552951d34ff9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gac7df4be2fc8ccceea18b369754f86f84">USBH_DeviceRequest_SetConfiguration</a> failed (Error)  <br /></td></tr>
 <tr class="separator:ga15d347e31a548e257315552951d34ff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8f70a339fbce0b13e1c5709ade338059" id="r_ga8f70a339fbce0b13e1c5709ade338059"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga8f70a339fbce0b13e1c5709ade338059">EvrUSBH_Core_RequestGetInterface</a> (uint8_t device, uint8_t index, uint8_t alt)</td></tr>
-<tr class="memdesc:ga8f70a339fbce0b13e1c5709ade338059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gad8f31ca57dfb6d918d58228ce69f2210">USBH_DeviceRequest_GetInterface</a> start (API)  <br /></td></tr>
+<tr class="memdesc:ga8f70a339fbce0b13e1c5709ade338059"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gad8f31ca57dfb6d918d58228ce69f2210">USBH_DeviceRequest_GetInterface</a> (API)  <br /></td></tr>
 <tr class="separator:ga8f70a339fbce0b13e1c5709ade338059"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga831eba9f739c2afc98bd592d6a474b3c" id="r_ga831eba9f739c2afc98bd592d6a474b3c"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga831eba9f739c2afc98bd592d6a474b3c">EvrUSBH_Core_RequestGetInterfaceFailed</a> (uint8_t device, uint8_t index, <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> error)</td></tr>
 <tr class="memdesc:ga831eba9f739c2afc98bd592d6a474b3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on <a class="el" href="group__usbh__customFunctions__api.html#gad8f31ca57dfb6d918d58228ce69f2210">USBH_DeviceRequest_GetInterface</a> failed (Error)  <br /></td></tr>
@@ -343,78 +337,6 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>Events generated by USB Host - Core functions. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga7d0a168fd3ef588c7e8c25256c403035" name="ga7d0a168fd3ef588c7e8c25256c403035"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7d0a168fd3ef588c7e8c25256c403035">&#9670;&#160;</a></span>EvrUSBH_Core_ControlTransfer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">__STATIC_INLINE void EvrUSBH_Core_ControlTransfer </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const void *</td>          <td class="paramname"><span class="paramname"><em>setup_packet</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>len</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Event on <a class="el" href="group__usbh__customFunctions__api.html#ga2b0c9f2e4d76ce263a95962edd13cc7c">USBH_ControlTransfer</a> start (API) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">device</td><td>device index </td></tr>
-    <tr><td class="paramname">setup_packet</td><td>setup packet content </td></tr>
-    <tr><td class="paramname">len</td><td>number of data bytes in data stage </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="gab5b2947e564944ed47c7a0b537bb7ab3" name="gab5b2947e564944ed47c7a0b537bb7ab3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab5b2947e564944ed47c7a0b537bb7ab3">&#9670;&#160;</a></span>EvrUSBH_Core_ControlTransferFailed()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">__STATIC_INLINE void EvrUSBH_Core_ControlTransferFailed </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>device</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const void *</td>          <td class="paramname"><span class="paramname"><em>setup_packet</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a></td>          <td class="paramname"><span class="paramname"><em>error</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Event on <a class="el" href="group__usbh__customFunctions__api.html#ga2b0c9f2e4d76ce263a95962edd13cc7c">USBH_ControlTransfer</a> failed (Error) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">device</td><td>device index </td></tr>
-    <tr><td class="paramname">setup_packet</td><td>setup packet content </td></tr>
-    <tr><td class="paramname">error</td><td>error code <a class="el" href="group__status__error__codes__usb.html#gaa48e102b9b2600828158b5319c3386af">usbStatus</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="ga8b3eb4b11486ab859fbde32d41b9ee97" name="ga8b3eb4b11486ab859fbde32d41b9ee97"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga8b3eb4b11486ab859fbde32d41b9ee97">&#9670;&#160;</a></span>EvrUSBH_Core_DeviceGetAddress()</h2>
 
@@ -1301,7 +1223,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Event on <a class="el" href="group__usbh__customFunctions__api.html#gae9f6b49b88dca85534d8addcc7fbf049">USBH_PipeCreate</a> start (API) </p>
+<p>Event on <a class="el" href="group__usbh__customFunctions__api.html#gae9f6b49b88dca85534d8addcc7fbf049">USBH_PipeCreate</a> (API) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">device</td><td>index of USB Device. </td></tr>
@@ -1922,7 +1844,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Event on <a class="el" href="group__usbh__customFunctions__api.html#ga39987c151198c186b174a1b6a1992ac0">USBH_DeviceRequest_GetConfiguration</a> start (API) </p>
+<p>Event on <a class="el" href="group__usbh__customFunctions__api.html#ga39987c151198c186b174a1b6a1992ac0">USBH_DeviceRequest_GetConfiguration</a> (API) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">device</td><td>device index </td></tr>
@@ -2041,7 +1963,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Event on <a class="el" href="group__usbh__customFunctions__api.html#gad8f31ca57dfb6d918d58228ce69f2210">USBH_DeviceRequest_GetInterface</a> start (API) </p>
+<p>Event on <a class="el" href="group__usbh__customFunctions__api.html#gad8f31ca57dfb6d918d58228ce69f2210">USBH_DeviceRequest_GetInterface</a> (API) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">device</td><td>device index </td></tr>

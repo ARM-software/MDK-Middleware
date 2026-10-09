@@ -1484,7 +1484,7 @@ Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>For isochronous transfer, with registered callback, this function is non-blocking and returns when transfer is queued (double-buffering). The parameter <em class="arg">data</em> must point to memory accessible by the USB Host controller and parameter <em class="arg">len</em> must be same as maximum packet size or it will be downsized to a maximum packet size of the isochronous endpoint. Only supported for full-speed transfers on the EHCI controller.</dd></dl>
 <p><b>Code Example</b> </p><div class="fragment"><div class="line"><span class="keywordflow">do</span> {</div>
 <div class="line">  status = <a class="code hl_function" href="#gac1ce81d11d0559993e4e21e09b868afb" title="Receive data on Pipe.">USBH_PipeReceive</a> (USBH_CC_PipeHandle[PL2303_RECEIVE_PIPE_INDEX], usart_receive_data, usart_receive_num);</div>
-<div class="line">} <span class="keywordflow">while</span> (status == <a class="code hl_enumvalue" href="rl__usb_8h.html#gaa48e102b9b2600828158b5319c3386afa9bc79fe1432b596c95184a2f477b55d6" title="Function completed; time-out occurred.">usbTimeout</a>);</div>
+<div class="line">} <span class="keywordflow">while</span> (status == <a class="code hl_enumvalue" href="rl__usb_8h.html#gaa48e102b9b2600828158b5319c3386afa9bc79fe1432b596c95184a2f477b55d6" title="Function timed out.">usbTimeout</a>);</div>
 </div><!-- fragment --> 
 </div>
 </div>

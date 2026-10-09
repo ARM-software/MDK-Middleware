@@ -12,7 +12,6 @@ var group__usbh__evr__cdc__acm__func =
     [ "EvrUSBH_CDC_ACM_GetLineCoding", "group__usbh__evr__cdc__acm__func.html#ga5bba142a386270921451c8216426595e", null ],
     [ "EvrUSBH_CDC_ACM_GetLineCodingFailed", "group__usbh__evr__cdc__acm__func.html#ga7fdccb8f37a5258e8df23af29a2c1d95", null ],
     [ "EvrUSBH_CDC_ACM_GetRxCount", "group__usbh__evr__cdc__acm__func.html#gab76d9222210838249a70bbf14c45a146", null ],
-    [ "EvrUSBH_CDC_ACM_GetStatus", "group__usbh__evr__cdc__acm__func.html#ga709b43ad1726186ce9f664de0092ceb4", null ],
     [ "EvrUSBH_CDC_ACM_GetTxCount", "group__usbh__evr__cdc__acm__func.html#ga0f48f8c4cba5843c1d31f054e48f7593", null ],
     [ "EvrUSBH_CDC_ACM_Initialize", "group__usbh__evr__cdc__acm__func.html#ga6d4a66a9ab2a9c726f067e5ced61ff7f", null ],
     [ "EvrUSBH_CDC_ACM_InitializeFailed", "group__usbh__evr__cdc__acm__func.html#gab217c12e423bd508fc37235aa9106dfa", null ],
