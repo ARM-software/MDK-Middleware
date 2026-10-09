@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component Validation
- * Copyright (c) 2018-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2018-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    MW_CV_TestSuite.c
  * Purpose: MDK Middleware - Component Validation - Tests Suite module
@@ -13,6 +13,19 @@
 #endif
 
 #include "MW_CV_Config.h"
+
+#if      (MW_CV_FS != 0)
+#include "rl_fs.h"
+#include "MW_CV_FS.h"
+#include "MW_CV_FS_Core.h"
+#include "MW_CV_FS_FAT.h"
+#include "MW_CV_FS_EFS.h"
+#include "MW_CV_FS_Clib.h"
+#include "MW_CV_FS_MC.h"
+#include "MW_CV_FS_IOC.h"
+#include "MW_CV_FS_Performance.h"
+#include "MW_CV_FS_Stress.h"
+#endif
 
 #if      (MW_CV_NET != 0)
 #include "MW_CV_BSD.h"
@@ -57,10 +70,274 @@
 #endif
 
 /*-----------------------------------------------------------------------------
+ *      Test suite initialization
+ *----------------------------------------------------------------------------*/
+
+static void TestSuiteInit (void) {
+#if (MW_CV_FS != 0)
+  (void)MW_CV_FS_Format("");
+#endif
+}
+
+/*-----------------------------------------------------------------------------
  *      List of tests
  *----------------------------------------------------------------------------*/
 
 static TEST_LIST_t test_list[] = {
+
+  /************************* File System Validation ***************************/
+#if (MW_CV_FS != 0)
+  TEST_UNIT_DEF ("MDK Middleware: File System", MW_CV_FS_GetVersion),
+
+  /* Common FileSystem core API tests */
+  TEST_CASE_DEF ( MW_CV_FS_Core_fversion_0                          , "MW_CV_FS_Core_fversion_0"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fversion_1                          , "MW_CV_FS_Core_fversion_1"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_finit_0                             , "MW_CV_FS_Core_finit_0"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_finit_1                             , "MW_CV_FS_Core_finit_1"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_finit_2                             , "MW_CV_FS_Core_finit_2"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_finit_3                             , "MW_CV_FS_Core_finit_3"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_funinit_0                           , "MW_CV_FS_Core_funinit_0"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_funinit_1                           , "MW_CV_FS_Core_funinit_1"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_funinit_2                           , "MW_CV_FS_Core_funinit_2"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_funinit_3                           , "MW_CV_FS_Core_funinit_3"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_funinit_4                           , "MW_CV_FS_Core_funinit_4"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fmount_0                            , "MW_CV_FS_Core_fmount_0"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fmount_1                            , "MW_CV_FS_Core_fmount_1"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fmount_2                            , "MW_CV_FS_Core_fmount_2"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fmount_3                            , "MW_CV_FS_Core_fmount_3"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fmount_4                            , "MW_CV_FS_Core_fmount_4"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_funmount_0                          , "MW_CV_FS_Core_funmount_0"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_funmount_1                          , "MW_CV_FS_Core_funmount_1"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_funmount_2                          , "MW_CV_FS_Core_funmount_2"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_funmount_3                          , "MW_CV_FS_Core_funmount_3"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_funmount_4                          , "MW_CV_FS_Core_funmount_4"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fdelete_0                           , "MW_CV_FS_Core_fdelete_0"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fdelete_1                           , "MW_CV_FS_Core_fdelete_1"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fdelete_2                           , "MW_CV_FS_Core_fdelete_2"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fdelete_3                           , "MW_CV_FS_Core_fdelete_3"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_ffind_0                             , "MW_CV_FS_Core_ffind_0"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_ffind_1                             , "MW_CV_FS_Core_ffind_1"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_ffind_2                             , "MW_CV_FS_Core_ffind_2"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_ffind_3                             , "MW_CV_FS_Core_ffind_3"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_ffind_4                             , "MW_CV_FS_Core_ffind_4"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_ffind_5                             , "MW_CV_FS_Core_ffind_5"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_ffind_6                             , "MW_CV_FS_Core_ffind_6"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_ffind_7                             , "MW_CV_FS_Core_ffind_7"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_ffind_8                             , "MW_CV_FS_Core_ffind_8"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_ffind_9                             , "MW_CV_FS_Core_ffind_9"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_frename_0                           , "MW_CV_FS_Core_frename_0"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_frename_1                           , "MW_CV_FS_Core_frename_1"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_frename_2                           , "MW_CV_FS_Core_frename_2"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_frename_3                           , "MW_CV_FS_Core_frename_3"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fchdrive_0                          , "MW_CV_FS_Core_fchdrive_0"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fchdrive_1                          , "MW_CV_FS_Core_fchdrive_1"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_ffree_0                             , "MW_CV_FS_Core_ffree_0"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_ffree_1                             , "MW_CV_FS_Core_ffree_1"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_ffree_2                             , "MW_CV_FS_Core_ffree_2"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fformat_0                           , "MW_CV_FS_Core_fformat_0"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fformat_1                           , "MW_CV_FS_Core_fformat_1"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fformat_2                           , "MW_CV_FS_Core_fformat_2"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_finfo_0                             , "MW_CV_FS_Core_finfo_0"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_finfo_1                             , "MW_CV_FS_Core_finfo_1"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_finfo_2                             , "MW_CV_FS_Core_finfo_2"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fs_get_time_0                       , "MW_CV_FS_Core_fs_get_time_0"                      , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fs_get_time_1                       , "MW_CV_FS_Core_fs_get_time_1"                      , true),
+  TEST_CASE_DEF ( MW_CV_FS_Core_fs_get_time_2                       , "MW_CV_FS_Core_fs_get_time_2"                      , true),
+
+#if (MW_CV_FS_DRIVE_F != 0)
+  /* EFS-specific API and unsupported-operation tests */
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fanalyse_0                                 , "MW_CV_FS_EFS_fanalyse_0"                                 , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fanalyse_1                           , "MW_CV_FS_EFS_fanalyse_1"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fanalyse_2                           , "MW_CV_FS_EFS_fanalyse_2"                          , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fcheck_0                             , "MW_CV_FS_EFS_fcheck_0"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fcheck_1                             , "MW_CV_FS_EFS_fcheck_1"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fcheck_2                             , "MW_CV_FS_EFS_fcheck_2"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fdefrag_0                            , "MW_CV_FS_EFS_fdefrag_0"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fdefrag_1                            , "MW_CV_FS_EFS_fdefrag_1"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fdefrag_2                            , "MW_CV_FS_EFS_fdefrag_2"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fdefrag_3                            , "MW_CV_FS_EFS_fdefrag_3"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fdefrag_4                            , "MW_CV_FS_EFS_fdefrag_4"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fdefrag_5                            , "MW_CV_FS_EFS_fdefrag_5"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fattrib_0                            , "MW_CV_FS_EFS_fattrib_0"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fpwd_0                               , "MW_CV_FS_EFS_fpwd_0"                              , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fchdir_0                             , "MW_CV_FS_EFS_fchdir_0"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fmkdir_0                             , "MW_CV_FS_EFS_fmkdir_0"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_frmdir_0                             , "MW_CV_FS_EFS_frmdir_0"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fvol_0                               , "MW_CV_FS_EFS_fvol_0"                              , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_ftime_set_0                          , "MW_CV_FS_EFS_ftime_set_0"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_ftime_get_0                          , "MW_CV_FS_EFS_ftime_get_0"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_fs_ioc_get_id_0                      , "MW_CV_FS_EFS_fs_ioc_get_id_0"                     , true),
+#else
+  /* FAT-specific search, file, directory, volume, and timestamp tests */
+  TEST_CASE_DEF ( MW_CV_FS_FAT_ffind_0                              , "MW_CV_FS_FAT_ffind_0"                             , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_ffind_1                              , "MW_CV_FS_FAT_ffind_1"                             , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_ffind_2                              , "MW_CV_FS_FAT_ffind_2"                             , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_ffind_3                              , "MW_CV_FS_FAT_ffind_3"                             , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fattrib_0                            , "MW_CV_FS_FAT_fattrib_0"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fattrib_1                            , "MW_CV_FS_FAT_fattrib_1"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fattrib_2                            , "MW_CV_FS_FAT_fattrib_2"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fpwd_0                               , "MW_CV_FS_FAT_fpwd_0"                              , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fpwd_1                               , "MW_CV_FS_FAT_fpwd_1"                              , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fpwd_2                               , "MW_CV_FS_FAT_fpwd_2"                              , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fchdir_0                             , "MW_CV_FS_FAT_fchdir_0"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fchdir_1                             , "MW_CV_FS_FAT_fchdir_1"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fchdir_2                             , "MW_CV_FS_FAT_fchdir_2"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fchdir_3                             , "MW_CV_FS_FAT_fchdir_3"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fchdir_4                             , "MW_CV_FS_FAT_fchdir_4"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fchdir_5                             , "MW_CV_FS_FAT_fchdir_5"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fmkdir_0                             , "MW_CV_FS_FAT_fmkdir_0"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fmkdir_1                             , "MW_CV_FS_FAT_fmkdir_1"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fmkdir_2                             , "MW_CV_FS_FAT_fmkdir_2"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fmkdir_3                             , "MW_CV_FS_FAT_fmkdir_3"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fmkdir_4                             , "MW_CV_FS_FAT_fmkdir_4"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_frmdir_0                             , "MW_CV_FS_FAT_frmdir_0"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_frmdir_1                             , "MW_CV_FS_FAT_frmdir_1"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_frmdir_2                             , "MW_CV_FS_FAT_frmdir_2"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_frmdir_3                             , "MW_CV_FS_FAT_frmdir_3"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_frmdir_4                             , "MW_CV_FS_FAT_frmdir_4"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fvol_0                               , "MW_CV_FS_FAT_fvol_0"                              , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fvol_1                               , "MW_CV_FS_FAT_fvol_1"                              , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_fvol_2                               , "MW_CV_FS_FAT_fvol_2"                              , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_ftime_set_0                          , "MW_CV_FS_FAT_ftime_set_0"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_ftime_set_1                          , "MW_CV_FS_FAT_ftime_set_1"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_ftime_set_2                          , "MW_CV_FS_FAT_ftime_set_2"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_ftime_set_3                          , "MW_CV_FS_FAT_ftime_set_3"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_ftime_get_0                          , "MW_CV_FS_FAT_ftime_get_0"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_ftime_get_1                          , "MW_CV_FS_FAT_ftime_get_1"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_ftime_get_2                          , "MW_CV_FS_FAT_ftime_get_2"                         , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_ftime_get_3                          , "MW_CV_FS_FAT_ftime_get_3"                         , true),
+#endif
+
+#if (MW_CV_FS_CLIB != 0)
+  /* Common C library stream interface tests */
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fopen_0                             , "MW_CV_FS_Clib_fopen_0"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fopen_1                             , "MW_CV_FS_Clib_fopen_1"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fopen_2                             , "MW_CV_FS_Clib_fopen_2"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fopen_3                             , "MW_CV_FS_Clib_fopen_3"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fopen_4                             , "MW_CV_FS_Clib_fopen_4"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fopen_5                             , "MW_CV_FS_Clib_fopen_5"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fopen_6                             , "MW_CV_FS_Clib_fopen_6"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fopen_7                             , "MW_CV_FS_Clib_fopen_7"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fopen_8                             , "MW_CV_FS_Clib_fopen_8"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fopen_9                             , "MW_CV_FS_Clib_fopen_9"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fclose_0                            , "MW_CV_FS_Clib_fclose_0"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fclose_1                            , "MW_CV_FS_Clib_fclose_1"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fclose_2                            , "MW_CV_FS_Clib_fclose_2"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fwrite_0                            , "MW_CV_FS_Clib_fwrite_0"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fwrite_1                            , "MW_CV_FS_Clib_fwrite_1"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fwrite_2                            , "MW_CV_FS_Clib_fwrite_2"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fwrite_3                            , "MW_CV_FS_Clib_fwrite_3"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fwrite_4                            , "MW_CV_FS_Clib_fwrite_4"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fread_0                             , "MW_CV_FS_Clib_fread_0"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fread_1                             , "MW_CV_FS_Clib_fread_1"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fread_2                             , "MW_CV_FS_Clib_fread_2"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fread_3                             , "MW_CV_FS_Clib_fread_3"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fread_4                             , "MW_CV_FS_Clib_fread_4"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fgetc_0                             , "MW_CV_FS_Clib_fgetc_0"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fgetc_1                             , "MW_CV_FS_Clib_fgetc_1"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fgetc_2                             , "MW_CV_FS_Clib_fgetc_2"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fseek_0                             , "MW_CV_FS_Clib_fseek_0"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fseek_1                             , "MW_CV_FS_Clib_fseek_1"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fseek_2                             , "MW_CV_FS_Clib_fseek_2"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fseek_3                             , "MW_CV_FS_Clib_fseek_3"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fseek_4                             , "MW_CV_FS_Clib_fseek_4"                            , true),
+  TEST_CASE_DEF ( MW_CV_FS_Clib_fseek_5                             , "MW_CV_FS_Clib_fseek_5"                            , true),
+#if (MW_CV_FS_DRIVE_F != 0)
+  /* EFS-specific C library limitations and filename tests */
+  TEST_CASE_DEF ( MW_CV_FS_EFS_Clib_fopen_0                         , "MW_CV_FS_EFS_Clib_fopen_0"                        , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_Clib_fopen_1                         , "MW_CV_FS_EFS_Clib_fopen_1"                        , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_Clib_fopen_2                         , "MW_CV_FS_EFS_Clib_fopen_2"                        , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_Clib_fopen_3                         , "MW_CV_FS_EFS_Clib_fopen_3"                        , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_Clib_fopen_4                         , "MW_CV_FS_EFS_Clib_fopen_4"                        , true),
+  TEST_CASE_DEF ( MW_CV_FS_EFS_Clib_fseek_0                         , "MW_CV_FS_EFS_Clib_fseek_0"                        , true),
+#else
+  /* FAT-specific update modes, paths, filenames, and seek tests */
+  TEST_CASE_DEF ( MW_CV_FS_FAT_Clib_fopen_0                         , "MW_CV_FS_FAT_Clib_fopen_0"                        , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_Clib_fopen_1                         , "MW_CV_FS_FAT_Clib_fopen_1"                        , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_Clib_fopen_2                         , "MW_CV_FS_FAT_Clib_fopen_2"                        , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_Clib_fopen_3                         , "MW_CV_FS_FAT_Clib_fopen_3"                        , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_Clib_fopen_4                         , "MW_CV_FS_FAT_Clib_fopen_4"                        , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_Clib_fopen_5                         , "MW_CV_FS_FAT_Clib_fopen_5"                        , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_Clib_fopen_6                         , "MW_CV_FS_FAT_Clib_fopen_6"                        , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_Clib_fopen_7                         , "MW_CV_FS_FAT_Clib_fopen_7"                        , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_Clib_fseek_0                         , "MW_CV_FS_FAT_Clib_fseek_0"                        , true),
+  TEST_CASE_DEF ( MW_CV_FS_FAT_Clib_fseek_1                         , "MW_CV_FS_FAT_Clib_fseek_1"                        , true),
+#endif
+#endif
+
+#if (MW_CV_FS_DRIVE_M != 0)
+  /* Removable-media behavior and Memory Card integration callbacks */
+  TEST_CASE_DEF ( MW_CV_FS_MC_fmedia_0                              , "MW_CV_FS_MC_fmedia_0"                             , true),
+  TEST_CASE_DEF ( MW_CV_FS_MC_fmedia_1                              , "MW_CV_FS_MC_fmedia_1"                             , true),
+  TEST_CASE_DEF ( MW_CV_FS_MC_fs_mc_read_cd_0                       , "MW_CV_FS_MC_fs_mc_read_cd_0"                      , true),
+  TEST_CASE_DEF ( MW_CV_FS_MC_fs_mc_read_cd_1                       , "MW_CV_FS_MC_fs_mc_read_cd_1"                      , true),
+  TEST_CASE_DEF ( MW_CV_FS_MC_fs_mc_read_wp_0                       , "MW_CV_FS_MC_fs_mc_read_wp_0"                      , true),
+  TEST_CASE_DEF ( MW_CV_FS_MC_fs_mc_read_wp_1                       , "MW_CV_FS_MC_fs_mc_read_wp_1"                      , true),
+  TEST_CASE_DEF ( MW_CV_FS_MC_fs_mc_spi_control_ss_0                , "MW_CV_FS_MC_fs_mc_spi_control_ss_0"               , true),
+  TEST_CASE_DEF ( MW_CV_FS_MC_fs_mc_spi_control_ss_1                , "MW_CV_FS_MC_fs_mc_spi_control_ss_1"               , true),
+  TEST_CASE_DEF ( MW_CV_FS_MC_fs_mc_spi_control_ss_2                , "MW_CV_FS_MC_fs_mc_spi_control_ss_2"               , true),
+  TEST_CASE_DEF ( MW_CV_FS_MC_fs_mc_lock_unlock_0                   , "MW_CV_FS_MC_fs_mc_lock_unlock_0"                  , true),
+  TEST_CASE_DEF ( MW_CV_FS_MC_fs_mc_lock_unlock_1                   , "MW_CV_FS_MC_fs_mc_lock_unlock_1"                  , true),
+#endif
+
+#if (MW_CV_FS_STRESS != 0)
+  /* Cross-API persistence, copy, concurrency, and cache stress tests */
+  TEST_CASE_DEF ( MW_CV_FS_Stress_persistence_0                     , "MW_CV_FS_Stress_persistence_0"                    , true),
+  TEST_CASE_DEF ( MW_CV_FS_Stress_persistence_1                     , "MW_CV_FS_Stress_persistence_1"                    , true),
+  TEST_CASE_DEF ( MW_CV_FS_Stress_copy_0                            , "MW_CV_FS_Stress_copy_0"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_Stress_copy_1                            , "MW_CV_FS_Stress_copy_1"                           , true),
+  TEST_CASE_DEF ( MW_CV_FS_Stress_concurrency_0                     , "MW_CV_FS_Stress_concurrency_0"                    , true),
+  TEST_CASE_DEF ( MW_CV_FS_Stress_concurrency_1                     , "MW_CV_FS_Stress_concurrency_1"                    , true),
+  TEST_CASE_DEF ( MW_CV_FS_Stress_concurrency_2                     , "MW_CV_FS_Stress_concurrency_2"                    , true),
+#if (MW_CV_FS_DRIVE_F != 0)
+  TEST_CASE_DEF ( MW_CV_FS_Stress_EFS_ffind_0                       , "MW_CV_FS_Stress_EFS_ffind_0"                      , true),
+#endif
+#if (MW_CV_FS_DRIVE_M != 0)
+  TEST_CASE_DEF ( MW_CV_FS_Stress_FAT_ffind_0                       , "MW_CV_FS_Stress_FAT_ffind_0"                      , true),
+  TEST_CASE_DEF ( MW_CV_FS_Stress_FAT_name_cache_0                  , "MW_CV_FS_Stress_FAT_name_cache_0"                 , true),
+  TEST_CASE_DEF ( MW_CV_FS_Stress_FAT_name_cache_1                  , "MW_CV_FS_Stress_FAT_name_cache_1"                 , true),
+  TEST_CASE_DEF ( MW_CV_FS_Stress_FAT_name_cache_2                  , "MW_CV_FS_Stress_FAT_name_cache_2"                 , true),
+  TEST_CASE_DEF ( MW_CV_FS_Stress_FAT_name_cache_3                  , "MW_CV_FS_Stress_FAT_name_cache_3"                 , true),
+  TEST_CASE_DEF ( MW_CV_FS_Stress_FAT_name_cache_4                  , "MW_CV_FS_Stress_FAT_name_cache_4"                 , true),
+#endif
+#endif
+
+#if ((MW_CV_FS_IOC != 0) && (MW_CV_FS_DRIVE_F == 0))
+  /* FAT media I/O Control tests run after the complete stress suite */
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_get_id_0                      , "MW_CV_FS_IOC_fs_ioc_get_id_0"                     , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_get_id_1                      , "MW_CV_FS_IOC_fs_ioc_get_id_1"                     , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_lock_0                        , "MW_CV_FS_IOC_fs_ioc_lock_0"                       , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_lock_1                        , "MW_CV_FS_IOC_fs_ioc_lock_1"                       , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_lock_2                        , "MW_CV_FS_IOC_fs_ioc_lock_2"                       , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_unlock_0                      , "MW_CV_FS_IOC_fs_ioc_unlock_0"                     , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_unlock_1                      , "MW_CV_FS_IOC_fs_ioc_unlock_1"                     , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_unlock_2                      , "MW_CV_FS_IOC_fs_ioc_unlock_2"                     , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_get_cache_0                   , "MW_CV_FS_IOC_fs_ioc_get_cache_0"                  , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_get_cache_1                   , "MW_CV_FS_IOC_fs_ioc_get_cache_1"                  , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_get_cache_2                   , "MW_CV_FS_IOC_fs_ioc_get_cache_2"                  , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_read_sector_0                 , "MW_CV_FS_IOC_fs_ioc_read_sector_0"                , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_read_sector_1                 , "MW_CV_FS_IOC_fs_ioc_read_sector_1"                , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_read_sector_2                 , "MW_CV_FS_IOC_fs_ioc_read_sector_2"                , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_read_info_0                   , "MW_CV_FS_IOC_fs_ioc_read_info_0"                  , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_read_info_1                   , "MW_CV_FS_IOC_fs_ioc_read_info_1"                  , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_read_info_2                   , "MW_CV_FS_IOC_fs_ioc_read_info_2"                  , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_device_ctrl_0                 , "MW_CV_FS_IOC_fs_ioc_device_ctrl_0"                , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_device_ctrl_1                 , "MW_CV_FS_IOC_fs_ioc_device_ctrl_1"                , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_write_sector_0                , "MW_CV_FS_IOC_fs_ioc_write_sector_0"               , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_write_sector_1                , "MW_CV_FS_IOC_fs_ioc_write_sector_1"               , true),
+  TEST_CASE_DEF ( MW_CV_FS_IOC_fs_ioc_write_sector_2                , "MW_CV_FS_IOC_fs_ioc_write_sector_2"               , true),
+#endif
+
+#if (MW_CV_FS_PERFORMANCE != 0)
+  /* Destructive performance measurements run after all FileSystem stress tests */
+#if (MW_CV_FS_CLIB != 0)
+  TEST_CASE_DEF ( MW_CV_FS_Performance_Clib                         , "MW_CV_FS_Performance_Clib"                        , true),
+#endif
+#if ((MW_CV_FS_IOC != 0) && (MW_CV_FS_DRIVE_F == 0))
+  TEST_CASE_DEF ( MW_CV_FS_Performance_IOC                          , "MW_CV_FS_Performance_IOC"                         , true),
+#endif
+#endif
+#endif
 
   /**************************** Network Validation ****************************/
 #if (MW_CV_NET != 0)
@@ -244,7 +521,7 @@ TEST_SUITE_t test_suite = {
   __DATE__,
   __TIME__,
   __FILE__,
-  NULL,
+  TestSuiteInit,
   test_list,
  (sizeof(test_list)/sizeof((test_list)[0])) - 1U,
 };
