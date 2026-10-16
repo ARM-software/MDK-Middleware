@@ -8,6 +8,10 @@
     <tr>
       <td>V8.3.1</td>
       <td>
+        - fixed SMTP client unsigned underflow and Base64 over-read/write
+        - fixed potential out-of-bounds reads in FTP client
+        - fixed TFTP server filename being treated as an unbounded C string
+        - fixed parsing of malformed DHCP options
         - fixed possible TCP socket reset after timeout recovery
         - various minor fixes and security improvements
       </td>

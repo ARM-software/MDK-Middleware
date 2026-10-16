@@ -23,6 +23,10 @@
       - corrected FAT name cache entry size from 48 to 40 bytes
       - corrected various minor code quality issues
       Network Component Version 8.3.1
+      - fixed SMTP client unsigned underflow and Base64 over-read/write
+      - fixed potential out-of-bounds reads in FTP client
+      - fixed TFTP server filename being treated as an unbounded C string
+      - fixed parsing of malformed DHCP options
       - fixed possible TCP socket reset after timeout recovery
       - various minor fixes and security improvements
       USB Component Version 8.0.3
