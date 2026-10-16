@@ -7,10 +7,8 @@ throughout the development stage.
 
 ## Achilles Test Platform
 
-The
-**[Achilles Test Platform](https://www.ge.com/digital/sites/default/files/download_assets/achilles-test-platform-from-ge-digital-datasheet.pdf)**
-by **[GE Digital](https://www.ge.com/digital/)** provides a stress test that simulates cyber attacks via a TCP/IP network connection.
-GE Digital offers also a certification service for end-equipment.
+The **Achilles Test Platform** by **GE Digital** provides a stress test that simulates cyber attacks via a TCP/IP network
+connection. GE Digital offers also a certification service for end-equipment.
 
 The **Network Component** is verified with the Achilles Test Software (ATS) and passes Level 1 tests. 
 Thus, Arm Cortex-M based microcontrollers using the **Network Component**, should pass the Achilles Level 1 certification.
