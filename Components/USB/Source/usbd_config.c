@@ -5955,6 +5955,10 @@ usbdRequestStatus (* const fpUSBD_Device_Endpoint0_InDataSent[USBD_DEV_NUM]) (ui
 #endif
 };
 
+/// \brief Initialize all enabled USB class instances associated with a device.
+/// \param[in]     device               index of USB Device.
+/// \return                             usbOK if every applicable class initializes successfully; otherwise
+///                                     the status returned by the last class initialization that failed.
 usbStatus USBD_ClassInitialize (uint8_t device) {
   uint8_t   instance;
   usbStatus status_ret, status;
@@ -6035,6 +6039,10 @@ usbStatus USBD_ClassInitialize (uint8_t device) {
   return status_ret;
 }
 
+/// \brief Uninitialize all enabled USB class instances associated with a device.
+/// \param[in]     device               index of USB Device.
+/// \return                             usbOK if every applicable class uninitializes successfully; otherwise
+///                                     the status returned by the last class uninitialization that failed.
 usbStatus USBD_ClassUninitialize (uint8_t device) {
   uint8_t   instance;
   usbStatus status_ret, status;
@@ -6115,6 +6123,8 @@ usbStatus USBD_ClassUninitialize (uint8_t device) {
   return status_ret;
 }
 
+/// \brief Notify all enabled USB class instances of a device reset.
+/// \param[in]     device               index of USB Device.
 void USBD_Reset (uint8_t device) {
   uint8_t instance;
 
@@ -6186,6 +6196,9 @@ void USBD_Reset (uint8_t device) {
 #endif
 }
 
+/// \brief Notify all enabled USB class instances when the device configuration changes.
+/// \param[in]     device               index of USB Device.
+/// \param[in]     configuration        configuration value.
 void USBD_SetConfiguration (uint8_t device, uint8_t configuration) {
 
 #if (USBD_HID_NUM > 0)
@@ -6210,6 +6223,9 @@ void USBD_SetConfiguration (uint8_t device, uint8_t configuration) {
 #endif
 }
 
+/// \brief Notify all enabled USB class instances to start a class-specific endpoint.
+/// \param[in]     device               index of USB Device.
+/// \param[in]     ep_addr              USB endpoint address.
 void USBD_EndpointStart (uint8_t device, uint8_t ep_addr) {
   uint8_t instance;
 
@@ -6320,6 +6336,9 @@ void USBD_EndpointStart (uint8_t device, uint8_t ep_addr) {
 #endif
 }
 
+/// \brief Notify all enabled USB class instances to stop a class-specific endpoint.
+/// \param[in]     device               index of USB Device.
+/// \param[in]     ep_addr              USB endpoint address.
 void USBD_EndpointStop (uint8_t device, uint8_t ep_addr) {
 #if ((USBD_CUSTOM_CLASS_NUM > 0) || (USBD_ADC_NUM > 0)  || (USBD_CDC_NUM > 0))
   uint8_t instance;
