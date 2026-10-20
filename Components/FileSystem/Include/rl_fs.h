@@ -13,8 +13,8 @@
 #include <stdbool.h>
 
 #define MW_FS_VERSION_MAJOR      8
-#define MW_FS_VERSION_MINOR      0
-#define MW_FS_VERSION_PATCH      10
+#define MW_FS_VERSION_MINOR      1
+#define MW_FS_VERSION_PATCH      0
 
 // ==== Enumeration, structures, defines ====
 

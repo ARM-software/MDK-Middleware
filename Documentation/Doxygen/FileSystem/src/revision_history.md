@@ -6,8 +6,9 @@
       <th>Description</th>
     </tr>
     <tr>
-      <td>V8.0.10</td>
+      <td>V8.1.0</td>
       <td>
+        - added support for SD Ultra High Speed (UHS-I) bus interface
         - corrected a bug in ffind for EFS which could return invalid file for explicit search
         - corrected fchdrive and fs_ioc_get_id to correctly handle NULL argument
         - corrected funmount for FAT drives when called multiple times

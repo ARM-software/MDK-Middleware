@@ -303,14 +303,20 @@ the functionality of the MC Control Layer:
 
 |Capability  |Functionality|
 |:----------:|-----------|
-|cd_state    |Enables device presence detection by pooling the Card Detect (CD) switch state |
+|cd_state    |Enables device presence detection by polling the Card Detect (CD) switch state |
 |cd_event    |Enables device presence detection using MCI driver events |
-|wp_state    |Enables write protection detection by pooling Write Protect (WP) switch state |
+|wp_state    |Enables write protection detection by polling Write Protect (WP) switch state |
 |vdd         |Power consumption can be controlled by turning VDD (VCC) power supply on or off |
 |vccq        |Power consumption can be controlled by turning VCCQ power supply on or off |
 |data_width_4|Data transfer rate can be increased by using 4-bit data bus |
 |data_width_8|Data transfer rate can be increased by using 8-bit data bus |
-|high_speed  |Data transfer rate can be increased by using MCI bus frequencies up to 52MHz |
+|high_speed  |Enables High Speed mode with bus clock frequencies up to 50MHz for SD cards or 52MHz for MMC/eMMC devices |
+|uhs_signaling|Enables negotiation and switching to 1.8V signaling for SD UHS-I modes |
+|uhs_sdr50   |Enables selection of SDR50 mode with bus clock frequencies up to 100MHz |
+|uhs_sdr104  |Enables selection of SDR104 mode with bus clock frequencies up to 208MHz; also requires uhs_tuning |
+|uhs_ddr50   |Enables selection of DDR50 mode with bus clock frequencies up to 50MHz and data transfer on both clock edges |
+|uhs_tuning  |Enables tuning operation during UHS-I initialization |
+|uhs_tuning_sdr50|Enables tuning operation also for UHS-I SDR50 mode |
 |rst_n       |eMMC device can be reset from software using RST_n pin |
 
 ### Device Specific Features {#mci_device_specifics}
@@ -341,6 +347,27 @@ supporting MMCA specification version 4.2 or higher (3.3V signaling, bus clock f
 do so, the high speed mode needs to be supported by the corresponding \urlout{MCI-API}.
 
 \note Improper PCB design can cause reliability problems when in high speed mode.
+
+#### Ultra High Speed (UHS-I) Mode {#mci_uhs_i_mode}
+
+For SD cards connected via MCI, the MC Control Layer automatically negotiates UHS-I support, switches to 1.8V
+signaling and selects a mode supported by both the card and MCI driver. UHS-I requires suitable board wiring
+and hardware and MCI driver support for switching to 1.8V signaling. The card power supply remains at 3.3V.
+
+Supported modes are SDR12 (up to 25MHz), SDR25 and DDR50 (up to 50MHz), SDR50 (up to 100MHz), and SDR104
+(up to 208MHz). Selection prefers SDR104, SDR50, DDR50, SDR25, then SDR12. The actual bus clock depends on
+the host clock configuration and may be lower than the mode limit.
+
+During initialization, CMD19 tuning is performed for SDR104 and for SDR50 when the driver reports
+`uhs_tuning_sdr50`. If voltage switching, mode selection or tuning fails, initialization is retried with UHS-I
+disabled. Recovery requires hardware and driver support to restore the card to its 3.3V initialization state,
+including card power cycling when necessary.
+
+> [!CAUTION]
+> The MC Control Layer performs initialization tuning but does not handle re-tuning requests during normal
+> transfers. Board signal integrity and pad configuration must suit the selected bus clock.
+
+\note UHS-I is only enabled when using MCI Driver API V2.5.0 (part of CMSIS 6.4.0 or higher)
 
 #### Password protection
 
