@@ -112,7 +112,7 @@ These tests measure successful transfers without imposing platform-specific mini
 @{
 */
 
-#if (MW_CV_FS_CLIB != 0U)
+#if defined(__DOXYGEN__) || ((MW_CV_FS_CLIB != 0U) && (MW_CV_FS_DRIVE_R == 0U))
 /**
 \brief Measure C library FileSystem performance.
 \details

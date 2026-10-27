@@ -329,7 +329,7 @@ static TEST_LIST_t test_list[] = {
 
 #if (MW_CV_FS_PERFORMANCE != 0)
   /* Destructive performance measurements run after all FileSystem stress tests */
-#if (MW_CV_FS_CLIB != 0)
+#if ((MW_CV_FS_CLIB != 0) && (MW_CV_FS_DRIVE_R == 0))
   TEST_CASE_DEF ( MW_CV_FS_Performance_Clib                         , "MW_CV_FS_Performance_Clib"                        , true),
 #endif
 #if ((MW_CV_FS_IOC != 0) && (MW_CV_FS_DRIVE_F == 0))
