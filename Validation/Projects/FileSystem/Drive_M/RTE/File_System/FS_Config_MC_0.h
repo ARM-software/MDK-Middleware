@@ -10,17 +10,24 @@
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 //------ With VS Code: Open Preview for Configuration Wizard -------------------
 
+#ifdef   CMSIS_target_header
+#include CMSIS_target_header
+#else
+#define CMSIS_DRIVER_MCI        0
+#define CMSIS_DRIVER_SPI        0
+#endif
+
 // <h>Memory Card Drive 0
 // <i>Configuration for SD/SDHC/MMC Memory Card assigned to drive letter "M0:"
 #define MC0_ENABLE              1
 
 //   <y>Connect to hardware via Driver_MCI#
 //   <i>Select driver control block for hardware interface
-#define MC0_MCI_DRIVER          0
+#define MC0_MCI_DRIVER          CMSIS_DRIVER_MCI
 
 //   <y>Connect to hardware via Driver_SPI#
 //   <i>Select driver control block for hardware interface when in SPI mode
-#define MC0_SPI_DRIVER          0
+#define MC0_SPI_DRIVER          CMSIS_DRIVER_SPI
 
 //   <o>Memory Card Interface Mode <0=>Native <1=>SPI
 //   <i>Native uses a SD Bus with up to 8 data lines, CLK, and CMD

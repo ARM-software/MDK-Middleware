@@ -10,12 +10,18 @@
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 //------ With VS Code: Open Preview for Configuration Wizard -------------------
 
+#ifdef   CMSIS_target_header
+#include CMSIS_target_header
+#else
+#define CMSIS_DRIVER_FLASH      0
+#endif
+
 // <h>NOR Flash Drive 0
 // <i>Configuration for NOR Flash device assigned to drive letter "F0:"
 #define NOR0_ENABLE             1
 
 //   <y>Connect to hardware via Driver_Flash#
 //   <i>Select driver control block for hardware interface
-#define NOR0_DRIVER             0
+#define NOR0_DRIVER             CMSIS_DRIVER_FLASH
 
 // </h>

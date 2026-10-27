@@ -10,13 +10,19 @@
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 //------ With VS Code: Open Preview for Configuration Wizard -------------------
 
+#ifdef   CMSIS_target_header
+#include CMSIS_target_header
+#else
+#define CMSIS_DRIVER_NAND       0
+#endif
+
 // <h>NAND Flash Drive 0
 // <i>Configuration for NAND device assigned to drive letter "N0:"
 #define NAND0_ENABLE            1
 
 //   <y>Connect to hardware via Driver_NAND#
 //   <i>Select driver control block for hardware interface
-#define NAND0_DRIVER            0
+#define NAND0_DRIVER            CMSIS_DRIVER_NAND
 
 //   <o>Device Number <0-255>
 //   <i>Selects NAND device connected to selected driver
