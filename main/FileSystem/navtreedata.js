@@ -75,6 +75,7 @@ var NAVTREE =
           [ "Power Supply Voltage Control", "operation.html#autotoc_md4", null ],
           [ "Data Bus Width", "operation.html#autotoc_md5", null ],
           [ "High Speed Mode", "operation.html#autotoc_md6", null ],
+          [ "Ultra High Speed (UHS-I) Mode", "operation.html#mci_uhs_i_mode", null ],
           [ "Password protection", "operation.html#autotoc_md7", null ],
           [ "Health Status (S.M.A.R.T)", "operation.html#autotoc_md8", null ]
         ] ],

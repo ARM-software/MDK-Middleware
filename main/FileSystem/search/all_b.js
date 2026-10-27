@@ -18,7 +18,7 @@ var searchData=
   ['migration_20guide_15',['Migration Guide',['../migration_guide.html',1,'']]],
   ['migration_5fguide_2emd_16',['migration_guide.md',['../migration__guide_8md.html',1,'']]],
   ['min_17',['min',['../rl__fs_8h.html#a7fb43d8c0a1704bab50921f94e4746fe',1,'fsTime']]],
-  ['mode_18',['High Speed Mode',['../operation.html#autotoc_md6',1,'']]],
+  ['mode_18',['Mode',['../operation.html#autotoc_md6',1,'High Speed Mode'],['../operation.html#mci_uhs_i_mode',1,'Ultra High Speed (UHS-I) Mode']]],
   ['mode_20support_19',['SPI Mode Support',['../operation.html#mc_spi_mode_support',1,'']]],
   ['mon_20',['mon',['../rl__fs_8h.html#a9bc467bf75e5202a3edfc1ec4e12642c',1,'fsTime']]],
   ['mutex_20requirements_21',['Mutex Requirements',['../resource_requirements.html#autotoc_md14',1,'']]],

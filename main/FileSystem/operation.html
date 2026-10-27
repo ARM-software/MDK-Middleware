@@ -393,11 +393,11 @@ List of Supported MCI Driver Capabilities</h2>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadCenter">Capability   </th><th class="markdownTableHeadNone">Functionality    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyCenter">cd_state   </td><td class="markdownTableBodyNone">Enables device presence detection by pooling the Card Detect (CD) switch state    </td></tr>
+<td class="markdownTableBodyCenter">cd_state   </td><td class="markdownTableBodyNone">Enables device presence detection by polling the Card Detect (CD) switch state    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyCenter">cd_event   </td><td class="markdownTableBodyNone">Enables device presence detection using MCI driver events    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyCenter">wp_state   </td><td class="markdownTableBodyNone">Enables write protection detection by pooling Write Protect (WP) switch state    </td></tr>
+<td class="markdownTableBodyCenter">wp_state   </td><td class="markdownTableBodyNone">Enables write protection detection by polling Write Protect (WP) switch state    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyCenter">vdd   </td><td class="markdownTableBodyNone">Power consumption can be controlled by turning VDD (VCC) power supply on or off    </td></tr>
 <tr class="markdownTableRowOdd">
@@ -407,7 +407,19 @@ List of Supported MCI Driver Capabilities</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyCenter">data_width_8   </td><td class="markdownTableBodyNone">Data transfer rate can be increased by using 8-bit data bus    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyCenter">high_speed   </td><td class="markdownTableBodyNone">Data transfer rate can be increased by using MCI bus frequencies up to 52MHz    </td></tr>
+<td class="markdownTableBodyCenter">high_speed   </td><td class="markdownTableBodyNone">Enables High Speed mode with bus clock frequencies up to 50MHz for SD cards or 52MHz for MMC/eMMC devices    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">uhs_signaling   </td><td class="markdownTableBodyNone">Enables negotiation and switching to 1.8V signaling for SD UHS-I modes    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">uhs_sdr50   </td><td class="markdownTableBodyNone">Enables selection of SDR50 mode with bus clock frequencies up to 100MHz    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">uhs_sdr104   </td><td class="markdownTableBodyNone">Enables selection of SDR104 mode with bus clock frequencies up to 208MHz; also requires uhs_tuning    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">uhs_ddr50   </td><td class="markdownTableBodyNone">Enables selection of DDR50 mode with bus clock frequencies up to 50MHz and data transfer on both clock edges    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">uhs_tuning   </td><td class="markdownTableBodyNone">Enables tuning operation during UHS-I initialization    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">uhs_tuning_sdr50   </td><td class="markdownTableBodyNone">Enables tuning operation also for UHS-I SDR50 mode    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyCenter">rst_n   </td><td class="markdownTableBodyNone">eMMC device can be reset from software using RST_n pin   </td></tr>
 </table>
@@ -432,6 +444,13 @@ Data Bus Width</h3>
 High Speed Mode</h3>
 <p>The MC Control Layer is able to automatically switch to <a href="https://www.sdcard.org/developers/sd-standard-overview/bus-speed-default-speed-high-speed-uhs-sd-express/">high speed mode</a> for SD cards supporting SD specification version 1.10 or higher (3.3V signaling, bus clock frequency up to 50MHz) and MMC/eMMC devices supporting MMCA specification version 4.2 or higher (3.3V signaling, bus clock frequency up to 52MHz). In order to do so, the high speed mode needs to be supported by the corresponding  <script>link_ext('MCI-API');</script>.</p>
 <dl class="section note"><dt>Note</dt><dd>Improper PCB design can cause reliability problems when in high speed mode.</dd></dl>
+<h3><a class="anchor" id="mci_uhs_i_mode"></a>
+Ultra High Speed (UHS-I) Mode</h3>
+<p>For SD cards connected via MCI, the MC Control Layer automatically negotiates UHS-I support, switches to 1.8V signaling and selects a mode supported by both the card and MCI driver. UHS-I requires suitable board wiring and hardware and MCI driver support for switching to 1.8V signaling. The card power supply remains at 3.3V.</p>
+<p>Supported modes are SDR12 (up to 25MHz), SDR25 and DDR50 (up to 50MHz), SDR50 (up to 100MHz), and SDR104 (up to 208MHz). Selection prefers SDR104, SDR50, DDR50, SDR25, then SDR12. The actual bus clock depends on the host clock configuration and may be lower than the mode limit.</p>
+<p>During initialization, CMD19 tuning is performed for SDR104 and for SDR50 when the driver reports <code>uhs_tuning_sdr50</code>. If voltage switching, mode selection or tuning fails, initialization is retried with UHS-I disabled. Recovery requires hardware and driver support to restore the card to its 3.3V initialization state, including card power cycling when necessary.</p>
+<dl class="section attention"><dt>Attention</dt><dd>The MC Control Layer performs initialization tuning but does not handle re-tuning requests during normal transfers. Board signal integrity and pad configuration must suit the selected bus clock.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>UHS-I is only enabled when using MCI Driver API V2.5.0 (part of CMSIS 6.4.0 or higher)</dd></dl>
 <h3><a class="anchor" id="autotoc_md7"></a>
 Password protection</h3>
 <p>The password protection feature enables the host to lock a card while providing a password, which later will be used for unlocking the card. The password is stored to device internal non-volatile registers and can consist of up to 16 bytes, where each byte can be arbitrary 8-bit value.</p>

@@ -14,6 +14,7 @@ var NAVTREEINDEX2 =
 "operation.html#mci_list_of_devices":[4,3,0],
 "operation.html#mci_list_of_mci_capabilities":[4,3,1],
 "operation.html#mci_power_save":[4,3,3],
+"operation.html#mci_uhs_i_mode":[4,3,2,3],
 "operation.html#nand_flash_TL":[4,4],
 "operation.html#slc_ecc":[4,4,2],
 "operation.html#sys_fail_beh":[4,2,5,1],
