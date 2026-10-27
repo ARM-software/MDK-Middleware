@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component Validation
- * Copyright (c) 2018-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2018-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    MW_CV_Config.h
  * Purpose: MDK Middleware - Component Validation - configuration definitions
@@ -11,6 +11,37 @@
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 //------ With VS Code: Open Preview for Configuration Wizard -------------------
+
+
+// <e0.0> File System
+//   <i> Enable/disable File System validation
+//   <q1> Drive F - NOR Flash
+//     <i> Enable/disable NOR flash drive F validation
+//   <q2> Drive M - Memory Card
+//     <i> Enable/disable memory card drive M validation
+//   <q3> Drive N - NAND Flash
+//     <i> Enable/disable NAND flash drive N validation
+//   <q4> Drive R - RAM
+//     <i> Enable/disable RAM drive R validation
+//   <q5> C Library
+//     <i> Enable/disable C Library interface validation
+//   <q6> I/O Control
+//     <i> Enable FAT I/O Control validation
+//   <q7> Stress and concurrency
+//     <i> Enable long-running workflow and RTOS concurrency tests
+//   <q8> Performance
+//     <i> Enable FileSystem throughput measurements
+
+#define MW_CV_FS                       0
+#define MW_CV_FS_DRIVE_F               0
+#define MW_CV_FS_DRIVE_M               0
+#define MW_CV_FS_DRIVE_N               0
+#define MW_CV_FS_DRIVE_R               0
+#define MW_CV_FS_CLIB                  0
+#define MW_CV_FS_IOC                   0
+#define MW_CV_FS_STRESS                0
+#define MW_CV_FS_PERFORMANCE           0
+// </e>
 
 // <h> Network
 //   <i> Network Component Validation Settings
