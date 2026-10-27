@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2023 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_mc_mci.c
  * Purpose: MMC/SD Card Native-Mode Interface
@@ -14,7 +14,6 @@
 
 #include "fs_mc.h"
 #include "fs_evr.h"
-
 
 /**
   Callback function used to retrieve password management information
@@ -150,7 +149,7 @@ static int32_t mci_card_power (bool enable, MC_MCI *mc) {
     }
     if (enable) {
       /* Wait for the longest of: VDD power-up time, VCCQ power-up time */
-      fs_set_rtos_delay (2);
+      fs_set_rtos_delay (2U);
     }
   }
   return (0);
@@ -196,6 +195,18 @@ static int32_t mci_bus_width (uint32_t width, MC_MCI *mc) {
   }
   return (0);
 }
+
+#if MC_UHS_SUPPORT
+/**
+  Set UHS-I signaling voltage
+*/
+static int32_t mci_uhs_signaling (uint32_t signaling, MC_MCI *mc) {
+  if (mc->Driver->Control (ARM_MCI_UHS_VOLTAGE_SWITCH, signaling) != ARM_DRIVER_OK) {
+    return (-1);
+  }
+  return (0);
+}
+#endif /* MC_UHS_SUPPORT */
 
 
 /**
@@ -591,9 +602,9 @@ static uint32_t mc_send_if_cond (uint32_t arg, uint32_t *r7, MC_MCI *mc) {
 static uint32_t mc_send_ext_csd (uint8_t *buf, MC_MCI *mc) {
   int32_t stat;
   uint32_t r1, flags, events;
-  
+
   mc->Event = 0;
-  
+
   /* Setup data transfer */
   flags = ARM_MCI_TRANSFER_READ | ARM_MCI_TRANSFER_BLOCK;
   stat = mc->Driver->SetupTransfer (buf, 1, 512, flags);
@@ -602,7 +613,7 @@ static uint32_t mc_send_ext_csd (uint8_t *buf, MC_MCI *mc) {
     EvrFsMcMCI_ReadXferSetupError (mc->Instance, buf, 1, 512);
     return (1);
   }
-  
+
   flags = MC_RESPONSE_R1 | ARM_MCI_RESPONSE_CRC | ARM_MCI_TRANSFER_DATA;
   stat  = mc->Driver->SendCommand (MC_CMD_SEND_EXT_CSD, 0, flags, &r1);
 
@@ -682,6 +693,38 @@ static uint32_t mc_read_cid (uint32_t rca, uint32_t *r2, MC_MCI *mc) {
 }
 
 
+#if MC_UHS_SUPPORT
+/**
+  (CMD11, R1): switch to 1.8V bus signaling level.
+
+  \param[in]   mc   Pointer to memory card instance object
+  \return     0U: Signaling voltage switch successful
+              1U: Signaling voltage switch failed
+*/
+static uint32_t mc_voltage_switch (MC_MCI *mc) {
+  int32_t stat;
+  uint32_t events, r1, flags;
+
+  mc->Event = 0U;
+
+  r1    = 0U;
+  flags = MC_RESPONSE_R1 | ARM_MCI_RESPONSE_CRC;
+  stat  = mc->Driver->SendCommand (MC_CMD_VOLTAGE_SWITCH, 0U, flags, &r1);
+
+  if (stat == ARM_DRIVER_OK) {
+    /* Wait for event */
+    events = mc_wfe (MC_CMD_EVENTS, mc);
+
+    if ((events & MC_CMD_EVENTS) == ARM_MCI_EVENT_COMMAND_COMPLETE) {
+      return (0U);
+    }
+  }
+  EvrFsMcMCI_SendCommandError (mc->Instance, MC_CMD_VOLTAGE_SWITCH, 0U);
+  return (1U);
+}
+#endif /* MC_UHS_SUPPORT */
+
+
 /**
   (CMD12, R1b): Force the card to stop transmission
 
@@ -743,7 +786,7 @@ static uint32_t mc_read_status (uint32_t rca, uint32_t *r1, MC_MCI *mc) {
 /**
   (CMD16, R1): Set block length.
 
-  \parma[in]   len  block length in bytes
+  \param[in]   len  block length in bytes
   \param[in]   mc   Pointer to memory card instance object
   \return
 */
@@ -810,6 +853,43 @@ static uint32_t mc_read_block (uint32_t block, bool multiple, MC_MCI *mc) {
   EvrFsMcMCI_SendCommandError (mc->Instance, idx, arg);
   return (1); //Error
 }
+
+
+#if MC_UHS_SUPPORT
+/**
+  (CMD19, R1): Send tuning block.
+
+  64 byte tuning pattern is transferred for SDR50 and SDR104 modes.
+
+  \param[in]   mc   Pointer to memory card instance object
+  \return 0 on success, 1 on error
+*/
+static uint32_t mc_send_tuning_block (MC_MCI *mc) {
+  int32_t stat;
+  uint32_t flags, r1, events;
+
+  mc->Event = 0U;
+
+  flags = MC_RESPONSE_R1 | ARM_MCI_RESPONSE_CRC | ARM_MCI_TRANSFER_DATA;
+  stat  = mc->Driver->SendCommand (MC_CMD_SEND_TUNING_BLOCK, 0U, flags, &r1);
+
+  if (stat == ARM_DRIVER_OK) {
+    /* Wait for command event */
+    events = mc_wfe (MC_CMD_EVENTS, mc);
+
+    if ((events & MC_CMD_EVENTS) == ARM_MCI_EVENT_COMMAND_COMPLETE) {
+      /* Wait for transfer event */
+      events = mc_wfe (MC_DAT_EVENTS, mc);
+
+      if ((events & MC_DAT_EVENTS) == ARM_MCI_EVENT_TRANSFER_COMPLETE) {
+        return (0);
+      }
+    }
+  }
+  EvrFsMcMCI_SendCommandError (mc->Instance, MC_CMD_SEND_TUNING_BLOCK, 0U);
+  return (1);
+}
+#endif /* MC_UHS_SUPPORT */
 
 
 /**
@@ -1079,7 +1159,7 @@ static uint32_t get_ccc (uint32_t *r2) {
 
   ccc  = (uint32_t)(b[11] << 4);
   ccc |= (uint32_t)(b[10] >> 4);
-  
+
   return (ccc);
 }
 
@@ -1428,7 +1508,7 @@ static fsStatus mc_control_lock (fsLockUnlock *lu, MC_MCI *mc) {
 
 
 /**
-  Selects beetwen 4-bit and 8-bit data bus width during device initialization.
+  Selects between 4-bit and 8-bit data bus width during device initialization.
 
   \param[in]   mc     Memory card instance object
   \return      execution status
@@ -1511,19 +1591,337 @@ static uint32_t mc_select_bus_width (MC_MCI *mc) {
 }
 
 
+#if MC_UHS_SUPPORT
+/**
+  \brief Execute sequence to switch 1.8V bus signaling level.
+
+  \param[in]   mc   Pointer to memory card instance object
+  \return execution status (0 = switching successful, 1 = switching failed)
+*/
+static uint32_t mc_seq_voltage_switch (MC_MCI *mc) {
+  int32_t stat;
+
+  /* Prepare for signaling voltage switch */
+  stat = mc->Driver->Control (ARM_MCI_UHS_VOLTAGE_SWITCH, ARM_MCI_VOLTAGE_SWITCH_PREPARE);
+  if (stat != ARM_DRIVER_OK) {
+    return (1U);
+  }
+
+  /* Send the CMD11 (Voltage Switch) command */
+  if (mc_voltage_switch (mc) == 0) {
+    /* Change the voltage selection from 3.3V to 1.8V */
+    stat = mc->Driver->Control (ARM_MCI_UHS_VOLTAGE_SWITCH, ARM_MCI_VOLTAGE_SWITCH_APPLY);
+
+    if (stat == ARM_DRIVER_OK) {
+      /* Allow the 1.8 V signaling rail to settle with SD bus clock stopped. */
+      fs_set_rtos_delay (5U);
+
+      /* Turn on the SD clock after the voltage switch */
+      stat = mc->Driver->Control (ARM_MCI_UHS_VOLTAGE_SWITCH, ARM_MCI_VOLTAGE_SWITCH_CLOCK_ON);
+
+      if (stat == ARM_DRIVER_OK) {
+        /* Allow at least 1 ms for the card to release DAT[3:0]. */
+        fs_set_rtos_delay (2U);
+
+        /* Verify the voltage switch */
+        stat = mc->Driver->Control (ARM_MCI_UHS_VOLTAGE_SWITCH, ARM_MCI_VOLTAGE_SWITCH_VERIFY);
+
+        if (stat == ARM_DRIVER_OK) {
+          /* Voltage switch successful, set the SDR12 bus speed mode */
+          if (mci_bus_speed_mode (ARM_MCI_BUS_UHS_SDR12, mc) == 0) {
+            return (0U);
+          }
+        }
+      }
+    }
+  }
+
+  /* Voltage switch failed, abort the voltage switch procedure */
+  (void)mc->Driver->Control (ARM_MCI_UHS_VOLTAGE_SWITCH, ARM_MCI_VOLTAGE_SWITCH_ABORT);
+
+  return (1U);
+}
+
+
+/**
+  \brief Execute sequence to perform tuning with the tuning block.
+
+  \param[in]   mc   Pointer to memory card instance object
+  \return execution status (0 = tuning successful, 1 = tuning failed)
+*/
+static uint32_t mc_seq_tuning_block (MC_MCI *mc) {
+  int32_t stat, result;
+  uint32_t attempt;
+
+  /* Start the tuning operation */
+  stat = mc->Driver->Control (ARM_MCI_UHS_TUNING_OPERATION, ARM_MCI_UHS_TUNING_START);
+  if (stat != ARM_DRIVER_OK) {
+    return (1U);
+  }
+
+  /* Transfer the tuning block up to 40 times, this shall complete withing 150ms */
+  for (attempt = 0U; attempt < 40U; attempt++) {
+    /* Tuning block size is 64 bytes */
+    stat = mc->Driver->SetupTransfer (mc->ExtCSD, 1U, 64U, ARM_MCI_TRANSFER_READ | ARM_MCI_TRANSFER_BLOCK);
+    if (stat != ARM_DRIVER_OK) {
+      /* Cannot setup the transfer */
+      break;
+    }
+
+    /* Send the CMD19 (send tuning block) command */
+    if (mc_send_tuning_block(mc) != 0U) {
+      /* Transfer failed, abort */
+      break;
+    }
+
+    /* Check the tuning operation result */
+    result = mc->Driver->Control (ARM_MCI_UHS_TUNING_RESULT, 0U);
+
+    if (result == ARM_MCI_UHS_TUNING_DONE) {
+      /* Tuning completed successfully */
+      return (0U);
+    }
+    if (result != ARM_MCI_UHS_TUNING_CONTINUE) {
+      /* Tunning error occurred */
+      break;
+    }
+  }
+
+  /* Tuning failed, abort the tuning operation */
+  (void)mc->Driver->Control (ARM_MCI_UHS_TUNING_OPERATION, ARM_MCI_UHS_TUNING_ABORT);
+
+  return (1U);
+}
+#endif /* MC_UHS_SUPPORT */
+
+
+/**
+  \brief Switch to High-Speed mode
+
+  \param[in]   mc     Pointer to memory card instance object
+  \return      execution status (0 = success, 1 = error)
+*/
+static uint32_t mc_seq_switch_hs (MC_MCI *mc) {
+  uint32_t speed;
+  int32_t actual_speed;
+  SWITCH_FUNC_ARG sw_arg;
+
+  sw_arg.mode            = CMD6_MODE_CHECK;
+  sw_arg.power_limit     = CMD6_POWER_LIMIT_CURRENT;
+  sw_arg.driver_strength = CMD6_DRIVER_STRENGTH_CURRENT;
+  sw_arg.command_system  = CMD6_COMMAND_SYSTEM_CURRENT;
+  sw_arg.access_mode     = CMD6_ACCESS_MODE_SDR25;
+
+  if (mc_switch_func (sw_arg, mc->ExtCSD, mc) == 0) {
+    /* Check if High-Speed/SDR25 support bit is set */
+    if (mc->ExtCSD[13] & (1U << CMD6_ACCESS_MODE_SDR25)) {
+      /* Switch to SDR25 (High-Speed mode) */
+      sw_arg.mode = CMD6_MODE_SET;
+
+      if (mc_switch_func (sw_arg, mc->ExtCSD, mc) == 0) {
+        fs_set_rtos_delay(2U);
+
+        /* High-Speed mode enabled */
+        speed = 50000000U;
+
+        /* Set High-Speed bus mode */
+        if (mci_bus_speed_mode (ARM_MCI_BUS_HIGH_SPEED, mc) != 0) {
+          return (1U);
+        }
+        /* Set High-Speed bus frequency */
+        actual_speed = mci_bus_speed (speed, mc);
+        if (actual_speed <= 0) {
+          return (1U);
+        }
+        /* Wait for the bus to stabilize */
+        fs_set_rtos_delay(2U);
+
+        /* Set data timeout to 550ms (500ms + 50ms overhead) */
+        mci_data_timeout (550U, (uint32_t)actual_speed, mc);
+
+        return (0U);
+      }
+      else {
+        /* Failed to switch to high-speed mode */
+        EvrFsMcMCI_HighSpeedSwitchError (mc->Instance);
+
+        /* Abort incomplete data transfer */
+        EvrFsMcMCI_TransferAbort (mc->Instance);
+        mc->Driver->AbortTransfer();
+      }
+    }
+  }
+  return (1U);
+}
+
+
+#if MC_UHS_SUPPORT
+/**
+  \brief Switch to UHS-I mode
+
+  \param[in]   mc     Pointer to memory card instance object
+  \return      execution status (0 = success, 1 = error)
+*/
+static uint32_t mc_seq_switch_uhs (MC_MCI *mc) {
+  uint32_t access_mode, uhs_mode, speed;
+  int32_t actual_speed;
+  SWITCH_FUNC_ARG sw_arg;
+
+  /* Select the fastest mutually supported UHS-I mode */
+  access_mode = CMD6_ACCESS_MODE_SDR12;
+  uhs_mode    = ARM_MCI_BUS_UHS_SDR12;
+  speed       = 25000000U;
+
+  sw_arg.mode            = CMD6_MODE_CHECK;
+  sw_arg.power_limit     = CMD6_POWER_LIMIT_CURRENT;
+  sw_arg.driver_strength = CMD6_DRIVER_STRENGTH_CURRENT;
+  sw_arg.command_system  = CMD6_COMMAND_SYSTEM_CURRENT;
+  sw_arg.access_mode     = CMD6_ACCESS_MODE_CURRENT;
+
+  if (mc_switch_func (sw_arg, mc->ExtCSD, mc) == 0U) {
+    if (mc->Capabilities.uhs_sdr104 && mc->Capabilities.uhs_tuning &&
+        ((mc->ExtCSD[13] & (1U << CMD6_ACCESS_MODE_SDR104)) != 0U)) {
+      access_mode = CMD6_ACCESS_MODE_SDR104;
+      uhs_mode    = ARM_MCI_BUS_UHS_SDR104;
+      speed       = 208000000U;
+    }
+    else if (mc->Capabilities.uhs_sdr50 &&
+        ((mc->ExtCSD[13] & (1U << CMD6_ACCESS_MODE_SDR50)) != 0U)) {
+      access_mode = CMD6_ACCESS_MODE_SDR50;
+      uhs_mode    = ARM_MCI_BUS_UHS_SDR50;
+      speed       = 100000000U;
+    }
+    else if (mc->Capabilities.uhs_ddr50 &&
+              ((mc->ExtCSD[13] & (1U << CMD6_ACCESS_MODE_DDR50)) != 0U)) {
+      access_mode = CMD6_ACCESS_MODE_DDR50;
+      uhs_mode    = ARM_MCI_BUS_UHS_DDR50;
+      speed       = 50000000U;
+      mc->Property |= MC_PROP_DATA_BUS_DDR;
+    }
+    else if ((mc->ExtCSD[13] & (1U << CMD6_ACCESS_MODE_SDR25)) != 0U) {
+      access_mode = CMD6_ACCESS_MODE_SDR25;
+      uhs_mode    = ARM_MCI_BUS_UHS_SDR25;
+      speed       = 50000000U;
+    }
+
+    sw_arg.mode        = CMD6_MODE_SET;
+    sw_arg.access_mode = access_mode;
+    if (mc_switch_func (sw_arg, mc->ExtCSD, mc) != 0U) {
+      /* Failed to send the switch command */
+      return (1U);
+    }
+    if ((mc->ExtCSD[16] & 0x0FU) != access_mode) {
+      /* Card did not select the requested UHS-I access mode. */
+      return (1U);
+    }
+    /* Set selected UHS bus speed mode */
+    if (mci_bus_speed_mode (uhs_mode, mc) != 0) {
+      /* Failed to set the bus speed mode */
+      return (1U);
+    }
+    /* Set selected UHS bus frequency */
+    actual_speed = mci_bus_speed (speed, mc);
+    if (actual_speed <= 0) {
+      return (1U);
+    }
+    /* Wait for the bus to stabilize */
+    fs_set_rtos_delay (2U);
+
+    /* Set data timeout to 550ms (500ms + 50ms overhead) */
+    mci_data_timeout (550U, (uint32_t)actual_speed, mc);
+
+    if ((uhs_mode == ARM_MCI_BUS_UHS_SDR104) || ((uhs_mode == ARM_MCI_BUS_UHS_SDR50) && mc->Capabilities.uhs_tuning_sdr50)) {
+      if (mc_seq_tuning_block (mc) != 0U) {
+        return (1U);
+      }
+    }
+    return (0U);
+  }
+  return (1U);
+}
+#endif /* MC_UHS_SUPPORT */
+
+
+/**
+  \brief Initial setup before memory card initialization sequence
+
+  \param[in]   mc     Pointer to memory card instance object
+  \return      execution status (0 = success, 1 = error)
+*/
+static uint32_t mc_seq_init_setup (MC_MCI *mc) {
+  int32_t actual_speed;
+
+  /* Init runtime info */
+  mc->Property = 0U;
+  mc->RCA      = 0U;
+  mc->Event    = 0U;
+
+  /* Power down memory card during basic host configuration */
+  mci_card_power (false, mc);
+
+  /* Set 1-bit data bus (mandatory support) */
+  mci_bus_width (ARM_MCI_BUS_DATA_WIDTH_1, mc);
+
+  /* Set bus speed mode to default (mandatory support) */
+  mci_bus_speed_mode (ARM_MCI_BUS_DEFAULT_SPEED, mc);
+
+  /* Set bus speed to 400kHz (initialization speed) */
+  actual_speed = mci_bus_speed (MC_INIT_BUS_SPEED, mc);
+  if (actual_speed <= 0) {
+    return (1);
+  }
+  /* Wait a bit for clock to stabilize */
+  fs_set_rtos_delay (2U);
+
+  /* Set data timeout to 550ms (500ms + 50ms overhead) */
+  mci_data_timeout (550U, actual_speed, mc);
+
+#if MC_UHS_SUPPORT
+  if (mc->Capabilities.uhs_signaling) {
+    /* Reset UHS-I signaling to 3.3V */
+    mci_uhs_signaling (ARM_MCI_VOLTAGE_SWITCH_RESET, mc);
+  }
+#endif /* MC_UHS_SUPPORT */
+
+  /* Enable power to the memory card */
+  mci_card_power (true, mc);
+
+  if (mc->Capabilities.rst_n) {
+    /* Assert RST_n pin for ~2ms */
+    mc->Driver->Control (ARM_MCI_CONTROL_RESET, 1);
+    fs_set_rtos_delay (2U);
+    mc->Driver->Control (ARM_MCI_CONTROL_RESET, 0);
+  }
+
+  /* Enable clock when bus idle */
+  mci_idle_clock (true, mc);
+
+  /* Wait a bit in order to send additional init clocks */
+  fs_set_rtos_delay(2U);
+
+  /* Disable clock when bus idle */
+  mci_idle_clock (false, mc);
+
+  return (0);
+}
+
+
 /**
   Initialize memory card in native mode (non SPI)
 
   \param[in]   mc     Pointer to memory card instance object
-  \return
+  \return execution status (0 = success, 1 = retry, -1 = failure)
 */
-static uint32_t mc_native_init (MC_MCI *mc) {
+static int32_t mc_native_init (MC_MCI *mc) {
   fsCID_Register cid;
   uint32_t err, r[4], arg, tout, speed;
-  SWITCH_FUNC_ARG sw_arg;
+  int32_t actual_speed;
   fsStatus status;
 
-  /* Set CMD line to Push-Pull mode */
+  /* Set initial state before card identification attempt */
+  mc_seq_init_setup (mc);
+
+    /* Set CMD line to Push-Pull mode */
   mci_cmd_bus_mode (ARM_MCI_BUS_CMD_PUSH_PULL, mc);
 
   EvrFsMcMCI_MediaReset (mc->Instance);
@@ -1534,7 +1932,6 @@ static uint32_t mc_native_init (MC_MCI *mc) {
   /** SD Identification Process **/
 
   EvrFsMcMCI_MediaDetectionSD (mc->Instance);
-
 
   /* Physical Layer Specification Version 2.00 requests to send CMD8 */
   if (mc_send_if_cond (0x1AA, &r[0], mc) == 0) {
@@ -1549,8 +1946,17 @@ static uint32_t mc_native_init (MC_MCI *mc) {
   arg = ACMD41_ARG_VDD_WINDOW;
 
   if (mc->Property & MC_PROP_SD_V2) {
-    /* Set HCS, XPC and S18R in argument of ACMD41 */
-    arg |= ACMD41_ARG_HCS | ACMD41_ARG_XPC | ACMD41_ARG_S18R;
+    /* Set HCS and XPC in argument of ACMD41 */
+    arg |= ACMD41_ARG_HCS | ACMD41_ARG_XPC;
+
+#if MC_UHS_SUPPORT
+    if (mc->Capabilities.uhs_signaling) {
+      if ((mc->Status & MC_STATUS_UHS_DISABLED) == 0U) {
+        /* Set S18R in ACMD41 argument to request UHS-I signaling (1.8V) */
+        arg |= ACMD41_ARG_S18R;
+      }
+    }
+#endif /* MC_UHS_SUPPORT */
   }
 
   for (tout = 1000; tout; tout -= 10) {
@@ -1576,10 +1982,12 @@ static uint32_t mc_native_init (MC_MCI *mc) {
             mc->Property |= MC_PROP_SPEED_UHSII;
           }
 
+#if MC_UHS_SUPPORT
           if (r[0] & R3_S18A) {
             /* Switching to 1.8V Accepted, this is UHS-I card */
             mc->Property |= MC_PROP_SPEED_UHSI;
           }
+#endif /* MC_UHS_SUPPORT */
           break;
         }
         /* Wait 10ms */
@@ -1607,7 +2015,7 @@ static uint32_t mc_native_init (MC_MCI *mc) {
     /* Check for MMC, send CMD1 */
     for (tout = 1000; tout; tout -= 10) {
       err = mc_send_op_cond (0x40FF8000, &r[0], mc);
-      
+
       if (err == 0) {
         /* Got response */
         mc->Property |= MC_PROP_TYPE_MMC;
@@ -1643,16 +2051,30 @@ static uint32_t mc_native_init (MC_MCI *mc) {
   if ((mc->Property & (MC_PROP_TYPE_SD | MC_PROP_TYPE_MMC)) == 0) {
     /* Unknown device */
     EvrFsMcMCI_MediaDetectionError (mc->Instance);
-    return (false);
+    return (-1);
   }
 
   mc->MediaStatus |= FS_MEDIA_INSERTED;
+
+#if MC_UHS_SUPPORT
+  if ((mc->Property & MC_PROP_SPEED_UHSI) != 0U) {
+    /* UHS-I card: switch signaling voltage to 1.8V after ACMD41 */
+    if (mc_seq_voltage_switch (mc) != 0U) {
+      /* Switch failed, disable UHS */
+      mc->Status |= MC_STATUS_UHS_DISABLED;
+
+      /* Retry initialization with UHS-I disabled */
+      return (1);
+    }
+    mc->Property |= MC_PROP_DATA_BUS_1V8;
+  }
+#endif /* MC_UHS_SUPPORT */
 
   /* Initialize the Card to SD/MMC mode. */
   if (mc_read_any_cid (&r[0], mc) != 0) {
     /* CID read failed - this should succeed */
     EvrFsMcMCI_CidReadError (mc->Instance);
-    return (false);
+    return (-1);
   }
   /* Reformat response and fill CID structure */
   fill_cid (&cid, &r[0], mc->Property & MC_PROP_TYPE_MMC);
@@ -1666,7 +2088,7 @@ static uint32_t mc_native_init (MC_MCI *mc) {
     if (mc_publish_rca (&mc->RCA, mc) != 0) {
       /* This should succeed */
       EvrFsMcMCI_RcaReadError (mc->Instance);
-      return (false);
+      return (-1);
     }
   }
   else {
@@ -1676,7 +2098,7 @@ static uint32_t mc_native_init (MC_MCI *mc) {
     if (mc_set_rca (1, mc) != 0) {
       /* Failed to set RCA - this should succeed */
       EvrFsMcMCI_RcaWriteError (mc->Instance);
-      return (false);
+      return (-1);
     }
     /* Switch command line to push pull */
     mci_cmd_bus_mode (ARM_MCI_BUS_CMD_PUSH_PULL, mc);
@@ -1688,7 +2110,7 @@ static uint32_t mc_native_init (MC_MCI *mc) {
   if (mc_read_csd (mc->RCA, &r[0], mc) != 0) {
     /* Failed to retrieve CSD register - this should succeed */
     EvrFsMcMCI_CsdReadError (mc->Instance);
-    return (false);
+    return (-1);
   }
   /* Read number of blocks (from CSD) */
   mc->SectorCount = get_block_number (&r[0], (mc->Property & MC_PROP_TYPE_MMC) != 0);
@@ -1709,7 +2131,7 @@ static uint32_t mc_native_init (MC_MCI *mc) {
   if (mc_select_deselect(mc->RCA, &r[0], mc) != 0) {
     /* Switch to TRAN state failed - this should succeed */
     EvrFsMcMCI_TranStateError (mc->Instance);
-    return (false);
+    return (-1);
   }
 
   /** Data Transfer Mode (Transfer State) **/
@@ -1722,18 +2144,18 @@ static uint32_t mc_native_init (MC_MCI *mc) {
 
     if ((status == fsOK) || (status == fsAccessDenied)) {
       if (mc->Status & MC_STATUS_LOCKED) {
-        return (false);
+        return (-1);
       }
     }
     else {
-      return (false);
+      return (-1);
     }
   }
 
   /* Set block length to 512 bytes. */
   if (mc_set_block_len (512, mc)) {
     EvrFsMcMCI_BlenWriteError (mc->Instance, 512);
-    return (false);
+    return (-1);
   }
 
   if (mc->Property & MC_PROP_MMC_V4) {
@@ -1742,7 +2164,7 @@ static uint32_t mc_native_init (MC_MCI *mc) {
       if (mc_send_ext_csd (mc->ExtCSD, mc)) {
         /* Failed to retrieve EXT_CSD register */
         EvrFsMcMCI_ExtCsdReadError (mc->Instance);
-        return (false);
+        return (-1);
       }
       /* Only sector count field (SEC_COUNT [215:212]) is in our interest */
       mc->SectorCount = (uint32_t)(mc->ExtCSD[215] << 24 |
@@ -1754,7 +2176,7 @@ static uint32_t mc_native_init (MC_MCI *mc) {
     if (mc_switch (3, 185, 1, mc)) {
       /* Failed to switch to high-speed mode */
       EvrFsMcMCI_HighSpeedSwitchError (mc->Instance);
-      return (false);
+      return (-1);
     }
     /* Wait at least 500ms till in "prg" state */
     tout =  fs_get_sys_tick();
@@ -1768,60 +2190,48 @@ static uint32_t mc_native_init (MC_MCI *mc) {
   }
 
   /* Set bus speed */
-  mci_bus_speed (speed, mc);
+  actual_speed = mci_bus_speed (speed, mc);
+  if (actual_speed <= 0) {
+    return (-1);
+  }
   /* Wait a bit for clock to stabilize */
   fs_set_rtos_delay (2);
-  
+
+  /* Set data timeout to 550ms (500ms + 50ms overhead) */
+  mci_data_timeout (550, (uint32_t)actual_speed, mc);
+
   /* Set data bus width */
   if (mc_select_bus_width (mc) != 0) {
     /* Failed to switch data bus width */
     EvrFsMcMCI_DataBusSwitchError (mc->Instance);
-    return (false);
+    return (-1);
   }
 
-  if ((mc->Property & (MC_PROP_TYPE_SD | MC_PROP_CCC_10)) == (MC_PROP_TYPE_SD | MC_PROP_CCC_10)) {
-    /* Switch to High-Speed mode */
-    if (mc->Capabilities.high_speed) {
-      sw_arg.mode            = CMD6_MODE_CHECK;
-      sw_arg.power_limit     = CMD6_POWER_LIMIT_CURRENT;
-      sw_arg.driver_strength = CMD6_DRIVER_STRENGTH_CURRENT;
-      sw_arg.command_system  = CMD6_COMMAND_SYSTEM_CURRENT;
-      sw_arg.access_mode     = CMD6_ACCESS_MODE_SDR25;
+#if MC_UHS_SUPPORT
+  if (((mc->Property & (MC_PROP_TYPE_SD | MC_PROP_SPEED_UHSI | MC_PROP_CCC_10)) == (MC_PROP_TYPE_SD | MC_PROP_SPEED_UHSI | MC_PROP_CCC_10))) {
+    /* Select the fastest mutually supported UHS-I mode */
+    if (mc_seq_switch_uhs(mc) != 0) {
+      /* Failed to configure UHS-I mode */
+      mc->Status |= MC_STATUS_UHS_DISABLED;
 
-      if (mc_switch_func (sw_arg, mc->ExtCSD, mc) == 0) {
-        /* Check if High-Speed/SDR25 support bit is set */
-        if (mc->ExtCSD[13] & (1U << CMD6_ACCESS_MODE_SDR25)) {
-          /* Switch to SDR25 (High-Speed mode) */
-          sw_arg.mode = CMD6_MODE_SET;
-
-          if (mc_switch_func (sw_arg, mc->ExtCSD, mc) == 0) {
-            fs_set_rtos_delay(2);
-            /* High-Speed mode enabled */
-            speed = 50000000U;
-            mci_bus_speed_mode (ARM_MCI_BUS_HIGH_SPEED, mc);
-            mci_bus_speed      (speed, mc);
-            fs_set_rtos_delay(2);
-          }
-          else {
-            /* Failed to switch to high-speed mode */
-            EvrFsMcMCI_HighSpeedSwitchError (mc->Instance);
-
-            /* Abort incomplete data transfer */
-            EvrFsMcMCI_TransferAbort (mc->Instance);
-            mc->Driver->AbortTransfer();
-          }
-        }
-      }
+      /* Retry initialization with UHS-I disabled */
+      return (1);
     }
   }
+#endif /* MC_UHS_SUPPORT */
 
-  /* Set data timeout to 550ms (500ms + 50ms overhead) */
-  mci_data_timeout (550, speed, mc);
+  if ((mc->Property & (MC_PROP_TYPE_SD | MC_PROP_SPEED_UHSI | MC_PROP_CCC_10)) == (MC_PROP_TYPE_SD | MC_PROP_CCC_10)) {
+    /* Switch to High-Speed mode */
+    if (mc->Capabilities.high_speed) {
+      /* Switch to High-Speed mode */
+      (void)mc_seq_switch_hs(mc);
+    }
+  }
 
   /* Switch device to Standby state */
   if (mc_select_deselect (0, &r[0], mc)) {
     EvrFsMcMCI_StbyStateError (mc->Instance);
-    return (false);
+    return (-1);
   }
 
   /** Data Transfer Mode (Stand-by State) **/
@@ -1831,7 +2241,7 @@ static uint32_t mc_native_init (MC_MCI *mc) {
 
   EvrFsMcMCI_InitSuccess (mc->Instance);
 
-  return (true);
+  return (0);
 }
 
 
@@ -2017,6 +2427,7 @@ static fsStatus mc_fsDevCtrlCodeHealthStatus (fsHealthStatus *p, MC_MCI *mc) {
   \return true if initialization passed, false otherwise
 */
 uint32_t mc_mci_Init (uint32_t mode, MC_MCI *mc) {
+  int32_t status;
 
   if (mode == DM_IO) {
     mc->MediaStatus = 0;
@@ -2043,16 +2454,10 @@ uint32_t mc_mci_Init (uint32_t mode, MC_MCI *mc) {
         return (false);
       }
     }
-    return (true);
   }
   else if (mode == DM_MEDIA) {
     /* Initializing memory media */
     EvrFsMcMCI_InitMedia (mc->Instance);
-
-    /* Init runtime info */
-    mc->Property    = 0;
-    mc->RCA         = 0;
-    mc->Event       = 0;
 
     if (mc->Capabilities.cd_state) {
       if (mc->Driver->ReadCD() == 0) {
@@ -2063,44 +2468,21 @@ uint32_t mc_mci_Init (uint32_t mode, MC_MCI *mc) {
       mc->MediaStatus |= FS_MEDIA_INSERTED;
     }
 
-    if (mc->Capabilities.rst_n) {
-      /* Assert RST_n pin for ~2ms */
-      mc->Driver->Control (ARM_MCI_CONTROL_RESET, 1);
-      fs_set_rtos_delay (2);
-      mc->Driver->Control (ARM_MCI_CONTROL_RESET, 0);
+    do {
+      /* Attempt memory card initialization */
+      status = mc_native_init(mc);
+    } while (status == 1);
+
+    if (status == -1) {
+      /* Disable card power after failed initialization */
+      mci_card_power (false, mc);
+
+      return (false);
     }
-
-    /* Set 1-bit data bus (mandatory support) */
-    mci_bus_width (ARM_MCI_BUS_DATA_WIDTH_1, mc);
-
-    /* Set bus speed mode to default (mandatory support) */
-    mci_bus_speed_mode (ARM_MCI_BUS_DEFAULT_SPEED, mc);
-
-    /* Set data timeout to 550ms (500ms + 50ms overhead) */
-    mci_data_timeout (550, MC_INIT_BUS_SPEED, mc);
-
-    /* Set bus speed to 400kHz (initialization speed) */
-    mci_bus_speed (MC_INIT_BUS_SPEED, mc);
-    /* Wait a bit for clock to stabilize */
-    fs_set_rtos_delay (2);
-
-    /* Device power-up sequence */
-    mci_card_power (true, mc);
-
-    /* Enable clock when bus idle */
-    mci_idle_clock (true, mc);
-    /* Wait a bit in order to send additional init clocks */
-    fs_set_rtos_delay(2);
-
-    /* Disable clock when bus idle */
-    mci_idle_clock (false, mc);
-
-    /* Initialize media in native mode */
-    return (mc_native_init (mc));
   }
-  else {
-    return (false);
-  }
+
+  /* Initialization successful */
+  return (true);
 }
 
 
@@ -2131,6 +2513,7 @@ uint32_t mc_mci_UnInit (uint32_t mode, MC_MCI *mc) {
       EvrFsMcMCI_UninitMedia (mc->Instance);
 
       mc->MediaStatus &= ~FS_MEDIA_INITIALIZED;
+      mc->Status      &= ~MC_STATUS_UHS_DISABLED;
       mc->Property     = 0;
 
       /* Power down the device */
@@ -2202,11 +2585,20 @@ uint32_t mc_mci_ReadSector (uint32_t sect, uint8_t *buf, uint32_t cnt, MC_MCI *m
             /* Transfer incomplete */
             EvrFsMcMCI_TransferError (mc->Instance, events);
             err = 1U;
+
+            /* Reset the host data path; CMD12 below stops the card. */
+            EvrFsMcMCI_TransferAbort (mc->Instance);
+            if (mc->Driver->AbortTransfer() != ARM_DRIVER_OK) {
+              retry = MC_RETRY_OPERATION_COUNT;
+              break;
+            }
           }
 
           if ((err != 0U) || (cnt > 1U)) {
             /* Send STOP_TRANSMISSION command */
-            err = mc_stop_transmission (mc);
+            if (mc_stop_transmission (mc) != 0U) {
+              err = 1U;
+            }
           }
 
           if (err == 0U) {
@@ -2299,11 +2691,20 @@ uint32_t mc_mci_WriteSector (uint32_t sect, const uint8_t *buf, uint32_t cnt, MC
             /* Transfer incomplete */
             EvrFsMcMCI_TransferError (mc->Instance, events);
             err = 1U;
+
+            /* Reset the host data path; CMD12 below stops the card. */
+            EvrFsMcMCI_TransferAbort (mc->Instance);
+            if (mc->Driver->AbortTransfer() != ARM_DRIVER_OK) {
+              retry = MC_RETRY_OPERATION_COUNT;
+              break;
+            }
           }
 
           if ((err != 0) || (cnt > 1)) {
             /* Send STOP_TRANSMISSION command */
-            err = mc_stop_transmission (mc);
+            if (mc_stop_transmission (mc) != 0U) {
+              err = 1U;
+            }
           }
 
           if (err == 0U) {

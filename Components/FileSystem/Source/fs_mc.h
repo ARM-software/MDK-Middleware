@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::File System
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    fs_mc.h
  * Purpose: SD/MMC Card definition header
@@ -12,11 +12,21 @@
 #include "fs_core.h"
 
 /**
+  Include UHS-I support conditionally
+*/
+#if (ARM_MCI_API_VERSION >= ARM_DRIVER_VERSION_MAJOR_MINOR(2,5))
+  #define MC_UHS_SUPPORT                1
+#else
+  #define MC_UHS_SUPPORT                0
+#endif
+
+/**
   Memory card command layer status flags
 */
-#define MC_STATUS_DRIVER_INIT (1U <<  0)    ///< Driver initialized
-#define MC_STATUS_EMMC_SLEEP  (1U <<  1)    ///< eMMC device is in Sleep State
-#define MC_STATUS_LOCKED      (1U <<  2)    ///< Device password protection active
+#define MC_STATUS_DRIVER_INIT           (1U <<  0)    ///< Driver initialized
+#define MC_STATUS_EMMC_SLEEP            (1U <<  1)    ///< eMMC device is in Sleep State
+#define MC_STATUS_LOCKED                (1U <<  2)    ///< Device password protection active
+#define MC_STATUS_UHS_DISABLED          (1U <<  3)    ///< UHS mode disabled
 
 /**
   Memory card default initialization bus speed (in Hz)
@@ -52,6 +62,15 @@
   Maximum retry count
 */
 #define MC_RETRY_OPERATION_COUNT        3U
+
+/**
+  UHS-I access modes
+*/
+#define MCI_UHS_MODE_SDR12              0U
+#define MCI_UHS_MODE_SDR25              1U
+#define MCI_UHS_MODE_DDR50              2U
+#define MCI_UHS_MODE_SDR50              3U
+#define MCI_UHS_MODE_SDR104             4U
 
 /**
   Driver event masks
