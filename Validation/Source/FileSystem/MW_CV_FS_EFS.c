@@ -543,7 +543,7 @@ void MW_CV_FS_EFS_fvol_0 (void) {
   }
 
   /* Verify that EFS rejects FAT volume information */
-  CHECK(fvol (MW_CV_FS_DRIVE, label, &serial) == fsAccessDenied);
+  CHECK(fvol (MW_CV_FS_DRIVE, label, &serial) == fsUnsupported);
 }
 
 

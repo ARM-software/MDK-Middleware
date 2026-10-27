@@ -8,10 +8,10 @@ to the specified API and functionality.
 Validation projects are available for the following Components:
 
 - **File System**
-  - **Drive F** - NOR flash (skeleton project; no tests implemented yet)
-  - **Drive M** - Memory card (skeleton project; no tests implemented yet)
-  - **Drive N** - NAND flash (skeleton project; no tests implemented yet)
-  - **Drive R** - RAM (skeleton project; no tests implemented yet)
+  - **Drive F** - NOR flash
+  - **Drive M** - Memory card
+  - **Drive N** - NAND flash
+  - **Drive R** - RAM
 - **Network**
   - **BSD Sockets**
 - **USB Device**

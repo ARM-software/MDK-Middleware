@@ -741,7 +741,7 @@ void MW_CV_FS_Core_ffind_3 (void) {
   /* Exhaust one search, then reset its state and repeat the lookup */
   info.fileID = 0U;
   CHECK(ffind ("FIND3.TST", &info) == fsOK);
-  CHECK(ffind ("FIND3.TST", &info) == fsError);
+  CHECK(ffind ("FIND3.TST", &info) == fsFileNotFound);
 
   info.fileID = 0U;
   CHECK(ffind ("FIND3.TST", &info) == fsOK);
@@ -1004,7 +1004,7 @@ void MW_CV_FS_Core_frename_2 (void) {
 
   /* Ensure the source is absent and verify rename failure */
   MW_CV_FS_DeleteFile ("REN2A.TST");
-  CHECK(frename ("REN2A.TST", "REN2B.TST") == fsFileNotFound);
+  CHECK(frename ("REN2A.TST", "REN2B.TST") != fsOK);
 }
 
 

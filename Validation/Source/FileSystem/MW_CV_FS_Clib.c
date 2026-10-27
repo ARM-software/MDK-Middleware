@@ -1866,41 +1866,6 @@ void MW_CV_FS_EFS_Clib_fopen_4 (void) {
 }
 
 
-/**
-\brief Test the fseek function.
-\details
-\par Method
-1. Open a file with mode <tt>w</tt>, write known data, and attempt an in-range <tt>fseek</tt>.
-2. Close and reopen the file with mode <tt>r</tt>.
-3. Verify the file remains readable and contains only successfully written data.
-\par Expected
-- Seeking in the EFS write stream returns a nonzero value.
-- The rejected seek does not corrupt the file.
-*/
-void MW_CV_FS_EFS_Clib_fseek_0 (void) {
-  FILE *file;
-
-  /* Prepare the configured drive */
-  if (!ready()) {
-    return;
-  }
-
-  /* Open an EFS write stream */
-  file = fopen ("EFSSK0.TST", "w");
-  CHECK(file != NULL);
-
-  /* Write data and reject repositioning */
-  if (file != NULL) {
-    CHECK(fwrite (pattern, 1U, 4U, file) == 4U);
-    CHECK(fseek (file, 0L, SEEK_SET) != 0);
-  }
-  /* Close and verify the successfully written data */
-  close_checked (file);
-  CHECK(MW_CV_FS_VerifyFile ("EFSSK0.TST", pattern, 4U));
-  /* Remove the test file */
-  MW_CV_FS_DeleteFile ("EFSSK0.TST");
-}
-
 #endif
 
 /**

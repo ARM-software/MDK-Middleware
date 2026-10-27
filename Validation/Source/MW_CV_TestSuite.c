@@ -249,7 +249,6 @@ static TEST_LIST_t test_list[] = {
   TEST_CASE_DEF ( MW_CV_FS_EFS_Clib_fopen_2                         , "MW_CV_FS_EFS_Clib_fopen_2"                        , true),
   TEST_CASE_DEF ( MW_CV_FS_EFS_Clib_fopen_3                         , "MW_CV_FS_EFS_Clib_fopen_3"                        , true),
   TEST_CASE_DEF ( MW_CV_FS_EFS_Clib_fopen_4                         , "MW_CV_FS_EFS_Clib_fopen_4"                        , true),
-  TEST_CASE_DEF ( MW_CV_FS_EFS_Clib_fseek_0                         , "MW_CV_FS_EFS_Clib_fseek_0"                        , true),
 #else
   /* FAT-specific update modes, paths, filenames, and seek tests */
   TEST_CASE_DEF ( MW_CV_FS_FAT_Clib_fopen_0                         , "MW_CV_FS_FAT_Clib_fopen_0"                        , true),

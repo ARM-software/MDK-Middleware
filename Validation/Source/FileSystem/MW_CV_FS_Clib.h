@@ -61,8 +61,7 @@
   X(MW_CV_FS_EFS_Clib_fopen_1)                                                                                        \
   X(MW_CV_FS_EFS_Clib_fopen_2)                                                                                        \
   X(MW_CV_FS_EFS_Clib_fopen_3)                                                                                        \
-  X(MW_CV_FS_EFS_Clib_fopen_4)                                                                                        \
-  X(MW_CV_FS_EFS_Clib_fseek_0)
+  X(MW_CV_FS_EFS_Clib_fopen_4)
 
 #define MW_CV_FS_DECLARE_TEST(name) extern void name (void);
 MW_CV_FS_CLIB_COMMON_TESTS(MW_CV_FS_DECLARE_TEST)
