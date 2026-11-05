@@ -14,6 +14,7 @@
   <releases>
     <release version="8.3.1-dev">
       Active development ...
+      - Added Cortex-M42 compatibility information for the source components.
       Network Component Version 8.4.0
       - fixed potential pre-authentication out-of-bounds read in SNMP processing (CVE-2026-115678)
       - fixed potential FTP server out-of-bounds reads and writes to the RX buffer (CVE-2026-115679)

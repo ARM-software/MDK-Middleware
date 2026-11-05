@@ -35,6 +35,13 @@ The software components that are part of this
 > [CMSIS-Driver standard](https://arm-software.github.io/CMSIS_6/latest/Driver/index.html). Check with your silicon
 > vendor about the availability of CMSIS-Drivers for your selected microcontroller device.
 
+## Cortex-M42
+
+Cortex-M42 uses the existing Cortex-M source components. Select a CMSIS-Core and device pack
+that provide Cortex-M42 support, together with a compatible CMSIS-RTOS2 implementation and
+CMSIS-Compiler pack. The middleware does not require a separate processor port. Board examples
+still require device-specific CMSIS drivers.
+
 ## Availability
 
 The MDK-Middleware is available free-of-charge to all users of Arm Cortex-M-based processors. It does not require a
