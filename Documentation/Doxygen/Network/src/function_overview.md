@@ -17,6 +17,7 @@ The following list provides a brief overview of all Network Component functions.
 - \ref netHTTPs_LoginActive &mdash; \copybrief netHTTPs_LoginActive
 - \ref netHTTPs_LoginOnOff &mdash; \copybrief netHTTPs_LoginOnOff
 - \ref netHTTPs_Running &mdash; \copybrief netHTTPs_Running
+- \ref netHTTPs_SetInterface &mdash; \copybrief netHTTPs_SetInterface
 - \ref netHTTPs_SetPassword &mdash; \copybrief netHTTPs_SetPassword
 - \ref netHTTPs_SetPort &mdash; \copybrief netHTTPs_SetPort
 - \ref netHTTPs_SetRootPath &mdash; \copybrief netHTTPs_SetRootPath

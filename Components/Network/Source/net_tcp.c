@@ -2739,12 +2739,19 @@ static NET_TCP_INFO *tcp_map_socket (NET_IF_CFG *net_if, NET_FRAME *frame,
     EvrNetTCP_MapSocketSynNotSet ();
     return (NULL);
   }
-  /* Scan the listening sockets */
+  /* Search for a socket matching the destination port */
   for (i = tcp->NumSocks, tcp_s = &tcp->Scb[0]; i > 0; tcp_s++, i--) {
     if ((tcp_s->State == netTCP_StateLISTEN)   &&
         (tcp_s->LocPort == ntohs(tcp_hdr->DstPort))) {
-      /* A listening socket is found, bind it now */
-      tcp_s->net_if    = net_if;
+      /* Check interface binding */
+      if (!tcp_s->net_if) {
+        /* Bind socket to the receiving interface */
+        tcp_s->net_if = net_if;
+      }
+      else if (tcp_s->net_if != net_if) {
+        /* Socket bound to a different interface, try next */
+        continue;
+      }
       tcp_s->LocAddr   = sys->RxIpAddr;
       tcp_s->Peer.port = ntohs(tcp_hdr->SrcPort);
       if (ip_ver == IP_VER4) {

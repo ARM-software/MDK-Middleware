@@ -6,6 +6,12 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V8.5.0</td>
+      <td>
+        - added \ref netHTTPs_SetInterface function to bind the HTTP server to a specified network interface
+      </td>
+    </tr>
+    <tr>
       <td>V8.4.0</td>
       <td>
         - fixed security vulnerabilities: [CVE-2026-115678, CVE-2026-115679, and CVE-2026-115680](https://support.arm.com/documentation/112560/1-0)

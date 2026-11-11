@@ -17,7 +17,7 @@
 
 /// Network component version
 #define MW_NET_VERSION_MAJOR    8
-#define MW_NET_VERSION_MINOR    4
+#define MW_NET_VERSION_MINOR    5
 #define MW_NET_VERSION_PATCH    0
 
 #ifdef __cplusplus
@@ -2236,6 +2236,11 @@ extern const char *netHTTPs_GetRootPath (void);
 /// \param[in]     path          new root path, a null-terminated string.
 /// \return      status code that indicates the execution status of the function.
 extern netStatus netHTTPs_SetRootPath (const char *path);
+
+/// \brief Set network interface used by the HTTP server. [\ref thread-safe]
+/// \param[in]     if_id         Interface identification (class and number).
+/// \return      status code that indicates the execution status of the function.
+extern netStatus netHTTPs_SetInterface (uint32_t if_id);
 
 /// \brief Retrieve username of the built-in user account. [\ref thread-safe]
 /// \return        pointer to username, a null-terminated string.

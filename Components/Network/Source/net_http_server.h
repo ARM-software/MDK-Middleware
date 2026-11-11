@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2024 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_http_server.h
  * Purpose: Web Server Definitions
@@ -150,6 +150,7 @@ typedef struct net_http_ctrl {
   uint8_t  passw_len;                   // Length of password
   bool     hdr_access;                  // Enable user access to request headers
   bool     en_cookie;                   // Enable support for cookies
+  uint16_t if_id;                       // Bound network interface (0=none)
 } NET_HTTP_CTRL;
 
 /* Variables */

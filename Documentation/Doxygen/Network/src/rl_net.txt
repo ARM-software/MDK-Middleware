@@ -7279,6 +7279,29 @@ netHTTPs_Start ();
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
+\fn netStatus netHTTPs_SetInterface (uint32_t if_id)
+\details
+The function \b netHTTPs_SetInterface configures the network interface on which the HTTP server listens for incoming connections.
+The HTTP server is restricted to the selected network interface. If multiple network interfaces are enabled in the application,
+connection requests received through any interface other than the selected one are rejected.
+
+The argument \a if_id specifies the \ref interface_id "Interface Identification number".
+
+Possible \ref netStatus return values:
+- \em netOK: Network interface successfully configured.
+- \em netInvalidParameter: Invalid \a if_id parameter provided.
+- \em netWrongState: HTTP server is running and the interface cannot be changed.
+
+\b Code \b Example
+\code
+netHTTPs_Stop ();
+netHTTPs_SetInterface (NET_IF_CLASS_ETH | 0);
+netHTTPs_Start ();
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
 \fn const char *netHTTPs_GetUsername (void)
 \details
 The function \b netHTTPs_GetUsername returns the user name of the built-in user if \c HTTP_SERVER_AUTH_ADMIN is set to

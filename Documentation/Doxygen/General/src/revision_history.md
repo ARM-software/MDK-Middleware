@@ -10,6 +10,14 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V8.4.1</td>
+    <td>
+      - Network Component Version 8.5.0
+      - FileSystem Component Version 8.1.0
+      - USB Component Version 8.0.3
+    </td>
+  </tr>
+  <tr>
     <td>V8.4.0</td>
     <td>
       - Network Component Version 8.4.0

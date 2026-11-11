@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------------
  * MDK Middleware - Component ::Network
- * Copyright (c) 2004-2025 Arm Limited (or its affiliates). All rights reserved.
+ * Copyright (c) 2004-2026 Arm Limited (or its affiliates). All rights reserved.
  *------------------------------------------------------------------------------
  * Name:    net_http_server.c
  * Purpose: Web Server
@@ -272,6 +272,31 @@ netStatus netHTTPs_SetRootPath (const char *path) {
 }
 
 /**
+  \brief       Set network interface used by HTTP server.
+  \param[in]   if_id  interface identifier.
+  \return      status code as defined with netStatus.
+*/
+netStatus netHTTPs_SetInterface (uint32_t if_id) {
+  NET_IF_CFG *net_if = net_if_map_all (if_id);
+
+  START_LOCK (netStatus);
+
+  if (net_if == NULL) {
+    RETURN (netInvalidParameter);
+  }
+  if (http->run_service) {
+    /* Service is running */
+    RETURN (netWrongState);
+  }
+  DEBUGF (HTTP,"SetInterface %s\n",net_if->Name);
+  EvrNetHTTPs_SetInterface (net_if->Id);
+  http->if_id = net_if->Id;
+  RETURN (netOK);
+
+  END_LOCK;
+}
+
+/**
   \brief       Retrieve username of system administrator account.
   \return      pointer to username, a null-terminated string or
                  NULL if authentication is disabled.
@@ -419,6 +444,9 @@ static void http_server_start (void) {
   EvrNetHTTPs_StartService (http->port_num);
   for (i = 1, http_s = &httpc->Scb[0]; i <= httpc->NumSess; http_s++, i++) {
     if (http_s->State != HTTP_STATE_ERROR) {
+      if (http->if_id) {
+        net_tcp_set_option (http_s->Socket, netTCP_OptionInterface, http->if_id);
+      }
       net_tcp_listen (http_s->Socket, http->port_num);
       net_tcp_set_option (http_s->Socket, netTCP_OptionDelayedACK, 1);
       if (tls_io) {
