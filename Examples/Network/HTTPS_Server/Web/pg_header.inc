@@ -7,7 +7,7 @@
    <h2 align="center"><font face="verdana" color="#006699">Embedded Development Tools</font></h2>
   </td>
   <td style="border-bottom: 1px solid #000080" vAlign=center noWrap height=73 width="170">
-   <a href="http://www.keil.com"><img border="0" src="keil.gif" align="left" width="151" height="47"></a>
+   <a href="https://keil.arm.com"><img border="0" src="keil.gif" align="left" width="151" height="47"></a>
   </td>
   <td style="border-bottom: 1px solid #000080" align=center vAlign=center noWrap width="70"> 
    <a href="index.htm"><img border="0" src="home.png" width="31" height="29"></a>
